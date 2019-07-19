@@ -71,6 +71,12 @@ enum class RequestType {
     /// rewind
     REWIND,
 
+    /// Enable Repeat of a track.
+    ENABLE_REPEAT_ONE,
+
+    /// Disable Repeat of a track.
+    DISABLE_REPEAT_ONE,
+
     /// Enable Loop on.
     ENABLE_REPEAT,
 
@@ -83,11 +89,17 @@ enum class RequestType {
     /// Disable shuffle.
     DISABLE_SHUFFLE,
 
-    /// Mark a track as favorite.(thumbs up)
+    /// Mark a track as favorite.(thumbs up true)
     FAVORITE,
 
-    /// Mark a track as not a favorite.(thumbs down)
+    /// Unmark a track as favorite.(thumbs up false)
+    DESELECT_FAVORITE,
+
+    /// Mark a track as not a favorite.(thumbs down true)
     UNFAVORITE,
+
+    /// Unmark a track as not a favorite.(thumbs down false)
+    DESELECT_UNFAVORITE,
 
     /// Seek to a given offset.
     SEEK,
@@ -275,7 +287,7 @@ struct AdapterPlaybackState {
     /// The playerId of an adapter which is the pre-negotiated business id for a partner music provider.
     std::string playerId;
 
-    /// The state of the default player - IDLE/STOPPED/PLAYING...
+    /// The players current state
     std::string state;
 
     /// The set of states the default player can move into from its current state.
@@ -383,6 +395,11 @@ public:
      */
     ExternalMediaAdapterInterface(const std::string& adapaterName);
 
+    /**
+     * Destructor.
+     */
+    virtual ~ExternalMediaAdapterInterface() = default;
+
     /// Method to initialize a third party library.
     virtual void init() = 0;
 
@@ -437,20 +454,6 @@ public:
      * @param deltaOffset The offset to seek to relative to the current offset.
      */
     virtual void handleAdjustSeek(std::chrono::milliseconds deltaOffset) = 0;
-
-    /**
-     * Method to set volume to a given value.
-     *
-     * @param volume The volume level to be set.
-     */
-    virtual void handleSetVolume(int8_t volume) = 0;
-
-    /**
-     * Method to mute/unmute the speaker.
-     *
-     * @param mute @c true mute the speaker @c false unmute a speaker.
-     */
-    virtual void handleSetMute(bool mute) = 0;
 
     /// Method to fetch the state(session state and playback state) of an adapter.
     virtual AdapterState getState() = 0;

@@ -47,34 +47,32 @@ std::shared_ptr<PlaybackRouter> PlaybackRouter::create(std::shared_ptr<PlaybackH
     return playbackRouter;
 }
 
-void PlaybackRouter::playButtonPressed() {
-    buttonPressed(PlaybackButton::PLAY);
-}
-
-void PlaybackRouter::pauseButtonPressed() {
-    buttonPressed(PlaybackButton::PAUSE);
-}
-
-void PlaybackRouter::nextButtonPressed() {
-    buttonPressed(PlaybackButton::NEXT);
-}
-
-void PlaybackRouter::previousButtonPressed() {
-    buttonPressed(PlaybackButton::PREVIOUS);
-}
-
-void PlaybackRouter::buttonPressed(avsCommon::avs::PlaybackButton button) {
+void PlaybackRouter::buttonPressed(PlaybackButton button) {
     ACSDK_DEBUG9(LX("buttonPressed").d("button", button));
     std::unique_lock<std::mutex> lock(m_handlerMutex);
 
     if (!m_handler) {
-        ACSDK_INFO(LX("buttonPressed").m("called but handler is not set"));
+        ACSDK_ERROR(LX("buttonPressedFailed").m("called but handler is not set"));
         return;
     }
     auto observer = m_handler;
     lock.unlock();
 
     observer->onButtonPressed(button);
+}
+
+void PlaybackRouter::togglePressed(PlaybackToggle toggle, bool action) {
+    ACSDK_DEBUG9(LX("togglePressed").d("toggle", toggle).d("action", action));
+    std::unique_lock<std::mutex> lock(m_handlerMutex);
+
+    if (!m_handler) {
+        ACSDK_ERROR(LX("togglePressedFailed").m("called but handler is not set"));
+        return;
+    }
+    auto observer = m_handler;
+    lock.unlock();
+
+    observer->onTogglePressed(toggle, action);
 }
 
 void PlaybackRouter::setHandler(std::shared_ptr<PlaybackHandlerInterface> handler) {

@@ -88,7 +88,7 @@ namespace logger {
  *     static const std::string TAG = "MyClass";
  *     #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
  *
- * When an event is to be logged, a wrapper macro named @c ACDK_<LEVEL> is invoked with an expression that starts
+ * When an event is to be logged, a wrapper macro named @c ACSDK_<LEVEL> is invoked with an expression that starts
  * with an invocation of the @c LX macro.  The value of <LEVEL> is the name of the @c LogLevel value to associate
  * with the @c LogEntry.  Here is an example of a very simple log line that logs a "somethingHappened" event from
  * the source @c TAG with a severity level of @c INFO.
@@ -181,6 +181,19 @@ public:
      * @param entry Object used to build the text of this log entry.
      */
     void log(Level level, const LogEntry& entry);
+
+    /**
+     * Send a log entry to this Logger while program is exiting.
+     *
+     * Use this method if the code may be run while destroying a static object. This method should not rely in any
+     * other static object.
+     *
+     * @note The user code should still ensure that the Logger object itself is valid.
+     *
+     * @param level The severity Level to associate with this log entry.
+     * @param entry Object used to build the text of this log entry.
+     */
+    void logAtExit(Level level, const LogEntry& entry);
 
     /**
      * Emit a log entry.

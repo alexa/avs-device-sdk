@@ -59,6 +59,24 @@ inline std::ostream& operator<<(std::ostream& stream, ASRProfile profile) {
     return stream;
 }
 
+/**
+ * Convert the @c ASRProfile to an AVS-compliant string.
+ *
+ * @param profile The profile value to convert to a string.
+ * @return String representing the profile value. If the profile given is not valid, an empty string will be returned.
+ */
+inline std::string asrProfileToString(ASRProfile profile) {
+    switch (profile) {
+        case ASRProfile::CLOSE_TALK:
+            return "CLOSE_TALK";
+        case ASRProfile::NEAR_FIELD:
+            return "NEAR_FIELD";
+        case ASRProfile::FAR_FIELD:
+            return "FAR_FIELD";
+    }
+    return "";
+}
+
 }  // namespace aip
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK

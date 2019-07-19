@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -216,7 +216,7 @@ SetStateResult AudioActivityTrackerTest::wakeOnSetState() {
 }
 
 /// Test if there's no activity updates, AudioActivityTracker will return an empty context.
-TEST_F(AudioActivityTrackerTest, noActivityUpdate) {
+TEST_F(AudioActivityTrackerTest, test_noActivityUpdate) {
     EXPECT_CALL(
         *(m_mockContextManager.get()),
         setState(NAMESPACE_AND_NAME_STATE, "", StateRefreshPolicy::SOMETIMES, PROVIDE_STATE_TOKEN_TEST))
@@ -228,7 +228,7 @@ TEST_F(AudioActivityTrackerTest, noActivityUpdate) {
 }
 
 /// Test if there's an empty set of activity updates, AudioActivityTracker will return an empty context.
-TEST_F(AudioActivityTrackerTest, emptyActivityUpdate) {
+TEST_F(AudioActivityTrackerTest, test_emptyActivityUpdate) {
     const std::vector<Channel::State> channels;
     EXPECT_CALL(
         *(m_mockContextManager.get()),
@@ -242,7 +242,7 @@ TEST_F(AudioActivityTrackerTest, emptyActivityUpdate) {
 }
 
 /// Test if there's an activityUpdate for one active channel, context will be reported correctly.
-TEST_F(AudioActivityTrackerTest, oneActiveChannel) {
+TEST_F(AudioActivityTrackerTest, test_oneActiveChannel) {
     std::vector<Channel::State> channels;
     m_dialogChannel->setFocus(FocusState::FOREGROUND);
     channels.push_back(m_dialogChannel->getState());
@@ -253,7 +253,7 @@ TEST_F(AudioActivityTrackerTest, oneActiveChannel) {
  * Test if there's an activityUpdate for one Dialog channel with "SpeechRecognizer" as an interface,
  * AudioActivityTracker will ignore it and report empty context.
  */
-TEST_F(AudioActivityTrackerTest, oneActiveChannelWithAIPAsInterface) {
+TEST_F(AudioActivityTrackerTest, test_oneActiveChannelWithAIPAsInterface) {
     std::vector<Channel::State> channels;
     m_dialogChannel->setInterface(AIP_INTERFACE_NAME);
     m_dialogChannel->setFocus(FocusState::FOREGROUND);
@@ -275,7 +275,7 @@ TEST_F(AudioActivityTrackerTest, oneActiveChannelWithAIPAsInterface) {
  * interface, AudioActivityTracker will ignore the "SpeechRecognizer" interface going active but report
  * "SpeechSynthesizer" with idleTime not equal to zero.
  */
-TEST_F(AudioActivityTrackerTest, oneActiveChannelWithDefaultAndAIPAsInterfaces) {
+TEST_F(AudioActivityTrackerTest, test_oneActiveChannelWithDefaultAndAIPAsInterfaces) {
     std::vector<Channel::State> channels;
     m_dialogChannel->setFocus(FocusState::FOREGROUND);
     channels.push_back(m_dialogChannel->getState());
@@ -283,7 +283,7 @@ TEST_F(AudioActivityTrackerTest, oneActiveChannelWithDefaultAndAIPAsInterfaces) 
 }
 
 /// Test if there's an activityUpdate for two active channels, context will be reported correctly.
-TEST_F(AudioActivityTrackerTest, twoActiveChannels) {
+TEST_F(AudioActivityTrackerTest, test_twoActiveChannels) {
     std::vector<Channel::State> channels;
     m_dialogChannel->setFocus(FocusState::FOREGROUND);
     m_contentChannel->setFocus(FocusState::BACKGROUND);
@@ -293,7 +293,7 @@ TEST_F(AudioActivityTrackerTest, twoActiveChannels) {
 }
 
 /// Test if there's an activityUpdate for one active and one idle channels, context will be reported correctly.
-TEST_F(AudioActivityTrackerTest, oneActiveOneIdleChannels) {
+TEST_F(AudioActivityTrackerTest, test_oneActiveOneIdleChannels) {
     std::vector<Channel::State> channels;
     m_dialogChannel->setFocus(FocusState::FOREGROUND);
     m_contentChannel->setFocus(FocusState::BACKGROUND);

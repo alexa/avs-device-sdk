@@ -16,8 +16,8 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SETTINGSUPDATEDEVENTSENDER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_SETTINGS_INCLUDE_SETTINGS_SETTINGSUPDATEDEVENTSENDER_H_
 
-#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/GlobalSettingsObserverInterface.h>
+#include <CertifiedSender/CertifiedSender.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -30,10 +30,11 @@ class SettingsUpdatedEventSender : public avsCommon::sdkInterfaces::GlobalSettin
 public:
     /**
      * Creates a new @c SettingsUpdatedEventSender instance.
-     * @param messageSender The object to send messages to AVS.
+     * @param certifiedMessageSender The object to send messages to AVS.
+     * @return A @c std::unique_ptr to the new @c SettingsUpdatedEventSender instance.
      */
     static std::unique_ptr<SettingsUpdatedEventSender> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
+        std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender);
 
     void onSettingChanged(const std::unordered_map<std::string, std::string>& mapOfSettings) override;
 
@@ -41,10 +42,10 @@ private:
     /**
      * Constructor for SettingsUpdatedEventSender.
      */
-    SettingsUpdatedEventSender(std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
+    SettingsUpdatedEventSender(std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender);
 
-    /// Object to send messages to AVS.
-    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+    /// The CertifiedSender object.
+    std::shared_ptr<certifiedSender::CertifiedSender> m_certifiedSender;
 };
 }  // namespace settings
 }  // namespace capabilityAgents

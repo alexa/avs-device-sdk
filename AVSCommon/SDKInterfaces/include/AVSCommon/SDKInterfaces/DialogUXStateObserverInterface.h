@@ -18,6 +18,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_DIALOGUXSTATEOBSERVERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_DIALOGUXSTATEOBSERVERINTERFACE_H_
 
+#include <ostream>
 #include <string>
 
 namespace alexaClientSDK {
@@ -34,6 +35,9 @@ public:
 
         /// Alexa is currently listening.
         LISTENING,
+
+        /// Alexa is currently expecting a response from the customer.
+        EXPECTING,
 
         /**
          * A customer request has been completed and no more input is accepted. In this state, Alexa is waiting for a
@@ -81,6 +85,8 @@ inline std::string DialogUXStateObserverInterface::stateToString(DialogUXState s
             return "IDLE";
         case DialogUXState::LISTENING:
             return "LISTENING";
+        case DialogUXState::EXPECTING:
+            return "EXPECTING";
         case DialogUXState::THINKING:
             return "THINKING";
         case DialogUXState::SPEAKING:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -58,15 +58,15 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
     return renderer;
 }
 
-void Renderer::setObserver(std::shared_ptr<RendererObserverInterface> observer) {
-    m_executor.submit([this, observer]() { executeSetObserver(observer); });
-}
-
 void Renderer::start(
+    std::shared_ptr<RendererObserverInterface> observer,
     std::function<std::unique_ptr<std::istream>()> audioFactory,
     const std::vector<std::string>& urls,
     int loopCount,
-    std::chrono::milliseconds loopPause) {
+    std::chrono::milliseconds loopPause,
+    bool startWithPause) {
+    ACSDK_DEBUG5(LX(__func__));
+
     std::unique_ptr<std::istream> defaultAudio = audioFactory();
     if (!defaultAudio) {
         ACSDK_ERROR(LX("startFailed").m("default audio is nullptr"));
@@ -83,11 +83,17 @@ void Renderer::start(
         loopPause = std::chrono::milliseconds{0};
     }
 
-    m_executor.submit(
-        [this, audioFactory, urls, loopCount, loopPause]() { executeStart(audioFactory, urls, loopCount, loopPause); });
+    m_executor.submit([this, observer, audioFactory, urls, loopCount, loopPause, startWithPause]() {
+        executeStart(observer, audioFactory, urls, loopCount, loopPause, startWithPause);
+    });
 }
 
 void Renderer::stop() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock(m_waitMutex);
+    m_isStopping = true;
+    m_waitCondition.notify_all();
+
     m_executor.submit([this]() { executeStop(); });
 }
 
@@ -114,67 +120,174 @@ Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_mediaPlayer{mediaPlayer},
         m_observer{nullptr},
         m_numberOfStreamsRenderedThisLoop{0},
-        m_loopCount{0},
+        m_remainingLoopCount{0},
+        m_directiveLoopCount{0},
         m_loopPause{std::chrono::milliseconds{0}},
-        m_isStopping{false} {
+        m_shouldPauseBeforeRender{false},
+        m_isStopping{false},
+        m_pauseWasInterrupted{false},
+        m_isStartPending{false} {
     resetSourceId();
 }
 
-void Renderer::executeSetObserver(std::shared_ptr<RendererObserverInterface> observer) {
-    ACSDK_DEBUG1(LX("executeSetObserver"));
-    m_observer = observer;
+bool Renderer::shouldPlayDefault() {
+    ACSDK_DEBUG9(LX("shouldPlayDefault"));
+    return m_urls.empty();
 }
 
-void Renderer::executeStart(
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
-    const std::vector<std::string>& urls,
-    int loopCount,
-    std::chrono::milliseconds loopPause) {
-    ACSDK_DEBUG1(LX("executeStart")
-                     .d("urls.size", urls.size())
-                     .d("loopCount", loopCount)
-                     .d("loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(loopPause).count()));
-    m_urls = urls;
-    m_loopCount = loopCount;
-    m_loopPause = loopPause;
-    m_defaultAudio = audioFactory();
+bool Renderer::shouldMediaPlayerRepeat() {
+    ACSDK_DEBUG9(LX("shouldMediaPlayerRepeat"));
+    return m_urls.empty() && (0 == m_directiveLoopCount) && (0 == m_loopPause.count());
+}
 
-    ACSDK_DEBUG9(
-        LX("executeStart")
-            .d("m_urls.size", m_urls.size())
-            .d("m_loopCount", m_loopCount)
-            .d("m_loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(m_loopPause).count()));
-    m_isStopping = false;
+bool Renderer::isLastSource() {
+    ACSDK_DEBUG9(LX("isLastSource"));
+    return isLastSourceInLoop() && m_remainingLoopCount <= 0;
+}
 
-    m_numberOfStreamsRenderedThisLoop = 0;
-    if (urls.empty()) {
-        ACSDK_DEBUG5(LX("executeStart").m("setSource with default alert audio stream"));
-        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudio, m_loopCount <= 0);
-    } else {
-        ACSDK_DEBUG5(LX("executeStart").d("setSource", m_urls[m_numberOfStreamsRenderedThisLoop]));
-        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_numberOfStreamsRenderedThisLoop]);
+bool Renderer::isLastSourceInLoop() {
+    ACSDK_DEBUG9(LX("isLastSourceInLoop"));
+    return m_numberOfStreamsRenderedThisLoop >= static_cast<int>(m_urls.size());
+}
+
+bool Renderer::shouldRenderNext() {
+    ACSDK_DEBUG9(LX("shouldRenderNext"));
+
+    if (shouldMediaPlayerRepeat()) {
+        return false;
     }
 
-    ACSDK_INFO(LX("executeStart").d("m_currentSourceId", m_currentSourceId));
+    if (m_directiveLoopCount > 0) {
+        return (m_remainingLoopCount > 0);
+    }
 
+    if (shouldPlayDefault() && (0 != m_loopPause.count())) {
+        return true;
+    }
+    return false;
+}
+
+bool Renderer::shouldPause() {
+    ACSDK_DEBUG9(LX("shouldPause"));
+    if (0 == m_loopPause.count()) {
+        return false;
+    }
+
+    if (m_directiveLoopCount == 0) {
+        return true;
+    }
+
+    if (m_remainingLoopCount > 0) {
+        return true;
+    }
+
+    return false;
+}
+
+void Renderer::pause(std::chrono::milliseconds duration) {
+    ACSDK_DEBUG9(LX(__func__).d("duration", duration.count()));
+
+    if (duration.count() <= 0) {
+        ACSDK_WARN(LX(__func__).m("duration is a non-positive value.  Returning."));
+        return;
+    }
+
+    std::unique_lock<std::mutex> lock(m_waitMutex);
+    // Wait for stop() or m_loopPause to elapse.
+    m_pauseWasInterrupted = m_waitCondition.wait_for(lock, duration, [this]() { return m_isStopping; });
+}
+
+void Renderer::play() {
+    ACSDK_DEBUG9(LX("play"));
+
+    m_isStartPending = false;
+
+    if (shouldPlayDefault()) {
+        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudioFactory(), shouldMediaPlayerRepeat());
+    } else {
+        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_numberOfStreamsRenderedThisLoop]);
+    }
     if (!isSourceIdOk(m_currentSourceId)) {
         ACSDK_ERROR(
             LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m("SourceId response was invalid."));
         return;
     }
 
-    if (!m_mediaPlayer->play(m_currentSourceId)) {
-        ACSDK_ERROR(
-            LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m("MediaPlayer play request failed."));
-        resetSourceId();
+    if (m_shouldPauseBeforeRender) {
+        ACSDK_DEBUG5(LX(__func__).m("Performing initial pause before beginning loop rendering."));
+        m_shouldPauseBeforeRender = false;
+        pause(m_loopPause);
     }
+
+    if (0 == m_numberOfStreamsRenderedThisLoop) {
+        m_loopStartTime = std::chrono::steady_clock::now();
+    }
+
+    if (!m_mediaPlayer->play(m_currentSourceId)) {
+        const std::string errorMessage{"MediaPlayer play request failed."};
+        ACSDK_ERROR(LX("executeStartFailed").d("m_currentSourceId", m_currentSourceId).m(errorMessage));
+        handlePlaybackError(errorMessage);
+    }
+}
+
+void Renderer::executeStart(
+    std::shared_ptr<RendererObserverInterface> observer,
+    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    const std::vector<std::string>& urls,
+    int loopCount,
+    std::chrono::milliseconds loopPause,
+    bool startWithPause) {
+    ACSDK_DEBUG1(LX(__func__)
+                     .d("urls.size", urls.size())
+                     .d("loopCount", loopCount)
+                     .d("loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(loopPause).count())
+                     .d("startWithPause", startWithPause));
+
+    m_observer = observer;
+
+    m_urls = urls;
+    m_remainingLoopCount = loopCount;
+    m_directiveLoopCount = loopCount;
+    m_loopPause = loopPause;
+    m_shouldPauseBeforeRender = startWithPause;
+    m_defaultAudioFactory = audioFactory;
+
+    m_numberOfStreamsRenderedThisLoop = 0;
+
+    ACSDK_DEBUG9(
+        LX("executeStart")
+            .d("m_urls.size", m_urls.size())
+            .d("m_remainingLoopCount", m_remainingLoopCount)
+            .d("m_loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(m_loopPause).count()));
+
+    std::unique_lock<std::mutex> lock(m_waitMutex);
+    if (m_isStopping) {
+        lock.unlock();
+        ACSDK_DEBUG5(LX(__func__).m("Being stopped. Will start playing once fully stopped."));
+        m_isStartPending = true;
+        return;
+    }
+    lock.unlock();
+
+    play();
 }
 
 void Renderer::executeStop() {
     ACSDK_DEBUG1(LX("executeStop"));
-    if (m_mediaPlayer->stop(m_currentSourceId)) {
-        m_isStopping = true;
-    } else {
+
+    m_isStartPending = false;
+
+    if (MediaPlayerInterface::ERROR == m_currentSourceId) {
+        ACSDK_DEBUG5(LX(__func__).m("Nothing to stop, no media playing."));
+        {
+            std::lock_guard<std::mutex> lock(m_waitMutex);
+            m_isStopping = false;
+            m_observer = nullptr;
+        }
+        return;
+    }
+
+    if (!m_mediaPlayer->stop(m_currentSourceId)) {
         std::string errorMessage = "mediaPlayer stop request failed.";
         ACSDK_ERROR(LX("executeStopFailed").d("SourceId", m_currentSourceId).m(errorMessage));
         notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
@@ -202,9 +315,20 @@ void Renderer::executeOnPlaybackStopped(SourceId sourceId) {
         return;
     }
 
-    resetSourceId();
+    {
+        std::lock_guard<std::mutex> lock(m_waitMutex);
+        m_isStopping = false;
+    }
+
     notifyObserver(RendererObserverInterface::State::STOPPED);
-    m_observer = nullptr;
+
+    if (m_isStartPending) {
+        ACSDK_DEBUG5(LX(__func__).m("Resuming pending play."));
+        play();
+    } else {
+        m_observer = nullptr;
+        resetSourceId();
+    }
 }
 
 void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
@@ -219,13 +343,21 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
     RendererObserverInterface::State finalState = RendererObserverInterface::State::STOPPED;
 
     ++m_numberOfStreamsRenderedThisLoop;
+    auto localIsStopping = false;
+    {
+        std::lock_guard<std::mutex> lock(m_waitMutex);
+        localIsStopping = m_isStopping;
+        m_isStopping = false;
+    }
 
-    if (!m_isStopping && 0 < m_loopCount) {
+    if (!localIsStopping && shouldRenderNext()) {
         if (renderNextAudioAsset()) {
             return;
         }
 
-        finalState = RendererObserverInterface::State::COMPLETED;
+        if (!m_pauseWasInterrupted) {
+            finalState = RendererObserverInterface::State::COMPLETED;
+        }
     }
 
     resetSourceId();
@@ -234,57 +366,40 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
 }
 
 bool Renderer::renderNextAudioAsset() {
-    bool shouldRenderAnotherAudioAsset = true;
-
     // If we have completed a loop, then update our counters, and determine what to do next.  If the URLs aren't
     // reachable, m_urls will be empty.
-    if (m_numberOfStreamsRenderedThisLoop >= static_cast<int>(m_urls.size())) {
-        m_loopCount--;
+    if (isLastSourceInLoop()) {
+        m_remainingLoopCount--;
         m_numberOfStreamsRenderedThisLoop = 0;
         ACSDK_DEBUG5(LX("renderNextAudioAsset")
-                         .d("loopCount", m_loopCount)
+                         .d("remainingLoopCount", m_remainingLoopCount)
                          .d("nextAudioIndex", m_numberOfStreamsRenderedThisLoop)
                          .m("Preparing the audio loop counters."));
 
-        if (m_loopCount <= 0) {
-            shouldRenderAnotherAudioAsset = false;
-        } else if (m_loopPause.count() > 0) {
-            std::this_thread::sleep_for(m_loopPause);
+        if (shouldPause()) {
+            auto loopRenderDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - m_loopStartTime);
+            // let's ensure we only pause for the remainder of the loopPause duration.
+            auto pauseDuration = m_loopPause - loopRenderDuration;
+
+            // only pause if there is a positive remainder duration.
+            if (pauseDuration.count() > 0) {
+                pause(pauseDuration);
+                if (m_pauseWasInterrupted) {
+                    ACSDK_DEBUG5(LX(__func__).m("Pause has been interrupted, not proceeding with the loop."));
+                    return false;
+                }
+            }
         }
     }
 
-    // If we should continue to the next url, let's kick it off.  If there aren't any urls, use the default audio.
-    if (shouldRenderAnotherAudioAsset) {
-        ACSDK_DEBUG9(LX("renderNextAudioAsset").d("setSource", m_numberOfStreamsRenderedThisLoop));
-
-        if (m_urls.empty()) {
-            m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudio, false);
-        } else {
-            std::string url = m_urls[m_numberOfStreamsRenderedThisLoop];
-            m_currentSourceId = m_mediaPlayer->setSource(url);
-        }
-
-        if (!isSourceIdOk(m_currentSourceId)) {
-            std::string errorMessage = "SourceId response from setSource was invalid.";
-            ACSDK_ERROR(LX("renderNextAudioAsset").d("SourceId", m_currentSourceId).m(errorMessage));
-            notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
-            return false;
-        }
-
-        if (!m_mediaPlayer->play(m_currentSourceId)) {
-            std::string errorMessage = "MediaPlayer was unable to play next media item.";
-            ACSDK_ERROR(LX("renderNextUrl").d("SourceId", m_currentSourceId).m(errorMessage));
-            notifyObserver(RendererObserverInterface::State::ERROR, errorMessage);
-            return false;
-        }
-
-        ACSDK_DEBUG9(LX("renderNextAudioAsset").m("Next source started successfully"));
-
-    } else {
-        ACSDK_DEBUG9(LX("renderNextAudioAsset").m("No more sounds to render."));
+    if (!shouldRenderNext()) {
+        return false;
     }
 
-    return shouldRenderAnotherAudioAsset;
+    play();
+
+    return true;
 }
 
 void Renderer::executeOnPlaybackError(
@@ -299,12 +414,9 @@ void Renderer::executeOnPlaybackError(
         return;
     }
 
-    resetSourceId();
-
     // This will cause a retry (through Renderer::start) using the same code paths as before, except in this case the
     // urls to render will be empty.
-    notifyObserver(RendererObserverInterface::State::ERROR, error);
-    m_observer = nullptr;
+    handlePlaybackError(error);
 }
 
 void Renderer::notifyObserver(RendererObserverInterface::State state, const std::string& message) {
@@ -314,7 +426,20 @@ void Renderer::notifyObserver(RendererObserverInterface::State state, const std:
 }
 
 void Renderer::resetSourceId() {
+    ACSDK_DEBUG5(LX(__func__));
     m_currentSourceId = MediaPlayerInterface::ERROR;
+}
+
+void Renderer::handlePlaybackError(const std::string& error) {
+    std::unique_lock<std::mutex> lock(m_waitMutex);
+    m_isStopping = false;
+    lock.unlock();
+
+    m_isStartPending = false;
+    resetSourceId();
+
+    notifyObserver(RendererObserverInterface::State::ERROR, error);
+    m_observer = nullptr;
 }
 
 }  // namespace renderer

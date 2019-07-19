@@ -1,3 +1,5 @@
+add_subdirectory("Common")
+
 set(INCLUDE_PATH
     "${AVSCommon_INCLUDE_DIRS}"
     "${CertifiedSender_INCLUDE_DIRS}"

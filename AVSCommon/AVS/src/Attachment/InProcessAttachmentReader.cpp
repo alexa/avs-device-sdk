@@ -37,8 +37,10 @@ std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
     SDSTypeReader::Policy policy,
     std::shared_ptr<SDSType> sds,
     SDSTypeIndex offset,
-    SDSTypeReader::Reference reference) {
-    auto reader = std::unique_ptr<InProcessAttachmentReader>(new InProcessAttachmentReader(policy, sds));
+    SDSTypeReader::Reference reference,
+    bool resetOnOverrun) {
+    auto reader =
+        std::unique_ptr<InProcessAttachmentReader>(new InProcessAttachmentReader(policy, sds, resetOnOverrun));
 
     if (!reader->m_reader) {
         ACSDK_ERROR(LX("createFailed").d("reason", "object not fully created"));
@@ -53,7 +55,11 @@ std::unique_ptr<InProcessAttachmentReader> InProcessAttachmentReader::create(
     return reader;
 }
 
-InProcessAttachmentReader::InProcessAttachmentReader(SDSTypeReader::Policy policy, std::shared_ptr<SDSType> sds) {
+InProcessAttachmentReader::InProcessAttachmentReader(
+    SDSTypeReader::Policy policy,
+    std::shared_ptr<SDSType> sds,
+    bool resetOnOverrun) :
+        m_resetOnOverrun{resetOnOverrun} {
     if (!sds) {
         ACSDK_ERROR(LX("ConstructorFailed").d("reason", "SDS parameter is nullptr"));
         return;
@@ -121,11 +127,20 @@ std::size_t InProcessAttachmentReader::read(
 
     if (readResult < 0) {
         switch (readResult) {
-            // This means the writer has overwritten the reader.  An attachment cannot recover from this.
+            // This means the writer has overwritten the reader.
             case SDSType::Reader::Error::OVERRUN:
-                *readStatus = ReadStatus::ERROR_OVERRUN;
-                ACSDK_ERROR(LX("readFailed").d("reason", "memory overrun by writer"));
-                close();
+                if (m_resetOnOverrun) {
+                    // An attachment's read position will be reset to current writer position.
+                    // Subsequent reads will deliver data from current writer position onward.
+                    *readStatus = ReadStatus::OK_OVERRUN_RESET;
+                    ACSDK_DEBUG5(LX("readFailed").d("reason", "memory overrun by writer"));
+                    m_reader->seek(0, SDSTypeReader::Reference::BEFORE_WRITER);
+                } else {
+                    // An attachment cannot recover from this.
+                    *readStatus = ReadStatus::ERROR_OVERRUN;
+                    ACSDK_ERROR(LX("readFailed").d("reason", "memory overrun by writer"));
+                    close();
+                }
                 break;
 
             // This means there is still an active writer, but no data.  A read would block if the policy was blocking.
@@ -147,7 +162,7 @@ std::size_t InProcessAttachmentReader::read(
 
     } else if (0 == readResult) {
         *readStatus = ReadStatus::CLOSED;
-        ACSDK_INFO(LX("readFailed").d("reason", "SDS is closed"));
+        ACSDK_DEBUG0(LX("readFailed").d("reason", "SDS is closed"));
     } else {
         bytesRead = static_cast<size_t>(readResult) * wordSize;
     }

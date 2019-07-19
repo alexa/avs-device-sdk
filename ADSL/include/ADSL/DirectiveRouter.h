@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEROUTER_H_
 #define ALEXA_CLIENT_SDK_ADSL_INCLUDE_ADSL_DIRECTIVEROUTER_H_
 
+#include <map>
 #include <set>
 #include <unordered_map>
 
@@ -64,15 +65,6 @@ public:
     bool handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
-     * Check if the directive handler's blocking policy is HANDLE_IMMEDIATELY for this directive, if so invoke @c
-     * handleDirectiveImmediately() on the handler registered for the given @c AVSDirective.
-     *
-     * @param directive The directive to be handled immediately.
-     * @return Whether or not the handler was invoked.
-     */
-    bool handleDirectiveWithPolicyHandleImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
-
-    /**
      * Invoke @c preHandleDirective() on the handler registered for the given @c AVSDirective.
      *
      * @param directive The directive to be preHandled.
@@ -88,14 +80,10 @@ public:
      * Invoke @c handleDirective() on the handler registered for the given @c AVSDirective.
      *
      * @param directive The directive to be handled.
-     * @param[out] policyOut If this method returns @c true, @c policyOut is set to the @c BlockingPolicy value that
-     * was configured when @c handleDirective() was called.
      * @return @c true if the the registered handler returned @c true.  @c false if there was no registered handler
      * or the registered handler returned @c false (indicating that the directive was not recognized.
      */
-    bool handleDirective(
-        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
-        avsCommon::avs::BlockingPolicy* policyOut);
+    bool handleDirective(const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
 
     /**
      * Invoke cancelDirective() on the handler registered for the given @c AVSDirective.
@@ -104,6 +92,14 @@ public:
      * @return Whether or not the handler was invoked.
      */
     bool cancelDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+
+    /**
+     * Get the policy associated with the given directive.
+     *
+     * @param directive The directive for which the policy is required.
+     * @return The corresponding @c BlockingPolicy value for the directive.
+     */
+    avsCommon::avs::BlockingPolicy getPolicy(const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
 
 private:
     void doShutdown() override;
@@ -150,13 +146,24 @@ private:
     };
 
     /**
-     * Look up the @c HandlerAndPolicy value for the specified @c AVSDirective.
+     * Look up the configured @c HandlerAndPolicy value for the specified @c AVSDirective.
      * @note The calling thread must have already acquired @c m_mutex.
      *
      * @param directive The directive to look up a value for.
      * @return The corresponding @c HandlerAndPolicy value for the specified directive.
      */
-    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(std::shared_ptr<avsCommon::avs::AVSDirective> directive);
+    avsCommon::avs::HandlerAndPolicy getdHandlerAndPolicyLocked(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
+
+    /**
+     * Get the @c DirectiveHandler for this directive.
+     * @note The calling thread must have already acquired @c m_mutex.
+     *
+     * @param directive The @c AVSDirective for which we're looking for handler.
+     * @return The directive handler for success. @c nullptr in failure.
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> getHandlerLocked(
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive);
 
     /**
      * Increment the reference count for the specified handler.

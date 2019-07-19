@@ -36,6 +36,9 @@ using namespace rapidjson;
 /// String to identify log entries originating from this file.
 static const std::string TAG("UserInactivityMonitor");
 
+/// Number of seconds in one hour.
+static const int SECONDS_IN_HOUR = 3600;
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -93,45 +96,62 @@ UserInactivityMonitor::UserInactivityMonitor(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     const std::chrono::milliseconds& sendPeriod) :
-        CapabilityAgent(USER_INACTIVITY_MONITOR_NAMESPACE, exceptionEncounteredSender),
+        CapabilityAgent{USER_INACTIVITY_MONITOR_NAMESPACE, exceptionEncounteredSender},
+        RequiresShutdown{"UserInactivityMonitor"},
         m_messageSender{messageSender},
-        m_lastTimeActive{std::chrono::steady_clock::now()} {
-    m_eventTimer.start(
-        sendPeriod,
-        Timer::PeriodType::ABSOLUTE,
-        Timer::FOREVER,
-        std::bind(&UserInactivityMonitor::sendInactivityReport, this));
+        m_lastTimeActive{std::chrono::steady_clock::now()},
+        m_sendPeriod{sendPeriod} {
+    startTimer();
 }
 
 void UserInactivityMonitor::sendInactivityReport() {
     std::chrono::time_point<std::chrono::steady_clock> lastTimeActive;
     m_recentUpdateBlocked = false;
     {
-        std::lock_guard<std::mutex> timeLock(m_timeMutex);
+        std::lock_guard<std::mutex> timeLock(m_mutex);
         lastTimeActive = m_lastTimeActive;
     }
     if (m_recentUpdateBlocked) {
-        std::lock_guard<std::mutex> timeLock(m_timeMutex);
+        std::lock_guard<std::mutex> timeLock(m_mutex);
         m_lastTimeActive = std::chrono::steady_clock::now();
         lastTimeActive = m_lastTimeActive;
-    }
 
+        // Recent update was blocked means user was active, so we don't need to send an event.
+        return;
+    }
     Document inactivityPayload(kObjectType);
     SizeType payloadKeySize = INACTIVITY_EVENT_PAYLOAD_KEY.length();
     const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
-    auto inactiveTime =
+
+    // AVS requires inactivity time to be a multiple of 3600.
+    auto inactiveSeconds =
         std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActive);
-    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveTime.count()));
+
+    // Rounded hours.
+    auto inactiveHours = ((inactiveSeconds.count() + SECONDS_IN_HOUR / 2) / SECONDS_IN_HOUR);
+
+    Pointer(payloadKey, 1).Set(inactivityPayload, static_cast<int64_t>(inactiveHours * SECONDS_IN_HOUR));
+
     std::string inactivityPayloadString;
     jsonUtils::convertToValue(inactivityPayload, &inactivityPayloadString);
 
     auto inactivityEvent = buildJsonEventString(INACTIVITY_EVENT_NAME, "", inactivityPayloadString);
     m_messageSender->sendMessage(std::make_shared<MessageRequest>(inactivityEvent.second));
+
+    notifyObservers();
+}
+
+void UserInactivityMonitor::startTimer() {
+    m_eventTimer.start(
+        m_sendPeriod,
+        Timer::PeriodType::ABSOLUTE,
+        Timer::FOREVER,
+        std::bind(&UserInactivityMonitor::sendInactivityReport, this));
 }
 
 DirectiveHandlerConfiguration UserInactivityMonitor::getConfiguration() const {
-    return DirectiveHandlerConfiguration{
-        {NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME}, BlockingPolicy::NON_BLOCKING}};
+    return DirectiveHandlerConfiguration{{NamespaceAndName{USER_INACTIVITY_MONITOR_NAMESPACE, RESET_DIRECTIVE_NAME},
+                                          BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
 }
 
 void UserInactivityMonitor::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
@@ -156,12 +176,60 @@ void UserInactivityMonitor::cancelDirective(std::shared_ptr<CapabilityAgent::Dir
 }
 
 void UserInactivityMonitor::onUserActive() {
-    std::unique_lock<std::mutex> timeLock(m_timeMutex, std::defer_lock);
+    ACSDK_DEBUG5(LX(__func__));
+    std::unique_lock<std::mutex> timeLock(m_mutex, std::defer_lock);
+
+    m_eventTimer.stop();
+    startTimer();
+
     if (timeLock.try_lock()) {
         m_lastTimeActive = std::chrono::steady_clock::now();
     } else {
         m_recentUpdateBlocked = true;
     }
+}
+
+std::chrono::seconds UserInactivityMonitor::timeSinceUserActivity() {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    auto lastTimeActiveCopy = m_lastTimeActive;
+    lock.unlock();
+
+    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - lastTimeActiveCopy);
+}
+
+void UserInactivityMonitor::addObserver(std::shared_ptr<UserInactivityMonitorObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_inactivityObservers.insert(observer);
+}
+
+void UserInactivityMonitor::removeObserver(std::shared_ptr<UserInactivityMonitorObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_inactivityObservers.erase(observer);
+}
+
+void UserInactivityMonitor::notifyObservers() {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    auto observers = m_inactivityObservers;
+    lock.unlock();
+
+    for (auto observer : observers) {
+        observer->onUserInactivityReportSent();
+    }
+}
+
+void UserInactivityMonitor::doShutdown() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    m_inactivityObservers.clear();
 }
 
 }  // namespace system

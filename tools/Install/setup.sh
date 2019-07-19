@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -15,11 +15,10 @@
 # permissions and limitations under the License.
 #
 
-#
-# Modified by XMOS Ltd
-# https://github.com/xmos/avs-device-sdk
-#
+set -o errexit  # Exit the script if any statement fails.
+set -o nounset  # Exit the script if any uninitialized variable is used.
 
+CLONE_URL=${CLONE_URL:- 'git://github.com/alexa/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
@@ -47,27 +46,134 @@ DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 CONFIG_DB_PATH="$DB_PATH"
 UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
 UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
-CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
-START_AUTH_SCRIPT="$INSTALL_BASE/avs_auth.sh"
-TEST_SCRIPT="$INSTALL_BASE/avs_test.sh"
+INPUT_CONFIG_FILE="$SOURCE_PATH/avs-device-sdk/Integration/AlexaClientSDKConfig.json"
+OUTPUT_CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
+TEMP_CONFIG_FILE="$BUILD_PATH/Integration/tmp_AlexaClientSDKConfig.json"
+TEST_SCRIPT="$INSTALL_BASE/test.sh"
 LIB_SUFFIX="a"
+ANDROID_CONFIG_FILE=""
+
+# Default device serial number if nothing is specified
+DEVICE_SERIAL_NUMBER="123456"
+
+GSTREAMER_AUDIO_SINK="autoaudiosink"
+
+build_port_audio() {
+  # build port audio
+  echo
+  echo "==============> BUILDING PORT AUDIO =============="
+  echo
+  pushd $THIRD_PARTY_PATH
+  wget -c $PORT_AUDIO_DOWNLOAD_URL
+  tar zxf $PORT_AUDIO_FILE
+
+  pushd portaudio
+  ./configure --without-jack
+  make
+  popd
+  popd
+}
 
 PI_HAT_CTRL_PATH="$THIRD_PARTY_PATH/pi_hat_ctrl"
 
 SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 ALIASES=$HOME/.bash_aliases
 
-unset CLIENT_ID
-unset CLIENT_SECRET
-unset PRODUCT_ID
-unset DEVICE_SERIAL_NUMBER
-unset LOCALE
+
+get_platform() {
+  uname_str=`uname -a`
+  result=""
+
+  if [[ "$uname_str" ==  "Linux "* ]] && [[ -f /etc/os-release ]]
+  then
+    sys_id=`cat /etc/os-release | grep "^ID="`
+    if [[ "$sys_id" == "ID=raspbian" ]]
+    then
+      echo "Raspberry pi"
+    fi
+  elif [[ "$uname_str" ==  "MINGW64"* ]]
+  then
+    echo "Windows mingw64"
+  fi
+}
+
+show_help() {
+  echo  'Usage: setup.sh <config-json-file> [OPTIONS]'
+  echo  'The <config-json-file> can be downloaded from developer portal and must contain the following:'
+  echo  '   "clientId": "<OAuth client ID>"'
+  echo  '   "productId": "<your product name for device>"'
+  echo  ''
+  echo  'Optional parameters'
+  echo  '  -s <serial-number>  If nothing is provided, the default device serial number is 123456'
+  echo  '  -a <file-name>      The file that contains Android installation configurations (e.g. androidConfig.txt)'
+  echo  '  -h                  Display this help and exit'
+}
+
+if [[ $# -lt 1 ]]; then
+    show_help
+    exit 1
+fi
+
+CONFIG_JSON_FILE=$1
+if [ ! -f "$CONFIG_JSON_FILE" ]; then
+    echo "Config json file not found!"
+    show_help
+    exit 1
+fi
+shift 1
+
+OPTIONS=s:a:h
+while getopts "$OPTIONS" opt ; do
+    case $opt in
+        s )
+            DEVICE_SERIAL_NUMBER="$OPTARG"
+            ;;
+        a )
+            ANDROID_CONFIG_FILE="$OPTARG"
+            if [ ! -f "$ANDROID_CONFIG_FILE" ]; then
+                echo "Android config file is not found!"
+                exit 1
+            fi
+            source $ANDROID_CONFIG_FILE
+            ;;
+        h )
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]; then
+   echo 'Device serial number is invalid!'
+   exit 1
+fi
+
+# The target platform for the build.
+PLATFORM=${PLATFORM:-$(get_platform)}
+
+if [ "$PLATFORM" == "Raspberry pi" ]
+then
+  source pi.sh
+elif [ "$PLATFORM" == "Windows mingw64" ]
+then
+  source mingw.sh
+  else
+    PLATFORM_LOWER=$(echo "${PLATFORM}" | tr '[:upper:]' '[:lower:]')
+    if [ "$PLATFORM_LOWER" == "android" ]
+    then
+      PLATFORM="Android"
+      source android.sh
+    else
+      echo "The installation script doesn't support current system. (System: $(uname -a))"
+      exit 1
+    fi
+fi
 
 echo "################################################################################"
 echo "################################################################################"
 echo ""
 echo ""
-echo "AVS Device SDK Raspberry Pi Script - Terms and Agreements"
+echo "AVS Device SDK $PLATFORM Script - Terms and Agreements"
 echo ""
 echo ""
 echo "The AVS Device SDK is dependent on several third-party libraries, environments, "
@@ -225,50 +331,28 @@ set -e
 if [ ! -d "$BUILD_PATH" ]
 then
 
-    # Make sure required packages are installed
-    echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
-    echo
+  # Make sure required packages are installed
+  echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
+  echo
 
     sudo apt-get update
     sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
     pip install flask commentjson
 
-    # create / paths
-    echo
-    echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
-    echo
+  # create / paths
+  echo
+  echo "==============> CREATING PATHS AND GETTING SOUND FILES ============"
+  echo
 
-    mkdir -p $SOURCE_PATH
-    mkdir -p $THIRD_PARTY_PATH
-    mkdir -p $BUILD_PATH
-    mkdir -p $SOUNDS_PATH
-    mkdir -p $DB_PATH
+  mkdir -p $SOURCE_PATH
+  mkdir -p $THIRD_PARTY_PATH
+  mkdir -p $SOUNDS_PATH
+  mkdir -p $DB_PATH
 
-    # build port audio
-    echo
-    echo "==============> BUILDING PORT AUDIO =============="
-    echo
+  run_os_specifics
 
-    cd $THIRD_PARTY_PATH
-    wget -c $PORT_AUDIO_DOWNLOAD_URL
-    tar zxf $PORT_AUDIO_FILE
-
-    cd portaudio
-    ./configure --without-jack
-    make
-
-    #get sensory and build
-    echo
-    echo "==============> CLONING AND BUILDING SENSORY =============="
-    echo
-
-    cd $THIRD_PARTY_PATH
-    git clone git://github.com/Sensory/alexa-rpi.git
-    pushd alexa-rpi > /dev/null
-    git checkout $SENSORY_MODEL_HASH -- models/spot-alexa-rpi-31000.snsr
-    popd > /dev/null
-    bash ./alexa-rpi/bin/license.sh
-
+  if [ ! -d "${SOURCE_PATH}/avs-device-sdk" ]
+  then
     #get sdk
     echo
     echo "==============> CLONING SDK =============="
@@ -289,10 +373,10 @@ then
         popd > /dev/null
     fi
 
-    # make the SDK
-    echo
-    echo "==============> BUILDING SDK =============="
-    echo
+  # make the SDK
+  echo
+  echo "==============> BUILDING SDK =============="
+  echo
 
     cd $BUILD_PATH
     if [ $# -ge 1 ] && [ $1 = "xvf3510" ] ; then
@@ -316,49 +400,37 @@ then
         -DCMAKE_BUILD_TYPE=DEBUG
     fi
 
-    cd $BUILD_PATH
-    make SampleApp -j2
+  cd $BUILD_PATH
+  make SampleApp -j2
 
 else
-    cd $BUILD_PATH
-    make SampleApp -j2
+  cd $BUILD_PATH
+  make SampleApp -j2
 fi
 
 echo
 echo "==============> SAVING CONFIGURATION FILE =============="
 echo
 
-cat << EOF > "$CONFIG_FILE"
-{
-    "alertsCapabilityAgent":{
-        "databaseFilePath":"$CONFIG_DB_PATH/alerts.db"
+# Create configuration file with audioSink configuration at the beginning of the file
+cat << EOF > "$OUTPUT_CONFIG_FILE"
+ {
+    "gstreamerMediaPlayer":{
+        "audioSink":"$GSTREAMER_AUDIO_SINK"
     },
-    "certifiedSender":{
-        "databaseFilePath":"$CONFIG_DB_PATH/certifiedSender.db"
-    },
-    "settings":{
-        "databaseFilePath":"$CONFIG_DB_PATH/settings.db",
-        "defaultAVSClientSettings":{
-            "locale":"$LOCALE"
-        }
-    },
-    "notifications":{
-        "databaseFilePath":"$CONFIG_DB_PATH/notifications.db"
-    },
-    "authDelegate":{
-      "clientId":"$CLIENT_ID",
-        "clientSecret":"$CLIENT_SECRET",
-        "deviceSerialNumber":"$DEVICE_SERIAL_NUMBER",
-        "refreshToken":"",
-        "productId":"$PRODUCT_ID"
-    },
-    "sampleApp":{
-        "portAudio":{
-            "suggestedLatency": 0.150
-        }
-    }
-}
 EOF
+
+cd $INSTALL_BASE
+bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE
+
+# Delete first line from temp file to remove opening bracket
+sed -i -e "1d" $TEMP_CONFIG_FILE
+
+# Append temp file to configuration file
+cat $TEMP_CONFIG_FILE >> $OUTPUT_CONFIG_FILE
+
+# Delete temp file
+rm $TEMP_CONFIG_FILE
 
 echo
 echo "==============> FINAL CONFIGURATION  =============="

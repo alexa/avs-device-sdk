@@ -36,7 +36,7 @@ public:
     enum class PlaylistType {
         M3U,
 
-        M3U8,
+        EXT_M3U,
 
         PLS
     };

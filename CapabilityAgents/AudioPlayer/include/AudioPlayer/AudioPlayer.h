@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/PlayerActivity.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
@@ -36,6 +38,7 @@
 #include "AudioItem.h"
 #include "ClearBehavior.h"
 #include "PlayBehavior.h"
+#include "ProgressTimer.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -50,7 +53,9 @@ namespace audioPlayer {
  */
 class AudioPlayer
         : public avsCommon::avs::CapabilityAgent
+        , public ProgressTimer::ContextInterface
         , public avsCommon::sdkInterfaces::AudioPlayerInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<AudioPlayer> {
@@ -108,11 +113,23 @@ public:
     void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags) override;
     /// @}
 
+    /// @name ProgressTimer::ContextInterface methods
+    /// @{
+    void onProgressReportDelayElapsed() override;
+    void onProgressReportIntervalElapsed() override;
+    void requestProgress() override;
+    /// @}
+
     /// @name AudioPlayerInterface Functions
     /// @{
     void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     std::chrono::milliseconds getAudioItemOffset() override;
+    /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
 private:
@@ -230,8 +247,19 @@ private:
     /// Performs necessary cleanup when playback has finished/stopped.
     void handlePlaybackCompleted();
 
-    /// Cancels the timers when playback has stopped/finished.
-    void cancelTimers();
+    /**
+     * Call an @c m_progressTimer method, keeping track of how many calls to m_progressTimer are in progress.
+     *
+     * @param call A function that performs the actual call.
+     */
+    void callProgressTimer(std::function<void()> call);
+
+    /**
+     * Record whether @c m_progressTimer is between @c start() and @c stop().
+     *
+     * @param Whether Whether @c m_progressTimer is between @c start() and @c stop().
+     */
+    void setIsInProgress(bool isInProgress);
 
     /// @copydoc MediaPlayerObserverInterface::onPlaybackError()
     void executeOnPlaybackError(SourceId id, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
@@ -259,7 +287,7 @@ private:
      */
     void executePlay(PlayBehavior playBehavior, const AudioItem& audioItem);
 
-    /// This fuction plays the next @c AudioItem in the queue.
+    /// This function plays the next @c AudioItem in the queue.
     void playNextItem();
 
     /**
@@ -300,12 +328,6 @@ private:
 
     /// Send a @c PlaybackNearlyFinished event.
     void sendPlaybackNearlyFinishedEvent();
-
-    /// Send a @c ProgressReportDelayElapsed event.
-    void sendProgressReportDelayElapsedEvent();
-
-    /// Send a @c ProgressReportIntervalElapsed event.
-    void sendProgressReportIntervalElapsedEvent();
 
     /// Send a @c PlaybackStutterStarted event.
     void sendPlaybackStutterStartedEvent();
@@ -433,11 +455,8 @@ private:
     /// When in the @c BUFFER_UNDERRUN state, this records the time at which the state was entered.
     std::chrono::steady_clock::time_point m_bufferUnderrunTimestamp;
 
-    /// This timer is used to send @c ProgressReportDelayElapsed events.
-    avsCommon::utils::timing::Timer m_delayTimer;
-
-    /// This timer is used to send @c ProgressReportIntervalElapsed events.
-    avsCommon::utils::timing::Timer m_intervalTimer;
+    /// Drives periodically reporting playback progress.
+    ProgressTimer m_progressTimer;
 
     /**
      * This keeps track of the current offset in the audio stream.  Reading the offset from @c MediaPlayer is
@@ -462,6 +481,9 @@ private:
     bool m_isStopCalled;
 
     /// @}
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

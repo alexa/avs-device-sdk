@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,22 +32,45 @@ static const std::string TAG("MessageRequest");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-MessageRequest::MessageRequest(
-    const std::string& jsonContent,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader) :
+MessageRequest::MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension) :
         m_jsonContent{jsonContent},
-        m_attachmentReader{attachmentReader} {
+        m_uriPathExtension{uriPathExtension} {
 }
 
 MessageRequest::~MessageRequest() {
+}
+
+void MessageRequest::addAttachmentReader(
+    const std::string& name,
+    std::shared_ptr<attachment::AttachmentReader> attachmentReader) {
+    if (!attachmentReader) {
+        ACSDK_ERROR(LX("addAttachmentReaderFailed").d("reason", "nullAttachment"));
+        return;
+    }
+
+    auto namedReader = std::make_shared<MessageRequest::NamedReader>(name, attachmentReader);
+    m_readers.push_back(namedReader);
 }
 
 std::string MessageRequest::getJsonContent() {
     return m_jsonContent;
 }
 
-std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> MessageRequest::getAttachmentReader() {
-    return m_attachmentReader;
+std::string MessageRequest::getUriPathExtension() {
+    return m_uriPathExtension;
+}
+
+int MessageRequest::attachmentReadersCount() {
+    return m_readers.size();
+}
+
+std::shared_ptr<MessageRequest::NamedReader> MessageRequest::getAttachmentReader(size_t index) {
+    if (m_readers.size() <= index) {
+        ACSDK_ERROR(LX("getAttachmentReaderFailed").d("reason", "index out of bound").d("index", index));
+        return nullptr;
+    }
+
+    return m_readers[index];
 }
 
 void MessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
@@ -94,30 +117,6 @@ void MessageRequest::removeObserver(
 }
 
 using namespace avsCommon::sdkInterfaces;
-
-bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
-    switch (status) {
-        case MessageRequestObserverInterface::Status::SUCCESS:
-        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
-        case MessageRequestObserverInterface::Status::CANCELED:
-        case MessageRequestObserverInterface::Status::THROTTLED:
-        case MessageRequestObserverInterface::Status::BAD_REQUEST:
-        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
-            return true;
-        case MessageRequestObserverInterface::Status::PENDING:
-        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
-        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
-        case MessageRequestObserverInterface::Status::TIMEDOUT:
-        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
-        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
-        case MessageRequestObserverInterface::Status::REFUSED:
-        case MessageRequestObserverInterface::Status::INVALID_AUTH:
-            return false;
-    }
-
-    return false;
-}
 
 }  // namespace avs
 }  // namespace avsCommon

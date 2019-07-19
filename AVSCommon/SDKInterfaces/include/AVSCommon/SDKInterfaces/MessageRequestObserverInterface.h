@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@ inline std::ostream& operator<<(std::ostream& stream, MessageRequestObserverInte
         case MessageRequestObserverInterface::Status::INVALID_AUTH:
             return stream << "INVALID_AUTH";
         case MessageRequestObserverInterface::Status::BAD_REQUEST:
-            return stream << "BAD_REQUEST";
+            return stream << "CLIENT_ERROR_BAD_REQUEST";
         case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
             return stream << "SERVER_OTHER_ERROR";
     }

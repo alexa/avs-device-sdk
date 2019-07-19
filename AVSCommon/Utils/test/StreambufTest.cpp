@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,14 +36,14 @@ protected:
 /**
  * Verify that the Streambuf is created correctly
  */
-TEST_F(StreambufTest, Creation) {
+TEST_F(StreambufTest, test_creation) {
     ASSERT_EQ(testData[0], m_sb.sgetc());
 }
 
 /**
  * Verify that the seekoff can be called based from the beginning
  */
-TEST_F(StreambufTest, seekoffBeginning) {
+TEST_F(StreambufTest, test_seekoffBeginning) {
     const std::vector<std::streampos> positions = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     for (const auto& pos : positions) {
         ASSERT_EQ(pos, m_sb.seekoff(pos, std::ios_base::beg));
@@ -54,7 +54,7 @@ TEST_F(StreambufTest, seekoffBeginning) {
 /**
  * Verify that the seekoff can be called based from the current positon
  */
-TEST_F(StreambufTest, seekoffCurrentForward) {
+TEST_F(StreambufTest, test_seekoffCurrentForward) {
     const std::streampos pos = 3;
     ASSERT_EQ(pos, m_sb.seekoff(pos, std::ios_base::cur));
     ASSERT_EQ(testData[pos], m_sb.sgetc());
@@ -66,7 +66,7 @@ TEST_F(StreambufTest, seekoffCurrentForward) {
 /**
  * Verify that you can seek all the way until the end correctly
  */
-TEST_F(StreambufTest, seekoffFromBeginningUntilEnd) {
+TEST_F(StreambufTest, test_seekoffFromBeginningUntilEnd) {
     const std::streampos step = 1;
     m_sb.seekoff(0, std::ios_base::beg);
     for (size_t i = 0; i < testData.size() - 1; ++i) {
@@ -80,7 +80,7 @@ TEST_F(StreambufTest, seekoffFromBeginningUntilEnd) {
 /**
  * Verify that you can seek all the way from the end to the beginning
  */
-TEST_F(StreambufTest, seekoffFromEndUntilBeginning) {
+TEST_F(StreambufTest, test_seekoffFromEndUntilBeginning) {
     const std::streampos step = -1;
     m_sb.seekoff(-1, std::ios_base::end);
     for (size_t i = 0; i < testData.size() - 1; ++i) {
@@ -94,7 +94,7 @@ TEST_F(StreambufTest, seekoffFromEndUntilBeginning) {
 /**
  * Verify that you can seek backward from the end
  */
-TEST_F(StreambufTest, seekoffCurrentBackward) {
+TEST_F(StreambufTest, test_seekoffCurrentBackward) {
     auto end = m_sb.seekoff(-1, std::ios_base::end);
 
     const std::streampos pos = 3;
@@ -108,21 +108,21 @@ TEST_F(StreambufTest, seekoffCurrentBackward) {
 /**
  * Verify that a seek to before the stream results in an error
  */
-TEST_F(StreambufTest, seekoffBeforeStart) {
+TEST_F(StreambufTest, test_seekoffBeforeStart) {
     ASSERT_EQ(-1, m_sb.seekoff(-1, std::ios_base::beg));
 }
 
 /**
  * Verify that a seek to after the stream results in an error
  */
-TEST_F(StreambufTest, seekoffPastEnd) {
+TEST_F(StreambufTest, test_seekoffPastEnd) {
     ASSERT_EQ(-1, m_sb.seekoff(1, std::ios_base::end));
 }
 
 /**
  * Verify that a basic seekpos works
  */
-TEST_F(StreambufTest, seekpos) {
+TEST_F(StreambufTest, test_seekpos) {
     const std::streampos pos = 3;
     ASSERT_EQ(pos, m_sb.seekpos(pos));
     ASSERT_EQ(testData[pos], m_sb.sgetc());
@@ -131,21 +131,21 @@ TEST_F(StreambufTest, seekpos) {
 /**
  * Verify that a basic seekpos before the beginning results in an error
  */
-TEST_F(StreambufTest, seekposBeforeStart) {
+TEST_F(StreambufTest, test_seekposBeforeStart) {
     ASSERT_EQ(-1, m_sb.seekpos(-1));
 }
 
 /**
  * Verify that a basic seekpos after the end results in an error
  */
-TEST_F(StreambufTest, seekposAfterEnd) {
+TEST_F(StreambufTest, test_seekposAfterEnd) {
     ASSERT_EQ(-1, m_sb.seekpos(sizeof(testData) + 1));
 }
 
 /**
  * Verify that a seekpos to the end is correct
  */
-TEST_F(StreambufTest, seekposToEnd) {
+TEST_F(StreambufTest, test_seekposToEnd) {
     auto end = m_sb.seekoff(0, std::ios_base::end);
     ASSERT_EQ(end, m_sb.seekpos(end));
 }

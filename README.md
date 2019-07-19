@@ -1,6 +1,3 @@
-### IMPORTANT NOTE
-If you are updating from v1.3 or earlier to v1.6, you must update your `AlexaClientSDKConfig.json` to include a Notifications database. An updated sample is available in the quickstart guides for Ubuntu Linux, Raspberry Pi, macOS, and Generic Linux.
-
 ### What is the Alexa Voice Service (AVS)?
 
 The Alexa Voice Service (AVS) enables developers to integrate Alexa directly into their products, bringing the convenience of voice control to any connected device. AVS provides developers with access to a suite of resources to quickly and easily build Alexa-enabled products, including APIs, hardware development kits, software development kits, and documentation.
@@ -71,15 +68,29 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
 
 **Capability Agents**: Handle Alexa-driven interactions; specifically directives and events. Each capability agent corresponds to a specific interface exposed by the AVS API. These interfaces include:
 
-* [SpeechRecognizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer) - The interface for speech capture.
-* [SpeechSynthesizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer) - The interface for Alexa speech output.
 * [Alerts](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/alerts) - The interface for setting, stopping, and deleting timers and alarms.
 * [AudioPlayer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/audioplayer) - The interface for managing and controlling audio playback.
+* [Bluetooth](https://developer.amazon.com/docs/alexa-voice-service/bluetooth.html) - The interface for managing Bluetooth connections between peer devices and Alexa-enabled products.
+* [DoNotDisturb](https://developer.amazon.com/docs/alexa-voice-service/) - The interface for enabling the do not disturb feature.
+* [EqualizerController](https://developer.amazon.com/docs/alexa-voice-service/equalizercontroller.html) - The interface for adjusting equalizer settings, such as decibel (dB) levels and modes.
+* [InteractionModel](https://developer.amazon.com/docs/alexa-voice-service/interactionmodel-interface.html) - This interface allows a client to support complex interactions initiated by Alexa, such as Alexa Routines.
 * [Notifications](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/notifications) - The interface for displaying notifications indicators.
 * [PlaybackController](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/playbackcontroller) - The interface for navigating a playback queue via GUI or buttons.
 * [Speaker](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speaker) - The interface for volume control, including mute and unmute.
+* [SpeechRecognizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer) - The interface for speech capture.
+* [SpeechSynthesizer](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer) - The interface for Alexa speech output.
 * [System](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/system) - The interface for communicating product status/state to AVS.
 * [TemplateRuntime](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/templateruntime) - The interface for rendering visual metadata.
+
+### Security Best Practices
+
+In addition to adopting the [Security Best Practices for Alexa](https://developer.amazon.com/docs/alexa-voice-service/security-best-practices.html), when building the SDK:
+
+* Protect configuration parameters, such as those found in the AlexaClientSDKCOnfig.json file, from tampering and inspection.
+* Protect executable files and processes from tampering and inspection.
+* Protect storage of the SDK's persistent states from tampering and inspection.
+* Your C++ implementation of AVS Device SDK interfaces must not retain locks, crash, hang, or throw exceptions.
+* Use exploit mitigation flags and memory randomization techniques when you compile your source code, in order to prevent vulnerabilities from exploiting buffer overflows and memory corruptions.
 
 ### Important Considerations
 
@@ -90,30 +101,50 @@ Focus management is not specific to Capability Agents or Directive Handlers, and
   * [Contact KITT.AI](mailto:snowboy@kitt.ai) for information on SnowBoy licensing.
 * **IMPORTANT**: The Sensory wake word engine referenced in this document is time-limited: code linked against it will stop working when the library expires. The library included in this repository will, at all times, have an expiration date that is at least 120 days in the future. See [Sensory's GitHub ](https://github.com/Sensory/alexa-rpi#license)page for more information.
 
-
 ### Release Notes and Known Issues
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-v1.6.0 released 03/08/2018:
+### v1.13.0 released 05/22/2019:
 
 **Enhancements**
-* `rapidJson` is now included with "make install".
-* Updated the `TemplateRuntimeObserverInterface` to support clearing of `displayCards`.
-* Added Windows SDK support, along with an installation script (MinGW-w64).
-* Updated `ContextManager` to ignore context reported by a state provider.
-* The `SharedDataStream` object is now associated by playlist, rather than by URL.
-* Added the `RegistrationManager` component. Now, when a user logs out all persistent user-specific data is cleared from the SDK. The log out functionality can be exercised in the sample app with the new command: `k`.
+
+* When an active Alert moves to the background, the alert now begins after a 10-second delay. Alert loop iteration delays can now no longer last longer than a maximum of 10 seconds, rather than depending on the length of the audio asset.
+* Changed NotificationsSpeaker to use Alerts Volume instead of using the speaker volume.
+* Allow customers to pass in an implementation of InternetConnectionMonitorInterface which will force AVSConnectionManager to reconnect on internet connectivity loss.
+* Added an exponential wait time for retrying transmitting a message via CertifiedSender.
+* When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.
+* Deprecated HttpResponseCodes.h, which is now present only to ensure backward compatibility.
+* The [default base URLs](https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints) for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.
 
 **Bug Fixes**
-* [Issue 400](https://github.com/alexa/avs-device-sdk/issues/400) Fixed a bug where the alert reminder did not iterate as intended after loss of network connection.
-* [Issue 477](https://github.com/alexa/avs-device-sdk/issues/477) Fixed a bug in which Alexa's weather response was being truncated.
-* Fixed an issue in which there were reports of instability related to the Sensory engine. To correct this, the `portAudio` [`suggestedLatency`](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json#L62) value can now be configured.
+
+* Fixed bug where receiving a Connected = true Property change from BlueZ without UUID information resulted in BlueZBluetoothDevice transitioning to CONNECTED state.
+* Fixed bug where MediaStreamingStateChangedEvent may be sent on non-state related property changes.
+* Added null check to SQLiteStatement::getColumnText.
+* Fixed an issue where database values with unescaped single quotes passed to miscStorage database will fail to be stored. Added a note on the interface that only non-escaped values should be passed.
+* Fixed a loop in audio in live stations based on playlists.
+* Fixed a race condition in TemplateRuntime that may result in a crash.
+* Fixed a race condition where a recognize event due to a EXPECT_SPEECH may end prematurely.
+* Changed the name of Alerts channel to Alert channel within AudioActivityTracker.
+* Prevented STOP Wakeword detections from generating Recognize events.
+* The SQLiteDeviceSettingsStorageTest no longer fails for Android.
 
 **Known Issues**
-* The `ACL` may encounter issues if audio attachments are received but not consumed.
+
+* Music playback history isn't being displayed in the Alexa app for certain account and device types.
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail and these warnings can be ignored.
+* Android error ("libDefaultClient.so" not found) can be resolved by upgrading to ADB version 1.0.40
+* When network connection is lost, lost connection status is not returned via local TTS.
+* `ACL` may encounter issues if audio attachments are received but not consumed.
 * `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
-* Music playback doesn't immediately stop when a user barges-in on iHeartRadio.
-* The Windows sample app hangs on exit.
-* GDB receives a `SIGTRAP` when troubleshooting the Windows sample app.
-* `make integration` doesn't work on Windows. Integration tests will need to be run individually.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).
+* When the sample app is restarted and the network connection is lost, the Reminder TTS message does not play. Instead, the default alarm tone will play twice.
+* ServerDisconnectIntegratonTest tests have been disabled until they can be updated to reflect new service behavior.
+* Devices connected before the Bluetooth CA is initialized are ignored.

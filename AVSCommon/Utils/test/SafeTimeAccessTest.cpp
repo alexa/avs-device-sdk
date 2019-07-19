@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,13 +30,13 @@ namespace test {
 const time_t LARGE_TIME_VALUE = (0x1 << 30) - 1;
 
 /// Test to verify that getGmtime returns failure if a nullptr is passed for the result variable.
-TEST(SafeCTimeAccessTest, getGmtimeNullReturnValue) {
+TEST(SafeCTimeAccessTest, test_getGmtimeNullReturnValue) {
     auto safeCTimeAccess = SafeCTimeAccess::instance();
     ASSERT_FALSE(safeCTimeAccess->getGmtime(0, nullptr));
 }
 
 /// Test to verify that getLocaltime returns failure if a nullptr is passed for the result variable.
-TEST(SafeCTimeAccessTest, getLocaltimeNullReturnValue) {
+TEST(SafeCTimeAccessTest, test_getLocaltimeNullReturnValue) {
     auto safeCTimeAccess = SafeCTimeAccess::instance();
     ASSERT_FALSE(safeCTimeAccess->getLocaltime(0, nullptr));
 }
@@ -86,7 +86,7 @@ static void testLocaltimeHelper(const std::tm& expected, const time_t& t) {
 }
 
 /// Test to verify that getGmtime returns the correct calendar date for the Unix epoch.
-TEST(SafeCTimeAccessTest, getGmtimeAtTheEpoch) {
+TEST(SafeCTimeAccessTest, test_getGmtimeAtTheEpoch) {
     std::tm epoch;
     epoch.tm_sec = 0;
     epoch.tm_min = 0;
@@ -101,7 +101,7 @@ TEST(SafeCTimeAccessTest, getGmtimeAtTheEpoch) {
 }
 
 /// Test to verify that getGmtime returns the same calendar date as std::gmtime.
-TEST(SafeCTimeAccessTest, getGmtime) {
+TEST(SafeCTimeAccessTest, test_getGmtime) {
     for (time_t t = 0; t < LARGE_TIME_VALUE; t = 2 * (t + 1)) {
         auto gmtimeResult = std::gmtime(&t);
         ASSERT_NE(nullptr, gmtimeResult);
@@ -110,7 +110,7 @@ TEST(SafeCTimeAccessTest, getGmtime) {
 }
 
 /// Test to verify that getLocaltime returns the same calendar date as std::localtime.
-TEST(SafeCTimeAccessTest, getLocaltime) {
+TEST(SafeCTimeAccessTest, test_getLocaltime) {
     for (time_t t = 0; t < LARGE_TIME_VALUE; t = 2 * (t + 1)) {
         auto localtimeResult = std::localtime(&t);
         ASSERT_NE(nullptr, localtimeResult);
@@ -201,13 +201,13 @@ static void checkSafeCTimeFunction(const TestType& type) {
 }
 
 /// Test to make sure that multithreaded access SafeCTimeAccess::getGmtime is safe.
-TEST(SafeCTimeAccessTest, DISABLED_gmTimeMultithreadedAccess) {
+TEST(SafeCTimeAccessTest, DISABLED_test_gmTimeMultithreadedAccess) {
     // TODO: ACSDK-1208 investigate Pi failure
     checkSafeCTimeFunction(TestType::GMTIME);
 }
 
 /// Test to make sure that multithreaded access SafeCTimeAccess::getLocaltimetime is safe.
-TEST(SafeCTimeAccessTest, DISABLED_localtimeMultithreadedAccess) {
+TEST(SafeCTimeAccessTest, DISABLED_test_localtimeMultithreadedAccess) {
     // TODO: ACSDK-1208 investigate Pi failure
     checkSafeCTimeFunction(TestType::LOCALTIME);
 }

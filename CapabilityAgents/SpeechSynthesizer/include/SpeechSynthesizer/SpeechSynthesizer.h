@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
@@ -48,6 +50,7 @@ namespace speechSynthesizer {
 class SpeechSynthesizer
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<SpeechSynthesizer> {
@@ -124,6 +127,11 @@ public:
 
     void onPlaybackStopped(SourceId id) override;
 
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
 private:
     /**
      * This class has all the data that is needed to process @c Speak directives.
@@ -160,6 +168,16 @@ private:
 
         /// A flag to indicate if the directive complete message has to be sent to the @c DirectiveSequencer.
         bool sendCompletedMessage;
+
+        /// A flag to indicate if setFailed() has been sent to the @c DirectiveSequencer.
+        bool isSetFailedCalled;
+
+        /// A flag to indicate if playback has been initiated.
+        bool isPlaybackInitiated;
+
+        /// A flag to indicate that a cancel was requested but not yet processed, which may happen when a cancel
+        /// was called before playback started.
+        bool isDelayedCancel;
     };
 
     /**
@@ -234,11 +252,17 @@ private:
     void executeHandle(std::shared_ptr<DirectiveInfo> info);
 
     /**
-     * Cancel execution of a SpeechSynthesizer.Speak directive (on the @c m_executor thread).
+     * Cancel execution of a SpeechSynthesizer @c Speak directive (on the @c m_executor thread).
      *
      * @param info The directive to cancel.
      */
     void executeCancel(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * Cancel execution of a SpeechSynthesize @c Speak directive (on the @c m_executor thread).
+     * @param speakInfo The speakInfoDirective to cancel.
+     */
+    void executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
 
     /**
      * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the
@@ -251,12 +275,9 @@ private:
      * Request to provide an update of the SpeechSynthesizer's state to the ContextManager (on the @c m_executor
      * thread).
      *
-     * @param state The state of the @c SpeechSynthesizer.
      * @param stateRequestToken The token to pass through when setting the state.
      */
-    void executeProvideState(
-        const SpeechSynthesizerObserverInterface::SpeechSynthesizerState& state,
-        const unsigned int& stateRequestToken);
+    void executeProvideState(const unsigned int& stateRequestToken);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback has started.
@@ -495,7 +516,9 @@ private:
 
     /// This flag indicates whether the initial dialog UX State has been received.
     bool m_initialDialogUXStateReceived;
-    /// @}
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

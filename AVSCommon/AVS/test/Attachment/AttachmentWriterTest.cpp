@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -117,7 +117,7 @@ void AttachmentWriterTest::testMultipleReads(bool closeWriterBeforeReading) {
 /**
  * Test writing to an invalid SDS.
  */
-TEST_F(AttachmentWriterTest, testAttachmentWriterWithInvalidSDS) {
+TEST_F(AttachmentWriterTest, test_attachmentWriterWithInvalidSDS) {
     auto writer = InProcessAttachmentWriter::create(nullptr);
     ASSERT_EQ(writer, nullptr);
 }
@@ -125,7 +125,7 @@ TEST_F(AttachmentWriterTest, testAttachmentWriterWithInvalidSDS) {
 /**
  * Test writing to a closed writer.
  */
-TEST_F(AttachmentWriterTest, testAttachmentWriterOnClosedWriter) {
+TEST_F(AttachmentWriterTest, test_attachmentWriterOnClosedWriter) {
     init();
 
     m_writer->close();
@@ -139,7 +139,7 @@ TEST_F(AttachmentWriterTest, testAttachmentWriterOnClosedWriter) {
 /**
  * Test writing a single pass of data.
  */
-TEST_F(AttachmentWriterTest, testAttachmentWriterWriteSinglePass) {
+TEST_F(AttachmentWriterTest, test_attachmentWriterWriteSinglePass) {
     init();
 
     AttachmentWriter::WriteStatus writeStatus = AttachmentWriter::WriteStatus::OK;
@@ -151,7 +151,7 @@ TEST_F(AttachmentWriterTest, testAttachmentWriterWriteSinglePass) {
 /**
  * Test a one-pass write and read with both wrapper classes.
  */
-TEST_F(AttachmentWriterTest, testAttachmentWriterAndReadInOnePass) {
+TEST_F(AttachmentWriterTest, test_attachmentWriterAndReadInOnePass) {
     init();
 
     auto writeStatus = InProcessAttachmentWriter::WriteStatus::OK;
@@ -173,14 +173,14 @@ TEST_F(AttachmentWriterTest, testAttachmentWriterAndReadInOnePass) {
 /**
  * Test multiple partial reads of complete data, where the writer is closed.
  */
-TEST_F(AttachmentWriterTest, testAttachmentReaderAndWriterMultipleReads) {
+TEST_F(AttachmentWriterTest, test_attachmentReaderAndWriterMultipleReads) {
     testMultipleReads(true);
 }
 
 /**
  * Test multiple partial reads of complete data, where the writer remains open.
  */
-TEST_F(AttachmentWriterTest, testAttachmentWriterAndReaderMultipleReadsOfUnfinishedData) {
+TEST_F(AttachmentWriterTest, test_attachmentWriterAndReaderMultipleReadsOfUnfinishedData) {
     testMultipleReads(false);
 }
 

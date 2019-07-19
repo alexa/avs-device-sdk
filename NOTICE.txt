@@ -23,7 +23,7 @@ License, Version 2.0 (the "License"):
 - Notifications Capability Agent
 - Playback Controller Capability Agent
 - Playlist Parser
-- RegistrationManager 
+- RegistrationManager
 - Sample App
 - Settings Capability Agent
 - SpeakerManager Capability Agent
@@ -49,9 +49,9 @@ ALEXA AUDIO ASSETS
 Copyright 2018 Amazon.com, Inc. or its affiliates (“Amazon”).
 All Rights Reserved.
 
-These materials are licensed to you as "Alexa Materials" under the Alexa Voice
-Service Agreement, which is currently available at
-https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/support/terms-and-agreements.
+These materials are licensed to you as "Program Materials" under the Program
+Materials License Agreement, which is currently available at
+https://developer.amazon.com/support/legal/pml.
 
 **********************
 THIRD PARTY COMPONENTS
@@ -70,6 +70,11 @@ Copyright (c) 2010 Hongli Lai
 
 - Extension for writing and using C++ mock classes from Google Mock -
 Copyright 2008, Google Inc.
+
+- a2dp-rtp.h from BlueALSA - Copyright (c) 2016-2017 Arkadiusz Bokowy.
+
+- Part of the code in BluetoothImplementations/BlueZ/src/MediaEndpoint.cpp is based on
+BlueALSA project - Copyright (c) 2016-2017 Arkadiusz Bokowy.
 
 NOTE: Other license terms may apply to certain, identified software files
 contained within or distributed with the accompanying software if such terms

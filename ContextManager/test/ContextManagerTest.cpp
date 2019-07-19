@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -27,6 +28,16 @@ namespace test {
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("ContextManagerTest");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Payload for SpeechSynthesizer state when it is playing back audio.
 static const std::string SPEECH_SYNTHESIZER_PAYLOAD_PLAYING =
@@ -112,7 +123,7 @@ static const std::chrono::milliseconds TIMEOUT_SLEEP_TIME = std::chrono::millise
 static const std::chrono::milliseconds DEFAULT_TIMEOUT = std::chrono::milliseconds(50);
 
 /// Timeout for the @c ContextRequester to get the failure.
-static const std::chrono::milliseconds FAILURE_TIMEOUT = std::chrono::milliseconds(110);
+static const std::chrono::milliseconds FAILURE_TIMEOUT = std::chrono::milliseconds(220);
 
 /// Namespace for SpeechSynthesizer.
 static const std::string NAMESPACE_SPEECH_SYNTHESIZER("SpeechSynthesizer");
@@ -193,6 +204,13 @@ public:
      */
     std::string& getContextString();
 
+    /**
+     * Function to read check context string JSON against the reference context JSON with unordered states.
+     *
+     * @return  @c true if both JSON context strings are equivalent, else @c false.
+     */
+    bool checkContextString(const std::string& a, const std::string& b);
+
 private:
     /// Instance of @ ContextManager
     std::shared_ptr<ContextManager> m_contextManager;
@@ -217,6 +235,14 @@ private:
 
     /// String to hold the context returned by the @c ContextManager.
     std::string m_context;
+
+    /**
+     * Function to convert a JSON object to string.
+     *
+     *@param documentNode the JSON object.
+     *@return  the serialized JSON string
+     */
+    std::string serializeJSONObjectToString(const rapidjson::Value& documentNode);
 };
 
 std::shared_ptr<MockContextRequester> MockContextRequester::create(std::shared_ptr<ContextManager> contextManager) {
@@ -266,6 +292,83 @@ std::string& MockContextRequester::getContextString() {
     return m_context;
 }
 
+std::string MockContextRequester::serializeJSONObjectToString(const rapidjson::Value& documentNode) {
+    if (!documentNode.IsObject()) {
+        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
+                        .d("reason", "invalidType")
+                        .d("expectedType", rapidjson::Type::kObjectType)
+                        .d("type", documentNode.GetType()));
+        return "";
+    }
+
+    rapidjson::StringBuffer stringBuffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(stringBuffer);
+
+    if (!documentNode.Accept(writer)) {
+        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed").d("reason", "acceptFailed").d("handler", "Writer"));
+        return "";
+    }
+
+    return stringBuffer.GetString();
+}
+bool MockContextRequester::checkContextString(const std::string& a, const std::string& b) {
+    rapidjson::Document ajson;
+    rapidjson::Document bjson;
+    const char contextstr[] = "context";
+
+    ajson.Parse(a.c_str());
+    if (!ajson.HasMember(contextstr)) {
+        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", a));
+        return false;
+    }
+
+    bjson.Parse(b.c_str());
+    if (!bjson.HasMember(contextstr)) {
+        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", b));
+        return false;
+    }
+
+    const rapidjson::Value& acontext = ajson[contextstr];
+    const rapidjson::Value& bcontext = bjson[contextstr];
+
+    if (!acontext.IsArray()) {
+        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", a));
+        return false;
+    }
+
+    if (!bcontext.IsArray()) {
+        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", b));
+        return false;
+    }
+
+    if (acontext.Size() != bcontext.Size()) {
+        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "contextStringNotMatched").d("value", a).d("ref", b));
+        return false;
+    }
+
+    for (rapidjson::Value::ConstValueIterator itr = acontext.Begin(); itr != acontext.End(); ++itr) {
+        bool entryMatch = false;
+        std::string aconstring;
+        aconstring = serializeJSONObjectToString(*itr);
+
+        for (rapidjson::Value::ConstValueIterator itr2 = bcontext.Begin(); itr2 != bcontext.End(); ++itr2) {
+            std::string bconstring;
+
+            bconstring = serializeJSONObjectToString(*itr);
+            if (aconstring == bconstring) {
+                entryMatch = true;
+                break;
+            }
+        }
+        if (!entryMatch) {
+            ACSDK_ERROR(
+                LX("checkContextStringFailed").d("reason", "contextStringNotMatched").d("value", a).d("ref", b));
+            return false;
+        }
+    }
+
+    return true;
+}
 /**
  * @c MockStateProvider used to verify @c ContextManager behavior.
  */
@@ -458,7 +561,7 @@ void ContextManagerTest::SetUp() {
  * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForRegisteredProvider) {
+TEST_F(ContextManagerTest, test_setStateForRegisteredProvider) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -472,7 +575,7 @@ TEST_F(ContextManagerTest, testSetStateForRegisteredProvider) {
  * Set the state with a @c StateRefreshPolicy @c NEVER for a @c StateProviderInterface that is not registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForUnregisteredProvider) {
+TEST_F(ContextManagerTest, test_setStateForUnregisteredProvider) {
     ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER));
 }
 
@@ -480,7 +583,7 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProvider) {
  * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is not registered with
  * the @c ContextManager. Expect @c SetStateResult @c STATE_PROVIDER_NOT_REGISTERED is returned.
  */
-TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyAlways) {
+TEST_F(ContextManagerTest, test_setStateForUnregisteredProviderWithRefreshPolicyAlways) {
     m_alerts = MockStateProvider::create(
         m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
     ASSERT_EQ(
@@ -494,7 +597,7 @@ TEST_F(ContextManagerTest, testSetStateForUnregisteredProviderWithRefreshPolicyA
  * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
  * timeout period. Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-TEST_F(ContextManagerTest, testGetContext) {
+TEST_F(ContextManagerTest, test_getContext) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -519,7 +622,7 @@ TEST_F(ContextManagerTest, testGetContext) {
  * @c ContextManager. Request for context by calling @c getContext by multiple requesters. Expect that the context is
  * returned to each of the requesters within the timeout period.
  */
-TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
+TEST_F(ContextManagerTest, test_multipleGetContextRequests) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -552,7 +655,7 @@ TEST_F(ContextManagerTest, testMultipleGetContextRequests) {
  * Request for context by calling @c getContext. Expect that the context is returned within the
  * timeout period. Check the context that is returned by the @c ContextManager matches the test context.
  */
-TEST_F(ContextManagerTest, testSetProviderTwice) {
+TEST_F(ContextManagerTest, test_setProviderTwice) {
     ASSERT_EQ(
         SetStateResult::SUCCESS,
         m_contextManager->setState(
@@ -589,7 +692,7 @@ TEST_F(ContextManagerTest, testSetProviderTwice) {
  * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces. Request for context by calling
  * @c getContext. Expect that failure occurs due to timeout.
  */
-TEST_F(ContextManagerTest, testProvideStateTimeout) {
+TEST_F(ContextManagerTest, test_provideStateTimeout) {
     m_alerts = MockStateProvider::create(
         m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, TIMEOUT_SLEEP_TIME);
     m_contextManager->setStateProvider(ALERTS, m_alerts);
@@ -620,7 +723,7 @@ TEST_F(ContextManagerTest, testProvideStateTimeout) {
  * @c StateRefreshPolicy @c ALWAYS for the @c StateProviderInterface that was unregistered. Expect @c SetStateResult
  * @c STATE_PROVIDER_NOT_REGISTERED is returned.
  */
-TEST_F(ContextManagerTest, testRemoveProvider) {
+TEST_F(ContextManagerTest, test_removeProvider) {
     m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, nullptr);
     ASSERT_EQ(
         SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
@@ -636,7 +739,7 @@ TEST_F(ContextManagerTest, testRemoveProvider) {
  * that is registered with the @c ContextManager with a wrong token value. Expect that
  * @c SetStateResult @c STATE_TOKEN_OUTDATED is returned.
  */
-TEST_F(ContextManagerTest, testIncorrectToken) {
+TEST_F(ContextManagerTest, test_incorrectToken) {
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
     ASSERT_EQ(
@@ -658,9 +761,7 @@ TEST_F(ContextManagerTest, testIncorrectToken) {
  *
  * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-// ACSDK-1217 - ContextManagerTest::testEmptyProvider fails on Windows
-#if !defined(_WIN32) || defined(RESOLVED_ACSDK_1217)
-TEST_F(ContextManagerTest, testEmptyProvider) {
+TEST_F(ContextManagerTest, test_emptyProvider) {
     auto dummyProvider = MockStateProvider::create(
         m_contextManager, DUMMY_PROVIDER, "", StateRefreshPolicy::SOMETIMES, DEFAULT_SLEEP_TIME);
     m_contextManager->setStateProvider(DUMMY_PROVIDER, dummyProvider);
@@ -685,9 +786,8 @@ TEST_F(ContextManagerTest, testEmptyProvider) {
             DUMMY_PROVIDER, "", StateRefreshPolicy::ALWAYS, dummyProvider->getCurrentstateRequestToken()));
     m_contextManager->getContext(m_contextRequester);
     ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
+    ASSERT_TRUE(m_contextRequester->checkContextString(CONTEXT_TEST, m_contextRequester->getContextString()));
 }
-#endif
 
 }  // namespace test
 }  // namespace contextManager

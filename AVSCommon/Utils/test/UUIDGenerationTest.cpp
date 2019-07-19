@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ class UUIDGenerationTest : public ::testing::Test {};
 /**
  * Call @c generateUUID and expect a string of length @c UUID_LENGTH.
  */
-TEST_F(UUIDGenerationTest, testUUIDStringLength) {
+TEST_F(UUIDGenerationTest, test_uUIDStringLength) {
     ASSERT_EQ(UUID_LENGTH, generateUUID().length());
 }
 
@@ -84,7 +84,7 @@ TEST_F(UUIDGenerationTest, testUUIDStringLength) {
  * Call @c generateUUID and expect a string of length @c UUID_LENGTH. Check that each character in the string
  * is a hexedecimal number except for the hyphens.
  */
-TEST_F(UUIDGenerationTest, testUUIDContainsOnlyHexCharacters) {
+TEST_F(UUIDGenerationTest, test_uUIDContainsOnlyHexCharacters) {
     auto uuid = generateUUID();
     ASSERT_EQ(UUID_LENGTH, uuid.length());
     for (unsigned int i = 0; i < uuid.length(); i++) {
@@ -99,21 +99,21 @@ TEST_F(UUIDGenerationTest, testUUIDContainsOnlyHexCharacters) {
 /**
  * Call @c generateUUID and check that the version is set correctly.
  */
-TEST_F(UUIDGenerationTest, testUUIDVersion) {
+TEST_F(UUIDGenerationTest, test_uUIDVersion) {
     ASSERT_EQ(UUID_VERSION, generateUUID().substr(UUID_VERSION_OFFSET, 1));
 }
 
 /**
  * Call @c generateUUID and check the variant is set correctly.
  */
-TEST_F(UUIDGenerationTest, testUUIDVariant) {
+TEST_F(UUIDGenerationTest, test_uUIDVariant) {
     ASSERT_EQ(UUID_VARIANT, strtoul(generateUUID().substr(UUID_VARIANT_OFFSET, 1).c_str(), nullptr, 16) & UUID_VARIANT);
 }
 
 /**
  * Call @c generateUUID and check that the hyphens are in the right positions.
  */
-TEST_F(UUIDGenerationTest, testUUIDHyphens) {
+TEST_F(UUIDGenerationTest, test_uUIDHyphens) {
     std::string uuid = generateUUID();
     ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN1_POSITION, 1));
     ASSERT_EQ(HYPHEN, uuid.substr(HYPHEN2_POSITION, 1));
@@ -125,7 +125,7 @@ TEST_F(UUIDGenerationTest, testUUIDHyphens) {
  * Call @c generateUUID multiple times and check the version and variant are set correctly.
  * Check for uniqueness of the UUIDs generated.
  */
-TEST_F(UUIDGenerationTest, testMultipleRequests) {
+TEST_F(UUIDGenerationTest, test_multipleRequests) {
     std::unordered_set<std::string> uuidsGenerated;
 
     for (unsigned int i = 0; i < MAX_UUIDS_TO_GENERATE; ++i) {
@@ -143,7 +143,7 @@ TEST_F(UUIDGenerationTest, testMultipleRequests) {
  * Call @c generateUUID from multiple threads and check the version and variant are set correctly.
  * Check for uniqueness of the UUIDs generated.
  */
-TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
+TEST_F(UUIDGenerationTest, test_multipleConcurrentRequests) {
     int no_of_threads = MAX_TEST_THREADS;
     std::vector<std::future<std::string>> uuidRequesters;
     std::unordered_set<std::string> uuidsGenerated;
@@ -167,7 +167,7 @@ TEST_F(UUIDGenerationTest, testMultipleConcurrentRequests) {
 /**
  * Call @c generateUUID and ensure all hex values are generated. Will retry @c MAX_RETRIES times.
  */
-TEST_F(UUIDGenerationTest, testAllHexValuesGenerated) {
+TEST_F(UUIDGenerationTest, test_allHexValuesGenerated) {
     std::unordered_set<char> hexCharacters = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (unsigned int retry = 0; retry < MAX_RETRIES && !hexCharacters.empty(); retry++) {

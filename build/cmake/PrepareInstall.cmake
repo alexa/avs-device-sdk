@@ -3,6 +3,12 @@
 # file for the SDK.
 #
 
+# Function to install the target library only.
+function(asdk_install_lib)
+    SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)
+    install(TARGETS ${PROJECT_NAME} DESTINATION "${ASDK_LIB_INSTALL_DIR}")
+endfunction()
+
 # Function to install the target
 function(asdk_install)
     SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)
@@ -24,8 +30,10 @@ SET(PKG_CONFIG_REQUIRES "libcurl sqlite3")
 if(GSTREAMER_MEDIA_PLAYER)
     SET(PKG_CONFIG_REQUIRES "${PKG_CONFIG_REQUIRES} gstreamer-1.0 gstreamer-app-1.0")
 endif()
-if(TOTEM_PLPARSER)
-    SET(PKG_CONFIG_REQUIRES "${PKG_CONFIG_REQUIRES} totem-plparser")
+if(BLUETOOTH_BLUEZ)
+    SET(PKG_CONFIG_REQUIRES "${PKG_CONFIG_REQUIRES} gio-2.0")
+    SET(PKG_CONFIG_REQUIRES "${PKG_CONFIG_REQUIRES} gio-unix-2.0")
+    SET(PKG_CONFIG_REQUIRES "${PKG_CONFIG_REQUIRES} sbc")
 endif()
 SET(PKG_CONFIG_LIBS         "-L\${libdir}" CACHE INTERNAL "" FORCE)
 SET(PKG_CONFIG_LIBDIR       "\${prefix}/lib")

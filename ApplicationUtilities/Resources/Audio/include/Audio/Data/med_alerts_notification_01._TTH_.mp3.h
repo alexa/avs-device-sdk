@@ -3893,7 +3893,7 @@ unsigned char med_alerts_notification_01__TTH__mp3[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0xff
 };
-unsigned int med_alerts_notification_01__TTH__mp3_len = 46249;
+constexpr unsigned int med_alerts_notification_01__TTH__mp3_len = 46249;
 // clang-format on
 
 #endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_MED_ALERTS_NOTIFICATION_01__TTH__MP3_H_

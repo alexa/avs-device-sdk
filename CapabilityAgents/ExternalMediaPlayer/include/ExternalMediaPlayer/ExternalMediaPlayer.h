@@ -22,14 +22,15 @@
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h>
 #include <AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h>
+#include <AVSCommon/SDKInterfaces/ExternalMediaPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
-#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -49,8 +50,8 @@ namespace externalMediaPlayer {
 class ExternalMediaPlayer
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::RequiresShutdown
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::ExternalMediaPlayerInterface
-        , public avsCommon::sdkInterfaces::SpeakerInterface
         , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
         , public std::enable_shared_from_this<ExternalMediaPlayer> {
 public:
@@ -58,10 +59,15 @@ public:
     using AdapterMediaPlayerMap =
         std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>;
 
+    // Map of adapter business names to their speakers.
+    using AdapterSpeakerMap =
+        std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>;
+
     // Signature of functions to create an ExternalMediaAdapter.
     using AdapterCreateFunction =
         std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> (*)(
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
             std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -76,6 +82,8 @@ public:
      *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
+     * @param speakers The map of <PlayerId, SpeakerInterface> to be used to find the speaker to use for this
+     * adapter.
      * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
      * @param speakerManager A @c SpeakerManagerInterface to perform volume changes requested by adapters.
      * @param messageSender The object to use for sending events.
@@ -87,6 +95,7 @@ public:
      */
     static std::shared_ptr<ExternalMediaPlayer> create(
         const AdapterMediaPlayerMap& mediaPlayers,
+        const AdapterSpeakerMap& speakers,
         const AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -111,24 +120,40 @@ public:
     avsCommon::avs::DirectiveHandlerConfiguration getConfiguration() const override;
     /// @}
 
-    /// @name Overridden SpeakerInterface methods.
-    /// @{
-    bool setVolume(int8_t volume) override;
-    bool adjustVolume(int8_t volume) override;
-    bool setMute(bool mute) override;
-    bool getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
-    avsCommon::sdkInterfaces::SpeakerInterface::Type getSpeakerType() override;
-    /// @}
-
     /// @name Overridden PlaybackHandlerInterface methods.
     /// @{
     virtual void onButtonPressed(avsCommon::avs::PlaybackButton button) override;
+
+    virtual void onTogglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) override;
     /// @}
 
     /// @name Overridden ExternalMediaPlayerInterface methods.
     /// @{
     virtual void setPlayerInFocus(const std::string& playerInFocus) override;
     /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
+    /**
+     * Adds an observer which will be notified on any observable state changes
+     *
+     * @param observer The observer to add
+     */
+    void addObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface>
+            observer);
+
+    /**
+     * Removes an observer from the list of active watchers
+     *
+     *@param observer The observer to remove
+     */
+    void removeObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface>
+            observer);
 
 private:
     /**
@@ -182,6 +207,8 @@ private:
      *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
+     * @param speakers The map of <PlayerId, SpeakerInterface> to be used to find the speaker to use for this
+     * adapter.
      * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
      * @param messageSender The messager sender of the adapter.
      * @param focusManager The focus manager to be used by the adapter to acquire/release channel.
@@ -189,6 +216,7 @@ private:
      */
     void createAdapters(
         const AdapterMediaPlayerMap& mediaPlayers,
+        const AdapterSpeakerMap& speakers,
         const AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -310,6 +338,38 @@ private:
         std::shared_ptr<DirectiveInfo> info,
         avsCommon::sdkInterfaces::externalMediaPlayer::RequestType request);
 
+    /**
+     * Calls each observer and provides the ObservableSessionProperties for this adapter
+     *
+     * @param playerId the ExternalMediaAdapter being reported on
+     * @param sessionProperties  the observable session properties being reported
+     */
+    void notifyObservers(
+        const std::string& playerId,
+        const avsCommon::sdkInterfaces::externalMediaPlayer::ObservableSessionProperties* sessionProperties);
+
+    /**
+     * Calls each observer and provides the ObservablePlaybackStateProperties for this adapter
+     *
+     * @param playerId the ExternalMediaAdapter being reported on
+     * @param playbackProperties  the observable playback state properties being reported
+     */
+    void notifyObservers(
+        const std::string& playerId,
+        const avsCommon::sdkInterfaces::externalMediaPlayer::ObservablePlaybackStateProperties* playbackProperties);
+
+    /**
+     * Calls each observer and provides the supplied ObservableProperties for this adapter
+     *
+     * @param adapter the ExternalMediaAdapter being reported on
+     * @param sessionProperties  the observable session properties being reported
+     * @param playbackProperties  the observable playback state properties being reported
+     */
+    void notifyObservers(
+        const std::string& playerId,
+        const avsCommon::sdkInterfaces::externalMediaPlayer::ObservableSessionProperties* sessionProperties,
+        const avsCommon::sdkInterfaces::externalMediaPlayer::ObservablePlaybackStateProperties* playbackProperties);
+
     /// The @c SpeakerManagerInterface used to change the volume when requested by @c ExternalMediaAdapterInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
 
@@ -326,8 +386,13 @@ private:
     /// The id of the player which currently has focus.
     std::string m_playerInFocus;
 
-    /// A holder for @c SpeakerSettings to report.
-    avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings m_speakerSettings;
+    /// Mutex to serialize access to the observers.
+    std::mutex m_observersMutex;
+
+    /// The set of observers watching session and playback state
+    std::unordered_set<
+        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface>>
+        m_observers;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.
@@ -347,6 +412,9 @@ private:
         avsCommon::avs::NamespaceAndName,
         std::pair<avsCommon::sdkInterfaces::externalMediaPlayer::RequestType, ExternalMediaPlayer::DirectiveHandler>>
         m_directiveToHandlerMap;
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 };
 
 }  // namespace externalMediaPlayer

@@ -16,10 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORTOBSERVER_H_
 #define ALEXA_CLIENT_SDK_ACL_TEST_TRANSPORT_MOCKTRANSPORTOBSERVER_H_
 
-#include "ACL/MessageRequest.h"
-#include "ACL/Message.h"
-#include "ACL/Values.h"
-#include "ACL/Transport/TransportObserverInterface.h"
+#include <ACL/Transport/TransportObserverInterface.h>
 
 #include <gmock/gmock.h>
 
@@ -30,14 +27,15 @@ namespace acl {
 namespace transport {
 namespace test {
 
-using ::testing::Return;
-
 class MockTransportObserver : public TransportObserverInterface {
 public:
-    MOCK_METHOD0(onConnected, void());
-    MOCK_METHOD1(onDisconnected, void(ConnectionChangedReason));
-    MOCK_METHOD0(onServerSideDisconnect, void());
-    MOCK_METHOD1(onMessageReceived, void(std::shared_ptr<Message>));
+    MOCK_METHOD1(onConnected, void(std::shared_ptr<TransportInterface> transport));
+    MOCK_METHOD2(
+        onDisconnected,
+        void(
+            std::shared_ptr<TransportInterface> transport,
+            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason));
+    MOCK_METHOD1(onServerSideDisconnect, void(std::shared_ptr<TransportInterface> transport));
 };
 
 }  // namespace test

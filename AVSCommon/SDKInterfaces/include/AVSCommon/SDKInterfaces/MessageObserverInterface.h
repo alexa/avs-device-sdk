@@ -16,11 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEOBSERVERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEOBSERVERINTERFACE_H_
 
+#include <string>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
-
-#include <string>
 
 /**
  * This class allows a client to receive messages from AVS.

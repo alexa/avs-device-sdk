@@ -31,6 +31,7 @@ namespace test {
 class MockPlaybackHandler : public PlaybackHandlerInterface {
 public:
     MOCK_METHOD1(onButtonPressed, void(avs::PlaybackButton button));
+    MOCK_METHOD2(onTogglePressed, void(avs::PlaybackToggle toggle, bool action));
 };
 
 }  // namespace test

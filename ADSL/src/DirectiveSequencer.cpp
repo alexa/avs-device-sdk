@@ -160,16 +160,10 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex>& lo
     if (directive->getDialogRequestId().empty()) {
         handled = m_directiveRouter.handleDirectiveImmediately(directive);
     } else {
-        handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
-        if (!handled) {
-            handled = m_directiveProcessor->onDirective(directive);
-        }
-    }
-#else
-    handled = m_directiveRouter.handleDirectiveWithPolicyHandleImmediately(directive);
-    if (!handled) {
         handled = m_directiveProcessor->onDirective(directive);
     }
+#else
+    handled = m_directiveProcessor->onDirective(directive);
 #endif
 
     if (!handled) {

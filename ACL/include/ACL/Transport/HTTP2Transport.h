@@ -17,26 +17,22 @@
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_HTTP2TRANSPORT_H_
 
 #include <atomic>
+#include <chrono>
 #include <condition_variable>
 #include <deque>
-#include <map>
 #include <memory>
 #include <mutex>
-#include <unordered_set>
-#include <queue>
 #include <string>
 #include <thread>
-#include <utility>
+#include <unordered_set>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
+#include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 
-#include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
-#include "AVSCommon/SDKInterfaces/ContextManagerInterface.h"
-#include "AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h"
-#include "ACL/Transport/HTTP2Stream.h"
-#include "ACL/Transport/HTTP2StreamPool.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
-#include "ACL/Transport/PostConnectObject.h"
+#include "ACL/Transport/PingHandler.h"
+#include "ACL/Transport/PostConnectFactoryInterface.h"
 #include "ACL/Transport/PostConnectObserverInterface.h"
 #include "ACL/Transport/PostConnectSendMessageInterface.h"
 #include "ACL/Transport/TransportInterface.h"
@@ -49,278 +45,310 @@ namespace acl {
  * Class to create and manage an HTTP/2 connection to AVS.
  */
 class HTTP2Transport
-        : public TransportInterface
+        : public std::enable_shared_from_this<HTTP2Transport>
+        , public TransportInterface
         , public PostConnectObserverInterface
         , public PostConnectSendMessageInterface
-        , public std::enable_shared_from_this<HTTP2Transport> {
+        , public avsCommon::sdkInterfaces::AuthObserverInterface
+        , public ExchangeHandlerContextInterface {
 public:
+    /*
+     *  Defines a set of HTTP2/2 connection settings.
+     */
+    struct Configuration {
+        /*
+         * Constructor. Initializes the configuration to default.
+         */
+        Configuration();
+
+        /// The elapsed time without any activity before sending out a ping.
+        std::chrono::seconds inactivityTimeout;
+    };
+
     /**
      * A function that creates a HTTP2Transport object.
      *
      * @param authDelegate The AuthDelegate implementation.
      * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param http2Connection Instance of HTTP2ConnectionInterface with which to perform HTTP2 operations.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
-     * @param observer The observer to this class.
+     * @param transportObserver The observer of the new instance of TransportInterface.
+     * @param postConnectFactory The object used to create @c PostConnectInterface instances.
+     * @param configuration An optional configuration to specify HTTP2/2 connection settings.
      * @return A shared pointer to a HTTP2Transport object.
      */
     static std::shared_ptr<HTTP2Transport> create(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         const std::string& avsEndpoint,
-        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
+        std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        std::shared_ptr<TransportObserverInterface> observer);
+        std::shared_ptr<TransportObserverInterface> transportObserver,
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
+        Configuration configuration = Configuration());
 
     /**
-     * @inheritDoc
-     * Initializes and prepares the multi-handle and downchannel for connection.
-     * Also starts the main network thread.
-     */
-    bool connect() override;
-
-    void disconnect() override;
-
-    bool isConnected() override;
-
-    void onPostConnected() override;
-
-    void sendPostConnectMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
-    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
-
-    /**
-     * Method to add observers for TranportObserverInterface.
+     * Method to add a TransportObserverInterface instance.
      *
-     * @param observer The observer object to add.
+     * @param transportObserver The observer instance to add.
      */
-    void addObserver(std::shared_ptr<TransportObserverInterface> observer);
+    void addObserver(std::shared_ptr<TransportObserverInterface> transportObserver);
 
     /**
-     * Method to add observers for TranportObserverInterface.
+     * Method to remove a TransportObserverInterface instance.
      *
-     * @param observer The observer object to add.
+     * @param observer The observer instance to remove.
      */
     void removeObserver(std::shared_ptr<TransportObserverInterface> observer);
 
+    /**
+     * Get the HTTP2ConnectionInterface instance being used by this HTTP2Transport.
+     *
+     * @return The HTTP2ConnectionInterface instance being used by this HTTP2Transport.
+     */
+    std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> getHTTP2Connection();
+
+    /// @name TransportInterface methods.
+    /// @{
+    bool connect() override;
+    void disconnect() override;
+    bool isConnected() override;
+    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    /// @}
+
+    /// @name PostConnectSendMessageInterface methods.
+    /// @{
+    void sendPostConnectMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    /// @}
+
+    /// @name PostConnectObserverInterface methods.
+    /// @{
+    void onPostConnected() override;
+    /// @}
+
+    /// @name AuthObserverInterface methods
+    /// @{
+    void onAuthStateChange(
+        avsCommon::sdkInterfaces::AuthObserverInterface::State newState,
+        avsCommon::sdkInterfaces::AuthObserverInterface::Error error) override;
+    /// @}
+
+    /// @name RequiresShutdown methods.
+    /// @{
+    void doShutdown() override;
+    /// @}
+
+    /// @name { ExchangeHandlerContextInterface methods.
+    /// @{
+    void onDownchannelConnected() override;
+    void onDownchannelFinished() override;
+    void onMessageRequestSent() override;
+    void onMessageRequestTimeout() override;
+    void onMessageRequestAcknowledged() override;
+    void onMessageRequestFinished() override;
+    void onPingRequestAcknowledged(bool success) override;
+    void onPingTimeout() override;
+    void onActivity() override;
+    void onForbidden(const std::string& authToken = "") override;
+    std::shared_ptr<avsCommon::utils::http2::HTTP2RequestInterface> createAndSendRequest(
+        const avsCommon::utils::http2::HTTP2RequestConfig& cfg) override;
+    std::string getEndpoint() override;
+    /// @}
+
 private:
+    /**
+     * Enum to track the (internal) state of the HTTP2Transport
+     */
+    enum class State {
+        /// Initial state, not doing anything.
+        INIT,
+        /// Waiting for authorization to complete.
+        AUTHORIZING,
+        /// Making a connection to AVS.
+        CONNECTING,
+        /// Waiting for a timeout before retrying to connect to AVS.
+        WAITING_TO_RETRY_CONNECTING,
+        /// Performing operations that require a connection, but which must be done before the connection
+        /// becomes widely available.
+        POST_CONNECTING,
+        /// Connectsed to AVS and available for general use.
+        CONNECTED,
+        /// Handling the server disconnecting.
+        SERVER_SIDE_DISCONNECT,
+        /// Tearing down the connection.  Possibly waiting for some streams to complete.
+        DISCONNECTING,
+        /// The connection is completely shut down.
+        SHUTDOWN
+    };
+
+    // Friend to allow access to enum class State.
+    friend std::ostream& operator<<(std::ostream& stream, HTTP2Transport::State state);
+
     /**
      * HTTP2Transport Constructor.
      *
      * @param authDelegate The AuthDelegate implementation.
      * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param http2Connection Instance of HTTP2ConnectionInterface with which to perform HTTP2 operations.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
-     * @param observer The observer to this class.
+     * @param transportObserver The observer of the new instance of TransportInterface.
+     * @param postConnect The object used to create PostConnectInterface instances.
+     * @param configuration The HTTP2/2 connection settings.
      */
     HTTP2Transport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         const std::string& avsEndpoint,
-        std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
+        std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
+        std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        std::shared_ptr<PostConnectObject> postConnectObject,
-        std::shared_ptr<TransportObserverInterface> observer);
+        std::shared_ptr<TransportObserverInterface> transportObserver,
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
+        Configuration configuration);
 
     /**
-     * Notify registered observers on a transport disconnect.
+     * Main loop for servicing the various states.
      */
-    void notifyObserversOnServerSideDisconnect();
+    void mainLoop();
 
     /**
-     * Notify registered observers on a server side disconnect.
+     * @c mainLoop() handler for the @c State::INIT.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleInit();
+
+    /**
+     * @c mainLoop() handler for the @c State::AUTHORIZING.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleAuthorizing();
+
+    /**
+     * @c mainLoop() handler for the @c State::CONNECTING.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleConnecting();
+
+    /**
+     * @c mainLoop() handler for the @c State::WAITING_TO_RETRY_CONNECTING.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleWaitingToRetryConnecting();
+
+    /**
+     * @c mainLoop() handler for the @c State::POST_CONNECTING.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handlePostConnecting();
+
+    /**
+     * @c mainLoop() handler for the @c State::CONNECTED.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleConnected();
+
+    /**
+     * @c mainLoop() handler for the @c State::SERVER_SIDE_DISCONNECT.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleServerSideDisconnect();
+
+    /**
+     * @c mainLoop() handler for the @c State::DISCONNECTING.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleDisconnecting();
+
+    /**
+     * @c mainLoop() handler for the @c State::SHUTDOWN.
+     *
+     * @return The current value of @c m_state.
+     */
+    State handleShutdown();
+
+    /**
+     * Enqueue a MessageRequest for sending.
+     *
+     * @param request The MessageRequest to enqueue.
+     * @param beforeConnected Whether or not to only allow enqueuing of messages before connected.
+     */
+    void enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request, bool beforeConnected);
+
+    /**
+     * Handle sending @c MessageRequests and pings while in @c State::POST_CONNECTING or @c State::CONNECTED.
+     *
+     * @param whileState Continue sending @c MessageRequests and pings while in this state.
+     * @return The current value of @c m_state.
+     */
+    State sendMessagesAndPings(State whileState);
+
+    /**
+     * Set the state to a new state.
+     *
+     * @note Must *not* be called while @c m_mutex is held by the calling thread.
+     *
+     * @param newState the new state to transition to.
+     * @param changedReason The reason the connection status changed.
+     * @return Whether the operation was successful.
+     */
+    bool setState(
+        State newState,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason changedReason);
+
+    /**
+     * Set the state to a new state.
+     *
+     * @note Must be called while @c m_mutex is held by the calling thread.
+     *
+     * @param newState
+     * @param reason The reason the connection status changed.
+     * @return
+     */
+    bool setStateLocked(
+        State newState,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+
+    /**
+     * Notify observers that this @c HTTP2Transport has established a connection with AVS.
+     */
+    void notifyObserversOnConnected();
+
+    /**
+     * Notify observers that this @c HTTP2Transport is not connected to AVS.
+     *
+     * @param reason The reason the connection was lost.
      */
     void notifyObserversOnDisconnect(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
     /**
-     * Notify registered observers on a transport connect.
+     * Notify observers that this @c HTTP2Transport's connection was terminated by AVS.
      */
-    void notifyObserversOnConnected();
-
-    void doShutdown() override;
-
-    /// Type defining an entry in the Event queue
-    typedef std::pair<CURL*, std::shared_ptr<HTTP2Stream>> ActiveTransferEntry;
+    void notifyObserversOnServerSideDisconnect();
 
     /**
-     * Sets up the downchannel stream. If a downchannel stream already exists, it is torn down and reset.
+     * Get m_state in a thread-safe manner.
      *
-     * @param[out] reason Pointer to receive the reason the operation failed, if it does.
-     * @return Whether the operation was successful.
+     * @return The current value of m_state.
      */
-    bool setupDownchannelStream(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason);
+    State getState();
 
-    /**
-     * Main network loop. Will establish a connection then repeatedly call curl_multi_perform in order to
-     * receive data from the AVS backend.
-     */
-    void networkLoop();
+    /// Mutex for accessing @c m_state and @c m_messageQueue
+    std::mutex m_mutex;
 
-    /**
-     * Establishes a connection to AVS.
-     *
-     * @return Whether the connection was successful or if we're already connected.
-     */
-    bool establishConnection();
+    /// Condition variable use to wake the @c m_thread from various waits.
+    std::condition_variable m_wakeEvent;
 
-    /**
-     * Checks if an active stream is finished and reports the response code the observer.
-     */
-    void cleanupFinishedStreams();
-
-    /**
-     * Check for streams that have not progressed within their timeout and remove them.
-     */
-    void cleanupStalledStreams();
-
-    /**
-     * Checks all the currently executing message requests to see if they have HTTP response codes.
-     *
-     * @return If all the currently executing message requests have HTTP response codes.
-     */
-    bool canProcessOutgoingMessage();
-
-    /**
-     * Send the next @c MessageRequest if any are queued.
-     */
-    void processNextOutgoingMessage();
-
-    /**
-     * Attempts to create a stream that will send a ping to the backend. If a ping stream is in flight, we do not
-     * attempt to create a new one (returning true in this case).
-     *
-     * @return Whether setting up the HTTP2Stream was successful. Returns true if there is a ping in flight already.
-     */
-    bool sendPing();
-
-    /**
-     * Cleans up the ping stream when the ping request is complete, also identifies if there was an error sending
-     * the ping.
-     */
-    void handlePingResponse();
-
-    /**
-     * Set whether or not the network thread is stopping. If transitioning to true, this method wakes up the
-     * connection retry loop so that it can break out.
-     *
-     * @param reason Reason why this transport is stopping.
-     */
-    void setIsStopping(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
-
-    /**
-     * Set whether or not the network thread is stopping. If transitioning to true, this method wakes up the
-     * connection retry loop so that it can break out.
-     * @note This method must be called while @c m_mutex is acquired.
-     *
-     * @param reason Reason why this transport is stopping.
-     */
-    void setIsStoppingLocked(avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
-
-    /**
-     * Get whether or not the @c m_networkLoop is stopping.
-     *
-     * @return Whether or not the network thread stopping.
-     */
-    bool isStopping();
-
-    /**
-     * Get whether or not a viable connection is available (returns @c false if @c m_isStopping to discourage
-     * doomed sends).
-     * @note This method must be called while @c m_mutex is acquired.
-     * @return Whether or not a viable connection is available.
-     */
-    bool isConnectedLocked() const;
-
-    /**
-     * Set the state to connected, unless already stopping. Notifies observer of any change to connection state.
-     */
-    void setIsConnectedTrueUnlessStopping();
-
-    /**
-     * Set the state to not connected. Notifies observer of any change to connection state.
-     */
-    void setIsConnectedFalse();
-
-    /**
-     * Queue a @c MessageRequest for processing (to the back of the queue).
-     *
-     * @param request The MessageRequest to queue for sending.
-     * @param ignoreConnectionStatus set to @c false to block messages to AVS, @c true
-     * when invoked through the @c PostConnectSendMessage interface to allow
-     * post-connect messages to AVS in the unconnected state.
-     * @return Whether the request was enqueued.
-     */
-    bool enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request, bool ignoreConnectionStatus = false);
-
-    /**
-     * De-queue a @c MessageRequest from (the front of) the queue of @c MessageRequest instances to process.
-     *
-     * @return The next @c MessageRequest to process (or @c nullptr).
-     */
-    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueRequest();
-
-    /**
-     * Clear the queue of @c MessageRequest instances, but first call @c onSendCompleted(NOT_CONNECTED) for any
-     * requests in the queue.
-     */
-    void clearQueuedRequests();
-
-    /**
-     * Release the down channel stream.
-     *
-     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
-     * @param[out] reason If the operation fails, returns reason value.
-     * @return Whether the operation was successful.
-     */
-    bool releaseDownchannelStream(
-        bool removeFromMulti = true,
-        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason* reason = nullptr);
-
-    /**
-     * Release the ping stream.
-     *
-     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
-     * @return Whether the operation was successful.
-     */
-    bool releasePingStream(bool removeFromMulti = true);
-
-    /**
-     * Release all the event streams.
-     */
-    void releaseAllEventStreams();
-
-    /**
-     * Release an event stream.
-     *
-     * @param stream The event stream to release.
-     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
-     * @return Whether the operation was successful.
-     */
-    bool releaseEventStream(std::shared_ptr<HTTP2Stream> stream, bool removeFromMulti = true);
-
-    /**
-     * Release a stream
-     *
-     * @param stream The stream to release.
-     * @param removeFromMulti Whether to remove the stream from @c m_multi as part of releasing the stream.
-     * @param name Name of the stream to release (for logging).
-     * @return Whether the operation was successful.
-     */
-    bool releaseStream(std::shared_ptr<HTTP2Stream> stream, bool removeFromMulti, const std::string& name);
-
-    /**
-     * Return whether a specified stream is an 'event' stream.
-     *
-     * @param stream The stream to check.
-     * @return Whether a specified stream is an 'event' stream.
-     */
-    bool isEventStream(std::shared_ptr<HTTP2Stream> stream);
-
-    /// Mutex to protect access to the m_observers variable.
-    std::mutex m_observerMutex;
-
-    /// Observers of this class, to be notified on changes in connection and received attachments.
-    std::unordered_set<std::shared_ptr<TransportObserverInterface>> m_observers;
-
-    /// Observer of this class, to be passed received messages from AVS.
-    std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
+    /// The current state of this HTTP2Transport.
+    State m_state;
 
     /// Auth delegate implementation.
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
@@ -328,50 +356,56 @@ private:
     /// The URL of the AVS server we will connect to.
     std::string m_avsEndpoint;
 
-    /// Representation of the downchannel stream.
-    std::shared_ptr<HTTP2Stream> m_downchannelStream;
+    /// The HTTP2ConnectionInterface with which to perform HTTP2 operations.
+    std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> m_http2Connection;
 
-    /// Representation of the ping stream.
-    std::shared_ptr<HTTP2Stream> m_pingStream;
+    /// Observer of this class, to be passed received messages from AVS.
+    std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
 
-    /// Represents a CURL multi handle.
-    std::unique_ptr<avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper> m_multi;
+    /// Object for creating and accessing attachments.
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
 
-    /// The list of streams that either do not have HTTP response headers, or have outstanding response data.
-    std::map<CURL*, std::shared_ptr<HTTP2Stream>> m_activeStreams;
+    /// Factory for creating @c PostConnectInterface instances.
+    std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
 
-    /// Main thread for this class.
-    std::thread m_networkThread;
+    /// Mutex to protect access to the m_observers variable.
+    std::mutex m_observerMutex;
 
-    /// An abstracted HTTP/2 stream pool to ensure that we efficiently and correctly manage our active streams.
-    HTTP2StreamPool m_streamPool;
+    /// Observers of this class, to be notified on changes in connection and received attachments.
+    std::unordered_set<std::shared_ptr<TransportObserverInterface>> m_observers;
 
-    /// Serializes access to various members.
-    std::mutex m_mutex;
+    /// Thread for servicing the network connection.
+    std::thread m_thread;
 
-    /// Reason the connection was lost. Serialized by @c m_mutex.
-    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_disconnectReason;
-
-    /// Keeps track of whether the main network loop is running. Serialized by @c m_mutex.
-    bool m_isNetworkThreadRunning;
-
-    /// Keeps track of whether we're connected to AVS. Serialized by @c m_mutex.
-    bool m_isConnected;
-
-    /// Whether or not the @c networkLoop is stopping. Serialized by @c m_mutex.
-    bool m_isStopping;
-
-    /// Whether or not the onDisconnected() notification has been sent. Serialized by @c m_mutex.
-    bool m_disconnectedSent;
+    /// PostConnect object is used to perform activities required once a connection is established.
+    std::shared_ptr<PostConnectInterface> m_postConnect;
 
     /// Queue of @c MessageRequest instances to send. Serialized by @c m_mutex.
     std::deque<std::shared_ptr<avsCommon::avs::MessageRequest>> m_requestQueue;
 
-    /// Used to wake the main network thread in connection retry back-off situation.
-    std::condition_variable m_wakeRetryTrigger;
+    /// Number of times connecting has been retried.
+    int m_connectRetryCount;
 
-    /// PostConnect object.
-    std::shared_ptr<PostConnectObject> m_postConnectObject;
+    /// Is a message handler awaiting a response?
+    bool m_isMessageHandlerAwaitingResponse;
+
+    /// The number of message handlers that are not finished with their request.
+    int m_countOfUnfinishedMessageHandlers;
+
+    /// The current ping handler (if any).
+    std::shared_ptr<PingHandler> m_pingHandler;
+
+    /// Time last activity on the connection was observed.
+    std::chrono::time_point<std::chrono::steady_clock> m_timeOfLastActivity;
+
+    /// A bool to specify whether a post connect message was already received
+    std::atomic<bool> m_postConnected;
+
+    /// The runtime HTTP2/2 connection settings.
+    const Configuration m_configuration;
+
+    /// The reason for disconnecting.
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_disconnectReason;
 };
 
 }  // namespace acl

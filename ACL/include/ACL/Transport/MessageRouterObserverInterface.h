@@ -29,6 +29,12 @@ namespace acl {
  * or when a message arrives from AVS.
  */
 class MessageRouterObserverInterface {
+public:
+    /**
+     * Destructor.
+     */
+    virtual ~MessageRouterObserverInterface() = default;
+
 private:
     /**
      * This function will be called when the connection status changes.

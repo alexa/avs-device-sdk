@@ -22,6 +22,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/StateProviderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -41,6 +43,7 @@ namespace afml {
 class AudioActivityTracker
         : public avsCommon::utils::RequiresShutdown
         , public ActivityTrackerInterface
+        , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::StateProviderInterface {
 public:
     /**
@@ -61,6 +64,11 @@ public:
     /// @name ActivityTrackerInterface Functions
     /// @{
     void notifyOfActivityUpdates(const std::vector<Channel::State>& channelStates) override;
+    /// @}
+
+    /// @name CapabilityConfigurationInterface Functions
+    /// @{
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
 private:
@@ -119,6 +127,9 @@ private:
     /// the name of the @c Channel.
     std::unordered_map<std::string, std::string> m_channelNamesInLowerCase;
     /// @}
+
+    /// Set of capability configurations that will get published using the Capabilities API
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

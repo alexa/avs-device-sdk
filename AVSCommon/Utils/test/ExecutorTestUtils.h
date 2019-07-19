@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ namespace test {
 /// Simple integer value to be reused in tests
 static const int VALUE = 1234;
 
-/// Timeout to use for waiting on calls within testss
-static const std::chrono::milliseconds SHORT_TIMEOUT_MS = std::chrono::milliseconds(50);
+/// Timeout to use for waiting on calls within tests
+static const std::chrono::milliseconds SHORT_TIMEOUT_MS = std::chrono::milliseconds(100);
 
 /// A simple task which takes an integer argument and returns the argument when executed
 static auto TASK = [](int arg) { return arg; };

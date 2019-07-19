@@ -19,6 +19,7 @@
 #include <memory>
 
 #include "AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h"
+#include "AVSCommon/SDKInterfaces/Audio/CommunicationsAudioFactoryInterface.h"
 #include "AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h"
 
 namespace alexaClientSDK {
@@ -42,6 +43,11 @@ public:
      * This shares a factory that produces audio streams for the notifications components.
      */
     virtual std::shared_ptr<NotificationsAudioFactoryInterface> notifications() const = 0;
+
+    /**
+     * This shares a factory that produces audio streams for the communications components.
+     */
+    virtual std::shared_ptr<CommunicationsAudioFactoryInterface> communications() const = 0;
 };
 
 }  // namespace audio

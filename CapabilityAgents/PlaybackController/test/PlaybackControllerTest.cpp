@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,9 +33,9 @@ namespace capabilityAgents {
 namespace playbackController {
 namespace test {
 
-using namespace avsCommon::avs;
-using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs;
 using namespace avsCommon::utils::json;
 using namespace testing;
 
@@ -50,6 +50,30 @@ static const std::string PLAYBACK_PAUSE_NAME = "PauseCommandIssued";
 static const std::string PLAYBACK_NEXT_NAME = "NextCommandIssued";
 /// String to identify the AVS name of the event on the 'Previous' button pressed.
 static const std::string PLAYBACK_PREVIOUS_NAME = "PreviousCommandIssued";
+/// String to identify the AVS name of the event on a PlaybackController button pressed.
+static const std::string PLAYBACK_BUTTON_NAME = "ButtonCommandIssued";
+/// String to identify the AVS name inside the event payload on the 'SKIPFORWARD' button pressed.
+static const std::string PLAYBACK_SKIPFORWARD_NAME = "SKIPFORWARD";
+/// String to identify the AVS name inside the event payload on the 'SKIPBACKWARD' button pressed.
+static const std::string PLAYBACK_SKIPBACKWARD_NAME = "SKIPBACKWARD";
+
+/// String to identify the AVS name of the event on a PlaybackController toggle button toggled.
+static const std::string PLAYBACK_TOGGLE_NAME = "ToggleCommandIssued";
+/// String to identify the AVS name inside the event payload on the 'SHUFFLE' button toggled.
+static const std::string PLAYBACK_SHUFFLE_NAME = "SHUFFLE";
+/// String to identify the AVS name inside the event payload on the 'LOOP' button toggled.
+static const std::string PLAYBACK_LOOP_NAME = "LOOP";
+/// String to identify the AVS name inside the event payload on the 'REPEAT' button toggled.
+static const std::string PLAYBACK_REPEAT_NAME = "REPEAT";
+/// String to identify the AVS name inside the event payload on the 'THUMBSUP' button toggled.
+static const std::string PLAYBACK_THUMBSUP_NAME = "THUMBSUP";
+/// String to identify the AVS name inside the event payload on the 'THUMBSDOWN' button toggled.
+static const std::string PLAYBACK_THUMBSDOWN_NAME = "THUMBSDOWN";
+
+/// String to identify the AVS name for 'SELECT' action on a toggle button.
+static const std::string PLAYBACK_SELECTED_NAME = "SELECT";
+/// String to identify the AVS name for 'DESELECT' action on a toggle button.
+static const std::string PLAYBACK_DESELECTED_NAME = "DESELECT";
 
 /// String to test for MessageRequest exceptionReceived()
 static const std::string TEST_EXCEPTION_TEXT = "Exception test";
@@ -77,12 +101,15 @@ static const std::string MOCK_CONTEXT = "{"
  * Check if message request has errors.
  *
  * @param messageRequest The message requests to be checked.
- * @return "ERROR" if parsing the JSON has any unexpected results and the payload is empty,
- * otherwise return the name of the message.
+ * @return "ERROR" if parsing the JSON has any unexpected results.
  */
-static std::string checkMessageRequest(std::shared_ptr<MessageRequest> messageRequest) {
+static std::string checkMessageRequest(
+    std::shared_ptr<MessageRequest> messageRequest,
+    const std::string& expected_payload_name,
+    const std::string& expected_payload_action) {
     const std::string error = "ERROR";
     rapidjson::Document jsonContent(rapidjson::kObjectType);
+
     if (jsonContent.Parse(messageRequest->getJsonContent()).HasParseError()) {
         return error;
     }
@@ -97,8 +124,22 @@ static std::string checkMessageRequest(std::shared_ptr<MessageRequest> messageRe
         return error;
     }
 
-    // check payload is empty
-    if (!payloadNode->value.ObjectEmpty()) {
+    // payload is not empty && no expected payload name
+    if (!payloadNode->value.ObjectEmpty() && ("" == expected_payload_name)) {
+        return error;
+    }
+
+    // payload name value not equal to expected
+    std::string eventPayloadName;
+    jsonUtils::retrieveValue(payloadNode->value, "name", &eventPayloadName);
+    if (eventPayloadName != expected_payload_name) {
+        return error;
+    }
+
+    // payload action value not equal to expected
+    std::string eventPayloadAction;
+    jsonUtils::retrieveValue(payloadNode->value, "action", &eventPayloadAction);
+    if (eventPayloadAction != expected_payload_action) {
         return error;
     }
 
@@ -140,8 +181,26 @@ protected:
      *
      * @param func The callable object to execute the key press API.
      * @param expectedMessageName The string of the expected AVS message name sent by the key pressed.
+     * @param expectedMessagePayload The string of the expected payload name value
      */
-    void verifyButtonPressed(std::function<void()> func, const std::string& expectedMessageName);
+    void verifyButtonPressed(
+        std::function<void()> func,
+        const std::string& expectedMessageName,
+        const std::string& expectedMessagePayloadName);
+
+    /**
+     * Check if message contextRequester is a nullptr and notify the m_contextTrigger to continue execution of the test.
+     *
+     * @param func The callable object to execute the key press API.
+     * @param expectedMessageName The string of the expected AVS message name sent by the key pressed.
+     * @param expectedMessagePayload The string of the expected payload name value
+     * @param action The bool value of the expected toggle message
+     */
+    void verifyTogglePressed(
+        std::function<void()> func,
+        const std::string& expectedMessageName,
+        const std::string& expectedMessagePayloadName,
+        const std::string& expectedMessagePayloadAction);
 
     /**
      * Check if message request has errors and notify the g_messageTrigger to continue execution of the test.
@@ -149,11 +208,14 @@ protected:
      * @param messageRequest The message requests to be checked.
      * @param sendException If this is true, then an exceptionReceived() will be sent, otherwise sendCompleted()
      * @param expected_name The string of the expected AVS message name sent.
+     * @param expected_payload_name The string of the expected AVS message payload name sent
      */
     void checkMessageRequestAndReleaseTrigger(
         std::shared_ptr<MessageRequest> messageRequest,
         bool sendException,
-        const std::string& expected_name);
+        const std::string& expected_name,
+        const std::string& expected_payload_name,
+        const std::string& expected_payload_action);
 
     /**
      * Check if message contextRequester is a nullptr and notify the m_contextTrigger to continue execution of the test.
@@ -201,7 +263,10 @@ void PlaybackControllerTest::TearDown() {
     }
 }
 
-void PlaybackControllerTest::verifyButtonPressed(std::function<void()> func, const std::string& expectedMessageName) {
+void PlaybackControllerTest::verifyButtonPressed(
+    std::function<void()> func,
+    const std::string& expectedMessageName,
+    const std::string& expectedMessagePayloadName = "") {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     EXPECT_CALL(*m_mockContextManager, getContext(_))
@@ -211,8 +276,32 @@ void PlaybackControllerTest::verifyButtonPressed(std::function<void()> func, con
     func();
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-        .WillOnce(Invoke([this, expectedMessageName](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-            checkMessageRequestAndReleaseTrigger(request, false, expectedMessageName);
+        .WillOnce(Invoke([this, expectedMessageName, expectedMessagePayloadName](
+                             std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            checkMessageRequestAndReleaseTrigger(request, false, expectedMessageName, expectedMessagePayloadName, "");
+        }));
+    m_playbackController->onContextAvailable(MOCK_CONTEXT);
+    m_messageTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
+}
+
+void PlaybackControllerTest::verifyTogglePressed(
+    std::function<void()> func,
+    const std::string& expectedMessageName,
+    const std::string& expectedMessagePayloadName,
+    const std::string& expectedMessagePayloadAction = "") {
+    std::unique_lock<std::mutex> exitLock(m_mutex);
+
+    EXPECT_CALL(*m_mockContextManager, getContext(_))
+        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
+            checkGetContextAndReleaseTrigger(contextRequester);
+        }));
+    func();
+    m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillOnce(Invoke([this, expectedMessageName, expectedMessagePayloadName, expectedMessagePayloadAction](
+                             std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            checkMessageRequestAndReleaseTrigger(
+                request, false, expectedMessageName, expectedMessagePayloadName, expectedMessagePayloadAction);
         }));
     m_playbackController->onContextAvailable(MOCK_CONTEXT);
     m_messageTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
@@ -227,8 +316,10 @@ void PlaybackControllerTest::checkGetContextAndReleaseTrigger(
 void PlaybackControllerTest::checkMessageRequestAndReleaseTrigger(
     std::shared_ptr<MessageRequest> messageRequest,
     bool sendException,
-    const std::string& expected_name) {
-    auto returnValue = checkMessageRequest(messageRequest);
+    const std::string& expected_name,
+    const std::string& expected_payload_name = "",
+    const std::string& expected_payload_action = "") {
+    auto returnValue = checkMessageRequest(messageRequest, expected_payload_name, expected_payload_action);
     m_messageTrigger.notify_one();
     if (sendException) {
         messageRequest->exceptionReceived(TEST_EXCEPTION_TEXT);
@@ -241,31 +332,31 @@ void PlaybackControllerTest::checkMessageRequestAndReleaseTrigger(
 /**
  * This case tests if @c StateSynchronizer basic create function works properly
  */
-TEST_F(PlaybackControllerTest, createSuccessfully) {
+TEST_F(PlaybackControllerTest, test_createSuccessfully) {
     ASSERT_NE(nullptr, PlaybackController::create(m_mockContextManager, m_mockMessageSender));
 }
 
 /**
  * This case tests if possible @c nullptr parameters passed to @c StateSynchronizer::create are handled properly.
  */
-TEST_F(PlaybackControllerTest, createWithError) {
+TEST_F(PlaybackControllerTest, test_createWithError) {
     ASSERT_EQ(nullptr, PlaybackController::create(m_mockContextManager, nullptr));
     ASSERT_EQ(nullptr, PlaybackController::create(nullptr, m_mockMessageSender));
     ASSERT_EQ(nullptr, PlaybackController::create(nullptr, nullptr));
 }
 
 /**
- * This case tests if playButtonPressed will send the correct event message.
+ * This case tests if buttonPressed will send the correct PlaybackButton::PLAY event message.
  */
-TEST_F(PlaybackControllerTest, playButtonPressed) {
+TEST_F(PlaybackControllerTest, test_playButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::PLAY); }, PLAYBACK_PLAY_NAME);
 }
 
 /**
- * This case tests if pauseButtonPressed will send the correct event message.
+ * This case tests if buttonPressed will send the correct PlaybackButton::PAUSE event message.
  */
-TEST_F(PlaybackControllerTest, pauseButtonPressed) {
+TEST_F(PlaybackControllerTest, test_pauseButtonPressed) {
     ASSERT_NE(nullptr, m_playbackController);
 
     PlaybackControllerTest::verifyButtonPressed(
@@ -273,26 +364,126 @@ TEST_F(PlaybackControllerTest, pauseButtonPressed) {
 }
 
 /**
- * This case tests if nextButtonPressed will send the correct event message.
+ * This case tests if buttonPressed will send the correct PlaybackButton::NEXT event message.
  */
-TEST_F(PlaybackControllerTest, nextButtonPressed) {
+TEST_F(PlaybackControllerTest, test_nextButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::NEXT); }, PLAYBACK_NEXT_NAME);
 }
 
 /**
- * This case tests if previousButtonPressed will send the correct event message.
+ * This case tests if buttonPressed will send the correct PlaybackButton::PREVIOUS event message.
  */
-TEST_F(PlaybackControllerTest, previousButtonPressed) {
+TEST_F(PlaybackControllerTest, test_previousButtonPressed) {
     PlaybackControllerTest::verifyButtonPressed(
         [this]() { m_playbackController->onButtonPressed(PlaybackButton::PREVIOUS); }, PLAYBACK_PREVIOUS_NAME);
+}
+
+/**
+ * This case tests if buttonPressed will send the correct PlaybackButton::SKIP_FORWARD event message.
+ */
+TEST_F(PlaybackControllerTest, test_skipForwardButtonPressed) {
+    PlaybackControllerTest::verifyButtonPressed(
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::SKIP_FORWARD); },
+        PLAYBACK_BUTTON_NAME,
+        PLAYBACK_SKIPFORWARD_NAME);
+}
+
+/**
+ * This case tests if buttonPressed will send the correct PlaybackButton::SKIP_BACKWARD event message.
+ */
+TEST_F(PlaybackControllerTest, test_skipBackwardButtonPressed) {
+    PlaybackControllerTest::verifyButtonPressed(
+        [this]() { m_playbackController->onButtonPressed(PlaybackButton::SKIP_BACKWARD); },
+        PLAYBACK_BUTTON_NAME,
+        PLAYBACK_SKIPBACKWARD_NAME);
+}
+
+/**
+ * This case tests if togglePressed will send the correct PlaybackToggle::SHUFFLE event message.
+ */
+TEST_F(PlaybackControllerTest, test_shuffleTogglePressed) {
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::SHUFFLE, true); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_SHUFFLE_NAME,
+        PLAYBACK_SELECTED_NAME);
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::SHUFFLE, false); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_SHUFFLE_NAME,
+        PLAYBACK_DESELECTED_NAME);
+}
+
+/**
+ * This case tests if togglePressed will send the correct PlaybackToggle::LOOP event message.
+ */
+TEST_F(PlaybackControllerTest, test_loopTogglePressed) {
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::LOOP, true); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_LOOP_NAME,
+        PLAYBACK_SELECTED_NAME);
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::LOOP, false); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_LOOP_NAME,
+        PLAYBACK_DESELECTED_NAME);
+}
+
+/**
+ * This case tests if togglePressed will send the correct PlaybackToggle::REPEAT event message.
+ */
+TEST_F(PlaybackControllerTest, test_repeatTogglePressed) {
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::REPEAT, true); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_REPEAT_NAME,
+        PLAYBACK_SELECTED_NAME);
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::REPEAT, false); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_REPEAT_NAME,
+        PLAYBACK_DESELECTED_NAME);
+}
+
+/**
+ * This case tests if togglePressed will send the correct PlaybackToggle::THUMBS_UP event message.
+ */
+TEST_F(PlaybackControllerTest, test_thumbsUpTogglePressed) {
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_UP, true); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_THUMBSUP_NAME,
+        PLAYBACK_SELECTED_NAME);
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_UP, false); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_THUMBSUP_NAME,
+        PLAYBACK_DESELECTED_NAME);
+}
+
+/**
+ * This case tests if togglePressed will send the correct PlaybackToggle::THUMBS_DOWN event message.
+ */
+TEST_F(PlaybackControllerTest, test_thumbsDownTogglePressed) {
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_DOWN, true); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_THUMBSDOWN_NAME,
+        PLAYBACK_SELECTED_NAME);
+    PlaybackControllerTest::verifyTogglePressed(
+        [this]() { m_playbackController->onTogglePressed(PlaybackToggle::THUMBS_DOWN, false); },
+        PLAYBACK_TOGGLE_NAME,
+        PLAYBACK_THUMBSDOWN_NAME,
+        PLAYBACK_DESELECTED_NAME);
 }
 
 /**
  * This case tests if getContext() returns failure, the button on the top of the queue will be dropped and getContext
  * will be called for the next button on the queue.
  */
-TEST_F(PlaybackControllerTest, getContextFailure) {
+TEST_F(PlaybackControllerTest, test_getContextFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     EXPECT_CALL(*m_mockContextManager, getContext(_))
@@ -329,7 +520,7 @@ TEST_F(PlaybackControllerTest, getContextFailure) {
  * This case tests if sendMessage() returns failure, an error log should be logged with the button pressed and reason
  * for failure.
  */
-TEST_F(PlaybackControllerTest, sendMessageFailure) {
+TEST_F(PlaybackControllerTest, test_sendMessageFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
@@ -352,7 +543,7 @@ TEST_F(PlaybackControllerTest, sendMessageFailure) {
  * This case tests if exceptionReceived() is received, an error log should be logged with with the exception
  * description.
  */
-TEST_F(PlaybackControllerTest, sendMessageException) {
+TEST_F(PlaybackControllerTest, test_sendMessageException) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;

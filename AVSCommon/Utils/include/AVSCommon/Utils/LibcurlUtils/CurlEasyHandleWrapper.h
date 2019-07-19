@@ -23,6 +23,15 @@
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
 
+/// Whether or not curl logs should be emitted.
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
+
+#define ACSDK_EMIT_CURL_LOGS
+#include <fstream>
+#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
+
+#endif
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -35,7 +44,7 @@ class CurlEasyHandleWrapper {
 public:
     /**
      * Callbacks to libcurl typically follow the below pattern.
-     * size_t callback(char* data, size_t size, size_t nmemb, void* user)
+     * size_t callback(char* buffer, size_t blockSize, size_t numBlocks, void* userData)
      * @param buffer A pointer to the data buffer to either read or write to
      * @param blockSize The size of a "block" of data (ala fwrite)
      * @param numBlocks The number of "blocks" to read or write
@@ -44,22 +53,39 @@ public:
     using CurlCallback = size_t (*)(char* buffer, size_t blockSize, size_t numBlocks, void* userData);
 
     /**
+     * Debug Callbacks to libcurl typically follow the below pattern.
+     * size_t callback(CURL* handle, curl_infotype infoType, char *buffer, size_t blockSize, void *userData)
+     * @param handle The CURL handle
+     * @param handle The CURL info type
+     * @param buffer A pointer to the data buffer to either read or write to
+     * @param blockSize The size of a "block" of data (ala fwrite)
+     * @param userData Some user data passed in with CURLOPT_DEBUGDATA
+     */
+    using CurlDebugCallback =
+        int (*)(CURL* handle, curl_infotype infoType, char* buffer, size_t blockSize, void* userData);
+
+    /**
      * Definitions for HTTP action types
      */
     enum class TransferType {
         /// HTTP GET
         kGET,
         /// HTTP POST
-        kPOST
+        kPOST,
+        /// HTTP PUT
+        kPUT
     };
 
     /**
-     * Default constructor
+     * Default constructor, optionally passing in an explicit Id.
+     *
+     * @param id name to use to identify this handle.  If none provided, an automatically generated
+     * one will be assigned.
      */
-    CurlEasyHandleWrapper();
+    CurlEasyHandleWrapper(std::string id = "");
 
     /**
-     * Default destructor
+     * Destructor
      */
     ~CurlEasyHandleWrapper();
 
@@ -72,9 +98,11 @@ public:
      * <li>POST headers</li>
      * <li>CURL post form</li>
      * </ul>
+     * @param id name to use to identify this handle.  If none provided, an automatically generated
+     * one will be assigned.
      * @return Whether the reset was successful
      */
-    bool reset();
+    bool reset(std::string id = "");
 
     /**
      * Used to get the underlying CURL easy handle. The handle returned
@@ -90,6 +118,13 @@ public:
      * @return true if curl handler is valid
      */
     bool isValid();
+
+    /**
+     * Get the ID for this handle.
+     *
+     * @return The ID for this handle.
+     */
+    std::string getId() const;
 
     /*
      * Adds an HTTP Header to the current easy handle
@@ -124,16 +159,6 @@ public:
     bool setTransferType(TransferType type);
 
     /**
-     * Adds a POST field to the current multipart form named @c fieldName with a string
-     * value contained in payload
-     *
-     * @param fieldName The POST field name
-     * @param payload The string to send
-     * @return Whether the addition was successful
-     */
-    bool setPostContent(const std::string& fieldName, const std::string& payload);
-
-    /**
      * Sets a timeout, in seconds, for how long the stream transfer is allowed to take.
      * If not set explicitly, there will be no timeout.
      *
@@ -141,17 +166,6 @@ public:
      * @returns Whether setting the timeout was succesful
      */
     bool setTransferTimeout(const long timeoutSeconds);
-
-    /**
-     * Adds a POST field to the current multipart form named @c fieldName with a chunked
-     * transfer encoded data stream. The readCallback set in setReadCallback will be called
-     * when data is required.
-     *
-     * @param fieldName The POST field name.
-     * @param userData User data passed into the read callback.
-     * @return Whether the addition was successful.
-     */
-    bool setPostStream(const std::string& fieldName, void* userData);
 
     /**
      * Sets the data to be sent in the next POST operation.
@@ -209,6 +223,37 @@ public:
     template <typename ParamType>
     bool setopt(CURLoption option, ParamType param);
 
+    /**
+     * URL encode a string.
+     *
+     * @param in The string to encode.
+     * @return The encoded string.
+     */
+    std::string urlEncode(const std::string& in) const;
+
+    /**
+     * Get the HTTP response code.
+     *
+     * @return The HTTP response code.
+     */
+    long getHTTPResponseCode();
+
+    /**
+     * Perform whatever has been setup in the handle.
+     *
+     * @return The CURL response code.
+     */
+    CURLcode perform();
+
+    /**
+     * Call @c curl_easy_pause() for this handle.
+     *
+     * @param mask The mask value to pass through to @c curl_easy_pause().
+     * @see https://curl.haxx.se/libcurl/c/curl_easy_pause.html
+     * @return The CURL response code.
+     */
+    CURLcode pause(int mask);
+
 private:
     /**
      * Frees and sets the following attributes to NULL:
@@ -227,6 +272,34 @@ private:
      */
     bool setDefaultOptions();
 
+#ifdef ACSDK_EMIT_CURL_LOGS
+    /**
+     * Initialize capturing this streams activities in a log file.
+     */
+    void initStreamLog();
+
+    /**
+     * Callback that is invoked when @c libcurl has debug information to provide.
+     *
+     * @param handle @c libcurl handle of the transfer being reported upon.
+     * @param type The type of data being reported.
+     * @param data Pointer to the data being provided.
+     * @param size Size (in bytes) of the data being reported.
+     * @param user User pointer used to pass which HTTP2Stream is being reported on.
+     * @return Always returns zero.
+     */
+    static int debugFunction(CURL* handle, curl_infotype type, char* data, size_t size, void* user);
+
+    /// File to log the stream I/O to
+    std::unique_ptr<std::ofstream> m_streamLog;
+    /// File to dump data streamed in
+    std::unique_ptr<std::ofstream> m_streamInDump;
+    /// File to dump data streamed out
+    std::unique_ptr<std::ofstream> m_streamOutDump;
+    /// Object to format log strings correctly.
+    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
+#endif
+
     /// The associated libcurl easy handle
     CURL* m_handle;
     /// A list of headers needed to be added at the HTTP level
@@ -235,6 +308,13 @@ private:
     curl_slist* m_postHeaders;
     /// The associated multipart post
     curl_httppost* m_post;
+    /// The last post used in curl_formadd
+    curl_httppost* m_lastPost;
+    /// Name for this handle.
+    std::string m_id;
+
+    /// If no id is provided by the user, we will generate it from this counter.
+    static std::atomic<uint64_t> m_idGenerator;
 };
 
 template <typename ParamType>

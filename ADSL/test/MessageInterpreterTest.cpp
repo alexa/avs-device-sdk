@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -208,7 +208,7 @@ protected:
  * Test when the content of message is invalid JSON format. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageIsInValidJSON) {
+TEST_F(MessageIntepreterTest, test_messageIsInValidJSON) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, INVALID_JSON);
@@ -218,7 +218,7 @@ TEST_F(MessageIntepreterTest, messageIsInValidJSON) {
  * Test when the message doesn't contain the directive key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidDirectiveKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidDirectiveKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_DIRECTIVE_KEY);
@@ -228,7 +228,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidDirectiveKey) {
  * Test when the message doesn't contain the header key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidHeaderKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidHeaderKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_HEADER_KEY);
@@ -238,7 +238,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidHeaderKey) {
  * Test when the message doesn't contain the namespace key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidNamespaceKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidNamespaceKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_NAMESPACE_KEY);
@@ -248,7 +248,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNamespaceKey) {
  * Test when the message doesn't contain the name key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidNameKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidNameKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_NAME_KEY);
@@ -258,7 +258,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidNameKey) {
  * Test when the message doesn't contain the messageId key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidMessageIdKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_MESSAGEID_KEY);
@@ -268,7 +268,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidMessageIdKey) {
  * Test when the message doesn't contain the dialogRequestId key in JSON content. DialogRequestId is optional, so
  * AVSDirective should be created and passed to the directive sequencer.
  */
-TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
+TEST_F(MessageIntepreterTest, test_messageHasNoDialogRequestIdKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(0);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
         .Times(1)
@@ -286,7 +286,7 @@ TEST_F(MessageIntepreterTest, messageHasNoDialogRequestIdKey) {
  * Test when the message doesn't contain the payload key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasNoPayloadKey) {
+TEST_F(MessageIntepreterTest, test_messageHasNoPayloadKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_NO_PAYLOAD);
@@ -296,7 +296,7 @@ TEST_F(MessageIntepreterTest, messageHasNoPayloadKey) {
  * Test when the message contains an invalid payload key in JSON content. The AVSDirective shouldn't be created and
  * and passed to directive sequencer. ExceptionEncounteredEvent should be sent to AVS.
  */
-TEST_F(MessageIntepreterTest, messageHasInvalidPayloadKey) {
+TEST_F(MessageIntepreterTest, test_messageHasInvalidPayloadKey) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(1);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_)).Times(0);
     m_messageInterpreter->receive(TEST_ATTACHMENT_CONTEXT_ID, DIRECTIVE_INVALID_PAYLOAD_KEY);
@@ -306,7 +306,7 @@ TEST_F(MessageIntepreterTest, messageHasInvalidPayloadKey) {
  * Test when the message is valid JSON content with all keys required in the header. An AVSDirective should be created
  * and passed to the directive sequencer.
  */
-TEST_F(MessageIntepreterTest, messageIsValidDirective) {
+TEST_F(MessageIntepreterTest, test_messageIsValidDirective) {
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(0);
     EXPECT_CALL(*m_mockDirectiveSequencer, onDirective(_))
         .Times(1)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/AVS/ExternalMediaPlayer/AdapterUtils.h>
+#include <AVSCommon/AVS/ExternalMediaPlayer/ExternalMediaAdapterConstants.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
@@ -64,6 +65,43 @@ static const std::string PLAYLISTCONTROLLER_NAMESPACE = "Alexa.PlaylistControlle
 static const std::string SEEKCONTROLLER_NAMESPACE = "Alexa.SeekController";
 static const std::string FAVORITESCONTROLLER_NAMESPACE = "Alexa.FavoritesController";
 
+// Capability constants
+/// The AlexaInterface constant type.
+static const std::string ALEXA_INTERFACE_TYPE = "AlexaInterface";
+
+/// ExternalMediaPlayer capability constants
+/// ExternalMediaPlayer interface type
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE = ALEXA_INTERFACE_TYPE;
+/// ExternalMediaPlayer interface name
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME = "ExternalMediaPlayer";
+/// ExternalMediaPlayer interface version
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaybackStateReporter name.
+static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME = PLAYBACKSTATEREPORTER_STATE_NAMESPACE;
+/// Alexa.PlaybackStateReporter version.
+static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaybackController name.
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYBACKCONTROLLER_NAMESPACE;
+/// Alexa.PlaybackController version.
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.PlaylistController name.
+static const std::string PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYLISTCONTROLLER_NAMESPACE;
+/// Alexa.PlaylistController version.
+static const std::string PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.SeekController name.
+static const std::string SEEKCONTROLLER_CAPABILITY_INTERFACE_NAME = SEEKCONTROLLER_NAMESPACE;
+/// Alexa.SeekController version.
+static const std::string SEEKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
+/// Alexa.FavoritesController name.
+static const std::string FAVORITESCONTROLLER_CAPABILITY_INTERFACE_NAME = FAVORITESCONTROLLER_NAMESPACE;
+/// Alexa.FavoritesController version.
+static const std::string FAVORITESCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
+
 // The @c External media player play directive signature.
 static const NamespaceAndName PLAY_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Play"};
 static const NamespaceAndName LOGIN_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Login"};
@@ -72,6 +110,7 @@ static const NamespaceAndName LOGOUT_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "L
 // The @c Transport control directive signatures.
 static const NamespaceAndName RESUME_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Play"};
 static const NamespaceAndName PAUSE_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Pause"};
+static const NamespaceAndName STOP_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Stop"};
 static const NamespaceAndName NEXT_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Next"};
 static const NamespaceAndName PREVIOUS_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Previous"};
 static const NamespaceAndName STARTOVER_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "StartOver"};
@@ -79,6 +118,7 @@ static const NamespaceAndName REWIND_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Re
 static const NamespaceAndName FASTFORWARD_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "FastForward"};
 
 // The @c PlayList control directive signature.
+static const NamespaceAndName ENABLEREPEATONE_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableRepeatOne"};
 static const NamespaceAndName ENABLEREPEAT_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableRepeat"};
 static const NamespaceAndName DISABLEREPEAT_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "DisableRepeat"};
 static const NamespaceAndName ENABLESHUFFLE_DIRECTIVE{PLAYLISTCONTROLLER_NAMESPACE, "EnableShuffle"};
@@ -108,6 +148,13 @@ static const int64_t MAX_PAST_OFFSET = -86400000;
 /// The max relative time in the past that we can  seek to in milliseconds(+12 hours in ms).
 static const int64_t MAX_FUTURE_OFFSET = 86400000;
 
+/**
+ * Creates the ExternalMediaPlayer capability configuration.
+ *
+ * @return The ExternalMediaPlayer capability configuration.
+ */
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration();
+
 /// The @c m_directiveToHandlerMap Map of the directives to their handlers.
 std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer::DirectiveHandler>>
     ExternalMediaPlayer::m_directiveToHandlerMap = {
@@ -115,12 +162,15 @@ std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer:
         {LOGOUT_DIRECTIVE, std::make_pair(RequestType::LOGOUT, &ExternalMediaPlayer::handleLogout)},
         {PLAY_DIRECTIVE, std::make_pair(RequestType::PLAY, &ExternalMediaPlayer::handlePlay)},
         {PAUSE_DIRECTIVE, std::make_pair(RequestType::PAUSE, &ExternalMediaPlayer::handlePlayControl)},
+        {STOP_DIRECTIVE, std::make_pair(RequestType::STOP, &ExternalMediaPlayer::handlePlayControl)},
         {RESUME_DIRECTIVE, std::make_pair(RequestType::RESUME, &ExternalMediaPlayer::handlePlayControl)},
         {NEXT_DIRECTIVE, std::make_pair(RequestType::NEXT, &ExternalMediaPlayer::handlePlayControl)},
         {PREVIOUS_DIRECTIVE, std::make_pair(RequestType::PREVIOUS, &ExternalMediaPlayer::handlePlayControl)},
         {STARTOVER_DIRECTIVE, std::make_pair(RequestType::START_OVER, &ExternalMediaPlayer::handlePlayControl)},
         {FASTFORWARD_DIRECTIVE, std::make_pair(RequestType::FAST_FORWARD, &ExternalMediaPlayer::handlePlayControl)},
         {REWIND_DIRECTIVE, std::make_pair(RequestType::REWIND, &ExternalMediaPlayer::handlePlayControl)},
+        {ENABLEREPEATONE_DIRECTIVE,
+         std::make_pair(RequestType::ENABLE_REPEAT_ONE, &ExternalMediaPlayer::handlePlayControl)},
         {ENABLEREPEAT_DIRECTIVE, std::make_pair(RequestType::ENABLE_REPEAT, &ExternalMediaPlayer::handlePlayControl)},
         {DISABLEREPEAT_DIRECTIVE, std::make_pair(RequestType::DISABLE_REPEAT, &ExternalMediaPlayer::handlePlayControl)},
         {ENABLESHUFFLE_DIRECTIVE, std::make_pair(RequestType::ENABLE_SHUFFLE, &ExternalMediaPlayer::handlePlayControl)},
@@ -130,34 +180,66 @@ std::unordered_map<NamespaceAndName, std::pair<RequestType, ExternalMediaPlayer:
         {UNFAVORITE_DIRECTIVE, std::make_pair(RequestType::UNFAVORITE, &ExternalMediaPlayer::handlePlayControl)},
         {SEEK_DIRECTIVE, std::make_pair(RequestType::SEEK, &ExternalMediaPlayer::handleSeek)},
         {ADJUSTSEEK_DIRECTIVE, std::make_pair(RequestType::ADJUST_SEEK, &ExternalMediaPlayer::handleAdjustSeek)}};
+// TODO: ARC-227 Verify default values
+auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
 
-static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {LOGIN_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {LOGOUT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {RESUME_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {PAUSE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {NEXT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {PREVIOUS_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {STARTOVER_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {REWIND_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {FASTFORWARD_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ENABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {DISABLEREPEAT_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ENABLESHUFFLE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {DISABLESHUFFLE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {SEEK_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {ADJUSTSEEK_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {FAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING},
-                                                        {UNFAVORITE_DIRECTIVE, BlockingPolicy::NON_BLOCKING}};
+static DirectiveHandlerConfiguration g_configuration = {{PLAY_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {LOGIN_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {LOGOUT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {RESUME_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {PAUSE_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {STOP_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {NEXT_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {PREVIOUS_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {STARTOVER_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {REWIND_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {FASTFORWARD_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {ENABLEREPEATONE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {ENABLEREPEAT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {DISABLEREPEAT_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {ENABLESHUFFLE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {DISABLESHUFFLE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {SEEK_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {ADJUSTSEEK_DIRECTIVE, audioNonBlockingPolicy},
+                                                        {FAVORITE_DIRECTIVE, neitherNonBlockingPolicy},
+                                                        {UNFAVORITE_DIRECTIVE, neitherNonBlockingPolicy}};
 
-static std::unordered_map<avsCommon::avs::PlaybackButton, RequestType> g_buttonToRequestType = {
-    {avsCommon::avs::PlaybackButton::PLAY, RequestType::PAUSE_RESUME_TOGGLE},
-    {avsCommon::avs::PlaybackButton::PAUSE, RequestType::PAUSE_RESUME_TOGGLE},
-    {avsCommon::avs::PlaybackButton::NEXT, RequestType::NEXT},
-    {avsCommon::avs::PlaybackButton::PREVIOUS, RequestType::PREVIOUS}};
+static std::unordered_map<PlaybackButton, RequestType> g_buttonToRequestType = {
+    {PlaybackButton::PLAY, RequestType::PAUSE_RESUME_TOGGLE},
+    {PlaybackButton::PAUSE, RequestType::PAUSE_RESUME_TOGGLE},
+    {PlaybackButton::NEXT, RequestType::NEXT},
+    {PlaybackButton::PREVIOUS, RequestType::PREVIOUS}};
+
+static std::unordered_map<PlaybackToggle, std::pair<RequestType, RequestType>> g_toggleToRequestType = {
+    {PlaybackToggle::SHUFFLE, std::make_pair(RequestType::ENABLE_SHUFFLE, RequestType::DISABLE_SHUFFLE)},
+    {PlaybackToggle::LOOP, std::make_pair(RequestType::ENABLE_REPEAT, RequestType::DISABLE_REPEAT)},
+    {PlaybackToggle::REPEAT, std::make_pair(RequestType::ENABLE_REPEAT_ONE, RequestType::DISABLE_REPEAT_ONE)},
+    {PlaybackToggle::THUMBS_UP, std::make_pair(RequestType::FAVORITE, RequestType::DESELECT_FAVORITE)},
+    {PlaybackToggle::THUMBS_DOWN, std::make_pair(RequestType::UNFAVORITE, RequestType::DESELECT_UNFAVORITE)}};
+
+/**
+ * Generate a @c CapabilityConfiguration object.
+ *
+ * @param type The Capability interface type.
+ * @param interface The Capability interface name.
+ * @param version The Capability interface verison.
+ */
+static std::shared_ptr<CapabilityConfiguration> generateCapabilityConfiguration(
+    const std::string& type,
+    const std::string& interface,
+    const std::string& version) {
+    std::unordered_map<std::string, std::string> configMap;
+    configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, type});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, interface});
+    configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, version});
+
+    return std::make_shared<CapabilityConfiguration>(configMap);
+}
 
 std::shared_ptr<ExternalMediaPlayer> ExternalMediaPlayer::create(
     const AdapterMediaPlayerMap& mediaPlayers,
+    const AdapterSpeakerMap& speakers,
     const AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<SpeakerManagerInterface> speakerManager,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -165,6 +247,11 @@ std::shared_ptr<ExternalMediaPlayer> ExternalMediaPlayer::create(
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<PlaybackRouterInterface> playbackRouter) {
+    if (nullptr == speakerManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullSpeakerManager"));
+        return nullptr;
+    }
+
     if (nullptr == messageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageSender"));
         return nullptr;
@@ -192,7 +279,8 @@ std::shared_ptr<ExternalMediaPlayer> ExternalMediaPlayer::create(
     contextManager->setStateProvider(SESSION_STATE, externalMediaPlayer);
     contextManager->setStateProvider(PLAYBACK_STATE, externalMediaPlayer);
 
-    externalMediaPlayer->createAdapters(mediaPlayers, adapterCreationMap, messageSender, focusManager, contextManager);
+    externalMediaPlayer->createAdapters(
+        mediaPlayers, speakers, adapterCreationMap, messageSender, focusManager, contextManager);
 
     return externalMediaPlayer;
 }
@@ -207,8 +295,38 @@ ExternalMediaPlayer::ExternalMediaPlayer(
         m_speakerManager{speakerManager},
         m_contextManager{contextManager},
         m_playbackRouter{playbackRouter} {
-    m_speakerSettings.volume = avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX;
-    m_speakerSettings.mute = false;
+    // Register all supported capabilities.
+    m_capabilityConfigurations.insert(getExternalMediaPlayerCapabilityConfiguration());
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME,
+        PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE, SEEKCONTROLLER_CAPABILITY_INTERFACE_NAME, SEEKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        FAVORITESCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        FAVORITESCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+}
+
+std::shared_ptr<CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration() {
+    return generateCapabilityConfiguration(
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
 }
 
 void ExternalMediaPlayer::provideState(
@@ -257,6 +375,8 @@ void ExternalMediaPlayer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
                         .d("reason", "noDirectiveHandlerForDirective")
                         .d("nameSpace", info->directive->getNamespace())
                         .d("name", info->directive->getName()));
+        sendExceptionEncounteredAndReportFailed(
+            info, "Unhandled directive", ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
         return;
     }
 
@@ -272,12 +392,11 @@ std::shared_ptr<ExternalMediaAdapterInterface> ExternalMediaPlayer::preprocessDi
     ACSDK_DEBUG9(LX("preprocessDirective"));
 
     if (!parseDirectivePayload(info, document)) {
-        sendExceptionEncounteredAndReportFailed(info, "Failed to parse directive.");
         return nullptr;
     }
 
     std::string playerId;
-    if (!jsonUtils::retrieveValue(*document, "playerId", &playerId)) {
+    if (!jsonUtils::retrieveValue(*document, PLAYER_ID, &playerId)) {
         ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "nullPlayerId"));
         sendExceptionEncounteredAndReportFailed(info, "No PlayerId in directive.");
         return nullptr;
@@ -285,14 +404,14 @@ std::shared_ptr<ExternalMediaAdapterInterface> ExternalMediaPlayer::preprocessDi
 
     auto adapterIt = m_adapters.find(playerId);
     if (adapterIt == m_adapters.end()) {
-        ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "noAdapterForPlayerId").d("playerId", playerId));
+        ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "noAdapterForPlayerId").d(PLAYER_ID, playerId));
         sendExceptionEncounteredAndReportFailed(info, "Unrecogonized PlayerId.");
         return nullptr;
     }
 
     auto adapter = adapterIt->second;
     if (!adapter) {
-        ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "nullAdapter").d("playerId", playerId));
+        ACSDK_ERROR(LX("preprocessDirectiveFailed").d("reason", "nullAdapter").d(PLAYER_ID, playerId));
         sendExceptionEncounteredAndReportFailed(info, "nullAdapter.");
         return nullptr;
     }
@@ -316,7 +435,7 @@ void ExternalMediaPlayer::handleLogin(std::shared_ptr<DirectiveInfo> info, Reque
     }
 
     std::string userName;
-    if (!jsonUtils::retrieveValue(payload, "username", &userName)) {
+    if (!jsonUtils::retrieveValue(payload, USERNAME, &userName)) {
         userName = "";
     }
 
@@ -388,7 +507,7 @@ void ExternalMediaPlayer::handleSeek(std::shared_ptr<DirectiveInfo> info, Reques
     }
 
     int64_t position;
-    if (!jsonUtils::retrieveValue(payload, "positionMilliseconds", &position)) {
+    if (!jsonUtils::retrieveValue(payload, POSITIONINMS, &position)) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullPosition"));
         sendExceptionEncounteredAndReportFailed(info, "missing positionMilliseconds in SetSeekPosition directive");
         return;
@@ -458,7 +577,7 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
     if (!m_playerInFocus.empty()) {
         auto adapterIt = m_adapters.find(m_playerInFocus);
 
-        if (adapterIt == m_adapters.end()) {
+        if (m_adapters.end() == adapterIt) {
             // Should never reach here as playerInFocus is always set based on a contract with AVS.
             ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
             return;
@@ -466,12 +585,42 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
 
         auto buttonIt = g_buttonToRequestType.find(button);
 
-        if (buttonIt == g_buttonToRequestType.end()) {
-            ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", PlaybackButtonToString(button)));
+        if (g_buttonToRequestType.end() == buttonIt) {
+            ACSDK_ERROR(LX("ButtonToRequestTypeNotFound").d("button", button));
             return;
         }
 
-        ((*adapterIt).second)->handlePlayControl((*buttonIt).second);
+        adapterIt->second->handlePlayControl(buttonIt->second);
+    }
+}
+
+void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
+    if (!m_playerInFocus.empty()) {
+        auto adapterIt = m_adapters.find(m_playerInFocus);
+
+        if (m_adapters.end() == adapterIt) {
+            // Should never reach here as playerInFocus is always set based on a contract with AVS.
+            ACSDK_ERROR(LX("AdapterNotFound").d("player", m_playerInFocus));
+            return;
+        }
+
+        auto toggleIt = g_toggleToRequestType.find(toggle);
+
+        if (g_toggleToRequestType.end() == toggleIt) {
+            ACSDK_ERROR(LX("ToggleToRequestTypeNotFound").d("toggle", toggle));
+            return;
+        }
+
+        auto adapter = adapterIt->second;
+
+        // toggleStates map is <SELECTED,DESELECTED>
+        auto toggleStates = toggleIt->second;
+
+        if (action) {
+            adapter->handlePlayControl(toggleStates.first);
+        } else {
+            adapterIt->second->handlePlayControl(toggleStates.second);
+        }
     }
 }
 
@@ -566,9 +715,11 @@ std::string ExternalMediaPlayer::provideSessionState() {
         if (!adapter.second) {
             continue;
         }
-
-        rapidjson::Value playerJson = buildSessionState(adapter.second->getState().sessionState, stateAlloc);
+        auto state = adapter.second->getState().sessionState;
+        rapidjson::Value playerJson = buildSessionState(state, stateAlloc);
         players.PushBack(playerJson, stateAlloc);
+        ObservableSessionProperties update{state.loggedIn, state.userName};
+        notifyObservers(state.playerId, &update);
     }
 
     state.AddMember(rapidjson::StringRef(PLAYERS), players, stateAlloc);
@@ -598,8 +749,11 @@ std::string ExternalMediaPlayer::providePlaybackState() {
         if (!adapter.second) {
             continue;
         }
-        rapidjson::Value playerJson = buildPlaybackState(adapter.second->getState().playbackState, stateAlloc);
+        auto state = adapter.second->getState().playbackState;
+        rapidjson::Value playerJson = buildPlaybackState(state, stateAlloc);
         players.PushBack(playerJson, stateAlloc);
+        ObservablePlaybackStateProperties update{state.state, state.trackName};
+        notifyObservers(state.playerId, &update);
     }
 
     state.AddMember(PLAYERS, players, stateAlloc);
@@ -615,78 +769,9 @@ std::string ExternalMediaPlayer::providePlaybackState() {
     return buffer.GetString();
 }
 
-/*
- * SpeakerInterface.
- */
-bool ExternalMediaPlayer::setVolume(int8_t volume) {
-    if (volume > avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX ||
-        volume < avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN) {
-        ACSDK_ERROR(LX("setVolumeFailed").d("reason", "invalid volume value").d("value", volume));
-        return false;
-    }
-
-    m_speakerSettings.volume = volume;
-
-    for (auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
-        }
-        adapter.second->handleSetVolume(volume);
-    }
-    return true;
-}
-
-bool ExternalMediaPlayer::adjustVolume(int8_t volume) {
-    if (volume > avsCommon::avs::speakerConstants::AVS_ADJUST_VOLUME_MAX ||
-        volume < avsCommon::avs::speakerConstants::AVS_ADJUST_VOLUME_MIN) {
-        ACSDK_ERROR(LX("adjustVolumeFailed").d("reason", "invalid volume value").d("value", volume));
-        return false;
-    }
-
-    // TODO: Replace int variables here to the actual volume time when int8_t would be changed to it
-    int newVolume = m_speakerSettings.volume + volume;
-    newVolume = std::min(newVolume, (int)speakerConstants::AVS_SET_VOLUME_MAX);
-    newVolume = std::max(newVolume, (int)speakerConstants::AVS_SET_VOLUME_MIN);
-
-    m_speakerSettings.volume = newVolume;
-
-    for (auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
-        }
-        adapter.second->handleSetVolume((int8_t)newVolume);
-    }
-    return true;
-}
-
-bool ExternalMediaPlayer::setMute(bool mute) {
-    m_speakerSettings.mute = mute;
-
-    for (auto& adapter : m_adapters) {
-        if (!adapter.second) {
-            continue;
-        }
-        adapter.second->handleSetMute(mute);
-    }
-    return true;
-}
-
-bool ExternalMediaPlayer::getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) {
-    if (!settings) {
-        ACSDK_ERROR(LX("getSpeakerSettingsFailed").d("reason", "nullSettings"));
-        return false;
-    }
-    settings->mute = m_speakerSettings.mute;
-    settings->volume = m_speakerSettings.volume;
-    return true;
-}
-
-avsCommon::sdkInterfaces::SpeakerInterface::Type ExternalMediaPlayer::getSpeakerType() {
-    return SpeakerInterface::Type::AVS_SYNCED;
-}
-
 void ExternalMediaPlayer::createAdapters(
     const AdapterMediaPlayerMap& mediaPlayers,
+    const AdapterSpeakerMap& speakers,
     const AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
@@ -694,18 +779,89 @@ void ExternalMediaPlayer::createAdapters(
     ACSDK_DEBUG0(LX("createAdapters"));
     for (auto& entry : adapterCreationMap) {
         auto mediaPlayerIt = mediaPlayers.find(entry.first);
+        auto speakerIt = speakers.find(entry.first);
 
         if (mediaPlayerIt == mediaPlayers.end()) {
-            ACSDK_ERROR(LX("adapterCreationFailed").d("playerId", entry.first).d("reason", "nullMediaPlayer"));
+            ACSDK_ERROR(LX("adapterCreationFailed").d(PLAYER_ID, entry.first).d("reason", "nullMediaPlayer"));
+            continue;
+        }
+
+        if (speakerIt == speakers.end()) {
+            ACSDK_ERROR(LX("adapterCreationFailed").d("playerId", entry.first).d("reason", "nullSpeaker"));
             continue;
         }
 
         auto adapter = entry.second(
-            (*mediaPlayerIt).second, m_speakerManager, messageSender, focusManager, contextManager, shared_from_this());
+            (*mediaPlayerIt).second,
+            (*speakerIt).second,
+            m_speakerManager,
+            messageSender,
+            focusManager,
+            contextManager,
+            shared_from_this());
         if (adapter) {
             m_adapters[entry.first] = adapter;
         } else {
-            ACSDK_ERROR(LX("adapterCreationFailed").d("playerId", entry.first));
+            ACSDK_ERROR(LX("adapterCreationFailed").d(PLAYER_ID, entry.first));
+        }
+    }
+}
+
+std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> ExternalMediaPlayer::
+    getCapabilityConfigurations() {
+    return m_capabilityConfigurations;
+}
+
+void ExternalMediaPlayer::addObserver(std::shared_ptr<ExternalMediaPlayerObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.insert(observer);
+}
+
+void ExternalMediaPlayer::removeObserver(std::shared_ptr<ExternalMediaPlayerObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.erase(observer);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservableSessionProperties* sessionProperties) {
+    notifyObservers(playerId, sessionProperties, nullptr);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservablePlaybackStateProperties* playbackProperties) {
+    notifyObservers(playerId, nullptr, playbackProperties);
+}
+
+void ExternalMediaPlayer::notifyObservers(
+    const std::string& playerId,
+    const ObservableSessionProperties* sessionProperties,
+    const ObservablePlaybackStateProperties* playbackProperties) {
+    if (playerId.empty()) {
+        ACSDK_ERROR(LX("notifyObserversFailed").d("reason", "emptyPlayerId"));
+        return;
+    }
+
+    std::unique_lock<std::mutex> lock{m_observersMutex};
+    auto observers = m_observers;
+    lock.unlock();
+
+    for (auto& observer : observers) {
+        if (sessionProperties) {
+            observer->onLoginStateProvided(playerId, *sessionProperties);
+        }
+
+        if (playbackProperties) {
+            observer->onPlaybackStateProvided(playerId, *playbackProperties);
         }
     }
 }

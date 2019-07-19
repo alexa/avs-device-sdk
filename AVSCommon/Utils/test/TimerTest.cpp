@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,11 @@ namespace timing {
 namespace test {
 
 /// Specifies the expected timing accuracy (timestamps must be within +/- ACCURACY of expected values).
+#ifdef _WIN32
+static const auto ACCURACY = std::chrono::milliseconds(30);
+#else
 static const auto ACCURACY = std::chrono::milliseconds(15);
+#endif
 
 /// Used for cases where the task should return immediately, without delay.
 static const auto NO_DELAY = std::chrono::milliseconds(0);
@@ -193,7 +197,7 @@ bool TimerTest::waitForInactive() {
 }
 
 /// This test runs a single-shot timer and verifies that the task is called once, at the expected time.
-TEST_F(TimerTest, singleShot) {
+TEST_F(TimerTest, testTimer_singleShot) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_EQ(
         m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, NO_DELAY)).wait_for(TIMEOUT),
@@ -206,7 +210,7 @@ TEST_F(TimerTest, singleShot) {
  * This test runs a multi-shot ABSOLUTE timer and verifies that the task is called the expected number of times,
  * and that each call occurred at the expected time.
  */
-TEST_F(TimerTest, multiShot) {
+TEST_F(TimerTest, testTimer_multiShot) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
@@ -219,7 +223,7 @@ TEST_F(TimerTest, multiShot) {
  * This test runs a multi-shot ABSOLUTE timer with different initial delay and verifies that the task is called
  * the expected number of times, and that each call occurred at the expected time.
  */
-TEST_F(TimerTest, multiShotWithDelay) {
+TEST_F(TimerTest, testTimer_multiShotWithDelay) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         MEDIUM_DELAY,
@@ -237,7 +241,7 @@ TEST_F(TimerTest, multiShotWithDelay) {
  * verifies that it stops when requested, and verifies that the expected number of calls occurred at their expected
  * times.
  */
-TEST_F(TimerTest, forever) {
+TEST_F(TimerTest, testTimer_forever) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::ABSOLUTE, Timer::FOREVER, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
@@ -252,7 +256,7 @@ TEST_F(TimerTest, forever) {
  * This test runs a slow task with an ABSOLUTE timer, but one which completes in less than a period, and verifies
  * that the slow task does not change the number of calls or their period.
  */
-TEST_F(TimerTest, slowTaskLessThanPeriod) {
+TEST_F(TimerTest, testTimer_slowTaskLessThanPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         MEDIUM_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)));
@@ -264,7 +268,7 @@ TEST_F(TimerTest, slowTaskLessThanPeriod) {
  * This test runs a slow task with an ABSOLUTE timer which does not complete within a period, and verifies that
  * the slow task results in skipped calls, but on a consistent period.
  */
-TEST_F(TimerTest, slowTaskGreaterThanPeriod) {
+TEST_F(TimerTest, testTimer_slowTaskGreaterThanPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
@@ -276,7 +280,7 @@ TEST_F(TimerTest, slowTaskGreaterThanPeriod) {
  * This test runs a slow task with an ABSOLUTE timer which does not complete within multiple periods, and verifies
  * that the slow task results in skipped calls, but on a consistent period.
  */
-TEST_F(TimerTest, slowTaskGreaterThanTwoPeriods) {
+TEST_F(TimerTest, testTimer_slowTaskGreaterThanTwoPeriods) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, LONG_DELAY)));
@@ -288,7 +292,7 @@ TEST_F(TimerTest, slowTaskGreaterThanTwoPeriods) {
  * This test runs a slow task with a RELATIVE timer which does not complete within a period, and verifies that
  * the slow task does not result in skipped calls, but calls have a consistent between-task delay.
  */
-TEST_F(TimerTest, endToStartPeriod) {
+TEST_F(TimerTest, testTimer_endToStartPeriod) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::RELATIVE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)));
@@ -300,7 +304,7 @@ TEST_F(TimerTest, endToStartPeriod) {
  * This test verifies that a call to stop() before the task is called results in an inactive timer which does not
  * execute the task.
  */
-TEST_F(TimerTest, stopSingleShotBeforeTask) {
+TEST_F(TimerTest, testTimer_stopSingleShotBeforeTask) {
     ASSERT_TRUE(m_timer->start(MEDIUM_DELAY, std::bind(&TimerTest::simpleTask, this, NO_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
     std::this_thread::sleep_for(SHORT_DELAY);
@@ -317,7 +321,7 @@ TEST_F(TimerTest, stopSingleShotBeforeTask) {
  * This test verifies that a call to stop() while a task is executing results in an inactive timer after that task
  * finishes executing.
  */
-TEST_F(TimerTest, stopSingleShotDuringTask) {
+TEST_F(TimerTest, testTimer_stopSingleShotDuringTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
@@ -331,7 +335,7 @@ TEST_F(TimerTest, stopSingleShotDuringTask) {
  * This test verifies that a call to stop() after a task has finished executing leaves the timer inactive and
  * unchanged.
  */
-TEST_F(TimerTest, stopSingleShotAfterTask) {
+TEST_F(TimerTest, testTimer_stopSingleShotAfterTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
@@ -346,7 +350,7 @@ TEST_F(TimerTest, stopSingleShotAfterTask) {
  * This test verifies that a call to stop() on a multi-shot timer results in an inactive timer with the expected
  * number of calls.
  */
-TEST_F(TimerTest, stopMultiShot) {
+TEST_F(TimerTest, testTimer_stopMultiShot) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY, Timer::PeriodType::ABSOLUTE, ITERATIONS, std::bind(&TimerTest::simpleTask, this, NO_DELAY)));
@@ -361,7 +365,7 @@ TEST_F(TimerTest, stopMultiShot) {
  * This test verifies that a call to start() fails on a timer which is active but has not called a task yet, but does
  * not interfere with the previously scheduled task.
  */
-TEST_F(TimerTest, startRunningBeforeTask) {
+TEST_F(TimerTest, testTimer_startRunningBeforeTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, NO_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
@@ -379,7 +383,7 @@ TEST_F(TimerTest, startRunningBeforeTask) {
  * This test verifies that a call to start() fails on a timer which is currently executing a task, but does
  * not interfere with that task.
  */
-TEST_F(TimerTest, startRunningDuringTask) {
+TEST_F(TimerTest, testTimer_startRunningDuringTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
@@ -395,7 +399,7 @@ TEST_F(TimerTest, startRunningDuringTask) {
  * This test verifies that a call to start() succeeds on a timer which was previously used to run a task, but which is
  * inactive at the time the new start() is called.
  */
-TEST_F(TimerTest, startRunningAfterTask) {
+TEST_F(TimerTest, testTimer_startRunningAfterTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, NO_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
@@ -411,7 +415,7 @@ TEST_F(TimerTest, startRunningAfterTask) {
 }
 
 /// This test verifies that a timer which is deleted while active, but before running its task, does not run the task.
-TEST_F(TimerTest, deleteBeforeTask) {
+TEST_F(TimerTest, test_deleteBeforeTask) {
     ASSERT_TRUE(m_timer->start(SHORT_DELAY, std::bind(&TimerTest::simpleTask, this, SHORT_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
     m_timer.reset();
@@ -422,7 +426,7 @@ TEST_F(TimerTest, deleteBeforeTask) {
 }
 
 /// This test verifies that a timer which is deleted while running a task completes the task.
-TEST_F(TimerTest, deleteDuringTask) {
+TEST_F(TimerTest, testTimer_deleteDuringTask) {
     auto t0 = std::chrono::steady_clock::now();
     ASSERT_TRUE(m_timer->start(
         SHORT_DELAY,
@@ -441,7 +445,7 @@ TEST_F(TimerTest, deleteDuringTask) {
  * This test verifies that a call to start() succeeds on a timer which was previously stopped while running a task, but
  * which is inactive at the time the new start() is called.
  */
-TEST_F(TimerTest, startRunningAfterStopDuringTask) {
+TEST_F(TimerTest, testTimer_startRunningAfterStopDuringTask) {
     ASSERT_TRUE(m_timer->start(NO_DELAY, std::bind(&TimerTest::simpleTask, this, MEDIUM_DELAY)).valid());
     ASSERT_TRUE(m_timer->isActive());
     std::this_thread::sleep_for(SHORT_DELAY);

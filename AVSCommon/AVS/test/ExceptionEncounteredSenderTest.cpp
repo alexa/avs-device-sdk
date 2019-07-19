@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -223,7 +223,7 @@ bool ExceptionEncounteredSenderTest::testExceptionEncounteredSucceeds(
  * This function sends @c ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED and verifies that
  * @c ExceptionEncounteredSender::sendExceptionEncountered send the event.
  */
-TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedInformationReceived) {
+TEST_F(ExceptionEncounteredSenderTest, test_errorTypeUnexpectedInformationReceived) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
         UNPARSED_DIRECTIVE_JSON_STRING,
         avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
@@ -233,7 +233,7 @@ TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedInformationReceived) {
  * This function sends @c ExceptionErrorType::UNSUPPORTED_OPERATION and verifies that
  * @c ExceptionEncounteredSender::sendExceptionEncountered send the event.
  */
-TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedOperation) {
+TEST_F(ExceptionEncounteredSenderTest, test_errorTypeUnexpectedOperation) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
         UNPARSED_DIRECTIVE_JSON_STRING, avs::ExceptionErrorType::UNSUPPORTED_OPERATION, "Operation not supported"));
 }
@@ -241,7 +241,7 @@ TEST_F(ExceptionEncounteredSenderTest, errorTypeUnexpectedOperation) {
  * This function sends @c ExceptionErrorType::INTERNAL_ERROR and verifies that
  * @c ExceptionEncounteredSender::sendExceptionEncountered send the event.
  */
-TEST_F(ExceptionEncounteredSenderTest, errorTypeInternalError) {
+TEST_F(ExceptionEncounteredSenderTest, test_errorTypeInternalError) {
     ASSERT_TRUE(testExceptionEncounteredSucceeds(
         UNPARSED_DIRECTIVE_JSON_STRING, avs::ExceptionErrorType::INTERNAL_ERROR, "An error occurred with the device"));
 }

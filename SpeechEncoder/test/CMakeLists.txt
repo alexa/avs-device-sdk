@@ -1,0 +1,1 @@
+discover_unit_tests("${SpeechEncoder_SOURCE_DIR}/include" SpeechEncoder)

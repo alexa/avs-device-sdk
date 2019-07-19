@@ -89,8 +89,8 @@ EndpointHandler::EndpointHandler(
 }
 
 avsCommon::avs::DirectiveHandlerConfiguration EndpointHandler::getConfiguration() const {
-    return avsCommon::avs::DirectiveHandlerConfiguration{
-        {NamespaceAndName{ENDPOINTING_NAMESPACE, ENDPOINTING_NAME}, avsCommon::avs::BlockingPolicy::NON_BLOCKING}};
+    return avsCommon::avs::DirectiveHandlerConfiguration{{NamespaceAndName{ENDPOINTING_NAMESPACE, ENDPOINTING_NAME},
+                                                          BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
 }
 
 void EndpointHandler::preHandleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) {

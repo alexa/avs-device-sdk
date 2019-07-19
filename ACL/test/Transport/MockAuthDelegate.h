@@ -31,10 +31,31 @@ namespace test {
 
 class MockAuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
 public:
+    /// @name AuthDelegateInterface methods
+    /// @{
     MOCK_METHOD1(addAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
     MOCK_METHOD1(removeAuthObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface>));
-    MOCK_METHOD0(getAuthToken, std::string());
+    std::string getAuthToken();
+    MOCK_METHOD1(onAuthFailure, void(const std::string& token));
+    /// @}
+
+    /*
+     * Set the token string.
+     * @param authToken The string to be returned when @c getAuthToken() is called.
+     */
+    void setAuthToken(std::string authToken);
+
+private:
+    /// Holds the token string to be returned when @c getAuthToken() is called.
+    std::string m_authToken;
 };
+
+std::string MockAuthDelegate::getAuthToken() {
+    return m_authToken;
+}
+void MockAuthDelegate::setAuthToken(std::string authToken) {
+    m_authToken = authToken;
+}
 
 }  // namespace test
 }  // namespace acl

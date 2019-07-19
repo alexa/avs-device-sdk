@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -106,14 +106,14 @@ static bool isOpen(const std::shared_ptr<MessageStorageInterface>& storage) {
 /**
  * Test basic construction.  Database should not be open.
  */
-TEST_F(MessageStorageTest, testConstructionAndDestruction) {
+TEST_F(MessageStorageTest, test_constructionAndDestruction) {
     ASSERT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test database creation.
  */
-TEST_F(MessageStorageTest, testDatabaseCreation) {
+TEST_F(MessageStorageTest, test_databaseCreation) {
     ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
@@ -122,7 +122,7 @@ TEST_F(MessageStorageTest, testDatabaseCreation) {
 /**
  * Test opening and closing a database.
  */
-TEST_F(MessageStorageTest, testOpenAndCloseDatabase) {
+TEST_F(MessageStorageTest, test_openAndCloseDatabase) {
     ASSERT_FALSE(isOpen(m_storage));
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
@@ -137,7 +137,7 @@ TEST_F(MessageStorageTest, testOpenAndCloseDatabase) {
 /**
  * Test storing records in the database.
  */
-TEST_F(MessageStorageTest, testDatabaseStoreAndLoad) {
+TEST_F(MessageStorageTest, test_databaseStoreAndLoad) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -172,7 +172,7 @@ TEST_F(MessageStorageTest, testDatabaseStoreAndLoad) {
 /**
  * Test erasing a record from the database.
  */
-TEST_F(MessageStorageTest, testDatabaseErase) {
+TEST_F(MessageStorageTest, test_databaseErase) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 
@@ -204,7 +204,7 @@ TEST_F(MessageStorageTest, testDatabaseErase) {
 /**
  * Test clearing the database.
  */
-TEST_F(MessageStorageTest, testDatabaseClear) {
+TEST_F(MessageStorageTest, test_databaseClear) {
     createDatabase();
     ASSERT_TRUE(isOpen(m_storage));
 

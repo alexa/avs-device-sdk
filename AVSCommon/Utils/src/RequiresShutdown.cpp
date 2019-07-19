@@ -104,11 +104,11 @@ ShutdownMonitor::~ShutdownMonitor() {
 
     for (auto object : m_objects) {
         if (!object->isShutdown()) {
-            m_destructorLogger.log(
+            m_destructorLogger.logAtExit(
                 alexaClientSDK::avsCommon::utils::logger::Level::WARN,
                 LX("ShutdownMonitor").d("reason", "no shutdown() call").d("name: ", object->name()));
         }
-        m_destructorLogger.log(
+        m_destructorLogger.logAtExit(
             alexaClientSDK::avsCommon::utils::logger::Level::WARN,
             LX("ShutdownMonitor").d("reason", "never deleted").d("name", object->name()));
     }

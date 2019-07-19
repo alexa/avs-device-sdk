@@ -19,11 +19,14 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace aip {
 
-const ESPData ESPData::EMPTY_ESP_DATA{};
-
 ESPData::ESPData(const std::string& voiceEnergy, const std::string& ambientEnergy) :
         m_voiceEnergy{voiceEnergy},
         m_ambientEnergy{ambientEnergy} {
+}
+
+const ESPData ESPData::getEmptyESPData() {
+    static const ESPData emptyESPData{};
+    return emptyESPData;
 }
 
 std::string ESPData::getVoiceEnergy() const {
