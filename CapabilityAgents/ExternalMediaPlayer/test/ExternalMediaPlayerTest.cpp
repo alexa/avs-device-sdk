@@ -268,6 +268,7 @@ public:
     MOCK_METHOD1(handleSetVolume, void(int8_t volume));
     MOCK_METHOD1(handleSetMute, void(bool));
     MOCK_METHOD0(getState, AdapterState());
+    MOCK_METHOD0(getOffset, std::chrono::milliseconds());
 
 private:
     /// MockExternalMediaPlayerAdapter private constructor.

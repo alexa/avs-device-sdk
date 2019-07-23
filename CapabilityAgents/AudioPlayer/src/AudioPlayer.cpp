@@ -100,6 +100,12 @@ static const std::chrono::seconds TIMEOUT{2};
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioPlayerCapabilityConfiguration();
 
+AudioPlayer::PlayDirectiveInfo::PlayDirectiveInfo(const std::string& messageId) :
+        messageId{messageId},
+        playBehavior{PlayBehavior::ENQUEUE},
+        sourceId{ERROR_SOURCE_ID} {
+}
+
 std::shared_ptr<AudioPlayer> AudioPlayer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -142,20 +148,30 @@ void AudioPlayer::provideState(
 }
 
 void AudioPlayer::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
-    handleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+    auto info = std::make_shared<DirectiveInfo>(directive, nullptr);
+    preHandleDirective(info);
+    handleDirective(info);
 }
 
 void AudioPlayer::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
-    // TODO: Move as much processing up here as possilble (ACSDK415).
+    if (!info || !info->directive) {
+        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullDirectiveInfo"));
+        return;
+    }
+    ACSDK_DEBUG5(LX(__func__).d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
+
+    if (info->directive->getName() == PLAY.name) {
+        preHandlePlayDirective(info);
+    }
 }
 
 void AudioPlayer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG(
-        LX("handleDirective").d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
-    if (!info) {
+    if (!info || !info->directive) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirectiveInfo"));
         return;
     }
+    ACSDK_DEBUG5(
+        LX("handleDirective").d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
     if (info->directive->getName() == PLAY.name) {
         handlePlayDirective(info);
     } else if (info->directive->getName() == STOP.name) {
@@ -175,15 +191,25 @@ void AudioPlayer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void AudioPlayer::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG(LX("cancelDirective").d("name", info->directive->getName()));
     removeDirective(info);
+    if (info && info->directive) {
+        ACSDK_DEBUG(LX("cancelDirective").d("name", info->directive->getName()));
+        auto messageId = info->directive->getMessageId();
+        m_executor.submit([this, messageId] {
+            for (auto it = m_preHandlePlayInfoList.begin(); it != m_preHandlePlayInfoList.end(); it++) {
+                if (messageId == it->get()->messageId) {
+                    m_preHandlePlayInfoList.erase(it);
+                }
+            }
+        });
+    }
 }
 
 void AudioPlayer::onDeregistered() {
     ACSDK_DEBUG(LX("onDeregistered"));
     m_executor.submit([this] {
         executeStop();
-        m_audioItems.clear();
+        m_audioPlayQueue.clear();
     });
 }
 
@@ -357,6 +383,12 @@ void AudioPlayer::removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::Audio
     });
 }
 
+void AudioPlayer::setObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
+    ACSDK_DEBUG1(LX(__func__));
+    m_executor.submit([this, observer] { m_renderPlayerObserver = observer; });
+}
+
 std::chrono::milliseconds AudioPlayer::getAudioItemOffset() {
     ACSDK_DEBUG1(LX(__func__));
     auto offset = m_executor.submit([this] { return getOffset(); });
@@ -381,6 +413,7 @@ AudioPlayer::AudioPlayer(
         m_focus{FocusState::NONE},
         m_initialOffset{0},
         m_sourceId{MediaPlayerInterface::ERROR},
+        m_isPreBuffering{false},
         m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}},
         m_isStopCalled{false} {
     m_capabilityConfigurations.insert(getAudioPlayerCapabilityConfiguration());
@@ -405,7 +438,7 @@ void AudioPlayer::doShutdown() {
     m_focusManager.reset();
     m_contextManager->setStateProvider(STATE, nullptr);
     m_contextManager.reset();
-    m_audioItems.clear();
+    m_audioPlayQueue.clear();
     m_playbackRouter.reset();
 }
 
@@ -424,8 +457,8 @@ bool AudioPlayer::parseDirectivePayload(std::shared_ptr<DirectiveInfo> info, rap
     return false;
 }
 
-void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG1(LX("handlePlayDirective"));
+void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG1(LX("preHandlePlayDirective"));
     ACSDK_DEBUG9(LX("PLAY").d("payload", info->directive->getPayload()));
     rapidjson::Document payload;
     if (!parseDirectivePayload(info, &payload)) {
@@ -439,11 +472,10 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     rapidjson::Value::ConstMemberIterator audioItemJson;
     if (!jsonUtils::findNode(payload, "audioItem", &audioItemJson)) {
-        ACSDK_ERROR(LX("handlePlayDirectiveFailed")
+        ACSDK_ERROR(LX("preHandlePlayDirectiveFailed")
                         .d("reason", "missingAudioItem")
                         .d("messageId", info->directive->getMessageId()));
         sendExceptionEncounteredAndReportFailed(info, "missing AudioItem");
-        ;
         return;
     }
 
@@ -454,7 +486,7 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     rapidjson::Value::ConstMemberIterator stream;
     if (!jsonUtils::findNode(audioItemJson->value, "stream", &stream)) {
-        ACSDK_ERROR(LX("handlePlayDirectiveFailed")
+        ACSDK_ERROR(LX("preHandlePlayDirectiveFailed")
                         .d("reason", "missingStream")
                         .d("messageId", info->directive->getMessageId()));
         sendExceptionEncounteredAndReportFailed(info, "missing stream");
@@ -462,8 +494,9 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     }
 
     if (!jsonUtils::retrieveValue(stream->value, "url", &audioItem.stream.url)) {
-        ACSDK_ERROR(
-            LX("handlePlayDirectiveFailed").d("reason", "missingUrl").d("messageId", info->directive->getMessageId()));
+        ACSDK_ERROR(LX("preHandlePlayDirectiveFailed")
+                        .d("reason", "missingUrl")
+                        .d("messageId", info->directive->getMessageId()));
         sendExceptionEncounteredAndReportFailed(info, "missing URL");
         return;
     }
@@ -477,17 +510,16 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
         std::string contentId = audioItem.stream.url.substr(CID_PREFIX.length());
         audioItem.stream.reader = info->directive->getAttachmentReader(contentId, sds::ReaderPolicy::NONBLOCKING);
         if (nullptr == audioItem.stream.reader) {
-            ACSDK_ERROR(LX("handlePlayDirectiveFailed")
+            ACSDK_ERROR(LX("preHandlePlayDirectiveFailed")
                             .d("reason", "getAttachmentReaderFailed")
                             .d("messageId", info->directive->getMessageId()));
             sendExceptionEncounteredAndReportFailed(info, "unable to obtain attachment reader");
-            ;
             return;
         }
 
         // TODO: Add a method to MediaPlayer to query whether a format is supported (ACSDK-416).
         if (audioItem.stream.format != StreamFormat::AUDIO_MPEG) {
-            ACSDK_ERROR(LX("handlePlayDirectiveFailed")
+            ACSDK_ERROR(LX("preHandlePlayDirectiveFailed")
                             .d("reason", "unsupportedFormat")
                             .d("format", audioItem.stream.format)
                             .d("messageId", info->directive->getMessageId()));
@@ -543,12 +575,34 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
         audioItem.stream.expectedPreviousToken = "";
     }
 
+    m_executor.submit([this, info, playBehavior, audioItem] {
+        auto messageId = info->directive->getMessageId();
+        if (executeIsInPreHandlePlayInfoList(messageId)) {
+            // There's is already a playInfo with the same messageId in the queue.
+            ACSDK_ERROR(LX("preHandlePlayDirectiveFailed").d("reason", "messageIdAlreadyInPreHandleQueue"));
+            sendExceptionEncounteredAndReportFailed(
+                info, "duplicated messageId " + messageId, ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+            return;
+        }
+
+        auto playDirectiveInfo = std::make_shared<AudioPlayer::PlayDirectiveInfo>(messageId);
+        playDirectiveInfo->audioItem = audioItem;
+        playDirectiveInfo->playBehavior = playBehavior;
+        executePrePlay(playDirectiveInfo);
+    });
+}
+
+void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG1(LX("handlePlayDirective"));
+
     // Note: Unlike SpeechSynthesizer, AudioPlayer directives are instructing the client to start/stop/queue
     //     content, so directive handling is considered to be complete when we have queued the content for
     //     playback; we don't wait for playback to complete.
     setHandlingCompleted(info);
 
-    m_executor.submit([this, playBehavior, audioItem] { executePlay(playBehavior, audioItem); });
+    auto messageId = info->directive->getMessageId();
+
+    m_executor.submit([this, messageId] { executePlay(messageId); });
 }
 
 void AudioPlayer::handleStopDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -577,7 +631,8 @@ void AudioPlayer::removeDirective(std::shared_ptr<DirectiveInfo> info) {
     // Check result too, to catch cases where DirectiveInfo was created locally, without a nullptr result.
     // In those cases there is no messageId to remove because no result was expected.
     if (info->directive && info->result) {
-        CapabilityAgent::removeDirective(info->directive->getMessageId());
+        auto messageId = info->directive->getMessageId();
+        CapabilityAgent::removeDirective(messageId);
     }
 }
 
@@ -636,12 +691,12 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
                 case PlayerActivity::STOPPED:
                 case PlayerActivity::FINISHED:
                     // We see a focus change to foreground in these states if we are starting to play a new song.
-                    if (!m_audioItems.empty()) {
+                    if (!m_audioPlayQueue.empty()) {
                         ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "playNextItem"));
                         playNextItem();
                     }
 
-                    // If m_audioItems is empty and channel wasn't released, that means we are going to
+                    // If m_audioPlayQueue is empty and channel wasn't released, that means we are going to
                     // play the next item.
 
                     return;
@@ -673,7 +728,7 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
                 case PlayerActivity::STOPPED:
                     // If we're stopping due to a new play and would have been continuing on to the next song, we want
                     // to block that.
-                    if (m_playNextItemAfterStopped && !m_audioItems.empty()) {
+                    if (m_playNextItemAfterStopped && !m_audioPlayQueue.empty()) {
                         m_playNextItemAfterStopped = false;
                         return;
                     }
@@ -714,7 +769,7 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus) {
                 case PlayerActivity::BUFFER_UNDERRUN:
                     // If the focus change came in while we were in a 'playing' state, we need to stop because we are
                     // yielding the channel.
-                    m_audioItems.clear();
+                    m_audioPlayQueue.clear();
                     ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "executeStop"));
                     executeStop();
                     return;
@@ -734,6 +789,8 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id) {
                         .d("m_sourceId", m_sourceId));
         return;
     }
+
+    m_isPreBuffering = false;
 
     // Race condition exists where focus can be lost before the executeOnPlaybackStarted callback.
     if (avsCommon::avs::FocusState::NONE == m_focus) {
@@ -773,10 +830,24 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id) {
             m_progressTimer.stop();
             sendPlaybackStoppedEvent();
             m_isStopCalled = false;
-            if (!m_playNextItemAfterStopped || m_audioItems.empty()) {
+            if (!m_playNextItemAfterStopped || (m_audioPlayQueue.empty() && m_preHandlePlayInfoList.empty())) {
                 handlePlaybackCompleted();
             } else if (avsCommon::avs::FocusState::FOREGROUND == m_focus) {
                 playNextItem();
+            } else if (avsCommon::avs::FocusState::BACKGROUND == m_focus) {
+                // Check if we have something to pre-buffer.
+                if (!m_preHandlePlayInfoList.empty() && !m_isPreBuffering) {
+                    auto playInfo = m_preHandlePlayInfoList.front();
+                    if (playInfo) {
+                        playInfo->sourceId = setSource(playInfo->audioItem);
+                        if (ERROR_SOURCE_ID != playInfo->sourceId) {
+                            m_isPreBuffering = true;
+                            ACSDK_INFO(LX("executeOnPlaybackStoppedPreBuffering").d("id", playInfo->audioItem.id));
+                        } else {
+                            ACSDK_ERROR(LX("executeOnPlaybackStoppedFailed").d("reason", "SetSourceFailed"));
+                        }
+                    }
+                }
             }
             return;
         case PlayerActivity::IDLE:
@@ -828,7 +899,7 @@ void AudioPlayer::executeOnPlaybackFinished(SourceId id) {
             sendPlaybackNearlyFinishedEvent();
 
             sendPlaybackFinishedEvent();
-            if (m_audioItems.empty()) {
+            if (m_audioPlayQueue.empty()) {
                 handlePlaybackCompleted();
             } else {
                 playNextItem();
@@ -865,6 +936,7 @@ void AudioPlayer::executeOnPlaybackError(SourceId id, const ErrorType& type, std
         return;
     }
 
+    m_isPreBuffering = false;
     m_progressTimer.stop();
     sendPlaybackFailedEvent(m_token, type, error);
 
@@ -953,37 +1025,168 @@ void AudioPlayer::executeOnTags(SourceId id, std::shared_ptr<const VectorOfTags>
     sendStreamMetadataExtractedEvent(vectorOfTags);
 }
 
-void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioItem) {
-    ACSDK_DEBUG1(LX("executePlay").d("playBehavior", playBehavior));
+bool AudioPlayer::executeShouldPreBufferInPreHandle(PlayBehavior playBehavior) {
+    bool shouldPreBuffer = false;
+    switch (m_currentActivity) {
+        case PlayerActivity::PLAYING:
+            break;
+
+        case PlayerActivity::IDLE:
+        case PlayerActivity::STOPPED:
+        case PlayerActivity::FINISHED:
+            shouldPreBuffer = !m_isPreBuffering || (PlayBehavior::REPLACE_ALL == playBehavior);
+            break;
+
+        case PlayerActivity::PAUSED:
+            if (PlayBehavior::REPLACE_ALL == playBehavior) {
+                // We shouldn't pre-buffer now for this case, but we should call executeStop now and play the next
+                // item.  And in executeOnPlaybackStopped, if the focus is still in BACKGROUND, then we should start
+                // buffering at that point.
+                executeStop(true);
+            }
+            break;
+
+        case PlayerActivity::BUFFER_UNDERRUN:
+            break;
+    }
+    return shouldPreBuffer;
+}
+
+AudioPlayer::SourceId AudioPlayer::setSource(const AudioItem& audioItem) {
+    ACSDK_DEBUG1(LX(__func__));
+    auto sourceId = ERROR_SOURCE_ID;
+    if (audioItem.stream.reader) {
+        sourceId = m_mediaPlayer->setSource(audioItem.stream.reader);
+        if (MediaPlayerInterface::ERROR == sourceId) {
+            sendPlaybackFailedEvent(
+                audioItem.stream.token,
+                ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+                "failed to set attachment media source");
+            ACSDK_ERROR(LX("setSourceFailed").d("reason", "setSourceFailed").d("type", "attachment"));
+        }
+    } else {
+        ACSDK_DEBUG9(LX("settingUrlSource").d("offset", audioItem.stream.offset.count()));
+        sourceId = m_mediaPlayer->setSource(audioItem.stream.url, audioItem.stream.offset);
+        if (MediaPlayerInterface::ERROR == sourceId) {
+            sendPlaybackFailedEvent(
+                audioItem.stream.token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "failed to set URL media source");
+            ACSDK_ERROR(LX("setSourceFailed").d("reason", "setSourceFailed").d("type", "URL"));
+        }
+    }
+    return sourceId;
+}
+
+bool AudioPlayer::executeIsInPreHandlePlayInfoList(const std::string& messageId) {
+    for (const auto& info : m_preHandlePlayInfoList) {
+        if (info && info->messageId == messageId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void AudioPlayer::executePrePlay(std::shared_ptr<AudioPlayer::PlayDirectiveInfo> info) {
+    if (!info) {
+        ACSDK_ERROR(LX("executePrePlayFailed").d("reason", "nullInfo"));
+        return;
+    }
+    ACSDK_DEBUG1(LX(__func__).d("playBehavior", info->playBehavior).d("state", m_currentActivity));
 
     // Per AVS docs, drop/ignore AudioItems that specify an expectedPreviousToken which does not match the
     // current/previous token.
-    if (!audioItem.stream.expectedPreviousToken.empty()) {
-        auto previousToken = m_audioItems.empty() ? m_token : m_audioItems.back().stream.token;
-        if (previousToken != audioItem.stream.expectedPreviousToken) {
-            ACSDK_INFO(LX("executePlayDropped")
+    if (!info->audioItem.stream.expectedPreviousToken.empty()) {
+        std::string previousToken;
+        if (!m_preHandlePlayInfoList.empty()) {
+            const auto& lastPlayInfo = m_preHandlePlayInfoList.back();
+            if (lastPlayInfo) {
+                previousToken = lastPlayInfo->audioItem.stream.token;
+            } else {
+                ACSDK_ERROR(
+                    LX("executePrePlayPreviousTokenNotFound").d("reason", "nullPlayInfoInPreHandlePlayInfoQueue"));
+            }
+        } else if (!m_audioPlayQueue.empty()) {
+            const auto& lastPlayInfo = m_audioPlayQueue.back();
+            if (lastPlayInfo) {
+                previousToken = lastPlayInfo->audioItem.stream.token;
+            } else {
+                ACSDK_ERROR(LX("executePrePlayPreviousTokenNotFound").d("reason", "nullPlayInfoInAudioPlayQueue"));
+            }
+        } else {
+            previousToken = m_token;
+        }
+        if (previousToken != info->audioItem.stream.expectedPreviousToken) {
+            ACSDK_INFO(LX("executePrePlayDropped")
                            .d("reason", "unexpectedPreviousToken")
                            .d("previous", previousToken)
-                           .d("expected", audioItem.stream.expectedPreviousToken));
+                           .d("expected", info->audioItem.stream.expectedPreviousToken));
             return;
         }
     }
 
+    if (executeShouldPreBufferInPreHandle(info->playBehavior)) {
+        info->sourceId = setSource(info->audioItem);
+        if (info->sourceId != ERROR_SOURCE_ID) {
+            ACSDK_INFO(LX("executePrePlayPreBuffering").d("id", info->audioItem.id));
+            m_isPreBuffering = true;
+        }
+    }
+
+    m_preHandlePlayInfoList.push_back(info);
+}
+
+void AudioPlayer::executePlay(const std::string& messageId) {
+    ACSDK_DEBUG1(LX(__func__));
+    if (m_preHandlePlayInfoList.empty()) {
+        ACSDK_ERROR(LX("executePlayFailed").d("reason", "emptyPlayQueue"));
+        return;
+    }
+
+    // If messageId is not found in set, just return
+    if (!executeIsInPreHandlePlayInfoList(messageId)) {
+        ACSDK_ERROR(LX("executePlayFailed").d("reason", "messageIdNotFoundInMap"));
+        return;
+    }
+
+    std::shared_ptr<PlayDirectiveInfo> playInfo;
+
+    // pop m_preHandlePlayInfoList until the playInfo with the matching messageId
+    while (!m_preHandlePlayInfoList.empty()) {
+        playInfo = m_preHandlePlayInfoList.front();
+        m_preHandlePlayInfoList.pop_front();
+        if (!playInfo) {
+            ACSDK_ERROR(LX("executePlayError").d("reason", "NullPlayInfo"));
+            continue;
+        }
+
+        if (playInfo->messageId == messageId) {
+            break;
+        }
+        ACSDK_WARN(LX("executePlay").d("reason", "TrackNotHeadOfQueue"));
+    }
+
+    if (!playInfo || playInfo->messageId != messageId) {
+        ACSDK_ERROR(LX("executePlayFailed").d("reason", "playInfoNotFound"));
+        return;
+    }
+
     // Do any playback/queue maintenance per playBehavior.
-    switch (playBehavior) {
+    switch (playInfo->playBehavior) {
         case PlayBehavior::REPLACE_ALL:
             // Note: this will change m_currentActivity to STOPPED.
-            executeStop(true);
+            if (!m_isStopCalled) {
+                executeStop(true);
+            }
         // FALL-THROUGH
         case PlayBehavior::REPLACE_ENQUEUED:
-            m_audioItems.clear();
+            m_audioPlayQueue.clear();
         // FALL-THROUGH
         case PlayBehavior::ENQUEUE:
-            m_audioItems.push_back(audioItem);
+            m_audioPlayQueue.push_back(playInfo);
             break;
     }
-    if (m_audioItems.empty()) {
-        ACSDK_ERROR(LX("executePlayFailed").d("reason", "unhandledPlayBehavior").d("playBehavior", playBehavior));
+    if (m_audioPlayQueue.empty()) {
+        ACSDK_ERROR(
+            LX("executePlayFailed").d("reason", "unhandledPlayBehavior").d("playBehavior", playInfo->playBehavior));
         return;
     }
 
@@ -1017,37 +1220,37 @@ void AudioPlayer::executePlay(PlayBehavior playBehavior, const AudioItem& audioI
 }
 
 void AudioPlayer::playNextItem() {
-    ACSDK_DEBUG1(LX("playNextItem").d("m_audioItems.size", m_audioItems.size()));
+    ACSDK_DEBUG1(LX("playNextItem").d("m_audioPlayQueue.size", m_audioPlayQueue.size()));
     // Cancel any existing progress timer.  The new timer will start when playback starts.
     m_progressTimer.stop();
-    if (m_audioItems.empty()) {
+    if (m_audioPlayQueue.empty()) {
         sendPlaybackFailedEvent(m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "queue is empty");
         ACSDK_ERROR(LX("playNextItemFailed").d("reason", "emptyQueue"));
         executeStop();
         return;
     }
 
-    auto item = m_audioItems.front();
-    m_audioItems.pop_front();
-    m_token = item.stream.token;
-    m_audioItemId = item.id;
-    m_initialOffset = item.stream.offset;
+    std::shared_ptr<PlayDirectiveInfo> info;
+    do {
+        info = m_audioPlayQueue.front();
+        m_audioPlayQueue.pop_front();
+    } while (!info && !m_audioPlayQueue.empty());
 
-    if (item.stream.reader) {
-        m_sourceId = m_mediaPlayer->setSource(std::move(item.stream.reader));
+    if (!info) {
+        ACSDK_ERROR(LX("playNextItemFailed").d("reason", "nullPlayInfo"));
+        return;
+    }
+
+    auto item = info->audioItem;
+    m_audioItemId = item.id;
+    m_token = item.stream.token;
+    m_initialOffset = item.stream.offset;
+    m_sourceId = info->sourceId;
+
+    if (MediaPlayerInterface::ERROR == m_sourceId) {
+        m_sourceId = setSource(item);
         if (MediaPlayerInterface::ERROR == m_sourceId) {
-            sendPlaybackFailedEvent(
-                m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "failed to set attachment media source");
-            ACSDK_ERROR(LX("playNextItemFailed").d("reason", "setSourceFailed").d("type", "attachment"));
-            return;
-        }
-    } else {
-        ACSDK_DEBUG9(LX("settingUrlSource").d("offset", item.stream.offset.count()));
-        m_sourceId = m_mediaPlayer->setSource(item.stream.url, item.stream.offset);
-        if (MediaPlayerInterface::ERROR == m_sourceId) {
-            sendPlaybackFailedEvent(
-                m_token, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "failed to set URL media source");
-            ACSDK_ERROR(LX("playNextItemFailed").d("reason", "setSourceFailed").d("type", "URL"));
+            ACSDK_ERROR(LX("playNextItemFailed").d("reason", "setSourceFailed"));
             return;
         }
     }
@@ -1088,13 +1291,13 @@ void AudioPlayer::executeStop(bool playNextItem) {
 }
 
 void AudioPlayer::executeClearQueue(ClearBehavior clearBehavior) {
-    ACSDK_DEBUG(LX("executeClearQueue").d("clearBehavior", clearBehavior));
+    ACSDK_DEBUG1(LX("executeClearQueue").d("clearBehavior", clearBehavior));
     switch (clearBehavior) {
         case ClearBehavior::CLEAR_ALL:
             executeStop();
         // FALL-THROUGH
         case ClearBehavior::CLEAR_ENQUEUED:
-            m_audioItems.clear();
+            m_audioPlayQueue.clear();
             sendPlaybackQueueClearedEvent();
             return;
     }
@@ -1273,6 +1476,14 @@ void AudioPlayer::notifyObserver() {
 
     for (auto& observer : m_observers) {
         observer->onPlayerActivityChanged(m_currentActivity, context);
+    }
+
+    if (m_renderPlayerObserver) {
+        avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface::Context renderPlayerInfoContext;
+        renderPlayerInfoContext.audioItemId = m_audioItemId;
+        renderPlayerInfoContext.offset = getOffset();
+        renderPlayerInfoContext.mediaProperties = shared_from_this();
+        m_renderPlayerObserver->onRenderPlayerCardsInfoChanged(m_currentActivity, renderPlayerInfoContext);
     }
 }
 

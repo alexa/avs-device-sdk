@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_STORAGE_SQLITESTORAGE_INCLUDE_SQLITESTORAGE_SQLITESTATEMENT_H_
 #define ALEXA_CLIENT_SDK_STORAGE_SQLITESTORAGE_INCLUDE_SQLITESTORAGE_SQLITESTATEMENT_H_
 
+#include <list>
 #include <sqlite3.h>
 #include <string>
 
@@ -184,6 +185,10 @@ private:
 
     /// The result of the last step operation.
     int m_stepResult;
+
+    /// A collection with all the string values that were bound to the current statement.
+    /// @warning SQLite will store a raw pointer to the string buffer so we must keep the reference alive.
+    std::list<std::string> m_boundValues;
 };
 
 }  // namespace sqliteStorage

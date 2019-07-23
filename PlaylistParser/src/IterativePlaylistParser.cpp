@@ -181,9 +181,11 @@ PlaylistEntry IterativePlaylistParser::next() {
                     }
                 }
             } else {
+                // This is a plain M3U playlist. Plain M3U playlist can contain either media URLs or playlist URLs.
+                // URLs found in plain M3U playlist are added to the playQueue for further processing.
                 auto entries = m3uContent.entries;
                 for (auto reverseIt = entries.rbegin(); reverseIt != entries.rend(); ++reverseIt) {
-                    m_playQueue.push_front(*reverseIt);
+                    m_playQueue.push_front(reverseIt->url);
                 }
             }
         } else if (lowerCaseContentType.find(PLS_CONTENT_TYPE) != std::string::npos) {

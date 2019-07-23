@@ -88,7 +88,8 @@ def process_inputs(inputs_folder, inputs):
     """
     ret = []
     for toProcess in inputs:
-        if path.exists(toProcess):
+        if path.exists(toProcess) or (path.dirname(toProcess) and
+                                      path.exists(path.dirname(toProcess))):
             # Input is a file / directory. Upload it to the device.
             push_command = 'adb push {} {}'.format(toProcess, inputs_folder)
             check_call(push_command.split(), stdout=FNULL)
@@ -104,6 +105,7 @@ def parse_output(output):
     lines = output.splitlines()
     print(string.join(lines[0:-1], '\n'))
     return int(lines[-1])
+
 
 if __name__ == '__main__':
     args = parse()

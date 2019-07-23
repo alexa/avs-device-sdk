@@ -136,11 +136,11 @@ MessageRequestHandler::MessageRequestHandler(
         m_wasMessageRequestAcknowledgeReported{false},
         m_wasMessageRequestFinishedReported{false},
         m_responseCode{0} {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+    ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 }
 
 void MessageRequestHandler::reportMessageRequestAcknowledged() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     if (!m_wasMessageRequestAcknowledgeReported) {
         m_wasMessageRequestAcknowledgeReported = true;
         m_context->onMessageRequestAcknowledged();
@@ -148,7 +148,7 @@ void MessageRequestHandler::reportMessageRequestAcknowledged() {
 }
 
 void MessageRequestHandler::reportMessageRequestFinished() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     if (!m_wasMessageRequestFinishedReported) {
         m_wasMessageRequestFinishedReported = true;
         m_context->onMessageRequestFinished();
@@ -156,7 +156,7 @@ void MessageRequestHandler::reportMessageRequestFinished() {
 }
 
 std::vector<std::string> MessageRequestHandler::getRequestHeaderLines() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
 
     m_context->onActivity();
 
@@ -164,7 +164,7 @@ std::vector<std::string> MessageRequestHandler::getRequestHeaderLines() {
 }
 
 HTTP2GetMimeHeadersResult MessageRequestHandler::getMimePartHeaderLines() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
 
     m_context->onActivity();
 
@@ -186,7 +186,7 @@ HTTP2GetMimeHeadersResult MessageRequestHandler::getMimePartHeaderLines() {
 }
 
 HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX(__func__).d("size", size));
 
     m_context->onActivity();
 
@@ -204,7 +204,7 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
     } else if (m_namedReader) {
         auto readStatus = AttachmentReader::ReadStatus::OK;
         auto bytesRead = m_namedReader->reader->read(bytes, size, &readStatus);
-        ACSDK_DEBUG5(LX("attachmentRead").d("readStatus", (int)readStatus).d("bytesRead", bytesRead));
+        ACSDK_DEBUG9(LX("attachmentRead").d("readStatus", (int)readStatus).d("bytesRead", bytesRead));
         switch (readStatus) {
             // The good cases.
             case AttachmentReader::ReadStatus::OK:
@@ -241,7 +241,7 @@ void MessageRequestHandler::onActivity() {
 }
 
 bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG7(LX(__func__).d("responseCode", responseCode));
 
     // TODO ACSDK-1839: Provide MessageRequestObserverInterface immediate notification of receipt of response code.
 
@@ -256,7 +256,7 @@ bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
 }
 
 void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody) {
-    ACSDK_DEBUG5(LX(__func__).d("status", status).d("responseCode", m_responseCode));
+    ACSDK_DEBUG7(LX(__func__).d("status", status).d("responseCode", m_responseCode));
 
     if (HTTP2ResponseFinishedStatus::TIMEOUT == status) {
         m_context->onMessageRequestTimeout();

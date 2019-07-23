@@ -488,6 +488,7 @@ private:
     avsCommon::avs::FocusState m_currentFocus;
 
     /// @c SpeakDirectiveInfo instance for the @c AVSDirective currently being handled.
+    /// Serialized by only accessing it from tasks running under m_executor.
     std::shared_ptr<SpeakDirectiveInfo> m_currentInfo;
 
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
@@ -508,10 +509,15 @@ private:
      */
     std::mutex m_speakDirectiveInfoMutex;
 
-    /// Queue which holds the directives to be processed.
+    /// Queue which holds the directives to be processed.  @c m_speakInfoQueueMutex must he acquired when
+    /// accessing or modifying this member.
     std::deque<std::shared_ptr<SpeakDirectiveInfo>> m_speakInfoQueue;
 
-    /// Serializes access to @c m_speakInfoQueue
+    /// Flag indicating if doShutdown() has been called.  @c m_speakInfoQueueMutex must he acquired when
+    /// accessing or modifying this member.
+    bool m_isShuttingDown;
+
+    /// Serializes access to @c m_speakInfoQueue.
     std::mutex m_speakInfoQueueMutex;
 
     /// This flag indicates whether the initial dialog UX State has been received.

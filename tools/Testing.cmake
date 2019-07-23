@@ -51,12 +51,26 @@ macro(configure_test_command testname inputs testsourcefile)
     elseif(ANDROID_TEST_AVAILABLE)
         # Use generator expression to get the test path when available.
         set(target_path $<TARGET_FILE:${testname}>)
-        add_test(NAME ${testname}
+        add_test(NAME "${testname}_fast"
             COMMAND python ${TESTING_CMAKE_DIR}/Testing/android_test.py
                 -n ${testname}
                 -s ${target_path}
                 -d ${ANDROID_DEVICE_INSTALL_PREFIX}
-                -i "${inputs}")
+                -i "${inputs}" " --gtest_filter=*test_*")
+        add_test(NAME "${testname}_slow"
+            COMMAND python ${TESTING_CMAKE_DIR}/Testing/android_test.py
+                -n ${testname}
+                -s ${target_path}
+                -d ${ANDROID_DEVICE_INSTALL_PREFIX}
+                -i "${inputs}" " --gtest_filter=*testSlow_*")
+        add_test(NAME "${testname}_timer"
+            COMMAND python ${TESTING_CMAKE_DIR}/Testing/android_test.py
+                -n ${testname}
+                -s ${target_path}
+                -d ${ANDROID_DEVICE_INSTALL_PREFIX}
+                -i "${inputs}" " --gtest_filter=*testTimer_*")
+        set_tests_properties("${testname}_slow" PROPERTIES LABELS "slowtest")
+        set_tests_properties("${testname}_timer" PROPERTIES LABELS "timertest")
     endif()
 endmacro()
 

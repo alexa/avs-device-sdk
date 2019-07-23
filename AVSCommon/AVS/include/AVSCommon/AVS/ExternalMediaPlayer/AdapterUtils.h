@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -66,15 +66,15 @@ extern const avsCommon::avs::NamespaceAndName PLAYER_EVENT;
 extern const avsCommon::avs::NamespaceAndName PLAYER_ERROR_EVENT;
 
 /**
- * Method to iterate over a vector of supported operation in playback state and convert to JSON.
+ * Method to iterate over a collection of supported operation in playback state and convert to JSON.
  *
- * @param supportedOperations The array of supported operations from the current playback state.
+ * @param supportedOperations The collection of supported operations from the current playback state.
  * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
  * rapidjson::Value objects.
  * @return The rapidjson::Value representing the array.
  */
 rapidjson::Value buildSupportedOperations(
-    const std::vector<avsCommon::sdkInterfaces::externalMediaPlayer::SupportedPlaybackOperation>& supportedOperations,
+    const std::set<avsCommon::sdkInterfaces::externalMediaPlayer::SupportedPlaybackOperation>& supportedOperations,
     rapidjson::Document::AllocatorType& allocator);
 
 /**

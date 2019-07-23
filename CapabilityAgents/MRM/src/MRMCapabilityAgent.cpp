@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,11 +38,13 @@ using namespace avsCommon::utils;
 /// The namespace for this capability agent.
 static const std::string NAMESPACE_STR = "MRM";
 
-/// The wildcard namespace signature so the DirectiveSequencer will send us all Directives under the namespace.
+/// The wildcard namespace signature so the DirectiveSequencer will send us all
+/// Directives under the namespace.
 static const avsCommon::avs::NamespaceAndName WHA_NAMESPACE_WILDCARD{NAMESPACE_STR, "*"};
 
 /**
- * Creates the MRM capability configuration, needed to register with Device Capability Framework.
+ * Creates the MRM capability configuration, needed to register with Device
+ * Capability Framework.
  *
  * @return The MRM capability configuration.
  */
@@ -52,7 +54,7 @@ static std::shared_ptr<CapabilityConfiguration> getMRMCapabilityConfiguration() 
 }
 
 std::shared_ptr<MRMCapabilityAgent> MRMCapabilityAgent::create(
-    std::unique_ptr<MRMHandlerInterface> mrmHandler,
+    std::shared_ptr<MRMHandlerInterface> mrmHandler,
     std::shared_ptr<SpeakerManagerInterface> speakerManager,
     std::shared_ptr<UserInactivityMonitorInterface> userInactivityMonitor,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
@@ -75,8 +77,8 @@ std::shared_ptr<MRMCapabilityAgent> MRMCapabilityAgent::create(
         return nullptr;
     }
 
-    auto agent = std::shared_ptr<MRMCapabilityAgent>(new MRMCapabilityAgent(
-        std::move(mrmHandler), speakerManager, userInactivityMonitor, exceptionEncounteredSender));
+    auto agent = std::shared_ptr<MRMCapabilityAgent>(
+        new MRMCapabilityAgent(mrmHandler, speakerManager, userInactivityMonitor, exceptionEncounteredSender));
 
     userInactivityMonitor->addObserver(agent);
     speakerManager->addSpeakerManagerObserver(agent);
@@ -85,13 +87,13 @@ std::shared_ptr<MRMCapabilityAgent> MRMCapabilityAgent::create(
 }
 
 MRMCapabilityAgent::MRMCapabilityAgent(
-    std::unique_ptr<MRMHandlerInterface> handler,
+    std::shared_ptr<MRMHandlerInterface> handler,
     std::shared_ptr<SpeakerManagerInterface> speakerManager,
     std::shared_ptr<UserInactivityMonitorInterface> userInactivityMonitor,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
         CapabilityAgent(NAMESPACE_STR, exceptionEncounteredSender),
         RequiresShutdown("MRMCapabilityAgent"),
-        m_mrmHandler{std::move(handler)},
+        m_mrmHandler{handler},
         m_speakerManager{speakerManager},
         m_userInactivityMonitor{userInactivityMonitor} {
     ACSDK_DEBUG5(LX(__func__));
@@ -151,6 +153,11 @@ void MRMCapabilityAgent::onSpeakerSettingsChanged(
     m_executor.submit([this, type]() { executeOnSpeakerSettingsChanged(type); });
 }
 
+void MRMCapabilityAgent::onCallStateChange(avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) {
+    ACSDK_DEBUG5(LX(__func__).d("callState", callState));
+    m_executor.submit([this, callState]() { executeOnCallStateChange(callState); });
+}
+
 std::string MRMCapabilityAgent::getVersionString() const {
     ACSDK_DEBUG5(LX(__func__));
     return m_mrmHandler->getVersionString();
@@ -159,7 +166,11 @@ std::string MRMCapabilityAgent::getVersionString() const {
 void MRMCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
 
-    if (m_mrmHandler->handleDirective(info->directive)) {
+    if (m_mrmHandler->handleDirective(
+            info->directive->getNamespace(),
+            info->directive->getName(),
+            info->directive->getMessageId(),
+            info->directive->getPayload())) {
         if (info->result) {
             info->result->setCompleted();
         }
@@ -188,10 +199,33 @@ void MRMCapabilityAgent::executeOnUserInactivityReportSent() {
     m_mrmHandler->onUserInactivityReportSent();
 }
 
+void MRMCapabilityAgent::executeSetObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_mrmHandler->setObserver(observer);
+}
+
+void MRMCapabilityAgent::executeOnCallStateChange(
+    const avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) {
+    ACSDK_DEBUG5(LX(__func__));
+    bool active =
+        (CallStateObserverInterface::CallState::CONNECTING == callState ||
+         CallStateObserverInterface::CallState::INBOUND_RINGING == callState ||
+         CallStateObserverInterface::CallState::CALL_CONNECTED == callState);
+
+    m_mrmHandler->onCallStateChange(active);
+}
+
 std::unordered_set<std::shared_ptr<CapabilityConfiguration>> MRMCapabilityAgent::getCapabilityConfigurations() {
     std::unordered_set<std::shared_ptr<CapabilityConfiguration>> configs;
     configs.insert(getMRMCapabilityConfiguration());
     return configs;
+}
+
+void MRMCapabilityAgent::setObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_executor.submit([this, observer]() { executeSetObserver(observer); });
 }
 
 void MRMCapabilityAgent::doShutdown() {

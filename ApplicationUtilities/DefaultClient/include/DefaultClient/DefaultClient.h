@@ -241,6 +241,13 @@ public:
     void disconnect();
 
     /**
+     * Get the URL endpoint for the AVS connection.
+     *
+     * @return The URL for the current AVS endpoint.
+     */
+    std::string getAVSEndpoint();
+
+    /**
      * Stops the foreground activity if there is one. This acts as a "stop" button that can be used to stop an
      * ongoing activity. This call will block until the foreground activity has stopped all user-observable activities.
      */

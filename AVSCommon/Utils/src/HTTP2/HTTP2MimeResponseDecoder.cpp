@@ -63,11 +63,11 @@ HTTP2MimeResponseDecoder::HTTP2MimeResponseDecoder(std::shared_ptr<HTTP2MimeResp
     m_multipartReader.onPartData = HTTP2MimeResponseDecoder::partDataCallback;
     m_multipartReader.onPartEnd = HTTP2MimeResponseDecoder::partEndCallback;
     m_multipartReader.userData = this;
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
 }
 
 bool HTTP2MimeResponseDecoder::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG9(LX(__func__).d("responseCode", responseCode));
     m_responseCode = responseCode;
 
     if (!m_sink) {
@@ -79,7 +79,7 @@ bool HTTP2MimeResponseDecoder::onReceiveResponseCode(long responseCode) {
 }
 
 bool HTTP2MimeResponseDecoder::onReceiveHeaderLine(const std::string& line) {
-    ACSDK_DEBUG5(LX(__func__).d("line", line));
+    ACSDK_DEBUG9(LX(__func__).d("line", line));
 
     if (!m_sink) {
         ACSDK_WARN(LX("onReceiveHeaderLineIgnored").d("reason", "nullSink"));
@@ -161,7 +161,7 @@ void HTTP2MimeResponseDecoder::partEndCallback(void* userData) {
 }
 
 HTTP2ReceiveDataStatus HTTP2MimeResponseDecoder::onReceiveData(const char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX(__func__).d("size", size));
     if (!bytes) {
         ACSDK_ERROR(LX("onReceivedDataFailed").d("reason", "nullBytes"));
         return HTTP2ReceiveDataStatus::ABORT;
@@ -240,7 +240,7 @@ HTTP2ReceiveDataStatus HTTP2MimeResponseDecoder::onReceiveData(const char* bytes
 }
 
 void HTTP2MimeResponseDecoder::onResponseFinished(HTTP2ResponseFinishedStatus status) {
-    ACSDK_DEBUG5(LX(__func__).d("status", status));
+    ACSDK_DEBUG9(LX(__func__).d("status", status));
 
     if (!m_sink) {
         ACSDK_WARN(LX("onResponseFinishedIgnored").d("reason", "nullSink"));

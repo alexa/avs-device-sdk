@@ -508,6 +508,14 @@ bool SpeakerManager::executeSetVolume(
         ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "noSpeakersWithType").d("type", type));
         return false;
     }
+
+    SpeakerInterface::SpeakerSettings settings;
+    if (!executeGetSpeakerSettings(type, &settings)) {
+        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "speakerSettingsInconsistent"));
+        return false;
+    }
+    const int8_t previousVolume = settings.volume;
+
     // Go through list of Speakers with SpeakerInterface::Type equal to type, and call setVolume.
     auto beginIteratorAndEndIterator = m_speakerMap.equal_range(type);
     auto begin = beginIteratorAndEndIterator.first;
@@ -521,11 +529,9 @@ bool SpeakerManager::executeSetVolume(
         }
     }
 
-    SpeakerInterface::SpeakerSettings settings;
-
     // All initialized speakers controlled by directives with the same type should have the same state.
     if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeSetVolume").d("reason", "speakerSettingsInconsistent"));
+        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "speakerSettingsInconsistent"));
         return false;
     }
 
@@ -533,6 +539,9 @@ bool SpeakerManager::executeSetVolume(
 
     if (forceNoNotifications) {
         ACSDK_INFO(LX("executeSetVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
+    } else if (previousVolume == settings.volume && SpeakerManagerObserverInterface::Source::LOCAL_API == source) {
+        ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending event").d("reason", "volumeUnchanged"));
+        executeNotifyObserver(source, type, settings);
     } else {
         executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
     }
@@ -575,12 +584,11 @@ bool SpeakerManager::executeAdjustVolume(
         return false;
     }
     SpeakerInterface::SpeakerSettings settings;
-
-    // All initialized speakers controlled by directives with the same type should have the same state.
-    if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "initialSpeakerSettingsInconsistent"));
+    if (!executeGetSpeakerSettings(type, &settings)) {
+        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "speakerSettingsInconsistent"));
         return false;
     }
+    const int8_t previousVolume = settings.volume;
 
     // Go through list of Speakers with SpeakerInterface::Type equal to type, and call adjustVolume.
     auto beginIteratorAndEndIterator = m_speakerMap.equal_range(type);
@@ -606,6 +614,9 @@ bool SpeakerManager::executeAdjustVolume(
 
     if (forceNoNotifications) {
         ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
+    } else if (previousVolume == settings.volume && SpeakerManagerObserverInterface::Source::LOCAL_API == source) {
+        ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending event").d("reason", "volumeUnchanged"));
+        executeNotifyObserver(source, type, settings);
     } else {
         executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
     }

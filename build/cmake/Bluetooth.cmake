@@ -12,7 +12,7 @@ if(BLUETOOTH_BLUEZ)
      find_package(PkgConfig)
      pkg_check_modules(GIO REQUIRED gio-2.0>=2.4)
      pkg_check_modules(GIO_UNIX REQUIRED gio-unix-2.0>=2.4)
-     pkg_check_modules(SBC REQUIRED)
+     pkg_check_modules(SBC REQUIRED sbc)
      add_definitions(-DBLUETOOTH_BLUEZ)
      # When we have other implementations, add another definition to represent whether Bluetooth is enabled.
      # add_definitions(-DBLUETOOTH_ENABLED)

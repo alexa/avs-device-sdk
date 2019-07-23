@@ -148,6 +148,11 @@ bool AVSConnectionManager::isConnected() const {
 void AVSConnectionManager::setAVSEndpoint(const std::string& avsEndpoint) {
     m_messageRouter->setAVSEndpoint(avsEndpoint);
 }
+
+std::string AVSConnectionManager::getAVSEndpoint() {
+    return m_messageRouter->getAVSEndpoint();
+}
+
 void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
     ACSDK_DEBUG5(LX(__func__).d("connected", connected));
     if (!connected) {
