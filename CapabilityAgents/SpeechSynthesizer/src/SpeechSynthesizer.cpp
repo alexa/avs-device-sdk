@@ -212,25 +212,31 @@ void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
             break;
     }
 
-    auto messageId = (m_currentInfo && m_currentInfo->directive) ? m_currentInfo->directive->getMessageId() : "";
     m_executor.submit([this]() { executeStateChange(); });
     // Block until we achieve the desired state.
     if (m_waitOnStateChange.wait_for(
             lock, STATE_CHANGE_TIMEOUT, [this]() { return m_currentState == m_desiredState; })) {
         ACSDK_DEBUG9(LX("onFocusChangedSuccess"));
     } else {
-        ACSDK_ERROR(LX("onFocusChangeFailed").d("reason", "stateChangeTimeout").d("messageId", messageId));
-        if (m_currentInfo) {
-            lock.unlock();
-            sendExceptionEncounteredAndReportFailed(
-                m_currentInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, "stateChangeTimeout");
-        }
+        ACSDK_ERROR(LX("onFocusChangeFailed").d("reason", "stateChangeTimeout"));
+        m_executor.submit([this]() {
+            if (m_currentInfo) {
+                std::string error{"stateChangeTimeout"};
+                if (m_currentInfo->directive) {
+                    error += " messageId=" + m_currentInfo->directive->getMessageId();
+                }
+                sendExceptionEncounteredAndReportFailed(
+                    m_currentInfo, avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR, error);
+            }
+        });
     }
 
-    m_executor.submit([this, messageId]() {
-        auto speakInfo = getSpeakDirectiveInfo(messageId);
-        if (speakInfo && speakInfo->isDelayedCancel) {
-            executeCancel(speakInfo);
+    m_executor.submit([this]() {
+        if (m_currentInfo && m_currentInfo->directive) {
+            auto speakInfo = getSpeakDirectiveInfo(m_currentInfo->directive->getMessageId());
+            if (speakInfo && speakInfo->isDelayedCancel) {
+                executeCancel(speakInfo);
+            }
         }
     });
 }
@@ -352,6 +358,7 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_desiredState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_currentFocus{FocusState::NONE},
         m_isAlreadyStopping{false},
+        m_isShuttingDown{false},
         m_initialDialogUXStateReceived{false} {
     m_capabilityConfigurations.insert(getSpeechSynthesizerCapabilityConfiguration());
 }
@@ -367,6 +374,10 @@ std::shared_ptr<CapabilityConfiguration> getSpeechSynthesizerCapabilityConfigura
 
 void SpeechSynthesizer::doShutdown() {
     ACSDK_DEBUG9(LX("doShutdown"));
+    {
+        std::lock_guard<std::mutex> lock(m_speakInfoQueueMutex);
+        m_isShuttingDown = true;
+    }
     m_speechPlayer->setObserver(nullptr);
     {
         std::unique_lock<std::mutex> lock(m_mutex);
@@ -379,7 +390,6 @@ void SpeechSynthesizer::doShutdown() {
             lock.unlock();
             stopPlaying();
             releaseForegroundFocus();
-
             lock.lock();
             m_currentState = SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED;
         }
@@ -705,7 +715,7 @@ void SpeechSynthesizer::executePlaybackFinished() {
     resetCurrentInfo();
     {
         std::lock_guard<std::mutex> lock_guard(m_speakInfoQueueMutex);
-        if (!m_speakInfoQueue.empty()) {
+        if (!m_isShuttingDown && !m_speakInfoQueue.empty()) {
             m_speakInfoQueue.pop_front();
             if (!m_speakInfoQueue.empty()) {
                 executeHandleAfterValidation(m_speakInfoQueue.front());

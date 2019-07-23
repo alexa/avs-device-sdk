@@ -136,10 +136,11 @@ bool SQLiteStatement::bindStringParameter(int index, const std::string& value) {
         return false;
     }
 
+    m_boundValues.push_back(value);
     int rcode = sqlite3_bind_text(
         m_handle,                                 // the statement handle
         index,                                    // the position to bind to
-        value.c_str(),                            // the value to bind
+        m_boundValues.back().c_str(),             // the value to bind
         SQLITE_PARSE_STRING_UNTIL_NUL_CHARACTER,  // SQLite string parsing instruction
         nullptr);                                 // optional destructor for SQLite to call once done
 

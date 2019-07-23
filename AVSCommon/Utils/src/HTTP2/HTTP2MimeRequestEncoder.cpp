@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -82,11 +82,11 @@ HTTP2MimeRequestEncoder::HTTP2MimeRequestEncoder(
         m_source{source},
         m_getMimeHeaderLinesResult{HTTP2GetMimeHeadersResult::ABORT},
         m_stringIndex{0} {
-    ACSDK_DEBUG5(LX(__func__).d("boundary", boundary).d("source", source.get()));
+    ACSDK_DEBUG9(LX(__func__).d("boundary", boundary).d("source", source.get()));
 }
 
 HTTP2SendDataResult HTTP2MimeRequestEncoder::onSendData(char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size).d("state", m_state));
+    ACSDK_DEBUG9(LX(__func__).d("size", size).d("state", m_state));
 
     if (!m_source) {
         return HTTP2SendDataResult::COMPLETE;
@@ -240,7 +240,7 @@ HTTP2SendDataResult HTTP2MimeRequestEncoder::onSendData(char* bytes, size_t size
 }
 
 std::vector<std::string> HTTP2MimeRequestEncoder::getRequestHeaderLines() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
     if (m_source) {
         auto lines = m_source->getRequestHeaderLines();
         lines.push_back(BOUNDARY_HEADER_PREFIX + m_rawBoundary);

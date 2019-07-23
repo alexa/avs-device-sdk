@@ -906,9 +906,12 @@ void Bluetooth::executeEnterForeground() {
         case StreamingState::PENDING_PAUSED:
         case StreamingState::PAUSED:
         case StreamingState::INACTIVE:
-            // We push a play because some devices do not auto start playback next/previous command.
-            m_cmdQueue.push_front(AVRCPCommand::PLAY);
-            executeDrainQueue();
+            // We push a play when the BT CA has been backgrounded because some devices do not
+            // auto start playback next/previous command.
+            if (m_focusState == FocusState::BACKGROUND) {
+                m_cmdQueue.push_front(AVRCPCommand::PLAY);
+                executeDrainQueue();
+            }
             if (m_mediaStream == nullptr) {
                 executeInitializeMediaSource();
             }

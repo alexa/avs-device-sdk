@@ -8,7 +8,9 @@ target_include_directories(MRM PUBLIC
 
 target_link_libraries(MRM AVSCommon)
 
-if (MRM)
+if (MRM AND MRM_WITH_IPC)
+    target_link_libraries(MRM MRMHandlerProxy)
+elseif (MRM)
     target_link_libraries(MRM MRMHandler)
 endif()
 

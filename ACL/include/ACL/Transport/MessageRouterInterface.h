@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -79,6 +79,13 @@ public:
      * @param avsEndpoint The URL for the new AVS endpoint.
      */
     virtual void setAVSEndpoint(const std::string& avsEndpoint) = 0;
+
+    /**
+     * Get the URL endpoint for the AVS connection.
+     *
+     * @return The URL for the current AVS endpoint.
+     */
+    virtual std::string getAVSEndpoint() = 0;
 
     /**
      * Set the observer to this object.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYERACTIVITY_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYERACTIVITY_H_
 
+#include <istream>
 #include <ostream>
 
 namespace alexaClientSDK {
@@ -79,6 +80,34 @@ inline std::string playerActivityToString(PlayerActivity playerActivity) {
  */
 inline std::ostream& operator<<(std::ostream& stream, const PlayerActivity& playerActivity) {
     return stream << playerActivityToString(playerActivity);
+}
+
+/**
+ * Converts an input string stream value to @c PlayerActivity.
+ *
+ * @param is The string stream to retrieve the value from.
+ * @param [out] value The value to write to.
+ * @return The stream that was passed in.
+ */
+inline std::istream& operator>>(std::istream& is, PlayerActivity& value) {
+    std::string str;
+    is >> str;
+    if ("IDLE" == str) {
+        value = PlayerActivity::IDLE;
+    } else if ("PLAYING" == str) {
+        value = PlayerActivity::PLAYING;
+    } else if ("STOPPED" == str) {
+        value = PlayerActivity::STOPPED;
+    } else if ("PAUSED" == str) {
+        value = PlayerActivity::PAUSED;
+    } else if ("BUFFER_UNDERRUN" == str) {
+        value = PlayerActivity::BUFFER_UNDERRUN;
+    } else if ("FINISHED" == str) {
+        value = PlayerActivity::FINISHED;
+    } else {
+        is.setstate(std::ios_base::failbit);
+    }
+    return is;
 }
 
 }  // namespace avs

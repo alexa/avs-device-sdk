@@ -22,11 +22,12 @@
 #include <rapidjson/document.h>
 
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
-#include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
-#include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MediaPropertiesInterface.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
@@ -113,13 +114,16 @@ static const std::string MALFORM_PLAYERINFO_PAYLOAD = "{"
 "}";
 // clang-format on
 
-class MockAudioPlayer : public AudioPlayerInterface {
+class MockMediaPropertiesFetcher : public MediaPropertiesInterface {
 public:
-    MOCK_METHOD1(addObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer));
-    MOCK_METHOD1(
-        removeObserver,
-        void(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer));
     MOCK_METHOD0(getAudioItemOffset, std::chrono::milliseconds());
+};
+
+class MockRenderInfoCardsPlayer : public RenderPlayerInfoCardsProviderInterface {
+public:
+    MOCK_METHOD1(
+        setObserver,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer));
 };
 
 class MockGui : public TemplateRuntimeObserverInterface {
@@ -215,8 +219,11 @@ protected:
     /// Future to synchronize releaseChannel calls.
     std::future<void> m_wakeReleaseChannelFuture;
 
-    /// A nice mock for the AudioPlayerInterface calls.
-    std::shared_ptr<NiceMock<MockAudioPlayer>> m_mockAudioPlayerInterface;
+    /// A nice mock for the RenderInfoCardsInterface calls.
+    std::shared_ptr<NiceMock<MockRenderInfoCardsPlayer>> m_mockRenderPlayerInfoCardsProvider;
+
+    /// A nice mock for the MediaPropertiesInterface calls.
+    std::shared_ptr<MockMediaPropertiesFetcher> m_mediaPropertiesFetcher;
 
     /// A strict mock that allows the test to strictly monitor the exceptions being sent.
     std::shared_ptr<StrictMock<MockExceptionEncounteredSender>> m_mockExceptionSender;
@@ -238,9 +245,11 @@ void TemplateRuntimeTest::SetUp() {
     m_mockExceptionSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
     m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
-    m_mockAudioPlayerInterface = std::make_shared<NiceMock<MockAudioPlayer>>();
+    m_mediaPropertiesFetcher = std::make_shared<NiceMock<MockMediaPropertiesFetcher>>();
+    m_mockRenderPlayerInfoCardsProvider = std::make_shared<NiceMock<MockRenderInfoCardsPlayer>>();
     m_mockGui = std::make_shared<StrictMock<MockGui>>();
-    m_templateRuntime = TemplateRuntime::create(m_mockAudioPlayerInterface, m_mockFocusManager, m_mockExceptionSender);
+    m_templateRuntime =
+        TemplateRuntime::create({m_mockRenderPlayerInfoCardsProvider}, m_mockFocusManager, m_mockExceptionSender);
     m_templateRuntime->addObserver(m_mockGui);
 
     ON_CALL(*m_mockFocusManager, acquireChannel(_, _, _)).WillByDefault(InvokeWithoutArgs([this] {
@@ -292,7 +301,7 @@ void TemplateRuntimeTest::wakeOnReleaseChannel() {
  * Tests creating the TemplateRuntime with a null audioPlayerInterface.
  */
 TEST_F(TemplateRuntimeTest, test_nullAudioPlayerInterface) {
-    auto templateRuntime = TemplateRuntime::create(nullptr, m_mockFocusManager, m_mockExceptionSender);
+    auto templateRuntime = TemplateRuntime::create({nullptr}, m_mockFocusManager, m_mockExceptionSender);
     ASSERT_EQ(templateRuntime, nullptr);
 }
 
@@ -300,7 +309,8 @@ TEST_F(TemplateRuntimeTest, test_nullAudioPlayerInterface) {
  * Tests creating the TemplateRuntime with a null focusManagerInterface.
  */
 TEST_F(TemplateRuntimeTest, test_nullFocusManagerInterface) {
-    auto templateRuntime = TemplateRuntime::create(m_mockAudioPlayerInterface, nullptr, m_mockExceptionSender);
+    auto templateRuntime =
+        TemplateRuntime::create({m_mockRenderPlayerInfoCardsProvider}, nullptr, m_mockExceptionSender);
     ASSERT_EQ(templateRuntime, nullptr);
 }
 
@@ -308,21 +318,27 @@ TEST_F(TemplateRuntimeTest, test_nullFocusManagerInterface) {
  * Tests creating the TemplateRuntime with a null exceptionSender.
  */
 TEST_F(TemplateRuntimeTest, test_nullExceptionSender) {
-    auto templateRuntime = TemplateRuntime::create(m_mockAudioPlayerInterface, m_mockFocusManager, nullptr);
+    auto templateRuntime = TemplateRuntime::create({m_mockRenderPlayerInfoCardsProvider}, m_mockFocusManager, nullptr);
     ASSERT_EQ(templateRuntime, nullptr);
 }
 
 /**
- * Tests that the TemplateRuntime successfully add itself with the AudioPlayer at constructor time, and
- * successfully remove itself with the AudioPlayer during shutdown.
+ * Tests that the TemplateRuntime successfully add itself with the RenderInfoCardsPlayers at constructor time, and
+ * successfully remove itself with the RenderPlayerInfoCardsPlayers during shutdown.
  */
-TEST_F(TemplateRuntimeTest, test_audioPlayerAddRemoveObserver) {
-    auto mockAudioPlayerInterface = std::make_shared<NiceMock<MockAudioPlayer>>();
+TEST_F(TemplateRuntimeTest, test_renderInfoCardsPlayersAddRemoveObserver) {
+    auto mockRenderInfoCardsProvider1 = std::make_shared<NiceMock<MockRenderInfoCardsPlayer>>();
+    auto mockRenderInfoCardsProvider2 = std::make_shared<NiceMock<MockRenderInfoCardsPlayer>>();
     auto mockExceptionSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
     auto mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
-    EXPECT_CALL(*mockAudioPlayerInterface, addObserver(NotNull())).Times(Exactly(1));
-    EXPECT_CALL(*mockAudioPlayerInterface, removeObserver(NotNull())).Times(Exactly(1));
-    auto templateRuntime = TemplateRuntime::create(mockAudioPlayerInterface, mockFocusManager, mockExceptionSender);
+
+    Expectation setObserver1 = EXPECT_CALL(*mockRenderInfoCardsProvider1, setObserver(NotNull())).Times(Exactly(1));
+    EXPECT_CALL(*mockRenderInfoCardsProvider1, setObserver(IsNull())).Times(Exactly(1)).After(setObserver1);
+    Expectation setObserver2 = EXPECT_CALL(*mockRenderInfoCardsProvider2, setObserver(NotNull())).Times(Exactly(1));
+    EXPECT_CALL(*mockRenderInfoCardsProvider2, setObserver(IsNull())).Times(Exactly(1)).After(setObserver2);
+
+    auto templateRuntime = TemplateRuntime::create(
+        {mockRenderInfoCardsProvider1, mockRenderInfoCardsProvider2}, mockFocusManager, mockExceptionSender);
     templateRuntime->shutdown();
 }
 
@@ -465,10 +481,11 @@ TEST_F(TemplateRuntimeTest, testSlow_renderPlayerInfoDirectiveBefore) {
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderPlayerInfoCard))
         .WillOnce(InvokeWithoutArgs([] {}));
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID;
     context.offset = TIMEOUT;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
 
     m_wakeRenderPlayerInfoCardFuture.wait_for(TIMEOUT);
 
@@ -476,7 +493,7 @@ TEST_F(TemplateRuntimeTest, testSlow_renderPlayerInfoDirectiveBefore) {
         .Times(Exactly(1))
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnClearPlayerInfoCard));
 
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::FINISHED, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::FINISHED, context);
     m_wakeClearPlayerInfoCardFuture.wait_for(PLAYER_FINISHED_TIMEOUT);
 }
 
@@ -498,10 +515,11 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAfter) {
         .Times(Exactly(1))
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID;
     context.offset = TIMEOUT;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
     m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
 
@@ -568,10 +586,11 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveDifferentAudioItemId) 
         .Times(Exactly(1))
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID_1;
     context.offset = TIMEOUT;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
     m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
@@ -581,15 +600,60 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveDifferentAudioItemId) 
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderPlayerInfoCard));
 
     context.audioItemId = AUDIO_ITEM_ID;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
 
     m_wakeRenderPlayerInfoCardFuture.wait_for(TIMEOUT);
 }
 
 /**
+ * Tests Provider notified the handling of AUDIO_ITEM_ID_1, and another provider notified the handling of
+ * AUDIO_ITEM_ID, and then RenderTemplate Directive with AUDIO_ITEM_ID is received.  Expect that the
+ * renderTemplateCard callback will be called and the correct getAudioItemOffset is called.
+ */
+TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveWithTwoProviders) {
+    auto anotherMediaPropertiesFetcher = std::make_shared<NiceMock<MockMediaPropertiesFetcher>>();
+
+    // Create Directive.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, PLAYERINFO_PAYLOAD, attachmentManager, "");
+
+    EXPECT_CALL(*m_mockGui, renderPlayerInfoCard(PLAYERINFO_PAYLOAD, _, _))
+        .Times(Exactly(1))
+        .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderPlayerInfoCard));
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
+        .Times(Exactly(1))
+        .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
+
+    EXPECT_CALL(*anotherMediaPropertiesFetcher, getAudioItemOffset())
+        .Times(Exactly(1))
+        .WillOnce(Return(std::chrono::milliseconds::zero()));
+    EXPECT_CALL(*m_mediaPropertiesFetcher, getAudioItemOffset()).Times(Exactly(0));
+
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
+    context.audioItemId = AUDIO_ITEM_ID_1;
+    context.offset = TIMEOUT;
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+
+    RenderPlayerInfoCardsObserverInterface::Context context1;
+    context1.mediaProperties = anotherMediaPropertiesFetcher;
+    context1.audioItemId = AUDIO_ITEM_ID;
+    context1.offset = TIMEOUT;
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context1);
+
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+
+    m_wakeRenderPlayerInfoCardFuture.wait_for(TIMEOUT);
+    m_wakeSetCompletedFuture.wait_for(TIMEOUT);
+}
+
+/**
  * Tests AudioPlayer callbacks will trigger the correct renderPlayerInfoCard callbacks. Expect
  * the payload, audioPlayerState and offset to match to the ones passed in by the
- * AudioPlayerObserverInterface.
+ * RenderPlayerInfoCardsObserverInterface.
  */
 TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
     // Create Directive.
@@ -607,7 +671,8 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
     m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID;
 
     // Test onAudioPlayed() callback with 100ms offset
@@ -624,7 +689,7 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
             EXPECT_EQ(audioPlayerInfo.offset, context.offset);
             wakePlayPromise.set_value();
         }));
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
     wakePlayFuture.wait_for(TIMEOUT);
 
     // Test onAudioPaused() callback with 200ms offset
@@ -641,7 +706,7 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
             EXPECT_EQ(audioPlayerInfo.offset, context.offset);
             wakePausePromise.set_value();
         }));
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PAUSED, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PAUSED, context);
     wakePauseFuture.wait_for(TIMEOUT);
 
     // Test onAudioStopped() callback with 300ms offset
@@ -658,7 +723,7 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
             EXPECT_EQ(audioPlayerInfo.offset, context.offset);
             wakeStopPromise.set_value();
         }));
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::STOPPED, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::STOPPED, context);
     wakeStopFuture.wait_for(TIMEOUT);
 
     // Test onAudioFinished() callback with 400ms offset
@@ -675,7 +740,7 @@ TEST_F(TemplateRuntimeTest, test_renderPlayerInfoDirectiveAudioStateUpdate) {
             EXPECT_EQ(audioPlayerInfo.offset, context.offset);
             wakeFinishPromise.set_value();
         }));
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::FINISHED, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::FINISHED, context);
     wakeFinishFuture.wait_for(TIMEOUT);
 }
 
@@ -756,10 +821,11 @@ TEST_F(TemplateRuntimeTest, test_reacquireChannel) {
         .Times(Exactly(1))
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderPlayerInfoCard));
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID;
     context.offset = TIMEOUT;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
     m_templateRuntime->handleDirectiveImmediately(directive);
     m_wakeRenderPlayerInfoCardFuture.wait_for(TIMEOUT);
 
@@ -791,16 +857,18 @@ TEST_F(TemplateRuntimeTest, test_reacquireChannel) {
 /**
  * Test that we should skip rendering a player info card if the audio has already changed.
  */
-TEST_F(TemplateRuntimeTest, testRenderPlayerInfoAfterPlayerActivityChanged) {
-    // Create Directive.
+TEST_F(TemplateRuntimeTest, test_RenderPlayerInfoAfterPlayerActivityChanged) {
+    // Create Directive1.
+    const std::string messageId1{"messageId1"};
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
-    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, MESSAGE_ID);
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, PLAYERINFO_PAYLOAD, attachmentManager, "");
+    auto avsMessageHeader1 = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, messageId1);
+    std::shared_ptr<AVSDirective> directive1 =
+        AVSDirective::create("", avsMessageHeader1, PLAYERINFO_PAYLOAD, attachmentManager, "");
 
-    AudioPlayerObserverInterface::Context context;
+    RenderPlayerInfoCardsObserverInterface::Context context;
+    context.mediaProperties = m_mediaPropertiesFetcher;
     context.audioItemId = AUDIO_ITEM_ID;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
 
     ::testing::InSequence s;
     EXPECT_CALL(*m_mockFocusManager, acquireChannel(_, _, _)).WillOnce(Return(true));
@@ -808,8 +876,8 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoAfterPlayerActivityChanged) {
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(Exactly(1))
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnSetCompleted));
-    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
-    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive1, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(messageId1);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 
     // Test onAudioPlayed() callback with 100ms offset
@@ -826,14 +894,20 @@ TEST_F(TemplateRuntimeTest, testRenderPlayerInfoAfterPlayerActivityChanged) {
         return returnValue;
     }));
 
-    m_templateRuntime->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
-    m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
+    // Create Directive2.
+    const std::string messageId2{"messageId2"};
+    auto avsMessageHeader2 = std::make_shared<AVSMessageHeader>(PLAYER_INFO.nameSpace, PLAYER_INFO.name, messageId2);
+    auto mockDirectiveHandlerResult1 = make_unique<StrictMock<MockDirectiveHandlerResult>>();
+    std::shared_ptr<AVSDirective> directive2 =
+        AVSDirective::create("", avsMessageHeader1, PLAYERINFO_PAYLOAD, attachmentManager, "");
+    m_templateRuntime->CapabilityAgent::preHandleDirective(directive2, std::move(m_mockDirectiveHandlerResult));
+    m_templateRuntime->CapabilityAgent::handleDirective(messageId2);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
     m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
     m_templateRuntime->displayCardCleared();
     m_wakeReleaseChannelFuture.wait_for(TIMEOUT);
     context.audioItemId = AUDIO_ITEM_ID_1;
-    m_templateRuntime->onPlayerActivityChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
+    m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
     m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
     m_templateRuntime->displayCardCleared();
     m_wakeReleaseChannelFuture.wait_for(TIMEOUT);

@@ -82,7 +82,7 @@ public:
 inline std::ostream& operator<<(std::ostream& stream, const CapabilitiesObserverInterface::State& state) {
     switch (state) {
         case CapabilitiesObserverInterface::State::UNINITIALIZED:
-            return stream << "UNINTIALIZED";
+            return stream << "UNINITIALIZED";
         case CapabilitiesObserverInterface::State::SUCCESS:
             return stream << "SUCCESS";
         case CapabilitiesObserverInterface::State::FATAL_ERROR:
@@ -103,7 +103,7 @@ inline std::ostream& operator<<(std::ostream& stream, const CapabilitiesObserver
 inline std::ostream& operator<<(std::ostream& stream, const CapabilitiesObserverInterface::Error& error) {
     switch (error) {
         case CapabilitiesObserverInterface::Error::UNINITIALIZED:
-            return stream << "UNINTIALIZED";
+            return stream << "UNINITIALIZED";
         case CapabilitiesObserverInterface::Error::SUCCESS:
             return stream << "SUCCESS";
         case CapabilitiesObserverInterface::Error::UNKNOWN_ERROR:
