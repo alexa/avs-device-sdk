@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
 #include "AVSCommon/Utils/RequiresShutdown.h"
 
 #include <chrono>
+#include <set>
 #include <string>
-#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -291,7 +291,7 @@ struct AdapterPlaybackState {
     std::string state;
 
     /// The set of states the default player can move into from its current state.
-    std::vector<SupportedPlaybackOperation> supportedOperations;
+    std::set<SupportedPlaybackOperation> supportedOperations;
 
     /// The offset of the track in milliseconds.
     std::chrono::milliseconds trackOffset;
@@ -457,6 +457,13 @@ public:
 
     /// Method to fetch the state(session state and playback state) of an adapter.
     virtual AdapterState getState() = 0;
+
+    /**
+     * This function retrieves the offset of the current track the adapter is handling.
+     *
+     * @return This returns the offset in milliseconds.
+     */
+    virtual std::chrono::milliseconds getOffset() = 0;
 };
 
 inline AdapterSessionState::AdapterSessionState() : loggedIn{false}, isGuest{false}, launched{false}, active{false} {

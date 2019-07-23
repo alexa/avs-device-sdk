@@ -1,5 +1,42 @@
 ## ChangeLog
 
+### v1.14.0 released 07/09/2019:
+
+**Enhancements**
+
+* AudioPlayer can now pre-buffer audio tracks in the Pre-Handle stage.
+
+**Bug Fixes**
+
+* Fixed an issue in the SQLite wrapper code where a `SQLiteStatement` caused a memory corruption issue.
+* Fixed a race condition in SpeechSynthesizer that caused crashes.
+* Fixed a `cmake` issue that specifies a dependency for Bluetooth incorrectly.
+* Fixed a bug that caused Bluetooth playback to start automatically.
+* Changed `supportedOperations` from a vector to a set in `ExternalMediaAdapterInterface`.
+* Corrected an issue where a `VolumeChanged` event had previously been sent when the volume was unchanged after `setVolume` or `adjustVolume` had been called locally.
+* Fixed issue with `IterativePlaylistParser` that prevented live stations on TuneIn from playing on Android.
+* Corrected the spelling of "UNINITIALIZED".
+
+**Known Issues**
+
+* Music playback history isn't being displayed in the Alexa app for certain account and device types.
+* On GCC 8+, issues related to `-Wclass-memaccess` will trigger warnings. However, this won't cause the build to fail and these warnings can be ignored.
+* Android error ("libDefaultClient.so" not found) can be resolved by upgrading to ADB version 1.0.40
+* When network connection is lost, lost connection status is not returned via local TTS.
+* `ACL` may encounter issues if audio attachments are received but not consumed.
+* `SpeechSynthesizerState` currently uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate state. These states may be removed in a future release.
+* The Alexa app doesn't always indicate when a device is successfully connected via Bluetooth.
+* Connecting a product to streaming media via Bluetooth will sometimes stop media playback within the source application. Resuming playback through the source application or toggling next/previous will correct playback.
+* When a source device is streaming silence via Bluetooth, the Alexa app indicates that audio content is streaming.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation is not yet supported.
+* On some products, interrupted Bluetooth playback may not resume if other content is locally streamed.
+* `make integration` is currently not available for Android. In order to run integration tests on Android, you'll need to manually upload the test binary file along with any input file. At that point, the adb can be used to run the integration tests.
+* On Raspberry Pi running Android Things with HDMI output audio, beginning of speech is truncated when Alexa responds to user text-to-speech (TTS).
+* When the sample app is restarted and the network connection is lost, the Reminder TTS message does not play. Instead, the default alarm tone will play twice.
+* `ServerDisconnectIntegratonTest` tests have been disabled until they can be updated to reflect new service behavior.
+* Devices connected before the Bluetooth CA is initialized are ignored.
+* The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
+
 ### v1.13.0 released 05/22/2019:
 
 **Enhancements**

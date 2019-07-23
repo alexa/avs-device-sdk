@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 #include <map>
 #include <memory>
+#include <mutex>
 #include <string>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
@@ -31,6 +32,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -52,6 +54,8 @@ class ExternalMediaPlayer
         , public avsCommon::utils::RequiresShutdown
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::ExternalMediaPlayerInterface
+        , public avsCommon::sdkInterfaces::MediaPropertiesInterface
+        , public avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface
         , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
         , public std::enable_shared_from_this<ExternalMediaPlayer> {
 public:
@@ -135,6 +139,17 @@ public:
     /// @name CapabilityConfigurationInterface Functions
     /// @{
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
+    /// @name RenderPlayerInfoCardsProviderInterface Functions
+    /// @{
+    void setObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) override;
+    /// @}
+
+    /// @name MediaPropertiesInterface Functions
+    /// @{
+    std::chrono::milliseconds getAudioItemOffset() override;
     /// @}
 
     /**
@@ -370,6 +385,11 @@ private:
         const avsCommon::sdkInterfaces::externalMediaPlayer::ObservableSessionProperties* sessionProperties,
         const avsCommon::sdkInterfaces::externalMediaPlayer::ObservablePlaybackStateProperties* playbackProperties);
 
+    /**
+     * Calls observer and provides the supplied changes related to RenderPlayerInfoCards for the active adapter.
+     */
+    void notifyRenderPlayerInfoCardsObservers();
+
     /// The @c SpeakerManagerInterface used to change the volume when requested by @c ExternalMediaAdapterInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
 
@@ -383,8 +403,20 @@ private:
     std::map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface>>
         m_adapters;
 
-    /// The id of the player which currently has focus.
+    /// The id of the player which currently has focus.  Access to @c m_playerInFocus is protected by @c
+    /// m_inFocusAdapterMutex.
+    /// TODO: ACSDK-2834 Consolidate m_playerInFocus and m_adapterInFocus.
     std::string m_playerInFocus;
+
+    /// The adapter with the @c m_playerInFocus which currently has focus.  Access to @c m_adapterInFocus is
+    // protected by @c m_inFocusAdapterMutex.
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> m_adapterInFocus;
+
+    /// Mutex to serialize access to the @c m_playerInFocus.
+    std::mutex m_inFocusAdapterMutex;
+
+    /// Mutex to serialize access to @c m_adapters.
+    std::mutex m_adaptersMutex;
 
     /// Mutex to serialize access to the observers.
     std::mutex m_observersMutex;
@@ -393,6 +425,9 @@ private:
     std::unordered_set<
         std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface>>
         m_observers;
+
+    /// Observer for changes related to RenderPlayerInfoCards.
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> m_renderPlayerObserver;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

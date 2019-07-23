@@ -148,8 +148,10 @@ public:
     }
 
     MOCK_CONST_METHOD0(getVersionString, std::string());
-    MOCK_METHOD1(handleDirective, bool(std::shared_ptr<AVSDirective> directive));
+    MOCK_METHOD4(handleDirective, bool(const std::string&, const std::string&, const std::string&, const std::string&));
     MOCK_METHOD0(doShutdown, void());
+    MOCK_METHOD1(onCallStateChange, void(bool));
+    MOCK_METHOD1(setObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface>));
 
     /**
      * overridden function, minus the explicit override, since gtest does not use override.
@@ -296,12 +298,12 @@ TEST_F(MRMCapabilityAgentTest, test_handleMRMDirective) {
     std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
 
     // Test that the MRMHandler will receive the Directive and fail to handle it.
-    EXPECT_CALL(*m_mockMRMHandlerPtr, handleDirective(_)).WillOnce(Return(false));
+    EXPECT_CALL(*m_mockMRMHandlerPtr, handleDirective(_, _, _, _)).WillOnce(Return(false));
     m_mrmCA->handleDirectiveImmediately(directive);
     ASSERT_TRUE(m_exceptionSender->wait(WAIT_FOR_INVOCATION_LONG_TIMEOUT));
 
     // Test that the MRMHandler will receive the Directive and successfully handle it.
-    EXPECT_CALL(*m_mockMRMHandlerPtr, handleDirective(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockMRMHandlerPtr, handleDirective(_, _, _, _)).WillOnce(Return(true));
     m_mrmCA->handleDirectiveImmediately(directive);
     ASSERT_FALSE(m_exceptionSender->wait(WAIT_FOR_INVOCATION_SHORT_TIMEOUT));
 }

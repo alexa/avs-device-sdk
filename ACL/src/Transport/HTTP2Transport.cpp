@@ -176,7 +176,7 @@ HTTP2Transport::HTTP2Transport(
         m_postConnected{false},
         m_configuration{configuration},
         m_disconnectReason{ConnectionStatusObserverInterface::ChangedReason::NONE} {
-    ACSDK_DEBUG5(LX(__func__)
+    ACSDK_DEBUG7(LX(__func__)
                      .d("authDelegate", authDelegate.get())
                      .d("avsEndpoint", avsEndpoint)
                      .d("http2Connection", http2Connection.get())
@@ -251,12 +251,12 @@ bool HTTP2Transport::isConnected() {
 }
 
 void HTTP2Transport::send(std::shared_ptr<MessageRequest> request) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     enqueueRequest(request, false);
 }
 
 void HTTP2Transport::sendPostConnectMessage(std::shared_ptr<MessageRequest> request) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     enqueueRequest(request, true);
 }
 
@@ -371,7 +371,7 @@ void HTTP2Transport::onMessageRequestSent() {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_isMessageHandlerAwaitingResponse = true;
     m_countOfUnfinishedMessageHandlers++;
-    ACSDK_DEBUG5(LX(__func__).d("countOfUnfinishedMessageHandlers", m_countOfUnfinishedMessageHandlers));
+    ACSDK_DEBUG7(LX(__func__).d("countOfUnfinishedMessageHandlers", m_countOfUnfinishedMessageHandlers));
 }
 
 void HTTP2Transport::onMessageRequestTimeout() {
@@ -384,7 +384,7 @@ void HTTP2Transport::onMessageRequestTimeout() {
 }
 
 void HTTP2Transport::onMessageRequestAcknowledged() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_isMessageHandlerAwaitingResponse = false;
     m_wakeEvent.notify_all();
@@ -393,12 +393,12 @@ void HTTP2Transport::onMessageRequestAcknowledged() {
 void HTTP2Transport::onMessageRequestFinished() {
     std::lock_guard<std::mutex> lock(m_mutex);
     --m_countOfUnfinishedMessageHandlers;
-    ACSDK_DEBUG5(LX(__func__).d("countOfUnfinishedMessageHandlers", m_countOfUnfinishedMessageHandlers));
+    ACSDK_DEBUG7(LX(__func__).d("countOfUnfinishedMessageHandlers", m_countOfUnfinishedMessageHandlers));
     m_wakeEvent.notify_all();
 }
 
 void HTTP2Transport::onPingRequestAcknowledged(bool success) {
-    ACSDK_DEBUG5(LX(__func__).d("success", success));
+    ACSDK_DEBUG7(LX(__func__).d("success", success));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_pingHandler.reset();
     if (!success) {
@@ -417,7 +417,7 @@ void HTTP2Transport::onPingTimeout() {
 }
 
 void HTTP2Transport::onActivity() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG9(LX(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_timeOfLastActivity = std::chrono::steady_clock::now();
 }
@@ -428,7 +428,7 @@ void HTTP2Transport::onForbidden(const std::string& authToken) {
 }
 
 std::shared_ptr<HTTP2RequestInterface> HTTP2Transport::createAndSendRequest(const HTTP2RequestConfig& cfg) {
-    ACSDK_DEBUG5(LX(__func__).d("type", cfg.getRequestType()).sensitive("url", cfg.getUrl()));
+    ACSDK_DEBUG7(LX(__func__).d("type", cfg.getRequestType()).sensitive("url", cfg.getUrl()));
     return m_http2Connection->createAndSendRequest(cfg);
 }
 
@@ -537,7 +537,7 @@ HTTP2Transport::State HTTP2Transport::handleConnecting() {
 }
 
 HTTP2Transport::State HTTP2Transport::handleWaitingToRetryConnecting() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     std::chrono::milliseconds timeout = TransportDefines::RETRY_TIMER.calculateTimeToRetry(m_connectRetryCount);
     ACSDK_DEBUG5(
@@ -602,7 +602,7 @@ HTTP2Transport::State HTTP2Transport::handleShutdown() {
 }
 
 void HTTP2Transport::enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request, bool beforeConnected) {
-    ACSDK_DEBUG5(LX(__func__).d("beforeConnected", beforeConnected));
+    ACSDK_DEBUG7(LX(__func__).d("beforeConnected", beforeConnected));
 
     if (!request) {
         ACSDK_ERROR(LX("enqueueRequestFailed").d("reason", "nullRequest"));
@@ -638,7 +638,7 @@ void HTTP2Transport::enqueueRequest(std::shared_ptr<avsCommon::avs::MessageReque
 }
 
 HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(alexaClientSDK::acl::HTTP2Transport::State whileState) {
-    ACSDK_DEBUG5(LX(__func__).d("whileState", whileState));
+    ACSDK_DEBUG7(LX(__func__).d("whileState", whileState));
 
     std::unique_lock<std::mutex> lock(m_mutex);
 
@@ -705,7 +705,7 @@ HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(alexaClientSDK::acl::
 
                 lock.lock();
             } else {
-                ACSDK_DEBUG5(LX("m_pingHandler != nullptr"));
+                ACSDK_DEBUG7(LX("m_pingHandler != nullptr"));
             }
         }
     }
@@ -722,7 +722,7 @@ bool HTTP2Transport::setStateLocked(State newState, ConnectionStatusObserverInte
     ACSDK_DEBUG5(LX(__func__).d("newState", newState).d("changedReason", changedReason));
 
     if (newState == m_state) {
-        ACSDK_DEBUG5(LX("alreadyInNewState"));
+        ACSDK_DEBUG7(LX("alreadyInNewState"));
         return true;
     }
 
@@ -787,7 +787,7 @@ bool HTTP2Transport::setStateLocked(State newState, ConnectionStatusObserverInte
 }
 
 void HTTP2Transport::notifyObserversOnConnected() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     std::unique_lock<std::mutex> lock{m_observerMutex};
     auto observers = m_observers;
@@ -799,7 +799,7 @@ void HTTP2Transport::notifyObserversOnConnected() {
 }
 
 void HTTP2Transport::notifyObserversOnDisconnect(ConnectionStatusObserverInterface::ChangedReason reason) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     if (m_postConnect) {
         m_postConnect->onDisconnect();
@@ -816,7 +816,7 @@ void HTTP2Transport::notifyObserversOnDisconnect(ConnectionStatusObserverInterfa
 }
 
 void HTTP2Transport::notifyObserversOnServerSideDisconnect() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     if (m_postConnect) {
         m_postConnect->onDisconnect();

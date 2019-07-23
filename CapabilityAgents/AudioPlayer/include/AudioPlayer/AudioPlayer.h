@@ -16,6 +16,8 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOPLAYER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_AUDIOPLAYER_H_
 
+#include <deque>
+#include <list>
 #include <memory>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
@@ -27,6 +29,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/ErrorTypes.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
@@ -55,6 +58,8 @@ class AudioPlayer
         : public avsCommon::avs::CapabilityAgent
         , public ProgressTimer::ContextInterface
         , public avsCommon::sdkInterfaces::AudioPlayerInterface
+        , public avsCommon::sdkInterfaces::MediaPropertiesInterface
+        , public avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
@@ -124,6 +129,16 @@ public:
     /// @{
     void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
+    /// @}
+
+    /// @name RenderPlayerInfoCardsProviderInterface Functions
+    /// @{
+    void setObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) override;
+    /// @}
+
+    /// @name MediaPropertiesInterface Functions
+    /// @{
     std::chrono::milliseconds getAudioItemOffset() override;
     /// @}
 
@@ -133,6 +148,31 @@ public:
     /// @}
 
 private:
+    /**
+     * This structure contain the necessary objects from the @c PLAY directive that are used for playing the audio.
+     */
+    struct PlayDirectiveInfo {
+        /// MessageId from the @c PLAY directive.
+        const std::string messageId;
+
+        /// This is the @c AudioItem object from the @c PLAY directive.
+        AudioItem audioItem;
+
+        /// This is the @c PlayBehavior from the @c PLAY directive.
+        PlayBehavior playBehavior;
+
+        /// The @c SourceId from setSource API call.  If the SourceId is not equal to ERROR_SOURCE_ID, it means that
+        /// this audioItem has buffered by the @c MediaPlayer.
+        SourceId sourceId;
+
+        /**
+         * Constructor.
+         *
+         * @param messageId The message ID of the @c PLAY directive.
+         */
+        PlayDirectiveInfo(const std::string& messageId);
+    };
+
     /**
      * Constructor.
      *
@@ -165,6 +205,13 @@ private:
      * @return @c true if parsing was successful, else @c false.
      */
     bool parseDirectivePayload(std::shared_ptr<DirectiveInfo> info, rapidjson::Document* document);
+
+    /**
+     * This function pre-handles a @c PLAY directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     */
+    void preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
      * This function handles a @c PLAY directive.
@@ -280,12 +327,44 @@ private:
     void executeOnTags(SourceId id, std::shared_ptr<const VectorOfTags> vectorOfTags);
 
     /**
-     * This function executes a parsed @c PLAY directive.
+     * This function checks to see if @c AudioPlayer should start pre-buffering the @c AudioItem in pre-handle stage.
      *
      * @param playBehavior Specifies how @c audioItem should be queued/played.
-     * @param audioItem The new @c AudioItem to play.
+     * @return true if @c AudioPlayer should start buffering the @c AudioItem in pre-handle, else @c false.
      */
-    void executePlay(PlayBehavior playBehavior, const AudioItem& audioItem);
+    bool executeShouldPreBufferInPreHandle(PlayBehavior playBehavior);
+
+    /**
+     * Set a source to play in MediaPlayer.
+     *
+     * @param audioItem The @c AudioItem with information for what needs to be played.
+     * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
+     *     returned if the source failed to be set.
+     */
+    SourceId setSource(const AudioItem& audioItem);
+
+    /**
+     * This function checks to see if a @c PlayDirectiveInfo in @c m_preHandlePlayInfoList with the same messageId
+     * exists or not.
+     *
+     * @param messageId The message ID to check against.
+     * @return true if there exists a @c PlayDirectiveInfo with the same messageId, else @c false.
+     */
+    bool executeIsInPreHandlePlayInfoList(const std::string& messageId);
+
+    /**
+     * This function executes a parsed @c PLAY directive in pre-handle stage.
+     *
+     * @param info The @c PlayDirectiveInfo specifying the information from the @c PLAY directive.
+     */
+    void executePrePlay(std::shared_ptr<PlayDirectiveInfo> info);
+
+    /**
+     * This function executes a parsed @c PLAY directive in handle stage.
+     *
+     * @param messageId The message ID of the @C PLAY directive.
+     */
+    void executePlay(const std::string& messageId);
 
     /// This function plays the next @c AudioItem in the queue.
     void playNextItem();
@@ -437,8 +516,14 @@ private:
     /// The current focus state of the @c AudioPlayer on the content channel.
     avsCommon::avs::FocusState m_focus;
 
-    /// The queue of @c AudioItems to play.
-    std::deque<AudioItem> m_audioItems;
+    /// The list of @c PlayDirectiveInfo parsed during the pre-handle stage.
+    std::list<std::shared_ptr<PlayDirectiveInfo>> m_preHandlePlayInfoList;
+
+    /*
+     * The queue of @c PlayDirectiveInfo to play.  The @c PlayBehavior is already resolved when items are
+     * added to the queue.  This queue is used to find the next @c AudioItem to play when @c playNextItem() is called.
+     */
+    std::deque<std::shared_ptr<PlayDirectiveInfo>> m_audioPlayQueue;
 
     /// The token of the currently (or most recently) playing @c AudioItem.
     std::string m_token;
@@ -449,8 +534,11 @@ private:
     /// The initial offset for the currently (or most recent) playing @c AudioItem.
     std::chrono::milliseconds m_initialOffset;
 
-    /// The id of the currently (or most recently) playing @c MediaPlayer source.
+    /// The ID of the currently (or most recently) playing @c MediaPlayer source.
     SourceId m_sourceId;
+
+    /// Flag to check if there's a on-going pre-buffering.
+    bool m_isPreBuffering;
 
     /// When in the @c BUFFER_UNDERRUN state, this records the time at which the state was entered.
     std::chrono::steady_clock::time_point m_bufferUnderrunTimestamp;
@@ -468,6 +556,9 @@ private:
     /// A set of observers to be notified when there's a change in the audio state.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface>> m_observers;
 
+    /// Observer for changes related to RenderPlayerInfoCards.
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> m_renderPlayerObserver;
+
     /**
      * A flag which is set when calling @c MediaPlayerInterface::stop(), and used by @c onPlaybackStopped() to decide
      * whether to continue on to the next queued item.
@@ -479,7 +570,6 @@ private:
      * This flag is used to tell if the @c AudioPlayer is in the process of stopping playback.
      */
     bool m_isStopCalled;
-
     /// @}
 
     /// Set of capability configurations that will get published using the Capabilities API

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
@@ -29,8 +30,10 @@ namespace capabilityAgents {
 namespace mrm {
 
 /**
- * An interface which should be extended by a class which wishes to implement lower level MRM functionality, such as
- * device / platform, local network, time synchronization, and audio playback.  The api provided here is minimal and
+ * An interface which should be extended by a class which wishes to implement
+ * lower level MRM functionality, such as
+ * device / platform, local network, time synchronization, and audio playback.
+ * The api provided here is minimal and
  * sufficient with respect to integration with other AVS Client SDK components.
  */
 class MRMHandlerInterface : public avsCommon::utils::RequiresShutdown {
@@ -55,10 +58,17 @@ public:
     /**
      * Function to handle an MRM Directive.
      *
-     * @param directive The MRM @c AVSDirective to be handled.
+     * @param nameSpace The namespace of the @c AVSDirective to be handled.
+     * @param name The name of the @c AVSDirective to be handled.
+     * @param messageId The messageId of the @c AVSDirective to be handled.
+     * @param payload The payload of the @c AVSDirective to be handled.
      * @return Whether the Directive was handled successfully.
      */
-    virtual bool handleDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) = 0;
+    virtual bool handleDirective(
+        const std::string& nameSpace,
+        const std::string& name,
+        const std::string& messageId,
+        const std::string& payload) = 0;
 
     /**
      * Function to handle if a speaker setting has changed.  MRM only needs to know the type of the speaker.
@@ -71,6 +81,19 @@ public:
      * Function to be called when a System.UserInactivityReportSent Event has been sent to AVS.
      */
     virtual void onUserInactivityReportSent() = 0;
+
+    /**
+     * Function to be called when a comms CallState has been changed.
+     */
+    virtual void onCallStateChange(bool active) = 0;
+
+    /**
+     * Function to set the RenderPlayerInfoCardsProviderInterface.
+     *
+     * @param observer The RenderPlayerInfoCardsObserverInterface to be set.
+     */
+    virtual void setObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) = 0;
 };
 
 inline MRMHandlerInterface::MRMHandlerInterface(const std::string& shutdownName) :
