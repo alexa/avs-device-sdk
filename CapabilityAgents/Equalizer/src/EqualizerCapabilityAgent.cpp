@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -391,11 +391,22 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Equ
 }
 
 void EqualizerCapabilityAgent::doShutdown() {
+    m_executor.shutdown();
     m_equalizerController->removeListener(shared_from_this());
+    m_equalizerController.reset();
+    std::lock_guard<std::mutex> lock(m_storageMutex);
+    m_equalizerStorage.reset();
 }
 
 void EqualizerCapabilityAgent::clearData() {
-    m_equalizerStorage->clear();
+    std::unique_lock<std::mutex> lock(m_storageMutex);
+    // Create a local copy in case m_equalizerStorage is reset
+    auto equalizerStorage = m_equalizerStorage;
+    if (equalizerStorage) {
+        // We should not wait before clearing storage
+        lock.unlock();
+        equalizerStorage->clear();
+    }
 }
 
 void EqualizerCapabilityAgent::onEqualizerStateChanged(const EqualizerState& state) {

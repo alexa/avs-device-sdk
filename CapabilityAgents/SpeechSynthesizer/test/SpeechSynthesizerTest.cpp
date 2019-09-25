@@ -1004,7 +1004,7 @@ TEST_F(SpeechSynthesizerTest, test_mediaPlayerFailedToStop) {
  *
  * Expected result is that shutdown should succeeded no matter the @c stop return.
  */
-TEST_F(SpeechSynthesizerTest, test_mediaPlayerAlwaysFailToStop) {
+TEST_F(SpeechSynthesizerTest, testTimer_mediaPlayerAlwaysFailToStop) {
     auto speechSynthesizer = SpeechSynthesizer::create(
         m_mockSpeechPlayer,
         m_mockMessageSender,

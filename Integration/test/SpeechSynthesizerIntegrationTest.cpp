@@ -596,7 +596,7 @@ TEST_F(SpeechSynthesizerTest, test_handleOneSpeech) {
  * done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak.
  *
  */
-TEST_F(SpeechSynthesizerTest, test_handleMultipleConsecutiveSpeaks) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleMultipleConsecutiveSpeaks) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -1032,7 +1032,7 @@ TEST_F(SpeechSynthesizerTest, test_multiturnScenario) {
  * This test is intended to test the SpeechSynthesizer's ability to do nothing when there are no Speak directives. A
  * Recognize event with audio of "Volume up" is sent to AVS to prompt a AdjustVolume directive but no Speak directives.
  */
-TEST_F(SpeechSynthesizerTest, test_handleNoSpeakDirectives) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleNoSpeakDirectives) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),

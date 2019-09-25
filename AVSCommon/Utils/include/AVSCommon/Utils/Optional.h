@@ -225,4 +225,4 @@ bool Optional<ValueT>::operator!=(const Optional<ValueT>& rhs) const {
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_OPTIONAL_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_OPTIONAL_H_

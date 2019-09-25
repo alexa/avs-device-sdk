@@ -242,6 +242,82 @@ bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& 
     return true;
 }
 
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(
+    const std::string& jsonString,
+    const std::string& key) {
+    rapidjson::Document document;
+    document.Parse(jsonString);
+
+    if (document.HasParseError()) {
+        ACSDK_ERROR(LX("retrieveElementsFailed")
+                        .d("offset", document.GetErrorOffset())
+                        .d("error", GetParseError_En(document.GetParseError())));
+        return std::vector<std::string>();
+    }
+
+    auto iter = document.FindMember(key);
+    if (document.MemberEnd() == iter) {
+        ACSDK_ERROR(LX("retrieveElementsFailed").d("reason", "keyNotFound").d("key", key));
+        return std::vector<std::string>();
+    }
+
+    return retrieveStringArray<std::vector<std::string>>(iter->value);
+}
+
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(const std::string& jsonString) {
+    rapidjson::Document document;
+    document.Parse(jsonString);
+
+    if (document.HasParseError()) {
+        ACSDK_ERROR(LX("retrieveElementsFailed")
+                        .d("offset", document.GetErrorOffset())
+                        .d("error", GetParseError_En(document.GetParseError())));
+        return std::vector<std::string>();
+    }
+
+    return retrieveStringArray<std::vector<std::string>>(document);
+}
+
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(const rapidjson::Value& value) {
+    std::vector<std::string> elements;
+    if (!value.IsArray()) {
+        ACSDK_ERROR(LX("retrieveElementsFailed").d("reason", "nonArrayString"));
+        return elements;
+    }
+
+    for (auto& item : value.GetArray()) {
+        if (item.IsString()) {
+            elements.push_back(item.GetString());
+        } else {
+            ACSDK_WARN(LX("retrieveStringArray").d("result", "ignoredEntry"));
+        }
+    }
+    return elements;
+}
+
+template <>
+std::string convertToJsonString<std::vector<std::string>>(const std::vector<std::string>& elements) {
+    rapidjson::Document document{rapidjson::kArrayType};
+    for (auto& item : elements) {
+        document.PushBack(rapidjson::StringRef(item.c_str()), document.GetAllocator());
+    }
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    if (!document.Accept(writer)) {
+        ACSDK_ERROR(LX("convertToJsonStringFailed")
+                        .d("reason", "")
+                        .d("offset", document.GetErrorOffset())
+                        .d("error", GetParseError_En(document.GetParseError())));
+        return std::string();
+    }
+
+    return buffer.GetString();
+}
+
 }  // namespace jsonUtils
 }  // namespace json
 }  // namespace utils

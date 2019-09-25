@@ -20,6 +20,7 @@
 
 #include "SampleApp/ConnectionObserver.h"
 #include "SampleApp/KeywordObserver.h"
+#include "SampleApp/LocaleAssetsManager.h"
 #include "SampleApp/SampleApplication.h"
 
 #ifdef ENABLE_REVOKE_AUTH
@@ -30,14 +31,13 @@
 #include "SampleApp/PhoneCaller.h"
 #endif
 
-#ifdef KWD
-#include <KWDProvider/KeywordDetectorProvider.h>
+#ifdef ENABLE_MCC
+#include "SampleApp/CalendarClient.h"
+#include "SampleApp/MeetingClient.h"
 #endif
 
-#ifdef ENABLE_ESP
-#include <ESP/ESPDataProvider.h>
-#else
-#include <ESP/DummyESPDataProvider.h>
+#ifdef KWD
+#include <KWDProvider/KeywordDetectorProvider.h>
 #endif
 
 #ifdef PORTAUDIO
@@ -91,7 +91,6 @@
 #include <SampleApp/SampleEqualizerModeController.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 #include <Settings/Storage/SQLiteDeviceSettingStorage.h>
-#include <Settings/SQLiteSettingStorage.h>
 
 #include <EqualizerImplementations/EqualizerController.h>
 #include <EqualizerImplementations/InMemoryEqualizerConfiguration.h>
@@ -277,6 +276,10 @@ SampleApplication::~SampleApplication() {
     if (m_bluetoothMediaPlayer) {
         m_bluetoothMediaPlayer->shutdown();
     }
+    if (m_systemSoundMediaPlayer) {
+        m_systemSoundMediaPlayer->shutdown();
+    }
+
     if (m_ringtoneMediaPlayer) {
         m_ringtoneMediaPlayer->shutdown();
     }
@@ -495,6 +498,17 @@ bool SampleApplication::initialize(
         return false;
     }
 
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker;
+    std::tie(m_systemSoundMediaPlayer, systemSoundSpeaker) = createApplicationMediaPlayer(
+        httpContentFetcherFactory,
+        false,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "SystemSoundMediaPlayer");
+    if (!m_systemSoundMediaPlayer || !systemSoundSpeaker) {
+        ACSDK_CRITICAL(LX("Failed to create media player for system sound player!"));
+        return false;
+    }
+
 #ifdef ENABLE_PCC
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker;
     std::shared_ptr<ApplicationMediaPlayer> phoneMediaPlayer;
@@ -506,6 +520,21 @@ bool SampleApplication::initialize(
 
     if (!phoneMediaPlayer || !phoneSpeaker) {
         ACSDK_CRITICAL(LX("Failed to create media player for phone!"));
+        return false;
+    }
+#endif
+
+#ifdef ENABLE_MCC
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker;
+    std::shared_ptr<ApplicationMediaPlayer> meetingMediaPlayer;
+    std::tie(meetingMediaPlayer, meetingSpeaker) = createApplicationMediaPlayer(
+        httpContentFetcherFactory,
+        false,
+        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        "MeetingMediaPlayer");
+
+    if (!meetingMediaPlayer || !meetingSpeaker) {
+        ACSDK_CRITICAL(LX("Failed to create media player for meeting client!"));
         return false;
     }
 #endif
@@ -538,11 +567,6 @@ bool SampleApplication::initialize(
         alexaClientSDK::capabilityAgents::notifications::SQLiteNotificationsStorage::create(config);
 
     /*
-     * Creating settings storage object to be used for storing <key, value> pairs of AVS Settings (DEPRECATED).
-     */
-    auto settingsStorage = alexaClientSDK::capabilityAgents::settings::SQLiteSettingStorage::create(config);
-
-    /*
      * Creating new device settings storage object to be used for storing AVS Settings.
      */
     auto deviceSettingsStorage = alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage::create(config);
@@ -556,10 +580,25 @@ bool SampleApplication::initialize(
      */
     auto bluetoothStorage = alexaClientSDK::capabilityAgents::bluetooth::SQLiteBluetoothStorage::create(config);
 
+#ifdef KWD
+    bool wakeWordEnabled = true;
+#else
+    bool wakeWordEnabled = false;
+#endif
+
+    /*
+     * Create sample locale asset manager.
+     */
+    auto localeAssetsManager = LocaleAssetsManager::create(wakeWordEnabled);
+    if (!localeAssetsManager) {
+        ACSDK_CRITICAL(LX("Failed to create Locale Assets Manager!"));
+        return false;
+    }
+
     /*
      * Creating the UI component that observes various components and prints to the console accordingly.
      */
-    auto userInterfaceManager = std::make_shared<alexaClientSDK::sampleApp::UIManager>();
+    auto userInterfaceManager = std::make_shared<alexaClientSDK::sampleApp::UIManager>(localeAssetsManager);
 
     /*
      * Creating customerDataManager which will be used by the registrationManager and all classes that extend
@@ -569,6 +608,11 @@ bool SampleApplication::initialize(
 
 #ifdef ENABLE_PCC
     auto phoneCaller = std::make_shared<alexaClientSDK::sampleApp::PhoneCaller>();
+#endif
+
+#ifdef ENABLE_MCC
+    auto meetingClient = std::make_shared<alexaClientSDK::sampleApp::MeetingClient>();
+    auto calendarClient = std::make_shared<alexaClientSDK::sampleApp::CalendarClient>();
 #endif
 
     /*
@@ -703,16 +747,23 @@ bool SampleApplication::initialize(
             m_notificationsMediaPlayer,
             m_bluetoothMediaPlayer,
             m_ringtoneMediaPlayer,
+            m_systemSoundMediaPlayer,
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
             bluetoothSpeaker,
             ringtoneSpeaker,
+            systemSoundSpeaker,
             additionalSpeakers,
 #ifdef ENABLE_PCC
             phoneSpeaker,
             phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+            meetingSpeaker,
+            meetingClient,
+            calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
             m_commsMediaPlayer,
@@ -725,9 +776,9 @@ bool SampleApplication::initialize(
             std::move(alertStorage),
             std::move(messageStorage),
             std::move(notificationsStorage),
-            std::move(settingsStorage),
             std::move(deviceSettingsStorage),
             std::move(bluetoothStorage),
+            miscStorage,
             {userInterfaceManager},
             {userInterfaceManager},
             std::move(internetConnectionMonitor),
@@ -735,6 +786,8 @@ bool SampleApplication::initialize(
             m_capabilitiesDelegate,
             contextManager,
             transportFactory,
+            localeAssetsManager,
+            /* systemTimezone*/ nullptr,
             firmwareVersion,
             true,
             nullptr,
@@ -744,9 +797,6 @@ bool SampleApplication::initialize(
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));
         return false;
     }
-
-    // Add userInterfaceManager as observer of locale setting.
-    client->addSettingObserver("locale", userInterfaceManager);
 
     client->addSpeakerManagerObserver(userInterfaceManager);
 
@@ -830,20 +880,8 @@ bool SampleApplication::initialize(
         wakeCanOverride,
         wakeCanBeOverridden);
 
-#ifdef ENABLE_ESP
-    // Creating ESP connector
-    std::shared_ptr<esp::ESPDataProviderInterface> espProvider = esp::ESPDataProvider::create(wakeWordAudioProvider);
-    std::shared_ptr<esp::ESPDataModifierInterface> espModifier = nullptr;
-#else
-    // Create dummy ESP connector
-    auto dummyEspProvider = std::make_shared<esp::DummyESPDataProvider>();
-    std::shared_ptr<esp::ESPDataProviderInterface> espProvider = dummyEspProvider;
-    std::shared_ptr<esp::ESPDataModifierInterface> espModifier = dummyEspProvider;
-#endif
-
     // This observer is notified any time a keyword is detected and notifies the DefaultClient to start recognizing.
-    auto keywordObserver =
-        std::make_shared<alexaClientSDK::sampleApp::KeywordObserver>(client, wakeWordAudioProvider, espProvider);
+    auto keywordObserver = std::make_shared<alexaClientSDK::sampleApp::KeywordObserver>(client, wakeWordAudioProvider);
 
     m_keywordDetector = alexaClientSDK::kwd::KeywordDetectorProvider::create(
         sharedDataStream,
@@ -864,12 +902,14 @@ bool SampleApplication::initialize(
 #ifdef ENABLE_PCC
         phoneCaller,
 #endif
+#ifdef ENABLE_MCC
+        meetingClient,
+        calendarClient,
+#endif
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
         m_guiRenderer,
-        wakeWordAudioProvider,
-        espProvider,
-        espModifier);
+        wakeWordAudioProvider);
 
 #else
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
@@ -879,6 +919,10 @@ bool SampleApplication::initialize(
         userInterfaceManager,
 #ifdef ENABLE_PCC
         phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+        meetingClient,
+        calendarClient,
 #endif
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
@@ -895,7 +939,8 @@ bool SampleApplication::initialize(
 #endif
 
     // Creating the input observer.
-    m_userInputManager = alexaClientSDK::sampleApp::UserInputManager::create(m_interactionManager, consoleReader);
+    m_userInputManager =
+        alexaClientSDK::sampleApp::UserInputManager::create(m_interactionManager, consoleReader, localeAssetsManager);
     if (!m_userInputManager) {
         ACSDK_CRITICAL(LX("Failed to create UserInputManager!"));
         return false;
@@ -911,9 +956,6 @@ bool SampleApplication::initialize(
     sampleAppConfig.getString(ENDPOINT_KEY, &endpoint);
 
     client->connect(m_capabilitiesDelegate, endpoint);
-
-    // Send default settings set by the user to AVS.
-    client->sendDefaultSettings();
 
     return true;
 }

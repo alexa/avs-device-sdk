@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,7 +48,16 @@ public:
         SettingNotificationFunction notifyObservers) override;
 
     bool restoreValue(ApplyDbChangeFunction applyChange, SettingNotificationFunction notifyObservers) override;
+
+    bool clearData() override;
     /// @}
+
+    /**
+     * Check if @c clearData() is called or not.
+     *
+     * @return @c true if @c clearData() is called; @c false otherwise.
+     */
+    bool isDataCleared();
 
 private:
     /// Stores the initial value used during restoreValue call.
@@ -59,12 +68,16 @@ private:
 
     /// Flag that can be used to configure whether the protocol should call revert change or not.
     bool m_revertChange;
+
+    /// Flag to indicate if @c clearData() is called or not.
+    bool m_isClearedData;
 };
 
 MockSettingProtocol::MockSettingProtocol(const std::string& initialValue, bool applyChange, bool revertChange) :
         m_initialValue{initialValue},
         m_applyChange{applyChange},
-        m_revertChange{revertChange} {
+        m_revertChange{revertChange},
+        m_isClearedData{false} {
 }
 
 SetSettingResult MockSettingProtocol::localChange(
@@ -104,6 +117,15 @@ bool MockSettingProtocol::restoreValue(ApplyDbChangeFunction applyChange, Settin
         applyChange(m_initialValue);
     }
     return true;
+}
+
+bool MockSettingProtocol::clearData() {
+    m_isClearedData = true;
+    return true;
+}
+
+bool MockSettingProtocol::isDataCleared() {
+    return m_isClearedData;
 }
 
 }  // namespace test

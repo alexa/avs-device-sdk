@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,9 +15,14 @@
 #ifndef ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_SETTINGSTRINGCONVERSION_H_
 #define ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_SETTINGSTRINGCONVERSION_H_
 
+#include <list>
+#include <set>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
+
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 
 namespace alexaClientSDK {
 namespace settings {
@@ -86,7 +91,7 @@ std::pair<bool, ValueT> fromSettingString(const std::string& str, const Integral
  * Test whether the type is either an enum type or string.
  *
  * @tparam ValueT The value type to be tested.
- * @return @c true if the given type is (u)int8_t; false otherwise.
+ * @return @c true if the given type is string or enum; false otherwise.
  */
 template <typename ValueT>
 static constexpr bool isEnumOrString() {
@@ -142,6 +147,64 @@ std::pair<bool, ValueT> fromSettingString(const std::string& str, const EnumOrSt
     return {!stream.fail(), value};
 }
 
+//----------------- Setting conversion functions for string set -----------------//
+
+/**
+ * Test whether the type is a string collection.
+ *
+ * @tparam ValueT The value type to be tested.
+ * @return @c true if the given type is a string set; false otherwise.
+ */
+template <typename ValueT>
+static constexpr bool isStringCollection() {
+    return std::is_same<ValueT, std::set<std::string>>::value ||
+           std::is_same<ValueT, std::vector<std::string>>::value || std::is_same<ValueT, std::list<std::string>>::value;
+}
+
+/**
+ * Define a valid type for string collection.
+ *
+ * @tparam ValueT The value type. This will only be a valid type for string collection.
+ */
+template <typename ValueT>
+using StringCollection = typename std::enable_if<isStringCollection<ValueT>(), ValueT>::type;
+
+/**
+ * Convert a setting that is a string collection to a json format string representation.
+ *
+ * @tparam ValueT The value type.
+ * @param value The value to be converted.
+ * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
+ * string.
+ */
+template <typename ValueT>
+std::pair<bool, std::string> toSettingString(const StringCollection<ValueT>& value) {
+    std::vector<std::string> values{value.begin(), value.end()};
+    auto retValue = avsCommon::utils::json::jsonUtils::convertToJsonString(values);
+    return std::make_pair(!retValue.empty(), retValue);
+}
+
+static const std::string EMPTY_JSON_LIST = "[]";
+
+/**
+ * Convert a string (json format) to the setting representation for a string collection.
+ *
+ * @tparam ValueT The value type.
+ * @param str The json string that represents the object.
+ * @param defaultValue In case the string conversion fails, we'll return this default value.
+ * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
+ * value.
+ */
+template <typename ValueT>
+std::pair<bool, ValueT> fromSettingString(const std::string& str, const StringCollection<ValueT>& defaultValue) {
+    auto values = avsCommon::utils::json::jsonUtils::retrieveStringArray<ValueT>(str);
+    if (values.empty() && str != EMPTY_JSON_LIST) {
+        return std::make_pair(false, defaultValue);
+    }
+    ValueT retValue{values.begin(), values.end()};
+    return std::make_pair(true, retValue);
+}
+
 //----------------- Setting conversion functions for arithmetic types and classes -----------------//
 
 /**
@@ -150,7 +213,9 @@ std::pair<bool, ValueT> fromSettingString(const std::string& str, const EnumOrSt
  * @tparam ValueT The value type. This will only be a valid type for arithmetic types (except (u)int8_t), and classes.
  */
 template <typename ValueT>
-using OtherTypes = typename std::enable_if<!isEnumOrString<ValueT>() && !isIntegralByteType<ValueT>(), ValueT>::type;
+using OtherTypes = typename std::enable_if<
+    !isEnumOrString<ValueT>() && !isIntegralByteType<ValueT>() && !isStringCollection<ValueT>(),
+    ValueT>::type;
 
 /**
  * Convert a setting that is either arithmetic types (except (u)int8_t), and classes to a json format representation.

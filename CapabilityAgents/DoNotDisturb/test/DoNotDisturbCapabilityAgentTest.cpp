@@ -21,7 +21,6 @@
 #include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
-#include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/MockDeviceSettingStorage.h>
 
 #include "DoNotDisturbCA/DoNotDisturbCapabilityAgent.h"
@@ -90,25 +89,15 @@ protected:
     /// The mock @c ExceptionEncounteredSenderInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
 
-    /// Customer data manager to handle the factory reset logic.
-    std::shared_ptr<CustomerDataManager> m_customerDataManager;
-
-    /// An instace of @c DeviceSettingsManager,
-    std::shared_ptr<DeviceSettingsManager> m_settingsManager;
-
     /// Storage for the settings.
     std::shared_ptr<MockDeviceSettingStorage> m_settingsStorage;
 };
 
 void DoNotDisturbCapabilityAgentTest::SetUp() {
-    m_customerDataManager = std::make_shared<CustomerDataManager>();
-
     m_messageSender = std::make_shared<MockMessageSender>();
 
     m_mockExceptionEncounteredSender =
         std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
-
-    m_settingsManager = std::make_shared<DeviceSettingsManager>();
 
     m_settingsStorage = std::make_shared<MockDeviceSettingStorage>();
     EXPECT_CALL(*m_settingsStorage, storeSetting(_, _, _)).WillRepeatedly(Return(true));
@@ -116,8 +105,7 @@ void DoNotDisturbCapabilityAgentTest::SetUp() {
     EXPECT_CALL(*m_settingsStorage, loadSetting(_))
         .WillRepeatedly(Return(std::make_pair(SettingStatus::SYNCHRONIZED, "true")));
 
-    m_dndCA = DoNotDisturbCapabilityAgent::create(
-        m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, m_settingsStorage);
+    m_dndCA = DoNotDisturbCapabilityAgent::create(m_mockExceptionEncounteredSender, m_messageSender, m_settingsStorage);
 
     ASSERT_NE(m_dndCA, nullptr);
 }
@@ -157,33 +145,14 @@ void DoNotDisturbCapabilityAgentTest::TearDown() {
     }
 }
 
-TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullCustomerDataManager_create_shouldFail) {
-    auto dndCA = DoNotDisturbCapabilityAgent::create(
-        nullptr, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, m_settingsStorage);
+TEST_F(DoNotDisturbCapabilityAgentTest, test_givenInvalidParameters_create_shouldFail) {
+    auto dndCA = DoNotDisturbCapabilityAgent::create(nullptr, m_messageSender, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
-}
 
-TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullExceptionSender_create_shouldFail) {
-    auto dndCA = DoNotDisturbCapabilityAgent::create(
-        m_customerDataManager, nullptr, m_messageSender, m_settingsManager, m_settingsStorage);
+    dndCA = DoNotDisturbCapabilityAgent::create(m_mockExceptionEncounteredSender, nullptr, m_settingsStorage);
     EXPECT_THAT(dndCA, IsNull());
-}
 
-TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullMessageSender_create_shouldFail) {
-    auto dndCA = DoNotDisturbCapabilityAgent::create(
-        m_customerDataManager, m_mockExceptionEncounteredSender, nullptr, m_settingsManager, m_settingsStorage);
-    EXPECT_THAT(dndCA, IsNull());
-}
-
-TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullSettingsManager_create_shouldFail) {
-    auto dndCA = DoNotDisturbCapabilityAgent::create(
-        m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, nullptr, m_settingsStorage);
-    EXPECT_THAT(dndCA, IsNull());
-}
-
-TEST_F(DoNotDisturbCapabilityAgentTest, test_givenNullSettingsStorage_create_shouldFail) {
-    auto dndCA = DoNotDisturbCapabilityAgent::create(
-        m_customerDataManager, m_mockExceptionEncounteredSender, m_messageSender, m_settingsManager, nullptr);
+    dndCA = DoNotDisturbCapabilityAgent::create(m_mockExceptionEncounteredSender, m_messageSender, nullptr);
     EXPECT_THAT(dndCA, IsNull());
 }
 
@@ -267,7 +236,6 @@ TEST_F(DoNotDisturbCapabilityAgentTest, test_whileSendingChangedEvent_sendChange
             } else if (request->getJsonContent().find(DND_REPORT_EVENT) != std::string::npos) {
                 eventMask <<= 1;
                 eventPromise.set_value(true);
-                request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS);
                 return;
             }
 

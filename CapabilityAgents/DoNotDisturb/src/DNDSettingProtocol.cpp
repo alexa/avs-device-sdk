@@ -75,6 +75,8 @@ SetSettingResult DNDSettingProtocol::localChange(
     }
 
     m_executor.submit([this, applyChange, revertChange, notifyObservers]() {
+        notifyObservers(SettingNotifications::LOCAL_CHANGE_IN_PROGRESS);
+
         bool ok = false;
         std::string value;
         std::tie(ok, value) = applyChange();
@@ -128,6 +130,8 @@ bool DNDSettingProtocol::avsChange(
         }
         requestSaved.set_value(true);
 
+        notifyObservers(SettingNotifications::AVS_CHANGE_IN_PROGRESS);
+
         bool ok = false;
         std::string value;
         std::tie(ok, value) = applyChange();
@@ -174,7 +178,7 @@ bool DNDSettingProtocol::restoreValue(ApplyDbChangeFunction applyChange, Setting
     auto revertChange = [applyChange] { return applyChange(INVALID_VALUE).second; };
     switch (status) {
         case SettingStatus::NOT_AVAILABLE:
-            // Fall-through
+        // Fall-through
         case SettingStatus::LOCAL_CHANGE_IN_PROGRESS:
             return localChange(applyStrChange, revertChange, notifyObservers) == SetSettingResult::ENQUEUED;
         case SettingStatus::AVS_CHANGE_IN_PROGRESS:
@@ -183,6 +187,11 @@ bool DNDSettingProtocol::restoreValue(ApplyDbChangeFunction applyChange, Setting
             return applyChange(valueStr).first;
     }
     return false;
+}
+
+bool DNDSettingProtocol::clearData() {
+    ACSDK_DEBUG5(LX(__func__).d("setting", m_key));
+    return m_storage->deleteSetting(m_key);
 }
 
 DNDSettingProtocol::DNDSettingProtocol(

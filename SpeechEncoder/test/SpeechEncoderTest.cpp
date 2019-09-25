@@ -109,7 +109,7 @@ protected:
  * This test will feed a dummy PCM stream into SpeechEncoder, then test the behavior with
  * the mock @c EncoderContext.
  */
-TEST_F(SpeechEncoderTest, test_startEncoding) {
+TEST_F(SpeechEncoderTest, testTimer_startEncoding) {
     AudioFormat audioFormat = {
         .encoding = AudioFormat::Encoding::LPCM,
         .endianness = AudioFormat::Endianness::LITTLE,

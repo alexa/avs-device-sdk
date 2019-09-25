@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include <functional>
 #include <memory>
+#include <ostream>
 
 namespace alexaClientSDK {
 namespace settings {
@@ -25,6 +26,10 @@ namespace settings {
  * Enumerate the type of notifications.
  */
 enum class SettingNotifications {
+    /// The setting that was changed locally is being applied.
+    LOCAL_CHANGE_IN_PROGRESS,
+    /// The setting that was changed via cloud is being applied.
+    AVS_CHANGE_IN_PROGRESS,
     /// Setting value changed due to a local change.
     LOCAL_CHANGE,
     /// Setting value changed due to a change requested via cloud.
@@ -32,8 +37,51 @@ enum class SettingNotifications {
     /// Local request failed.
     LOCAL_CHANGE_FAILED,
     /// AVS request failed.
-    AVS_CHANGE_FAILED
+    AVS_CHANGE_FAILED,
+    /// Local request cancelled due to a new request.
+    LOCAL_CHANGE_CANCELLED,
+    /// AVS request cancelled due to a new request.
+    AVS_CHANGE_CANCELLED
 };
+
+/**
+ * Write a @c SettingNotifications value to the given stream.
+ *
+ * @param stream The stream to write the value to.
+ * @param value The value to write to the stream as a string.
+ * @return The stream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const SettingNotifications& value) {
+    switch (value) {
+        case SettingNotifications::LOCAL_CHANGE_IN_PROGRESS:
+            stream << "LOCAL_CHANGE_IN_PROGRESS";
+            return stream;
+        case SettingNotifications::AVS_CHANGE_IN_PROGRESS:
+            stream << "AVS_CHANGE_IN_PROGRESS";
+            return stream;
+        case SettingNotifications::LOCAL_CHANGE:
+            stream << "LOCAL_CHANGE";
+            return stream;
+        case SettingNotifications::AVS_CHANGE:
+            stream << "AVS_CHANGE";
+            return stream;
+        case SettingNotifications::LOCAL_CHANGE_FAILED:
+            stream << "LOCAL_CHANGE_FAILED";
+            return stream;
+        case SettingNotifications::AVS_CHANGE_FAILED:
+            stream << "AVS_CHANGE_FAILED";
+            return stream;
+        case SettingNotifications::LOCAL_CHANGE_CANCELLED:
+            stream << "LOCAL_CHANGE_CANCELLED";
+            return stream;
+        case SettingNotifications::AVS_CHANGE_CANCELLED:
+            stream << "AVS_CHANGE_CANCELLED";
+            return stream;
+    }
+
+    stream.setstate(std::ios_base::failbit);
+    return stream;
+}
 
 /**
  * Base definition of SettingObserver.

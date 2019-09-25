@@ -137,11 +137,24 @@ public:
      */
     bool waitFor(IndicatorState state, std::chrono::milliseconds timeout);
 
+    /**
+     * Waits for IndicationCount to increase.
+     *
+     * @param count The number of indicator events to wait for.
+     * @param timeout The amount of time to wait for the state change.
+     */
+    bool waitFor(int count, std::chrono::milliseconds timeout);
+
     void onSetIndicator(IndicatorState state) override;
+
+    void onNotificationReceived() override;
 
 private:
     /// The most recently observed IndicatorState.
     IndicatorState m_indicatorState;
+
+    /// The number of notifications received.
+    int m_indicationCount;
 
     /// Serializes access to m_conditionVariable.
     std::mutex m_mutex;
@@ -150,7 +163,7 @@ private:
     std::condition_variable m_conditionVariable;
 };
 
-TestNotificationsObserver::TestNotificationsObserver() : m_indicatorState{IndicatorState::OFF} {
+TestNotificationsObserver::TestNotificationsObserver() : m_indicatorState{IndicatorState::OFF}, m_indicationCount{0} {
 }
 
 bool TestNotificationsObserver::waitFor(IndicatorState state, std::chrono::milliseconds timeout) {
@@ -158,10 +171,22 @@ bool TestNotificationsObserver::waitFor(IndicatorState state, std::chrono::milli
     return m_conditionVariable.wait_for(lock, timeout, [this, state] { return m_indicatorState == state; });
 }
 
+bool TestNotificationsObserver::waitFor(int count, std::chrono::milliseconds timeout) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    return m_conditionVariable.wait_for(lock, timeout, [this, count] { return m_indicationCount == count; });
+}
+
 void TestNotificationsObserver::onSetIndicator(IndicatorState state) {
-    ACSDK_ERROR(LX("onSetIndicator").d("indicatorState", indicatorStateToInt(state)));
+    ACSDK_INFO(LX("onSetIndicator").d("indicatorState", indicatorStateToInt(state)));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_indicatorState = state;
+    m_conditionVariable.notify_all();
+}
+
+void TestNotificationsObserver::onNotificationReceived() {
+    ACSDK_INFO(LX("onNotificationReceived"));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    ++m_indicationCount;
     m_conditionVariable.notify_all();
 }
 
@@ -730,6 +755,42 @@ TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicator) {
 
     // check that the NotificationIndicator was dequeued as expected
     ASSERT_TRUE(m_notificationsStorage->waitForQueueSizeToBe(0));
+}
+
+/**
+ * Test that duplicate SetIndicator directive with persistVisualIndicator and playAudioIndicator set to various values.
+ * Expect that the NotificationsObserver is notified of the indicator's count on initialization.
+ * Expect all calls to increase notification count.
+ */
+TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorIncreasesCount) {
+    initializeCapabilityAgent();
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(0, WAIT_TIMEOUT));
+
+    sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
+
+    // A duplicate indication should trigger an increase in indicator count
+    sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(2, WAIT_TIMEOUT));
+
+    sendSetIndicatorDirective(generatePayload(true, true), MESSAGE_ID_TEST);
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(3, WAIT_TIMEOUT));
+}
+
+/**
+ * Test that the indication count is preserved across shutdown.
+ */
+TEST_F(NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreservedIncreasesCount) {
+    initializeCapabilityAgent();
+
+    sendSetIndicatorDirective(generatePayload(true, false, ASSET_ID1), MESSAGE_ID_TEST);
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
+
+    m_notificationsCapabilityAgent->shutdown();
+
+    // reboot and check that the indicator count value is preserved
+    initializeCapabilityAgent();
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
 }
 
 /**

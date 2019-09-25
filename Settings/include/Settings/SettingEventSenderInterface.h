@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -83,6 +83,35 @@ public:
      * @return A future expressing if the event has been guaranteed to be sent to AVS.
      */
     virtual std::shared_future<bool> sendReportEvent(const std::string& value) = 0;
+
+    /**
+     * Sends a state report event to AVS.
+     *
+     * The setting state report event follows the format:
+     * @code{.json}
+     *   {
+     *    "event": {
+     *      "header": {
+     *        "namespace": "{eventNamespace}",
+     *        "name": "{eventReportName}",
+     *        "messageId": "xxxxx"
+     *      },
+     *      "payload": {payload}
+     *    }
+     *  }
+     * @endcode
+     * The setting specific fields should be specified in a @c SettingEventMetadata passed as an argument on creation
+     * this object.
+     *
+     * @param payload The report payload. It should be a valid JSON element.
+     * @return A future expressing if the event has been guaranteed to be sent to AVS.
+     */
+    virtual std::shared_future<bool> sendStateReportEvent(const std::string& payload) = 0;
+
+    /**
+     * Cancels an ongoing event transmission to AVS.
+     */
+    virtual void cancel() = 0;
 };
 
 }  // namespace settings

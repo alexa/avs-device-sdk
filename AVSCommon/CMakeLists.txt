@@ -80,7 +80,8 @@ add_library(AVSCommon SHARED
     Utils/src/TimePoint.cpp
     Utils/src/TimeUtils.cpp
     Utils/src/Timer.cpp
-    Utils/src/UUIDGeneration.cpp)
+    Utils/src/UUIDGeneration.cpp
+    Utils/src/WaitEvent.cpp)
 
 target_include_directories(AVSCommon PUBLIC
     "${AVSCommon_SOURCE_DIR}/AVS/include"

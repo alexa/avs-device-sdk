@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ namespace avs {
 
 using namespace rapidjson;
 using namespace utils;
+using namespace avs::constants;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("EventBuilder");
@@ -41,23 +42,11 @@ static const std::string TAG("EventBuilder");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// The namespace key in the header of the event.
-static const std::string NAMESPACE_KEY_STRING = "namespace";
-
-/// The name key in the header of the event.
-static const std::string NAME_KEY_STRING = "name";
-
 /// The message id key in the header of the event
 static const std::string MESSAGE_ID_KEY_STRING = "messageId";
 
 /// The dialog request Id key in the header of the event.
 static const std::string DIALOG_REQUEST_ID_KEY_STRING = "dialogRequestId";
-
-/// The header key in the event.
-static const std::string HEADER_KEY_STRING = "header";
-
-/// The payload key in the event.
-static const std::string PAYLOAD_KEY_STRING = "payload";
 
 /// The context key in the event.
 static const std::string CONTEXT_KEY_STRING = "context";

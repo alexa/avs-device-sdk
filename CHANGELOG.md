@@ -1,5 +1,59 @@
 ## ChangeLog
 
+### v1.15.0 released 09/25/2019:
+
+**Enhancements**
+
+* Added `SystemSoundPlayer` to [ApplicationUtilities](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1application_utilities.html). `SystemSoundPlayer` is a new class that plays pre-defined sounds. Sounds currently supported include the wake word notification and the end of speech tone. This change is internal and you don't need to update your code.
+* Removed [Echo Spatial Perception (ESP)](https://developer.amazon.com/blogs/alexa/post/042be85c-5a62-4c55-a18d-d7a82cf394df/esp-moves-to-the-cloud-for-alexa-enabled-devices) functionality from the Alexa Voice Service (AVS) device SDK. Make sure you download and test your devices using the new AVS SDK sample app. If you're using an older version of the sample app, manually remove any references to ESP or errors occur during compile.
+* Added `onNotificationReceived` to `NotificationsObserverInterface`. `onNotificationReceived` broadcasts when `NotificationsObserverInterface` receives a new notification, instead of only sending the indicator state. This is important if you support a feature that requires a distinct signal for each notification received. See [NotificationsObserverInterface](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html) for more details.
+* Added support for [Multilingual Mode](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations). With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:
+ - `[ "en-US", "es-US" ]`
+ - `[ "es-US", "en-US" ]`
+ - `[ "en-IN", "hi-IN" ]`
+ - `[ "hi-IN", "en-IN" ]`
+ - `[ "en-CA", "fr-CA" ]`
+ - `[ "fr-CA", "en-CA" ]`
+<br/> **IMPORTANT**: Specify the locales your device supports in the [localeCombinations](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations) field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.
+* Added two new system settings, [Timezone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) and [Locale](https://developer.amazon.com/docs/alexa-voice-service/system.html#locales).
+    - Timezone: For example, you can set the `defaultTimezone` to `America/Vancouver`. If you don't set a value, `GMT` is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class `SystemTimeZoneInterface`. See [System Interface > SetTimeZone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) for more information.
+    - Locale: For example, you can set `defaultLocale` to `en-GB`, instead of the default `en-US`.
+* The [SpeechRecognizer](https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html) interface now supports the following functionalities.
+  - Change wake word (`Alexa` supported for now).
+  - Toggle start of request tone on/off.
+  - Toggle End of request tone on/off.
+* Deprecated the [CapabilityAgents](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html) `Settings{…}` library. `Settings {…}` now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read [Settings Interface](https://developer.amazon.com/docs/alexa-voice-service/per-interface-settings.html) for more details.
+* Added support for three new locals: Spanish - United States (ES_US), Hindi - India (HI_IN), and Brazilian - Portuguese (PT_BR).
+* Linked the atomic library to the sample app to prevent build errors on Raspberry Pi.
+
+**Bug Fixes**
+
+* Fixed resource leaking in [EqualizerCapabilityAgent](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html) after engine shutdown.
+* [Issue 1391:](https://github.com/alexa/avs-device-sdk/pull/1391) Fixed an issue where [SQLiteDeviceSettingsStorage::open](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html#a7733e56145916f7ff265c5c950add492) tries to acquire a mutex twice, resulting in deadlock.
+* [Issue 1468:](https://github.com/alexa/avs-device-sdk/issues/1468) Fixed a bug in [AudioPlayer::cancelDirective](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a2c710c16f3627790fcc3238d34da9361) that causes a crash.
+* Fixed Windows install script that caused the sample app build to fail - removed pip, flask, requests, and commentjson dependencies from the mingw.sh helper script.
+* Fixed issue: notifications failed to sync upon device initialization. For example, let's say you had two devices - one turned on and the other turned off. After clearing the notification on the first device, it still showed up on the second device after turning it on.
+* Fixed issue: barging in on a reminder caused it to stick in an inconsistent state, blocking subsequent reminders. For example, if a reminder was going off and you interrupted it, the reminder would get persist indefinitely. You could schedule future reminders, but they wouldn't play. Saying “Alexa stop” or rebooting the device fixed the “stuck” reminder.
+
+**Known Issues**
+
+* Music playback history isn't displayed in the Alexa app for certain account and device types.
+* When using Gnu Compiler Collection 8+ (GCC 8+), `-Wclass-memaccess` triggers warnings. You can ignore these, they don't cause the build to fail.
+* Android error `libDefaultClient.so not found` might occur. Resolve this by upgrading to ADB version 1.0.40.
+* If a device loses a network connection, the lost connection status isn't returned via local TTS.
+* ACL encounters issues if it receives audio attachments but doesn't consume them.
+* `SpeechSynthesizerState` uses `GAINING_FOCUS` and `LOSING_FOCUS` as a  workaround for handling intermediate states.
+* Media steamed through Bluetooth might abruptly stop. To restart playback, resume the media in the source application or toggle next/previous.
+* If a connected Bluetooth device is inactive, the Alexa app might indicates that audio is playing.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation isn't yet supported.
+* When using some products, interrupted Bluetooth playback might not resume if other content is locally streamed.
+* `make integration` isn't available for Android. To run Android integration tests, manually upload the test binary and input file and run ADB.
+* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS) user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
+* A reminder TTS message doesn't play if the sample app restarts and loses a network connection. Instead, the default alarm tone plays twice.
+* `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
+* Bluetooth initialization must complete before connecting devices, otherwise devices are ignored.
+* The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
+
 ### v1.14.0 released 07/09/2019:
 
 **Enhancements**

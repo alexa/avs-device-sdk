@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -220,7 +220,7 @@ protected:
         const std::string& eventName,
         const std::string& dialogRequestIdString = "",
         const std::string& payload = "{}",
-        const std::string& context = "");
+        const std::string& context = "") const;
 
     /// The namespace of the capability agent.
     const std::string m_namespace;

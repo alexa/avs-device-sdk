@@ -867,7 +867,7 @@ TEST_P(MediaPlayerTest, test_resumeAfterPlay) {
  * Check the offset value. Then call @c stop and expect the playback finished notification is received.
  * Call @c getOffset again. Check the offset value.
  */
-TEST_P(MediaPlayerTest, testSlow_getOffsetInMilliseconds) {
+TEST_P(MediaPlayerTest, testTimer_getOffsetInMilliseconds) {
     MediaPlayer::SourceId sourceId;
     setAttachmentReaderSource(&sourceId);
     ASSERT_TRUE(m_mediaPlayer->play(sourceId));
@@ -1025,7 +1025,7 @@ TEST_P(MediaPlayerTest, testSlow_startPlayWithUrlPlaylistWaitForEnd) {
  * Test setting the offset to a seekable source. Setting the offset should succeed and playback should start from the
  * offset.
  */
-TEST_P(MediaPlayerTest, testSlow_setOffsetSeekableSource) {
+TEST_P(MediaPlayerTest, testTimer_setOffsetSeekableSource) {
     std::chrono::milliseconds offset(OFFSET);
 
     std::string url_single(FILE_PREFIX + inputsDirPath + MP3_FILE_PATH);

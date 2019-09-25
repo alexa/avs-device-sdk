@@ -116,7 +116,7 @@ bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer
 }
 
 bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
-    ACSDK_DEBUG9(LX("scheduleAlert"));
+    ACSDK_DEBUG9(LX("scheduleAlert").d("token", alert->getToken()));
     int64_t unixEpochNow = 0;
     if (!m_timeUtils.getCurrentUnixTime(&unixEpochNow)) {
         ACSDK_ERROR(LX("scheduleAlertFailed").d("reason", "could not get current unix time."));
@@ -132,6 +132,7 @@ bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
 
     auto oldAlert = getAlertLocked(alert->getToken());
     if (oldAlert) {
+        ACSDK_DEBUG9(LX("oldAlert").d("token", oldAlert->getToken()));
         // Update the alert schedule.
         return updateAlert(oldAlert, alert->getScheduledTime_ISO_8601());
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,10 +52,19 @@ static const std::string DEVICE_SETTINGS_VALUE_COLUMN_NAME = "value";
 /// The name of the column to store the settings status.
 static const std::string DEVICE_SETTINGS_STATUS_COLUMN_NAME = "status";
 
+/// The index of key in the tuple vector of data.
+static const int KEY_INDEX = 0;
+
+/// The index of value in the tuple vector of data.
+static const int VALUE_INDEX = 1;
+
+/// The index of status in the tuple vector of data.
+static const int STATUS_INDEX = 2;
+
 /// The SQL string to create the alert configurations table.
 // clang-format off
  static const std::string CREATE_DEVICE_SETTINGS_TABLE_SQL_STRING = std::string("CREATE TABLE ") +
-         DEVICE_SETTINGS_TABLE_NAME + " (" + 
+         DEVICE_SETTINGS_TABLE_NAME + " (" +
          DEVICE_SETTINGS_KEY_COLUMN_NAME  + " TEXT PRIMARY KEY NOT NULL," +
          DEVICE_SETTINGS_VALUE_COLUMN_NAME+ " TEXT NOT NULL," +
          DEVICE_SETTINGS_STATUS_COLUMN_NAME + " TEXT NOT NULL);";
@@ -130,21 +139,83 @@ void SQLiteDeviceSettingStorage::close() {
 }
 
 bool SQLiteDeviceSettingStorage::storeSetting(const std::string& key, const std::string& value, SettingStatus status) {
-    ACSDK_DEBUG5(LX(__func__).d("key", key).d("value", value).d("status", settingStatusToString(status)));
+    ACSDK_DEBUG5(LX(__func__).d("key", key).d("status", settingStatusToString(status)).sensitive("value", value));
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
     // clang-format off
      const std::string sqlString = "REPLACE INTO " + DEVICE_SETTINGS_TABLE_NAME + " (" +
-                            DEVICE_SETTINGS_KEY_COLUMN_NAME + ", " 
-                            + DEVICE_SETTINGS_VALUE_COLUMN_NAME + ", " 
-                            + DEVICE_SETTINGS_STATUS_COLUMN_NAME 
-                            + ") VALUES (" 
-                            + "'" + key + "', '" + value + "', '" 
-                            + settingStatusToString(status) + "' );";
+                            DEVICE_SETTINGS_KEY_COLUMN_NAME + ", "
+                            + DEVICE_SETTINGS_VALUE_COLUMN_NAME + ", "
+                            + DEVICE_SETTINGS_STATUS_COLUMN_NAME
+                            + ") VALUES (?, ?, ?);";
     // clang-format on
+    const int keyIndex = 1;
+    const int valueIndex = 2;
+    const int statusIndex = 3;
 
     auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX("storeSettingFailed").d("reason", "createStatementFailed"));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(keyIndex, key) || !statement->bindStringParameter(valueIndex, value) ||
+        !statement->bindStringParameter(statusIndex, settingStatusToString(status))) {
+        ACSDK_ERROR(LX("storeSettingFailed").d("reason", "bindParameterFailed"));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX("storeSettingFailed").d("reason", "stepFailed"));
+        return false;
+    }
+
+    return true;
+}
+
+bool SQLiteDeviceSettingStorage::storeSettings(
+    const std::vector<std::tuple<std::string, std::string, SettingStatus>>& data) {
+    if (data.empty()) {
+        return true;
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    // clang-format off
+     std::string sqlString = "REPLACE INTO " + DEVICE_SETTINGS_TABLE_NAME + " (" +
+                            DEVICE_SETTINGS_KEY_COLUMN_NAME + ", "
+                            + DEVICE_SETTINGS_VALUE_COLUMN_NAME + ", "
+                            + DEVICE_SETTINGS_STATUS_COLUMN_NAME
+                            + ") VALUES ";
+
+    std::string valueString;
+    std::string separator = "";
+    for (size_t counter = 0; counter < data.size(); ++counter) {
+        valueString += separator;
+        valueString += "(?, ?, ?) ";
+        separator = ", ";
+    }
+
+    // clang-format on
+    sqlString += valueString + ";";
+    ACSDK_DEBUG5(LX(__func__).sensitive("query", sqlString));
+
+    auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX("storeSettingsFailed").d("reason", "createStatementFailed"));
+        return false;
+    }
+
+    int paramIndex = 1;
+    for (auto& row : data) {
+        if (!statement->bindStringParameter(paramIndex++, std::get<KEY_INDEX>(row)) ||
+            !statement->bindStringParameter(paramIndex++, std::get<VALUE_INDEX>(row)) ||
+            !statement->bindStringParameter(paramIndex++, settingStatusToString(std::get<STATUS_INDEX>(row)))) {
+            ACSDK_ERROR(LX("storeSettingsFailed").d("reason", "bindParameterFailed"));
+            return false;
+        }
+    }
 
     if (!statement->step()) {
         ACSDK_ERROR(LX("storeSettingFailed").d("reason", "stepFailed"));
@@ -169,9 +240,9 @@ DeviceSettingStorageInterface::SettingStatusAndValue SQLiteDeviceSettingStorage:
     }
 
     // clang-format off
-     const std::string sqlString = "SELECT " + DEVICE_SETTINGS_VALUE_COLUMN_NAME 
-                    + "," + DEVICE_SETTINGS_STATUS_COLUMN_NAME 
-                    + " FROM " + DEVICE_SETTINGS_TABLE_NAME 
+     const std::string sqlString = "SELECT " + DEVICE_SETTINGS_VALUE_COLUMN_NAME
+                    + "," + DEVICE_SETTINGS_STATUS_COLUMN_NAME
+                    + " FROM " + DEVICE_SETTINGS_TABLE_NAME
                     + " WHERE " + DEVICE_SETTINGS_KEY_COLUMN_NAME + "=?;";
     // clang-format on
 
@@ -205,7 +276,7 @@ DeviceSettingStorageInterface::SettingStatusAndValue SQLiteDeviceSettingStorage:
     std::string value = statement->getColumnText(VALUE_COLUMN_INDEX);
     SettingStatus status = stringToSettingStatus(statement->getColumnText(STATUS_COLUMN_INDEX));
 
-    ACSDK_DEBUG5(LX("loadSetting").d("value", value));
+    ACSDK_DEBUG5(LX("loadSetting").sensitive("value", value));
 
     return std::make_pair(status, value);
 }
@@ -266,14 +337,22 @@ bool SQLiteDeviceSettingStorage::updateSettingStatus(const std::string& key, Set
     }
 
     // clang-format off
-     const std::string sqlString = "UPDATE " + DEVICE_SETTINGS_TABLE_NAME +
-                            " SET " + DEVICE_SETTINGS_STATUS_COLUMN_NAME +"=\"" + settingStatusToString(status)+ "\""
-                             " WHERE " + DEVICE_SETTINGS_KEY_COLUMN_NAME + " = \"" + key + "\"";
+    const std::string sqlString = "UPDATE " + DEVICE_SETTINGS_TABLE_NAME +
+                             " SET " + DEVICE_SETTINGS_STATUS_COLUMN_NAME + "=?"
+                             " WHERE " + DEVICE_SETTINGS_KEY_COLUMN_NAME + "=?;";
+    const int statusIndex = 1;
+    const int keyIndex = 2;
 
     // clang-format on
     auto statement = m_db.createStatement(sqlString);
     if (!statement) {
         ACSDK_ERROR(LX("updateSettingStatusFailed").d("reason", "createStatementFailed"));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(statusIndex, settingStatusToString(status)) ||
+        !statement->bindStringParameter(keyIndex, key)) {
+        ACSDK_ERROR(LX("updateSettingStatusFailed").d("reason", "bindParameterFailed"));
         return false;
     }
 

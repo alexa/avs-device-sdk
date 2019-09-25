@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,8 +23,9 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
-#include <ESP/ESPDataModifierInterface.h>
 #include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
 
 #include "KeywordObserver.h"
 #include "UIManager.h"
@@ -33,6 +34,11 @@
 
 #ifdef ENABLE_PCC
 #include "PhoneCaller.h"
+#endif
+
+#ifdef ENABLE_MCC
+#include "CalendarClient.h"
+#include "MeetingClient.h"
 #endif
 
 namespace alexaClientSDK {
@@ -56,12 +62,14 @@ public:
 #ifdef ENABLE_PCC
         std::shared_ptr<sampleApp::PhoneCaller> phoneCaller,
 #endif
+#ifdef ENABLE_MCC
+        std::shared_ptr<sampleApp::MeetingClient> meetingClient,
+        std::shared_ptr<sampleApp::CalendarClient> calendarClient,
+#endif
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
         std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
-        std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr,
-        std::shared_ptr<esp::ESPDataModifierInterface> espModifier = nullptr,
         std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr);
 
     /**
@@ -164,9 +172,24 @@ public:
     void settings();
 
     /**
+     * Should be called whenever a user requests 'WAKEWORD_CONFIRMATION' change.
+     */
+    void wakewordConfirmation();
+
+    /**
+     * Should be called whenever a user requests 'SPEECH_CONFIRMATION' change.
+     */
+    void speechConfirmation();
+
+    /**
      * Should be called whenever a user requests 'LOCALE' change.
      */
     void locale();
+
+    /**
+     * Should be called whenever a user requests 'TIMEZONE' change.
+     */
+    void timeZone();
 
     /**
      * Should be called whenever a user requests 'DO_NOT_DISTURB' change.
@@ -177,11 +200,6 @@ public:
      * Should be called whenever a user presses invalid option.
      */
     void errorValue();
-
-    /**
-     * Should be called when setting value is selected by the user.
-     */
-    void changeSetting(const std::string& key, const std::string& value);
 
     /**
      * Should be called whenever a users requests 'SPEAKER_CONTROL' for speaker control.
@@ -229,32 +247,6 @@ public:
      * Prompts the user to confirm the intent to re-authorize the device.
      */
     void confirmReauthorizeDevice();
-
-    /**
-     * Should be called whenever a user requests for ESP control.
-     */
-    void espControl();
-
-    /**
-     * Should be called whenever a user requests to toggle the ESP support.
-     */
-    void toggleESPSupport();
-
-    /**
-     * Should be called whenever a user requests to set the @c voiceEnergy sent in ReportEchoSpatialPerceptionData
-     * event.
-     *
-     * @param voiceEnergy The voice energy measurement to be set as the ESP measurement.
-     */
-    void setESPVoiceEnergy(const std::string& voiceEnergy);
-
-    /**
-     * Should be called whenever a user requests set the @c ambientEnergy sent in ReportEchoSpatialPerceptionData
-     * event.
-     *
-     * @param ambientEnergy The ambient energy measurement to be set as the ESP measurement.
-     */
-    void setESPAmbientEnergy(const std::string& ambientEnergy);
 
     /**
      * Grants the user access to the communications controls.
@@ -308,10 +300,59 @@ public:
 
 #endif
 
+#ifdef ENABLE_MCC
+    /**
+     * Should be called whenever a user selects Phone Control.
+     */
+    void meetingControl();
+
+    /**
+     * Should be called whenever collecting a Call Id.
+     */
+    void sessionId();
+
+    /**
+     * Should be called whenever collecting a path to Calendar Items file.
+     */
+    void calendarItemsFile();
+
+    /**
+     * MeetingClientController commands.
+     */
+    void sendMeetingJoined(const std::string& sessionId);
+    void sendMeetingEnded(const std::string& sessionId);
+    void sendSetCurrentMeetingSession(const std::string& sessionId);
+    void sendClearCurrentMeetingSession();
+    void sendConferenceConfigurationChanged();
+    void sendMeetingClientErrorOccured(const std::string& sessionId);
+    void sendCalendarItemsRetrieved(const std::string& calendarItemsFile);
+    void sendCalendarClientErrorOccured();
+#endif
+
     /**
      * Sets the do not disturb mode state.
      */
     void setDoNotDisturbMode(bool enable);
+
+    /**
+     * Sets the speech confirmation state.
+     */
+    void setSpeechConfirmation(settings::SpeechConfirmationSettingType value);
+
+    /**
+     * Sets the wake word confirmation state.
+     */
+    void setWakewordConfirmation(settings::WakeWordConfirmationSettingType value);
+
+    /**
+     * Sets the time zone of the device.
+     */
+    void setTimeZone(const std::string& value);
+
+    /**
+     * Sets the locale of the device.
+     */
+    void setLocale(const settings::DeviceLocales& value);
 
 private:
     /// The default SDK client.
@@ -326,18 +367,19 @@ private:
     /// The gui renderer.
     std::shared_ptr<sampleApp::GuiRenderer> m_guiRenderer;
 
-    /// The ESP provider.
-    std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
-
-    /// The ESP modifier.
-    std::shared_ptr<esp::ESPDataModifierInterface> m_espModifier;
-
     /// The call manager.
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> m_callManager;
 
 #ifdef ENABLE_PCC
     /// The Phone Caller
     std::shared_ptr<sampleApp::PhoneCaller> m_phoneCaller;
+#endif
+
+#ifdef ENABLE_MCC
+    /// The Meeting Client.
+    std::shared_ptr<sampleApp::MeetingClient> m_meetingClient;
+    /// The Calendar Client.
+    std::shared_ptr<sampleApp::CalendarClient> m_calendarClient;
 #endif
 
     /// The hold to talk audio provider.

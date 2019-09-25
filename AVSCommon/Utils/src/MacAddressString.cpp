@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/MacAddressString.h>
 
 #include <memory>
@@ -60,6 +61,23 @@ std::unique_ptr<MacAddressString> MacAddressString::create(const std::string& ma
 
 std::string MacAddressString::getString() const {
     return m_macAddress;
+}
+
+std::string MacAddressString::getTruncatedString() const {
+    const char X = 'X';
+
+    std::string truncatedMac = m_macAddress;
+
+    truncatedMac.at(0) = X;
+    truncatedMac.at(1) = X;
+    truncatedMac.at(3) = X;
+    truncatedMac.at(4) = X;
+    truncatedMac.at(6) = X;
+    truncatedMac.at(7) = X;
+    truncatedMac.at(9) = X;
+    truncatedMac.at(10) = X;
+
+    return truncatedMac;
 }
 
 MacAddressString::MacAddressString(const std::string& macAddress) : m_macAddress(macAddress) {

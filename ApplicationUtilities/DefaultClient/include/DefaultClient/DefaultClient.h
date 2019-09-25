@@ -44,7 +44,11 @@
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeechInteractionHandlerInterface.h>
+#include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
+#include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
@@ -67,6 +71,12 @@
 #include <PhoneCallController/PhoneCallController.h>
 #endif
 
+#ifdef ENABLE_MCC
+#include <AVSCommon/SDKInterfaces/Calendar/CalendarClientInterface.h>
+#include <AVSCommon/SDKInterfaces/Meeting/MeetingClientInterface.h>
+#include <MeetingClientController/MeetingClientController.h>
+#endif
+
 #ifdef ENABLE_COMMS_AUDIO_PROXY
 #include <CallManager/CallAudioDeviceProxy.h>
 #endif
@@ -76,13 +86,11 @@
 #include <RegistrationManager/RegistrationManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
-#include <Settings/Settings.h>
-#include <Settings/SettingsStorageInterface.h>
-#include <Settings/SettingsUpdatedEventSender.h>
 #include <SpeakerManager/SpeakerManager.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/SoftwareInfoSender.h>
 #include <System/UserInactivityMonitor.h>
+#include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <TemplateRuntime/TemplateRuntime.h>
 
 #ifdef ENABLE_REVOKE_AUTH
@@ -98,11 +106,10 @@ namespace defaultClient {
  * This class serves to instantiate each default component with of the SDK with no specializations to provide an
  * "out-of-box" component that users may utilize for AVS interaction.
  */
-class DefaultClient : public avsCommon::sdkInterfaces::CapabilitiesObserverInterface {
+class DefaultClient
+        : public avsCommon::sdkInterfaces::CapabilitiesObserverInterface
+        , public avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface {
 public:
-    /// A reserved index value which is considered invalid.
-    static const auto INVALID_INDEX = capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX;
-
     /**
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
      * connect() after creation.
@@ -122,12 +129,14 @@ public:
      * @param notificationsMediaPlayer The media player to play notification indicators.
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
      * @param ringtoneMediaPlayer The media player to play Comms ringtones.
+     * @param systemSoundMediaPlayer The media player to play system sounds.
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
      * @param bluetoothSpeaker The speaker to control volume of bluetooth.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
+     * @param systemSoundSpeaker The speaker to control volume of system sounds.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
 #ifdef ENABLE_COMMS_AUDIO_PROXY
      * @param commsMediaPlayer The media player to play Comms calling audio.
@@ -140,9 +149,9 @@ public:
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
-     * @param settingsStorage The storage interface that will be used to store settings (DEPRECATED).
      * @param deviceSettingStorage The storage interface that will be used to store device settings.
      * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
+     * @param miscStorage The storage interface that will be used to store key / value pairs.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
@@ -152,6 +161,8 @@ public:
      * @param contextManager The @c ContextManager which will provide the context for various components.
      * @param transportFactory The object passed in here will be used whenever a new transport object
      * for AVS communication is needed.
+     * @param localeAssetsManager The device locale assets manager.
+     * @param systemTimezone Optional object used to set the system timezone.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
@@ -173,16 +184,23 @@ public:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
 #ifdef ENABLE_PCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -195,9 +213,9 @@ public:
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
         std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
-        std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
         std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
         std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
+        std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -207,6 +225,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone = nullptr,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion =
             avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION,
         bool sendSoftwareInfoOnConnected = false,
@@ -375,26 +395,6 @@ public:
     void TemplateRuntimeDisplayCardCleared();
 
     /**
-     * Adds an observer to a single setting to be notified of that setting change.
-     *
-     * @param key The name of the setting.
-     * @param observer The settings observer to be added.
-     */
-    void addSettingObserver(
-        const std::string& key,
-        std::shared_ptr<avsCommon::sdkInterfaces::SingleSettingObserverInterface> observer);
-
-    /**
-     * Removes an observer to a single setting to be notified of that setting change.
-     *
-     * @param key The name of the setting.
-     * @param observer The settings observer to remove.
-     */
-    void removeSettingObserver(
-        const std::string& key,
-        std::shared_ptr<avsCommon::sdkInterfaces::SingleSettingObserverInterface> observer);
-
-    /**
      * Adds an observer to be notified of IndicatorState changes.
      *
      * @param observer The observer to add.
@@ -441,20 +441,7 @@ public:
     void removeBluetoothDeviceObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface> observer);
 
-    /**
-     * Calls the changeSetting function of Settings object.
-     *
-     * @param key The name of the setting to be changed.
-     * @param value The value of the setting to be set.
-     */
-    void changeSetting(const std::string& key, const std::string& value);
-
-    /**
-     * Sends the default settings set by the user to the AVS after connection is established.
-     */
-    void sendDefaultSettings();
-
-    /**
+    /*
      * Get a reference to the PlaybackRouter
      *
      * @return shared_ptr to the PlaybackRouter.
@@ -525,71 +512,29 @@ public:
      */
     bool setFirmwareVersion(avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion);
 
-    /**
-     * Begins a wake word initiated Alexa interaction.
-     *
-     * @param wakeWordAudioProvider The audio provider containing the audio data stream along with its metadata.
-     * @param beginIndex The begin index of the keyword found within the stream.
-     * @param endIndex The end index of the keyword found within the stream.
-     * @param keyword The keyword that was detected.
-     * @param espData The ESP measurement data.
-     * @param KWDMetadata Wake word engine metadata.
-     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa.
-     * @return A future indicating whether the interaction was successfully started.
-     */
+    /// @name SpeechInteractionHandlerInterface Methods
+    /// @{
     std::future<bool> notifyOfWakeWord(
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
         avsCommon::avs::AudioInputStream::Index beginIndex,
         avsCommon::avs::AudioInputStream::Index endIndex,
         std::string keyword,
         std::chrono::steady_clock::time_point startOfSpeechTimestamp,
-        const capabilityAgents::aip::ESPData espData = capabilityAgents::aip::ESPData::getEmptyESPData(),
-        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr) override;
 
-    /**
-     * Begins a tap to talk initiated Alexa interaction. Note that this can also be used for wake word engines that
-     * don't support providing both a begin and end index.
-     *
-     * @param tapToTalkAudioProvider The audio provider containing the audio data stream along with its metadata.
-     * @param beginIndex An optional parameter indicating where in the stream to start reading from.
-     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
-     * and it is used to measure user perceived latency.
-     * @return A future indicating whether the interaction was successfully started.
-     */
     std::future<bool> notifyOfTapToTalk(
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
-        avsCommon::avs::AudioInputStream::Index beginIndex = INVALID_INDEX,
-        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now());
+        avsCommon::avs::AudioInputStream::Index beginIndex = capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX,
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now()) override;
 
-    /**
-     * Begins a hold to talk initiated Alexa interaction.
-     *
-     * @param holdToTalkAudioProvider The audio provider containing the audio data stream along with its metadata.
-     * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
-     * and it is used to measure user perceived latency.
-     * @return A future indicating whether the interaction was successfully started.
-     */
     std::future<bool> notifyOfHoldToTalkStart(
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now());
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now()) override;
 
-    /**
-     * Ends a hold to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any
-     * currently ongoing recognize interactions.
-     *
-     * @return A future indicating whether audio streaming was successfully stopped. This can be false if this was
-     * called in the wrong state.
-     */
-    std::future<bool> notifyOfHoldToTalkEnd();
+    std::future<bool> notifyOfHoldToTalkEnd() override;
 
-    /**
-     * Ends a tap to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any
-     * currently ongoing recognize interactions.
-     *
-     * @return A future indicating whether audio streaming was successfully stopped. This can be false if this was
-     * called in the wrong state.
-     */
-    std::future<bool> notifyOfTapToTalkEnd();
+    std::future<bool> notifyOfTapToTalkEnd() override;
+    /// }
 
     /**
      * Retrieves the device settings manager which can be used to access device settings.
@@ -653,12 +598,14 @@ private:
      * @param notificationsMediaPlayer The media player to play notification indicators.
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
      * @param ringtoneMediaPlayer The media player to play Comms ringtones.
+     * @param systemSoundPlayer The media player to play system sounds.
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
      * @param notificationsSpeaker The speaker to control volume of notifications.
      * @param bluetoothSpeaker The speaker to control bluetooth volume.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
+     * @param systemSoundSpeaker The speaker to control volume of system sounds.
      * @param additionalSpeakers A list of additional speakers to receive volume changes.
      * @param equalizerRuntimeSetup Equalizer component runtime setup
      * @param audioFactory The audioFactory is a component the provides unique audio streams.
@@ -666,9 +613,9 @@ private:
      * @param alertStorage The storage interface that will be used to store alerts.
      * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
-     * @param settingsStorage The storage interface that will be used to store settings (DEPRECATED).
      * @param deviceSettingsStorage The storage interface that will be used to store device settings.
      * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
+     * @param miscStorage The storage interface that will be used to store key / value pairs.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
@@ -678,6 +625,8 @@ private:
      * @param contextManager The @c ContextManager which will provide the context for various components.
      * @param transportFactory The object passed in here will be used whenever a new transport object
      * for AVS communication is needed.
+     * @param localeAssetsManager The device locale assets manager.
+     * @param systemTimezone Optional object used to set the system timezone.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
@@ -697,16 +646,23 @@ private:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
 #ifdef ENABLE_PCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -719,9 +675,9 @@ private:
         std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
         std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
-        std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
         std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
+        std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -731,6 +687,8 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoOnConnected,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
@@ -800,6 +758,12 @@ private:
     std::shared_ptr<capabilityAgents::phoneCallController::PhoneCallController> m_phoneCallControllerCapabilityAgent;
 #endif
 
+#ifdef ENABLE_MCC
+    /// The MeetingClientController capability agent.
+    std::shared_ptr<capabilityAgents::meetingClientController::MeetingClientController>
+        m_meetingClientControllerCapabilityAgent;
+#endif
+
     /// The call manager capability agent.
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> m_callManager;
 
@@ -811,9 +775,6 @@ private:
 
     /// The playbackController capability agent.
     std::shared_ptr<capabilityAgents::playbackController::PlaybackController> m_playbackController;
-
-    /// The settings object.
-    std::shared_ptr<capabilityAgents::settings::Settings> m_settings;
 
     /// The speakerManager. Used for controlling the volume and mute settings of @c SpeakerInterface objects.
     std::shared_ptr<capabilityAgents::speakerManager::SpeakerManager> m_speakerManager;
@@ -849,6 +810,9 @@ private:
 
     /// The RegistrationManager used to control customer registration.
     std::shared_ptr<registrationManager::RegistrationManager> m_registrationManager;
+
+    /// An instance of the system sounds player.
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;
 
     /// Module responsible for managing device settings.
     std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;

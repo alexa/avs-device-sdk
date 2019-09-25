@@ -389,7 +389,7 @@ TEST_F(AlertsCapabilityAgentTest, test_localAlertVolumeChangeNoAlert) {
 /**
  * Test local alert volume changes. With alert sounding. Must not send event, volume is treated as local.
  */
-TEST_F(AlertsCapabilityAgentTest, test_localAlertVolumeChangeAlertPlaying) {
+TEST_F(AlertsCapabilityAgentTest, testTimer_localAlertVolumeChangeAlertPlaying) {
     m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
 
     // We have to wait for the alert state to be processed before updating speaker settings.

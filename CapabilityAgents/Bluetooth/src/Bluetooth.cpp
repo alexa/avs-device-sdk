@@ -330,45 +330,6 @@ static bool supportsAvsProfile(std::shared_ptr<BluetoothDeviceInterface> device,
 }
 
 /**
- * TODO: Move this to MacAddressString class.
- * Utility function to truncate a valid MAC address. The first 8 octets are X'd out.
- *
- * @param mac The untruncated MAC address.
- * @param[out] truncatedMac The truncated MAC address.
- * @return The truncated mac address if successful, otherwise the original string.
- */
-static bool truncate(const std::string& mac, std::string* truncatedMac) {
-    // The expected size of a MAC address in the format XX:XX:XX:XX:XX:XX.
-    const unsigned int MAC_SIZE = 17;
-
-    // Not a valid mac string, return.
-    if (!MacAddressString::create(mac)) {
-        ACSDK_ERROR(LX(__func__).d("reason", "invalidMac"));
-        return false;
-    } else if (mac.length() != MAC_SIZE) {
-        ACSDK_ERROR(LX(__func__).d("reason", "invalidMac"));
-        return false;
-    } else if (!truncatedMac) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullTruncatedMac"));
-        return false;
-    }
-
-    *truncatedMac = mac;
-
-    char X = 'X';
-    truncatedMac->at(0) = X;
-    truncatedMac->at(1) = X;
-    truncatedMac->at(3) = X;
-    truncatedMac->at(4) = X;
-    truncatedMac->at(6) = X;
-    truncatedMac->at(7) = X;
-    truncatedMac->at(9) = X;
-    truncatedMac->at(10) = X;
-
-    return true;
-}
-
-/**
  * Utility function to extract AVS compliant profiles. This returns a rapidjson node
  * containing an array of supported profiles.
  *
@@ -1710,9 +1671,11 @@ void Bluetooth::executeSendScanDevicesUpdated(
         deviceJson.AddMember(UNIQUE_DEVICE_ID_KEY, uuid, payload.GetAllocator());
         deviceJson.AddMember(FRIENDLY_NAME_KEY, device->getFriendlyName(), payload.GetAllocator());
 
-        std::string truncatedMac;
-        if (truncate(device->getMac(), &truncatedMac)) {
-            deviceJson.AddMember(TRUNCATED_MAC_ADDRESS_KEY, truncatedMac, payload.GetAllocator());
+        std::unique_ptr<MacAddressString> mac = MacAddressString::create(device->getMac());
+        if (mac) {
+            deviceJson.AddMember(TRUNCATED_MAC_ADDRESS_KEY, mac->getTruncatedString(), payload.GetAllocator());
+        } else {
+            ACSDK_ERROR(LX("appendingMacAddressFailed").d("reason", "invalidFormat"));
         }
 
         devicesArray.PushBack(deviceJson, payload.GetAllocator());

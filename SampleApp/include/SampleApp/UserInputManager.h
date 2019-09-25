@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <atomic>
 #include <memory>
 
+#include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <RegistrationManager/RegistrationObserverInterface.h>
 
 #include "ConsoleReader.h"
@@ -39,11 +40,13 @@ public:
      *
      * @param interactionManager An instance of the @c InteractionManager used to manage user input.
      * @param consoleReader The @c ConsoleReader to read inputs from console.
+     * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
      * @return Returns a new @c UserInputManager, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<UserInputManager> create(
         std::shared_ptr<InteractionManager> interactionManager,
-        std::shared_ptr<ConsoleReader> consoleReader);
+        std::shared_ptr<ConsoleReader> consoleReader,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
 
     /**
      * Processes user input until a quit command or a device reset is triggered.
@@ -60,10 +63,15 @@ public:
 private:
     /**
      * Constructor.
+     *
+     * @param interactionManager An instance of the @c InteractionManager used to manage user input.
+     * @param consoleReader The @c ConsoleReader to read inputs from console.
+     * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
      */
     UserInputManager(
         std::shared_ptr<InteractionManager> interactionManager,
-        std::shared_ptr<ConsoleReader> consoleReader);
+        std::shared_ptr<ConsoleReader> consoleReader,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
 
     /**
      * Reads an input from the console.  This is a blocking call until an input is read from the console or if m_restart
@@ -84,6 +92,13 @@ private:
      * Implement phone control options.
      */
     void controlPhone();
+#endif
+
+#ifdef ENABLE_MCC
+    /**
+     * Implement meeting control options.
+     */
+    void controlMeeting();
 #endif
 
     /**
@@ -122,6 +137,9 @@ private:
 
     /// The @c ConsoleReader to read input from console.
     std::shared_ptr<ConsoleReader> m_consoleReader;
+
+    /// The @c LocaleAssetsManagerInterface that provides the supported locales.
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> m_localeAssetsManager;
 
     /// Flag to indicate that a fatal failure occurred. In this case, customer can either reset the device or kill
     /// the app.

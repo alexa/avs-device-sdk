@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,11 +20,9 @@ namespace sampleApp {
 
 KeywordObserver::KeywordObserver(
     std::shared_ptr<defaultClient::DefaultClient> client,
-    capabilityAgents::aip::AudioProvider audioProvider,
-    std::shared_ptr<esp::ESPDataProviderInterface> espProvider) :
+    capabilityAgents::aip::AudioProvider audioProvider) :
         m_client{client},
-        m_audioProvider{audioProvider},
-        m_espProvider{espProvider} {
+        m_audioProvider{audioProvider} {
 }
 
 void KeywordObserver::onKeyWordDetected(
@@ -41,16 +39,11 @@ void KeywordObserver::onKeyWordDetected(
     } else if (
         endIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX &&
         beginIndex != avsCommon::sdkInterfaces::KeyWordObserverInterface::UNSPECIFIED_INDEX) {
-        auto espData = capabilityAgents::aip::ESPData::getEmptyESPData();
-        if (m_espProvider) {
-            espData = m_espProvider->getESPData();
-        }
-
         if (m_client) {
             // TODO(ACSDK-1976): We need to take into consideration the keyword duration.
             auto startOfSpeechTimestamp = std::chrono::steady_clock::now();
             m_client->notifyOfWakeWord(
-                m_audioProvider, beginIndex, endIndex, keyword, startOfSpeechTimestamp, espData, KWDMetadata);
+                m_audioProvider, beginIndex, endIndex, keyword, startOfSpeechTimestamp, KWDMetadata);
         }
     }
 }

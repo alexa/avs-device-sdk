@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,12 +19,15 @@
 #include <cstddef>
 #include <memory>
 #include <mutex>
+#include <type_traits>
 #include <utility>
 
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
+#include <RegistrationManager/CustomerDataHandler.h>
 
-#include "SettingInterface.h"
+#include "Settings/SettingInterface.h"
+#include "Settings/SettingStringConversion.h"
 
 namespace alexaClientSDK {
 namespace settings {
@@ -33,21 +36,11 @@ namespace settings {
  * The @c SettingsManager is responsible for managing settings.
  */
 template <typename... SettingsT>
-class SettingsManager {
+class SettingsManager : public registrationManager::CustomerDataHandler {
 public:
-    /**
-     * Define the setting type kept on position @c index.
-     *
-     * Explanation:
-     *   - tuple definition: This allow us to use @c std::get<> to get a specific index of @c SettingsT.
-     *   - Pointers: Since a setting type can be abstract, we use pointers.
-     *   - decltype: Gets the reference type of the "object" in @c index position.
-     *   - decay: Extract the type from the reference returned by decltype.
-     *
-     * @tparam index The index of the target setting.
-     */
+    /// The setting type kept at @c index position.
     template <size_t index>
-    using SettingType = typename std::decay<decltype(*std::get<index>(std::tuple<SettingsT*...>()))>::type;
+    using SettingType = typename std::tuple_element<index, std::tuple<SettingsT...>>::type;
 
     /// Define the value type for setting kept on position @c index.
     template <size_t index>
@@ -61,10 +54,15 @@ public:
     template <typename SettingT>
     using SettingPointerType = std::shared_ptr<SettingT>;
 
+    /// The number of settings supported by this manager.
+    static constexpr size_t NUMBER_OF_SETTINGS{sizeof...(SettingsT)};
+
     /**
      * Settings manager constructor.
+     *
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
      */
-    SettingsManager() = default;
+    SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
      * SettingsManager destructor.
@@ -90,7 +88,17 @@ public:
      * this function will return {false, defaultValue}. If the setting exist, it will return {true, settingValue}.
      */
     template <size_t index>
-    std::pair<bool, ValueType<index>> getValue(const ValueType<index>& defaultValue) const;
+    std::pair<bool, ValueType<index>> getValue(const ValueType<index>& defaultValue = ValueType<index>()) const;
+
+    /**
+     * Get a json representation of the current setting value.
+     *
+     * @tparam index The index of the target setting.
+     * @return The json representation of the given setting. An empty string will be returned if the setting
+     * doesn't exist or conversion failed.
+     */
+    template <size_t index>
+    std::string getJsonValue() const;
 
     /**
      * Register an observer for a given setting.
@@ -130,9 +138,41 @@ public:
     template <size_t index>
     void removeSetting(std::shared_ptr<SettingType<index>> setting);
 
+    /**
+     * Checks if a setting is available.
+     *
+     * @tparam index The index of the target setting.
+     * @return @c true if the setting is available, @c false otherwise.
+     */
+    template <size_t index>
+    bool hasSetting();
+
+    /// @name CustomerDataHandler Functions
+    /// @{
+    void clearData() override;
+    /// @}
+
 private:
     /// Alias to make log entries less verbose.
     using LogEntry = avsCommon::utils::logger::LogEntry;
+
+    /**
+     * ClearData on the setting when @c CustomerDataHandler triggers clearData callback.
+     *
+     * @note This function is an no-op for the case when index is the size of SettingsT.
+     *
+     */
+    template <size_t index>
+    typename std::enable_if<index >= NUMBER_OF_SETTINGS, void>::type clearData();
+
+    /**
+     * ClearData on the setting when @c CustomerDataHandler triggers clearData callback.
+     *
+     * @note This is a recursive function for iterating through a tuple.
+     *
+     */
+    template <size_t index>
+    typename std::enable_if<index <= NUMBER_OF_SETTINGS - 1, void>::type clearData();
 
     /**
      * Delete copy constructor.
@@ -152,6 +192,11 @@ private:
 };
 
 template <typename... SettingsT>
+SettingsManager<SettingsT...>::SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
+        CustomerDataHandler{dataManager} {
+}
+
+template <typename... SettingsT>
 template <size_t index>
 std::pair<bool, typename SettingsManager<SettingsT...>::template ValueType<index>> SettingsManager<
     SettingsT...>::getValue(const ValueType<index>& defaultValue) const {
@@ -164,6 +209,27 @@ std::pair<bool, typename SettingsManager<SettingsT...>::template ValueType<index
     avsCommon::utils::logger::acsdkError(
         LogEntry("SettingManager", "getValueFailed").d("reason", "invalidSetting").d("settingIndex", index));
     return {false, defaultValue};
+}
+
+template <typename... SettingsT>
+template <size_t index>
+std::string SettingsManager<SettingsT...>::getJsonValue() const {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    auto& setting = std::get<index>(m_settings);
+    if (setting) {
+        auto result = toSettingString<ValueType<index>>(setting->get());
+        if (!result.first) {
+            avsCommon::utils::logger::acsdkError(LogEntry("SettingManager", "getStringValueFailed")
+                                                     .d("reason", "toSettingStringFailed")
+                                                     .d("settingIndex", index));
+            return std::string();
+        }
+        return result.second;
+    }
+
+    avsCommon::utils::logger::acsdkDebug0(
+        LogEntry("SettingManager", __func__).d("result", "noSettingAvailable").d("settingIndex", index));
+    return std::string();
 }
 
 template <typename... SettingsT>
@@ -201,6 +267,7 @@ void SettingsManager<SettingsT...>::removeObserver(std::shared_ptr<ObserverType<
     auto& setting = std::get<index>(m_settings);
     if (setting && observer) {
         setting->removeObserver(observer);
+        return;
     }
 
     avsCommon::utils::logger::acsdkError(
@@ -233,6 +300,42 @@ void SettingsManager<SettingsT...>::removeSetting(std::shared_ptr<SettingType<in
         avsCommon::utils::logger::acsdkError(
             LogEntry("SettingManager", "removeSettingFailed").d("reason", "invalidSetting").d("settingIndex", index));
     }
+}
+
+template <typename... SettingsT>
+template <size_t index>
+bool SettingsManager<SettingsT...>::hasSetting() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    return std::get<index>(m_settings);
+}
+
+template <typename... SettingsT>
+template <size_t index>
+typename std::enable_if<index >= SettingsManager<SettingsT...>::NUMBER_OF_SETTINGS, void>::type SettingsManager<
+    SettingsT...>::clearData() {
+}
+
+template <typename... SettingsT>
+template <size_t index>
+typename std::enable_if<index <= SettingsManager<SettingsT...>::NUMBER_OF_SETTINGS - 1, void>::type SettingsManager<
+    SettingsT...>::clearData() {
+    auto& setting = std::get<index>(m_settings);
+    if (setting) {
+        if (!setting->clearData(setting->getDefault())) {
+            avsCommon::utils::logger::acsdkError(
+                LogEntry("SettingManager", "clearDataFailed").d("reason", "invalidSetting").d("settingIndex", index));
+        }
+    } else {
+        avsCommon::utils::logger::acsdkDebug0(
+            LogEntry("SettingManager", __func__).d("reason", "invalidSetting").d("settingIndex", index));
+    }
+    clearData<index + 1>();
+}
+
+template <typename... SettingsT>
+void SettingsManager<SettingsT...>::clearData() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    clearData<0>();
 }
 
 }  // namespace settings

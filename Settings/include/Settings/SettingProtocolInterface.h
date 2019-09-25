@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -106,6 +106,13 @@ public:
      * @return @c true if the directive was enqueued correctly; @c false otherwise.
      */
     virtual bool restoreValue(ApplyDbChangeFunction applyChange, SettingNotificationFunction notifyObservers) = 0;
+
+    /**
+     * Clear the data for this setting.
+     *
+     * @return @c true if it data is cleared; @false otherwise.
+     */
+    virtual bool clearData() = 0;
 
     /**
      * Destructor.

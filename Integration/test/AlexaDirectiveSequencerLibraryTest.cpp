@@ -630,7 +630,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, test_dropQueueAfterBargeIn) {
  * @c SetAlert directives do not have a @c dialogRequestId value. This test uses that fact to verify that
  * @c AVSDirectives with no @c dialogRequestId are processed properly.
  */
-TEST_F(AlexaDirectiveSequencerLibraryTest, test_sendDirectiveWithoutADialogRequestID) {
+TEST_F(AlexaDirectiveSequencerLibraryTest, DISABLED_test_sendDirectiveWithoutADialogRequestID) {
     DirectiveHandlerConfiguration config;
     auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     config[SPEAK_PAIR] = audioNonBlockingPolicy;
@@ -945,7 +945,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, test_noDirectiveHandlerRegisteredForA
  * To do this, no handler is set for a directive (@c SetMute) that is known to come down consistently in response to
  * a Recognize event, instead an exception encountered is expected.
  */
-TEST_F(AlexaDirectiveSequencerLibraryTest, test_noDirectiveHandlerRegisteredForADirectiveInTheMiddle) {
+TEST_F(AlexaDirectiveSequencerLibraryTest, DISABLED_test_noDirectiveHandlerRegisteredForADirectiveInTheMiddle) {
     // Don't Register a DirectiveHandler for Speak.
     DirectiveHandlerConfiguration config;
     config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);

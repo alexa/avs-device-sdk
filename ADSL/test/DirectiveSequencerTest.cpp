@@ -780,7 +780,7 @@ TEST_F(DirectiveSequencerTest, test_handleBlockingThenImmediatelyThenNonBockingO
     EXPECT_CALL(*(handler1.get()), preHandleDirective(directive1, _)).Times(1).InSequence(s1, s2);
     EXPECT_CALL(*(handler2.get()), preHandleDirective(directive2, _)).Times(1).InSequence(s2);
 
-    EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(1).InSequence(s2);
+    EXPECT_CALL(*(handler1.get()), handleDirective(_)).Times(1).InSequence(s1);
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
 
     EXPECT_CALL(*(handler2.get()), handleDirectiveImmediately(_)).Times(0);

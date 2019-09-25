@@ -33,6 +33,7 @@
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <AIP/Initiator.h>
+#include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/AVS/BlockingPolicy.h>
 #include <AVSCommon/AVS/MessageRequest.h>
@@ -41,8 +42,19 @@
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#ifdef GSTREAMER_MEDIA_PLAYER
+#include <MediaPlayer/MediaPlayer.h>
+#else
+#include "Integration/TestMediaPlayer.h"
+#endif
+#include <Settings/MockSetting.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
+#include <SystemSoundPlayer/SystemSoundPlayer.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -77,6 +89,8 @@ using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace afml;
 using namespace contextManager;
+using namespace settings;
+using namespace settings::test;
 
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Tell me a Joke" to be recognized.
 static const std::string JOKE_AUDIO_FILE = "/recognize_joke_test.wav";
@@ -400,6 +414,11 @@ protected:
         size_t maxReaders = 3;
         size_t bufferSize = AudioInputStream::calculateBufferSize(nWords, wordSize, maxReaders);
 
+        m_wakeWordConfirmation =
+            std::make_shared<MockSetting<WakeWordConfirmationSettingType>>(getWakeWordConfirmationDefault());
+        m_speechConfirmation =
+            std::make_shared<MockSetting<SpeechConfirmationSettingType>>(getSpeechConfirmationDefault());
+
         auto m_Buffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(bufferSize);
         auto m_Sds = avsCommon::avs::AudioInputStream::create(m_Buffer, wordSize, maxReaders);
         ASSERT_NE(nullptr, m_Sds);
@@ -445,6 +464,18 @@ protected:
         connect();
 
         m_userInactivityMonitor = UserInactivityMonitor::create(m_avsConnectionManager, m_exceptionEncounteredSender);
+
+#ifdef GSTREAMER_MEDIA_PLAYER
+        auto systemSoundMediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
+            std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
+#else
+        auto systemSoundMediaPlayer = std::make_shared<TestMediaPlayer>();
+#endif
+
+        m_systemSoundPlayer = applicationUtilities::systemSoundPlayer::SystemSoundPlayer::create(
+            systemSoundMediaPlayer,
+            std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
+
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
@@ -452,7 +483,11 @@ protected:
             m_focusManager,
             m_dialogUXStateAggregator,
             m_exceptionEncounteredSender,
-            m_userInactivityMonitor);
+            m_userInactivityMonitor,
+            m_systemSoundPlayer,
+            std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
+            m_wakeWordConfirmation,
+            m_speechConfirmation);
         ASSERT_NE(nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
@@ -580,6 +615,9 @@ protected:
     std::shared_ptr<AudioProvider> m_TapToTalkAudioProvider;
     std::shared_ptr<AudioProvider> m_HoldToTalkAudioProvider;
     avsCommon::utils::AudioFormat m_compatibleAudioFormat;
+    std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
+    std::shared_ptr<settings::test::MockSetting<settings::WakeWordConfirmationSettingType>> m_wakeWordConfirmation;
+    std::shared_ptr<settings::test::MockSetting<settings::SpeechConfirmationSettingType>> m_speechConfirmation;
 #if defined(KWD_KITTAI) || defined(KWD_SENSORY)
     std::shared_ptr<wakeWordTrigger> m_wakeWordTrigger;
 #ifdef KWD_KITTAI

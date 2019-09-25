@@ -30,9 +30,9 @@ enum HTTPResponseCode {
     /// No HTTP response received.
     HTTP_RESPONSE_CODE_UNDEFINED = 0,
 
-    /// HTTP Success with reponse payload.
+    /// HTTP Success with response payload.
     SUCCESS_OK = 200,
-    /// HTTP Succcess with no response payload.
+    /// HTTP Success with no response payload.
     SUCCESS_NO_CONTENT = 204,
 
     /// Multiple redirection choices

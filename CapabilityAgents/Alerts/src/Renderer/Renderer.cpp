@@ -125,7 +125,6 @@ Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_loopPause{std::chrono::milliseconds{0}},
         m_shouldPauseBeforeRender{false},
         m_isStopping{false},
-        m_pauseWasInterrupted{false},
         m_isStartPending{false} {
     resetSourceId();
 }
@@ -184,17 +183,17 @@ bool Renderer::shouldPause() {
     return false;
 }
 
-void Renderer::pause(std::chrono::milliseconds duration) {
+bool Renderer::pause(std::chrono::milliseconds duration) {
     ACSDK_DEBUG9(LX(__func__).d("duration", duration.count()));
 
     if (duration.count() <= 0) {
         ACSDK_WARN(LX(__func__).m("duration is a non-positive value.  Returning."));
-        return;
+        return false;
     }
 
     std::unique_lock<std::mutex> lock(m_waitMutex);
     // Wait for stop() or m_loopPause to elapse.
-    m_pauseWasInterrupted = m_waitCondition.wait_for(lock, duration, [this]() { return m_isStopping; });
+    return !m_waitCondition.wait_for(lock, duration, [this]() { return m_isStopping; });
 }
 
 void Renderer::play() {
@@ -351,12 +350,15 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
     }
 
     if (!localIsStopping && shouldRenderNext()) {
-        if (renderNextAudioAsset()) {
+        bool pauseWasInterrupted = false;
+        if (renderNextAudioAsset(&pauseWasInterrupted)) {
             return;
-        }
-
-        if (!m_pauseWasInterrupted) {
-            finalState = RendererObserverInterface::State::COMPLETED;
+        } else {
+            // If there are no more assets to render, and the reason we aren't rendering more
+            // assets isn't because a pause was interrupted, set state to COMPLETED
+            if (!pauseWasInterrupted) {
+                finalState = RendererObserverInterface::State::COMPLETED;
+            }
         }
     }
 
@@ -365,7 +367,11 @@ void Renderer::executeOnPlaybackFinished(SourceId sourceId) {
     m_observer = nullptr;
 }
 
-bool Renderer::renderNextAudioAsset() {
+bool Renderer::renderNextAudioAsset(bool* pauseInterruptedOut) {
+    if (pauseInterruptedOut) {
+        *pauseInterruptedOut = false;
+    }
+
     // If we have completed a loop, then update our counters, and determine what to do next.  If the URLs aren't
     // reachable, m_urls will be empty.
     if (isLastSourceInLoop()) {
@@ -384,8 +390,13 @@ bool Renderer::renderNextAudioAsset() {
 
             // only pause if there is a positive remainder duration.
             if (pauseDuration.count() > 0) {
-                pause(pauseDuration);
-                if (m_pauseWasInterrupted) {
+                bool pauseWasInterrupted = !pause(pauseDuration);
+
+                if (pauseInterruptedOut) {
+                    *pauseInterruptedOut = pauseWasInterrupted;
+                }
+
+                if (pauseWasInterrupted) {
                     ACSDK_DEBUG5(LX(__func__).m("Pause has been interrupted, not proceeding with the loop."));
                     return false;
                 }

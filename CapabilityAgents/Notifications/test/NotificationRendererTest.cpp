@@ -170,7 +170,7 @@ TEST_F(NotificationRendererTest, test_playPreferredStream) {
  * methods get called (once each) and that the NotificationRenderer's observer gets called
  * back to indicate that playback had completed.
  */
-TEST_F(NotificationRendererTest, test_playDefaultStream) {
+TEST_F(NotificationRendererTest, testTimer_playDefaultStream) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(1);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(2);
@@ -210,7 +210,7 @@ TEST_F(NotificationRendererTest, test_secondPlayRejected) {
  * Exercise rendering the default stream.  Verify that a call to @c renderNotification()
  * while the default stream is playing is rejected.
  */
-TEST_F(NotificationRendererTest, test_secondPlayWhilePlayingDefaultStream) {
+TEST_F(NotificationRendererTest, testTimer_secondPlayWhilePlayingDefaultStream) {
     EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
     EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(1);
     EXPECT_CALL(*(m_player.get()), play(_)).Times(2);

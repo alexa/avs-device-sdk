@@ -35,12 +35,6 @@ install_dependencies() {
   # Build tools and make (mingw32-make fails building portAudio)
   pacman -S ${PACMAN_ARGS} git mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake msys/tar msys/make
 
-  # pip required for installing flask and commentjson
-  pacman -S ${PACMAN_ARGS} mingw64/mingw-w64-x86_64-python2-pip
-
-  # Requirements for AuthServer
-  pip install flask requests commentjson
-
   # required by the SDK
   pacman -S ${PACMAN_ARGS} mingw-w64-x86_64-sqlite3
 

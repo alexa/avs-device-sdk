@@ -132,6 +132,17 @@ TEST_F(SettingTest, test_localChangeRevert) {
     EXPECT_EQ(setting->get(), INIT_VALUE);
 }
 
+/// Test clearData.
+TEST_F(SettingTest, test_clearData) {
+    m_protocol = std::unique_ptr<MockSettingProtocol>(new MockSettingProtocol(INIT_VALUE_STR, true, true));
+    MockSettingProtocol* protocolSpy = m_protocol.get();
+    auto setting = createSetting();
+    ASSERT_NE(setting, nullptr);
+
+    setting->clearData(INIT_VALUE);
+    EXPECT_TRUE(protocolSpy->isDataCleared());
+}
+
 /// Test observer notification.
 TEST_F(SettingTest, test_observerNotificationLocal) {
     auto setting = createSetting();

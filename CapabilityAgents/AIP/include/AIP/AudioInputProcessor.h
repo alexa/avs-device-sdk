@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AIP_INCLUDE_AIP_AUDIOINPUTPROCESSOR_H_
 
 #include <chrono>
+#include <map>
 #include <memory>
 #include <unordered_set>
 #include <vector>
@@ -24,26 +25,30 @@
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
-#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
-#include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
+#include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
+#include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
+#include <Settings/DeviceSettingsManager.h>
+#include <Settings/SettingEventMetadata.h>
 #include <SpeechEncoder/SpeechEncoder.h>
 
 #include "AudioProvider.h"
-#include "ESPData.h"
 #include "Initiator.h"
 
 namespace alexaClientSDK {
@@ -89,6 +94,12 @@ public:
      * @param dialogUXStateAggregator The dialog state aggregator which tracks UX states related to dialog.
      * @param exceptionEncounteredSender The object to use for sending AVS Exception messages.
      * @param userInactivityNotifier The object to use for resetting user inactivity.
+     * @param systemSoundPlayer The instance of the system sound player.
+     * @param assetsManager Responsible for retrieving and changing the wake words and locale.
+     * @param wakeWordConfirmation The wake word confirmation setting.
+     * @param speechConfirmation The end of speech confirmation setting.
+     * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
+     * device supports wake words.
      * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
      *     defaults to nullptr, which disable the encoding feature.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
@@ -104,6 +115,11 @@ public:
         std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityNotifier,
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& assetsManager,
+        std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
+        std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+        std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting = nullptr,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null());
 
@@ -126,8 +142,7 @@ public:
 
     /**
      * This function asks the @c AudioInputProcessor to send a Recognize Event to AVS and start streaming from @c
-     * audioProvider, which transitions it to the @c RECOGNIZING state.  A ReportEchoSpatialPerceptionData Event will
-     * also be sent before the Recognize event if ESP measurements is passed into @c espData.  This function can be
+     * audioProvider, which transitions it to the @c RECOGNIZING state. This function can be
      * called in any state except @c BUSY, however the flags in @c AudioProvider will dictate whether the call is
      * allowed to override an ongoing Recognize Event. If the flags do not allow an override, no event will be sent, no
      * state change will occur, and the function will fail.
@@ -167,7 +182,6 @@ public:
      *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
-     * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
      * @param KWDMetadata Wake word engine metadata.
      * @return A future which is @c true if the Recognize Event was started successfully, else @c false.
      */
@@ -178,7 +192,6 @@ public:
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "",
-        const ESPData espData = ESPData::getEmptyESPData(),
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -237,6 +250,27 @@ public:
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
+    /**
+     * Gets the wake words events metadata.
+     *
+     * @return The wake words events metadata.
+     */
+    static settings::SettingEventMetadata getWakeWordsEventsMetadata();
+
+    /**
+     * Gets the wake word confirmation events metadata.
+     *
+     * @return The wake word confirmation event metadata.
+     */
+    static settings::SettingEventMetadata getWakeWordConfirmationMetadata();
+
+    /**
+     * Gets the speech confirmation events metadata.
+     *
+     * @return The speech confirmation event metadata.
+     */
+    static settings::SettingEventMetadata getSpeechConfirmationMetadata();
+
 private:
     /**
      * Constructor.
@@ -247,11 +281,17 @@ private:
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
      * @param userInactivityMonitor The object to use for resetting user inactivity.
+     * @param systemSoundPlayer The instance of the system sound player.
      * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
      *     will disable the encoding feature if set to nullptr.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
      *     to @c AudioProvider::null().
+     * @param wakeWordConfirmation The wake word confirmation setting.
+     * @param speechConfirmation The end of speech confirmation setting.
+     * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
+     * device supports wake words.
+     * @param capabilitiesConfiguration The SpeechRecognizer capabilities configuration.
      *
      * @note This constructor is private so that users are forced to use the @c create() factory function.  The primary
      *     reason for this is to ensure that a @c std::shared_ptr to the instance exists, which is a requirement for
@@ -264,8 +304,13 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
-        AudioProvider defaultAudioProvider);
+        AudioProvider defaultAudioProvider,
+        std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
+        std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+        std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
+        std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -310,13 +355,6 @@ private:
      * to lambda functions.  No additional synchronization is needed.
      */
     /// @{
-
-    /**
-     * This function builds a @c ReportEchoSpatialPerceptionData event.  The event will not be sent out until context is
-     * available so that the @c ReportEchoSpatialPerceptionData event will be sent just before the @c Recognize event.
-     * @param espData The ESP measurements to be sent in the ReportEchoSpatialPerceptionData event.
-     */
-    void executePrepareEspPayload(const ESPData espData);
 
     /**
      * This function builds @c a Recognize event and will request context so the events will be sent upon @c
@@ -480,6 +518,30 @@ private:
 
     /// @}
 
+    /**
+     * A helper function to handle the SetWakeWordConfirmation directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     * @return Whether the directive processing was successful.
+     */
+    bool handleSetWakeWordConfirmation(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * A helper function to handle the SetSpeechConfirmation directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     * @return Whether the directive processing was successful.
+     */
+    bool handleSetSpeechConfirmation(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * A helper function to handle the SetWakeWords directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     * @return Whether the directive processing was successful.
+     */
+    bool handleSetWakeWords(std::shared_ptr<DirectiveInfo> info);
+
     /// The Directive Sequencer to register with for receiving directives.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 
@@ -539,13 +601,6 @@ private:
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_KWDMetadataReader;
 
     /**
-     * The payload for a ReportEchoSpatialPerceptionData event.  This string is populated by a call to @c
-     * executeRecognize(), and later consumed by a call to @c executeOnContextAvailable() when the context arrives and
-     * the full @c MessageRequest can be assembled.  This string is only relevant during the @c RECOGNIZING state.
-     */
-    std::string m_espPayload;
-
-    /**
      * The payload for a Recognize event.  This string is populated by a call to @c executeRecognize(), and later
      * consumed by a call to @c executeOnContextAvailable() when the context arrives and the full @c MessageRequest can
      * be assembled.  This string is only relevant during the @c RECOGNIZING state.
@@ -553,21 +608,10 @@ private:
     std::string m_recognizePayload;
 
     /**
-     * The @c MessageRequest for a ReportEchoSpatialPerceptionData event.  This request is created by a call to
-     * @c executeOnContextAvailable(), and either sent immediately (if `m_focusState == afml::FocusState::FOREGROUND`),
-     * or later sent by a call to @c executeOnFocusChanged().  This pointer is only valid during the @c RECOGNIZING
-     * state after a call to @c executeRecognize(), and is reset after it is sent.
-     */
-    std::shared_ptr<avsCommon::avs::MessageRequest> m_espRequest;
-
-    /**
      * The @c MessageRequest for a Recognize event.  This request is created by a call to
      * @c executeOnContextAvailable(), and either sent immediately (if `m_focusState == afml::FocusState::FOREGROUND`),
      * or later sent by a call to @c executeOnFocusChanged().  This pointer is only valid during the @c RECOGNIZING
      * state after a call to @c executeRecognize(), and is reset after it is sent.
-     *
-     * @note If ESP measurement is provided in @c recognize(), the @c ReportEchoSpatialPerceptionData event is sent
-     * before the @c Recognize event.
      */
     std::shared_ptr<avsCommon::avs::MessageRequest> m_recognizeRequest;
 
@@ -601,6 +645,9 @@ private:
      */
     bool m_localStopCapturePerformed;
 
+    /// The system sound player.
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;
+
     /**
      * The initiator value from the preceding ExpectSpeech directive. The ExpectSpeech directive's initiator
      * will need to be consumed and sent back in a subsequent Recognize event. This should be cleared if the
@@ -623,6 +670,15 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// The wake word confirmation setting.
+    std::shared_ptr<settings::WakeWordConfirmationSetting> m_wakeWordConfirmation;
+
+    /// The end of speech confirmation setting.
+    std::shared_ptr<settings::SpeechConfirmationSetting> m_speechConfirmation;
+
+    /// The wake words setting. This field is optional and it is only used if the device supports wake words.
+    std::shared_ptr<settings::WakeWordsSetting> m_wakeWordsSetting;
 };
 
 }  // namespace aip

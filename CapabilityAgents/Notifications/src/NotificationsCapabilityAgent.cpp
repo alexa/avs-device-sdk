@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -183,7 +183,7 @@ void NotificationsCapabilityAgent::executeInit() {
         ACSDK_ERROR(LX("executeInitFailed").d("reason", "getIndicatorStateFailed"));
         return;
     }
-    notifyObservers(currentIndicatorState);
+    notifyObserversOfIndicatorState(currentIndicatorState);
 
     int queueSize = 0;
     if (!m_notificationsStorage->getQueueSize(&queueSize)) {
@@ -191,7 +191,7 @@ void NotificationsCapabilityAgent::executeInit() {
         return;
     }
 
-    m_isEnabled = (queueSize > 0);
+    m_isEnabled = (queueSize > 0 || (IndicatorState::ON == currentIndicatorState));
     // relevant state has been updated here (m_isEnabled and currentIndicatorState)
     executeProvideState();
 
@@ -201,10 +201,16 @@ void NotificationsCapabilityAgent::executeInit() {
     }
 }
 
-void NotificationsCapabilityAgent::notifyObservers(IndicatorState state) {
+void NotificationsCapabilityAgent::notifyObserversOfIndicatorState(IndicatorState state) {
     ACSDK_DEBUG5(LX(__func__).d("indicatorState", indicatorStateToInt(state)));
     for (const auto& observer : m_observers) {
         observer->onSetIndicator(state);
+    }
+}
+
+void NotificationsCapabilityAgent::notifyObserversOfNotificationReceived() {
+    for (const auto& observer : m_observers) {
+        observer->onNotificationReceived();
     }
 }
 
@@ -380,7 +386,7 @@ void NotificationsCapabilityAgent::executePossibleIndicatorStateChange(const Ind
                 LX("executePossibleIndicatorStateChangeFailed").d("reason", "failed to set new indicator state"));
             return;
         }
-        notifyObservers(nextIndicatorState);
+        notifyObserversOfIndicatorState(nextIndicatorState);
         executeProvideState();
     }
 }
@@ -429,6 +435,8 @@ void NotificationsCapabilityAgent::executeSetIndicator(
     }
     // if we make it past the switch statement, a NotificationIndicator was successfully enqueued
     setHandlingCompleted(info);
+
+    notifyObserversOfNotificationReceived();
 
     // m_isEnabled needs to be true until we are sure that the user has been properly notified, so despite the
     // possibility of immediately calling executeRenderNotification(), m_isEnabled should only be set to false upon

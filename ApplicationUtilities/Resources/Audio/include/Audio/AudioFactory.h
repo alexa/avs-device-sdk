@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
-#include "AVSCommon/SDKInterfaces/Audio/CommunicationsAudioFactoryInterface.h"
+#include <AVSCommon/SDKInterfaces/Audio/CommunicationsAudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/SystemSoundAudioFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
@@ -36,6 +37,7 @@ public:
     std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notifications() const override;
     std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> communications()
         const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> systemSounds() const override;
 };
 
 }  // namespace audio

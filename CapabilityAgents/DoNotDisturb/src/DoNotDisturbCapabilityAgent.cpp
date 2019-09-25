@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -72,18 +72,11 @@ static const std::string DND_JSON_INTERFACE_VERSION = "1.0";
 static constexpr char JSON_KEY_ENABLED[] = "enabled";
 
 std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create(
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<MessageSenderInterface> messageSender,
-    std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage) {
     if (!messageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "messageSenderNull"));
-        return nullptr;
-    }
-
-    if (!customerDataManager) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "customerDataManagerNull"));
         return nullptr;
     }
 
@@ -92,18 +85,13 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
         return nullptr;
     }
 
-    if (!settingsManager) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "settingsManagerNull"));
-        return nullptr;
-    }
-
     if (!settingsStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "settingsStorageNull"));
         return nullptr;
     }
 
-    auto dndCA = std::shared_ptr<DoNotDisturbCapabilityAgent>(new DoNotDisturbCapabilityAgent(
-        customerDataManager, exceptionEncounteredSender, messageSender, settingsManager));
+    auto dndCA = std::shared_ptr<DoNotDisturbCapabilityAgent>(
+        new DoNotDisturbCapabilityAgent(exceptionEncounteredSender, messageSender));
 
     if (!dndCA->initialize(settingsStorage)) {
         ACSDK_ERROR(LX("createFailed").d("reason", "Initialization failed."));
@@ -114,34 +102,31 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
 }
 
 DoNotDisturbCapabilityAgent::DoNotDisturbCapabilityAgent(
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    std::shared_ptr<MessageSenderInterface> messageSender,
-    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
+    std::shared_ptr<MessageSenderInterface> messageSender) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"DoNotDisturbCA"},
-        CustomerDataHandler{customerDataManager},
         m_messageSender{messageSender},
-        m_settingsManager{settingsManager},
         m_isConnected{false},
         m_hasOfflineChanges{false} {
     generateCapabilityConfiguration();
 }
 
+std::shared_ptr<settings::DoNotDisturbSetting> DoNotDisturbCapabilityAgent::getDoNotDisturbSetting() const {
+    return m_dndModeSetting;
+}
+
+settings::SettingEventMetadata DoNotDisturbCapabilityAgent::getDoNotDisturbEventsMetadata() {
+    return settings::SettingEventMetadata{
+        NAMESPACE, EVENT_DONOTDISTURBCHANGED.name, EVENT_REPORTDONOTDISTURB.name, JSON_KEY_ENABLED};
+}
+
 bool DoNotDisturbCapabilityAgent::initialize(
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage) {
-    // TODO: ACSDK-2089 - Clear the data when SettingsAPI allows. There will be no need to keep settings storage in CA.
-    m_settingsStorage = settingsStorage;
-
-    const settings::SettingEventMetadata metadata = {
-        .eventNamespace = NAMESPACE,
-        .eventChangedName = EVENT_DONOTDISTURBCHANGED.name,
-        .eventReportName = EVENT_REPORTDONOTDISTURB.name,
-        .settingName = JSON_KEY_ENABLED,
-    };
+    auto metadata = getDoNotDisturbEventsMetadata();
     auto protocol = DNDSettingProtocol::create(metadata, shared_from_this(), settingsStorage);
     m_dndModeSetting = settings::Setting<bool>::create(false, std::move(protocol));
-    return m_settingsManager->addSetting<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(m_dndModeSetting);
+    return m_dndModeSetting != nullptr;
 }
 
 void DoNotDisturbCapabilityAgent::generateCapabilityConfiguration() {
@@ -247,14 +232,7 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> DoN
 }
 
 void DoNotDisturbCapabilityAgent::doShutdown() {
-    m_settingsManager->removeSetting<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(m_dndModeSetting);
     m_dndModeSetting.reset();
-}
-
-void DoNotDisturbCapabilityAgent::clearData() {
-    // TODO: ACSDK-2089 - Clear the data when SettingsAPI allows.
-    std::string settingKey = NAMESPACE + "::" + JSON_KEY_ENABLED;
-    m_settingsStorage->deleteSetting(settingKey);
 }
 
 bool DoNotDisturbCapabilityAgent::handleSetDoNotDisturbDirective(
@@ -328,6 +306,17 @@ std::shared_future<bool> DoNotDisturbCapabilityAgent::sendReportEvent(const std:
 
     promise.set_value(true);
     return promise.get_future();
+}
+
+std::shared_future<bool> DoNotDisturbCapabilityAgent::sendStateReportEvent(const std::string& payload) {
+    // Not supported.
+    std::promise<bool> promise;
+    promise.set_value(false);
+    return promise.get_future();
+}
+
+void DoNotDisturbCapabilityAgent::cancel() {
+    // TODO: ACSDK-2246: use SharedAVSSettingProtocol to implement sending logic.
 }
 
 void DoNotDisturbCapabilityAgent::onConnectionStatusChanged(
