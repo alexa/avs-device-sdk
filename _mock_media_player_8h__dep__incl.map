@@ -1,8 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h">
-<area shape="rect" id="node2" href="$_mock_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MockMediaPlayer.cpp" alt="" coords="5,125,244,177"/>
-<area shape="rect" id="node3" href="$_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/test/Renderer\l/RendererTest.cpp" alt="" coords="268,119,421,184"/>
-<area shape="rect" id="node4" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="444,119,642,184"/>
-<area shape="rect" id="node5" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="666,119,863,184"/>
-<area shape="rect" id="node6" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notification\lRendererTest.cpp" alt="" coords="887,119,1079,184"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1103,119,1293,184"/>
+<area shape="rect" id="node2" href="$_system_sound_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/SystemSoundPlayer/test\l/SystemSoundPlayerTest.cpp" alt="" coords="5,119,201,184"/>
+<area shape="rect" id="node3" href="$_mock_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MockMediaPlayer.cpp" alt="" coords="225,125,464,177"/>
+<area shape="rect" id="node4" href="$_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/test/Renderer\l/RendererTest.cpp" alt="" coords="488,119,641,184"/>
+<area shape="rect" id="node5" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="664,119,862,184"/>
+<area shape="rect" id="node6" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="886,119,1083,184"/>
+<area shape="rect" id="node7" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notification\lRendererTest.cpp" alt="" coords="1107,119,1299,184"/>
+<area shape="rect" id="node8" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1323,119,1513,184"/>
 </map>

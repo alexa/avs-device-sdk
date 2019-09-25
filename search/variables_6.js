@@ -36,6 +36,7 @@ var searchData=
   ['g_5funknowntoggle',['g_unknownToggle',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#ab88d41fb0c3e769012473064c4f43a38',1,'alexaClientSDK::capabilityAgents::playbackController']]],
   ['g_5fvolume',['g_volume',['../namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a9d51eb25dd9b954b31b11f2b875c3078',1,'alexaClientSDK::mediaPlayer::android::test']]],
   ['g_5fworkingdirectory',['g_workingDirectory',['../namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1test.html#a447f1945b81d84874f0535d47a108dba',1,'alexaClientSDK::storage::sqliteStorage::test']]],
+  ['globaltimezone',['globalTimezone',['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#aec0e0f7fe4f376fbd10985f0e87b43f4',1,'alexaClientSDK::settings::test']]],
   ['goodstreamfunction',['goodStreamFunction',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a15bdc796ca59308f62fa1865b92d3fc9',1,'alexaClientSDK::capabilityAgents::notifications::test']]],
   ['gst_5fadjust_5fvolume_5fmax',['GST_ADJUST_VOLUME_MAX',['../namespacealexa_client_s_d_k_1_1media_player.html#a58288d9e12d2be3e7e4942e74472270a',1,'alexaClientSDK::mediaPlayer']]],
   ['gst_5fadjust_5fvolume_5fmin',['GST_ADJUST_VOLUME_MIN',['../namespacealexa_client_s_d_k_1_1media_player.html#aaa31c6b27d4a55657547d2976a72021f',1,'alexaClientSDK::mediaPlayer']]],

@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SystemSoundPlayer/test/SystemSoundPlayerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SystemSoundPlayer/test/SystemSoundPlayerTest.cpp">
+<area shape="rect" id="node3" href="$_mock_system_sound_audio_factory_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/MockSystemSoundAudioFactory.h" alt="" coords="123,119,390,157"/>
+<area shape="rect" id="node9" href="$_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="413,119,622,157"/>
+<area shape="rect" id="node25" href="$_system_sound_player_8h.html" title="SystemSoundPlayer/System\lSoundPlayer.h" alt="" coords="865,119,1055,157"/>
+<area shape="rect" id="node5" href="$_system_sound_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/SystemSoundAudioFactory\lInterface.h" alt="" coords="144,205,369,257"/>
+<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="590,212,778,251"/>
+<area shape="rect" id="node14" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="997,305,1206,344"/>
+<area shape="rect" id="node23" href="$_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="392,212,566,251"/>
+<area shape="rect" id="node18" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="759,392,961,431"/>
+<area shape="rect" id="node22" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="985,399,1207,424"/>
+<area shape="rect" id="node21" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="870,479,1032,517"/>
+<area shape="rect" id="node26" href="$_system_sound_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemSoundPlayerInterface.h" alt="" coords="1459,212,1667,251"/>
+<area shape="rect" id="node27" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="852,212,1069,251"/>
+<area shape="rect" id="node29" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1316,392,1525,431"/>
+</map>

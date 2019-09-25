@@ -1,0 +1,10 @@
+<map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SystemSoundPlayer/include/SystemSoundPlayer/SystemSoundPlayer.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SystemSoundPlayer/include/SystemSoundPlayer/SystemSoundPlayer.h">
+<area shape="rect" id="node4" href="$_system_sound_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/SystemSoundAudioFactory\lInterface.h" alt="" coords="288,119,513,171"/>
+<area shape="rect" id="node7" href="$_system_sound_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemSoundPlayerInterface.h" alt="" coords="5,125,214,164"/>
+<area shape="rect" id="node8" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="635,219,843,257"/>
+<area shape="rect" id="node16" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="741,125,958,164"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="638,305,840,344"/>
+<area shape="rect" id="node15" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="948,312,1170,337"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="657,392,819,431"/>
+<area shape="rect" id="node19" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1193,305,1402,344"/>
+</map>

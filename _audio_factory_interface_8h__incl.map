@@ -1,5 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h">
-<area shape="rect" id="node3" href="$_alerts_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AlertsAudioFactoryInterface.h" alt="" coords="27,125,266,164"/>
-<area shape="rect" id="node6" href="$_communications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/CommunicationsAudioFactory\lInterface.h" alt="" coords="290,119,531,171"/>
-<area shape="rect" id="node7" href="$_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="555,119,769,171"/>
+<area shape="rect" id="node3" href="$_alerts_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AlertsAudioFactoryInterface.h" alt="" coords="780,125,1018,164"/>
+<area shape="rect" id="node6" href="$_communications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/CommunicationsAudioFactory\lInterface.h" alt="" coords="28,119,269,171"/>
+<area shape="rect" id="node7" href="$_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="293,119,507,171"/>
+<area shape="rect" id="node8" href="$_system_sound_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/SystemSoundAudioFactory\lInterface.h" alt="" coords="531,119,755,171"/>
 </map>

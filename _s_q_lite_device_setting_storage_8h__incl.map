@@ -1,7 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h">
-<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="321,119,534,157"/>
-<area shape="rect" id="node12" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="806,125,1028,151"/>
-<area shape="rect" id="node16" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1051,119,1257,157"/>
-<area shape="rect" id="node17" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1210,205,1373,231"/>
-<area shape="rect" id="node14" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="907,205,1132,231"/>
+<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="359,119,573,157"/>
+<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="787,125,1009,151"/>
+<area shape="rect" id="node17" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1033,119,1238,157"/>
+<area shape="rect" id="node19" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1344,205,1508,231"/>
+<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="971,205,1196,231"/>
 </map>

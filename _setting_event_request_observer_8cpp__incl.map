@@ -1,0 +1,12 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/src/SettingEventRequestObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/src/SettingEventRequestObserver.cpp">
+<area shape="rect" id="node2" href="$_setting_event_request_observer_8h.html" title="Settings/SettingEventRequest\lObserver.h" alt="" coords="237,105,436,144"/>
+<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1054,105,1230,144"/>
+<area shape="rect" id="node5" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="5,192,252,231"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="688,192,902,231"/>
+<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1197,279,1373,317"/>
+<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1502,192,1678,231"/>
+<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1179,192,1376,231"/>
+<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="615,365,791,404"/>
+<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1541,279,1717,317"/>
+<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1365,365,1541,404"/>
+</map>

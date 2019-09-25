@@ -1,10 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include" name="/workplace/avs&#45;device&#45;sdk/Settings/include">
-<area shape="rect" id="node2" href="dir_5ad71ff850730ae2a3f8f6d36f5ecd38.html" title="Settings" alt="" coords="43,61,115,109"/>
+<area shape="rect" id="node2" href="dir_5ad71ff850730ae2a3f8f6d36f5ecd38.html" title="Settings" alt="" coords="79,61,151,109"/>
 <area shape="rect" id="node3" href="dir_d29c5f5a2915d6c5388c9daae4f109c7.html" title="Storage" alt="" coords="5,157,77,205"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000288_000303.html" title="1" alt="" coords="62,136,69,150"/>
-<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,253,128,301"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000288_000015.html" title="7" alt="" coords="90,230,98,243"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000303_000015.html" title="13" alt="" coords="62,226,77,240"/>
-<area shape="rect" id="clust2" href="dir_432cbbb5245314b613ff1e5a0d6316fd.html" alt="" coords="32,51,221,120"/>
-<area shape="rect" id="clust1" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="21,16,232,131"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000284_000301.html" title="1" alt="" coords="74,141,82,154"/>
+<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="64,253,165,301"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000284_000015.html" title="27" alt="" coords="116,228,131,242"/>
+<area shape="rect" id="node5" href="dir_b14333b5607b47fe7356eaa790107bd3.html" title="RegistrationManager" alt="" coords="151,157,297,205"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000284_000268.html" title="1" alt="" coords="181,132,189,146"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000301_000015.html" title="13" alt="" coords="84,227,99,240"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000268_000015.html" title="9" alt="" coords="158,241,165,254"/>
+<area shape="rect" id="clust2" href="dir_432cbbb5245314b613ff1e5a0d6316fd.html" alt="" coords="68,51,257,120"/>
+<area shape="rect" id="clust1" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="57,16,268,131"/>
 </map>

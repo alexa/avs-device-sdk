@@ -3,7 +3,7 @@
 <area shape="rect" id="node24" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="3901,459,4099,524"/>
 <area shape="rect" id="node26" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="5057,685,5247,751"/>
 <area shape="rect" id="node30" href="$_a_v_s_directive_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AVSDirective.h" alt="" coords="5012,125,5239,177"/>
-<area shape="rect" id="node43" href="$_mock_attachment_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="6776,119,6982,184"/>
+<area shape="rect" id="node43" href="$_mock_attachment_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="6787,119,6992,184"/>
 <area shape="rect" id="node3" href="$_downchannel_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/DownchannelHandler.h" alt="" coords="2861,465,3084,517"/>
 <area shape="rect" id="node4" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="3159,465,3354,517"/>
 <area shape="rect" id="node5" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="3335,579,3508,631"/>
@@ -41,11 +41,11 @@
 <area shape="rect" id="node40" href="$_m_r_m_handler_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/include/MRM/MRMHandlerInterface.h" alt="" coords="5609,239,5893,291"/>
 <area shape="rect" id="node41" href="$_speaker_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/include\l/SpeakerManager/SpeakerManager.h" alt="" coords="5917,232,6161,297"/>
 <area shape="rect" id="node42" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp" alt="" coords="5971,345,6177,411"/>
-<area shape="rect" id="node44" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="6779,232,6979,297"/>
-<area shape="rect" id="node45" href="$_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="7002,232,7183,297"/>
-<area shape="rect" id="node46" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="7206,232,7405,297"/>
-<area shape="rect" id="node47" href="$_revoke_authorization_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp" alt="" coords="7429,232,7673,297"/>
-<area shape="rect" id="node48" href="$_endpoint_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/EndpointHandler\lTest.cpp" alt="" coords="7697,232,7895,297"/>
-<area shape="rect" id="node49" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="6286,239,6509,291"/>
-<area shape="rect" id="node50" href="$_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="6533,232,6756,297"/>
+<area shape="rect" id="node44" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="6790,232,6989,297"/>
+<area shape="rect" id="node45" href="$_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="7013,232,7193,297"/>
+<area shape="rect" id="node46" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="7217,232,7416,297"/>
+<area shape="rect" id="node47" href="$_revoke_authorization_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp" alt="" coords="7440,232,7683,297"/>
+<area shape="rect" id="node48" href="$_endpoint_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/EndpointHandler\lTest.cpp" alt="" coords="7708,232,7906,297"/>
+<area shape="rect" id="node49" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="6286,239,6520,291"/>
+<area shape="rect" id="node50" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="6543,239,6766,291"/>
 </map>

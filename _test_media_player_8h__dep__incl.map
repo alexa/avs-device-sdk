@@ -1,6 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestMediaPlayer.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestMediaPlayer.h">
 <area shape="rect" id="node2" href="$_test_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/TestMediaPlayer.cpp" alt="" coords="5,112,158,164"/>
 <area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="182,112,354,164"/>
-<area shape="rect" id="node4" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="378,112,588,164"/>
-<area shape="rect" id="node5" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="612,105,815,171"/>
+<area shape="rect" id="node4" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="378,105,590,171"/>
+<area shape="rect" id="node5" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="614,112,824,164"/>
+<area shape="rect" id="node6" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="848,105,1051,171"/>
 </map>

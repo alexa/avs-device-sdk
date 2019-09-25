@@ -1,0 +1,16 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceControlledSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceControlledSettingProtocol.h">
+<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1784,292,2018,331"/>
+<area shape="rect" id="node8" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="452,292,646,331"/>
+<area shape="rect" id="node19" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1269,299,1453,324"/>
+<area shape="rect" id="node21" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="2397,212,2613,237"/>
+<area shape="rect" id="node22" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="1401,205,1593,244"/>
+<area shape="rect" id="node23" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="822,205,985,244"/>
+<area shape="rect" id="node25" href="$_shared_a_v_s_setting_protocol_8h.html" title="Settings/SharedAVSSetting\lProtocol.h" alt="" coords="1132,119,1315,157"/>
+<area shape="rect" id="node28" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="2167,205,2373,244"/>
+<area shape="rect" id="node4" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1461,379,1709,417"/>
+<area shape="rect" id="node6" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1812,379,2009,417"/>
+<area shape="rect" id="node17" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="48,379,242,417"/>
+<area shape="rect" id="node24" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1076,292,1246,331"/>
+<area shape="rect" id="node26" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="1527,292,1709,331"/>
+<area shape="rect" id="node27" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="2143,299,2307,324"/>
+</map>

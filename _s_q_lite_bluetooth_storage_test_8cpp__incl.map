@@ -1,8 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/test/SQLiteBluetoothStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/test/SQLiteBluetoothStorageTest.cpp">
-<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="507,205,721,244"/>
-<area shape="rect" id="node17" href="$_s_q_lite_bluetooth_storage_8h.html" title="Bluetooth/SQLiteBluetooth\lStorage.h" alt="" coords="849,119,1027,157"/>
-<area shape="rect" id="node19" href="$_bluetooth_storage_interface_8h.html" title="Bluetooth/BluetoothStorage\lInterface.h" alt="" coords="975,205,1160,244"/>
-<area shape="rect" id="node20" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="893,365,1114,391"/>
-<area shape="rect" id="node22" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="940,439,1165,464"/>
-<area shape="rect" id="node23" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="1127,292,1317,317"/>
+<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="497,205,710,244"/>
+<area shape="rect" id="node18" href="$_s_q_lite_bluetooth_storage_8h.html" title="Bluetooth/SQLiteBluetooth\lStorage.h" alt="" coords="734,119,913,157"/>
+<area shape="rect" id="node20" href="$_bluetooth_storage_interface_8h.html" title="Bluetooth/BluetoothStorage\lInterface.h" alt="" coords="1022,205,1206,244"/>
+<area shape="rect" id="node21" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="905,365,1126,391"/>
+<area shape="rect" id="node23" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1207,439,1432,464"/>
+<area shape="rect" id="node24" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="1052,292,1243,317"/>
 </map>

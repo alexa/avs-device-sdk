@@ -1,0 +1,13 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingEventSender.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingEventSender.h">
+<area shape="rect" id="node7" href="$_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="1155,105,1325,144"/>
+<area shape="rect" id="node12" href="$_event_builder_8h.html" title="AVSCommon/AVS/EventBuilder.h" alt="" coords="1756,112,1976,137"/>
+<area shape="rect" id="node14" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="722,105,913,144"/>
+<area shape="rect" id="node23" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1081,265,1328,304"/>
+<area shape="rect" id="node25" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="409,192,619,217"/>
+<area shape="rect" id="node26" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="77,112,283,137"/>
+<area shape="rect" id="node27" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="1999,112,2215,137"/>
+<area shape="rect" id="node28" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="1488,105,1680,144"/>
+<area shape="rect" id="node15" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="693,192,942,217"/>
+<area shape="rect" id="node18" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="856,265,1057,304"/>
+<area shape="rect" id="node22" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="738,352,900,391"/>
+</map>

@@ -1,15 +1,15 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/src/Storage/SQLiteDeviceSettingStorage.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/src/Storage/SQLiteDeviceSettingStorage.cpp">
-<area shape="rect" id="node2" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="590,105,795,144"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1630,105,1806,144"/>
-<area shape="rect" id="node7" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1015,192,1229,231"/>
-<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="294,199,515,224"/>
-<area shape="rect" id="node17" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="590,192,795,231"/>
-<area shape="rect" id="node18" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="581,285,745,311"/>
-<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="181,285,406,311"/>
-<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1598,279,1774,317"/>
-<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1942,192,2118,231"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1483,192,1680,231"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1383,365,1559,404"/>
-<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1942,279,2118,317"/>
-<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1809,365,1985,404"/>
+<area shape="rect" id="node2" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="495,105,701,144"/>
+<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1545,105,1721,144"/>
+<area shape="rect" id="node7" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1150,192,1364,231"/>
+<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="226,199,447,224"/>
+<area shape="rect" id="node18" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="635,192,841,231"/>
+<area shape="rect" id="node20" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="522,285,685,311"/>
+<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="71,285,296,311"/>
+<area shape="rect" id="node24" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1675,279,1851,317"/>
+<area shape="rect" id="node25" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2027,192,2203,231"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1670,192,1867,231"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1070,365,1246,404"/>
+<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2006,279,2182,317"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1942,365,2118,404"/>
 </map>

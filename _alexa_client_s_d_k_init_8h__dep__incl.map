@@ -5,14 +5,13 @@
 <area shape="rect" id="node5" href="$_alexa_client_s_d_k_init_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/AlexaClientSDKInitTest.cpp" alt="" coords="727,125,915,177"/>
 <area shape="rect" id="node6" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="939,125,1162,177"/>
 <area shape="rect" id="node7" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Notifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="1186,119,1385,184"/>
-<area shape="rect" id="node8" href="$_settings_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/test/SettingsTest.cpp" alt="" coords="1409,125,1609,177"/>
-<area shape="rect" id="node9" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="1633,125,1825,177"/>
-<area shape="rect" id="node10" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="1849,125,2001,177"/>
-<area shape="rect" id="node11" href="$_s_d_k_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/SDKTestContext.cpp" alt="" coords="2025,125,2177,177"/>
-<area shape="rect" id="node12" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="2202,125,2441,177"/>
-<area shape="rect" id="node13" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="2464,119,2658,184"/>
-<area shape="rect" id="node14" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="2682,125,2912,177"/>
-<area shape="rect" id="node15" href="$_c_b_l_auth_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="2935,125,3224,177"/>
-<area shape="rect" id="node16" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="3248,132,3528,171"/>
-<area shape="rect" id="node17" href="$_s_q_lite_misc_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Storage/SQLiteStorage\l/test/SQLiteMiscStorageTest.cpp" alt="" coords="3552,125,3767,177"/>
+<area shape="rect" id="node8" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="1409,125,1601,177"/>
+<area shape="rect" id="node9" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="1625,125,1777,177"/>
+<area shape="rect" id="node10" href="$_s_d_k_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/SDKTestContext.cpp" alt="" coords="1801,125,1953,177"/>
+<area shape="rect" id="node11" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="1978,125,2217,177"/>
+<area shape="rect" id="node12" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="2240,119,2434,184"/>
+<area shape="rect" id="node13" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="2458,125,2688,177"/>
+<area shape="rect" id="node14" href="$_c_b_l_auth_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="2711,125,3000,177"/>
+<area shape="rect" id="node15" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="3024,132,3304,171"/>
+<area shape="rect" id="node16" href="$_s_q_lite_misc_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Storage/SQLiteStorage\l/test/SQLiteMiscStorageTest.cpp" alt="" coords="3328,125,3543,177"/>
 </map>

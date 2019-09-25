@@ -1,7 +1,20 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/JSON/JSONGenerator.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/JSON/JSONGenerator.h">
 <area shape="rect" id="node2" href="$_j_s_o_n_generator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/JSON/JSONGenerator.cpp" alt="" coords="5,125,211,177"/>
 <area shape="rect" id="node3" href="$_j_s_o_n_generator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/JSONGeneratorTest.cpp" alt="" coords="235,125,430,177"/>
-<area shape="rect" id="node4" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="454,125,674,177"/>
-<area shape="rect" id="node5" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="698,119,908,184"/>
-<area shape="rect" id="node6" href="$_setting_string_conversion_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingString\lConversionTest.cpp" alt="" coords="932,125,1135,177"/>
+<area shape="rect" id="node4" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="444,239,664,291"/>
+<area shape="rect" id="node5" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="504,119,715,184"/>
+<area shape="rect" id="node6" href="$_state_report_generator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/StateReportGenerator.cpp" alt="" coords="739,125,989,177"/>
+<area shape="rect" id="node7" href="$_system_capability_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SystemCapability\lProvider.cpp" alt="" coords="1013,119,1211,184"/>
+<area shape="rect" id="node8" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="1235,125,1469,177"/>
+<area shape="rect" id="node9" href="$_setting_event_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingEventSender.h" alt="" coords="1493,125,1699,177"/>
+<area shape="rect" id="node19" href="$_setting_string_conversion_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingString\lConversionTest.cpp" alt="" coords="1724,125,1927,177"/>
+<area shape="rect" id="node10" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DeviceSettingsManagerBuilder.h" alt="" coords="773,232,1001,297"/>
+<area shape="rect" id="node13" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="1025,232,1224,297"/>
+<area shape="rect" id="node14" href="$_locale_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/LocaleHandler.cpp" alt="" coords="1248,239,1453,291"/>
+<area shape="rect" id="node15" href="$_report_state_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/ReportStateHandler.cpp" alt="" coords="1478,239,1715,291"/>
+<area shape="rect" id="node16" href="$_time_zone_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/TimeZoneHandler.cpp" alt="" coords="1738,239,1964,291"/>
+<area shape="rect" id="node17" href="$_setting_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/SettingEvent\lSender.cpp" alt="" coords="1987,239,2187,291"/>
+<area shape="rect" id="node18" href="$_setting_event_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingEvent\lSenderTest.cpp" alt="" coords="2211,239,2414,291"/>
+<area shape="rect" id="node11" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="650,352,878,404"/>
+<area shape="rect" id="node12" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="902,345,1117,411"/>
 </map>

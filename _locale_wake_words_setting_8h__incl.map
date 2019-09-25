@@ -1,0 +1,27 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Types/LocaleWakeWordsSetting.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Types/LocaleWakeWordsSetting.h">
+<area shape="rect" id="node4" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="878,452,1112,491"/>
+<area shape="rect" id="node9" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="2794,279,3014,317"/>
+<area shape="rect" id="node13" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="365,452,559,491"/>
+<area shape="rect" id="node23" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="2595,125,2820,151"/>
+<area shape="rect" id="node35" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="157,459,340,484"/>
+<area shape="rect" id="node36" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="685,452,855,491"/>
+<area shape="rect" id="node46" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="3451,125,3667,151"/>
+<area shape="rect" id="node47" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="2321,452,2512,491"/>
+<area shape="rect" id="node48" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="3365,205,3529,231"/>
+<area shape="rect" id="node49" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="3151,119,3357,157"/>
+<area shape="rect" id="node5" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="808,539,1057,577"/>
+<area shape="rect" id="node7" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1577,539,1774,577"/>
+<area shape="rect" id="node21" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="27,539,222,577"/>
+<area shape="rect" id="node25" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="1544,372,1721,397"/>
+<area shape="rect" id="node37" href="$_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="1490,205,1674,231"/>
+<area shape="rect" id="node43" href="$_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="3198,625,3392,664"/>
+<area shape="rect" id="node45" href="$_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="3416,625,3630,664"/>
+<area shape="rect" id="node28" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1978,545,2209,571"/>
+<area shape="rect" id="node29" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1200,625,1376,664"/>
+<area shape="rect" id="node33" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1728,452,1904,491"/>
+<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1200,712,1376,751"/>
+<area shape="rect" id="node34" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1376,539,1552,577"/>
+<area shape="rect" id="node39" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1238,279,1406,317"/>
+<area shape="rect" id="node40" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2196,285,2424,311"/>
+<area shape="rect" id="node42" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2411,365,2581,404"/>
+</map>

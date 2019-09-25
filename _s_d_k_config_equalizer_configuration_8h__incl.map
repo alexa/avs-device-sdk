@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/include/EqualizerImplementations/SDKConfigEqualizerConfiguration.h" name="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/include/EqualizerImplementations/SDKConfigEqualizerConfiguration.h">
-<area shape="rect" id="node4" href="$_equalizer_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerConfiguration\lInterface.h" alt="" coords="342,205,539,257"/>
-<area shape="rect" id="node16" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="766,119,979,157"/>
-<area shape="rect" id="node22" href="$_in_memory_equalizer_configuration_8h.html" title="EqualizerImplementations\l/InMemoryEqualizerConfiguration.h" alt="" coords="411,119,641,157"/>
-<area shape="rect" id="node7" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="473,379,637,417"/>
-<area shape="rect" id="node9" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="42,379,234,417"/>
-<area shape="rect" id="node13" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="329,305,453,331"/>
-<area shape="rect" id="node8" href="$_result_8h.html" title="Result.h" alt="" coords="520,465,590,491"/>
+<area shape="rect" id="node4" href="$_equalizer_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerConfiguration\lInterface.h" alt="" coords="229,205,426,257"/>
+<area shape="rect" id="node16" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="687,119,901,157"/>
+<area shape="rect" id="node22" href="$_in_memory_equalizer_configuration_8h.html" title="EqualizerImplementations\l/InMemoryEqualizerConfiguration.h" alt="" coords="383,119,613,157"/>
+<area shape="rect" id="node7" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="5,379,169,417"/>
+<area shape="rect" id="node9" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="409,379,600,417"/>
+<area shape="rect" id="node13" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="266,305,389,331"/>
+<area shape="rect" id="node8" href="$_result_8h.html" title="Result.h" alt="" coords="52,465,122,491"/>
 </map>

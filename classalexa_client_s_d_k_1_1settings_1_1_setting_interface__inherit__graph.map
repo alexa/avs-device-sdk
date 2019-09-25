@@ -1,5 +1,8 @@
 <map id="alexaClientSDK::settings::SettingInterface&lt; ValueT &gt;" name="alexaClientSDK::settings::SettingInterface&lt; ValueT &gt;">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1_setting.html" title="alexaClientSDK::settings\l::Setting\&lt; ValueT \&gt;" alt="" coords="253,5,421,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting.html" title="alexaClientSDK::settings\l::test::MockSetting\&lt; ValueT \&gt;" alt="" coords="239,68,434,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_stub.html" title="Settings stub that just set the value immediately. " alt="" coords="242,131,432,169"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1_setting.html" title="alexaClientSDK::settings\l::Setting\&lt; ValueT \&gt;" alt="" coords="266,5,434,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting.html" title="alexaClientSDK::settings\l::test::MockSetting\&lt; ValueT \&gt;" alt="" coords="252,68,447,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_stub.html" title="Settings stub that just set the value immediately. " alt="" coords="255,131,445,169"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_timezone_setting_stub.html" title="alexaClientSDK::settings\l::test::TimezoneSettingStub" alt="" coords="258,193,442,232"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1settings_1_1types_1_1_locale_wake_words_setting.html" title="alexaClientSDK::settings\l::types::LocaleWakeWordsSetting\l\&lt; WakeWords \&gt;" alt="" coords="239,256,460,308"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1settings_1_1types_1_1_locale_wake_words_setting.html" title="alexaClientSDK::settings\l::types::LocaleWakeWordsSetting\l\&lt; DeviceLocales \&gt;" alt="" coords="239,332,460,384"/>
 </map>

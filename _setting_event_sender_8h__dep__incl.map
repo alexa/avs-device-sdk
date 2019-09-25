@@ -1,0 +1,12 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingEventSender.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingEventSender.h">
+<area shape="rect" id="node2" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DeviceSettingsManagerBuilder.h" alt="" coords="128,105,356,171"/>
+<area shape="rect" id="node5" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="380,112,600,164"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="624,105,823,171"/>
+<area shape="rect" id="node7" href="$_locale_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/LocaleHandler.cpp" alt="" coords="847,112,1053,164"/>
+<area shape="rect" id="node8" href="$_report_state_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/ReportStateHandler.cpp" alt="" coords="1077,112,1314,164"/>
+<area shape="rect" id="node9" href="$_time_zone_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/TimeZoneHandler.cpp" alt="" coords="1337,112,1563,164"/>
+<area shape="rect" id="node10" href="$_setting_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/SettingEvent\lSender.cpp" alt="" coords="1586,112,1786,164"/>
+<area shape="rect" id="node11" href="$_setting_event_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingEvent\lSenderTest.cpp" alt="" coords="1810,112,2013,164"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,225,233,277"/>
+<area shape="rect" id="node4" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="257,219,472,284"/>
+</map>

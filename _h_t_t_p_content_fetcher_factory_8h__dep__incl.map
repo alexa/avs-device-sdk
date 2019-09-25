@@ -3,9 +3,10 @@
 <area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="351,645,631,684"/>
 <area shape="rect" id="node13" href="$_h_t_t_p_content_fetcher_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/HTTPContent\lFetcherFactory.cpp" alt="" coords="878,132,1075,197"/>
 <area shape="rect" id="node14" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1098,139,1270,191"/>
-<area shape="rect" id="node15" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1294,139,1504,191"/>
-<area shape="rect" id="node16" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1528,132,1731,197"/>
-<area shape="rect" id="node17" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="1756,139,2048,191"/>
+<area shape="rect" id="node15" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1294,132,1506,197"/>
+<area shape="rect" id="node16" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1530,139,1740,191"/>
+<area shape="rect" id="node17" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1764,132,1967,197"/>
+<area shape="rect" id="node18" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="1992,139,2284,191"/>
 <area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="80,245,308,297"/>
 <area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="230,345,453,397"/>
 <area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="384,245,598,297"/>

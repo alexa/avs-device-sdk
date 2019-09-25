@@ -12,9 +12,11 @@ var searchData=
   ['defaultclient',['DefaultClient',['../classalexa_client_s_d_k_1_1default_client_1_1_default_client.html',1,'alexaClientSDK::defaultClient']]],
   ['detectionresult',['detectionResult',['../structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html',1,'alexaClientSDK::kwd::test::testKeyWordObserver']]],
   ['deviceattributes',['DeviceAttributes',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_obser94c6197e70b66554b18e449b4b42c987.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface']]],
+  ['devicecontrolledsettingprotocol',['DeviceControlledSettingProtocol',['../classalexa_client_s_d_k_1_1settings_1_1_device_controlled_setting_protocol.html',1,'alexaClientSDK::settings']]],
   ['devicediscoveredevent',['DeviceDiscoveredEvent',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['deviceinfo',['DeviceInfo',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['deviceremovedevent',['DeviceRemovedEvent',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
+  ['devicesettingsmanagerbuilder',['DeviceSettingsManagerBuilder',['../classalexa_client_s_d_k_1_1default_client_1_1_device_settings_manager_builder.html',1,'alexaClientSDK::defaultClient']]],
   ['devicesettingstorageinterface',['DeviceSettingStorageInterface',['../classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html',1,'alexaClientSDK::settings::storage']]],
   ['devicestatechangedevent',['DeviceStateChangedEvent',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['dialoguxaggregatortest',['DialogUXAggregatorTest',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test.html',1,'alexaClientSDK::avsCommon::test']]],
@@ -38,6 +40,5 @@ var searchData=
   ['donotdisturbcapabilityagenttest',['DoNotDisturbCapabilityAgentTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1test_1_1_do_not_disturb_capability_agent_test.html',1,'alexaClientSDK::capabilityAgents::doNotDisturb::test']]],
   ['downchannelhandler',['DownchannelHandler',['../classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html',1,'alexaClientSDK::acl']]],
   ['dummy',['Dummy',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_dummy.html',1,'alexaClientSDK::avsCommon::utils']]],
-  ['dummyespdataprovider',['DummyESPDataProvider',['../classalexa_client_s_d_k_1_1esp_1_1_dummy_e_s_p_data_provider.html',1,'alexaClientSDK::esp']]],
   ['dynamicdata',['DynamicData',['../structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_dynamic_data.html',1,'alexaClientSDK::capabilityAgents::alerts::Alert']]]
 ];

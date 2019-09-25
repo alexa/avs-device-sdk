@@ -1,6 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
-<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="5,119,218,157"/>
-<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="482,119,696,157"/>
-<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="813,125,1034,151"/>
-<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1044,205,1270,231"/>
+<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="51,119,264,157"/>
+<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="459,119,673,157"/>
+<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="878,125,1099,151"/>
+<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1058,205,1284,231"/>
 </map>

@@ -1,5 +1,15 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/SystemCapabilityProvider.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/SystemCapabilityProvider.cpp">
-<area shape="rect" id="node2" href="$_system_capability_provider_8h.html" title="System/SystemCapabilityProvider.h" alt="" coords="65,119,298,144"/>
-<area shape="rect" id="node6" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="238,279,431,317"/>
-<area shape="rect" id="node4" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="70,192,296,231"/>
+<area shape="rect" id="node4" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="72,292,264,331"/>
+<area shape="rect" id="node6" href="$_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="1898,119,2068,157"/>
+<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="961,119,1137,157"/>
+<area shape="rect" id="node31" href="$_system_capability_provider_8h.html" title="System/SystemCapabilityProvider.h" alt="" coords="58,125,291,151"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1508,292,1722,331"/>
+<area shape="rect" id="node23" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="815,292,991,331"/>
+<area shape="rect" id="node24" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="564,205,740,244"/>
+<area shape="rect" id="node29" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="951,205,1148,244"/>
+<area shape="rect" id="node30" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1308,292,1484,331"/>
+<area shape="rect" id="node25" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="564,292,740,331"/>
+<area shape="rect" id="node27" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="564,379,740,417"/>
+<area shape="rect" id="node32" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="56,205,282,244"/>
+<area shape="rect" id="node33" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="1065,292,1285,331"/>
 </map>

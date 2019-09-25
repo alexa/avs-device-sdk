@@ -5,7 +5,9 @@
 <area shape="rect" id="node5" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp" alt="" coords="655,119,861,184"/>
 <area shape="rect" id="node6" href="$_revoke_authorization_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp" alt="" coords="886,119,1129,184"/>
 <area shape="rect" id="node7" href="$_endpoint_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/EndpointHandler\lTest.cpp" alt="" coords="1154,119,1352,184"/>
-<area shape="rect" id="node8" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="1376,125,1599,177"/>
-<area shape="rect" id="node9" href="$_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="1623,119,1846,184"/>
-<area shape="rect" id="node10" href="$_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="1869,119,2047,184"/>
+<area shape="rect" id="node8" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="1376,125,1610,177"/>
+<area shape="rect" id="node9" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="1633,125,1856,177"/>
+<area shape="rect" id="node10" href="$_time_zone_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/TimeZoneHandler\lTest.cpp" alt="" coords="1880,119,2085,184"/>
+<area shape="rect" id="node11" href="$_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="2108,119,2331,184"/>
+<area shape="rect" id="node12" href="$_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="2354,119,2533,184"/>
 </map>

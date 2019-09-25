@@ -1,16 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/BufferLayout.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/BufferLayout.h">
-<area shape="rect" id="node7" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="957,265,1133,304"/>
-<area shape="rect" id="node24" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1360,119,1507,144"/>
-<area shape="rect" id="node9" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="660,352,836,391"/>
-<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="853,439,1067,477"/>
-<area shape="rect" id="node16" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="373,525,549,564"/>
-<area shape="rect" id="node17" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="296,439,472,477"/>
-<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="496,439,693,477"/>
-<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="91,612,267,651"/>
-<area shape="rect" id="node18" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="624,525,800,564"/>
-<area shape="rect" id="node20" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="744,612,920,651"/>
-<area shape="rect" id="node25" href="$_reader_8h.html" title="Reader.h" alt="" coords="1396,192,1471,217"/>
-<area shape="rect" id="node29" href="$_writer_8h.html" title="Writer.h" alt="" coords="1602,192,1670,217"/>
-<area shape="rect" id="node28" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="1259,272,1370,297"/>
-<area shape="rect" id="node30" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1757,272,1859,297"/>
+<area shape="rect" id="node7" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="748,265,924,304"/>
+<area shape="rect" id="node25" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1050,119,1196,144"/>
+<area shape="rect" id="node9" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="748,352,924,391"/>
+<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="457,439,671,477"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="814,525,990,564"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1068,439,1244,477"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="847,439,1044,477"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="44,612,220,651"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1064,525,1240,564"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="536,612,712,651"/>
+<area shape="rect" id="node26" href="$_reader_8h.html" title="Reader.h" alt="" coords="1085,192,1161,217"/>
+<area shape="rect" id="node30" href="$_writer_8h.html" title="Writer.h" alt="" coords="1292,192,1359,217"/>
+<area shape="rect" id="node29" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="949,272,1060,297"/>
+<area shape="rect" id="node31" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1447,272,1549,297"/>
 </map>

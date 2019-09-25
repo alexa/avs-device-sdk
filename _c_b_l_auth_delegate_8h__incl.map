@@ -1,13 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
-<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1321,119,1512,157"/>
-<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2005,205,2196,244"/>
-<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="755,205,969,244"/>
-<area shape="rect" id="node17" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="865,119,1065,157"/>
-<area shape="rect" id="node20" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1089,125,1297,151"/>
-<area shape="rect" id="node21" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="420,212,630,237"/>
-<area shape="rect" id="node22" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="25,205,193,244"/>
-<area shape="rect" id="node23" href="$_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="552,119,791,157"/>
-<area shape="rect" id="node24" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="1472,205,1711,244"/>
-<area shape="rect" id="node25" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="1735,205,1981,244"/>
-<area shape="rect" id="node19" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1118,212,1246,237"/>
+<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="621,119,812,157"/>
+<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="5,205,196,244"/>
+<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="743,205,957,244"/>
+<area shape="rect" id="node18" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1484,119,1683,157"/>
+<area shape="rect" id="node21" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1150,125,1358,151"/>
+<area shape="rect" id="node22" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1082,212,1293,237"/>
+<area shape="rect" id="node23" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="450,205,618,244"/>
+<area shape="rect" id="node24" href="$_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="887,119,1125,157"/>
+<area shape="rect" id="node25" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="2167,205,2405,244"/>
+<area shape="rect" id="node26" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="1847,205,2093,244"/>
+<area shape="rect" id="node20" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1696,212,1823,237"/>
 </map>

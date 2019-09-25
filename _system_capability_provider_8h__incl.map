@@ -1,4 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/SystemCapabilityProvider.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/SystemCapabilityProvider.h">
-<area shape="rect" id="node3" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="62,119,288,157"/>
-<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="243,205,436,244"/>
+<area shape="rect" id="node3" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="78,119,304,157"/>
+<area shape="rect" id="node8" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="411,119,631,157"/>
+<area shape="rect" id="node5" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="230,205,423,244"/>
 </map>

@@ -1,16 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/Writer.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/Writer.h">
-<area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="860,265,1036,304"/>
-<area shape="rect" id="node26" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1108,119,1255,144"/>
-<area shape="rect" id="node30" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1858,119,1961,144"/>
-<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="845,352,1021,391"/>
-<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="482,439,696,477"/>
-<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1112,525,1288,564"/>
-<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="720,439,896,477"/>
-<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1022,439,1218,477"/>
-<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="141,612,317,651"/>
-<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="717,525,893,564"/>
-<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="467,612,643,651"/>
-<area shape="rect" id="node27" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1093,192,1201,217"/>
-<area shape="rect" id="node28" href="$_reader_8h.html" title="Reader.h" alt="" coords="1374,192,1450,217"/>
-<area shape="rect" id="node29" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="1361,272,1471,297"/>
+<area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1114,265,1290,304"/>
+<area shape="rect" id="node27" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1039,119,1186,144"/>
+<area shape="rect" id="node31" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1718,119,1821,144"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="866,352,1042,391"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="503,439,717,477"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1132,525,1308,564"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="740,439,916,477"/>
+<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="991,439,1188,477"/>
+<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="99,612,275,651"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="738,525,914,564"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="487,612,663,651"/>
+<area shape="rect" id="node28" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="1282,192,1390,217"/>
+<area shape="rect" id="node29" href="$_reader_8h.html" title="Reader.h" alt="" coords="1011,192,1086,217"/>
+<area shape="rect" id="node30" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="877,272,988,297"/>
 </map>

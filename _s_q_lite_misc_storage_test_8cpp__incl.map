@@ -1,8 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/test/SQLiteMiscStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/test/SQLiteMiscStorageTest.cpp">
-<area shape="rect" id="node2" href="$_s_q_lite_misc_storage_8h.html" title="SQLiteStorage/SQLiteMisc\lStorage.h" alt="" coords="393,105,574,144"/>
-<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="406,192,620,231"/>
-<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="929,199,1150,224"/>
-<area shape="rect" id="node19" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="700,192,904,231"/>
+<area shape="rect" id="node2" href="$_s_q_lite_misc_storage_8h.html" title="SQLiteStorage/SQLiteMisc\lStorage.h" alt="" coords="428,105,609,144"/>
+<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="411,192,625,231"/>
+<area shape="rect" id="node15" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="992,199,1213,224"/>
+<area shape="rect" id="node20" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="763,192,967,231"/>
 <area shape="rect" id="node3" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="5,192,218,231"/>
-<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1128,279,1354,304"/>
+<area shape="rect" id="node17" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1191,279,1416,304"/>
 </map>

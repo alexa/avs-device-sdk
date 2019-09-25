@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/LocaleHandler.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/include/System/LocaleHandler.h">
+<area shape="rect" id="node4" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1441,119,1634,157"/>
+<area shape="rect" id="node23" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="509,379,704,417"/>
+<area shape="rect" id="node31" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="3249,212,3474,237"/>
+<area shape="rect" id="node50" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="1768,125,1984,151"/>
+<area shape="rect" id="node7" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1593,379,1823,417"/>
+<area shape="rect" id="node8" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="781,205,1046,244"/>
+<area shape="rect" id="node11" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1508,205,1700,244"/>
+<area shape="rect" id="node13" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3606,465,3802,504"/>
+<area shape="rect" id="node15" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1725,205,1915,244"/>
+<area shape="rect" id="node16" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1213,205,1403,244"/>
+<area shape="rect" id="node22" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="996,292,1220,331"/>
+<area shape="rect" id="node9" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="749,292,971,331"/>
+<area shape="rect" id="node12" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1652,299,1865,324"/>
+<area shape="rect" id="node17" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1157,385,1379,411"/>
+<area shape="rect" id="node21" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1345,292,1578,331"/>
+<area shape="rect" id="node19" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="1524,465,1737,504"/>
+<area shape="rect" id="node29" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="408,465,603,504"/>
+<area shape="rect" id="node35" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="2496,385,2674,411"/>
+<area shape="rect" id="node43" href="$_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="2689,299,2874,324"/>
+<area shape="rect" id="node47" href="$_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="4146,465,4340,504"/>
+<area shape="rect" id="node49" href="$_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="3908,465,4122,504"/>
+<area shape="rect" id="node38" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="2873,472,3103,497"/>
+<area shape="rect" id="node39" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2623,465,2799,504"/>
+<area shape="rect" id="node40" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2241,465,2417,504"/>
+<area shape="rect" id="node41" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="3127,472,3310,497"/>
+<area shape="rect" id="node42" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1331,465,1501,504"/>
+<area shape="rect" id="node45" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1847,379,2015,417"/>
+<area shape="rect" id="node46" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="3239,385,3467,411"/>
+</map>

@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer">
 <area shape="rect" id="node1" href="dir_9b83a3a02537ea061e11167c986dd2c8.html" title="MediaPlayer" alt="" coords="54,51,150,99"/>
 <area shape="rect" id="node2" href="dir_655fbec917b1f23289d3ed8ec9803bf1.html" title="PlaylistParser" alt="" coords="5,147,108,195"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000263_000266.html" title="1" alt="" coords="80,127,87,140"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000259_000262.html" title="1" alt="" coords="80,127,87,140"/>
 <area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="50,243,151,291"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000263_000015.html" title="11" alt="" coords="116,221,130,234"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000266_000015.html" title="36" alt="" coords="82,215,97,229"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000259_000015.html" title="11" alt="" coords="116,221,130,234"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000262_000015.html" title="36" alt="" coords="82,215,97,229"/>
 <area shape="rect" id="clust1" href="dir_d1a5c25c65a86ab490915a47e76c835a.html" title="include" alt="" coords="43,16,161,109"/>
 </map>

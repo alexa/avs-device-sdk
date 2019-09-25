@@ -1,6 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_response_sink_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2MimeResponse\lSinkInterface" alt="" coords="5,61,237,113"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html" title="alexaClientSDK::acl\l::MimeResponseSink" alt="" coords="343,5,491,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_mime_response_sink.html" title="alexaClientSDK::acl\l::test::MockMimeResponseSink" alt="" coords="313,68,521,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_response_decode_sink.html" title="alexaClientSDK::avsCommon\l::utils::http2::MockHTTP2MimeResponse\lDecodeSink" alt="" coords="285,131,549,183"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_connection_factory_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2Connection\lFactoryInterface" alt="" coords="5,5,212,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_connection_factory.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lLibcurlHTTP2ConnectionFactory" alt="" coords="260,5,475,57"/>
 </map>

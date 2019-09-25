@@ -24,6 +24,7 @@ var searchData=
   ['channelobserverinterface',['ChannelObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['channeltest',['ChannelTest',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html',1,'alexaClientSDK::afml::test']]],
   ['clientmessagehandler',['ClientMessageHandler',['../classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html',1,'alexaClientSDK::integration']]],
+  ['cloudcontrolledsettingprotocol',['CloudControlledSettingProtocol',['../classalexa_client_s_d_k_1_1settings_1_1_cloud_controlled_setting_protocol.html',1,'alexaClientSDK::settings']]],
   ['communicationsaudiofactory',['CommunicationsAudioFactory',['../classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_communications_audio_factory.html',1,'alexaClientSDK::applicationUtilities::resources::audio']]],
   ['communicationsaudiofactoryinterface',['CommunicationsAudioFactoryInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_communications_audio_factory_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::audio']]],
   ['conditionvariable',['ConditionVariable',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits']]],

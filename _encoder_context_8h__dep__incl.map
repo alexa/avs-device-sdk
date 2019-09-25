@@ -1,15 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/EncoderContext.h" name="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/EncoderContext.h">
-<area shape="rect" id="node2" href="$_speech_encoder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/include\l/SpeechEncoder/SpeechEncoder.h" alt="" coords="721,112,950,164"/>
-<area shape="rect" id="node22" href="$_opus_encoder_context_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/include/SpeechEncoder\l/OpusEncoderContext.h" alt="" coords="1059,105,1289,171"/>
-<area shape="rect" id="node3" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="473,219,728,271"/>
-<area shape="rect" id="node15" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="5,325,225,377"/>
-<area shape="rect" id="node20" href="$_speech_encoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/src\l/SpeechEncoder.cpp" alt="" coords="752,219,919,271"/>
-<area shape="rect" id="node21" href="$_speech_encoder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/test\l/SpeechEncoderTest.cpp" alt="" coords="942,219,1112,271"/>
+<area shape="rect" id="node2" href="$_speech_encoder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/include\l/SpeechEncoder/SpeechEncoder.h" alt="" coords="845,112,1074,164"/>
+<area shape="rect" id="node23" href="$_opus_encoder_context_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/include/SpeechEncoder\l/OpusEncoderContext.h" alt="" coords="1183,105,1413,171"/>
+<area shape="rect" id="node3" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="597,219,852,271"/>
+<area shape="rect" id="node16" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="5,325,225,377"/>
+<area shape="rect" id="node21" href="$_speech_encoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/src\l/SpeechEncoder.cpp" alt="" coords="876,219,1043,271"/>
+<area shape="rect" id="node22" href="$_speech_encoder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/test\l/SpeechEncoderTest.cpp" alt="" coords="1066,219,1236,271"/>
 <area shape="rect" id="node4" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="250,319,477,384"/>
-<area shape="rect" id="node16" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="501,319,700,384"/>
-<area shape="rect" id="node17" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="724,325,896,377"/>
-<area shape="rect" id="node18" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="920,319,1132,384"/>
-<area shape="rect" id="node19" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1156,325,1365,377"/>
+<area shape="rect" id="node15" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="501,319,716,384"/>
+<area shape="rect" id="node17" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="741,319,940,384"/>
+<area shape="rect" id="node18" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="964,325,1136,377"/>
+<area shape="rect" id="node19" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1160,319,1372,384"/>
+<area shape="rect" id="node20" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1396,325,1605,377"/>
 <area shape="rect" id="node5" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="97,432,325,484"/>
 <area shape="rect" id="node6" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="251,532,473,584"/>
 <area shape="rect" id="node13" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="403,432,617,484"/>
@@ -20,5 +21,5 @@
 <area shape="rect" id="node9" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="36,832,235,871"/>
 <area shape="rect" id="node10" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="314,832,594,871"/>
 <area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="548,539,824,577"/>
-<area shape="rect" id="node23" href="$_opus_encoder_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/src/OpusEncoderContext.cpp" alt="" coords="1137,219,1382,271"/>
+<area shape="rect" id="node24" href="$_opus_encoder_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/src/OpusEncoderContext.cpp" alt="" coords="1261,219,1506,271"/>
 </map>

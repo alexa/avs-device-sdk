@@ -1,3 +1,5 @@
 <map id="alexaClientSDK::settings::SettingEventSenderInterface" name="alexaClientSDK::settings::SettingEventSenderInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DoNotDisturb\lCapabilityAgent" alt="" coords="5,92,241,144"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DoNotDisturb\lCapabilityAgent" alt="" coords="253,5,488,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_event_sender.html" title="alexaClientSDK::settings\l::SettingEventSender" alt="" coords="286,81,454,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_event_sender.html" title="alexaClientSDK::settings\l::test::MockSettingEventSender" alt="" coords="266,144,474,183"/>
 </map>

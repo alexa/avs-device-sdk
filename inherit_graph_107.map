@@ -1,12 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ConsoleLogger" alt="" coords="290,5,487,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::Logger" alt="" coords="25,204,222,243"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_logger.html" title="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidLogger" alt="" coords="296,269,482,321"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="290,68,487,107"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockLogger" alt="" coords="290,345,487,397"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_test_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lTestLogger" alt="" coords="290,131,487,183"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html" title="alexaClientSDK::sampleApp\l::ConsolePrinter" alt="" coords="294,207,483,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockModuleLogger" alt="" coords="535,61,732,113"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogLevelObserver\lInterface" alt="" coords="17,61,230,113"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_sink_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::SinkObserverInterface" alt="" coords="5,137,242,176"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryStream" alt="" coords="379,27,580,65"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryBuffer" alt="" coords="134,55,331,93"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html" title="alexaClientSDK::avsCommon\l::utils::stream::Streambuf" alt="" coords="134,117,331,156"/>
 </map>

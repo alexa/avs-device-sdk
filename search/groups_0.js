@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initial_2c_20new_20and_20default_20values_20to_20be_20used_20in_20the_20test_2e',['initial, new and default values to be used in the test.',['../group___define.html',1,'']]]
+  ['initial_20values_20for_20each_20setting_20type_2e',['initial values for each setting type.',['../group___define.html',1,'']]]
 ];

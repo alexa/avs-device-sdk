@@ -1,0 +1,37 @@
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/TimeZoneHandler.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/TimeZoneHandler.cpp">
+<area shape="rect" id="node2" href="$_time_zone_handler_8h.html" title="System/TimeZoneHandler.h" alt="" coords="1854,105,2040,131"/>
+<area shape="rect" id="node30" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="1988,359,2203,384"/>
+<area shape="rect" id="node31" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="6372,352,6542,391"/>
+<area shape="rect" id="node33" href="$_setting_8h.html" title="Settings/Setting.h" alt="" coords="3606,185,3732,211"/>
+<area shape="rect" id="node37" href="$_setting_event_sender_8h.html" title="Settings/SettingEventSender.h" alt="" coords="5044,272,5246,297"/>
+<area shape="rect" id="node47" href="$_shared_a_v_s_setting_protocol_8h.html" title="Settings/SharedAVSSetting\lProtocol.h" alt="" coords="3306,179,3490,217"/>
+<area shape="rect" id="node5" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="694,179,886,217"/>
+<area shape="rect" id="node15" href="$_system_time_zone_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemTimeZoneInterface.h" alt="" coords="1683,179,1875,217"/>
+<area shape="rect" id="node16" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4198,352,4393,391"/>
+<area shape="rect" id="node22" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="3756,185,3981,211"/>
+<area shape="rect" id="node8" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1582,352,1811,391"/>
+<area shape="rect" id="node9" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="764,265,1029,304"/>
+<area shape="rect" id="node10" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="407,265,600,304"/>
+<area shape="rect" id="node11" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1054,265,1249,304"/>
+<area shape="rect" id="node12" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1583,265,1773,304"/>
+<area shape="rect" id="node13" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="141,265,332,304"/>
+<area shape="rect" id="node14" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="90,352,314,391"/>
+<area shape="rect" id="node25" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="3344,272,3522,297"/>
+<area shape="rect" id="node26" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2974,352,3150,391"/>
+<area shape="rect" id="node27" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="6369,439,6545,477"/>
+<area shape="rect" id="node28" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="3470,359,3654,384"/>
+<area shape="rect" id="node29" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="3225,352,3395,391"/>
+<area shape="rect" id="node34" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="3647,265,3811,304"/>
+<area shape="rect" id="node35" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="2430,359,2593,384"/>
+<area shape="rect" id="node36" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="5884,272,6112,297"/>
+<area shape="rect" id="node38" href="$_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="6668,352,6838,391"/>
+<area shape="rect" id="node41" href="$_event_builder_8h.html" title="AVSCommon/AVS/EventBuilder.h" alt="" coords="4569,359,4789,384"/>
+<area shape="rect" id="node42" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="5500,352,5691,391"/>
+<area shape="rect" id="node43" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="5715,352,5961,391"/>
+<area shape="rect" id="node44" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="6036,359,6246,384"/>
+<area shape="rect" id="node45" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="5067,359,5273,384"/>
+<area shape="rect" id="node46" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="3881,352,4073,391"/>
+<area shape="rect" id="node48" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1273,265,1507,304"/>
+<area shape="rect" id="node49" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="2768,352,2950,391"/>
+<area shape="rect" id="node50" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="2896,265,3102,304"/>
+</map>

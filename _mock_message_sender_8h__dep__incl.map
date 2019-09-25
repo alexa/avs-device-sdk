@@ -5,12 +5,13 @@
 <area shape="rect" id="node5" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="726,119,940,184"/>
 <area shape="rect" id="node6" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="963,119,1161,184"/>
 <area shape="rect" id="node7" href="$_playback_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/test\l/PlaybackControllerTest.cpp" alt="" coords="1185,119,1371,184"/>
-<area shape="rect" id="node8" href="$_settings_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Settings/test/SettingsTest.cpp" alt="" coords="1395,125,1595,177"/>
-<area shape="rect" id="node9" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp" alt="" coords="1619,119,1825,184"/>
-<area shape="rect" id="node10" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1848,119,2038,184"/>
-<area shape="rect" id="node11" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="2062,125,2285,177"/>
-<area shape="rect" id="node12" href="$_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="2309,119,2532,184"/>
-<area shape="rect" id="node13" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="2556,125,2749,177"/>
-<area shape="rect" id="node14" href="$_mock_certified_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/MockCertifiedSender.h" alt="" coords="2773,125,2958,177"/>
-<area shape="rect" id="node15" href="$_mock_certified_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/Common/MockCertifiedSender.cpp" alt="" coords="2737,232,2994,284"/>
+<area shape="rect" id="node8" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp" alt="" coords="1395,119,1601,184"/>
+<area shape="rect" id="node9" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1624,119,1814,184"/>
+<area shape="rect" id="node10" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="1838,125,2061,177"/>
+<area shape="rect" id="node11" href="$_time_zone_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/TimeZoneHandler\lTest.cpp" alt="" coords="2085,119,2290,184"/>
+<area shape="rect" id="node12" href="$_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="2313,119,2536,184"/>
+<area shape="rect" id="node13" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="2560,125,2753,177"/>
+<area shape="rect" id="node14" href="$_mock_certified_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/MockCertifiedSender.h" alt="" coords="2777,125,2962,177"/>
+<area shape="rect" id="node16" href="$_setting_event_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingEvent\lSenderTest.cpp" alt="" coords="2987,125,3190,177"/>
+<area shape="rect" id="node15" href="$_mock_certified_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/Common/MockCertifiedSender.cpp" alt="" coords="2741,232,2998,284"/>
 </map>
