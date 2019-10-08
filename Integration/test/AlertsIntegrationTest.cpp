@@ -24,6 +24,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <ADSL/DirectiveSequencer.h>
@@ -36,19 +37,25 @@
 #include <Alerts/AlertsCapabilityAgent.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
 #include <Audio/AlertsAudioFactory.h>
+#include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/AVS/BlockingPolicy.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
+#include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <Settings/MockSetting.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/UserInactivityMonitor.h>
+#include <SystemSoundPlayer/SystemSoundPlayer.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -83,6 +90,8 @@ using namespace capabilityAgents::aip;
 using namespace afml;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
+using namespace settings;
+using namespace settings::test;
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
 #endif
@@ -299,6 +308,11 @@ protected:
         m_compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;
         m_compatibleAudioFormat.encoding = COMPATIBLE_ENCODING;
 
+        m_mockWakeWordConfirmationSetting =
+            std::make_shared<MockSetting<WakeWordConfirmationSettingType>>(getWakeWordConfirmationDefault());
+        m_mockSpeechConfirmationSetting =
+            std::make_shared<MockSetting<SpeechConfirmationSettingType>>(getSpeechConfirmationDefault());
+
         size_t nWords = 1024 * 1024;
         size_t wordSize = 2;
         size_t maxReaders = 3;
@@ -327,6 +341,22 @@ protected:
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
 
         m_userInactivityMonitor = UserInactivityMonitor::create(m_avsConnectionManager, m_exceptionEncounteredSender);
+
+#ifdef GSTREAMER_MEDIA_PLAYER
+        auto systemSoundMediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
+#else
+        auto systemSoundMediaPlayer = std::make_shared<TestMediaPlayer>();
+#endif
+
+        m_systemSoundPlayer = applicationUtilities::systemSoundPlayer::SystemSoundPlayer::create(
+            systemSoundMediaPlayer,
+            std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
+
+        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+
+        m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(m_customerDataManager);
+
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
@@ -334,7 +364,11 @@ protected:
             m_focusManager,
             m_dialogUXStateAggregator,
             m_exceptionEncounteredSender,
-            m_userInactivityMonitor);
+            m_userInactivityMonitor,
+            m_systemSoundPlayer,
+            std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
+            m_mockWakeWordConfirmationSetting,
+            m_mockSpeechConfirmationSetting);
         ASSERT_NE(nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
@@ -368,8 +402,6 @@ protected:
 
         auto messageStorage =
             SQLiteMessageStorage::create(avsCommon::utils::configuration::ConfigurationNode::getRoot());
-
-        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
 
         m_certifiedSender = CertifiedSender::create(
             m_avsConnectionManager,
@@ -553,6 +585,8 @@ protected:
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<capabilityAgents::alerts::storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
+    std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;
     std::shared_ptr<renderer::RendererInterface> m_alertRenderer;
     std::shared_ptr<TestAlertObserver> m_alertObserver;
     std::shared_ptr<holdToTalkButton> m_holdToTalkButton;
@@ -562,6 +596,8 @@ protected:
     std::shared_ptr<AudioInputStream> m_AudioBuffer;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
+    std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
+    std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
     std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
 
     FocusState m_focusState;
@@ -584,7 +620,7 @@ protected:
  *
  * Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped.
  */
-TEST_F(AlertsTest, test_handleOneTimerWithLocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleOneTimerWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -634,7 +670,7 @@ TEST_F(AlertsTest, test_handleOneTimerWithLocalStop) {
  *
  * Set two second timer, ensure they go off, then stop both timers.
  */
-TEST_F(AlertsTest, test_handleMultipleTimersWithLocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleMultipleTimersWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 15 seconds".
     sendAudioFileAsRecognize(RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -731,7 +767,7 @@ TEST_F(AlertsTest, test_handleMultipleTimersWithLocalStop) {
  * Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert
  * is stopped.
  */
-TEST_F(AlertsTest, test_stealChannelFromActiveAlert) {
+TEST_F(AlertsTest, DISABLED_test_stealChannelFromActiveAlert) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -942,7 +978,7 @@ TEST_F(AlertsTest, test_removeAllAlertsBeforeAlertIsActive) {
  * Set a 10 second timer, then send audio of "Cancel the timer" as a recognize event. Ensure the timer does not go off
  * and the DeleteAlertSucceeded event is sent.
  */
-TEST_F(AlertsTest, test_cancelAlertBeforeItIsActive) {
+TEST_F(AlertsTest, DISABLED_test_cancelAlertBeforeItIsActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);

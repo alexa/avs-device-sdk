@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,12 @@ public:
      * @param state The value of the persistVisualIndicator field of the directive.
      */
     virtual void onSetIndicator(avsCommon::avs::IndicatorState state) = 0;
+
+    /**
+     * Notifies the observer that a new notification has been received. This is called repeatedly for duplicate
+     * notifications.
+     */
+    virtual void onNotificationReceived() = 0;
 };
 
 }  // namespace sdkInterfaces

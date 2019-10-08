@@ -18,20 +18,35 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${PlaybackController_SOURCE_DIR}/include"
-     "${CONTEXTMANAGER_SOURCE_DIR}/include")
+     "${ContextManager_SOURCE_DIR}/include"
+     "${DeviceSettings_SOURCE_DIR}/test")
 
-    set(LINK_PATH ACL ADSL AFML AIP Alerts AudioPlayer AVSSystem CBLAuthDelegate ContextManager Integration gtest gmock KWD PlaybackController SpeechSynthesizer)
+set(LINK_PATH ACL
+        ADSL
+        AFML
+        AIP
+        Alerts
+        AudioPlayer
+        AVSSystem
+        CBLAuthDelegate
+        ContextManager
+        Integration
+        gtest
+        gmock
+        KWD
+        PlaybackController
+        SpeechSynthesizer)
 
-    if(KITTAI_KEY_WORD_DETECTOR)
-        SET(LINK_PATH ${LINK_PATH} KITTAI)
-    endif()
-    if(SENSORY_KEY_WORD_DETECTOR)
-        SET(LINK_PATH ${LINK_PATH} SENSORY)
-    endif()
-    if(GSTREAMER_MEDIA_PLAYER)
-        SET(LINK_PATH ${LINK_PATH} MediaPlayer)
-        add_definitions(-DGSTREAMER_MEDIA_PLAYER)
-    endif()
+if(KITTAI_KEY_WORD_DETECTOR)
+    SET(LINK_PATH ${LINK_PATH} KITTAI)
+endif()
+if(SENSORY_KEY_WORD_DETECTOR)
+    SET(LINK_PATH ${LINK_PATH} SENSORY)
+endif()
+if(GSTREAMER_MEDIA_PLAYER)
+    SET(LINK_PATH ${LINK_PATH} MediaPlayer)
+    add_definitions(-DGSTREAMER_MEDIA_PLAYER)
+endif()
 
 # Define a variable for the audio inputs.
 set(INTEGRATION_INPUTS "${Integration_SOURCE_DIR}/inputs")

@@ -89,15 +89,20 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
 
     if (bypassDialogRequestIDCheck) {
         ACSDK_INFO(LX("onDirective")
+                       .d("messageId", directive->getMessageId())
                        .d("action", "bypassingDialogRequestIdCheck")
                        .d("reason", "routinesDirectiveContainsDialogRequestId")
-                       .d("directiveNamespace", "InteractionModel")
-                       .d("directiveName", "NewDialogRequest"));
+                       .d("namespace", directive->getNamespace())
+                       .d("name", directive->getName())
+                       .d("directivesDialogRequestId", directive->getDialogRequestId())
+                       .d("dialogRequestId", m_dialogRequestId));
     } else if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
         ACSDK_INFO(LX("onDirective")
                        .d("messageId", directive->getMessageId())
                        .d("action", "dropped")
                        .d("reason", "dialogRequestIdDoesNotMatch")
+                       .d("namespace", directive->getNamespace())
+                       .d("name", directive->getName())
                        .d("directivesDialogRequestId", directive->getDialogRequestId())
                        .d("dialogRequestId", m_dialogRequestId));
         return true;
@@ -408,7 +413,13 @@ bool DirectiveProcessor::handleQueuedDirectivesLocked(std::unique_lock<std::mute
         }
 
         if (!handleDirectiveSucceeded) {
-            ACSDK_ERROR(LX("handleDirectiveFailed").d("message id", directive->getMessageId()));
+            ACSDK_ERROR(LX("handleDirectiveFailed")
+                            .d("message id", directive->getMessageId())
+                            .d("namespace", directive->getNamespace())
+                            .d("name", directive->getName())
+                            .d("reason", "dialog request id does not match")
+                            .d("directive's dialog request id", directive->getDialogRequestId())
+                            .d("dialog request id", m_dialogRequestId));
             scrubDialogRequestIdLocked(directive->getDialogRequestId());
         }
     }

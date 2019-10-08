@@ -121,10 +121,6 @@ SDK_MISC_DATABASE_FILE_PATH=$CONFIG_DB_PATH/miscDatabase.db
 # Variables for alertsCapabilityAgent
 SDK_SQLITE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/alerts.db
 
-# Variables for settings
-SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/settings.db
-SETTING_LOCALE_VALUE=$LOCALE
-
 # Variables for device settings
 SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/deviceSettings.db
 

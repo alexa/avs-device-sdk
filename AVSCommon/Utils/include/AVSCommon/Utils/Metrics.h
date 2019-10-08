@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ private:
  *
  * @param entry The text (or builder of the text) for the log entry.
  */
-#define ACSDK_METRIC_WITH_ENTRY(entry) ACSDK_CRITICAL(entry)
+#define ACSDK_METRIC_WITH_ENTRY(entry) ACSDK_INFO(entry)
 
 /**
  * Send a Metric log line.

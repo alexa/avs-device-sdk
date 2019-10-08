@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,7 @@ public:
     bool open() override;
     void close() override;
     bool storeSetting(const std::string& key, const std::string& value, SettingStatus status) override;
+    bool storeSettings(const std::vector<std::tuple<std::string, std::string, SettingStatus>>& data) override;
     SettingStatusAndValue loadSetting(const std::string& key) override;
     bool deleteSetting(const std::string& key) override;
     bool updateSettingStatus(const std::string& key, SettingStatus status) override;

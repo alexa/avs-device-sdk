@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ public:
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
     MOCK_METHOD3(storeSetting, bool(const std::string& key, const std::string& value, SettingStatus status));
+    MOCK_METHOD1(storeSettings, bool(const std::vector<std::tuple<std::string, std::string, SettingStatus>>& data));
     MOCK_METHOD1(loadSetting, SettingStatusAndValue(const std::string& key));
     MOCK_METHOD1(deleteSetting, bool(const std::string& key));
     MOCK_METHOD2(updateSettingStatus, bool(const std::string& key, SettingStatus status));

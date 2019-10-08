@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,9 +33,9 @@ class SpeakerManagerObserverInterface {
 public:
     /// Indicates whether the source of the call is from an AVS Directive or through a Local API call.
     enum class Source {
-        // The call occured as a result of an AVS Directive.
+        // The call occurred as a result of an AVS Directive.
         DIRECTIVE,
-        // The call occured as a result of a local API call.
+        // The call occurred as a result of a local API call.
         LOCAL_API
     };
 

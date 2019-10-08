@@ -27,23 +27,38 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MockAVSConnectionManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
+#include <AVSCommon/SDKInterfaces/MockSystemSoundPlayer.h>
 #include <AVSCommon/SDKInterfaces/MockUserInactivityMonitor.h>
-#include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
-#include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
+#include <Settings/DeviceSettingsManager.h>
+#include <Settings/MockDeviceSettingStorage.h>
+#include <Settings/MockSettingEventSender.h>
+#include <Settings/SettingEventSender.h>
+#include <Settings/MockSetting.h>
 
 #include "AIP/AudioInputProcessor.h"
 #include "MockObserver.h"
 
 using namespace alexaClientSDK::avsCommon::avs;
 using namespace alexaClientSDK::avsCommon::utils::json;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces::test;
+using namespace alexaClientSDK::settings;
+using namespace alexaClientSDK::settings::test;
+using namespace alexaClientSDK::settings::storage;
+using namespace alexaClientSDK::settings::storage::test;
 using namespace testing;
 
 namespace alexaClientSDK {
@@ -68,8 +83,22 @@ static const avsCommon::avs::NamespaceAndName EXPECT_SPEECH{NAMESPACE, "ExpectSp
 /// The SetEndOfSpeechOffset directive signature.
 static const avsCommon::avs::NamespaceAndName SET_END_OF_SPEECH_OFFSET{NAMESPACE, "SetEndOfSpeechOffset"};
 
+/// The SetWakeWordConfirmation directive signature.
+static const avsCommon::avs::NamespaceAndName SET_WAKE_WORD_CONFIRMATION{NAMESPACE, "SetWakeWordConfirmation"};
+
+/// The SetSpeechConfirmation directive signature.
+static const avsCommon::avs::NamespaceAndName SET_SPEECH_CONFIRMATION{NAMESPACE, "SetSpeechConfirmation"};
+
+/// The SetWakeWords directive signature.
+static const avsCommon::avs::NamespaceAndName SET_WAKE_WORDS{NAMESPACE, "SetWakeWords"};
+
 /// The directives @c AudioInputProcessor should handle.
-avsCommon::avs::NamespaceAndName DIRECTIVES[] = {STOP_CAPTURE, EXPECT_SPEECH, SET_END_OF_SPEECH_OFFSET};
+static const avsCommon::avs::NamespaceAndName DIRECTIVES[] = {STOP_CAPTURE,
+                                                              EXPECT_SPEECH,
+                                                              SET_END_OF_SPEECH_OFFSET,
+                                                              SET_WAKE_WORD_CONFIRMATION,
+                                                              SET_SPEECH_CONFIRMATION,
+                                                              SET_WAKE_WORDS};
 
 /// The SpeechRecognizer context state signature.
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
@@ -241,6 +270,27 @@ static const size_t MESSAGE_ATTACHMENT_KWD_METADATA_INDEX = 0;
 /// Sample Wakeword engine metadata to compare with the @ AttachmentReader
 static const std::string KWD_METADATA_EXAMPLE = "Wakeword engine metadata example";
 
+/// The value of the payload key for wakeWordConfirmation.
+static const std::string WAKE_WORD_CONFIRMATION_PAYLOAD_KEY = "wakeWordConfirmation";
+
+/// The value of the payload key for speechConfirmation.
+static const std::string SPEECH_CONFIRMATION_PAYLOAD_KEY = "speechConfirmation";
+
+/// The value of the payload key for wake words.
+static const std::string WAKEWORDS_PAYLOAD_KEY = "wakeWords";
+
+/// A list of test supported wake words.
+static const std::set<std::string> SUPPORTED_WAKE_WORDS = {"ALEXA", "ECHO"};
+
+/// A list of test supported locales.
+static const std::set<std::string> SUPPORTED_LOCALES = {"en-CA", "en-US"};
+
+/// Default locale.
+static const std::string DEFAULT_LOCALE = "en-CA";
+
+/// Capability configuration key used to give more details about the device configuration.
+static const std::string CAPABILITY_INTERFACE_CONFIGURATIONS_KEY = "configurations";
+
 /// Utility function to parse a JSON document.
 static rapidjson::Document parseJson(const std::string& json) {
     rapidjson::Document document;
@@ -288,7 +338,6 @@ public:
         avsCommon::avs::AudioInputStream::Index keywordEnd = AudioInputProcessor::INVALID_INDEX,
         std::string keyword = "",
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData espData = ESPData::getEmptyESPData(),
         const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -370,9 +419,6 @@ private:
     /// The initiator that is passed from AVS in a preceding ExpectSpeech.
     std::shared_ptr<std::string> m_avsInitiator;
 
-    /// The ESP data for this ReportEchoSpatialPerceptionData event.
-    const ESPData m_espData;
-
     /// The user voice attachment reader saved by a call to @c verifyMessage().
     std::shared_ptr<avsCommon::avs::MessageRequest::NamedReader> m_reader;
 
@@ -387,7 +433,6 @@ RecognizeEvent::RecognizeEvent(
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData espData,
     const std::shared_ptr<std::vector<char>> KWDMetadata) :
         m_audioProvider{audioProvider},
         m_initiator{initiator},
@@ -395,20 +440,12 @@ RecognizeEvent::RecognizeEvent(
         m_keywordEnd{keywordEnd},
         m_keyword{keyword},
         m_avsInitiator{avsInitiator},
-        m_espData{espData},
         m_KWDMetadata{KWDMetadata} {
 }
 
 std::future<bool> RecognizeEvent::send(std::shared_ptr<AudioInputProcessor> audioInputProcessor) {
     auto result = audioInputProcessor->recognize(
-        m_audioProvider,
-        m_initiator,
-        START_OF_SPEECH_TIMESTAMP,
-        m_begin,
-        m_keywordEnd,
-        m_keyword,
-        m_espData,
-        m_KWDMetadata);
+        m_audioProvider, m_initiator, START_OF_SPEECH_TIMESTAMP, m_begin, m_keywordEnd, m_keyword, m_KWDMetadata);
     EXPECT_TRUE(result.valid());
     return result;
 }
@@ -434,9 +471,6 @@ void RecognizeEvent::verifyEspMessage(
     EXPECT_EQ(getJsonString(header->value, MESSAGE_NAME_KEY), ESP_EVENT_NAME);
     EXPECT_NE(getJsonString(header->value, MESSAGE_MESSAGE_ID_KEY), "");
     EXPECT_EQ(getJsonString(header->value, MESSAGE_DIALOG_REQUEST_ID_KEY), dialogRequestId);
-
-    EXPECT_EQ(std::to_string(getJsonInt64(payload->value, ESP_VOICE_ENERGY_KEY)), m_espData.getVoiceEnergy());
-    EXPECT_EQ(std::to_string(getJsonInt64(payload->value, ESP_AMBIENT_ENERGY_KEY)), m_espData.getAmbientEnergy());
 }
 
 void RecognizeEvent::verifyMetadata(
@@ -638,7 +672,6 @@ protected:
         std::string keyword = "",
         RecognizeStopPoint stopPoint = RecognizeStopPoint::NONE,
         std::shared_ptr<std::string> avsInitiator = nullptr,
-        const ESPData espData = ESPData::getEmptyESPData(),
         const std::shared_ptr<std::vector<char>> KWDMetadata = nullptr);
 
     /**
@@ -782,8 +815,17 @@ protected:
     /// The mock @c DirectiveSequencerInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockDirectiveSequencer> m_mockDirectiveSequencer;
 
-    /// The mock @c MessageSenderInterface.
+    /// The mock @c MessageSenderInterface for AIP.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockMessageSender> m_mockMessageSender;
+
+    /// Mock speech confirmation setting.
+    std::shared_ptr<settings::test::MockSetting<settings::SpeechConfirmationSettingType>> m_mockSpeechConfirmation;
+
+    /// Mock wake word confirmation setting.
+    std::shared_ptr<settings::test::MockSetting<settings::WakeWordConfirmationSettingType>> m_mockWakeWordConfirmation;
+
+    /// The locale and wake words settings.
+    std::shared_ptr<settings::test::MockSetting<settings::WakeWords>> m_mockWakeWordSetting;
 
     /// The mock @c ContextManagerInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockContextManager> m_mockContextManager;
@@ -815,6 +857,12 @@ protected:
     /// The mock @c ObserverInterface.
     std::shared_ptr<MockObserver> m_mockObserver;
 
+    /// A mock of the @c SystemSoundPlayerInterface.
+    std::shared_ptr<MockSystemSoundPlayer> m_mockSystemSoundPlayer;
+
+    // A mock instance of LocaleAssetsManagerInterface
+    std::shared_ptr<MockLocaleAssetsManager> m_mockAssetsManager;
+
     /// The @c RecognizeEvent from the last @c testRecognizeSucceeds() call.
     std::shared_ptr<RecognizeEvent> m_recognizeEvent;
 
@@ -831,8 +879,15 @@ void AudioInputProcessorTest::SetUp() {
     m_mockFocusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
     m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
     m_dialogUXStateObserver = std::make_shared<TestDialogUXStateObserver>(m_dialogUXStateAggregator);
-
+    m_mockSystemSoundPlayer = std::make_shared<NiceMock<MockSystemSoundPlayer>>();
     m_dialogUXStateAggregator->addObserver(m_dialogUXStateObserver);
+    m_mockAssetsManager = std::make_shared<NiceMock<MockLocaleAssetsManager>>();
+    m_mockSpeechConfirmation = std::make_shared<settings::test::MockSetting<settings::SpeechConfirmationSettingType>>(
+        settings::getSpeechConfirmationDefault());
+    m_mockWakeWordConfirmation =
+        std::make_shared<settings::test::MockSetting<settings ::WakeWordConfirmationSettingType>>(
+            settings::getWakeWordConfirmationDefault());
+    m_mockWakeWordSetting = std::make_shared<settings::test::MockSetting<settings::WakeWords>>(SUPPORTED_WAKE_WORDS);
 
     m_mockExceptionEncounteredSender =
         std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
@@ -851,6 +906,16 @@ void AudioInputProcessorTest::SetUp() {
                                             NUM_CHANNELS};
     m_audioProvider = avsCommon::utils::memory::make_unique<AudioProvider>(
         std::move(stream), format, ASRProfile::NEAR_FIELD, ALWAYS_READABLE, CAN_OVERRIDE, CAN_BE_OVERRIDDEN);
+
+    ON_CALL(*m_mockAssetsManager, getSupportedWakeWords(_))
+        .WillByDefault(InvokeWithoutArgs([]() -> avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::WakeWordsSets {
+            return {SUPPORTED_WAKE_WORDS};
+        }));
+    ON_CALL(*m_mockAssetsManager, getDefaultSupportedWakeWords())
+        .WillByDefault(InvokeWithoutArgs([]() -> avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::WakeWordsSets {
+            return {SUPPORTED_WAKE_WORDS};
+        }));
+
     m_audioInputProcessor = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
@@ -859,6 +924,11 @@ void AudioInputProcessorTest::SetUp() {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     ASSERT_NE(m_audioInputProcessor, nullptr);
@@ -902,7 +972,6 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     std::string keyword,
     RecognizeStopPoint stopPoint,
     std::shared_ptr<std::string> avsInitiator,
-    const ESPData espData,
     const std::shared_ptr<std::vector<char>> KWDMetadata) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
@@ -923,7 +992,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     contextDocument.Accept(contextWriter);
     std::string contextJson = contextBuffer.GetString();
     m_recognizeEvent = std::make_shared<RecognizeEvent>(
-        audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, espData, KWDMetadata);
+        audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, KWDMetadata);
     if (keyword.empty()) {
         EXPECT_CALL(*m_mockContextManager, getContext(_)).WillOnce(InvokeWithoutArgs([this, contextJson, stopPoint] {
             m_audioInputProcessor->onContextAvailable(contextJson);
@@ -961,15 +1030,6 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     {
         // Enforce the sequence.
         InSequence dummy;
-        if (espData.verify()) {
-            EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-                .WillOnce(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-                    m_recognizeEvent->verifyEspMessage(request, m_dialogRequestId);
-                    EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::BUSY));
-                    m_audioInputProcessor->onSendCompleted(
-                        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
-                }));
-        }
         EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
             .WillOnce(DoAll(
                 Invoke([this, KWDMetadata](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
@@ -1375,7 +1435,12 @@ void AudioInputProcessorTest::removeDefaultAudioProvider() {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserInactivityMonitor);
+        m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -1392,6 +1457,11 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_NE(m_audioInputProcessor, nullptr);
@@ -1466,6 +1536,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutDirectiveSequencer) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1482,6 +1557,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutMessageSender) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1498,6 +1578,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutContextManager) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1514,6 +1599,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutFocusManager) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1530,6 +1620,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutStateAggregator) {
         nullptr,
         m_mockExceptionEncounteredSender,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1549,6 +1644,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutExceptionSender) {
         m_dialogUXStateAggregator,
         nullptr,
         m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1568,6 +1668,11 @@ TEST_F(AudioInputProcessorTest, test_createWithoutUserInactivityMonitor) {
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
         nullptr,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
@@ -1583,7 +1688,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutAudioProvider) {
         m_mockFocusManager,
         m_dialogUXStateAggregator,
         m_mockExceptionEncounteredSender,
-        m_mockUserInactivityMonitor);
+        m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting);
     EXPECT_NE(m_audioInputProcessor, nullptr);
 }
 
@@ -1592,7 +1702,10 @@ TEST_F(AudioInputProcessorTest, test_getConfiguration) {
     DirectiveHandlerConfiguration expectedConfiguration{
         {STOP_CAPTURE, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)},
         {EXPECT_SPEECH, BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true)},
-        {SET_END_OF_SPEECH_OFFSET, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
+        {SET_END_OF_SPEECH_OFFSET, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)},
+        {SET_WAKE_WORD_CONFIRMATION, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)},
+        {SET_SPEECH_CONFIRMATION, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)},
+        {SET_WAKE_WORDS, BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false)}};
 
     auto configuration = m_audioInputProcessor->getConfiguration();
     EXPECT_EQ(configuration, expectedConfiguration);
@@ -2078,29 +2191,26 @@ TEST_F(AudioInputProcessorTest, test_resetStateOnTimeOut) {
 }
 
 /*
- * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD, keyword and
- * valid espData.
+ * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD and keyword
  */
 TEST_F(AudioInputProcessorTest, test_recognizeWakewordWithESPWithKeyword) {
     auto begin = AudioInputProcessor::INVALID_INDEX;
     auto end = AudioInputProcessor::INVALID_INDEX;
     // note that we are just using a integer instead of a float number, this is to help with JSON verification.
-    ESPData espData("123456789", "987654321");
     EXPECT_TRUE(testRecognizeSucceeds(
-        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
+        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr));
 }
 
 /*
- * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD, keyword and
- * invalid espData.  The ReportEchoSpatialPerceptionData event will not be sent but the Recognize event should still be
+ * This function verifies that @c AudioInputProcessor::recognize() works with @c Initiator::WAKEWORD and keyword
+ * The ReportEchoSpatialPerceptionData event will not be sent but the Recognize event should still be
  * sent.
  */
 TEST_F(AudioInputProcessorTest, test_recognizeWakewordWithInvalidESPWithKeyword) {
     auto begin = AudioInputProcessor::INVALID_INDEX;
     auto end = AudioInputProcessor::INVALID_INDEX;
-    ESPData espData("@#\"", "@#\"");
     EXPECT_TRUE(testRecognizeSucceeds(
-        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, espData));
+        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr));
 }
 
 /*
@@ -2147,15 +2257,7 @@ TEST_F(AudioInputProcessorTest, test_recognizeWakewordWithKWDMetadata) {
     metadata->assign(KWD_METADATA_EXAMPLE.data(), KWD_METADATA_EXAMPLE.data() + KWD_METADATA_EXAMPLE.length());
 
     EXPECT_TRUE(testRecognizeSucceeds(
-        *m_audioProvider,
-        Initiator::WAKEWORD,
-        begin,
-        end,
-        KEYWORD_TEXT,
-        RecognizeStopPoint::NONE,
-        nullptr,
-        ESPData::getEmptyESPData(),
-        metadata));
+        *m_audioProvider, Initiator::WAKEWORD, begin, end, KEYWORD_TEXT, RecognizeStopPoint::NONE, nullptr, metadata));
 }
 
 /**
@@ -2685,6 +2787,130 @@ TEST_F(AudioInputProcessorTest, test_handleSetEndOfSpeechOffsetFailureMissing) {
     EXPECT_CALL(*result, setFailed(_));
     directiveHandler->preHandleDirective(avsDirective, std::move(result));
     EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
+}
+
+/**
+ * This function verifies that the SetWakeWordConfirmation directive can be handled successfully.
+ */
+TEST_F(AudioInputProcessorTest, test_handleSetWakeWordConfirmation) {
+    rapidjson::Document document(rapidjson::kObjectType);
+    rapidjson::Value payloadJson(rapidjson::kObjectType);
+
+    const std::string WAKE_WORD_CONFIRMATION_ENABLED_VALUE = "TONE";
+
+    payloadJson.AddMember(
+        rapidjson::StringRef(WAKE_WORD_CONFIRMATION_PAYLOAD_KEY),
+        WAKE_WORD_CONFIRMATION_ENABLED_VALUE,
+        document.GetAllocator());
+
+    avsCommon::utils::WaitEvent waitEvent;
+    EXPECT_CALL(*m_mockWakeWordConfirmation, setAvsChange(settings::WakeWordConfirmationSettingType::TONE))
+        .WillOnce(InvokeWithoutArgs([&waitEvent] {
+            waitEvent.wakeUp();
+            return true;
+        }));
+
+    auto avsDirective = createAVSDirective(SET_WAKE_WORD_CONFIRMATION, true, true, document, payloadJson);
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+    directiveHandler->handleDirectiveImmediately(avsDirective);
+
+    // Wait till last expectation is met.
+    ASSERT_TRUE(waitEvent.wait(TEST_TIMEOUT));
+}
+
+/**
+ * This function verifies that the SetSpeechConfirmation directive can be handled successfully.
+ */
+TEST_F(AudioInputProcessorTest, test_setSpeechConfirmation) {
+    rapidjson::Document document(rapidjson::kObjectType);
+    rapidjson::Value payloadJson(rapidjson::kObjectType);
+
+    const std::string SPEECH_WORD_CONFIRMATION_ENABLED_VALUE = "TONE";
+
+    payloadJson.AddMember(
+        rapidjson::StringRef(SPEECH_CONFIRMATION_PAYLOAD_KEY),
+        SPEECH_WORD_CONFIRMATION_ENABLED_VALUE,
+        document.GetAllocator());
+
+    avsCommon::utils::WaitEvent waitEvent;
+    EXPECT_CALL(*m_mockSpeechConfirmation, setAvsChange(settings::SpeechConfirmationSettingType::TONE))
+        .WillOnce(InvokeWithoutArgs([&waitEvent] {
+            waitEvent.wakeUp();
+            return true;
+        }));
+
+    auto avsDirective = createAVSDirective(SET_SPEECH_CONFIRMATION, true, true, document, payloadJson);
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+    directiveHandler->handleDirectiveImmediately(avsDirective);
+
+    // Wait till last expectation is met.
+    ASSERT_TRUE(waitEvent.wait(TEST_TIMEOUT));
+}
+
+/**
+ * Test if SetWakeWords directive is handled correctly.
+ */
+TEST_F(AudioInputProcessorTest, test_setWakeWordsDirectiveSuccess) {
+    // Prepare the directive JSON:
+    // "directive": {
+    //     "header": {
+    //       "namespace": "SpeechRecognizer",
+    //       "name": "SetWakeWords",
+    //       "messageId": "XXXX-XXXX"
+    //     },
+    //     "payload": {
+    //       "wakeWords": ["ALEXA"]
+    //     }
+    //   }
+
+    JsonGenerator generator;
+    generator.addStringArray(WAKEWORDS_PAYLOAD_KEY, SUPPORTED_WAKE_WORDS);
+    rapidjson::Document document(rapidjson::kObjectType);
+    rapidjson::Value payloadJson(rapidjson::kObjectType);
+    rapidjson::Value wakeWordsPayload(rapidjson::kArrayType);
+
+    // Put the first supported wake word as the value we want to set.
+    auto newWakeWord = *SUPPORTED_WAKE_WORDS.begin();
+    wakeWordsPayload.PushBack(rapidjson::Value(newWakeWord, document.GetAllocator()), document.GetAllocator());
+
+    payloadJson.AddMember(rapidjson::StringRef(WAKEWORDS_PAYLOAD_KEY), wakeWordsPayload, document.GetAllocator());
+
+    std::promise<bool> messagePromise;
+
+    avsCommon::utils::WaitEvent waitEvent;
+    EXPECT_CALL(*m_mockWakeWordSetting, setAvsChange(std::set<std::string>{newWakeWord}))
+        .WillOnce(InvokeWithoutArgs([&waitEvent] {
+            waitEvent.wakeUp();
+            return true;
+        }));
+
+    // Handle the directive
+    auto avsDirective = createAVSDirective(SET_WAKE_WORDS, true, true, document, payloadJson);
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+    directiveHandler->handleDirectiveImmediately(avsDirective);
+
+    // Wait till last expectation is met.
+    ASSERT_TRUE(waitEvent.wait(TEST_TIMEOUT));
+}
+
+TEST_F(AudioInputProcessorTest, test_publishedCapabiltiesContainsSupportedWakeWords) {
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> caps =
+        m_audioInputProcessor->getCapabilityConfigurations();
+    auto cap = *caps.begin();
+
+    auto configuration = cap->capabilityConfiguration.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
+
+    ASSERT_NE(configuration, cap->capabilityConfiguration.end());
+
+    std::string wakeWordString;
+    for (auto wakeWord : SUPPORTED_WAKE_WORDS) {
+        if (!wakeWordString.empty()) {
+            wakeWordString += ",";
+        }
+        wakeWordString += "\"" + wakeWord + "\"";
+    }
+
+    EXPECT_THAT(configuration->second, MatchesRegex(R"(.*\[)" + wakeWordString + R"(\].*)"));
 }
 
 }  // namespace test

@@ -21,6 +21,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -137,6 +138,15 @@ public:
      * @return Whether this @c ConfigurationNode has a @c string value for @c key.
      */
     bool getString(const std::string& key, std::string* out = nullptr, std::string defaultValue = "") const;
+
+    /**
+     * Get the @c string value for @c key from this @c ConfigurationNode.
+     *
+     * @param key The key of the @c string value to get.
+     * @param[out] out Pointer to receive the returned value.
+     * @return Whether this @c ConfigurationNode has a @c string array value for @c key.
+     */
+    bool getStringValues(const std::string& key, std::set<std::string>* out = nullptr) const;
 
     /**
      * Get a duration value derived from an integer value for @c key from this @c ConfigurationNode.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_STORAGE_DEVICESETTINGSTORAGEINTERFACE_H_
 
 #include <string>
+#include <tuple>
+#include <vector>
 
 #include "Settings/SettingStatus.h"
 
@@ -67,6 +69,14 @@ public:
      * @return Whether the setting was successfully stored.
      */
     virtual bool storeSetting(const std::string& key, const std::string& value, SettingStatus status) = 0;
+
+    /**
+     * Stores multiple setting in the database.
+     *
+     * @param data A collection of key-value-status entries to store.
+     * @return Whether the setting was successfully stored.
+     */
+    virtual bool storeSettings(const std::vector<std::tuple<std::string, std::string, SettingStatus>>& data) = 0;
 
     /**
      * Retrieves the setting status and value from the database.

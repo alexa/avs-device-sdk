@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,21 @@
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
+namespace constants {
+
+/// The namespace key in the header of the event.
+static const std::string NAMESPACE_KEY_STRING = "namespace";
+
+/// The name key in the header of the event.
+static const std::string NAME_KEY_STRING = "name";
+
+/// The header key in the event.
+static const std::string HEADER_KEY_STRING = "header";
+
+/// The payload key in the event.
+static const std::string PAYLOAD_KEY_STRING = "payload";
+
+}  // namespace constants
 
 /**
  * Builds a JSON event string which includes the header, the @c payload and an optional @c context.

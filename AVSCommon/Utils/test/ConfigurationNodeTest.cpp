@@ -145,7 +145,26 @@ static const std::string ARRAY_JSON = R"(
 /**
  * Class for testing the ConfigurationNode class
  */
-class ConfigurationNodeTest : public ::testing::Test {};
+class ConfigurationNodeTest : public ::testing::Test {
+protected:
+    void TearDown() override;
+};
+
+void ConfigurationNodeTest::TearDown() {
+    ConfigurationNode::uninitialize();
+}
+
+/**
+ * Initializes the root configuration with the given JSON string.
+ *
+ * @param jsonConfiguration The configuration string.
+ * @return Whether it succeeded or not.
+ */
+bool initializeConfiguration(const std::string& jsonConfiguration) {
+    std::vector<std::shared_ptr<std::istream>> jsonStream;
+    jsonStream.push_back(std::make_shared<std::stringstream>(jsonConfiguration));
+    return ConfigurationNode::initialize(jsonStream);
+}
 
 /**
  * Verify initialization a configuration. Verify both the implementation of accessor methods and the results
@@ -258,6 +277,51 @@ TEST_F(ConfigurationNodeTest, test_initializationAndAccess) {
     ASSERT_EQ(arrayString, NEW_STRING_VALUE2_1);
     ASSERT_TRUE(array[1].getString(OBJECT2_1, &arrayString));
     ASSERT_EQ(arrayString, NEW_STRING_VALUE2_1_1);
+}
+
+TEST_F(ConfigurationNodeTest, test_arrayElement) {
+    // clang-format off
+    initializeConfiguration(R"(
+    {
+        "array1" : ["value1","value2"],
+        "NonStringArray" : [1, 2]
+    })");
+    // clang-format on
+
+    const std::string key{"array1"};
+    const std::set<std::string> expectedValue = {"value1", "value2"};
+
+    std::set<std::string> configValue;
+    EXPECT_TRUE(ConfigurationNode::getRoot().getStringValues(key, &configValue));
+    EXPECT_EQ(configValue, expectedValue);
+
+    const std::string missingKey{"missingKey"};
+    const std::set<std::string> expectedValueForMissingKey = {};
+    configValue.clear();
+    EXPECT_FALSE(ConfigurationNode::getRoot().getStringValues(missingKey, &configValue));
+    EXPECT_EQ(configValue, expectedValueForMissingKey);
+
+    const std::string nonStringArrayKey{"NonStringArray"};
+    const std::set<std::string> expectedValueForNonStringArray = {};
+    EXPECT_TRUE(ConfigurationNode::getRoot().getStringValues(nonStringArrayKey, &configValue));
+    configValue.clear();
+    EXPECT_EQ(configValue, expectedValueForNonStringArray);
+}
+
+TEST_F(ConfigurationNodeTest, test_emptyArrayElement) {
+    // clang-format off
+    initializeConfiguration(R"(
+    {
+        "array1" : []
+    })");
+    // clang-format on
+
+    const std::string key{"array1"};
+
+    std::set<std::string> configValue;
+    EXPECT_TRUE(ConfigurationNode::getRoot().getStringValues(key, &configValue));
+    EXPECT_TRUE(ConfigurationNode::getRoot().getStringValues(key, nullptr));
+    EXPECT_TRUE(configValue.empty());
 }
 
 }  // namespace test

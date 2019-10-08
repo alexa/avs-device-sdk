@@ -16,7 +16,6 @@ add_subdirectory("Notifications")
 add_subdirectory("PlaybackController")
 add_subdirectory("SpeakerManager")
 add_subdirectory("SpeechSynthesizer")
-add_subdirectory("Settings")
 add_subdirectory("System")
 add_subdirectory("TemplateRuntime")
 
@@ -26,4 +25,8 @@ endif()
 
 if (PCC)
     add_subdirectory("PhoneCallController")
+endif()
+
+if (MCC)
+    add_subdirectory("MeetingClientController")
 endif()

@@ -142,7 +142,7 @@ TEST_F(UserInactivityMonitorTest, test_createWithError) {
 /**
  * This case tests if a directive is handled properly.
  */
-TEST_F(UserInactivityMonitorTest, test_handleDirectiveProperly) {
+TEST_F(UserInactivityMonitorTest, testTimer_handleDirectiveProperly) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     std::promise<void> notifyObserverPromise1;

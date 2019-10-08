@@ -50,7 +50,7 @@ public:
     /**
      * Destructor.
      */
-    ~InternetConnectionMonitor();
+    virtual ~InternetConnectionMonitor();
 
     /// @name InternetConnectionMonitorInterface Methods
     /// @{

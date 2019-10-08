@@ -26,8 +26,6 @@ namespace utils {
 namespace threading {
 namespace test {
 
-using namespace utils::test;
-
 class ExecutorTest : public ::testing::Test {
 public:
     Executor executor;
@@ -306,8 +304,9 @@ TEST_F(ExecutorTest, test_shutdownCancelJob) {
     jobToDropResult = executor.submit(jobToDrop);
 
     // Wake up first job and wait for it to start running.
+    const std::chrono::seconds DEFAULT_TIMEOUT{5};
     waitSetUp.wakeUp();
-    waitJobStart.wait();
+    waitJobStart.wait(DEFAULT_TIMEOUT);
 
     // Shutdown should cancel enqueued jobs and wait for the ongoing job.
     executor.shutdown();

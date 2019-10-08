@@ -44,24 +44,25 @@
         // The database file should only be used for alerts (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}"
     },
-    "settings":{
-        // Path to Settings database file. e.g. /home/ubuntu/Build/settings.db
-        // Note: The directory specified must be valid.
-        // The database file (settings.db) will be created by SampleApp, do not create it yourself.
-        // The database file should only be used for settings (don't use it for other components of SDK)
-        "databaseFilePath":"${SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH}",
-        "defaultAVSClientSettings":{
-            // Default language for Alexa.
-            // See https://developer.amazon.com/docs/alexa-voice-service/settings.html#settingsupdated for valid values.
-            "locale":"${SETTING_LOCALE_VALUE}"
-        }
-    },
     "deviceSettings":{
         // Path to Device Settings database file. e.g. /home/ubuntu/Build/deviceSettings.db
         // Note: The directory specified must be valid.
         // The database file (deviceSettings.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for device settings (don't use it for other components of SDK)
-        "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}"
+        "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}",
+        // The list of supported locales on this device.
+        "locales":["en-US","en-GB","de-DE","en-IN","en-CA","ja-JP","en-AU","fr-FR","it-IT","es-ES","es-MX","fr-CA",
+            "es-US", "hi-IN", "pt-BR"],
+        // The default locale of this device.
+        "defaultLocale":"en-US",
+        // The list of locale combinations supported on this device.
+        "localeCombinations":[
+            ["en-CA", "fr-CA"],
+            ["fr-CA", "en-CA"]
+        ],
+        // The default timezone of this device.  This is an optional parameter; if it isn't specified, Etc/GMT is set as
+        // the default timezone.
+        "defaultTimezone":"America/Vancouver"
     },
     "bluetooth" : {
         // Path to Bluetooth database file. e.g. /home/ubuntu/Build/bluetooth.db

@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <list>
 #include <sstream>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -28,6 +29,9 @@
 #include <AVSCommon/Utils/String/StringUtils.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSCommon/AVS/Attachment/AttachmentUtils.h>
+#include <Settings/SettingEventMetadata.h>
+#include <Settings/SettingEventSender.h>
+#include <Settings/SharedAVSSettingProtocol.h>
 #include <SpeechEncoder/SpeechEncoder.h>
 
 #include "AIP/AudioInputProcessor.h"
@@ -45,7 +49,25 @@ static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInte
 /// SpeechRecognizer interface name
 static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME = "SpeechRecognizer";
 /// SpeechRecognizer interface version
-static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.1";
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.3";
+
+/// Configuration key used to give more details about the device configuration.
+static const std::string CAPABILITY_INTERFACE_CONFIGURATIONS_KEY = "configurations";
+
+/// Supported wake words key.
+static const std::string CAPABILITY_INTERFACE_WAKE_WORDS_KEY = "wakeWords";
+
+/// Supported maximum number of concurrent wakewords key.
+static const std::string CAPABILITY_MAXIMUM_CONCURRENT_WAKEWORDS_KEY = "maximumConcurrentWakeWords";
+
+/// The scope key for each wake words set.
+static const std::string CAPABILITY_INTERFACE_SCOPES_KEY = "scopes";
+
+/// The wake word values for a given scope.
+static const std::string CAPABILITY_INTERFACE_VALUES_KEY = "values";
+
+/// The scope configuration used as default locale wake words support.
+static const std::string CAPABILITY_INTERFACE_DEFAULT_LOCALE = "DEFAULT";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioInputProcessor");
@@ -75,6 +97,15 @@ static const avsCommon::avs::NamespaceAndName SET_END_OF_SPEECH_OFFSET{NAMESPACE
 /// The SpeechRecognizer context state signature.
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
 
+/// The SetWakeWordConfirmation directive signature.
+static const avsCommon::avs::NamespaceAndName SET_WAKE_WORD_CONFIRMATION{NAMESPACE, "SetWakeWordConfirmation"};
+
+/// The SetSpeechConfirmation directive signature.
+static const avsCommon::avs::NamespaceAndName SET_SPEECH_CONFIRMATION{NAMESPACE, "SetSpeechConfirmation"};
+
+/// The SetWakeWords directive signature.
+static const avsCommon::avs::NamespaceAndName SET_WAKE_WORDS{NAMESPACE, "SetWakeWords"};
+
 /// The field identifying the initiator.
 static const std::string INITIATOR_KEY = "initiator";
 
@@ -102,12 +133,6 @@ static const std::string END_INDEX_KEY = "endIndexInSamples";
 /// The field identifying the initiator's wake word.
 static const std::string WAKE_WORD_KEY = "wakeWord";
 
-/// The field identifying the ESP voice energy.
-static const std::string VOICE_ENERGY_KEY = "voiceEnergy";
-
-/// The field identifying the ESP ambient energy.
-static const std::string AMBIENT_ENERGY_KEY = "ambientEnergy";
-
 /// The field name for the user voice attachment.
 static const std::string AUDIO_ATTACHMENT_FIELD_NAME = "audio";
 
@@ -121,12 +146,35 @@ static const std::string START_OF_SPEECH_TIMESTAMP_FIELD_NAME = "startOfSpeechTi
 /// The field name for the end of speech offset, reported in milliseconds, as part of SetEndOfSpeechOffset payload.
 static const std::string END_OF_SPEECH_OFFSET_FIELD_NAME = "endOfSpeechOffsetInMilliseconds";
 
+/// The value of the WakeWordConfirmationChanged Event name.
+static const std::string WAKE_WORD_CONFIRMATION_CHANGED_EVENT_NAME = "WakeWordConfirmationChanged";
+/// The value of the WakeWordConfirmationReport Event name.
+static const std::string WAKE_WORD_CONFIRMATION_REPORT_EVENT_NAME = "WakeWordConfirmationReport";
+/// The value of the payload key for wakeWordConfirmation.
+static const std::string WAKE_WORD_CONFIRMATION_PAYLOAD_KEY = "wakeWordConfirmation";
+
+/// The value of the SpeechConfirmationChanged Event name.
+static const std::string SPEECH_CONFIRMATION_CHANGED_EVENT_NAME = "SpeechConfirmationChanged";
+/// The value of the SpeechConfirmationReport Event name.
+static const std::string SPEECH_CONFIRMATION_REPORT_EVENT_NAME = "SpeechConfirmationReport";
+/// The value of the payload key for speechConfirmation.
+static const std::string SPEECH_CONFIRMATION_PAYLOAD_KEY = "speechConfirmation";
+
+/// The value of the WakeWordsChanged Event name.
+static const std::string WAKE_WORDS_CHANGED_EVENT_NAME = "WakeWordsChanged";
+/// The value of the WakeWordsReport Event name.
+static const std::string WAKE_WORDS_REPORT_EVENT_NAME = "WakeWordsReport";
+/// The value of the payload key for wake words.
+static const std::string WAKE_WORDS_PAYLOAD_KEY = "wakeWords";
+
 /**
  * Creates the SpeechRecognizer capability configuration.
  *
+ * @param assetsManager Responsible for retrieving and changing the wake words and locale.
  * @return The SpeechRecognizer capability configuration.
  */
-static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration();
+static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration(
+    const avsCommon::sdkInterfaces::LocaleAssetsManagerInterface& assetsManager);
 
 std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
@@ -136,6 +184,11 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
+    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& assetsManager,
+    std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
+    std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+    std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
     std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
     AudioProvider defaultAudioProvider) {
     if (!directiveSequencer) {
@@ -157,7 +210,28 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
     } else if (!userInactivityMonitor) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullUserInctivityMonitor"));
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullUserInactivityMonitor"));
+        return nullptr;
+    } else if (!systemSoundPlayer) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullSystemSoundPlayer"));
+        return nullptr;
+    } else if (!wakeWordConfirmation) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullWakeWordsConfirmation"));
+        return nullptr;
+    } else if (!speechConfirmation) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullSpeechConfirmation"));
+        return nullptr;
+    } else if (!assetsManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullAssetsManager"));
+        return nullptr;
+    } else if (!assetsManager->getDefaultSupportedWakeWords().empty() && !wakeWordsSetting) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullWakeWordsSetting"));
+        return nullptr;
+    }
+
+    auto capabilitiesConfiguration = getSpeechRecognizerCapabilityConfiguration(*assetsManager);
+    if (!capabilitiesConfiguration) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "unableToCreateCapabilitiesConfiguration"));
         return nullptr;
     }
 
@@ -168,8 +242,13 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         focusManager,
         exceptionEncounteredSender,
         userInactivityMonitor,
+        systemSoundPlayer,
         speechEncoder,
-        defaultAudioProvider));
+        defaultAudioProvider,
+        wakeWordConfirmation,
+        speechConfirmation,
+        wakeWordsSetting,
+        capabilitiesConfiguration));
 
     if (aip) {
         dialogUXStateAggregator->addObserver(aip);
@@ -183,6 +262,9 @@ avsCommon::avs::DirectiveHandlerConfiguration AudioInputProcessor::getConfigurat
     configuration[STOP_CAPTURE] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     configuration[EXPECT_SPEECH] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     configuration[SET_END_OF_SPEECH_OFFSET] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[SET_WAKE_WORD_CONFIRMATION] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[SET_SPEECH_CONFIRMATION] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[SET_WAKE_WORDS] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     return configuration;
 }
 
@@ -209,7 +291,6 @@ std::future<bool> AudioInputProcessor::recognize(
     avsCommon::avs::AudioInputStream::Index begin,
     avsCommon::avs::AudioInputStream::Index keywordEnd,
     std::string keyword,
-    const ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
     ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
 
@@ -235,10 +316,6 @@ std::future<bool> AudioInputProcessor::recognize(
             return ret.get_future();
         }
         begin = reader->tell();
-    }
-
-    if (!espData.isEmpty()) {
-        m_executor.submit([this, espData]() { executePrepareEspPayload(espData); });
     }
 
     return m_executor.submit(
@@ -276,6 +353,12 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirectiveInfo"));
         return;
     }
+
+    if (!info->directive) {
+        ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirective"));
+        return;
+    }
+
     if (info->directive->getName() == STOP_CAPTURE.name) {
         ACSDK_METRIC_MSG(TAG, info->directive, Metrics::Location::AIP_RECEIVE);
         handleStopCaptureDirective(info);
@@ -283,6 +366,12 @@ void AudioInputProcessor::handleDirective(std::shared_ptr<DirectiveInfo> info) {
         handleExpectSpeechDirective(info);
     } else if (info->directive->getName() == SET_END_OF_SPEECH_OFFSET.name) {
         handleSetEndOfSpeechOffsetDirective(info);
+    } else if (info->directive->getName() == SET_WAKE_WORD_CONFIRMATION.name) {
+        handleSetWakeWordConfirmation(info);
+    } else if (info->directive->getName() == SET_SPEECH_CONFIRMATION.name) {
+        handleSetSpeechConfirmation(info);
+    } else if (info->directive->getName() == SET_WAKE_WORDS.name) {
+        handleSetWakeWords(info);
     } else {
         std::string errorMessage =
             "unexpected directive " + info->directive->getNamespace() + ":" + info->directive->getName();
@@ -326,8 +415,13 @@ AudioInputProcessor::AudioInputProcessor(
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
     std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
-    AudioProvider defaultAudioProvider) :
+    AudioProvider defaultAudioProvider,
+    std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
+    std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+    std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
+    std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"AudioInputProcessor"},
         m_directiveSequencer{directiveSequencer},
@@ -344,17 +438,62 @@ AudioInputProcessor::AudioInputProcessor(
         m_preparingToSend{false},
         m_initialDialogUXStateReceived{false},
         m_localStopCapturePerformed{false},
-        m_precedingExpectSpeechInitiator{nullptr} {
-    m_capabilityConfigurations.insert(getSpeechRecognizerCapabilityConfiguration());
+        m_systemSoundPlayer{systemSoundPlayer},
+        m_precedingExpectSpeechInitiator{nullptr},
+        m_wakeWordConfirmation{wakeWordConfirmation},
+        m_speechConfirmation{speechConfirmation},
+        m_wakeWordsSetting{wakeWordsSetting} {
+    m_capabilityConfigurations.insert(capabilitiesConfiguration);
 }
 
-std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration() {
+/**
+ * Generate supported wake words json capability configuration for a given scope (default, language or locale).
+ *
+ * @param scope The scope being reported.
+ * @param wakeWordsCombination The set of a combination of wake words supported in the given scope.
+ * @return A json representation of the scope configuration.
+ */
+std::string generateSupportedWakeWordsJson(
+    const std::string& scope,
+    const avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::WakeWordsSets& wakeWordsCombination) {
+    json::JsonGenerator generator;
+    generator.addStringArray(CAPABILITY_INTERFACE_SCOPES_KEY, std::list<std::string>({scope}));
+    generator.addCollectionOfStringArray(CAPABILITY_INTERFACE_VALUES_KEY, wakeWordsCombination);
+    return generator.toString();
+}
+
+std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration(
+    const avsCommon::sdkInterfaces::LocaleAssetsManagerInterface& assetsManager) {
     std::unordered_map<std::string, std::string> configMap;
     configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE});
     configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME});
     configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION});
 
+    // Generate wake words capability configuration if supportedWakeWords is not empty.
+    auto defaultWakeWords = assetsManager.getDefaultSupportedWakeWords();
+    if (!defaultWakeWords.empty()) {
+        std::set<std::string> wakeWords;
+        wakeWords.insert(generateSupportedWakeWordsJson(CAPABILITY_INTERFACE_DEFAULT_LOCALE, defaultWakeWords));
+        for (const auto& entry : assetsManager.getLanguageSpecificWakeWords()) {
+            wakeWords.insert(generateSupportedWakeWordsJson(entry.first, entry.second));
+        }
+
+        for (const auto& entry : assetsManager.getLocaleSpecificWakeWords()) {
+            wakeWords.insert(generateSupportedWakeWordsJson(entry.first, entry.second));
+        }
+
+        json::JsonGenerator generator;
+        generator.addMembersArray(CAPABILITY_INTERFACE_WAKE_WORDS_KEY, wakeWords);
+        configMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, generator.toString()});
+        ACSDK_DEBUG7(LX(__func__).d("wakeWords", generator.toString()));
+    }
+
     return std::make_shared<avsCommon::avs::CapabilityConfiguration>(configMap);
+}
+
+settings::SettingEventMetadata AudioInputProcessor::getWakeWordsEventsMetadata() {
+    return settings::SettingEventMetadata{
+        NAMESPACE, WAKE_WORDS_CHANGED_EVENT_NAME, WAKE_WORDS_REPORT_EVENT_NAME, WAKE_WORDS_PAYLOAD_KEY};
 }
 
 void AudioInputProcessor::doShutdown() {
@@ -434,35 +573,6 @@ void AudioInputProcessor::handleSetEndOfSpeechOffsetDirective(std::shared_ptr<Di
         info->result->setFailed("Missing parameter(s): " + missing);
     }
     removeDirective(info);
-}
-
-void AudioInputProcessor::executePrepareEspPayload(const ESPData espData) {
-    m_espPayload.clear();
-    if (!espData.verify()) {
-        // Log an error as the values are invalid, but we should continue to send the recognize event.
-        ACSDK_ERROR(LX("executeRecognizeFailed")
-                        .d("reason", "invalidEspData")
-                        .d("voiceEnergy", espData.getVoiceEnergy())
-                        .d("ambientEnergy", espData.getAmbientEnergy()));
-    } else {
-        int64_t voiceEnergy = 0;
-        int64_t ambientEnergy = 0;
-        if (!string::stringToInt64(espData.getAmbientEnergy(), &ambientEnergy) ||
-            !string::stringToInt64(espData.getVoiceEnergy(), &voiceEnergy)) {
-            ACSDK_ERROR(LX("executePrepareEspPayloadFailed")
-                            .d("reason", "invalidESPData")
-                            .d("ambientEnergy", espData.getAmbientEnergy())
-                            .d("voiceEnergy", espData.getVoiceEnergy()));
-        }
-        // Assemble the event payload.
-        json::JsonGenerator jsonGenerator;
-        jsonGenerator.addMember(VOICE_ENERGY_KEY, voiceEnergy);
-        jsonGenerator.addMember(AMBIENT_ENERGY_KEY, ambientEnergy);
-
-        // Record the ReportEchoSpatialPerceptionData event payload for later use by executeContextAvailable().
-        m_espPayload = jsonGenerator.toString();
-    }
-    m_espRequest.reset();
 }
 
 bool AudioInputProcessor::executeRecognize(
@@ -597,6 +707,11 @@ bool AudioInputProcessor::executeRecognize(
             return false;
     }
 
+    if (settings::WakeWordConfirmationSettingType::TONE == m_wakeWordConfirmation->get()) {
+        m_systemSoundPlayer->playTone(
+            avsCommon::sdkInterfaces::SystemSoundPlayerInterface::Tone::WAKEWORD_NOTIFICATION);
+    }
+
     // Check if SpeechEncoder is available
     const bool shouldBeEncoded = (m_encoder != nullptr);
     // Set up format
@@ -724,12 +839,6 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
     // Assemble the MessageRequest.  It will be sent by executeOnFocusChanged when we acquire the channel.
     auto dialogRequestId = avsCommon::utils::uuidGeneration::generateUUID();
     m_directiveSequencer->setDialogRequestId(dialogRequestId);
-    if (!m_espPayload.empty()) {
-        auto msgIdAndESPJsonEvent =
-            buildJsonEventString("ReportEchoSpatialPerceptionData", dialogRequestId, m_espPayload);
-        m_espPayload.clear();
-        m_espRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndESPJsonEvent.second);
-    }
     auto msgIdAndJsonEvent = buildJsonEventString("Recognize", dialogRequestId, m_recognizePayload, jsonContext);
     m_recognizeRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second);
 
@@ -837,6 +946,10 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
             }
             removeDirective(info);
         }
+
+        if (m_speechConfirmation->get() == settings::SpeechConfirmationSettingType::TONE) {
+            m_systemSoundPlayer->playTone(avsCommon::sdkInterfaces::SystemSoundPlayerInterface::Tone::END_SPEECH);
+        }
     };
 
     if (m_preparingToSend) {
@@ -868,7 +981,6 @@ void AudioInputProcessor::executeResetState() {
         m_recognizeRequestSent.reset();
     }
     m_recognizeRequest.reset();
-    m_espRequest.reset();
     m_preparingToSend = false;
     m_deferredStopCapture = nullptr;
     if (m_focusState != avsCommon::avs::FocusState::NONE) {
@@ -994,10 +1106,6 @@ void AudioInputProcessor::removeDirective(std::shared_ptr<DirectiveInfo> info) {
 
 void AudioInputProcessor::sendRequestNow() {
     ACSDK_DEBUG(LX(__func__));
-    if (m_espRequest) {
-        m_messageSender->sendMessage(m_espRequest);
-        m_espRequest.reset();
-    }
 
     if (m_recognizeRequest) {
         ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_SEND);
@@ -1040,6 +1148,121 @@ void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageReque
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AudioInputProcessor::
     getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+settings::SettingEventMetadata AudioInputProcessor::getWakeWordConfirmationMetadata() {
+    return settings::SettingEventMetadata{NAMESPACE,
+                                          WAKE_WORD_CONFIRMATION_CHANGED_EVENT_NAME,
+                                          WAKE_WORD_CONFIRMATION_REPORT_EVENT_NAME,
+                                          WAKE_WORD_CONFIRMATION_PAYLOAD_KEY};
+}
+
+settings::SettingEventMetadata AudioInputProcessor::getSpeechConfirmationMetadata() {
+    return settings::SettingEventMetadata{NAMESPACE,
+                                          SPEECH_CONFIRMATION_CHANGED_EVENT_NAME,
+                                          SPEECH_CONFIRMATION_REPORT_EVENT_NAME,
+                                          SPEECH_CONFIRMATION_PAYLOAD_KEY};
+}
+
+bool AudioInputProcessor::handleSetWakeWordConfirmation(std::shared_ptr<DirectiveInfo> info) {
+    std::string jsonValue;
+    bool found = avsCommon::utils::json::jsonUtils::retrieveValue(
+        info->directive->getPayload(), WAKE_WORD_CONFIRMATION_PAYLOAD_KEY, &jsonValue);
+
+    if (!found) {
+        std::string errorMessage = "missing " + WAKE_WORD_CONFIRMATION_PAYLOAD_KEY;
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+        return false;
+    }
+
+    settings::WakeWordConfirmationSettingType value = settings::getWakeWordConfirmationDefault();
+    std::stringstream ss{jsonValue};
+    ss >> value;
+
+    if (ss.fail()) {
+        std::string errorMessage = "invalid " + WAKE_WORD_CONFIRMATION_PAYLOAD_KEY;
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+        return false;
+    }
+
+    auto executeChange = [this, value]() { m_wakeWordConfirmation->setAvsChange(value); };
+
+    m_executor.submit(executeChange);
+
+    if (info->result) {
+        info->result->setCompleted();
+    }
+
+    removeDirective(info);
+
+    return true;
+}
+
+bool AudioInputProcessor::handleSetSpeechConfirmation(std::shared_ptr<DirectiveInfo> info) {
+    std::string jsonValue;
+    bool found = avsCommon::utils::json::jsonUtils::retrieveValue(
+        info->directive->getPayload(), SPEECH_CONFIRMATION_PAYLOAD_KEY, &jsonValue);
+
+    if (!found) {
+        std::string errorMessage = "missing/invalid " + SPEECH_CONFIRMATION_PAYLOAD_KEY;
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+        return false;
+    }
+
+    settings::SpeechConfirmationSettingType value;
+    std::stringstream ss{jsonValue};
+    ss >> value;
+
+    if (ss.fail()) {
+        std::string errorMessage = "invalid " + SPEECH_CONFIRMATION_PAYLOAD_KEY;
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+        return false;
+    }
+
+    auto executeChange = [this, value]() { m_speechConfirmation->setAvsChange(value); };
+
+    m_executor.submit(executeChange);
+
+    if (info->result) {
+        info->result->setCompleted();
+    }
+
+    removeDirective(info);
+
+    return true;
+}
+
+bool AudioInputProcessor::handleSetWakeWords(std::shared_ptr<DirectiveInfo> info) {
+    auto wakeWords = json::jsonUtils::retrieveStringArray<settings::WakeWords>(
+        info->directive->getPayload(), WAKE_WORDS_PAYLOAD_KEY);
+
+    if (wakeWords.empty()) {
+        std::string errorMessage = "missing/invalid " + WAKE_WORDS_PAYLOAD_KEY;
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
+        return false;
+    }
+
+    if (!m_wakeWordsSetting) {
+        std::string errorMessage = "Wake words are not supported in this device";
+        sendExceptionEncounteredAndReportFailed(
+            info, errorMessage, avsCommon::avs::ExceptionErrorType::UNSUPPORTED_OPERATION);
+        return false;
+    }
+
+    m_executor.submit([this, wakeWords, info]() { m_wakeWordsSetting->setAvsChange(wakeWords); });
+
+    if (info->result) {
+        info->result->setCompleted();
+    }
+
+    removeDirective(info);
+
+    return true;
 }
 
 }  // namespace aip

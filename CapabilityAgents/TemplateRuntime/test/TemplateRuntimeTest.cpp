@@ -857,7 +857,7 @@ TEST_F(TemplateRuntimeTest, test_reacquireChannel) {
 /**
  * Test that we should skip rendering a player info card if the audio has already changed.
  */
-TEST_F(TemplateRuntimeTest, test_RenderPlayerInfoAfterPlayerActivityChanged) {
+TEST_F(TemplateRuntimeTest, testTimer_RenderPlayerInfoAfterPlayerActivityChanged) {
     // Create Directive1.
     const std::string messageId1{"messageId1"};
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -237,7 +237,12 @@ private:
      *
      * @param state The IndicatorState that warrants notification.
      */
-    void notifyObservers(avsCommon::avs::IndicatorState state);
+    void notifyObserversOfIndicatorState(avsCommon::avs::IndicatorState state);
+
+    /**
+     * Notifies NotificationObservers of a newly received notification
+     */
+    void notifyObserversOfNotificationReceived();
 
     /**
      * Handles necessary start-up behavior such as the initial observer notify() of the current indicator state

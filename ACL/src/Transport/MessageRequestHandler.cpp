@@ -81,7 +81,7 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+    ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (!context) {
         ACSDK_CRITICAL(LX("MessageRequestHandlerCreateFailed").d("reason", "nullHttp2Transport"));

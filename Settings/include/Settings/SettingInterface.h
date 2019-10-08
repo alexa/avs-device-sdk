@@ -23,6 +23,8 @@
 #include <unordered_set>
 
 #include <AVSCommon/Utils/GuardedValue.h>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Logger/LoggerUtils.h>
 
 #include "Settings/SetSettingResult.h"
 #include "Settings/SettingObserverInterface.h"
@@ -49,6 +51,11 @@ public:
     using ObserverType = SettingObserverInterface<SettingInterface<ValueType>>;
 
     /**
+     * Destructor.
+     */
+    virtual ~SettingInterface() = default;
+
+    /**
      * Request to set the managed setting to the given @c value. Note that this is an asynchronous operation.
      *
      * @param value The target value.
@@ -57,11 +64,34 @@ public:
     virtual SetSettingResult setLocalChange(const ValueType& value) = 0;
 
     /**
+     * Request to set the managed setting to the given @c value. This should be used when the request came from AVS.
+     *
+     * @param value The target value.
+     * @return @c true if it succeeds to enqueue the request; @false otherwise.
+     */
+    virtual bool setAvsChange(const ValueType& value) = 0;
+
+    /**
+     * Clear the data this @c Setting.
+     *
+     * @param value The default value for this setting.
+     * @return @c true if it data is cleared; @false otherwise.
+     */
+    virtual bool clearData(const ValueType& value) = 0;
+
+    /**
      * Get the current value of this setting. This will not take into consideration pending @c set requests.
      *
      * @return The setting value.
      */
     inline ValueType get() const;
+
+    /**
+     * Get the default value of this setting.
+     *
+     * @return The setting default value.
+     */
+    inline ValueType getDefault() const;
 
     /**
      * Register a setting observer.
@@ -80,11 +110,6 @@ public:
      */
     inline void removeObserver(std::shared_ptr<ObserverType>& observer);
 
-    /**
-     * Destructor.
-     */
-    virtual ~SettingInterface() = default;
-
 protected:
     /**
      * Constructor that initialize @c m_value with the given @c value.
@@ -92,7 +117,7 @@ protected:
     SettingInterface(const ValueType& value);
 
     /**
-     * Notifies observers of setting new value.
+     * Notifies observers of the status of applying a setting and it's current value.
      *
      * @param notification The type of notification to send to the observers.
      */
@@ -107,8 +132,14 @@ protected:
     /// Alias for GuardedValue with the templated value @c ValueType.
     using GuardedValue = avsCommon::utils::GuardedValue<ValueType>;
 
-    /// The setting value. (is_trivially_copyble is not supported on gcc4.8)
+    /// Alias to make log entries less verbose.
+    using LogEntry = avsCommon::utils::logger::LogEntry;
+
+    /// The setting value. (is_trivially_copyable is not supported on gcc4.8)
     typename std::conditional<std::is_scalar<ValueType>::value, std::atomic<ValueType>, GuardedValue>::type m_value;
+
+    /// The default setting value.
+    const ValueType m_defaultValue;
 };
 
 template <typename ValueT>
@@ -117,10 +148,19 @@ ValueT SettingInterface<ValueT>::get() const {
 }
 
 template <typename ValueT>
+ValueT SettingInterface<ValueT>::getDefault() const {
+    return m_defaultValue;
+}
+
+template <typename ValueT>
 bool SettingInterface<ValueT>::addObserver(std::shared_ptr<ObserverType> observer) {
-    std::lock_guard<std::mutex>{m_observerMutex};
-    m_observers.insert(observer);
-    return true;
+    if (observer) {
+        std::lock_guard<std::mutex>{m_observerMutex};
+        m_observers.insert(observer);
+        return true;
+    }
+    avsCommon::utils::logger::acsdkError(LogEntry("SettingInterface", "addObserverFailed").d("reason", "nullObserver"));
+    return false;
 }
 
 template <typename ValueT>
@@ -139,7 +179,7 @@ void SettingInterface<ValueT>::removeObserver(std::shared_ptr<ObserverType>& obs
 }
 
 template <typename ValueT>
-SettingInterface<ValueT>::SettingInterface(const ValueT& value) : m_value(value) {
+SettingInterface<ValueT>::SettingInterface(const ValueT& value) : m_value(value), m_defaultValue{value} {
 }
 
 }  // namespace settings

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,7 +40,19 @@ public:
      */
     static std::unique_ptr<MacAddressString> create(const std::string& macAddress);
 
+    /**
+     * Returns a the MAC address.
+     *
+     * @return The MAC address.
+     */
     std::string getString() const;
+
+    /**
+     * Utility function to truncate a valid MAC address. The first 4 octets are X'd out.
+     *
+     * @return The truncated mac address.
+     */
+    std::string getTruncatedString() const;
 
 private:
     /// The constructor will only be called with a legal macAddress input.  We don't check here because this function is

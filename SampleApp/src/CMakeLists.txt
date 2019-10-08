@@ -6,6 +6,7 @@ list(APPEND SampleApp_SOURCES
     GuiRenderer.cpp
     InteractionManager.cpp
     KeywordObserver.cpp
+    LocaleAssetsManager.cpp
     UIManager.cpp
     UserInputManager.cpp
     SampleApplication.cpp
@@ -22,6 +23,11 @@ ENDIF()
 
 if (PCC)
     list(APPEND SampleApp_SOURCES PhoneCaller.cpp)
+endif()
+
+if (MCC)
+    list(APPEND SampleApp_SOURCES MeetingClient.cpp)
+    list(APPEND SampleApp_SOURCES CalendarClient.cpp)
 endif()
 
 IF (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
@@ -45,11 +51,14 @@ target_link_libraries(SampleApp
     CapabilitiesDelegate
     CBLAuthDelegate
     SQLiteStorage
-    ESP
     EqualizerImplementations
     "${PORTAUDIO_LIB_PATH}")
 
 if (PCC)
+    target_link_libraries(SampleApp AVSCommon)
+endif()
+
+if (MCC)
     target_link_libraries(SampleApp AVSCommon)
 endif()
 
@@ -80,6 +89,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         "-framework Carbon")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(SampleApp
-      rt m pthread asound)
+      rt m pthread asound atomic)
 endif()
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -64,17 +64,11 @@ public:
         std::unique_ptr<SettingProtocolInterface> settingProtocol,
         std::function<bool(const ValueType&)> applyValueFn = std::function<bool(const ValueType&)>());
 
-    /**
-     * Request to set the managed setting to the given @c value. This should be used when the request came from AVS.
-     *
-     * @param value The target value.
-     * @return @c true if it succeeds to enqueue the request; @false otherwise.
-     */
-    bool setAvsChange(const ValueType& value);
-
     /// @name SettingInterface methods.
     /// @{
     SetSettingResult setLocalChange(const ValueType& value) override;
+    bool setAvsChange(const ValueType& value) override;
+    bool clearData(const ValueType& value) override;
     /// @}
 
 private:
@@ -187,6 +181,13 @@ SetSettingResult Setting<ValueT>::setLocalChange(const ValueType& value) {
     };
     auto notifyObservers = [this](SettingNotifications notification) { this->notifyObservers(notification); };
     return m_protocol->localChange(executeSet, revertChange, notifyObservers);
+}
+
+template <typename ValueT>
+bool Setting<ValueT>::clearData(const ValueType& value) {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    this->m_value = value;
+    return m_protocol->clearData();
 }
 
 template <typename ValueT>

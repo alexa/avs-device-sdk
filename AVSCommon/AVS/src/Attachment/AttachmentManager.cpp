@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -99,7 +99,8 @@ AttachmentManager::AttachmentManagementDetails& AttachmentManager::getDetailsLoc
         switch (m_attachmentType) {
             // The in-process attachment type.
             case AttachmentType::IN_PROCESS:
-                details.attachment = make_unique<InProcessAttachment>(attachmentId);
+                details.attachment =
+                    alexaClientSDK::avsCommon::utils::memory::make_unique<InProcessAttachment>(attachmentId);
                 break;
         }
 

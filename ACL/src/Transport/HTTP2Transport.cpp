@@ -188,7 +188,7 @@ HTTP2Transport::HTTP2Transport(
 }
 
 void HTTP2Transport::addObserver(std::shared_ptr<TransportObserverInterface> transportObserver) {
-    ACSDK_DEBUG5(LX(__func__).d("transportObserver", transportObserver.get()));
+    ACSDK_DEBUG7(LX(__func__).d("transportObserver", transportObserver.get()));
 
     if (!transportObserver) {
         ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
@@ -200,7 +200,7 @@ void HTTP2Transport::addObserver(std::shared_ptr<TransportObserverInterface> tra
 }
 
 void HTTP2Transport::removeObserver(std::shared_ptr<TransportObserverInterface> transportObserver) {
-    ACSDK_DEBUG5(LX(__func__).d("transportObserver", transportObserver.get()));
+    ACSDK_DEBUG7(LX(__func__).d("transportObserver", transportObserver.get()));
 
     if (!transportObserver) {
         ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
@@ -322,7 +322,7 @@ void HTTP2Transport::onAuthStateChange(
 }
 
 void HTTP2Transport::doShutdown() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     setState(State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
     disconnect();
     m_authDelegate->removeAuthObserver(shared_from_this());
@@ -336,12 +336,12 @@ void HTTP2Transport::doShutdown() {
 }
 
 void HTTP2Transport::onDownchannelConnected() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
     setState(State::POST_CONNECTING, ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
 }
 
 void HTTP2Transport::onDownchannelFinished() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -437,7 +437,7 @@ std::string HTTP2Transport::getEndpoint() {
 }
 
 void HTTP2Transport::mainLoop() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG7(LX(__func__));
 
     m_postConnect = m_postConnectFactory->createPostConnect();
     if (!m_postConnect || !m_postConnect->doPostConnect(shared_from_this())) {
@@ -471,6 +471,7 @@ void HTTP2Transport::mainLoop() {
                 break;
             case State::SERVER_SIDE_DISCONNECT:
                 nextState = handleServerSideDisconnect();
+                break;
             case State::DISCONNECTING:
                 nextState = handleDisconnecting();
                 break;
@@ -481,7 +482,7 @@ void HTTP2Transport::mainLoop() {
 
     handleShutdown();
 
-    ACSDK_DEBUG5(LX("mainLoopExiting"));
+    ACSDK_DEBUG7(LX("mainLoopExiting"));
 }
 
 HTTP2Transport::State HTTP2Transport::handleInit() {
@@ -540,7 +541,7 @@ HTTP2Transport::State HTTP2Transport::handleWaitingToRetryConnecting() {
     ACSDK_DEBUG7(LX(__func__));
 
     std::chrono::milliseconds timeout = TransportDefines::RETRY_TIMER.calculateTimeToRetry(m_connectRetryCount);
-    ACSDK_DEBUG5(
+    ACSDK_DEBUG7(
         LX("handleConnectingWaitingToRetry").d("connectRetryCount", m_connectRetryCount).d("timeout", timeout.count()));
     m_connectRetryCount++;
     std::unique_lock<std::mutex> lock(m_mutex);

@@ -12,14 +12,14 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "DefaultClient/DefaultClient.h"
 #include <ADSL/MessageInterpreter.h>
+#include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 #include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
+#include <SystemSoundPlayer/SystemSoundPlayer.h>
 
 #ifdef ENABLE_OPUS
 #include <SpeechEncoder/OpusEncoderContext.h>
@@ -39,15 +39,24 @@
 #include <PhoneCallController/PhoneCallController.h>
 #endif
 
+#ifdef ENABLE_MCC
+#include <AVSCommon/SDKInterfaces/Calendar/CalendarClientInterface.h>
+#include <AVSCommon/SDKInterfaces/Meeting/MeetingClientInterface.h>
+#include <MeetingClientController/MeetingClientController.h>
+#endif
+
 #if defined(ENABLE_MRM) && defined(ENABLE_MRM_STANDALONE_APP)
 #include <MRMHandler/MRMHandlerProxy.h>
 #elif ENABLE_MRM
 #include <MRMHandler/MRMHandler.h>
 #endif
 
-#include <Settings/SettingsUpdatedEventSender.h>
+#include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <System/EndpointHandler.h>
+#include <System/LocaleHandler.h>
+#include <System/ReportStateHandler.h>
 #include <System/SystemCapabilityProvider.h>
+#include <System/TimeZoneHandler.h>
 #include <System/UserInactivityMonitor.h>
 
 #ifdef BLUETOOTH_BLUEZ
@@ -55,10 +64,14 @@
 #include <Bluetooth/BluetoothAVRCPTransformer.h>
 #endif
 
+#include "DefaultClient/DefaultClient.h"
+#include "DefaultClient/DeviceSettingsManagerBuilder.h"
+
 namespace alexaClientSDK {
 namespace defaultClient {
 
-using namespace alexaClientSDK::avsCommon::sdkInterfaces;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("DefaultClient");
@@ -84,16 +97,23 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
 #ifdef ENABLE_PCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
+    std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -106,9 +126,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
-    std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
     std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
     std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -118,6 +138,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
@@ -135,16 +157,23 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             notificationsMediaPlayer,
             bluetoothMediaPlayer,
             ringtoneMediaPlayer,
+            systemSoundMediaPlayer,
             speakSpeaker,
             audioSpeaker,
             alertsSpeaker,
             notificationsSpeaker,
             bluetoothSpeaker,
             ringtoneSpeaker,
+            systemSoundSpeaker,
             additionalSpeakers,
 #ifdef ENABLE_PCC
             phoneSpeaker,
             phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+            meetingSpeaker,
+            meetingClient,
+            calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
             commsMediaPlayer,
@@ -157,9 +186,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             alertStorage,
             messageStorage,
             notificationsStorage,
-            settingsStorage,
             std::move(deviceSettingStorage),
             bluetoothStorage,
+            miscStorage,
             alexaDialogStateObservers,
             connectionObservers,
             internetConnectionMonitor,
@@ -167,6 +196,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             capabilitiesDelegate,
             contextManager,
             transportFactory,
+            localeAssetsManager,
+            systemTimezone,
             firmwareVersion,
             sendSoftwareInfoOnConnected,
             softwareInfoSenderObserver,
@@ -191,16 +222,23 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& additionalSpeakers,
 #ifdef ENABLE_PCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
+    std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -213,9 +251,9 @@ bool DefaultClient::initialize(
     std::shared_ptr<capabilityAgents::alerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<capabilityAgents::notifications::NotificationsStorageInterface> notificationsStorage,
-    std::shared_ptr<capabilityAgents::settings::SettingsStorageInterface> settingsStorage,
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
     std::shared_ptr<capabilityAgents::bluetooth::BluetoothStorageInterface> bluetoothStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -225,6 +263,8 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
@@ -264,6 +304,11 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    if (!systemSoundMediaPlayer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSystemSoundMediaPlayer"));
+        return false;
+    }
+
     if (!authDelegate) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAuthDelegate"));
         return false;
@@ -276,18 +321,6 @@ bool DefaultClient::initialize(
 
     if (!deviceSettingStorage) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullDeviceSettingStorage"));
-        return false;
-    }
-    m_deviceSettingStorage = deviceSettingStorage;
-    if (!m_deviceSettingStorage->open()) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "deviceSettingStorageOpenFailed"));
-        return false;
-    }
-
-    m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>();
-
-    if (!m_deviceSettingsManager) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "createDeviceSettingsManagerFailed"));
         return false;
     }
 
@@ -402,6 +435,46 @@ bool DefaultClient::initialize(
     m_registrationManager = std::make_shared<registrationManager::RegistrationManager>(
         m_directiveSequencer, m_connectionManager, customerDataManager);
 
+    m_deviceSettingStorage = deviceSettingStorage;
+    if (!m_deviceSettingStorage->open()) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "deviceSettingStorageOpenFailed"));
+        return false;
+    }
+
+    /*
+     * Creating the DoNotDisturb Capability Agent.
+     *
+     * TODO(ACSDK-2279): Keep this here till we can inject DND setting into the DND CA.
+     */
+    m_dndCapabilityAgent = capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent::create(
+        m_exceptionSender, m_connectionManager, m_deviceSettingStorage);
+
+    if (!m_dndCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDNDCapabilityAgent"));
+        return false;
+    }
+
+    addConnectionObserver(m_dndCapabilityAgent);
+
+    DeviceSettingsManagerBuilder settingsManagerBuilder{
+        m_deviceSettingStorage, m_connectionManager, m_connectionManager, customerDataManager};
+    settingsManagerBuilder.withDoNotDisturbSetting(m_dndCapabilityAgent)
+        .withWakeWordConfirmationSetting()
+        .withSpeechConfirmationSetting()
+        .withTimeZoneSetting(systemTimezone);
+
+    if (localeAssetsManager->getDefaultSupportedWakeWords().empty()) {
+        settingsManagerBuilder.withLocaleSetting(localeAssetsManager);
+    } else {
+        settingsManagerBuilder.withLocaleAndWakeWordsSettings(localeAssetsManager);
+    }
+
+    m_deviceSettingsManager = settingsManagerBuilder.build();
+    if (!m_deviceSettingsManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "createDeviceSettingsManagerFailed"));
+        return false;
+    }
+
     /*
      * Creating the Audio Activity Tracker - This component is responsibly for
      * reporting the audio channel focus
@@ -434,10 +507,17 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    m_systemSoundPlayer = applicationUtilities::systemSoundPlayer::SystemSoundPlayer::create(
+        systemSoundMediaPlayer, audioFactory->systemSounds());
+
+    auto wakeWordConfirmationSetting =
+        settingsManagerBuilder.getSetting<settings::DeviceSettingsIndex::WAKEWORD_CONFIRMATION>();
+    auto speechConfirmationSetting =
+        settingsManagerBuilder.getSetting<settings::DeviceSettingsIndex::SPEECH_CONFIRMATION>();
+    auto wakeWordsSetting = settingsManagerBuilder.getSetting<settings::DeviceSettingsIndex::WAKE_WORDS>();
 /*
  * Creating the Audio Input Processor - This component is the Capability Agent
- * that implements the
- * SpeechRecognizer interface of AVS.
+ * that implements the SpeechRecognizer interface of AVS.
  */
 #ifdef ENABLE_OPUS
     m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
@@ -448,6 +528,11 @@ bool DefaultClient::initialize(
         m_dialogUXStateAggregator,
         m_exceptionSender,
         m_userInactivityMonitor,
+        m_systemSoundPlayer,
+        localeAssetsManager,
+        wakeWordConfirmationSetting,
+        speechConfirmationSetting,
+        wakeWordsSetting,
         std::make_shared<speechencoder::SpeechEncoder>(std::make_shared<speechencoder::OpusEncoderContext>()));
 #else
     m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
@@ -457,7 +542,12 @@ bool DefaultClient::initialize(
         m_audioFocusManager,
         m_dialogUXStateAggregator,
         m_exceptionSender,
-        m_userInactivityMonitor);
+        m_userInactivityMonitor,
+        m_systemSoundPlayer,
+        localeAssetsManager,
+        wakeWordConfirmationSetting,
+        speechConfirmationSetting,
+        wakeWordsSetting);
 #endif
 
     if (!m_audioInputProcessor) {
@@ -526,11 +616,20 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
-        speakSpeaker, audioSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker};
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {speakSpeaker,
+                                                                                            audioSpeaker,
+                                                                                            alertsSpeaker,
+                                                                                            notificationsSpeaker,
+                                                                                            bluetoothSpeaker,
+                                                                                            ringtoneSpeaker,
+                                                                                            systemSoundSpeaker};
 
 #ifdef ENABLE_PCC
     allSpeakers.push_back(phoneSpeaker);
+#endif
+
+#ifdef ENABLE_MCC
+    allSpeakers.push_back(meetingSpeaker);
 #endif
 
 #ifdef ENABLE_COMMS_AUDIO_PROXY
@@ -551,6 +650,12 @@ bool DefaultClient::initialize(
         return false;
     }
 
+    auto alertRenderer = capabilityAgents::alerts::renderer::Renderer::create(alertsMediaPlayer);
+    if (!alertRenderer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlarmRenderer"));
+        return false;
+    }
+
     /*
      * Creating the Alerts Capability Agent - This component is the Capability
      * Agent that implements the Alerts
@@ -566,7 +671,7 @@ bool DefaultClient::initialize(
         m_exceptionSender,
         alertStorage,
         audioFactory->alerts(),
-        capabilityAgents::alerts::renderer::Renderer::create(alertsMediaPlayer),
+        alertRenderer,
         customerDataManager);
     if (!m_alertsCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlertsCapabilityAgent"));
@@ -618,6 +723,25 @@ bool DefaultClient::initialize(
     }
 #endif
 
+#ifdef ENABLE_MCC
+    /*
+     * Creating the MeetingClientController - This component is the Capability Agent that implements the
+     * MeetingClientController interface of AVS
+     */
+    m_meetingClientControllerCapabilityAgent =
+        capabilityAgents::meetingClientController::MeetingClientController::create(
+            contextManager,
+            m_connectionManager,
+            meetingClient,
+            calendarClient,
+            m_speakerManager,
+            m_audioFocusManager,
+            m_exceptionSender);
+    if (!m_meetingClientControllerCapabilityAgent) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateMeetingClientControllerCapabilityAgent"));
+    }
+#endif
+
 #ifdef ENABLE_COMMS
     if (!ringtoneMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
@@ -655,25 +779,6 @@ bool DefaultClient::initialize(
         commsMediaPlayer, commsSpeaker, acquireAudioInputStream, relinquishAudioInputStream);
     m_callManager->addObserver(m_callAudioDeviceProxy);
 #endif
-
-    std::shared_ptr<capabilityAgents::settings::SettingsUpdatedEventSender> settingsUpdatedEventSender =
-        alexaClientSDK::capabilityAgents::settings::SettingsUpdatedEventSender::create(m_certifiedSender);
-    if (!settingsUpdatedEventSender) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSettingsObserver"));
-        return false;
-    }
-
-    /*
-     * Creating the Setting object - This component implements the Setting
-     * interface of AVS.
-     */
-    m_settings = capabilityAgents::settings::Settings::create(
-        settingsStorage, {settingsUpdatedEventSender}, customerDataManager);
-
-    if (!m_settings) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSettingsObject"));
-        return false;
-    }
 
     /*
      * Creating the ExternalMediaPlayer CA - This component is the Capability
@@ -786,19 +891,6 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the DoNotDisturb Capability Agent
-     */
-    m_dndCapabilityAgent = capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent::create(
-        customerDataManager, m_exceptionSender, m_connectionManager, m_deviceSettingsManager, m_deviceSettingStorage);
-
-    if (!m_dndCapabilityAgent) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDNDCapabilityAgent"));
-        return false;
-    }
-
-    addConnectionObserver(m_dndCapabilityAgent);
-
-    /*
      * Creating the Equalizer Capability Agent and related implementations if
      * enabled
      */
@@ -843,8 +935,50 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Endpoint Handler - This component is responsible for handling
-     * directives from AVS instructing the
+     * Creating the TimeZone Handler - This component is responsible for handling directives related to time zones.
+     */
+    auto timezoneHandler = capabilityAgents::system::TimeZoneHandler::create(
+        settingsManagerBuilder.getSetting<settings::TIMEZONE>(), m_exceptionSender);
+    if (!timezoneHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTimeZoneHandler"));
+        return false;
+    }
+
+    /*
+     * Creating the Locale Handler - This component is responsible for handling directives related to locales.
+     */
+    auto localeHandler = capabilityAgents::system::LocaleHandler::create(
+        m_exceptionSender, settingsManagerBuilder.getSetting<settings::DeviceSettingsIndex::LOCALE>());
+    if (!localeHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateLocaleHandler"));
+        return false;
+    }
+
+    /*
+     * Creating the ReportState Handler - This component is responsible for the ReportState directives.
+     */
+    auto reportGenerator = capabilityAgents::system::StateReportGenerator::create(
+        m_deviceSettingsManager, settingsManagerBuilder.getConfigurations());
+    if (!reportGenerator.hasValue()) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateStateReportGenerator"));
+        return false;
+    }
+
+    std::vector<capabilityAgents::system::StateReportGenerator> reportGenerators{{reportGenerator.value()}};
+    auto reportStateHandler = capabilityAgents::system::ReportStateHandler::create(
+        customerDataManager,
+        m_exceptionSender,
+        m_connectionManager,
+        m_connectionManager,
+        miscStorage,
+        reportGenerators);
+    if (!reportStateHandler) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateReportStateHandler"));
+        return false;
+    }
+
+    /*
+     * Creating the Endpoint Handler - This component is responsible for handling directives from AVS instructing the
      * client to change the endpoint to connect to.
      */
     auto endpointHandler = capabilityAgents::system::EndpointHandler::create(m_connectionManager, m_exceptionSender);
@@ -858,7 +992,7 @@ bool DefaultClient::initialize(
      * publishing information about the System
      * capability agent.
      */
-    auto systemCapabilityProvider = capabilityAgents::system::SystemCapabilityProvider::create();
+    auto systemCapabilityProvider = capabilityAgents::system::SystemCapabilityProvider::create(localeAssetsManager);
     if (!systemCapabilityProvider) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSystemCapabilityProvider"));
         return false;
@@ -975,10 +1109,41 @@ bool DefaultClient::initialize(
     }
 #endif
 
+#ifdef ENABLE_MCC
+    if (m_meetingClientControllerCapabilityAgent &&
+        !m_directiveSequencer->addDirectiveHandler(m_meetingClientControllerCapabilityAgent)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "MeetingClientControllerCapabilityAgent"));
+        return false;
+    }
+#endif
+
     if (!m_directiveSequencer->addDirectiveHandler(endpointHandler)) {
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "unableToRegisterDirectiveHandler")
                         .d("directiveHandler", "EndpointHandler"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(std::move(localeHandler))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "LocaleHandler"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(std::move(timezoneHandler))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "TimezoneHandler"));
+        return false;
+    }
+
+    if (!m_directiveSequencer->addDirectiveHandler(std::move(reportStateHandler))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterDirectiveHandler")
+                        .d("directiveHandler", "ReportStateHandler"));
         return false;
     }
 
@@ -1127,11 +1292,16 @@ bool DefaultClient::initialize(
     }
 #endif
 
-    if (!(capabilitiesDelegate->registerCapability(m_settings))) {
-        ACSDK_ERROR(
-            LX("initializeFailed").d("reason", "unableToRegisterCapability").d("capabilitiesDelegate", "Settings"));
+#ifdef ENABLE_MCC
+    // MeetingClientController is an optional component, so it may be nullptr
+    if (m_meetingClientControllerCapabilityAgent &&
+        !(capabilitiesDelegate->registerCapability(m_meetingClientControllerCapabilityAgent))) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "unableToRegisterCapability")
+                        .d("capabilitiesDelegate", "MeetingClientController"));
         return false;
     }
+#endif
 
     if (!(capabilitiesDelegate->registerCapability(m_speakerManager))) {
         ACSDK_ERROR(
@@ -1335,18 +1505,6 @@ void DefaultClient::TemplateRuntimeDisplayCardCleared() {
     m_templateRuntime->displayCardCleared();
 }
 
-void DefaultClient::addSettingObserver(
-    const std::string& key,
-    std::shared_ptr<avsCommon::sdkInterfaces::SingleSettingObserverInterface> observer) {
-    m_settings->addSingleSettingObserver(key, observer);
-}
-
-void DefaultClient::removeSettingObserver(
-    const std::string& key,
-    std::shared_ptr<avsCommon::sdkInterfaces::SingleSettingObserverInterface> observer) {
-    m_settings->removeSingleSettingObserver(key, observer);
-}
-
 void DefaultClient::addNotificationsObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::NotificationsObserverInterface> observer) {
     m_notificationsCapabilityAgent->addObserver(observer);
@@ -1404,14 +1562,6 @@ void DefaultClient::removeRevokeAuthorizationObserver(
 }
 #endif
 
-void DefaultClient::changeSetting(const std::string& key, const std::string& value) {
-    m_settings->changeSetting(key, value);
-}
-
-void DefaultClient::sendDefaultSettings() {
-    m_settings->sendDefaultSettings();
-}
-
 std::shared_ptr<settings::DeviceSettingsManager> DefaultClient::getSettingsManager() {
     return m_deviceSettingsManager;
 }
@@ -1467,7 +1617,6 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
     avsCommon::avs::AudioInputStream::Index endIndex,
     std::string keyword,
     std::chrono::steady_clock::time_point startOfSpeechTimestamp,
-    const capabilityAgents::aip::ESPData espData,
     std::shared_ptr<const std::vector<char>> KWDMetadata) {
     ACSDK_DEBUG5(LX(__func__).d("keyword", keyword).d("connected", m_connectionManager->isConnected()));
 
@@ -1498,7 +1647,6 @@ std::future<bool> DefaultClient::notifyOfWakeWord(
         beginIndex,
         endIndex,
         keyword,
-        espData,
         KWDMetadata);
 }
 
@@ -1649,6 +1797,12 @@ DefaultClient::~DefaultClient() {
     if (m_phoneCallControllerCapabilityAgent) {
         ACSDK_DEBUG5(LX("PhoneCallControllerCapabilityAgentShutdown"));
         m_phoneCallControllerCapabilityAgent->shutdown();
+    }
+#endif
+#ifdef ENABLE_MCC
+    if (m_meetingClientControllerCapabilityAgent) {
+        ACSDK_DEBUG5(LX("MeetingClientControllerCapabilityAgentShutdown"));
+        m_meetingClientControllerCapabilityAgent->shutdown();
     }
 #endif
     if (m_dndCapabilityAgent) {

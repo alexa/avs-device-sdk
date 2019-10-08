@@ -418,6 +418,132 @@ TEST_F(JSONUtilTest, test_convertToBoolValueWithBool) {
     ASSERT_EQ(expected.GetBool(), actual);
 }
 
+/**
+ * Test convert to string set with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArraySucceed) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"(["ONE","TWO"])");
+    ASSERT_EQ(entries.size(), 2u);
+    ASSERT_NE(entries.find("ONE"), entries.end());
+    ASSERT_NE(entries.find("TWO"), entries.end());
+}
+
+/**
+ * Test convert to string set with empty entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayEmpty) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"([])");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayNonArray) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":"value"})");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with invalid json.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayNonJson) {
+    auto entries = retrieveStringArray<std::set<std::string>>("Not json");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with an array with elements that are not string.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayWithNonStringArrayFails) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"([true,1])");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with empty set.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonStringFromEmptySet) {
+    auto jsonString = convertToJsonString<std::set<std::string>>(std::set<std::string>());
+    ASSERT_EQ(jsonString, std::string("[]"));
+}
+
+/**
+ * Test convert to string set with non-empty set.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonStringFromStringSet) {
+    auto jsonString = convertToJsonString<std::set<std::string>>(std::set<std::string>({"ONE", "TWO"}));
+    ASSERT_EQ(jsonString, std::string(R"(["ONE","TWO"])"));
+}
+
+/**
+ * Test convert to json list with non-empty string vector.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonFromStringVector) {
+    auto jsonString = convertToJsonString<std::vector<std::string>>(std::vector<std::string>({"ONE", "TWO", "THREE"}));
+    ASSERT_EQ(jsonString, std::string(R"(["ONE","TWO","THREE"])"));
+}
+
+/**
+ * Test convert to string set with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":["ONE","TWO"]})", key);
+    ASSERT_EQ(entries.size(), 2u);
+    EXPECT_NE(entries.find("ONE"), entries.end());
+    EXPECT_NE(entries.find("TWO"), entries.end());
+}
+
+/**
+ * Test convert to string set with mix of string and non-strings entries.
+ */
+TEST_F(JSONUtilTest, test_retrieveMixStringNonStringElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":["ONE",2]})", key);
+    ASSERT_EQ(entries.size(), 1u);
+    EXPECT_NE(entries.find("ONE"), entries.end());
+}
+
+/**
+ * Test convert to string set with empty entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyEmptyArray) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":[]})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyNonArray) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":"value"})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyMissing) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"anotherKey":"value"})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string array with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayOfElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::vector<std::string>>(R"({"key":["ONE","TWO","THREE"]})", key);
+    ASSERT_EQ(entries.size(), 3u);
+    EXPECT_EQ(entries[0], std::string("ONE"));
+    EXPECT_EQ(entries[1], std::string("TWO"));
+    EXPECT_EQ(entries[2], std::string("THREE"));
+}
+
 }  // namespace test
 }  // namespace json
 }  // namespace utils

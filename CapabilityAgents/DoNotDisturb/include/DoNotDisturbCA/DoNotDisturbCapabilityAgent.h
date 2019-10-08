@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,10 +31,9 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
-#include <RegistrationManager/CustomerDataHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 #include <Settings/DeviceSettingsManager.h>
+#include <Settings/SettingEventMetadata.h>
 #include <Settings/SettingEventSenderInterface.h>
 #include <Settings/Setting.h>
 
@@ -55,7 +54,6 @@ class DoNotDisturbCapabilityAgent
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::utils::RequiresShutdown
-        , public registrationManager::CustomerDataHandler
         , public settings::SettingEventSenderInterface {
 public:
     /**
@@ -66,18 +64,14 @@ public:
     /**
      * Factory method to create a capability agent instance.
      *
-     * @param customerDataManager Component to register Capability Agent as customer data container (equalizer state).
      * @param exceptionEncounteredSender Interface to report exceptions to AVS.
      * @param messageSender Interface to send events to AVS.
-     * @param settingsManager A settingsManager object that manages do not disturb setting.
      * @param settingsStorage The storage interface that will be used to store device settings.
      * @return A new instance of @c DoNotDisturbCapabilityAgent on success, @c nullptr otherwise.
      */
     static std::shared_ptr<DoNotDisturbCapabilityAgent> create(
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage);
 
     /// @name CapabilityAgent Functions
@@ -99,15 +93,12 @@ public:
     void doShutdown() override;
     /// @}
 
-    /// @name CustomerDataHandler Functions
-    /// @{
-    void clearData() override;
-    /// @}
-
     /// @name SettingEventSenderInterface Functions
     /// @{
     std::shared_future<bool> sendChangedEvent(const std::string& value) override;
     std::shared_future<bool> sendReportEvent(const std::string& value) override;
+    std::shared_future<bool> sendStateReportEvent(const std::string& payload) override;
+    void cancel() override;
     /// @}
 
     /// @name ConnectionStatusObserverInterface Functions
@@ -115,26 +106,36 @@ public:
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
     /// @}
 
+    /**
+     * Get DND Setting.
+     *
+     * @todo ACSDK-2279: Change DND to use a setting protocol. For now, expose the setting.
+     */
+    std::shared_ptr<settings::DoNotDisturbSetting> getDoNotDisturbSetting() const;
+
+    /**
+     * Gets the do not disturb events metadata.
+     *
+     * @return The do not disturb events metadata.
+     */
+    static settings::SettingEventMetadata getDoNotDisturbEventsMetadata();
+
 private:
     /**
      * Constructor.
      *
-     * @param customerDataManager Component to register Capability Agent as customer data container (equalizer state).
      * @param exceptionEncounteredSender Interface to report exceptions to AVS.
      * @param messageSender Interface to send events to AVS.
-     * @param settingsManager A settingsManager object that manages do not disturb setting.
      */
     DoNotDisturbCapabilityAgent(
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
 
     /**
      * Method to initialize the new instance of the capability agent.
      *
      * @param settingsStorage The storage interface that will be used to store device settings.
-     * @return True on succes, false otherwise.
+     * @return True on success, false otherwise.
      */
     bool initialize(std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage);
 
@@ -172,14 +173,8 @@ private:
     /// The @c MessageSenderInterface used to send event messages.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
-    /// The device settings manager object.
-    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
-
     /// The do not disturb mode setting.
     std::shared_ptr<settings::Setting<bool>> m_dndModeSetting;
-
-    /// The storage interface that will be used to store device settings.
-    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> m_settingsStorage;
 
     /**
      * Flag indicating latest reported connection status. True if SDK is connected to the AVS and ready,

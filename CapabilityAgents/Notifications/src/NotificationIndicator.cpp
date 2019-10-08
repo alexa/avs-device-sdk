@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ namespace notifications {
 NotificationIndicator::NotificationIndicator() :
         persistVisualIndicator{false},
         playAudioIndicator{false},
-        asset{/*.assetId =*/"", /*.url =*/""} {
+        asset{"", ""} {
 }
 
 NotificationIndicator::NotificationIndicator(
@@ -32,7 +32,7 @@ NotificationIndicator::NotificationIndicator(
     const std::string& url) :
         persistVisualIndicator{persistVisualIndicator},
         playAudioIndicator{playAudioIndicator},
-        asset{.assetId = assetId, .url = url} {
+        asset{assetId, url} {
 }
 
 }  // namespace notifications

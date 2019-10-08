@@ -202,6 +202,9 @@ private:
     /// The @c MediaPlayer used by @c Bluetooth.
     std::shared_ptr<ApplicationMediaPlayer> m_bluetoothMediaPlayer;
 
+    /// The @c MediaPlayer used by @c SystemSoundPlayer.
+    std::shared_ptr<ApplicationMediaPlayer> m_systemSoundMediaPlayer;
+
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     /// The @c MediaPlayer used by @c Comms.
     std::shared_ptr<ApplicationMediaPlayer> m_commsMediaPlayer;

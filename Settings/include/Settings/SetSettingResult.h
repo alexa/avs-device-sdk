@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 #ifndef ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_SETSETTINGRESULT_H_
 #define ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_SETSETTINGRESULT_H_
 
+#include <ostream>
+
 /**
  * Enumerates possible return values for set settings functions.
  */
@@ -26,10 +28,50 @@ enum class SetSettingResult {
     /// The request failed because there is already a value change in process and the setter requested change
     /// to abort if busy.
     BUSY,
-    /// The request was failed because the setting requested does not exist.
+    /// The request failed because the setting requested does not exist.
     UNAVAILABLE_SETTING,
+    /// The request failed because the value requested is invalid.
+    INVALID_VALUE,
     /// The request failed due to some internal error.
-    INTERNAL_ERROR
+    INTERNAL_ERROR,
+    /// The request is not supported.
+    UNSUPPORTED_OPERATION
 };
+
+/**
+ * Write a @c SetSettingResult value to the given stream.
+ *
+ * @param stream The stream to write the value to.
+ * @param value The value to write to the stream as a string.
+ * @return The stream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const SetSettingResult& value) {
+    switch (value) {
+        case SetSettingResult::NO_CHANGE:
+            stream << "NO_CHANGE";
+            return stream;
+        case SetSettingResult::ENQUEUED:
+            stream << "ENQUEUED";
+            return stream;
+        case SetSettingResult::BUSY:
+            stream << "BUSY";
+            return stream;
+        case SetSettingResult::UNAVAILABLE_SETTING:
+            stream << "UNAVAILABLE_SETTING";
+            return stream;
+        case SetSettingResult::INVALID_VALUE:
+            stream << "INVALID_VALUE";
+            return stream;
+        case SetSettingResult::INTERNAL_ERROR:
+            stream << "INTERNAL_ERROR";
+            return stream;
+        case SetSettingResult::UNSUPPORTED_OPERATION:
+            stream << "UNSUPPORTED_OPERATION";
+            return stream;
+    }
+
+    stream.setstate(std::ios_base::failbit);
+    return stream;
+}
 
 #endif  // ALEXA_CLIENT_SDK_SETTINGS_INCLUDE_SETTINGS_SETSETTINGRESULT_H_

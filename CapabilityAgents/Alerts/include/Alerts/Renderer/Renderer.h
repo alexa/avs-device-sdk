@@ -208,8 +208,10 @@ private:
      * Implements the pause between playback loops
      *
      * @param duration The duration the pause should be for.  Must be a positive value.
+     * @return @c true if the pause completed succesfully. Returns @c false if the pause
+     * was interrupted by a user action or the duration was less than or equal to 0.
      */
-    void pause(std::chrono::milliseconds duration);
+    bool pause(std::chrono::milliseconds duration);
 
     /**
      * Implements the playback of the audio source
@@ -221,10 +223,13 @@ private:
      * m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render, this
      * function will also perform a sleep for the @c m_loopPause duration.
      *
+     * @param pauseInterruptedOut A return value parameter. If there are no more audio assets to render because
+     * a pause during the render loop was interrupted, the boolean pointed to will be set to true. Otherwise it
+     * will be set to false.
      * @return @c true if there are more audio assets to render, and the next one has been successfully sent to the @c
      * m_mediaPlayer to be played.  Returns @c false otherwise.
      */
-    bool renderNextAudioAsset();
+    bool renderNextAudioAsset(bool* pauseInterruptedOut = nullptr);
 
     /**
      * Utility function to handle all aspects of an error occurring.  The sourceId is reset, the observer is notified
@@ -278,9 +283,6 @@ private:
     /// A flag to capture if the renderer has been asked to stop by its owner. @c m_waitMutex must be locked when
     /// modifying this variable.
     bool m_isStopping;
-
-    /// A flag to indicate if last pause was interrupted and is not expected to continue.
-    bool m_pauseWasInterrupted;
 
     /// A flag to indicate that renderer is going to start playing a new asset once the old one is stopped.
     bool m_isStartPending;

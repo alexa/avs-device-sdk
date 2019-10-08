@@ -37,6 +37,9 @@ static const std::string KEY = "key";
 /// The value used to initialize the hello object.
 static const std::string INIT_VALUE = "value";
 
+/// Represents an empty json list.
+static const std::string EMPTY_JSON_LIST = "[]";
+
 /**
  * Define an enumeration for testing string conversion.
  */
@@ -209,6 +212,26 @@ TEST(SettingStringConversionTest, test_fromClass) {
 
     // Invalid conversion
     EXPECT_EQ(fromSettingString<HelloClass>("invalid json", HelloClass()), std::make_pair(false, HelloClass()));
+}
+
+TEST(SettingStringConversionTest, test_toStringSet) {
+    std::set<std::string> emptySet;
+    EXPECT_EQ(toSettingString<std::set<std::string>>(emptySet), expected(true, EMPTY_JSON_LIST));
+
+    std::set<std::string> twoElements{"hello", "there"};
+    EXPECT_EQ(toSettingString<std::set<std::string>>(twoElements), expected(true, R"(["hello","there"])"));
+}
+
+TEST(SettingStringConversionTest, test_fromStringSet) {
+    std::set<std::string> emptySet;
+    std::set<std::string> twoElements{"hello", "there"};
+    EXPECT_EQ(fromSettingString<std::set<std::string>>(EMPTY_JSON_LIST, twoElements), std::make_pair(true, emptySet));
+    EXPECT_EQ(
+        fromSettingString<std::set<std::string>>(R"(["hello","there"])", emptySet), std::make_pair(true, twoElements));
+
+    // Invalid conversions.
+    EXPECT_EQ(fromSettingString<std::set<std::string>>("", twoElements), std::make_pair(false, twoElements));
+    EXPECT_EQ(fromSettingString<std::set<std::string>>("[", twoElements), std::make_pair(false, twoElements));
 }
 
 }  // namespace test

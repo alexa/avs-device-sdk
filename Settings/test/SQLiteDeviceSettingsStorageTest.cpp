@@ -45,10 +45,8 @@ static const std::string PATH_DELIMITER = "/";
 /// Test Database file path. Initialized at @c main().
 static std::string testDatabase;
 
-// clang-format off
 /// Test configuration JSON. Initialized at @c main().
 static std::string deviceSettingJSON;
-// clang-format on
 
 /// Error message for when the file already exists.
 static std::string fileExistError;
@@ -74,7 +72,8 @@ public:
 
 protected:
     /// Open dataabse;
-    void openDB();
+    /// @return @c true if it succeed; @c false otherwise.
+    bool openDB();
 
     /// Cleanup function to close.
     void closeDB();
@@ -90,10 +89,11 @@ void SQLiteDeviceSettingsStorageTest::closeDB() {
     m_db.reset();
 }
 
-void SQLiteDeviceSettingsStorageTest::openDB() {
+bool SQLiteDeviceSettingsStorageTest::openDB() {
     m_db = SQLiteDeviceSettingStorage::create(ConfigurationNode::getRoot());
-    ASSERT_THAT(m_db, NotNull());
-    ASSERT_TRUE(m_db->open());
+    EXPECT_THAT(m_db, NotNull());
+    EXPECT_TRUE(m_db && m_db->open());
+    return !Test::HasFailure();
 }
 
 void SQLiteDeviceSettingsStorageTest::SetUp() {
@@ -171,6 +171,60 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_insertUpdateSettingValue) {
 }
 
 /**
+ * Test that create an entry with non escaped key works.
+ */
+TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringKey) {
+    const std::string key = R"(non-escaped'\%$#*?!`"key)";
+    const std::string value = "value2";
+    const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
+    DeviceSettingStorageInterface::SettingStatusAndValue loadedValue;
+
+    // Open the database.
+    ASSERT_TRUE(openDB());
+
+    // Check if store succeeds.
+    EXPECT_TRUE(m_db->storeSetting(key, value, localStatus));
+
+    loadedValue = m_db->loadSetting(key);
+    EXPECT_EQ(loadedValue.first, localStatus);
+    EXPECT_EQ(loadedValue.second, value);
+}
+
+/**
+ * Test that create an entry with non escaped characters works.
+ */
+TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringValue) {
+    const std::string key = "key";
+    const std::string value = R"(non-escaped'\%$#*?!`"chars)";
+    const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
+    DeviceSettingStorageInterface::SettingStatusAndValue loadedValue;
+
+    // Open the database.
+    ASSERT_TRUE(openDB());
+
+    // Check if store succeeds.
+    EXPECT_TRUE(m_db->storeSetting(key, value, localStatus));
+
+    loadedValue = m_db->loadSetting(key);
+    EXPECT_EQ(loadedValue.first, localStatus);
+    EXPECT_EQ(loadedValue.second, value);
+}
+
+/**
+ * Test that delete an entry with non escaped key works.
+ */
+TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSettingWithNonEscapedStringKey) {
+    const std::string key = R"(non-escaped'\%$#*?!`"key)";
+
+    // Open the database and add an entry with the given key.
+    ASSERT_TRUE(openDB());
+    ASSERT_TRUE(m_db->storeSetting(key, "value", SettingStatus::NOT_AVAILABLE));
+
+    // Check if delete succeeds.
+    EXPECT_TRUE(m_db->deleteSetting(key));
+}
+
+/**
  * Test removing an entry from the database.
  */
 TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSetting) {
@@ -198,6 +252,47 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSetting) {
     // Try to retrieve the setting.
     loadedValue = m_db->loadSetting(key);
     ASSERT_EQ(loadedValue.first, SettingStatus::NOT_AVAILABLE);
+}
+
+/**
+ * Test replace values of multiple rows.
+ */
+TEST_F(SQLiteDeviceSettingsStorageTest, test_replaceMultipleEntries) {
+    const std::string key = "AAAA";
+    const std::string key2 = "KKKK";
+    const std::string value1 = "BBBBB";
+    const std::string value2 = "CCCCC";
+    const std::string value3 = "DDDDD";
+    const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
+    const SettingStatus notAvailableStatus = SettingStatus::NOT_AVAILABLE;
+    DeviceSettingStorageInterface::SettingStatusAndValue loadedValue;
+
+    // Open the database.
+    openDB();
+
+    // Try loading a non-existent key.
+    loadedValue = m_db->loadSetting(key);
+    ASSERT_EQ(loadedValue.first, SettingStatus::NOT_AVAILABLE);
+
+    // Store some values.
+    // key = value1, localStatus
+    // key2 = value1, localStatus
+    ASSERT_TRUE(m_db->storeSetting(key, value1, localStatus));
+    ASSERT_TRUE(m_db->storeSetting(key2, value1, localStatus));
+
+    // Now do multiple replace
+    const std::vector<std::tuple<std::string, std::string, SettingStatus>> newData = {
+        {std::make_tuple(key, value2, notAvailableStatus)}, {std::make_tuple(key2, value3, notAvailableStatus)}};
+
+    m_db->storeSettings(newData);
+
+    loadedValue = m_db->loadSetting(key);
+    ASSERT_EQ(loadedValue.first, notAvailableStatus);
+    ASSERT_EQ(loadedValue.second, value2);
+
+    loadedValue = m_db->loadSetting(key2);
+    ASSERT_EQ(loadedValue.first, notAvailableStatus);
+    ASSERT_EQ(loadedValue.second, value3);
 }
 
 }  // namespace test

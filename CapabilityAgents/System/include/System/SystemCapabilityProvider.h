@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <memory>
 
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -32,8 +33,11 @@ class SystemCapabilityProvider : public avsCommon::sdkInterfaces::CapabilityConf
 public:
     /**
      * Create an instance of @c SystemCapabilityProvider.
+     *
+     * @param localeAssetsManager The locale assets manager that provides supported locales.
      */
-    static std::shared_ptr<SystemCapabilityProvider> create();
+    static std::shared_ptr<SystemCapabilityProvider> create(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager);
 
     /// @name CapabilityConfigurationInterface Functions
     /// @{
@@ -43,8 +47,11 @@ public:
 private:
     /**
      * Constructor.
+     *
+     * @param localeAssetsManager The locale assets manager that provides supported locales.
      */
-    SystemCapabilityProvider();
+    SystemCapabilityProvider(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager);
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
