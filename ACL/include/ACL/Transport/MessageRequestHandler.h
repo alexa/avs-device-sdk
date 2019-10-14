@@ -88,6 +88,7 @@ private:
     std::vector<std::string> getRequestHeaderLines() override;
     avsCommon::utils::http2::HTTP2GetMimeHeadersResult getMimePartHeaderLines() override;
     avsCommon::utils::http2::HTTP2SendDataResult onSendMimePartData(char* bytes, size_t size) override;
+    int seek(int64_t offset, int origin) override;
     /// @}
 
     /// @name MimeResponseStatusHandlerInterface

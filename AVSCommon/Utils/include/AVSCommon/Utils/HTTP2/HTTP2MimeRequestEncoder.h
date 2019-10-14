@@ -52,6 +52,7 @@ public:
     /// @name HTTP2RequestSourceInterface methods.
     /// @{
     HTTP2SendDataResult onSendData(char* bytes, size_t size) override;
+    int seek(int64_t offset, int origin) override;
     std::vector<std::string> getRequestHeaderLines() override;
     /// @}
 

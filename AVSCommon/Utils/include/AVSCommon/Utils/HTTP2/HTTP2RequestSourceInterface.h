@@ -59,6 +59,15 @@ public:
      * @return Result indicating the disposition of the operation and number of bytes copied.  @see HTTPSendDataResult.
      */
     virtual HTTP2SendDataResult onSendData(char* bytes, size_t size) = 0;
+
+    /**
+     * Seeks the current data source
+     *
+     * @param offset number of bytes to seek
+     * @param origin SEEK_SET, SEEK_CUR or SEEK_END
+     * @return 0, indicating success, 1, indicating failure, or 2 indicating unable to seek
+     */
+    virtual int seek(int64_t offset, int origin) = 0;
 };
 
 }  // namespace http2

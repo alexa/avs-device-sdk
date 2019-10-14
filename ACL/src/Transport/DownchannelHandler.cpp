@@ -93,6 +93,11 @@ HTTP2SendDataResult DownchannelHandler::onSendData(char* bytes, size_t size) {
     return HTTP2SendDataResult::COMPLETE;
 }
 
+int DownchannelHandler::seek(int64_t offset, int origin) {
+    ACSDK_DEBUG9(LX(__func__).d("offset", offset).d("origin", origin));
+    return 0; // OK_SUCCESS
+}
+
 DownchannelHandler::DownchannelHandler(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken) :

@@ -239,6 +239,11 @@ HTTP2SendDataResult HTTP2MimeRequestEncoder::onSendData(char* bytes, size_t size
     }
 }
 
+int HTTP2MimeRequestEncoder::seek(int64_t offset, int origin) {
+    ACSDK_DEBUG9(LX(__func__).d("offset", offset).d("origin", origin));
+    return m_source->seek(offset, origin);
+}
+
 std::vector<std::string> HTTP2MimeRequestEncoder::getRequestHeaderLines() {
     ACSDK_DEBUG9(LX(__func__));
     if (m_source) {

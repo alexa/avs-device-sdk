@@ -106,6 +106,11 @@ HTTP2SendDataResult PingHandler::onSendData(char* bytes, size_t size) {
     return HTTP2SendDataResult::COMPLETE;
 }
 
+int PingHandler::seek(int64_t offset, int origin) {
+    ACSDK_DEBUG9(LX(__func__).d("offset", offset).d("origin", origin));
+    return 0; // OK_SUCCESS
+}
+
 bool PingHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
 

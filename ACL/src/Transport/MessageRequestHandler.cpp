@@ -236,6 +236,30 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
     return HTTP2SendDataResult::ABORT;
 }
 
+int MessageRequestHandler::seek(int64_t offset, int origin) {
+    ACSDK_INFO(LX(__func__).d("offset", "offset").d("origin", origin));
+    if (offset < 0) {
+        ACSDK_WARN(LX(__func__).m("Cannot seek to negative value"));
+        return 2; // Can't seek
+    }
+    bool success = false;
+    switch (origin) {
+        case SEEK_SET:
+            success = m_namedReader->reader->seek(offset);
+            break;
+        default:
+            return 2; // Can't seek
+    }
+
+    if (success) {
+        ACSDK_DEBUG9(LX(__func__).m("Seek Succeeded!"));
+        return 0; // Seek succeeded
+    } else {
+        ACSDK_DEBUG9(LX(__func__).m("Seek Failed"));
+        return 1; // Seek failed
+    }
+}
+
 void MessageRequestHandler::onActivity() {
     m_context->onActivity();
 }

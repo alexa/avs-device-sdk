@@ -117,6 +117,18 @@ size_t LibcurlHTTP2Request::readCallback(char* data, size_t size, size_t nmemb, 
     return CURL_READFUNC_ABORT;
 }
 
+int LibcurlHTTP2Request::seekCallback(void *userData, curl_off_t offset, int origin) {
+    if (!userData) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullUserData"));
+        return CURL_SEEKFUNC_FAIL;
+    }
+
+    LibcurlHTTP2Request* stream = static_cast<LibcurlHTTP2Request*>(userData);
+    ACSDK_DEBUG9(LX(__func__).d("id", stream->getId()).d("offset", offset).d("origin", origin));
+
+    return stream->m_source->seek(offset, origin);
+}
+
 long LibcurlHTTP2Request::getResponseCode() {
     long responseCode = 0;
     CURLcode ret = curl_easy_getinfo(m_stream.getCurlHandle(), CURLINFO_RESPONSE_CODE, &responseCode);
@@ -152,6 +164,7 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
         case HTTP2RequestType::POST:
             curl_easy_setopt(m_stream.getCurlHandle(), CURLOPT_POST, 1L);
             m_stream.setReadCallback(LibcurlHTTP2Request::readCallback, this);
+            m_stream.setSeekCallback(LibcurlHTTP2Request::seekCallback, this);
             break;
     }
     m_stream.setURL(config.getUrl());

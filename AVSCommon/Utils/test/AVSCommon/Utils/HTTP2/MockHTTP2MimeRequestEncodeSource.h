@@ -44,6 +44,7 @@ public:
     /// @{
     HTTP2GetMimeHeadersResult getMimePartHeaderLines() override;
     HTTP2SendDataResult onSendMimePartData(char* bytes, size_t size) override;
+    int seek(int64_t offset, int origin) override;
     std::vector<std::string> getRequestHeaderLines() override;
     /// @}
 
