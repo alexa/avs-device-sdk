@@ -117,6 +117,35 @@ size_t LibcurlHTTP2Request::readCallback(char* data, size_t size, size_t nmemb, 
     return CURL_READFUNC_ABORT;
 }
 
+int LibcurlHTTP2Request::seekCallback(void *userData, curl_off_t offset, int origin) {
+    if (!userData) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullUserData"));
+        return CURL_SEEKFUNC_CANTSEEK;
+    }
+
+    LibcurlHTTP2Request* stream = static_cast<LibcurlHTTP2Request*>(userData);
+    ACSDK_DEBUG9(LX(__func__).d("id", stream->getId()).d("offset", offset).d("origin", origin));
+
+    if (offset != 0 || origin != SEEK_SET) {
+        // According the CURL documentation,
+        // they will only ever send `SEEK_SET`
+        // If they send something else, bail
+        //
+        // Our rewind function only supports rewinding
+        // to a specific index. In practice
+        // curl only sends 0. If they don't,
+        // that's unexpected and let's bail early
+        ACSDK_INFO(LX(__func__).m("seekFailed. Invalid offset/origin."));
+        return CURL_SEEKFUNC_CANTSEEK;
+    }
+
+    if (stream->m_source->rewindData()) {
+        return CURL_SEEKFUNC_OK;
+    } else {
+        return CURL_SEEKFUNC_FAIL;
+    }
+}
+
 long LibcurlHTTP2Request::getResponseCode() {
     long responseCode = 0;
     CURLcode ret = curl_easy_getinfo(m_stream.getCurlHandle(), CURLINFO_RESPONSE_CODE, &responseCode);
@@ -152,6 +181,7 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
         case HTTP2RequestType::POST:
             curl_easy_setopt(m_stream.getCurlHandle(), CURLOPT_POST, 1L);
             m_stream.setReadCallback(LibcurlHTTP2Request::readCallback, this);
+            m_stream.setSeekCallback(LibcurlHTTP2Request::seekCallback, this);
             break;
     }
     m_stream.setURL(config.getUrl());

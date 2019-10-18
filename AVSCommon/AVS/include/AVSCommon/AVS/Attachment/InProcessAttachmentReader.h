@@ -74,6 +74,8 @@ public:
 
     bool seek(uint64_t offset) override;
 
+    bool seekRelativeBytes(int64_t offsetInBytes) override;
+
     uint64_t getNumUnreadBytes() override;
 
 private:

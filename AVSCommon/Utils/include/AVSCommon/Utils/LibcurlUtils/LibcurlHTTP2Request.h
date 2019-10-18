@@ -149,6 +149,20 @@ private:
     static size_t readCallback(char* data, size_t size, size_t nmemb, void* userData);
 
     /**
+     * Callback that gets executed when curl needs to retry sending data
+     *
+     * @see CurlEasyHandleWrapper::CurlSeekCallback for details
+     * The function shall work like fseek(3) or lseek(3) and it gets SEEK_SET, SEEK_CUR or SEEK_END as argument for
+     * origin, although libcurl currently only passes SEEK_SET.
+     *
+     * @param userData  Context passed back from @c libcurl.  Should always be a pointer to @c LibcurlHTTP2Request.
+     * @param offset Absolute index if `SEEK_SET`. Relative delta if `SEEK_CUR` or `SEEK_END`
+     * @param origin always SEEK_SET from <stdio.h>
+     * @return CURL_SEEKFUNC_OK(0) for success, CURL_SEEKFUNC_FAIL(1) for fail, CURL_SEEKFUNC_CANTSEEK(2) for can't seek
+     */
+    static int seekCallback(void *userData, curl_off_t offset, int origin);
+
+    /**
      * Returns the HTTP response code to this request.
      *
      * @returns The HTTP response code if one has been received, 0 if not, and < 0 if there is an error

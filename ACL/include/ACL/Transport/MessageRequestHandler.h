@@ -88,6 +88,7 @@ private:
     std::vector<std::string> getRequestHeaderLines() override;
     avsCommon::utils::http2::HTTP2GetMimeHeadersResult getMimePartHeaderLines() override;
     avsCommon::utils::http2::HTTP2SendDataResult onSendMimePartData(char* bytes, size_t size) override;
+    bool rewindData() override;
     /// @}
 
     /// @name MimeResponseStatusHandlerInterface
@@ -124,6 +125,9 @@ private:
 
     /// Response code received through @c onReciveResponseCode (or zero).
     long m_responseCode;
+
+    /// Number of bytes read from the attachment
+    int64_t m_bytesReadFromAttachmentReader;
 };
 
 }  // namespace acl

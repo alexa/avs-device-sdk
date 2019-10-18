@@ -94,6 +94,16 @@ public:
     virtual bool seek(uint64_t offset) = 0;
 
     /**
+     * Seeks a relative number of bytes from the
+     * current position in the stream
+     *
+     * @param offset The offset (in bytes! not words!) to seek to within the @c Attachment.
+     * @return @c true if the specified position points at unexpired data, or @c false otherwise. Note that it is valid
+     * to seek into a future index that has not been written to yet.
+     */
+    virtual bool seekRelativeBytes(int64_t offsetInBytes) = 0;
+
+    /**
      * Utility function to return the number of bytes in an attachment.
      *
      * @return Number of unread bytes in the attachment by this attachment reader.

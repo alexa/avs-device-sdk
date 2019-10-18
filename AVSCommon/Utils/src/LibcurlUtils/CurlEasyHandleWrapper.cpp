@@ -270,6 +270,10 @@ bool CurlEasyHandleWrapper::setReadCallback(CurlCallback callback, void* userDat
     return setopt(CURLOPT_READFUNCTION, callback) && (!userData || setopt(CURLOPT_READDATA, userData));
 }
 
+bool CurlEasyHandleWrapper::setSeekCallback(CurlSeekCallback callback, void* userData) {
+    return setopt(CURLOPT_SEEKFUNCTION, callback) && (!userData || setopt(CURLOPT_SEEKDATA, userData));
+}
+
 std::string CurlEasyHandleWrapper::urlEncode(const std::string& in) const {
     std::string result;
     auto temp = curl_easy_escape(m_handle, in.c_str(), 0);

@@ -67,6 +67,7 @@ private:
     /// @{
     std::vector<std::string> getRequestHeaderLines() override;
     avsCommon::utils::http2::HTTP2SendDataResult onSendData(char* bytes, size_t size) override;
+    bool rewindData() override;
     /// @}
 
     /// @name MimeResponseStatusHandlerInterface

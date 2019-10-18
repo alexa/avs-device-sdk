@@ -190,6 +190,21 @@ bool InProcessAttachmentReader::seek(uint64_t offset) {
     return false;
 }
 
+bool InProcessAttachmentReader::seekRelativeBytes(int64_t offsetInBytes) {
+    if (m_reader) {
+        int64_t wordOffset = offsetInBytes / static_cast<int64_t>(m_reader->getWordSize());
+        ACSDK_DEBUG9(LX("seekRelativeBytes").d("wordOffset", wordOffset));
+        if (wordOffset < 0) {
+            // Seek back
+            return m_reader->seek(-wordOffset, utils::sds::InProcessSDS::Reader::Reference::BEFORE_READER);
+        } else {
+            // Seek forward
+            return m_reader->seek(wordOffset, utils::sds::InProcessSDS::Reader::Reference::AFTER_READER);
+        }
+    }
+    return false;
+}
+
 uint64_t InProcessAttachmentReader::getNumUnreadBytes() {
     if (m_reader) {
         return m_reader->tell(utils::sds::InProcessSDS::Reader::Reference::BEFORE_WRITER);

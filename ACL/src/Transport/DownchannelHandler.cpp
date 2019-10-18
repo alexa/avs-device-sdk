@@ -93,6 +93,14 @@ HTTP2SendDataResult DownchannelHandler::onSendData(char* bytes, size_t size) {
     return HTTP2SendDataResult::COMPLETE;
 }
 
+bool DownchannelHandler::rewindData() {
+    ACSDK_DEBUG9(LX(__func__));
+    // no-op: this function is only called
+    // during data upload and this class
+    // does not upload data
+    return true;
+}
+
 DownchannelHandler::DownchannelHandler(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken) :
