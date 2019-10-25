@@ -19,6 +19,8 @@ var searchData=
   ['playlistparserinterface',['PlaylistParserInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html',1,'alexaClientSDK::avsCommon::utils::playlistParser']]],
   ['playlistparserobserverinterface',['PlaylistParserObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html',1,'alexaClientSDK::avsCommon::utils::playlistParser']]],
   ['playlistparsertest',['PlaylistParserTest',['../classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_playlist_parser_test.html',1,'alexaClientSDK::playlistParser::test']]],
+  ['pooledmediaplayerfactory',['PooledMediaPlayerFactory',['../classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html',1,'alexaClientSDK::mediaPlayer']]],
+  ['pooledmediaplayerfactorytest',['PooledMediaPlayerFactoryTest',['../classalexa_client_s_d_k_1_1media_player_1_1test_1_1_pooled_media_player_factory_test.html',1,'alexaClientSDK::mediaPlayer::test']]],
   ['portaudiomicrophonewrapper',['PortAudioMicrophoneWrapper',['../classalexa_client_s_d_k_1_1sample_app_1_1_port_audio_microphone_wrapper.html',1,'alexaClientSDK::sampleApp']]],
   ['postconnectfactoryinterface',['PostConnectFactoryInterface',['../classalexa_client_s_d_k_1_1acl_1_1_post_connect_factory_interface.html',1,'alexaClientSDK::acl']]],
   ['postconnectinterface',['PostConnectInterface',['../classalexa_client_s_d_k_1_1acl_1_1_post_connect_interface.html',1,'alexaClientSDK::acl']]],

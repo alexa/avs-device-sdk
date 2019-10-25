@@ -14,8 +14,8 @@ digraph "/workplace/avs-device-sdk/SampleApp/Authorization/CBLAuthDelegate/inclu
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
   dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000302_000015.html"];
-  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000271_000015.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000280_000302.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000280_000015.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000280_000271.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000269_000015.html"];
+  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000278_000302.html"];
+  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000278_000015.html"];
+  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000278_000269.html"];
 }

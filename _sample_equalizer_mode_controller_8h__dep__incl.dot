@@ -2,9 +2,9 @@ digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/SampleEqualizerMo
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleEqualizerMode\lController.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
-  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleEqualizer\lModeController.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_equalizer_mode_controller_8cpp.html"];
+  Node15 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleEqualizerMode\lController.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node15 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node15 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleEqualizer\lModeController.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_equalizer_mode_controller_8cpp.html"];
 }

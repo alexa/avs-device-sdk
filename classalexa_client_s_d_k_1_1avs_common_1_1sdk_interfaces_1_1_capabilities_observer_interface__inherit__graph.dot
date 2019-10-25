@@ -3,11 +3,11 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesObserverInterface
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::defaultClient\l::DefaultClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1default_client_1_1_default_client.html"];
-  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html"];
-  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::sampleApp\l::UserInputManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html",tooltip="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..."];
+  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::defaultClient\l::DefaultClient",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1default_client_1_1_default_client.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::sampleApp\l::UserInputManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html",tooltip="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..."];
 }

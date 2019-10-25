@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -195,6 +195,8 @@ Functions</h2></td></tr>
 <tr class="separator:a283cbcbaa3f230fbad5a91e2b1cc2bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe5cdccb9303e756d8970a8a5ca0c889"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#afe5cdccb9303e756d8970a8a5ca0c889">SEND_EVENT_TIMEOUT_DURATION</a> (20)</td></tr>
 <tr class="separator:afe5cdccb9303e756d8970a8a5ca0c889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a061e1960a45b283d978da030bea0639b"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a061e1960a45b283d978da030bea0639b">RESPONSE_DELAY</a> (2)</td></tr>
+<tr class="separator:a061e1960a45b283d978da030bea0639b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29977df61b5c891d529f9201b135e95c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a29977df61b5c891d529f9201b135e95c">getToken</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_directive_handler_1_1_directive_params.html">TestDirectiveHandler::DirectiveParams</a> params, std::string &amp;returnToken)</td></tr>
 <tr class="separator:a29977df61b5c891d529f9201b135e95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7afa8fd1a535a2b10d7502ca270fcd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ab7afa8fd1a535a2b10d7502ca270fcd2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>, test_sendEventWithDirective)</td></tr>
@@ -825,6 +827,8 @@ Variables</h2></td></tr>
 <tr class="separator:a0b9a5303e67452e8da4fcdfe7bec76c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ceb220460c760906cc076b0d7376c77"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a2ceb220460c760906cc076b0d7376c77">NAME_SPEECH_FINISHED</a> = &quot;SpeechFinished&quot;</td></tr>
 <tr class="separator:a2ceb220460c760906cc076b0d7376c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeccd1eeddd3da5da227dda161d7df34e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#aeccd1eeddd3da5da227dda161d7df34e">NAME_SPEECH_INTERRUPTED</a> = &quot;SpeechInterrupted&quot;</td></tr>
+<tr class="separator:aeccd1eeddd3da5da227dda161d7df34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36677d27b7a766c6bff3a4522f919004"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a36677d27b7a766c6bff3a4522f919004">NAMESPACE_SPEECH_RECOGNIZER</a> = &quot;SpeechRecognizer&quot;</td></tr>
 <tr class="separator:a36677d27b7a766c6bff3a4522f919004"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc8f3de3b3f7404f753b940c86d2f3d1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#abc8f3de3b3f7404f753b940c86d2f3d1">NAMESPACE_SPEECH_SYNTHESIZER</a> = &quot;SpeechSynthesizer&quot;</td></tr>
@@ -1051,6 +1055,32 @@ template&lt;typename T &gt; </div>
           <td></td><td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a061e1960a45b283d978da030bea0639b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a061e1960a45b283d978da030bea0639b">&#9670;&nbsp;</a></span>RESPONSE_DELAY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::chrono::seconds alexaClientSDK::integration::test::RESPONSE_DELAY </td>
+          <td>(</td>
+          <td class="paramtype">2&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -1972,8 +2002,37 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a7da27c06738f6100164b85322eea4a4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7da27c06738f6100164b85322eea4a4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test.html">AlexaCommunicationsLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_multipleConnectionStatusObservers&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test add- and removeConnectionStatuObserver, expecting the observer to be updated only when it is added. </p>
+
+</div>
+</div>
 <a id="ab7afa8fd1a535a2b10d7502ca270fcd2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7afa8fd1a535a2b10d7502ca270fcd2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7afa8fd1a535a2b10d7502ca270fcd2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1999,35 +2058,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test DirectiveSequencer's ability to pass an <code>AVSDirective</code> to a <code>DirectiveHandler</code>.</p>
 <p>This test is intended to test <code>DirectiveSequencer's</code> ability to pass an <code>AVSDirective</code> to a <code>DirectiveHandler</code> that has been registered to handle an <code>AVSDirective</code>. </p>
-
-</div>
-</div>
-<a id="a7da27c06738f6100164b85322eea4a4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7da27c06738f6100164b85322eea4a4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_communications_library_test.html">AlexaCommunicationsLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_multipleConnectionStatusObservers&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test add- and removeConnectionStatuObserver, expecting the observer to be updated only when it is added. </p>
 
 </div>
 </div>
@@ -2417,7 +2447,7 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.</p>
+<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consecutive speaks.</p>
 <p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
 
 </div>
@@ -2507,7 +2537,7 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test ability for the SpeechSynthesizer to handle a barge in in the middle of consucutive speaks.</p>
+<p>Test ability for the SpeechSynthesizer to handle a barge in in the middle of consecutive speaks.</p>
 <p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. While the Speak directives are being handled, the dialogRequestID is changed and all directives are cancelled. </p>
 
 </div>
@@ -4267,7 +4297,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::integration::test::CONTENT_ACTIVITY_ID = &quot;Content&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::integration::test::CONTENT_ACTIVITY_ID = &quot;content&quot;</td>
         </tr>
       </table>
   </td>
@@ -4276,6 +4306,8 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sample content activity id. </p>
 
 </div>
 </div>
@@ -4289,7 +4321,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::integration::test::CONTENT_ACTIVITY_ID = &quot;content&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::integration::test::CONTENT_ACTIVITY_ID = &quot;Content&quot;</td>
         </tr>
       </table>
   </td>
@@ -4298,8 +4330,6 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sample content activity id. </p>
 
 </div>
 </div>
@@ -4547,7 +4577,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::integration::test::DIALOG_ACTIVITY_ID = &quot;Dialog&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::integration::test::DIALOG_ACTIVITY_ID = &quot;dialog&quot;</td>
         </tr>
       </table>
   </td>
@@ -4556,6 +4586,8 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sample dialog activity id. </p>
 
 </div>
 </div>
@@ -4569,7 +4601,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::integration::test::DIALOG_ACTIVITY_ID = &quot;dialog&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::integration::test::DIALOG_ACTIVITY_ID = &quot;Dialog&quot;</td>
         </tr>
       </table>
   </td>
@@ -4578,8 +4610,6 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sample dialog activity id. </p>
 
 </div>
 </div>
@@ -7139,6 +7169,28 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="aeccd1eeddd3da5da227dda161d7df34e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeccd1eeddd3da5da227dda161d7df34e">&#9670;&nbsp;</a></span>NAME_SPEECH_INTERRUPTED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::integration::test::NAME_SPEECH_INTERRUPTED = &quot;SpeechInterrupted&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a0b9a5303e67452e8da4fcdfe7bec76c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b9a5303e67452e8da4fcdfe7bec76c5">&#9670;&nbsp;</a></span>NAME_SPEECH_STARTED <span class="overload">[1/4]</span></h2>
 
@@ -8665,7 +8717,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

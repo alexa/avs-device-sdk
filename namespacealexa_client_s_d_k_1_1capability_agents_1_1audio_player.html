@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,12 +98,6 @@ Enumerations</h2></td></tr>
  }<tr class="memdesc:ac2a1eefec8330e695ffcf2134869443e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine clear queue behavior.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ac2a1eefec8330e695ffcf2134869443e">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:ac2a1eefec8330e695ffcf2134869443e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeba80bab2e001369c59500827c1af540"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540a408342dab366e318a4e3b44fe9a72be7">PlayBehavior::REPLACE_ALL</a>, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540a59525a864214564c3344e08a6fcaa49a">PlayBehavior::ENQUEUE</a>, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540a126594e24321b3066d51f1d607302767">PlayBehavior::REPLACE_ENQUEUED</a>
- }<tr class="memdesc:aeba80bab2e001369c59500827c1af540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine how a client must handle queueing and playback of a stream.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:aeba80bab2e001369c59500827c1af540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a72a48a942acbcb33ead93b1bf86fb1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1">StreamFormat</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1ae5d311084477fc09c9f898f444f47e53">StreamFormat::AUDIO_MPEG</a>, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1a696b031073e74bf2cb98e5ef201d4aa3">StreamFormat::UNKNOWN</a>
  }<tr class="memdesc:a3a72a48a942acbcb33ead93b1bf86fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the format of a binary audio attachment in a <code>Play</code> directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1">More...</a><br /></td></tr>
@@ -120,14 +114,6 @@ Functions</h2></td></tr>
 <tr class="separator:a6595949db3e4db1d3512dc3372d26036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5e17b1f13073c9c66f3bd12cfcdc90"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a4d5e17b1f13073c9c66f3bd12cfcdc90">convertToValue</a> (const rapidjson::Value &amp;documentNode, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ac2a1eefec8330e695ffcf2134869443e">ClearBehavior</a> *clearBehavior)</td></tr>
 <tr class="separator:a4d5e17b1f13073c9c66f3bd12cfcdc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7242ee7592f37b8a50a026b49573dcb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aa7242ee7592f37b8a50a026b49573dcb">playBehaviorToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> playBehavior)</td></tr>
-<tr class="separator:aa7242ee7592f37b8a50a026b49573dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7abd046ee00ef9c2f8ccab273748edf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ae7abd046ee00ef9c2f8ccab273748edf">stringToPlayBehavior</a> (const std::string &amp;text, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> *playBehavior)</td></tr>
-<tr class="separator:ae7abd046ee00ef9c2f8ccab273748edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9f71aada7b9a716e16383ed5d4c3ca4"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ad9f71aada7b9a716e16383ed5d4c3ca4">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> &amp;playBehavior)</td></tr>
-<tr class="separator:ad9f71aada7b9a716e16383ed5d4c3ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8c5bdf28dea9b39c061a9487025053a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#ae8c5bdf28dea9b39c061a9487025053a">convertToValue</a> (const rapidjson::Value &amp;documentNode, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> *playBehavior)</td></tr>
-<tr class="separator:ae8c5bdf28dea9b39c061a9487025053a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16232f6c709581720898ad7ad1fae21e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a16232f6c709581720898ad7ad1fae21e">streamFormatToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1">StreamFormat</a> streamFormat)</td></tr>
 <tr class="separator:a16232f6c709581720898ad7ad1fae21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc9cbd7a93a36f3db5500ae81e8a72d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#adc9cbd7a93a36f3db5500ae81e8a72d9">stringToStreamFormat</a> (const std::string &amp;text, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a3a72a48a942acbcb33ead93b1bf86fb1">StreamFormat</a> *streamFormat)</td></tr>
@@ -139,6 +125,8 @@ Functions</h2></td></tr>
 <tr class="memitem:aabdf92c5f143be35328cb007aabf27f4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aabdf92c5f143be35328cb007aabf27f4">TAG</a> (&quot;AudioPlayer&quot;)</td></tr>
 <tr class="memdesc:aabdf92c5f143be35328cb007aabf27f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#aabdf92c5f143be35328cb007aabf27f4">More...</a><br /></td></tr>
 <tr class="separator:aabdf92c5f143be35328cb007aabf27f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf16fc50f048c98fa6ec030439db8f0f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#adf16fc50f048c98fa6ec030439db8f0f">compareUrlNotQuery</a> (const std::string &amp;url1, const std::string &amp;url2)</td></tr>
+<tr class="separator:adf16fc50f048c98fa6ec030439db8f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaf397bb86265f74f0d28054e2c36c33"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#adaf397bb86265f74f0d28054e2c36c33">getAudioPlayerCapabilityConfiguration</a> ()</td></tr>
 <tr class="separator:adaf397bb86265f74f0d28054e2c36c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe3de5dd770997acbb0b590f5cf5ba57"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#afe3de5dd770997acbb0b590f5cf5ba57">TAG</a> (&quot;ProgressTimer&quot;)</td></tr>
@@ -228,38 +216,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aeba80bab2e001369c59500827c1af540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeba80bab2e001369c59500827c1af540">&#9670;&nbsp;</a></span>PlayBehavior</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">alexaClientSDK::capabilityAgents::audioPlayer::PlayBehavior</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Used to determine how a client must handle queueing and playback of a stream. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aeba80bab2e001369c59500827c1af540a408342dab366e318a4e3b44fe9a72be7"></a>REPLACE_ALL&#160;</td><td class="fielddoc"><p>Immediately begin playback of the stream returned with the <code>Play</code> directive, and replace current and enqueued streams. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aeba80bab2e001369c59500827c1af540a59525a864214564c3344e08a6fcaa49a"></a>ENQUEUE&#160;</td><td class="fielddoc"><p>Adds a stream to the end of the current queue. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aeba80bab2e001369c59500827c1af540a126594e24321b3066d51f1d607302767"></a>REPLACE_ENQUEUED&#160;</td><td class="fielddoc"><p>Replace all streams in the queue. This does not impact the currently playing stream. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="a3a72a48a942acbcb33ead93b1bf86fb1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a72a48a942acbcb33ead93b1bf86fb1">&#9670;&nbsp;</a></span>StreamFormat</h2>
 
@@ -325,8 +281,53 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="adf16fc50f048c98fa6ec030439db8f0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf16fc50f048c98fa6ec030439db8f0f">&#9670;&nbsp;</a></span>compareUrlNotQuery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::audioPlayer::compareUrlNotQuery </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Compare two URLs up to the 'query' portion, if one exists.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url1</td><td>First URL to compare </td></tr>
+    <tr><td class="paramname">url2</td><td>URL to compare to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the URLs are identical except for their query strings. </dd></dl>
+
+</div>
+</div>
 <a id="a0b0fbce0c7e276d9ce0a5fb547938163"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b0fbce0c7e276d9ce0a5fb547938163">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b0fbce0c7e276d9ce0a5fb547938163">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +372,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4d5e17b1f13073c9c66f3bd12cfcdc90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d5e17b1f13073c9c66f3bd12cfcdc90">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d5e17b1f13073c9c66f3bd12cfcdc90">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -415,51 +416,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae8c5bdf28dea9b39c061a9487025053a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8c5bdf28dea9b39c061a9487025053a">&#9670;&nbsp;</a></span>convertToValue() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool alexaClientSDK::capabilityAgents::audioPlayer::convertToValue </td>
-          <td>(</td>
-          <td class="paramtype">const rapidjson::Value &amp;&#160;</td>
-          <td class="paramname"><em>documentNode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> *&#160;</td>
-          <td class="paramname"><em>playBehavior</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convert a <code>PlayBehavior</code> to a <code>rapidjson::Value</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">documentNode</td><td>The <code>rapidjson::Value</code> to write to. </td></tr>
-    <tr><td class="paramname">playBehavior</td><td>The <code>PlayBehavior</code> to convert. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if conversion is successful, else <code>false</code>. </dd></dl>
-
-</div>
-</div>
 <a id="adaf397bb86265f74f0d28054e2c36c33"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adaf397bb86265f74f0d28054e2c36c33">&#9670;&nbsp;</a></span>getAudioPlayerCapabilityConfiguration()</h2>
 
@@ -488,7 +444,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a17b0b8039f00625f17cc56209a5e93a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17b0b8039f00625f17cc56209a5e93a2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a17b0b8039f00625f17cc56209a5e93a2">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -525,7 +481,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae64ed9c3e1a0e461473e9d6eb82c72b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae64ed9c3e1a0e461473e9d6eb82c72b0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae64ed9c3e1a0e461473e9d6eb82c72b0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -570,7 +526,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6595949db3e4db1d3512dc3372d26036"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6595949db3e4db1d3512dc3372d26036">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6595949db3e4db1d3512dc3372d26036">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -611,85 +567,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
-
-</div>
-</div>
-<a id="ad9f71aada7b9a716e16383ed5d4c3ca4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9f71aada7b9a716e16383ed5d4c3ca4">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; alexaClientSDK::capabilityAgents::audioPlayer::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> &amp;&#160;</td>
-          <td class="paramname"><em>playBehavior</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Write a <code>PlayBehavior</code> value to an <code>ostream</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
-    <tr><td class="paramname">playBehavior</td><td>The <code>PlayBehavior</code> value to write to the <code>ostream</code> as a string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
-
-</div>
-</div>
-<a id="aa7242ee7592f37b8a50a026b49573dcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7242ee7592f37b8a50a026b49573dcb">&#9670;&nbsp;</a></span>playBehaviorToString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string alexaClientSDK::capabilityAgents::audioPlayer::playBehaviorToString </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a>&#160;</td>
-          <td class="paramname"><em>playBehavior</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convert a <code>PlayBehavior</code> to an AVS-compliant <code>std::string</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">playBehavior</td><td>The <code>PlayBehavior</code> to convert. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The AVS-compliant string representation of <code>playBehavior</code>. </dd></dl>
 
 </div>
 </div>
@@ -765,51 +642,6 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">text</td><td>The string to convert. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">clearBehavior</td><td>The converted <code>ClearBehavior</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the string converted succesfully, else <code>false</code>. </dd></dl>
-
-</div>
-</div>
-<a id="ae7abd046ee00ef9c2f8ccab273748edf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7abd046ee00ef9c2f8ccab273748edf">&#9670;&nbsp;</a></span>stringToPlayBehavior()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool alexaClientSDK::capabilityAgents::audioPlayer::stringToPlayBehavior </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>text</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540">PlayBehavior</a> *&#160;</td>
-          <td class="paramname"><em>playBehavior</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Convert an AVS-compliant <code>string</code> to a <code>PlayBehavior</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">text</td><td>The string to convert. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">playBehavior</td><td>The converted <code>PlayBehavior</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1306,7 +1138,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

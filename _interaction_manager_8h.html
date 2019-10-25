@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,6 +75,7 @@ $(function() {
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;<a class="el" href="_microphone_interface_8h_source.html">Audio/MicrophoneInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_dialog_u_x_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_call_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/CallStateObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_default_client_8h_source.html">DefaultClient/DefaultClient.h</a>&gt;</code><br />
@@ -89,49 +90,6 @@ Include dependency graph for InteractionManager.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_interaction_manager_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8h" id="_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8h">
-<area shape="rect" id="node3" href="_microphone_interface_8h.html" title="Audio/MicrophoneInterface.h" alt="" coords="4993,279,5185,304"/>
-<area shape="rect" id="node6" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="1158,465,1388,504"/>
-<area shape="rect" id="node9" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="5,465,196,504"/>
-<area shape="rect" id="node10" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3584,372,3772,411"/>
-<area shape="rect" id="node12" href="_default_client_8h.html" title="DefaultClient/DefaultClient.h" alt="" coords="2652,192,2840,217"/>
-<area shape="rect" id="node45" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="4939,105,5113,144"/>
-<area shape="rect" id="node46" href="_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="458,465,652,504"/>
-<area shape="rect" id="node47" href="_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="220,465,434,504"/>
-<area shape="rect" id="node48" href="_keyword_observer_8h.html" title="KeywordObserver.h" alt="" coords="4205,112,4343,137"/>
-<area shape="rect" id="node49" href="_u_i_manager_8h.html" title="UIManager.h" alt="" coords="644,379,742,404"/>
-<area shape="rect" id="node50" href="_gui_renderer_8h.html" title="GuiRenderer.h" alt="" coords="5707,192,5815,217"/>
-<area shape="rect" id="node13" href="_a_v_s_connection_manager_8h.html" title="ACL/AVSConnectionManager.h" alt="" coords="2406,279,2614,304"/>
-<area shape="rect" id="node14" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="2009,465,2257,504"/>
-<area shape="rect" id="node15" href="_internet_connection_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionMonitorInterface.h" alt="" coords="3062,372,3307,411"/>
-<area shape="rect" id="node16" href="_message_router_8h.html" title="ACL/Transport/MessageRouter.h" alt="" coords="2638,279,2854,304"/>
-<area shape="rect" id="node17" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2484,372,2675,411"/>
-<area shape="rect" id="node18" href="_post_connect_synchronizer_8h.html" title="ACL/Transport/PostConnect\lSynchronizer.h" alt="" coords="4520,272,4708,311"/>
-<area shape="rect" id="node19" href="_post_connect_synchronizer_factory_8h.html" title="ACL/Transport/PostConnect\lSynchronizerFactory.h" alt="" coords="2750,372,2937,411"/>
-<area shape="rect" id="node20" href="_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="4731,279,4918,304"/>
-<area shape="rect" id="node21" href="_audio_activity_tracker_8h.html" title="AFML/AudioActivityTracker.h" alt="" coords="4102,279,4294,304"/>
-<area shape="rect" id="node22" href="_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="4937,379,5097,404"/>
-<area shape="rect" id="node23" href="_visual_activity_tracker_8h.html" title="AFML/VisualActivityTracker.h" alt="" coords="3409,279,3603,304"/>
-<area shape="rect" id="node24" href="_audio_input_processor_8h.html" title="AIP/AudioInputProcessor.h" alt="" coords="1549,279,1730,304"/>
-<area shape="rect" id="node25" href="_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="1782,372,2004,411"/>
-<area shape="rect" id="node26" href="_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="1728,465,1948,504"/>
-<area shape="rect" id="node27" href="_audio_provider_8h.html" title="AudioProvider.h" alt="" coords="1206,379,1321,404"/>
-<area shape="rect" id="node28" href="_alerts_capability_agent_8h.html" title="Alerts/AlertsCapabilityAgent.h" alt="" coords="3830,279,4028,304"/>
-<area shape="rect" id="node29" href="_renderer_8h.html" title="Alerts/Renderer/Renderer.h" alt="" coords="5171,379,5356,404"/>
-<area shape="rect" id="node30" href="_alert_storage_interface_8h.html" title="Alerts/Storage/AlertStorage\lInterface.h" alt="" coords="3948,372,4131,411"/>
-<area shape="rect" id="node31" href="_audio_player_8h.html" title="AudioPlayer/AudioPlayer.h" alt="" coords="3627,279,3806,304"/>
-<area shape="rect" id="node32" href="_exception_encountered_sender_8h.html" title="AVSCommon/AVS/ExceptionEncountered\lSender.h" alt="" coords="4207,372,4475,411"/>
-<area shape="rect" id="node33" href="_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AudioFactoryInterface.h" alt="" coords="3181,272,3386,311"/>
-<area shape="rect" id="node34" href="_equalizer_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerConfiguration\lInterface.h" alt="" coords="5379,365,5577,417"/>
-<area shape="rect" id="node35" href="_equalizer_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerModeController\lInterface.h" alt="" coords="1907,265,2116,317"/>
-<area shape="rect" id="node36" href="_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="2929,272,3157,311"/>
-<area shape="rect" id="node37" href="_audio_player_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="5388,465,5603,504"/>
-<area shape="rect" id="node38" href="_call_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="2140,272,2331,311"/>
-<area shape="rect" id="node39" href="_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="1396,372,1606,411"/>
-<area shape="rect" id="node40" href="_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="921,465,1133,504"/>
-<area shape="rect" id="node41" href="_single_setting_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SingleSettingObserverInterface.h" alt="" coords="677,465,898,504"/>
-<area shape="rect" id="node42" href="_speech_interaction_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeechInteractionHandlerInterface.h" alt="" coords="1062,272,1304,311"/>
-<area shape="rect" id="node43" href="_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="918,372,1131,411"/>
-<area shape="rect" id="node44" href="_system_time_zone_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemTimeZoneInterface.h" alt="" coords="1513,465,1705,504"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -139,12 +97,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_interaction_manager_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8hdep" id="_2workplace_2avs-device-sdk_2_sample_app_2include_2_sample_app_2_interaction_manager_8hdep">
-<area shape="rect" id="node2" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="243,105,462,157"/>
-<area shape="rect" id="node7" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="485,105,692,157"/>
-<area shape="rect" id="node3" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,205,345,257"/>
-<area shape="rect" id="node6" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="369,205,571,257"/>
-<area shape="rect" id="node4" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,305,204,344"/>
-<area shape="rect" id="node5" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,305,507,344"/>
 </map>
 </div>
 </div>
@@ -167,7 +119,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

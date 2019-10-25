@@ -3,7 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHttpPostInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html",tooltip="Minimal interface for making Http POST requests. "];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHttpPost",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html",tooltip="LIBCURL based implementation of HttpPostInterface. "];
+  Node0 [label="alexaClientSDK::avsCommon\l::utils::json::JsonGenerator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html"];
 }

@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/Network" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_834bf911d49030c30073fd5ed0d05185 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_834bf911d49030c30073fd5ed0d05185.html"]
+  dir_01037c60081af1e4ffdd17d027381383 [shape=box, label="Network", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_01037c60081af1e4ffdd17d027381383.html"];
+  }
+  dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
+  dir_01037c60081af1e4ffdd17d027381383->dir_97afc8111b754cf401b73024f872f45d [headlabel="1", labeldistance=1.5 headhref="dir_000124_000016.html"];
+}

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -84,6 +84,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a58fe40618370125a058a6ebcd3ad6e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79f12de0f2919c6cd38cb0452c5b8523"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a79f12de0f2919c6cd38cb0452c5b8523">setDialogRequestId</a> (const std::string &amp;dialogRequestId)</td></tr>
 <tr class="separator:a79f12de0f2919c6cd38cb0452c5b8523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3102c42b96d816b8535e579cc21a4de6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a3102c42b96d816b8535e579cc21a4de6">getDialogRequestId</a> ()</td></tr>
+<tr class="separator:a3102c42b96d816b8535e579cc21a4de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90f8c546cb39a806374911fa73759013"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#a90f8c546cb39a806374911fa73759013">onDirective</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html">avsCommon::avs::AVSDirective</a> &gt; directive)</td></tr>
 <tr class="separator:a90f8c546cb39a806374911fa73759013"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2faaf7acc90e86198035959717b24d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_processor.html#ae2faaf7acc90e86198035959717b24d2">shutdown</a> ()</td></tr>
@@ -179,6 +181,25 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3102c42b96d816b8535e579cc21a4de6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3102c42b96d816b8535e579cc21a4de6">&#9670;&nbsp;</a></span>getDialogRequestId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::adsl::DirectiveProcessor::getDialogRequestId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the <code>dialogRequestId</code> currently in use for Directive handling. This may be the empty string if Directives have either experienced errors, or have been cancelled.</p>
+<dl class="section return"><dt>Returns</dt><dd>dialogRequestId The current dialog request id. </dd></dl>
+
+</div>
+</div>
 <a id="a90f8c546cb39a806374911fa73759013"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90f8c546cb39a806374911fa73759013">&#9670;&nbsp;</a></span>onDirective()</h2>
 
@@ -256,7 +277,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

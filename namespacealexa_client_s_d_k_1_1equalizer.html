@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -136,6 +136,9 @@ Variables</h2></td></tr>
 <tr class="memitem:af4b7a395b668bbd5637cf8a12386d0fc"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html#af4b7a395b668bbd5637cf8a12386d0fc">DEFAULT_MAX_LEVEL</a> = 6</td></tr>
 <tr class="memdesc:af4b7a395b668bbd5637cf8a12386d0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default maximum band level in dB. +6 dB effectively doubling the amplitude of the band.  <a href="#af4b7a395b668bbd5637cf8a12386d0fc">More...</a><br /></td></tr>
 <tr class="separator:af4b7a395b668bbd5637cf8a12386d0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0058a976ef5a99aeefd45643633ec574"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html#a0058a976ef5a99aeefd45643633ec574">DEFAULT_ADJUST_DELTA</a> = 1</td></tr>
+<tr class="memdesc:a0058a976ef5a99aeefd45643633ec574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjustment value used by AVS by default, in dB, when you, for example, say "Alexa, raise the bass".  <a href="#a0058a976ef5a99aeefd45643633ec574">More...</a><br /></td></tr>
+<tr class="separator:a0058a976ef5a99aeefd45643633ec574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae71b3d1b5d97e15bbd94985be044e6f0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html#ae71b3d1b5d97e15bbd94985be044e6f0">TAG</a> {&quot;MiscDBEqualizerStorage&quot;}</td></tr>
 <tr class="memdesc:ae71b3d1b5d97e15bbd94985be044e6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ae71b3d1b5d97e15bbd94985be044e6f0">More...</a><br /></td></tr>
 <tr class="separator:ae71b3d1b5d97e15bbd94985be044e6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +175,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ad750961e0397e9d0e4fd44612081182d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html#ad750961e0397e9d0e4fd44612081182d">MAX_LEVEL_CONFIG_KEY</a> = &quot;maxLevel&quot;</td></tr>
 <tr class="memdesc:ad750961e0397e9d0e4fd44612081182d"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "maxLevel" value.  <a href="#ad750961e0397e9d0e4fd44612081182d">More...</a><br /></td></tr>
 <tr class="separator:ad750961e0397e9d0e4fd44612081182d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a926311ac63c497111b4636ba56a5ef3e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html#a926311ac63c497111b4636ba56a5ef3e">DEFAULT_DELTA_CONFIG_KEY</a> = &quot;defaultDelta&quot;</td></tr>
+<tr class="memdesc:a926311ac63c497111b4636ba56a5ef3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "defaultDelta" value.  <a href="#a926311ac63c497111b4636ba56a5ef3e">More...</a><br /></td></tr>
+<tr class="separator:a926311ac63c497111b4636ba56a5ef3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a8baad786ad6f7e84131557d55e1d4124"></a>
@@ -219,6 +225,54 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Component name needed for Misc DB. </p>
+
+</div>
+</div>
+<a id="a0058a976ef5a99aeefd45643633ec574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0058a976ef5a99aeefd45643633ec574">&#9670;&nbsp;</a></span>DEFAULT_ADJUST_DELTA</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int alexaClientSDK::equalizer::DEFAULT_ADJUST_DELTA = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adjustment value used by AVS by default, in dB, when you, for example, say "Alexa, raise the bass". </p>
+
+</div>
+</div>
+<a id="a926311ac63c497111b4636ba56a5ef3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a926311ac63c497111b4636ba56a5ef3e">&#9670;&nbsp;</a></span>DEFAULT_DELTA_CONFIG_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::equalizer::DEFAULT_DELTA_CONFIG_KEY = &quot;defaultDelta&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>JSON key for "defaultDelta" value. </p>
 
 </div>
 </div>
@@ -745,7 +799,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

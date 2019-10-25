@@ -9,9 +9,9 @@ digraph "/workplace/avs-device-sdk/CapabilitiesDelegate/src" {
   dir_b1dfedc9efa610ba8c818c30206ff41f [shape=box label="ACL" fillcolor="white" style="filled" color="red" URL="dir_b1dfedc9efa610ba8c818c30206ff41f.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_872c8767738f6c0aba43e56d09bbdc21 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_872c8767738f6c0aba43e56d09bbdc21.html"];
-  dir_b1dfedc9efa610ba8c818c30206ff41f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="95", labeldistance=1.5 headhref="dir_000000_000015.html"];
-  dir_f14574f3da14ef94e1b0e15a21513161->dir_b1dfedc9efa610ba8c818c30206ff41f [headlabel="1", labeldistance=1.5 headhref="dir_000129_000000.html"];
-  dir_f14574f3da14ef94e1b0e15a21513161->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000129_000015.html"];
-  dir_f14574f3da14ef94e1b0e15a21513161->dir_872c8767738f6c0aba43e56d09bbdc21 [headlabel="1", labeldistance=1.5 headhref="dir_000129_000127.html"];
-  dir_872c8767738f6c0aba43e56d09bbdc21->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000127_000015.html"];
+  dir_b1dfedc9efa610ba8c818c30206ff41f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="97", labeldistance=1.5 headhref="dir_000000_000015.html"];
+  dir_f14574f3da14ef94e1b0e15a21513161->dir_b1dfedc9efa610ba8c818c30206ff41f [headlabel="1", labeldistance=1.5 headhref="dir_000136_000000.html"];
+  dir_f14574f3da14ef94e1b0e15a21513161->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000136_000015.html"];
+  dir_f14574f3da14ef94e1b0e15a21513161->dir_872c8767738f6c0aba43e56d09bbdc21 [headlabel="1", labeldistance=1.5 headhref="dir_000136_000134.html"];
+  dir_872c8767738f6c0aba43e56d09bbdc21->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000134_000015.html"];
 }

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,10 +79,6 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSeque
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_inherit__map">
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html" title="alexaClientSDK::adsl\l::DirectiveSequencer" alt="" coords="560,5,706,44"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html" title="alexaClientSDK::adsl\l::test::MockDirectiveSequencer" alt="" coords="530,68,736,107"/>
-<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html" title="Mock class that implements the DirectiveSequencer. " alt="" coords="535,131,731,183"/>
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,68,202,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -90,7 +86,6 @@ Collaboration diagram for alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSeq
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_coll__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface_coll__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="23,5,220,44"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -106,6 +101,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af91ce4c3a515f0bd7b7ed90d1af29a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d99e3aaa023663cde990873e3e2b416"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a9d99e3aaa023663cde990873e3e2b416">setDialogRequestId</a> (const std::string &amp;dialogRequestId)=0</td></tr>
 <tr class="separator:a9d99e3aaa023663cde990873e3e2b416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44138e70ad902e01f32d6325b6365fcc"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a44138e70ad902e01f32d6325b6365fcc">getDialogRequestId</a> ()=0</td></tr>
+<tr class="separator:a44138e70ad902e01f32d6325b6365fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f130b4ffadb2bda35fddff1e9252a87"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#a1f130b4ffadb2bda35fddff1e9252a87">onDirective</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html">avsCommon::avs::AVSDirective</a> &gt; directive)=0</td></tr>
 <tr class="separator:a1f130b4ffadb2bda35fddff1e9252a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1047dd8584b681bbbbebe7590e1af7f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html#ae1047dd8584b681bbbbebe7590e1af7f">disable</a> ()=0</td></tr>
@@ -287,6 +284,35 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a44138e70ad902e01f32d6325b6365fcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44138e70ad902e01f32d6325b6365fcc">&#9670;&nbsp;</a></span>getDialogRequestId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface::getDialogRequestId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the <code>dialogRequestId</code> currently in use for Directive handling. This may be the empty string if Directives have either experienced errors, or have been cancelled.</p>
+<dl class="section return"><dt>Returns</dt><dd>dialogRequestId The current dialog request id. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#af14dbe2cbf3293972b168a7372408bba">alexaClientSDK::adsl::DirectiveSequencer</a>, <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html#a7f6ec21176e729f19f672691f1ef7ced">alexaClientSDK::adsl::test::MockDirectiveSequencer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html#a45edaa3e72e3b301ef6f7020ca9b4377">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveSequencer</a>.</p>
+
+</div>
+</div>
 <a id="a1f130b4ffadb2bda35fddff1e9252a87"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f130b4ffadb2bda35fddff1e9252a87">&#9670;&nbsp;</a></span>onDirective()</h2>
 
@@ -386,7 +412,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#a9ed32174308b933bdfe19b3697ffd1aa">alexaClientSDK::adsl::DirectiveSequencer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html#a9ed32174308b933bdfe19b3697ffd1aa">alexaClientSDK::adsl::DirectiveSequencer</a>, <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html#abd43a24f2f628665e3821fcbf0985003">alexaClientSDK::adsl::test::MockDirectiveSequencer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html#a44a97e5ff5a730af13e8b53d124c5d9c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveSequencer</a>.</p>
 
 </div>
 </div>
@@ -397,7 +423,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

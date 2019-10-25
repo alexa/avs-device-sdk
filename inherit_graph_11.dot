@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidSLESObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_object.html"];
+  Node0 [label="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidSLESObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_object.html"];
 }

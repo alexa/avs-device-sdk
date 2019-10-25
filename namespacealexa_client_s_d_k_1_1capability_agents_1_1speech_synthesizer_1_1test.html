@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,7 +76,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_attachment_manager.html">MockAttachmentManager</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +127,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a3c7a8ba186995f3e5d4475e6dca4d881"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a3c7a8ba186995f3e5d4475e6dca4d881">FINISHED_STATE</a> (&quot;FINISHED&quot;)</td></tr>
 <tr class="memdesc:a3c7a8ba186995f3e5d4475e6dca4d881"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>FINISHED</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code>.  <a href="#a3c7a8ba186995f3e5d4475e6dca4d881">More...</a><br /></td></tr>
 <tr class="separator:a3c7a8ba186995f3e5d4475e6dca4d881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa69f297b2f81343bdd1fb914647198e4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aa69f297b2f81343bdd1fb914647198e4">generateSpeakInfo</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#abbc3b036d3a7da6b14cefff24cd1c8f7">PlayBehavior</a> playBehavior)</td></tr>
+<tr class="separator:aa69f297b2f81343bdd1fb914647198e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb5e21e73912171225041581cad8ea57"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#acb5e21e73912171225041581cad8ea57">generatePlayingState</a> (const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;info)</td></tr>
+<tr class="separator:acb5e21e73912171225041581cad8ea57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63b9d15a65ca74dbf981dc68e037e3d"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#ab63b9d15a65ca74dbf981dc68e037e3d">generateFinishedState</a> (const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;info)</td></tr>
+<tr class="separator:ab63b9d15a65ca74dbf981dc68e037e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17941eb2a9008e5e12b2b2c2cea52139"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a17941eb2a9008e5e12b2b2c2cea52139">generateInterruptedState</a> (const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;info)</td></tr>
+<tr class="separator:a17941eb2a9008e5e12b2b2c2cea52139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5afb5e7e5c5559403e2118830d1ca224"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a5afb5e7e5c5559403e2118830d1ca224">matchEvent</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt; request, const std::string &amp;expectedContent)</td></tr>
+<tr class="separator:a5afb5e7e5c5559403e2118830d1ca224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa001bac38e8f164a5a3dfbfb1dd0d8f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aa001bac38e8f164a5a3dfbfb1dd0d8f7">MATCHER</a> (IsStartedEvent, &quot;&quot;)</td></tr>
+<tr class="separator:aa001bac38e8f164a5a3dfbfb1dd0d8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa69477606388bb49cebd6afe68fa8f32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aa69477606388bb49cebd6afe68fa8f32">MATCHER</a> (IsFinishedEvent, &quot;&quot;)</td></tr>
+<tr class="separator:aa69477606388bb49cebd6afe68fa8f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb61809dc9c789b0191e45bee1e59465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aeb61809dc9c789b0191e45bee1e59465">MATCHER</a> (IsInterruptedEvent, &quot;&quot;)</td></tr>
+<tr class="separator:aeb61809dc9c789b0191e45bee1e59465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c4aa7f6f05d10948623ffe6b32a529d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0c4aa7f6f05d10948623ffe6b32a529d">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_callingHandleImmediately)</td></tr>
 <tr class="separator:a0c4aa7f6f05d10948623ffe6b32a529d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae635c458bfb2ee68440ad72e87d0e34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aae635c458bfb2ee68440ad72e87d0e34">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_callingHandle)</td></tr>
@@ -155,11 +171,30 @@ Functions</h2></td></tr>
 <tr class="separator:a6277735b8cd52306b054ebaa82784041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a253e875d823b749721331ebb146837f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a253e875d823b749721331ebb146837f2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_givenPlayingStateFocusBecomesNone)</td></tr>
 <tr class="separator:a253e875d823b749721331ebb146837f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30a06563833c31e236f99e9037d03e21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a30a06563833c31e236f99e9037d03e21">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_onPlayedStopped)</td></tr>
-<tr class="separator:a30a06563833c31e236f99e9037d03e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb17f72e76f9812eceef8c238cf853d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aeb17f72e76f9812eceef8c238cf853d2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, testTimer_onPlayedStopped)</td></tr>
+<tr class="separator:aeb17f72e76f9812eceef8c238cf853d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc2bca185ad718a55d0fea7fbe3ecdc4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#afc2bca185ad718a55d0fea7fbe3ecdc4">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_replaceAllWithEmptyQueue)</td></tr>
+<tr class="separator:afc2bca185ad718a55d0fea7fbe3ecdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9adaed9f8f84412602fba69228ae46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a2c9adaed9f8f84412602fba69228ae46">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_replaceAllWithNonEmptyQueue)</td></tr>
+<tr class="separator:a2c9adaed9f8f84412602fba69228ae46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c234e93d824e4295f115ede67ca14bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a2c234e93d824e4295f115ede67ca14bc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_replaceAllStopActiveSpeech)</td></tr>
+<tr class="separator:a2c234e93d824e4295f115ede67ca14bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a045cfc95f22a497b98296228d1e6a3c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a045cfc95f22a497b98296228d1e6a3c2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_enqueueWithActiveSpeech)</td></tr>
+<tr class="separator:a045cfc95f22a497b98296228d1e6a3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d093562de96867f898dc4cbe70582dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a1d093562de96867f898dc4cbe70582dc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>, test_replaceEnqueuedWithAnotherEnqueuedItem)</td></tr>
+<tr class="separator:a1d093562de96867f898dc4cbe70582dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:abdeadd67984c6baf1557d7868946df70"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#abdeadd67984c6baf1557d7868946df70">SPEECH_STARTED_EVENT_NAME</a> {&quot;SpeechStarted&quot;}</td></tr>
+<tr class="memdesc:abdeadd67984c6baf1557d7868946df70"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the event to send to the AVS server once audio starting playing.  <a href="#abdeadd67984c6baf1557d7868946df70">More...</a><br /></td></tr>
+<tr class="separator:abdeadd67984c6baf1557d7868946df70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a303faaf5557cd7b768972adaba324b75"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a303faaf5557cd7b768972adaba324b75">SPEECH_FINISHED_EVENT_NAME</a> {&quot;SpeechFinished&quot;}</td></tr>
+<tr class="memdesc:a303faaf5557cd7b768972adaba324b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the event to send to the AVS server once audio finishes playing.  <a href="#a303faaf5557cd7b768972adaba324b75">More...</a><br /></td></tr>
+<tr class="separator:a303faaf5557cd7b768972adaba324b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2886393035289af3f12f17dbe8e5697b"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a2886393035289af3f12f17dbe8e5697b">SPEECH_INTERRUPTED_EVENT_NAME</a> {&quot;SpeechInterrupted&quot;}</td></tr>
+<tr class="memdesc:a2886393035289af3f12f17dbe8e5697b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the event to send to the AVS server once audio playing has been interrupted.  <a href="#a2886393035289af3f12f17dbe8e5697b">More...</a><br /></td></tr>
+<tr class="separator:a2886393035289af3f12f17dbe8e5697b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1414b3f5094d108ae929afdb26d12838"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a1414b3f5094d108ae929afdb26d12838">NAMESPACE_AND_NAME_SPEECH_STATE</a> {<a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a9b24ffa4608d8364b1c28d525d848ffc">NAMESPACE_SPEECH_SYNTHESIZER</a>, &quot;SpeechState&quot;}</td></tr>
 <tr class="memdesc:a1414b3f5094d108ae929afdb26d12838"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>NamespaceAndName</code> to send to the <code>ContextManager</code>.  <a href="#a1414b3f5094d108ae929afdb26d12838">More...</a><br /></td></tr>
 <tr class="separator:a1414b3f5094d108ae929afdb26d12838"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,6 +204,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a9efde3e9b21b5348c81fb1f08d8a79eb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a9efde3e9b21b5348c81fb1f08d8a79eb">PLAYING_STATE</a> {&quot;PLAYING&quot;}</td></tr>
 <tr class="memdesc:a9efde3e9b21b5348c81fb1f08d8a79eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>PLAYING</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code>.  <a href="#a9efde3e9b21b5348c81fb1f08d8a79eb">More...</a><br /></td></tr>
 <tr class="separator:a9efde3e9b21b5348c81fb1f08d8a79eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e2968718f16c99f7f85d8f4d08aa0d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a32e2968718f16c99f7f85d8f4d08aa0d">INTERRUPTED_STATE</a> {&quot;INTERRUPTED&quot;}</td></tr>
+<tr class="memdesc:a32e2968718f16c99f7f85d8f4d08aa0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>INTERRUPTED</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code>.  <a href="#a32e2968718f16c99f7f85d8f4d08aa0d">More...</a><br /></td></tr>
+<tr class="separator:a32e2968718f16c99f7f85d8f4d08aa0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d2dfdea95061b20d9fcc66f13833c9d"><td class="memItemLeft" align="right" valign="top">static const long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">OFFSET_IN_MILLISECONDS_TEST</a> {100}</td></tr>
 <tr class="memdesc:a0d2dfdea95061b20d9fcc66f13833c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset in milliseconds returned by the mock media player.  <a href="#a0d2dfdea95061b20d9fcc66f13833c9d">More...</a><br /></td></tr>
 <tr class="separator:a0d2dfdea95061b20d9fcc66f13833c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +219,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a931fdd8845b7feb0d59a0e1766199eeb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a931fdd8845b7feb0d59a0e1766199eeb">FINISHED_STATE_TEST</a></td></tr>
 <tr class="memdesc:a931fdd8845b7feb0d59a0e1766199eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is in <code>FINISHED</code> state.  <a href="#a931fdd8845b7feb0d59a0e1766199eeb">More...</a><br /></td></tr>
 <tr class="separator:a931fdd8845b7feb0d59a0e1766199eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05089048f9f2a523c570b85f38f00cf6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a05089048f9f2a523c570b85f38f00cf6">INTERRUPTED_STATE_TEST</a></td></tr>
+<tr class="memdesc:a05089048f9f2a523c570b85f38f00cf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is in <code>INTERRUPTED</code> state.  <a href="#a05089048f9f2a523c570b85f38f00cf6">More...</a><br /></td></tr>
+<tr class="separator:a05089048f9f2a523c570b85f38f00cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abff1024405730cf3e933ae2793959c96"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#abff1024405730cf3e933ae2793959c96">IDLE_STATE_TEST</a></td></tr>
 <tr class="memdesc:abff1024405730cf3e933ae2793959c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is not handling any directive.  <a href="#abff1024405730cf3e933ae2793959c96">More...</a><br /></td></tr>
 <tr class="separator:abff1024405730cf3e933ae2793959c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -357,6 +398,239 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab63b9d15a65ca74dbf981dc68e037e3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab63b9d15a65ca74dbf981dc68e037e3d">&#9670;&nbsp;</a></span>generateFinishedState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::generateFinishedState </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17941eb2a9008e5e12b2b2c2cea52139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17941eb2a9008e5e12b2b2c2cea52139">&#9670;&nbsp;</a></span>generateInterruptedState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::generateInterruptedState </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb5e21e73912171225041581cad8ea57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb5e21e73912171225041581cad8ea57">&#9670;&nbsp;</a></span>generatePlayingState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::generatePlayingState </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa69f297b2f81343bdd1fb914647198e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa69f297b2f81343bdd1fb914647198e4">&#9670;&nbsp;</a></span>generateSpeakInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speak_test_info.html">SpeakTestInfo</a> alexaClientSDK::capabilityAgents::speechSynthesizer::test::generateSpeakInfo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#abbc3b036d3a7da6b14cefff24cd1c8f7">PlayBehavior</a>&#160;</td>
+          <td class="paramname"><em>playBehavior</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa001bac38e8f164a5a3dfbfb1dd0d8f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa001bac38e8f164a5a3dfbfb1dd0d8f7">&#9670;&nbsp;</a></span>MATCHER() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MATCHER </td>
+          <td>(</td>
+          <td class="paramtype">IsStartedEvent&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&quot;&quot;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa69477606388bb49cebd6afe68fa8f32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa69477606388bb49cebd6afe68fa8f32">&#9670;&nbsp;</a></span>MATCHER() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MATCHER </td>
+          <td>(</td>
+          <td class="paramtype">IsFinishedEvent&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&quot;&quot;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeb61809dc9c789b0191e45bee1e59465"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb61809dc9c789b0191e45bee1e59465">&#9670;&nbsp;</a></span>MATCHER() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MATCHER </td>
+          <td>(</td>
+          <td class="paramtype">IsInterruptedEvent&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&quot;&quot;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5afb5e7e5c5559403e2118830d1ca224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5afb5e7e5c5559403e2118830d1ca224">&#9670;&nbsp;</a></span>matchEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::capabilityAgents::speechSynthesizer::test::matchEvent </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>expectedContent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Match request by the event content. This does a simple string search.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>The request to be checked. </td></tr>
+    <tr><td class="paramname">expectedContent</td><td>The content that should be included in the request. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the content was found or not. </dd></dl>
+
+</div>
+</div>
 <a id="a4306539df699d5c39d20a9a7535e601f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4306539df699d5c39d20a9a7535e601f">&#9670;&nbsp;</a></span>MESSAGE_ID_TEST()</h2>
 
@@ -525,7 +799,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0c4aa7f6f05d10948623ffe6b32a529d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c4aa7f6f05d10948623ffe6b32a529d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c4aa7f6f05d10948623ffe6b32a529d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -554,7 +828,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aae635c458bfb2ee68440ad72e87d0e34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae635c458bfb2ee68440ad72e87d0e34">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae635c458bfb2ee68440ad72e87d0e34">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -583,7 +857,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac98a76b736962d46b414daac7c30afba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac98a76b736962d46b414daac7c30afba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac98a76b736962d46b414daac7c30afba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -612,7 +886,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3df8b34a70d305be684f22cb4f19e5e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3df8b34a70d305be684f22cb4f19e5e4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df8b34a70d305be684f22cb4f19e5e4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -636,12 +910,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Testing cancelDirective after calling Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that <code>acquireChannel</code> is called once. On Focus Changed to foreground, audio should play. Call cancel directive. Expect the <code>ContextManager</code> <code>setState</code> is called when the state changes to <code>PLAYING</code> and then to <code>FINISHED</code>. Expect <code>sendMessage</code> is called only once. On cancel, message should not be sent to AVS. </p>
+<p>Testing cancelDirective after calling Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that <code>acquireChannel</code> is called once. On Focus Changed to foreground, audio should play. Call cancel directive. Expect the <code>ContextManager</code> <code>setState</code> is called when the state changes to <code>PLAYING</code> and then to <code>INTERRUPTED</code>. Expect <code>sendMessage</code> is called twice (SpeechStarted and SpeechInterrupted). </p>
 
 </div>
 </div>
 <a id="adb2eafeb0675f2caff5da3d2cdbed44b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb2eafeb0675f2caff5da3d2cdbed44b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adb2eafeb0675f2caff5da3d2cdbed44b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,7 +944,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a354478f832a3682d0f63407ebf6ab045"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a354478f832a3682d0f63407ebf6ab045">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a354478f832a3682d0f63407ebf6ab045">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -699,7 +973,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="acbe78ce371e1ac080f0b07568671bb55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe78ce371e1ac080f0b07568671bb55">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe78ce371e1ac080f0b07568671bb55">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -728,7 +1002,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3a11ec19dc01e742212f2246cd9096e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a11ec19dc01e742212f2246cd9096e3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a11ec19dc01e742212f2246cd9096e3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -757,7 +1031,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa96e79fb312404f71a27fc55504b4f3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa96e79fb312404f71a27fc55504b4f3a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa96e79fb312404f71a27fc55504b4f3a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -781,12 +1055,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Testing executeCancel() completes execution before onFocusChanged() is called. </p>
+<p>Testing executeCancel() completes execution before onFocusChanged() is called.</p>
+<p>The directive that was cancelled should never play. The second speech should play without any problem. </p>
 
 </div>
 </div>
 <a id="a4fc48c05285a52ec94389bb8fb35c63a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fc48c05285a52ec94389bb8fb35c63a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc48c05285a52ec94389bb8fb35c63a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -815,7 +1090,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6c19600fab572e161c6d2b4e0004e9cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c19600fab572e161c6d2b4e0004e9cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c19600fab572e161c6d2b4e0004e9cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -844,7 +1119,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3e69d2f9865a7c8a34774bea58f55366"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e69d2f9865a7c8a34774bea58f55366">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e69d2f9865a7c8a34774bea58f55366">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -874,7 +1149,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6277735b8cd52306b054ebaa82784041"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6277735b8cd52306b054ebaa82784041">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6277735b8cd52306b054ebaa82784041">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -903,7 +1178,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a253e875d823b749721331ebb146837f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a253e875d823b749721331ebb146837f2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a253e875d823b749721331ebb146837f2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -931,8 +1206,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a30a06563833c31e236f99e9037d03e21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30a06563833c31e236f99e9037d03e21">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/15]</span></h2>
+<a id="aeb17f72e76f9812eceef8c238cf853d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb17f72e76f9812eceef8c238cf853d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/20]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -946,7 +1221,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_onPlayedStopped&#160;</td>
+          <td class="paramtype">testTimer_onPlayedStopped&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -957,6 +1232,156 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Testing <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> will call setFailed() if the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> got a onPlaybackStopped() callback while it is in PLAYING state. </p>
+
+</div>
+</div>
+<a id="afc2bca185ad718a55d0fea7fbe3ecdc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc2bca185ad718a55d0fea7fbe3ecdc4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_replaceAllWithEmptyQueue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> REPLACE_ALL when there is no active directive.</p>
+<p>Expect the speech synthesizer to play the new speech and go to idle after. </p>
+
+</div>
+</div>
+<a id="a2c9adaed9f8f84412602fba69228ae46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9adaed9f8f84412602fba69228ae46">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_replaceAllWithNonEmptyQueue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> REPLACE_ALL when the queue has one speak directive that hasn't started yet.</p>
+<p>Expect the speech synthesizer to cancel the enqueued directive and play the new speech. </p>
+
+</div>
+</div>
+<a id="a2c234e93d824e4295f115ede67ca14bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c234e93d824e4295f115ede67ca14bc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_replaceAllStopActiveSpeech&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> REPLACE_ALL when there is an ongoing speech.</p>
+<p>Expect the speech synthesizer to cancel the active speech, send an interrupted event and play the new speech. </p>
+
+</div>
+</div>
+<a id="a045cfc95f22a497b98296228d1e6a3c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a045cfc95f22a497b98296228d1e6a3c2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_enqueueWithActiveSpeech&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> ENQUEUE play behavior when there is already an active directive.</p>
+<p>Expect the speech synthesizer to finish playing the first directive and play the enqueued directive right after. </p>
+
+</div>
+</div>
+<a id="a1d093562de96867f898dc4cbe70582dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d093562de96867f898dc4cbe70582dc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_replaceEnqueuedWithAnotherEnqueuedItem&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> REPLACE_ENQUEUED play behavior when there is one directive playing and one in the queue.</p>
+<p>Expect the speech synthesizer to finish playing the first directive, skip the second and play the third directive. </p>
 
 </div>
 </div>
@@ -1093,6 +1518,57 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a3c7a8ba186995f3e5d4475e6dca4d881">FINISHED_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a3c7a8ba186995f3e5d4475e6dca4d881"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a3c7a8ba186995f3e5d4475e6dca4d881">alexaClientSDK::capabilityAgents::speechSynthesizer::test::FINISHED_STATE</a></div><div class="ttdeci">static const std::string FINISHED_STATE(&quot;FINISHED&quot;)</div><div class="ttdoc">The FINISHED state of the SpeechSynthesizer. </div></div>
 </div><!-- fragment -->
 <p>The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is not handling any directive. </p>
+
+</div>
+</div>
+<a id="a32e2968718f16c99f7f85d8f4d08aa0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e2968718f16c99f7f85d8f4d08aa0d">&#9670;&nbsp;</a></span>INTERRUPTED_STATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::INTERRUPTED_STATE {&quot;INTERRUPTED&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <code>INTERRUPTED</code> state of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code>. </p>
+
+</div>
+</div>
+<a id="a05089048f9f2a523c570b85f38f00cf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05089048f9f2a523c570b85f38f00cf6">&#9670;&nbsp;</a></span>INTERRUPTED_STATE_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::INTERRUPTED_STATE_TEST</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#ad6994ffd5a70c55af342188de386f00a">TOKEN_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">OFFSET_IN_MILLISECONDS_TEST</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a32e2968718f16c99f7f85d8f4d08aa0d">INTERRUPTED_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_ad6994ffd5a70c55af342188de386f00a"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#ad6994ffd5a70c55af342188de386f00a">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TOKEN_TEST</a></div><div class="ttdeci">static const std::string TOKEN_TEST(&quot;Token_Test&quot;)</div><div class="ttdoc">Token for testing. </div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a0d2dfdea95061b20d9fcc66f13833c9d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:126</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a32e2968718f16c99f7f85d8f4d08aa0d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a32e2968718f16c99f7f85d8f4d08aa0d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::INTERRUPTED_STATE</a></div><div class="ttdeci">static const std::string INTERRUPTED_STATE</div><div class="ttdoc">The INTERRUPTED state of the SpeechSynthesizer. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:123</div></div>
+</div><!-- fragment -->
+<p>The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is in <code>INTERRUPTED</code> state. </p>
 
 </div>
 </div>
@@ -1239,8 +1715,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#ad6994ffd5a70c55af342188de386f00a">TOKEN_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">OFFSET_IN_MILLISECONDS_TEST</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a9efde3e9b21b5348c81fb1f08d8a79eb">PLAYING_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_ad6994ffd5a70c55af342188de386f00a"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#ad6994ffd5a70c55af342188de386f00a">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TOKEN_TEST</a></div><div class="ttdeci">static const std::string TOKEN_TEST(&quot;Token_Test&quot;)</div><div class="ttdoc">Token for testing. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a9efde3e9b21b5348c81fb1f08d8a79eb"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a9efde3e9b21b5348c81fb1f08d8a79eb">alexaClientSDK::capabilityAgents::speechSynthesizer::test::PLAYING_STATE</a></div><div class="ttdeci">static const std::string PLAYING_STATE</div><div class="ttdoc">The PLAYING state of the SpeechSynthesizer. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:110</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a0d2dfdea95061b20d9fcc66f13833c9d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:113</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a9efde3e9b21b5348c81fb1f08d8a79eb"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a9efde3e9b21b5348c81fb1f08d8a79eb">alexaClientSDK::capabilityAgents::speechSynthesizer::test::PLAYING_STATE</a></div><div class="ttdeci">static const std::string PLAYING_STATE</div><div class="ttdoc">The PLAYING state of the SpeechSynthesizer. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:120</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_html_a0d2dfdea95061b20d9fcc66f13833c9d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0d2dfdea95061b20d9fcc66f13833c9d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> SpeechSynthesizerTest.cpp:126</div></div>
 </div><!-- fragment -->
 <p>The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a></code> is in <code>PLAYING</code> state. </p>
 
@@ -1270,11 +1746,83 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a303faaf5557cd7b768972adaba324b75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a303faaf5557cd7b768972adaba324b75">&#9670;&nbsp;</a></span>SPEECH_FINISHED_EVENT_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::SPEECH_FINISHED_EVENT_NAME {&quot;SpeechFinished&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the event to send to the AVS server once audio finishes playing. </p>
+
+</div>
+</div>
+<a id="a2886393035289af3f12f17dbe8e5697b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2886393035289af3f12f17dbe8e5697b">&#9670;&nbsp;</a></span>SPEECH_INTERRUPTED_EVENT_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::SPEECH_INTERRUPTED_EVENT_NAME {&quot;SpeechInterrupted&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the event to send to the AVS server once audio playing has been interrupted. </p>
+
+</div>
+</div>
+<a id="abdeadd67984c6baf1557d7868946df70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdeadd67984c6baf1557d7868946df70">&#9670;&nbsp;</a></span>SPEECH_STARTED_EVENT_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::capabilityAgents::speechSynthesizer::test::SPEECH_STARTED_EVENT_NAME {&quot;SpeechStarted&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the event to send to the AVS server once audio starting playing. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

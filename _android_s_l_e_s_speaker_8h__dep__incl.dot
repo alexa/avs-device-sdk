@@ -2,11 +2,11 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/An
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESSpeaker.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
-  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESSpeaker.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_speaker_8cpp.html"];
-  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESSpeakerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_speaker_test_8cpp.html"];
+  Node42 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESSpeaker.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node42 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
+  Node42 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESSpeaker.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_speaker_8cpp.html"];
+  Node42 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESSpeakerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_speaker_test_8cpp.html"];
 }

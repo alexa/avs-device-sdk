@@ -3,11 +3,11 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::PlaybackHandlerInterface"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockPlaybackHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_handler.html"];
-  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html"];
-  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html"];
+  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::PlaybackHandler\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockPlaybackHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_handler.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html"];
 }

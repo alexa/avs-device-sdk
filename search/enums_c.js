@@ -5,7 +5,7 @@ var searchData=
   ['periodtype',['PeriodType',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#a3abfcab70fb00bbe0fb6137c8e15b77b',1,'alexaClientSDK::avsCommon::utils::timing::Timer']]],
   ['playbackbutton',['PlaybackButton',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556',1,'alexaClientSDK::avsCommon::avs']]],
   ['playbacktoggle',['PlaybackToggle',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad9f7d4000e3b111db271f73d9e34604b',1,'alexaClientSDK::avsCommon::avs']]],
-  ['playbehavior',['PlayBehavior',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#aeba80bab2e001369c59500827c1af540',1,'alexaClientSDK::capabilityAgents::audioPlayer']]],
+  ['playbehavior',['PlayBehavior',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#abbc3b036d3a7da6b14cefff24cd1c8f7',1,'alexaClientSDK::avsCommon::avs']]],
   ['playeractivity',['PlayerActivity',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47b',1,'alexaClientSDK::avsCommon::avs']]],
   ['playlistparseresult',['PlaylistParseResult',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#ab60fb31cb5497bc9f16feda4fc24fe8a',1,'alexaClientSDK::avsCommon::utils::playlistParser']]],
   ['playlisttype',['PlaylistType',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484',1,'alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserInterface']]]

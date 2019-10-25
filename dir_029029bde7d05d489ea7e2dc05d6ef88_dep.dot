@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/TemplateRuntime/include/Temp
   dir_029029bde7d05d489ea7e2dc05d6ef88 [shape=box, label="TemplateRuntime", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_029029bde7d05d489ea7e2dc05d6ef88.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_029029bde7d05d489ea7e2dc05d6ef88->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000207_000015.html"];
+  dir_029029bde7d05d489ea7e2dc05d6ef88->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000209_000015.html"];
 }

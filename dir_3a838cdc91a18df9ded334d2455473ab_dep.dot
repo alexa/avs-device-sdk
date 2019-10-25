@@ -9,6 +9,6 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/Alerts/include/Alerts/Storag
   dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000302_000015.html"];
-  dir_3a838cdc91a18df9ded334d2455473ab->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000138_000302.html"];
-  dir_3a838cdc91a18df9ded334d2455473ab->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000138_000015.html"];
+  dir_3a838cdc91a18df9ded334d2455473ab->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000145_000302.html"];
+  dir_3a838cdc91a18df9ded334d2455473ab->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000145_000015.html"];
 }

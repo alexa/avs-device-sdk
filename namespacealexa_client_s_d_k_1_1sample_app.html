@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -120,7 +120,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57eaa2a72fe7fd9105fe2571e54286c4b420">SettingsValues::WAKEWORD_CONFIRMATION</a> = '3', 
 <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57eaf697004957d30cca0edfbecb6d6658b9">SettingsValues::SPEECH_CONFIRMATION</a> = '4', 
 <br />
-&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea7ed2a86d12092f143a4024a85250b9b4">SettingsValues::TIME_ZONE</a> = '5'
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea7ed2a86d12092f143a4024a85250b9b4">SettingsValues::TIME_ZONE</a> = '5', 
+<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea5dfd352dd6b7a5d118237fcf1e19fcc1">SettingsValues::QUIT</a> = 'q'
 <br />
  }</td></tr>
 <tr class="separator:acf0d771f547caeda5a3a7d2bacaaa57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,6 +183,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aefd8f66814c381f356c6a4503c501a16"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#aefd8f66814c381f356c6a4503c501a16">DISPLAY_CARD_KEY</a> (&quot;displayCardsSupported&quot;)</td></tr>
 <tr class="memdesc:aefd8f66814c381f356c6a4503c501a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for setting if display cards are supported or not under the <code>SAMPLE_APP_CONFIG_KEY</code> configuration node.  <a href="#aefd8f66814c381f356c6a4503c501a16">More...</a><br /></td></tr>
 <tr class="separator:aefd8f66814c381f356c6a4503c501a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c3306e3d5823461602743f482a13b5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a89c3306e3d5823461602743f482a13b5">AUDIO_MEDIAPLAYER_POOL_SIZE_KEY</a> (&quot;audioMediaPlayerPoolSize&quot;)</td></tr>
+<tr class="memdesc:a89c3306e3d5823461602743f482a13b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for the Audio MediaPlayer pool size.  <a href="#a89c3306e3d5823461602743f482a13b5">More...</a><br /></td></tr>
+<tr class="separator:a89c3306e3d5823461602743f482a13b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8877f57a2bdb7c67cc02e92d57c72b0d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a8877f57a2bdb7c67cc02e92d57c72b0d">TAG</a> (&quot;SampleApplication&quot;)</td></tr>
 <tr class="memdesc:a8877f57a2bdb7c67cc02e92d57c72b0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a8877f57a2bdb7c67cc02e92d57c72b0d">More...</a><br /></td></tr>
 <tr class="separator:a8877f57a2bdb7c67cc02e92d57c72b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -260,6 +264,8 @@ Variables</h2></td></tr>
 <tr class="memitem:aaf14a076dae227686bb6569cac20f2ac"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#aaf14a076dae227686bb6569cac20f2ac">MAX_READERS</a> = 10</td></tr>
 <tr class="memdesc:aaf14a076dae227686bb6569cac20f2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of readers of the stream.  <a href="#aaf14a076dae227686bb6569cac20f2ac">More...</a><br /></td></tr>
 <tr class="separator:aaf14a076dae227686bb6569cac20f2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac66040f75a2f9e898775145395db2be1"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ac66040f75a2f9e898775145395db2be1">AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT</a> = 2</td></tr>
+<tr class="separator:ac66040f75a2f9e898775145395db2be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a09d5a0cb89682330ad5a59a5ce6435f3">AMOUNT_OF_AUDIO_DATA_IN_BUFFER</a> = std::chrono::seconds(15)</td></tr>
 <tr class="memdesc:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The amount of audio data to keep in the ring buffer.  <a href="#a09d5a0cb89682330ad5a59a5ce6435f3">More...</a><br /></td></tr>
 <tr class="separator:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -389,6 +395,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a1601cdeb2e1f8c0a8d7b94bb1fbd6d98"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a1601cdeb2e1f8c0a8d7b94bb1fbd6d98">OPTION_ENUM_START</a> = 1</td></tr>
 <tr class="memdesc:a1601cdeb2e1f8c0a8d7b94bb1fbd6d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of the first option in displaying a list of options.  <a href="#a1601cdeb2e1f8c0a8d7b94bb1fbd6d98">More...</a><br /></td></tr>
 <tr class="separator:a1601cdeb2e1f8c0a8d7b94bb1fbd6d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65b85aced66635152a8f3def92c30309"><td class="memItemLeft" align="right" valign="top">static const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a65b85aced66635152a8f3def92c30309">OPTION_ENUM_QUIT</a> = 0</td></tr>
+<tr class="memdesc:a65b85aced66635152a8f3def92c30309"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number used to quit a numeric options menu.  <a href="#a65b85aced66635152a8f3def92c30309">More...</a><br /></td></tr>
+<tr class="separator:a65b85aced66635152a8f3def92c30309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97bc06fddd19074a41198ba3e4dc004a"><td class="memItemLeft" align="right" valign="top">static const int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a97bc06fddd19074a41198ba3e4dc004a">INCREASE_VOLUME</a> = 10</td></tr>
 <tr class="separator:a97bc06fddd19074a41198ba3e4dc004a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d653465febd5826c18ac776edbbbf0c"><td class="memItemLeft" align="right" valign="top">static const int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a4d653465febd5826c18ac776edbbbf0c">DECREASE_VOLUME</a> = -10</td></tr>
@@ -445,6 +454,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57eaa2a72fe7fd9105fe2571e54286c4b420"></a>WAKEWORD_CONFIRMATION&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57eaf697004957d30cca0edfbecb6d6658b9"></a>SPEECH_CONFIRMATION&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57ea7ed2a86d12092f143a4024a85250b9b4"></a>TIME_ZONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57ea5dfd352dd6b7a5d118237fcf1e19fcc1"></a>QUIT&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -475,6 +485,34 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Tag for find the AudioItemId in the payload of the RenderPlayerInfo directive. </p>
+
+</div>
+</div>
+<a id="a89c3306e3d5823461602743f482a13b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89c3306e3d5823461602743f482a13b5">&#9670;&nbsp;</a></span>AUDIO_MEDIAPLAYER_POOL_SIZE_KEY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::sampleApp::AUDIO_MEDIAPLAYER_POOL_SIZE_KEY </td>
+          <td>(</td>
+          <td class="paramtype">&quot;audioMediaPlayerPoolSize&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Key for the Audio MediaPlayer pool size. </p>
 
 </div>
 </div>
@@ -1274,6 +1312,29 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ac66040f75a2f9e898775145395db2be1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac66040f75a2f9e898775145395db2be1">&#9670;&nbsp;</a></span>AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned int alexaClientSDK::sampleApp::AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT = 2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The default number of MediaPlayers used by AudioPlayer CA/ Can be overridden in the Configuration using <code>AUDIO_MEDIAPLAYER_POOL_SIZE_KEY</code> </p>
+
+</div>
+</div>
 <a id="a44857eef9fbf2976a6eda05b13c6f4ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a44857eef9fbf2976a6eda05b13c6f4ca">&#9670;&nbsp;</a></span>AUTH_FAILED_STR</h2>
 
@@ -1567,7 +1628,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;|                                                                            |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;E&#39; followed by Enter to enable this configuration.                  |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;D&#39; followed by Enter to disable this configuration.                 |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;|                                                                            |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;E&#39; followed by Enter to enable this configuration.                  |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;D&#39; followed by Enter to disable this configuration.                 |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;q&#39; followed by Enter to quit this configuration menu.               |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
 </div>
 </div>
 <a id="ad0cd0434c923487f201c31fa38d9a2ba"></a>
@@ -2039,6 +2100,30 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a65b85aced66635152a8f3def92c30309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65b85aced66635152a8f3def92c30309">&#9670;&nbsp;</a></span>OPTION_ENUM_QUIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned alexaClientSDK::sampleApp::OPTION_ENUM_QUIT = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number used to quit a numeric options menu. </p>
 
 </div>
 </div>
@@ -2657,7 +2742,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                          Setting Options:                                  |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Change Language:                                                           |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|       Press &#39;1&#39; followed by Enter to see language options.                 |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Change Do Not Disturb mode:                                                |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|       Press &#39;2&#39; followed by Enter to see Do Not Disturb options.           |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Change Wake Word Confirmation:                                             |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|       Press &#39;3&#39; followed by Enter to see wake word confirmation options.   |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Change Speech Confirmation:                                                |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|       Press &#39;4&#39; followed by Enter to see speech confirmation options.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Change Time Zone:                                                          |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|       Press &#39;5&#39; followed by Enter to see time zone options.                |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                          Setting Options:                                  |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;1&#39; followed by Enter to see language options.                      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;2&#39; followed by Enter to see Do Not Disturb options.                |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;3&#39; followed by Enter to see wake word confirmation options.        |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;4&#39; followed by Enter to see speech confirmation options.           |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;5&#39; followed by Enter to see time zone options.                     |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|  Press &#39;q&#39; followed by Enter to exit Settings Options.                     |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
 </div>
 </div>
 <a id="ad589049f24a32ff197e5e6ef906d0f70"></a>
@@ -2947,7 +3032,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                          TimeZone Configuration:                           |&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                                                                            |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;1&#39; followed by Enter to set the time zone to America/Vancouver.     |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;2&#39; followed by Enter to set the time zone to America/Edmonton.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;3&#39; followed by Enter to set the time zone to America/Winnipeg.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;4&#39; followed by Enter to set the time zone to America/Toronto.       |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;5&#39; followed by Enter to set the time zone to America/Halifax.       |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;6&#39; followed by Enter to set the time zone to America/St_Johns.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                          TimeZone Configuration:                           |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;|                                                                            |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;1&#39; followed by Enter to set the time zone to America/Vancouver.     |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;2&#39; followed by Enter to set the time zone to America/Edmonton.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;3&#39; followed by Enter to set the time zone to America/Winnipeg.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;4&#39; followed by Enter to set the time zone to America/Toronto.       |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;5&#39; followed by Enter to set the time zone to America/Halifax.       |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;6&#39; followed by Enter to set the time zone to America/St_Johns.      |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;| Press &#39;q&#39; followed by Enter to quit this configuration menu.               |\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div></div><!-- fragment -->
 </div>
 </div>
 <a id="a70af6ab04aa9fa93f34a7171386619a9"></a>
@@ -3092,7 +3177,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

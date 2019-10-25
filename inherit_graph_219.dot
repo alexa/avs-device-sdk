@@ -3,5 +3,11 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::playlist\lParser::M3UContent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html",tooltip="A struct used to encapsulate information retrieved from an M3U playlist. "];
+  Node0 [label="alexaClientSDK::mediaPlayer\l::android::FFmpegInputController\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_input_controller_interface.html"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::mediaPlayer\l::android::FFmpegAttachmentInput\lController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_attachment_input_controller.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::mediaPlayer\l::android::FFmpegStreamInputController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_stream_input_controller.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::mediaPlayer\l::android::FFmpegUrlInputController",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_url_input_controller.html"];
 }

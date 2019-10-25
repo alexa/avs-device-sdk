@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,8 +82,6 @@ Inheritance diagram for alexaClientSDK::applicationUtilities::resources::audio::
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface_inherit__map" id="alexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_microphone.html" title="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidSLESMicrophone" alt="" coords="250,5,436,57"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1sample_app_1_1_port_audio_microphone_wrapper.html" title="This acts as a wrapper around PortAudio, a cross&#45;platform open&#45;source audio I/O library. " alt="" coords="239,81,447,120"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -93,6 +91,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2ebc21b7f83c90ea51ae149991b14f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac07c81314cb662b42e73e134600a7fd9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html#ac07c81314cb662b42e73e134600a7fd9">startStreamingMicrophoneData</a> ()=0</td></tr>
 <tr class="separator:ac07c81314cb662b42e73e134600a7fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98768f305b01164100bc4cb2e34abcc1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html#a98768f305b01164100bc4cb2e34abcc1">isStreaming</a> ()=0</td></tr>
+<tr class="separator:a98768f305b01164100bc4cb2e34abcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43934bd5b214f3bcd88b55e725721627"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html#a43934bd5b214f3bcd88b55e725721627">~MicrophoneInterface</a> ()=default</td></tr>
 <tr class="separator:a43934bd5b214f3bcd88b55e725721627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -126,6 +126,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a98768f305b01164100bc4cb2e34abcc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98768f305b01164100bc4cb2e34abcc1">&#9670;&nbsp;</a></span>isStreaming()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::applicationUtilities::resources::audio::MicrophoneInterface::isStreaming </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the microphone is currently streaming.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the microphone is streaming. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_microphone.html#ab544e997905bfe4b4cf103a6f0468b00">alexaClientSDK::applicationUtilities::androidUtilities::AndroidSLESMicrophone</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_port_audio_microphone_wrapper.html#a8fd74691d67db4c364453683c238e200">alexaClientSDK::sampleApp::PortAudioMicrophoneWrapper</a>.</p>
+
+</div>
+</div>
 <a id="ac07c81314cb662b42e73e134600a7fd9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac07c81314cb662b42e73e134600a7fd9">&#9670;&nbsp;</a></span>startStreamingMicrophoneData()</h2>
 
@@ -191,7 +220,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

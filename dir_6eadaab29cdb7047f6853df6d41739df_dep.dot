@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluet
   dir_6eadaab29cdb7047f6853df6d41739df [shape=box, label="Bluetooth", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6eadaab29cdb7047f6853df6d41739df.html"];
   }
   dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
-  dir_6eadaab29cdb7047f6853df6d41739df->dir_97afc8111b754cf401b73024f872f45d [headlabel="4", labeldistance=1.5 headhref="dir_000083_000016.html"];
+  dir_6eadaab29cdb7047f6853df6d41739df->dir_97afc8111b754cf401b73024f872f45d [headlabel="4", labeldistance=1.5 headhref="dir_000088_000016.html"];
 }

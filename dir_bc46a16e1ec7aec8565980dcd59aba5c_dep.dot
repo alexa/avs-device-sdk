@@ -13,9 +13,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/SpeakerManager" {
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_8620b6ccbdfcb9177a1dbdba6aef9122->dir_58f46be1458388d2fc10aa8246ff1704 [headlabel="2", labeldistance=1.5 headhref="dir_000193_000190.html"];
-  dir_8620b6ccbdfcb9177a1dbdba6aef9122->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000193_000015.html"];
-  dir_442b93685f9da00927e786b83e62ebb1->dir_58f46be1458388d2fc10aa8246ff1704 [headlabel="2", labeldistance=1.5 headhref="dir_000192_000190.html"];
-  dir_442b93685f9da00927e786b83e62ebb1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000192_000015.html"];
-  dir_58f46be1458388d2fc10aa8246ff1704->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000190_000015.html"];
+  dir_8620b6ccbdfcb9177a1dbdba6aef9122->dir_58f46be1458388d2fc10aa8246ff1704 [headlabel="2", labeldistance=1.5 headhref="dir_000195_000192.html"];
+  dir_8620b6ccbdfcb9177a1dbdba6aef9122->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000195_000015.html"];
+  dir_442b93685f9da00927e786b83e62ebb1->dir_58f46be1458388d2fc10aa8246ff1704 [headlabel="2", labeldistance=1.5 headhref="dir_000194_000192.html"];
+  dir_442b93685f9da00927e786b83e62ebb1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000194_000015.html"];
+  dir_58f46be1458388d2fc10aa8246ff1704->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000192_000015.html"];
 }

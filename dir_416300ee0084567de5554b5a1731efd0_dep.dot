@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/EqualizerImplementations/test" {
   }
   dir_c3ab2912bcaa751858979eb56f868649 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_c3ab2912bcaa751858979eb56f868649.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_c3ab2912bcaa751858979eb56f868649->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000222_000015.html"];
-  dir_416300ee0084567de5554b5a1731efd0->dir_c3ab2912bcaa751858979eb56f868649 [headlabel="6", labeldistance=1.5 headhref="dir_000225_000222.html"];
-  dir_416300ee0084567de5554b5a1731efd0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000225_000015.html"];
+  dir_c3ab2912bcaa751858979eb56f868649->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000224_000015.html"];
+  dir_416300ee0084567de5554b5a1731efd0->dir_c3ab2912bcaa751858979eb56f868649 [headlabel="6", labeldistance=1.5 headhref="dir_000227_000224.html"];
+  dir_416300ee0084567de5554b5a1731efd0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000227_000015.html"];
 }

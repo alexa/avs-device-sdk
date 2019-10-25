@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,7 +77,9 @@ $(function() {
 <div class="textblock"><code>#include &lt;random&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;climits&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
@@ -89,15 +91,6 @@ Include dependency graph for UUIDGeneration.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_u_u_i_d_generation_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_u_u_i_d_generation_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_u_u_i_d_generation_8cpp" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_u_u_i_d_generation_8cpp">
-<area shape="rect" id="node10" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="808,105,984,144"/>
-<area shape="rect" id="node28" href="_u_u_i_d_generation_8h.html" title="AVSCommon/Utils/UUIDGeneration\l/UUIDGeneration.h" alt="" coords="1479,192,1712,231"/>
-<area shape="rect" id="node13" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="425,192,639,231"/>
-<area shape="rect" id="node20" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="885,279,1061,317"/>
-<area shape="rect" id="node21" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1039,192,1215,231"/>
-<area shape="rect" id="node26" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="767,192,964,231"/>
-<area shape="rect" id="node27" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1336,365,1512,404"/>
-<area shape="rect" id="node22" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1136,279,1312,317"/>
-<area shape="rect" id="node24" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1024,365,1200,404"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -126,6 +119,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a7cf01fbb04b393956de3adac97e95db0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a7cf01fbb04b393956de3adac97e95db0">alexaClientSDK::avsCommon::utils::uuidGeneration::SEPARATOR</a> (&quot;-&quot;)</td></tr>
 <tr class="memdesc:a7cf01fbb04b393956de3adac97e95db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Separator used between UUID fields.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a7cf01fbb04b393956de3adac97e95db0">More...</a><br /></td></tr>
 <tr class="separator:a7cf01fbb04b393956de3adac97e95db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e664023ae41d0baed5e1373a459ca28"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a3e664023ae41d0baed5e1373a459ca28">alexaClientSDK::avsCommon::utils::uuidGeneration::g_salt</a> (&quot;default&quot;)</td></tr>
+<tr class="memdesc:a3e664023ae41d0baed5e1373a459ca28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique g_salt to use, settable by caller. Must not be accessed unless g_mutex is locked.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a3e664023ae41d0baed5e1373a459ca28">More...</a><br /></td></tr>
+<tr class="separator:a3e664023ae41d0baed5e1373a459ca28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5571ea7a6cb5327fbb320de339762d0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a5571ea7a6cb5327fbb320de339762d0f">alexaClientSDK::avsCommon::utils::uuidGeneration::setSalt</a> (const std::string &amp;newSalt)</td></tr>
+<tr class="separator:a5571ea7a6cb5327fbb320de339762d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaa2765261f2c0ca4015a98ef1175bfb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#adaa2765261f2c0ca4015a98ef1175bfb">alexaClientSDK::avsCommon::utils::uuidGeneration::generateHexWithReplacement</a> (std::independent_bits_engine&lt; std::default_random_engine, CHAR_BIT, uint8_t &gt; &amp;ibe, unsigned int numDigits, uint8_t replacementBits, unsigned short numReplacementBits)</td></tr>
 <tr class="separator:adaa2765261f2c0ca4015a98ef1175bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0073490cfe8c4218bdbc4cb85479e55e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a0073490cfe8c4218bdbc4cb85479e55e">alexaClientSDK::avsCommon::utils::uuidGeneration::generateHex</a> (std::independent_bits_engine&lt; std::default_random_engine, CHAR_BIT, uint8_t &gt; &amp;ibe, unsigned int numDigits)</td></tr>
@@ -147,6 +145,18 @@ Variables</h2></td></tr>
 <tr class="memitem:a84d0af91d9812874964b1cbc82e22e93"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a84d0af91d9812874964b1cbc82e22e93">alexaClientSDK::avsCommon::utils::uuidGeneration::BITS_IN_HEX_DIGIT</a> = 4</td></tr>
 <tr class="memdesc:a84d0af91d9812874964b1cbc82e22e93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bits in a hex digit.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a84d0af91d9812874964b1cbc82e22e93">More...</a><br /></td></tr>
 <tr class="separator:a84d0af91d9812874964b1cbc82e22e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec7f5a1215400e855685abf10ab07556"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#aec7f5a1215400e855685abf10ab07556">alexaClientSDK::avsCommon::utils::uuidGeneration::g_seedNeeded</a> = true</td></tr>
+<tr class="memdesc:aec7f5a1215400e855685abf10ab07556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if next UUID should be seeded. Must not be accessed unless g_mutex is locked.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#aec7f5a1215400e855685abf10ab07556">More...</a><br /></td></tr>
+<tr class="separator:aec7f5a1215400e855685abf10ab07556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938e19c708470d46bc8221f389825449"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a938e19c708470d46bc8221f389825449">alexaClientSDK::avsCommon::utils::uuidGeneration::g_mutex</a></td></tr>
+<tr class="memdesc:a938e19c708470d46bc8221f389825449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock to avoid collisions in generationing uuid and setting seed.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a938e19c708470d46bc8221f389825449">More...</a><br /></td></tr>
+<tr class="separator:a938e19c708470d46bc8221f389825449"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c5cb2f36ad254a4de1f0f38781d3459"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a7c5cb2f36ad254a4de1f0f38781d3459">alexaClientSDK::avsCommon::utils::uuidGeneration::ENTROPY_THRESHOLD</a> = 600</td></tr>
+<tr class="memdesc:a7c5cb2f36ad254a4de1f0f38781d3459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entropy Threshold for sufficient uniqueness. Value chosen by experiment.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a7c5cb2f36ad254a4de1f0f38781d3459">More...</a><br /></td></tr>
+<tr class="separator:a7c5cb2f36ad254a4de1f0f38781d3459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab56a42b705eec358002c32f9d10aced2"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#ab56a42b705eec358002c32f9d10aced2">alexaClientSDK::avsCommon::utils::uuidGeneration::ENTROPY_REPEAT_THRESHOLD</a> = 16</td></tr>
+<tr class="memdesc:ab56a42b705eec358002c32f9d10aced2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Catch for platforms where entropy is a hard coded value. Value chosen by experiment.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#ab56a42b705eec358002c32f9d10aced2">More...</a><br /></td></tr>
+<tr class="separator:ab56a42b705eec358002c32f9d10aced2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -178,7 +188,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

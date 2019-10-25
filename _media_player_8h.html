@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.15.0</span>
+   &#160;<span id="projectnumber">1.16.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,6 +82,8 @@ $(function() {
 <code>#include &lt;queue&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;unordered_set&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;gst/gst.h&gt;</code><br />
 <code>#include &lt;gst/app/gstappsrc.h&gt;</code><br />
 <code>#include &lt;gst/base/gstbasesink.h&gt;</code><br />
@@ -100,38 +102,6 @@ Include dependency graph for MediaPlayer.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_media_player_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8h" id="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8h">
-<area shape="rect" id="node14" href="_equalizer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerInterface.h" alt="" coords="2071,119,2262,157"/>
-<area shape="rect" id="node20" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="725,525,928,577"/>
-<area shape="rect" id="node35" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="3101,205,3291,244"/>
-<area shape="rect" id="node36" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2384,712,2592,751"/>
-<area shape="rect" id="node38" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1605,625,1822,664"/>
-<area shape="rect" id="node40" href="_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserInterface.h" alt="" coords="973,365,1182,404"/>
-<area shape="rect" id="node43" href="_url_content_to_attachment_converter_8h.html" title="PlaylistParser/UrlContent\lToAttachmentConverter.h" alt="" coords="519,119,691,157"/>
-<area shape="rect" id="node48" href="_offset_manager_8h.html" title="MediaPlayer/OffsetManager.h" alt="" coords="2971,539,3168,564"/>
-<area shape="rect" id="node49" href="_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="2597,372,2806,397"/>
-<area shape="rect" id="node50" href="_source_interface_8h.html" title="MediaPlayer/SourceInterface.h" alt="" coords="1576,292,1781,317"/>
-<area shape="rect" id="node15" href="_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="1994,292,2118,317"/>
-<area shape="rect" id="node18" href="hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="2228,365,2420,404"/>
-<area shape="rect" id="node19" href="_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="2041,365,2205,404"/>
-<area shape="rect" id="node21" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="1259,625,1474,664"/>
-<area shape="rect" id="node22" href="_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="1383,972,1553,1011"/>
-<area shape="rect" id="node23" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1677,719,1904,744"/>
-<area shape="rect" id="node34" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="1334,719,1551,744"/>
-<area shape="rect" id="node24" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="449,799,650,837"/>
-<area shape="rect" id="node25" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="726,885,927,924"/>
-<area shape="rect" id="node30" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="607,972,769,1011"/>
-<area shape="rect" id="node32" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="952,885,1158,924"/>
-<area shape="rect" id="node33" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="449,885,650,924"/>
-<area shape="rect" id="node26" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1006,972,1207,1011"/>
-<area shape="rect" id="node29" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="839,1059,1001,1097"/>
-<area shape="rect" id="node37" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="2373,892,2595,917"/>
-<area shape="rect" id="node39" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="2578,972,2787,1011"/>
-<area shape="rect" id="node41" href="_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="1892,452,2113,477"/>
-<area shape="rect" id="node42" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="1950,539,2055,564"/>
-<area shape="rect" id="node44" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="397,365,585,404"/>
-<area shape="rect" id="node45" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1307,365,1501,404"/>
-<area shape="rect" id="node46" href="_content_decrypter_8h.html" title="PlaylistParser/ContentDecrypter.h" alt="" coords="253,212,475,237"/>
-<area shape="rect" id="node47" href="_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="599,292,798,317"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -139,8 +109,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_media_player_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8hdep" id="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_media_player_8hdep">
-<area shape="rect" id="node2" href="_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/MediaPlayer.cpp" alt="" coords="5,119,235,171"/>
-<area shape="rect" id="node3" href="_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="259,119,488,171"/>
 </map>
 </div>
 </div>
@@ -168,7 +136,7 @@ Typedefs</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.15.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.16.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

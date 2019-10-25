@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/Settings/include/Settings/Types/LocaleWakeWordsSetting.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node57 [label="/workplace/avs-device\l-sdk/Settings/include\l/Settings/Types/LocaleWakeWords\lSetting.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node57 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_settings_manager_builder_8cpp.html"];
+  Node57 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node59 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_locale_handler_test_8cpp.html"];
+  Node57 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="/workplace/avs-device\l-sdk/Settings/src/Types\l/LocaleWakeWordsSetting.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_locale_wake_words_setting_8cpp.html"];
+  Node57 -> Node61 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node61 [label="/workplace/avs-device\l-sdk/Settings/test/LocaleWake\lWordsSettingTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_locale_wake_words_setting_test_8cpp.html"];
+}

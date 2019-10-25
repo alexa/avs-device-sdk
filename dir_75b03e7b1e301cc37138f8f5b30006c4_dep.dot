@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/KWD/KWDProvider/src" {
   dir_75b03e7b1e301cc37138f8f5b30006c4 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_75b03e7b1e301cc37138f8f5b30006c4.html"];
   }
   dir_9d4ae4016b26aa9beb737196ea1eaf71 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_9d4ae4016b26aa9beb737196ea1eaf71.html"];
-  dir_75b03e7b1e301cc37138f8f5b30006c4->dir_9d4ae4016b26aa9beb737196ea1eaf71 [headlabel="1", labeldistance=1.5 headhref="dir_000246_000244.html"];
+  dir_75b03e7b1e301cc37138f8f5b30006c4->dir_9d4ae4016b26aa9beb737196ea1eaf71 [headlabel="1", labeldistance=1.5 headhref="dir_000244_000242.html"];
 }
