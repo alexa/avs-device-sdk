@@ -904,7 +904,7 @@ void ExternalMediaPlayer::notifyObservers(
     auto observers = m_observers;
     lock.unlock();
 
-    for (auto& observer : observers) {
+    for (const auto& observer : observers) {
         if (sessionProperties) {
             observer->onLoginStateProvided(playerId, *sessionProperties);
         }

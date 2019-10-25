@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ static const std::string LIBCURLUTILS_CONFIG_KEY = "libcurlUtils";
 
 /// Key for looking up a configuration value for @c CURLOPT_CAPATH
 static const std::string CAPATH_CONFIG_KEY = "CURLOPT_CAPATH";
+
+/// Key for looking up a configuration value for @c CURLOPT_CAINFO
+static const std::string CAINFO_CONFIG_KEY = "CURLOPT_CAINFO";
 
 /// Key for looking up a configuration value for verifying hosts and peers.
 static const std::string VERIFY_HOSTS_AND_PEERS_CONFIG_KEY = "verifyHostsAndPeers";
@@ -100,6 +103,12 @@ bool prepareForTLS(CURL* handle) {
     std::string caPath;
     if (config.getString(CAPATH_CONFIG_KEY, &caPath) &&
         !setopt(handle, CURLOPT_CAPATH, caPath.c_str(), "CURLOPT_CAPATH", caPath.c_str())) {
+        return false;
+    }
+
+    std::string caInfo;
+    if (config.getString(CAINFO_CONFIG_KEY, &caInfo) &&
+        !setopt(handle, CURLOPT_CAINFO, caInfo.c_str(), "CURLOPT_CAINFO", caInfo.c_str())) {
         return false;
     }
 

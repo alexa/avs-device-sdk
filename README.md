@@ -107,40 +107,21 @@ All Alexa products should adopt the [Security Best Practices for Alexa](https://
 
 **Note**: Feature enhancements, updates, and resolved issues from previous releases are available to view in [CHANGELOG.md](https://github.com/alexa/alexa-client-sdk/blob/master/CHANGELOG.md).
 
-### v1.15.0 released 09/25/2019:
+### v1.16.0 released 10/25/2019:
 
-**Enhancements**
+**Enhancements** 
 
-* Added `SystemSoundPlayer` to [ApplicationUtilities](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1application_utilities.html). `SystemSoundPlayer` is a new class that plays pre-defined sounds. Sounds currently supported include the wake word notification and the end of speech tone. This change is internal and you don't need to update your code.
-* Removed [Echo Spatial Perception (ESP)](https://developer.amazon.com/blogs/alexa/post/042be85c-5a62-4c55-a18d-d7a82cf394df/esp-moves-to-the-cloud-for-alexa-enabled-devices) functionality from the Alexa Voice Service (AVS) device SDK. Make sure you download and test your devices using the new AVS SDK sample app. If you're using an older version of the sample app, manually remove any references to ESP or errors occur during compile.
-* Added `onNotificationReceived` to `NotificationsObserverInterface`. `onNotificationReceived` broadcasts when `NotificationsObserverInterface` receives a new notification, instead of only sending the indicator state. This is important if you support a feature that requires a distinct signal for each notification received. See [NotificationsObserverInterface](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html) for more details.
-* Added support for [Multilingual Mode](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations). With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:
- - `[ "en-US", "es-US" ]`
- - `[ "es-US", "en-US" ]`
- - `[ "en-IN", "hi-IN" ]`
- - `[ "hi-IN", "en-IN" ]`
- - `[ "en-CA", "fr-CA" ]`
- - `[ "fr-CA", "en-CA" ]`
-<br/> **IMPORTANT**: Specify the locales your device supports in the [localeCombinations](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations) field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.
-* Added two new system settings, [Timezone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) and [Locale](https://developer.amazon.com/docs/alexa-voice-service/system.html#locales).
-    - Timezone: For example, you can set the `defaultTimezone` to `America/Vancouver`. If you don't set a value, `GMT` is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class `SystemTimeZoneInterface`. See [System Interface > SetTimeZone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) for more information.
-    - Locale: For example, you can set `defaultLocale` to `en-GB`, instead of the default `en-US`.
-* The [SpeechRecognizer](https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html) interface now supports the following functionalities.
-  - Change wake word (`Alexa` supported for now).
-  - Toggle start of request tone on/off.
-  - Toggle End of request tone on/off.
-* Deprecated the [CapabilityAgents](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html) `Settings{…}` library. `Settings {…}` now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read [Settings Interface](https://developer.amazon.com/docs/alexa-voice-service/per-interface-settings.html) for more details.
-* Added support for three new locals: Spanish - United States (ES_US), Hindi - India (HI_IN), and Brazilian - Portuguese (PT_BR).
-* Linked the atomic library to the sample app to prevent build errors on Raspberry Pi.
+- Added support for SpeechSynthesizer v.1.2 which includes the new `playBehaviour` directive.  For more information, see [SpeechSynthesizer v1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2).
+- Added support for pre-buffering in [AudioPlayer](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html). You can optionally choose the number of instances MediaPlayer uses in the [AlexaClientSDKconfig.json](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json). Important: the contract for [MediaPlayerInterface](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html) has changed. You must now make sure that the `SourceId` value returned by `setSource()` is unique across all instances.
+- AudioPlayer is now licensed under the Amazon Software License instead of the Apache Software License.
 
 **Bug Fixes**
 
-* Fixed resource leaking in [EqualizerCapabilityAgent](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html) after engine shutdown.
-* [Issue 1391:](https://github.com/alexa/avs-device-sdk/pull/1391) Fixed an issue where [SQLiteDeviceSettingsStorage::open](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html#a7733e56145916f7ff265c5c950add492) tries to acquire a mutex twice, resulting in deadlock.
-* [Issue 1468:](https://github.com/alexa/avs-device-sdk/issues/1468) Fixed a bug in [AudioPlayer::cancelDirective](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a2c710c16f3627790fcc3238d34da9361) that causes a crash.
-* Fixed Windows install script that caused the sample app build to fail - removed pip, flask, requests, and commentjson dependencies from the mingw.sh helper script.
-* Fixed issue: notifications failed to sync upon device initialization. For example, let's say you had two devices - one turned on and the other turned off. After clearing the notification on the first device, it still showed up on the second device after turning it on.
-* Fixed issue: barging in on a reminder caused it to stick in an inconsistent state, blocking subsequent reminders. For example, if a reminder was going off and you interrupted it, the reminder would get persist indefinitely. You could schedule future reminders, but they wouldn't play. Saying “Alexa stop” or rebooting the device fixed the “stuck” reminder.
+- Fixed Android issue that caused the build script to ignore PKG_CONFIG_PATH. This sometimes caused the build to use a preinstalled dependency instead of the specific version downloaded by the Android script (e.g - openssl).
+- Fixed Android issue that prevented the Sample app from running at the same time as other applications using the microphone. Android doesn't inherently allow two applications to use the microphone. Pressing the mute button now temporarily stops Alexa from accessing the microphone.
+- Added 'quit' (– q) to the settings sub menu.
+- Fixed outdated dependencies issue in the Windows install script.
+- Fixed reminders issue that caused Notification LEDs to stay on, even after dismissing the alert.
 
 **Known Issues**
 
@@ -160,3 +141,5 @@ All Alexa products should adopt the [Security Best Practices for Alexa](https://
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
 * Bluetooth initialization must complete before connecting devices, otherwise devices are ignored.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
+* On some devices, Alexa gets stuck in a permanent listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
+* Exiting the `settings` menu doesn't provide a message to indicate that you are back in the main menu.

@@ -47,8 +47,7 @@ public:
     /// @}
 
     /**
-     * @copydoc
-     * In this implementation, the function may only be called once. Subsequent calls will return @c nullptr.
+     * In this implementation, the function may only be called once. Subsequent calls will return nullptr.
      */
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,23 +27,29 @@ namespace test {
 
 class MockSpeakerManager : public SpeakerManagerInterface {
 public:
-    MOCK_METHOD3(
+    MOCK_METHOD4(
         setVolume,
         std::future<bool>(
             avsCommon::sdkInterfaces::SpeakerInterface::Type type,
             int8_t volume,
-            bool forceNoNotifications));
+            bool forceNoNotifications,
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
 
-    MOCK_METHOD3(
+    MOCK_METHOD4(
         adjustVolume,
         std::future<bool>(
             avsCommon::sdkInterfaces::SpeakerInterface::Type type,
             int8_t delta,
-            bool forceNoNotifications));
+            bool forceNoNotifications,
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
 
-    MOCK_METHOD3(
+    MOCK_METHOD4(
         setMute,
-        std::future<bool>(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute, bool forceNoNotifications));
+        std::future<bool>(
+            avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+            bool mute,
+            bool forceNoNotifications,
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
 
     MOCK_METHOD2(
         getSpeakerSettings,

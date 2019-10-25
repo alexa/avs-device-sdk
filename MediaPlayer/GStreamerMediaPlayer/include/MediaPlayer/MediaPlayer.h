@@ -25,6 +25,8 @@
 #include <queue>
 #include <string>
 #include <thread>
+#include <unordered_set>
+#include <vector>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -103,7 +105,8 @@ public:
     bool resume(SourceId id) override;
     uint64_t getNumBytesBuffered() override;
     std::chrono::milliseconds getOffset(SourceId id) override;
-    void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    void addObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
 
     /// @name Overridden SpeakerInterface methods.
@@ -127,7 +130,7 @@ public:
     gboolean removeSource(guint tag) override;
     /// @}
 
-    /// @name Overriden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
+    /// @name Overridden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
     /// @{
     void onError() override;
     /// @}
@@ -430,12 +433,22 @@ private:
     void handleGetOffset(SourceId id, std::promise<std::chrono::milliseconds>* promise);
 
     /**
-     * Worker thread handler for setting the observer.
+     * Worker thread handler for adding the observer.
      *
      * @param promise A void promise to fulfill once the observer has been set.
      * @param observer The new observer.
      */
-    void handleSetObserver(
+    void handleAddObserver(
+        std::promise<void>* promise,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
+
+    /**
+     * Worker thread handler for removing the observer.
+     *
+     * @param promise A void promise to fulfill once the observer has been set.
+     * @param observer The observer that we want to remove.
+     */
+    void handleRemoveObserver(
         std::promise<void>* promise,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
 
@@ -550,6 +563,9 @@ private:
      */
     int clampEqualizerLevel(int level);
 
+    /// Mutex used to synchronize @c operations that notify observers.
+    std::mutex m_operationMutex;
+
     /// The volume to restore to when exiting muted state. Used in GStreamer crash fix for zero volume on PCM data.
     gdouble m_lastVolume;
 
@@ -599,7 +615,7 @@ private:
     bool m_isBufferUnderrun;
 
     /// @c MediaPlayerObserverInterface instance to notify when the playback state changes.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_playerObserver;
+    std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface>> m_playerObservers;
 
     /// @c SourceInterface instance set to the appropriate source.
     std::shared_ptr<SourceInterface> m_source;

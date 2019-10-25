@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,10 +33,10 @@ namespace androidUtilities {
 AndroidSLESBufferQueue::AndroidSLESBufferQueue(
     std::shared_ptr<AndroidSLESObject> object,
     SLAndroidSimpleBufferQueueItf bufferQueue,
-    std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> writer) :
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer) :
         m_slObject{object},
         m_queueInterface{bufferQueue},
-        m_writer{std::move(writer)},
+        m_writer{writer},
         m_index{0} {
 }
 
@@ -53,7 +53,7 @@ static void recorderCallback(SLAndroidSimpleBufferQueueItf slQueue, void* buffer
 
 std::unique_ptr<AndroidSLESBufferQueue> AndroidSLESBufferQueue::create(
     std::shared_ptr<AndroidSLESObject> queueObject,
-    std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> writer) {
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer) {
     // get the buffer queue interface
     SLAndroidSimpleBufferQueueItf queueInterface;
     if (!queueObject->getInterface(SL_IID_ANDROIDSIMPLEBUFFERQUEUE, &queueInterface)) {

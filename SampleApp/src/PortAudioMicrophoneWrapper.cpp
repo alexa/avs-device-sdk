@@ -63,7 +63,8 @@ std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
 
 PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) :
         m_audioInputStream{stream},
-        m_paStream{nullptr} {
+        m_paStream{nullptr},
+        m_isStreaming{false} {
 }
 
 PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
@@ -129,23 +130,31 @@ bool PortAudioMicrophoneWrapper::initialize() {
 }
 
 bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StartStream(m_paStream);
     if (err != paNoError) {
         ACSDK_CRITICAL(LX("Failed to start PortAudio stream"));
         return false;
     }
+    m_isStreaming = true;
     return true;
 }
 
 bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StopStream(m_paStream);
     if (err != paNoError) {
         ACSDK_CRITICAL(LX("Failed to stop PortAudio stream"));
         return false;
     }
+    m_isStreaming = false;
     return true;
+}
+
+bool PortAudioMicrophoneWrapper::isStreaming() {
+    return m_isStreaming;
 }
 
 int PortAudioMicrophoneWrapper::PortAudioCallback(

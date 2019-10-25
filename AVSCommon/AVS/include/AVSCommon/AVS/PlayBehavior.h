@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,17 +13,17 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_
-#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_
+#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYBEHAVIOR_H_
+#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYBEHAVIOR_H_
 
+#include <string>
 #include <ostream>
 
-#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 
 namespace alexaClientSDK {
-namespace capabilityAgents {
-namespace audioPlayer {
+namespace avsCommon {
+namespace avs {
 
 /// Used to determine how a client must handle queueing and playback of a stream.
 enum class PlayBehavior {
@@ -107,8 +107,8 @@ inline bool convertToValue(const rapidjson::Value& documentNode, PlayBehavior* p
     return stringToPlayBehavior(text, playBehavior);
 }
 
-}  // namespace audioPlayer
-}  // namespace capabilityAgents
+}  // namespace avs
+}  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PLAYBEHAVIOR_H_
+#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_PLAYBEHAVIOR_H_

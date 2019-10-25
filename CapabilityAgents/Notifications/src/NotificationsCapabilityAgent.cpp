@@ -778,6 +778,7 @@ void NotificationsCapabilityAgent::clearData() {
     auto result = m_executor.submit([this]() {
         m_notificationsStorage->clearNotificationIndicators();
         m_notificationsStorage->setIndicatorState(IndicatorState::OFF);
+        notifyObserversOfIndicatorState(IndicatorState::OFF);
     });
 
     result.wait();

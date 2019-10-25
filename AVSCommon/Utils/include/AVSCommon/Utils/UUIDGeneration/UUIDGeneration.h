@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,15 @@ namespace uuidGeneration {
  * @return A uuid as a string.
  */
 const std::string generateUUID();
+
+/**
+ * Allows caller to set a specific salt to be used in any seeding operation.
+ * Salt wil be a prefix to the seed and should be as specific to the unique device as possible.
+ * Setting a salt will cause the next UUID to be generated with a new seed.
+ *
+ * @param newSalt  the salt to use
+ */
+void setSalt(const std::string& newSalt);
 
 }  // namespace uuidGeneration
 }  // namespace utils

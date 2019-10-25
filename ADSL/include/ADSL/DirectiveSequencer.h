@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,6 +52,8 @@ public:
 
     void setDialogRequestId(const std::string& dialogRequestId) override;
 
+    std::string getDialogRequestId() override;
+
     bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
     void disable() override;
@@ -67,11 +69,6 @@ private:
      */
     DirectiveSequencer(std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
 
-    /**
-     * @copydoc
-     *
-     * This method blocks until all processing of directives has stopped.
-     */
     void doShutdown() override;
 
     /**

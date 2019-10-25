@@ -59,31 +59,37 @@ avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::s
 }
 
 bool TestMediaPlayer::play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
-    if (m_observer) {
-        m_observer->onPlaybackStarted(id);
-        m_playbackFinished = true;
-        m_timer = std::unique_ptr<avsCommon::utils::timing::Timer>(new avsCommon::utils::timing::Timer);
-        // Wait 600 milliseconds before sending onPlaybackFinished.
-        m_timer->start(std::chrono::milliseconds(600), [this, id] {
-            if (m_playbackFinished) {
-                m_observer->onPlaybackFinished(id);
-                m_playbackFinished = false;
-            }
-        });
-        return true;
-    } else {
+    if (m_observers.empty()) {
         return false;
     }
+    for (const auto& observer : m_observers) {
+        observer->onPlaybackStarted(id);
+    }
+    m_playbackFinished = true;
+    m_timer = std::unique_ptr<avsCommon::utils::timing::Timer>(new avsCommon::utils::timing::Timer);
+    // Wait 600 milliseconds before sending onPlaybackFinished.
+    m_timer->start(std::chrono::milliseconds(600), [this, id] {
+        for (const auto& observer : m_observers) {
+            if (m_playbackFinished) {
+                observer->onPlaybackFinished(id);
+            }
+        }
+        m_playbackFinished = false;
+    });
+    return true;
 }
 
 bool TestMediaPlayer::stop(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) {
-    if (m_observer && m_playbackFinished) {
-        m_observer->onPlaybackStopped(id);
-        m_playbackFinished = false;
-        return true;
-    } else {
+    if (!m_playbackFinished || m_observers.empty()) {
         return false;
     }
+    for (const auto& observer : m_observers) {
+        if (m_playbackFinished) {
+            observer->onPlaybackStopped(id);
+        }
+    }
+    m_playbackFinished = false;
+    return true;
 }
 
 // TODO Add implementation
@@ -100,9 +106,14 @@ std::chrono::milliseconds TestMediaPlayer::getOffset(avsCommon::utils::mediaPlay
     return std::chrono::milliseconds::zero();
 }
 
-void TestMediaPlayer::setObserver(
+void TestMediaPlayer::addObserver(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
-    m_observer = playerObserver;
+    m_observers.insert(playerObserver);
+}
+
+void TestMediaPlayer::removeObserver(
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) {
+    m_observers.erase(playerObserver);
 }
 
 uint64_t TestMediaPlayer::getNumBytesBuffered() {

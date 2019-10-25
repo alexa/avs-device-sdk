@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ private:
      *
      * @param minBandLevel Minimum band level supported by the equalizer.
      * @param maxBandLevel Maximum band level supported by the equalizer.
+     * @param defaultDelta Default delta value to adjust the equalizer.
      * @param bandsSupported A set of bands supported by the equalizer.
      * @param modesSupported A set of modes supported by the equalizer.
      * @param defaultState Default state of the equalizer used when there is no state stored in a persistent storage or
@@ -70,6 +71,7 @@ private:
     SDKConfigEqualizerConfiguration(
         int minBandLevel,
         int maxBandLevel,
+        int defaultDelta,
         std::set<avsCommon::sdkInterfaces::audio::EqualizerBand> bandsSupported,
         std::set<avsCommon::sdkInterfaces::audio::EqualizerMode> modesSupported,
         avsCommon::sdkInterfaces::audio::EqualizerState defaultState);

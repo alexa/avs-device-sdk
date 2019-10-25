@@ -23,6 +23,7 @@
 #include <deque>
 
 #include <AVSCommon/AVS/AVSDirective.h>
+#include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
@@ -136,8 +137,7 @@ private:
     /**
      * This class has all the data that is needed to process @c Speak directives.
      */
-    class SpeakDirectiveInfo {
-    public:
+    struct SpeakDirectiveInfo {
         /**
          * Constructor.
          *
@@ -163,7 +163,7 @@ private:
         /// A flag to indicate if an event needs to be sent to AVS on playback started.
         bool sendPlaybackStartedMessage;
 
-        /// A flag to indicate if an event needs to be sent to AVS on playback finished.
+        /// A flag to indicate if an event needs to be sent to AVS on playback finished / interrupted.
         bool sendPlaybackFinishedMessage;
 
         /// A flag to indicate if the directive complete message has to be sent to the @c DirectiveSequencer.
@@ -175,9 +175,11 @@ private:
         /// A flag to indicate if playback has been initiated.
         bool isPlaybackInitiated;
 
-        /// A flag to indicate that a cancel was requested but not yet processed, which may happen when a cancel
-        /// was called before playback started.
-        bool isDelayedCancel;
+        /// A flag to indicate the directive has been handled.
+        bool isHandled;
+
+        /// The play behavior of this directive.
+        avsCommon::avs::PlayBehavior playBehavior;
     };
 
     /**
@@ -268,8 +270,10 @@ private:
      * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the
      * audio of the current directive is started. If the @c m_desiredState is @c FINISHED this method triggers
      * termination of playing the audio.
+     *
+     * @param newState The target state.
      */
-    void executeStateChange();
+    void executeStateChange(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
 
     /**
      * Request to provide an update of the SpeechSynthesizer's state to the ContextManager (on the @c m_executor
@@ -277,7 +281,7 @@ private:
      *
      * @param stateRequestToken The token to pass through when setting the state.
      */
-    void executeProvideState(const unsigned int& stateRequestToken);
+    void executeProvideStateLocked(const unsigned int& stateRequestToken);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback has started.
@@ -315,12 +319,28 @@ private:
     std::string buildState(std::string& token, int64_t offsetInMilliseconds) const;
 
     /**
+     * Notify AVS of a state change.
+     *
+     * @param eventName The name of the event to send to AVS.
+     */
+    void sendEvent(const std::string& eventName, const std::string& payload) const;
+
+    /**
      * Builds a JSON payload string part of the event to be sent to AVS.
      *
      * @param token the token sent in the message from AVS.
      * @return The JSON payload string.
      */
     static std::string buildPayload(std::string& token);
+
+    /**
+     * Builds a JSON payload string part of the event to be sent to AVS including the playback offset.
+     *
+     * @param token the token sent in the message from AVS.
+     * @param offsetInMilliseconds The current offset of text to speech in milliseconds.
+     * @return The JSON payload string.
+     */
+    static std::string buildPayload(std::string& token, int64_t offsetInMilliseconds);
 
     /**
      * Start playing Speak directive audio.
@@ -344,12 +364,12 @@ private:
     void setCurrentStateLocked(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
 
     /**
-     * Set the desired state the @c SpeechSynthesizer needs to transition to based on the @c newFocus.
-     * @c m_mutex must be acquired before calling this function.
+     * Set the desired state the @c SpeechSynthesizer needs to transition to.
      *
-     * @param newFocus The new focus of the @c SpeechSynthesizer.
+     * @param desiredState The target state.
+     * @note This method will acquire m_mutex.
      */
-    void setDesiredStateLocked(avsCommon::avs::FocusState newFocus);
+    void setDesiredState(SpeechSynthesizerObserverInterface::SpeechSynthesizerState desiredState);
 
     /**
      * Reset @c m_currentInfo, cleaning up any @c SpeechSynthesizer resources and removing from CapabilityAgent's
@@ -451,11 +471,21 @@ private:
     void resetMediaSourceId();
 
     /**
+     * Clear the enqueued directives.
+     *
+     * @note Make sure you acquired @c m_speakInfoQueueMutex.
+     */
+    void clearPendingDirectivesLocked();
+
+    /**
      * Id to identify the specific source when making calls to MediaPlayerInterface.
      * If this is modified or retrieved from methods that are not protected by the executor
      * then additional locking will be needed.
      */
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId m_mediaSourceId;
+
+    /// The last media player offset reportted. This is used to provide the interrupted state information.
+    int64_t m_offsetInMilliseconds;
 
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;
@@ -493,9 +523,6 @@ private:
 
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
     std::mutex m_mutex;
-
-    /// A flag to keep track of if @c SpeechSynthesizer has called @c Stop() already or not.
-    bool m_isAlreadyStopping;
 
     /// Condition variable to wake @c onFocusChanged() once the state transition to desired state is complete.
     std::condition_variable m_waitOnStateChange;

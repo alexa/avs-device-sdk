@@ -63,6 +63,11 @@ void DirectiveProcessor::setDialogRequestId(const std::string& dialogRequestId) 
     setDialogRequestIdLocked(dialogRequestId);
 }
 
+std::string DirectiveProcessor::getDialogRequestId() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_dialogRequestId;
+}
+
 bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
     if (!directive) {
         ACSDK_ERROR(LX("onDirectiveFailed").d("action", "ignored").d("reason", "nullptrDirective"));

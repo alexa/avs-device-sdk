@@ -40,6 +40,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/PromiseFuturePair.h>
 
@@ -66,11 +67,17 @@ using namespace rapidjson;
 /// Plenty of time for a test to complete.
 static std::chrono::milliseconds WAIT_TIMEOUT(1000);
 
+// Delay to let events happen / threads catch up
+static std::chrono::milliseconds EVENT_PROCESS_DELAY(20);
+
 /// The name of the @c FocusManager channel used by the @c AudioPlayer.
 static const std::string CHANNEL_NAME(avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME);
 
 /// Namespace for AudioPlayer.
 static const std::string NAMESPACE_AUDIO_PLAYER("AudioPlayer");
+
+/// Namespace for Another AudioPlayer.
+static const std::string NAMESPACE_AUDIO_PLAYER_2("AudioPlayer_2");
 
 /// Name for AudioPlayer Play directive.
 static const std::string NAME_PLAY("Play");
@@ -90,6 +97,9 @@ static const std::string MESSAGE_ID_TEST("MessageId_Test");
 /// Another message Id for testing.
 static const std::string MESSAGE_ID_TEST_2("MessageId_Test2");
 
+/// Another message Id for testing.
+static const std::string MESSAGE_ID_TEST_3("MessageId_Test3");
+
 /// PlayRequestId for testing.
 static const std::string PLAY_REQUEST_ID_TEST("PlayRequestId_Test");
 
@@ -98,6 +108,9 @@ static const std::string CONTEXT_ID_TEST("ContextId_Test");
 
 /// Context ID for testing
 static const std::string CONTEXT_ID_TEST_2("ContextId_Test2");
+
+/// Context ID for testing
+static const std::string CONTEXT_ID_TEST_3("ContextId_Test3");
 
 /// Token for testing.
 static const std::string TOKEN_TEST("Token_Test");
@@ -164,13 +177,13 @@ static const std::chrono::milliseconds TIME_FOR_TWO_AND_A_HALF_INTERVAL_PERIODS{
     std::chrono::milliseconds((2 * PROGRESS_REPORT_INTERVAL) + (PROGRESS_REPORT_INTERVAL / 2))};
 
 /// Payloads for testing.
-static std::string createEnqueuePayloadTest(long offsetInMilliseconds) {
+static std::string createEnqueuePayloadTest(long offsetInMilliseconds, const std::string& audioId = AUDIO_ITEM_ID_1) {
     // clang-format off
     const std::string ENQUEUE_PAYLOAD_TEST =
         "{"
             "\"playBehavior\":\"" + NAME_ENQUEUE + "\","
             "\"audioItem\": {"
-                "\"audioItemId\":\"" + AUDIO_ITEM_ID_1 + "\","
+                "\"audioItemId\":\"" + audioId + "\","
                 "\"stream\": {"
                     "\"url\":\"" + URL_TEST + "\","
                     "\"streamFormat\":\"" + FORMAT_TEST + "\","
@@ -211,31 +224,6 @@ static const std::string REPLACE_ALL_PAYLOAD_TEST =
     "}"
 "}";
 // clang-format on
-
-static std::string createUrlPayloadTest(PlayBehavior playbehavior, const std::string& url) {
-    // clang-format off
-    const std::string replaceAllPaylaod =
-    "{"
-        "\"playBehavior\":\"" + playBehaviorToString(playbehavior) + "\","
-        "\"audioItem\": {"
-            "\"audioItemId\":\"" + AUDIO_ITEM_ID_2 + "\","
-            "\"stream\": {"
-                "\"url\":\"" + url + "\","
-                "\"streamFormat\":\"" + FORMAT_TEST + "\","
-                "\"offsetInMilliseconds\":" + std::to_string(OFFSET_IN_MILLISECONDS_TEST) + ","
-                "\"expiryTime\":\"" + EXPIRY_TEST + "\","
-                "\"progressReport\": {"
-                    "\"progressReportDelayInMilliseconds\":" + std::to_string(PROGRESS_REPORT_DELAY) + ","
-                    "\"progressReportIntervalInMilliseconds\":" + std::to_string(PROGRESS_REPORT_INTERVAL) +
-                "},"
-                "\"token\":\"" + TOKEN_TEST + "\","
-                "\"expectedPreviousToken\":\"\""
-            "}"
-        "}"
-    "}";
-    // clang-format on
-    return replaceAllPaylaod;
-}
 
 /// Empty payload for testing.
 static const std::string EMPTY_PAYLOAD_TEST = "{}";
@@ -278,6 +266,9 @@ static const std::string MESSAGE_HEADER_KEY = "header";
 
 /// JSON key for the name section of a message.
 static const std::string MESSAGE_NAME_KEY = "name";
+
+/// JSON key for the token section of a message.
+static const std::string MESSAGE_TOKEN_KEY = "token";
 
 /// JSON key for the payload section of a message.
 static const std::string MESSAGE_PAYLOAD_KEY = "payload";
@@ -394,6 +385,10 @@ public:
 
     void SetUp() override;
     void TearDown() override;
+    void reSetUp(int numberOfPlayers);
+
+    /// @c MediaPlayerFactory to generate MockMediaPlayers for testing;
+    std::unique_ptr<alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory> m_mockFactory;
 
     /// @c AudioPlayer to test
     std::shared_ptr<AudioPlayer> m_audioPlayer;
@@ -403,6 +398,12 @@ public:
 
     /// Player to send the audio to.
     std::shared_ptr<MockMediaPlayer> m_mockMediaPlayer;
+
+    /// Another Player to send the audio to.
+    std::shared_ptr<MockMediaPlayer> m_mockMediaPlayerTrack2;
+
+    /// Another Player to send the audio to.
+    std::shared_ptr<MockMediaPlayer> m_mockMediaPlayerTrack3;
 
     /// @c ContextManager to provide state and update state.
     std::shared_ptr<MockContextManager> m_mockContextManager;
@@ -490,6 +491,11 @@ public:
     void sendPlayDirective(long offsetInMilliseconds = OFFSET_IN_MILLISECONDS_TEST);
 
     /**
+     * Consolidate code to send Stop directive.
+     */
+    void sendStopDirective();
+
+    /**
      * Consolidate code to send ClearQueue directive
      */
 
@@ -516,6 +522,17 @@ public:
         std::map<std::string, int>* expectedMessages);
 
     /**
+     * verify that the sent request matches the indexed message in the list
+     *
+     * @param orderedMessageList The list of expected messages, in order expected
+     * @param index The expected message to match
+     */
+    void verifyMessageOrder(
+        const std::vector<std::string>& orderedMessageList,
+        int index,
+        std::function<void()> trigger);
+
+    /**
      * Verify that the provided state matches the expected state
      *
      * @param jsonState The state to verify
@@ -533,6 +550,11 @@ public:
     void verifyTags(
         std::shared_ptr<avsCommon::avs::MessageRequest> request,
         std::map<std::string, int>* expectedMessages);
+
+    /**
+     * Run through test of playing, enqueuing, finish, play
+     */
+    void testPlayEnqueFinishPlay();
 
     /// General purpose mutex.
     std::mutex m_mutex;
@@ -557,6 +579,8 @@ AudioPlayerTest::AudioPlayerTest() :
 }
 
 void AudioPlayerTest::SetUp() {
+    MockMediaPlayer::enableConcurrentMediaPlayers();
+
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
     m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
@@ -564,23 +588,67 @@ void AudioPlayerTest::SetUp() {
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_mockMediaPlayer = MockMediaPlayer::create();
     m_mockPlaybackRouter = std::make_shared<NiceMock<MockPlaybackRouter>>();
+    ASSERT_TRUE(m_mockMediaPlayer);
+    m_mockMediaPlayerTrack2 = MockMediaPlayer::create();
+    ASSERT_TRUE(m_mockMediaPlayerTrack2);
+    m_mockMediaPlayerTrack3 = MockMediaPlayer::create();
+    ASSERT_TRUE(m_mockMediaPlayerTrack3);
+    std::vector<std::shared_ptr<MediaPlayerInterface>> pool = {
+        m_mockMediaPlayer, m_mockMediaPlayerTrack2, m_mockMediaPlayerTrack3};
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     m_audioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         m_mockMessageSender,
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter);
+
+    ASSERT_TRUE(m_audioPlayer);
+
     m_testAudioPlayerObserver = std::make_shared<TestAudioPlayerObserver>();
     m_audioPlayer->addObserver(m_testAudioPlayerObserver);
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-
-    ASSERT_TRUE(m_audioPlayer);
 }
 
 void AudioPlayerTest::TearDown() {
-    m_audioPlayer->shutdown();
+    if (m_audioPlayer) {
+        m_audioPlayer->shutdown();
+    }
     m_mockMediaPlayer->shutdown();
+    m_mockMediaPlayerTrack2->shutdown();
+    m_mockMediaPlayerTrack3->shutdown();
+}
+
+void AudioPlayerTest::reSetUp(int numberOfPlayers) {
+    ASSERT_LE(numberOfPlayers, 3);
+    ASSERT_GE(numberOfPlayers, 1);
+    if (m_audioPlayer) {
+        m_audioPlayer->shutdown();
+    }
+
+    std::vector<std::shared_ptr<MediaPlayerInterface>> pool;
+    switch (numberOfPlayers) {
+        case 3:
+            pool.push_back(m_mockMediaPlayerTrack3);
+        case 2:
+            pool.push_back(m_mockMediaPlayerTrack2);
+        case 1:
+            pool.push_back(m_mockMediaPlayer);
+    }
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
+    m_audioPlayer = AudioPlayer::create(
+        std::move(m_mockFactory),
+        m_mockMessageSender,
+        m_mockFocusManager,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_mockPlaybackRouter);
+
+    ASSERT_TRUE(m_audioPlayer);
+
+    m_testAudioPlayerObserver = std::make_shared<TestAudioPlayerObserver>();
+    m_audioPlayer->addObserver(m_testAudioPlayerObserver);
 }
 
 SetStateResult AudioPlayerTest::wakeOnSetState() {
@@ -625,6 +693,17 @@ void AudioPlayerTest::sendPlayDirective(long offsetInMilliseconds) {
     m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
 
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+}
+
+void AudioPlayerTest::sendStopDirective() {
+    auto avsStopMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_STOP, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+
+    std::shared_ptr<AVSDirective> stopDirective =
+        AVSDirective::create("", avsStopMessageHeader, EMPTY_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+
+    m_audioPlayer->CapabilityAgent::preHandleDirective(stopDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
 }
 
 void AudioPlayerTest::sendClearQueueDirective() {
@@ -757,6 +836,8 @@ void AudioPlayerTest::verifyTags(
 
 TEST_F(AudioPlayerTest, test_createWithNullPointers) {
     std::shared_ptr<AudioPlayer> testAudioPlayer;
+    std::vector<std::shared_ptr<MediaPlayerInterface>> pool = {
+        m_mockMediaPlayer, m_mockMediaPlayerTrack2, m_mockMediaPlayerTrack3};
 
     testAudioPlayer = AudioPlayer::create(
         nullptr,
@@ -767,8 +848,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockPlaybackRouter);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     testAudioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         nullptr,
         m_mockFocusManager,
         m_mockContextManager,
@@ -776,8 +858,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockPlaybackRouter);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     testAudioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         m_mockMessageSender,
         nullptr,
         m_mockContextManager,
@@ -785,8 +868,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockPlaybackRouter);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     testAudioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         m_mockMessageSender,
         m_mockFocusManager,
         nullptr,
@@ -794,8 +878,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockPlaybackRouter);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     testAudioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         m_mockMessageSender,
         m_mockFocusManager,
         m_mockContextManager,
@@ -803,8 +888,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockPlaybackRouter);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
     testAudioPlayer = AudioPlayer::create(
-        m_mockMediaPlayer,
+        std::move(m_mockFactory),
         m_mockMessageSender,
         m_mockFocusManager,
         m_mockContextManager,
@@ -832,14 +918,7 @@ TEST_F(AudioPlayerTest, test_transitionFromPlayingToStopped) {
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
 
     // now send Stop directive
-    auto avsStopMessageHeader =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_STOP, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
-
-    std::shared_ptr<AVSDirective> stopDirective =
-        AVSDirective::create("", avsStopMessageHeader, EMPTY_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
-
-    m_audioPlayer->CapabilityAgent::preHandleDirective(stopDirective, std::move(m_mockDirectiveHandlerResult));
-    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+    sendStopDirective();
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
 }
 
@@ -865,20 +944,54 @@ TEST_F(AudioPlayerTest, test_transitionFromStoppedToPlaying) {
     sendPlayDirective();
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
+    sendClearQueueDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+    m_audioPlayer->onFocusChanged(FocusState::NONE);
 
+    // Verify previous media player unused
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
+        .Times(1)
+        .WillOnce(Return(true));
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_2),
+        m_attachmentManager,
+        CONTEXT_ID_TEST_2);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+}
+
+/**
+ * Test transition from Stopped to Playing after issuing second Play directive, resuming
+ */
+
+TEST_F(AudioPlayerTest, testTransitionFromStoppedToResumePlaying) {
+    // send a play directive
+    sendPlayDirective();
+
+    // send clear Queue directive
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
     sendClearQueueDirective();
 
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
-
     m_audioPlayer->onFocusChanged(FocusState::NONE);
 
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(AtLeast(1));
+    // re-init attachemnt manager - resuming is not normally done with attachments...
+    m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
+    m_mockMediaPlayer->resetWaitTimer();
 
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(1);
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
         .Times(1)
         .WillOnce(Return(true));
 
-    // send a second Play directive
+    // Enqueue next track
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
 
     std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
@@ -886,13 +999,51 @@ TEST_F(AudioPlayerTest, test_transitionFromStoppedToPlaying) {
         avsMessageHeader,
         createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST),
         m_attachmentManager,
+        CONTEXT_ID_TEST);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+}
+
+/**
+ * Test transition to next track, when next track has been enqueued
+ */
+
+TEST_F(AudioPlayerTest, testTransitionFromPlayingToPlayingNextEnqueuedTrack) {
+    // send a play directive
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    // Verify that the media player for the enqueued track is used
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(AtLeast(1));
+    EXPECT_CALL(*(m_mockMediaPlayerTrack3.get()), play(_)).Times(0);
+
+    // Enqueue next track
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_2),
+        m_attachmentManager,
         CONTEXT_ID_TEST_2);
 
     m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
 
-    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
 
+    // Now, send a REPLACE_ALL directive that has the same ID as the enqueued track
+    avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_3);
+    playDirective =
+        AVSDirective::create("", avsMessageHeader, REPLACE_ALL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST_3);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_3);
+
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
 }
 
@@ -1011,6 +1162,125 @@ TEST_F(AudioPlayerTest, test_onPlaybackError) {
 }
 
 /**
+ * Test @c onPlaybackError and expect a PlaybackFailed message
+ */
+
+TEST_F(AudioPlayerTest, test_onPlaybackError_Stopped) {
+    m_expectedMessages.insert({PLAYBACK_STARTED_NAME, 0});
+    m_expectedMessages.insert({PLAYBACK_STOPPED_NAME, 0});
+    // we don't want to see this, as it shouldn't be send when stopped
+    m_expectedMessages.insert({PLAYBACK_FAILED_NAME, -1});
+
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            verifyMessageMap(request, &m_expectedMessages);
+            m_messageSentTrigger.notify_one();
+        }));
+
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    sendStopDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+
+    m_audioPlayer->onPlaybackError(
+        m_mockMediaPlayer->getCurrentSourceId(), ErrorType::MEDIA_ERROR_UNKNOWN, "TEST_ERROR");
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    bool result;
+
+    result = m_messageSentTrigger.wait_for(lock, WAIT_TIMEOUT, [this] {
+        for (auto messageStatus : m_expectedMessages) {
+            if (messageStatus.second == 0) {
+                return false;
+            }
+        }
+        return true;
+    });
+    ASSERT_TRUE(result);
+}
+
+/**
+ * Test @c onPlaybackError during pre-buffering
+ */
+
+TEST_F(AudioPlayerTest, testPrebufferOnPlaybackError) {
+    m_expectedMessages.insert({PLAYBACK_FAILED_NAME, 0});
+
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            verifyMessageMap(request, &m_expectedMessages);
+            m_messageSentTrigger.notify_one();
+        }));
+
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    bool result;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    // Verify that the media player for the enqueued track is used
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+    // zero because we should error out before play is called
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(0);
+
+    // Enqueue next track
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_2),
+        m_attachmentManager,
+        CONTEXT_ID_TEST_2);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    // Send error for track 2 while track 1 is playing
+    m_audioPlayer->onPlaybackError(
+        m_mockMediaPlayerTrack2->getSourceId(), ErrorType::MEDIA_ERROR_UNKNOWN, "TEST_ERROR");
+
+    // now 'play' track 2
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    {
+        // verify error not sent
+        std::unique_lock<std::mutex> lock(m_mutex);
+
+        result = m_messageSentTrigger.wait_for(lock, WAIT_TIMEOUT, [this] {
+            for (auto messageStatus : m_expectedMessages) {
+                if (messageStatus.second == 0) {
+                    return false;
+                }
+            }
+            return true;
+        });
+        ASSERT_FALSE(result);
+    }
+
+    // verify error sent
+    std::unique_lock<std::mutex> lock(m_mutex);
+    // Second track enqueue, but had an error loading.  now advance by finishing playing
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getSourceId());
+
+    result = m_messageSentTrigger.wait_for(lock, WAIT_TIMEOUT, [this] {
+        for (auto messageStatus : m_expectedMessages) {
+            if (messageStatus.second == 0) {
+                return false;
+            }
+        }
+        return true;
+    });
+    ASSERT_TRUE(result);
+}
+
+/**
  * Test @c onPlaybackPaused and expect a PlaybackPaused message
  */
 
@@ -1065,12 +1335,13 @@ TEST_F(AudioPlayerTest, test_onPlaybackResumed) {
         }));
 
     sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    bool result;
 
     m_audioPlayer->onPlaybackResumed(m_mockMediaPlayer->getCurrentSourceId());
 
     std::unique_lock<std::mutex> lock(m_mutex);
-
-    bool result;
 
     result = m_messageSentTrigger.wait_for(lock, WAIT_TIMEOUT, [this] {
         for (auto messageStatus : m_expectedMessages) {
@@ -1080,7 +1351,6 @@ TEST_F(AudioPlayerTest, test_onPlaybackResumed) {
         }
         return true;
     });
-
     ASSERT_TRUE(result);
 }
 
@@ -1102,10 +1372,11 @@ TEST_F(AudioPlayerTest, test_onPlaybackFinished) {
         }));
 
     sendPlayDirective();
-
-    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
 
     std::unique_lock<std::mutex> lock(m_mutex);
+
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
 
     bool result;
 
@@ -1292,26 +1563,12 @@ TEST_F(AudioPlayerTest, test_focusChangeToNoneInIdleState) {
  */
 
 TEST_F(AudioPlayerTest, test_focusChangeFromForegroundToBackgroundInIdleState) {
-    bool pauseCalled = false;
-
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_))
-        .Times(1)
-        .WillOnce(Invoke([this, &pauseCalled](MediaPlayerInterface::SourceId sourceId) {
-            std::lock_guard<std::mutex> lock(m_mutex);
-            pauseCalled = true;
-            m_mediaPlayerCallTrigger.notify_one();
-            return m_mockMediaPlayer->mockPause(sourceId);
-        }));
-
     m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
 
     // ensure AudioPlayer is still IDLE
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::IDLE, WAIT_TIMEOUT));
 
     m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
-
-    std::unique_lock<std::mutex> lock(m_mutex);
-    ASSERT_TRUE(m_mediaPlayerCallTrigger.wait_for(lock, WAIT_TIMEOUT, [&pauseCalled] { return pauseCalled; }));
 }
 
 /**
@@ -1320,20 +1577,7 @@ TEST_F(AudioPlayerTest, test_focusChangeFromForegroundToBackgroundInIdleState) {
  */
 
 TEST_F(AudioPlayerTest, test_focusChangeFromNoneToBackgroundInIdleState) {
-    bool pauseCalled = false;
-
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_))
-        .Times(1)
-        .WillOnce(Invoke([this, &pauseCalled](MediaPlayerInterface::SourceId sourceId) {
-            std::lock_guard<std::mutex> lock(m_mutex);
-            pauseCalled = true;
-            m_mediaPlayerCallTrigger.notify_one();
-            return m_mockMediaPlayer->mockPause(sourceId);
-        }));
-
     m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
-    std::unique_lock<std::mutex> lock(m_mutex);
-    ASSERT_TRUE(m_mediaPlayerCallTrigger.wait_for(lock, WAIT_TIMEOUT, [&pauseCalled] { return pauseCalled; }));
 }
 
 /**
@@ -1463,26 +1707,25 @@ TEST_F(AudioPlayerTest, test_focusChangeToBackgroundBeforeOnPlaybackStarted) {
     EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
     sendPlayDirective();
 
+    // send clear queue directive and move to NONE focus
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_)).Times(AtLeast(1));
 
     sendClearQueueDirective();
 
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
-
     m_audioPlayer->onFocusChanged(FocusState::NONE);
 
+    // send a second Play directive and move to foreground
     EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
         .Times(1)
         .WillOnce(Return(true));
-
-    // send a second Play directive
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(1);
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
 
     std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
         "",
         avsMessageHeader,
-        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST),
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_2),
         m_attachmentManager,
         CONTEXT_ID_TEST_2);
 
@@ -1490,10 +1733,9 @@ TEST_F(AudioPlayerTest, test_focusChangeToBackgroundBeforeOnPlaybackStarted) {
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
 
     m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
 
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), pause(_)).Times(AtLeast(1));
     m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
-
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PAUSED, WAIT_TIMEOUT));
 }
 
@@ -1517,7 +1759,7 @@ TEST_F(AudioPlayerTest, test_playAfterOnPlaybackError) {
     m_audioPlayer->onFocusChanged(FocusState::NONE);
 
     // send a REPLACE_ALL Play directive to see if AudioPlayer can still play the new item
-    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(1);
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
 
     std::shared_ptr<AVSDirective> playDirective =
@@ -1689,22 +1931,14 @@ TEST_F(AudioPlayerTest, testSlow_playOnlyAfterForegroundFocus) {
 
     m_wakeAcquireChannelPromise = std::promise<void>();
     m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(0);
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
 
-    {
-        // Enforce the sequence.
-        InSequence dummy;
-
-        // Make sure play() is not called
-        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
-        ASSERT_FALSE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
-
-        // Now check play() is only called when focus to back to FOREGROUND
-        EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(1);
-        m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
-        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
-    }
+    // Now check play() is only called when focus to back to FOREGROUND
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(1);
+    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
 }
 
 /**
@@ -1745,6 +1979,7 @@ TEST_F(AudioPlayerTest, testTimer_playbackStartedCallbackAfterFocusLost) {
             playCalledPromise.set_value();
             return true;
         }));
+        EXPECT_CALL(*m_mockMediaPlayer, stop(_)).Times(1);
 
         // Wait for acquireFocus().
         ASSERT_EQ(std::future_status::ready, m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
@@ -1753,173 +1988,175 @@ TEST_F(AudioPlayerTest, testTimer_playbackStartedCallbackAfterFocusLost) {
         ASSERT_THAT(playCalled.wait_for(WAIT_TIMEOUT), Ne(std::future_status::timeout));
 
         m_audioPlayer->onFocusChanged(FocusState::NONE);
-        m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getCurrentSourceId());
+        m_audioPlayer->onPlaybackStarted(m_mockMediaPlayer->getSourceId());
 
-        // Make sure AudioPlayer will go to STOPPED.
-        ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
+        // Make sure stop() will be called, but STOPPED state is already true
+        ASSERT_FALSE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
     }
 }
 
 /**
- * Test when @c AudioPlayer will only pre-buffer once with multiple ENQUEUE and REPLACE_ENQUEUED Play directives.
+ * This test sets up a sequence of 1 REPLACE track, followed by 3 ENQUEUE tracks,
+ * then tests that they are all played in sequence.
+ * It is called from tests that set up different numbers of MediaPlayers in a Factory Pool
+ * to ensure everything works smoothly.
  */
-TEST_F(AudioPlayerTest, test_MultipleEnqueuePlayDirectiveWillOnlyCallSetSourceOnce) {
-    auto avsMessageHeader1 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "1", PLAY_REQUEST_ID_TEST);
-
-    auto avsMessageHeader2 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "2", PLAY_REQUEST_ID_TEST);
-
-    auto avsMessageHeader3 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "3", PLAY_REQUEST_ID_TEST);
-
-    PromiseFuturePair<void> setSourcePair;
-    auto setSourceCalled = [this, &setSourcePair] {
-        setSourcePair.setValue();
-        m_mockMediaPlayer->mockSetSource();
-        return m_mockMediaPlayer->getCurrentSourceId();
-    };
-
-    auto directiveHandlerResult1 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-    auto directiveHandlerResult2 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-    auto directiveHandlerResult3 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-
-    std::shared_ptr<AVSDirective> playDirective1 = AVSDirective::create(
-        "",
-        avsMessageHeader1,
-        createUrlPayloadTest(PlayBehavior::ENQUEUE, "www.abc.com"),
-        m_attachmentManager,
-        CONTEXT_ID_TEST);
-    std::shared_ptr<AVSDirective> playDirective2 = AVSDirective::create(
-        "",
-        avsMessageHeader2,
-        createUrlPayloadTest(PlayBehavior::ENQUEUE, "www.def.com"),
-        m_attachmentManager,
-        CONTEXT_ID_TEST);
-    std::shared_ptr<AVSDirective> playDirective3 = AVSDirective::create(
-        "",
-        avsMessageHeader3,
-        createUrlPayloadTest(PlayBehavior::REPLACE_ENQUEUED, "www.ghi.com"),
-        m_attachmentManager,
-        CONTEXT_ID_TEST);
-
-    EXPECT_CALL(*m_mockMediaPlayer, urlSetSource(_)).Times(1).WillOnce(InvokeWithoutArgs(setSourceCalled));
-
-    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective1, std::move(directiveHandlerResult1));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective2, std::move(directiveHandlerResult2));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective3, std::move(directiveHandlerResult3));
-
-    ASSERT_TRUE(setSourcePair.waitFor(WAIT_TIMEOUT));
-}
-
-/**
- * Test when @c AudioPlayer will only pre-buffer once with ENQUEUE Play directives and call SetSource again when
- * REPLACE_ALL PLAY directive is received.
- */
-TEST_F(AudioPlayerTest, test_EnqueuePlayDirectiveReplaceAllDirectiveWillCallSetSourceTwice) {
-    auto avsMessageHeader1 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "1", PLAY_REQUEST_ID_TEST);
-
-    auto avsMessageHeader2 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "2", PLAY_REQUEST_ID_TEST);
-
-    auto directiveHandlerResult1 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-    auto directiveHandlerResult2 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-
-    const std::string url1{"www.abc.com"};
-    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
-        "", avsMessageHeader1, createUrlPayloadTest(PlayBehavior::ENQUEUE, url1), m_attachmentManager, CONTEXT_ID_TEST);
-
-    const std::string url2{"www.def.com"};
-    std::shared_ptr<AVSDirective> anotherPlayDirective = AVSDirective::create(
-        "",
-        avsMessageHeader2,
-        createUrlPayloadTest(PlayBehavior::REPLACE_ALL, url2),
-        m_attachmentManager,
-        CONTEXT_ID_TEST);
-
-    PromiseFuturePair<void> setSourcePair1;
-    auto setSourceCalled1 = [this, &setSourcePair1] {
-        setSourcePair1.setValue();
-        m_mockMediaPlayer->mockSetSource();
-        return m_mockMediaPlayer->getCurrentSourceId();
-    };
-    EXPECT_CALL(*m_mockMediaPlayer, urlSetSource(url1)).Times(1).WillOnce(InvokeWithoutArgs(setSourceCalled1));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(directiveHandlerResult1));
-    ASSERT_TRUE(setSourcePair1.waitFor(WAIT_TIMEOUT));
-
-    PromiseFuturePair<void> setSourcePair2;
-    auto setSourceCalled2 = [this, &setSourcePair2] {
-        setSourcePair2.setValue();
-        m_mockMediaPlayer->mockSetSource();
-        return m_mockMediaPlayer->getCurrentSourceId();
-    };
-    EXPECT_CALL(*m_mockMediaPlayer, urlSetSource(url2)).Times(1).WillOnce(InvokeWithoutArgs(setSourceCalled2));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(anotherPlayDirective, std::move(directiveHandlerResult2));
-    ASSERT_TRUE(setSourcePair2.waitFor(WAIT_TIMEOUT));
-}
-
-/**
- * Test when @c AudioPlayer is in BACKGROUND focus that it will pre-buffer when a REPLACE_ALL PLAY directive is
- * received.
- */
-TEST_F(AudioPlayerTest, test_PlayingWhenReplaceAllDirectiveInBackgroundWillPrebuffer) {
-    auto avsMessageHeader1 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "1", PLAY_REQUEST_ID_TEST);
-
-    auto avsMessageHeader2 =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, "2", PLAY_REQUEST_ID_TEST);
-
-    auto directiveHandlerResult1 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-    auto directiveHandlerResult2 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
-
-    const std::string url1{"www.abc.com"};
-    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
-        "", avsMessageHeader1, createUrlPayloadTest(PlayBehavior::ENQUEUE, url1), m_attachmentManager, CONTEXT_ID_TEST);
-
-    const std::string url2{"www.def.com"};
-    std::shared_ptr<AVSDirective> anotherPlayDirective = AVSDirective::create(
-        "",
-        avsMessageHeader2,
-        createUrlPayloadTest(PlayBehavior::REPLACE_ALL, url2),
-        m_attachmentManager,
-        CONTEXT_ID_TEST);
-
-    PromiseFuturePair<void> setSourcePair1;
-    auto setSourceCalled1 = [this, &setSourcePair1] {
-        setSourcePair1.setValue();
-        m_mockMediaPlayer->mockSetSource();
-        return m_mockMediaPlayer->getCurrentSourceId();
-    };
-
-    EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _, NAMESPACE_AUDIO_PLAYER))
-        .Times(1)
-        .WillOnce(InvokeWithoutArgs(this, &AudioPlayerTest::wakeOnAcquireChannel));
-    EXPECT_CALL(*directiveHandlerResult1, setCompleted());
-    EXPECT_CALL(*m_mockMediaPlayer, urlSetSource(url1)).Times(1).WillOnce(InvokeWithoutArgs(setSourceCalled1));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(directiveHandlerResult1));
-    m_audioPlayer->CapabilityAgent::handleDirective("1");
-    ASSERT_EQ(std::future_status::ready, m_wakeAcquireChannelFuture.wait_for(WAIT_TIMEOUT));
-    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND);
-    ASSERT_TRUE(setSourcePair1.waitFor(WAIT_TIMEOUT));
+void AudioPlayerTest::testPlayEnqueFinishPlay() {
+    // send a play directive
+    sendPlayDirective();
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
 
-    m_audioPlayer->onFocusChanged(FocusState::BACKGROUND);
-    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PAUSED, WAIT_TIMEOUT));
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
 
-    PromiseFuturePair<void> setSourcePair2;
-    auto setSourceCalled2 = [this, &setSourcePair2] {
-        setSourcePair2.setValue();
-        m_mockMediaPlayer->mockSetSource();
-        return m_mockMediaPlayer->getCurrentSourceId();
-    };
-    EXPECT_CALL(*m_mockMediaPlayer, urlSetSource(url2)).Times(1).WillOnce(InvokeWithoutArgs(setSourceCalled2));
-    m_audioPlayer->CapabilityAgent::preHandleDirective(anotherPlayDirective, std::move(directiveHandlerResult2));
+    // Enqueue 3 tracks
+    for (int i = 0; i < 3; i++) {
+        std::string msgId = MESSAGE_ID_TEST + std::to_string(i);
+        auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, msgId);
+        std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+            "",
+            avsMessageHeader,
+            createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_1 + std::to_string(i)),
+            m_attachmentManager,
+            CONTEXT_ID_TEST + std::to_string(i));
+        m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+        m_audioPlayer->CapabilityAgent::handleDirective(msgId);
+    }
 
-    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, WAIT_TIMEOUT));
-    ASSERT_TRUE(setSourcePair2.waitFor(WAIT_TIMEOUT));
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
+
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::FINISHED, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
+
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::FINISHED, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
+
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::FINISHED, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, WAIT_TIMEOUT));
+
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId());
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::FINISHED, WAIT_TIMEOUT));
 }
 
+TEST_F(AudioPlayerTest, test1PlayerPool_PlayEnqueFinishPlay) {
+    reSetUp(1);
+
+    testPlayEnqueFinishPlay();
+}
+
+TEST_F(AudioPlayerTest, test2PlayerPool_PlayEnqueFinishPlay) {
+    reSetUp(2);
+
+    testPlayEnqueFinishPlay();
+}
+
+TEST_F(AudioPlayerTest, test3PlayerPool_PlayEnqueFinishPlay) {
+    reSetUp(3);
+
+    testPlayEnqueFinishPlay();
+}
+
+void AudioPlayerTest::verifyMessageOrder(
+    const std::vector<std::string>& orderedMessageList,
+    int index,
+    std::function<void()> trigger) {
+    size_t nextIndex = index;
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(
+            Invoke([this, orderedMessageList, &nextIndex](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                if (nextIndex < orderedMessageList.size()) {
+                    if (verifyMessage(request, orderedMessageList.at(nextIndex))) {
+                        if (nextIndex < orderedMessageList.size()) {
+                            nextIndex++;
+                        }
+                    }
+                }
+                m_messageSentTrigger.notify_one();
+            }));
+
+    trigger();
+
+    {
+        bool result;
+        std::unique_lock<std::mutex> lock(m_mutex);
+        result = m_messageSentTrigger.wait_for(lock, WAIT_TIMEOUT, [orderedMessageList, &nextIndex] {
+            if (nextIndex == orderedMessageList.size()) {
+                return true;
+            }
+            return false;
+        });
+
+        ASSERT_TRUE(result);
+    }
+}
+
+TEST_F(AudioPlayerTest, test_playbackFinishedMessageOrder_1Player) {
+    reSetUp(1);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+
+    verifyMessageOrder(expectedMessages, 0, [this] { sendPlayDirective(); });
+
+    expectedMessages.push_back(PLAYBACK_NEARLY_FINISHED_NAME);
+    expectedMessages.push_back(PLAYBACK_FINISHED_NAME);
+    verifyMessageOrder(
+        expectedMessages, 2, [this] { m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId()); });
+}
+
+TEST_F(AudioPlayerTest, test_playbackFinishedMessageOrder_2Players) {
+    reSetUp(2);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PLAYBACK_NEARLY_FINISHED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+
+    verifyMessageOrder(expectedMessages, 0, [this] { sendPlayDirective(); });
+
+    expectedMessages.push_back(PLAYBACK_FINISHED_NAME);
+    verifyMessageOrder(
+        expectedMessages, 3, [this] { m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId()); });
+}
+
+TEST_F(AudioPlayerTest, test_playbackStoppedMessageOrder_1Player) {
+    reSetUp(1);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+
+    verifyMessageOrder(expectedMessages, 0, [this] { sendPlayDirective(); });
+
+    expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
+    verifyMessageOrder(
+        expectedMessages, 2, [this] { m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId()); });
+}
+
+TEST_F(AudioPlayerTest, test_playbackStoppedMessageOrder_2Players) {
+    reSetUp(2);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PLAYBACK_NEARLY_FINISHED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+
+    verifyMessageOrder(expectedMessages, 0, [this] { sendPlayDirective(); });
+
+    expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
+    verifyMessageOrder(
+        expectedMessages, 3, [this] { m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId()); });
+}
 }  // namespace test
 }  // namespace audioPlayer
 }  // namespace capabilityAgents

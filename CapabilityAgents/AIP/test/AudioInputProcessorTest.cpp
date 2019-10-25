@@ -1025,8 +1025,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                 return true;
             }));
     }
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_))
-        .WillOnce(Invoke([this](const std::string& dialogRequestId) { m_dialogRequestId = dialogRequestId; }));
+    m_mockDirectiveSequencer->setDialogRequestId("dialogRequestId");
     {
         // Enforce the sequence.
         InSequence dummy;
@@ -1034,7 +1033,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
             .WillOnce(DoAll(
                 Invoke([this, KWDMetadata](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
                     m_recognizeEvent->verifyMetadata(request, KWDMetadata);
-                    m_recognizeEvent->verifyMessage(request, m_pattern, m_dialogRequestId);
+                    m_recognizeEvent->verifyMessage(request, m_pattern, m_mockDirectiveSequencer->getDialogRequestId());
                 }),
                 InvokeWithoutArgs([&] {
                     if (RecognizeStopPoint::AFTER_SEND == stopPoint) {
@@ -1332,11 +1331,11 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
     EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockContextManager, getContext(_));
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_));
 
     // Set AIP to a sane state.
     directiveHandler->preHandleDirective(avsDirective, std::move(result));
     EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
+    EXPECT_EQ(std::string(""), m_mockDirectiveSequencer->getDialogRequestId());
     m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
     m_audioInputProcessor->onContextAvailable(contextJson);
 

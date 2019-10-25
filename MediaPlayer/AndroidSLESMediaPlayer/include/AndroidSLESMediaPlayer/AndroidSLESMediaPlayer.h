@@ -15,18 +15,19 @@
 #ifndef ALEXA_CLIENT_SDK_MEDIAPLAYER_ANDROIDSLESMEDIAPLAYER_INCLUDE_ANDROIDSLESMEDIAPLAYER_ANDROIDSLESMEDIAPLAYER_H_
 #define ALEXA_CLIENT_SDK_MEDIAPLAYER_ANDROIDSLESMEDIAPLAYER_INCLUDE_ANDROIDSLESMEDIAPLAYER_ANDROIDSLESMEDIAPLAYER_H_
 
+#include <unordered_set>
 #include <vector>
 
 #include <SLES/OpenSLES.h>
 
+#include <AndroidUtilities/AndroidSLESEngine.h>
+#include <AndroidUtilities/AndroidSLESObject.h>
 #include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/PlaylistParser/IterativePlaylistParserInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
-#include <AndroidUtilities/AndroidSLESEngine.h>
-#include <AndroidUtilities/AndroidSLESObject.h>
 #include <EqualizerImplementations/EqualizerBandMapperInterface.h>
 #include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
@@ -88,7 +89,9 @@ public:
     bool resume(SourceId id) override;
     std::chrono::milliseconds getOffset(SourceId id) override;
     uint64_t getNumBytesBuffered() override;
-    void setObserver(
+    void addObserver(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
+    void removeObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
     ///@}
 
@@ -233,8 +236,8 @@ private:
     /// The media player OpenSL ES object.
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> m_playerObject;
 
-    /// The media player observer which can be nullptr.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_observer;
+    /// The media player observers.
+    std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface>> m_observers;
 
     /// Equalizer OpenSL ES interface.
     SLEqualizerItf m_equalizer;

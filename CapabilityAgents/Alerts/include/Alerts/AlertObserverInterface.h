@@ -48,7 +48,9 @@ public:
         /// The alert has entered the background.
         FOCUS_ENTERED_BACKGROUND,
         /// The alert has encountered an error.
-        ERROR
+        ERROR,
+        /// The alert has been deleted.
+        DELETED
     };
 
     /**
@@ -99,6 +101,8 @@ inline std::string AlertObserverInterface::stateToString(State state) {
             return "FOCUS_ENTERED_BACKGROUND";
         case State::ERROR:
             return "ERROR";
+        case State::DELETED:
+            return "DELETED";
     }
     return "unknown State";
 }

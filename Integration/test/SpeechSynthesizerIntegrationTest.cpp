@@ -174,10 +174,12 @@ static const std::string NAME_ADJUST_VOLUME = "AdjustVolume";
 static const std::string NAME_EXPECT_SPEECH = "ExpectSpeech";
 // This string to be used for SetMute Directives which use the NAMESPACE_SPEAKER namespace.
 static const std::string NAME_SET_MUTE = "SetMute";
-// This string to be used for SpeechStarted Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+// This string to be used for SpeechStarted events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
 static const std::string NAME_SPEECH_STARTED = "SpeechStarted";
-// This string to be used for SpeechFinished Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+// This string to be used for SpeechFinished events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
 static const std::string NAME_SPEECH_FINISHED = "SpeechFinished";
+// This string to be used for SpeechInterrupted events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+static const std::string NAME_SPEECH_INTERRUPTED = "SpeechInterrupted";
 // This String to be used to register the SpeechRecognizer namespace to a DirectiveHandler.
 static const std::string NAMESPACE_SPEECH_RECOGNIZER = "SpeechRecognizer";
 // This String to be used to register the SpeechSynthesizer namespace to a DirectiveHandler.
@@ -712,18 +714,18 @@ TEST_F(SpeechSynthesizerTest, test_bargeInOnOneSpeech) {
     // SpeechSynthesizer has finished.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED);
 
-    // No SpeechFinished was sent.
+    // SpeechInterrupted was sent.
     TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+    ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_INTERRUPTED));
 
     // Alerts channel regains the foreground.
     ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
 }
 
 /**
- * Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.
+ * Test ability for the SpeechSynthesizer to handle a barge in at the begining of consecutive speaks.
  *
  * This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a
  * MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is
@@ -791,7 +793,7 @@ TEST_F(SpeechSynthesizerTest, test_bargeInOnMultipleSpeaksAtTheBeginning) {
 }
 
 /**
- * Test ability for the SpeechSynthesizer to handle a barge in in the middle of consucutive speaks.
+ * Test ability for the SpeechSynthesizer to handle a barge in in the middle of consecutive speaks.
  *
  * This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a
  * MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is

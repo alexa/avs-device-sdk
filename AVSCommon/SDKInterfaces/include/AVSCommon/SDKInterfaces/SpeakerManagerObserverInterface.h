@@ -40,7 +40,7 @@ public:
     };
 
     /**
-     * A callback for when the @c SpeakerInterface::SpeakerSettings succesfully changes.
+     * A callback for when the @c SpeakerInterface::SpeakerSettings successfully changes.
      *
      * @param source. This indicates the origin of the call.
      * @param type. This indicates the type of speaker that was modified.

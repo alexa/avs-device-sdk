@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,8 +32,6 @@ namespace playbackController {
 class PlaybackMessageRequest : public avsCommon::avs::MessageRequest {
 public:
     /**
-     * @copyDoc avsCommon::avs::MessageRequest()
-     *
      * Construct a @c MessageRequest while binding it to a @c PlaybackController and a @c Button.
      *
      * @param button The @c Button pressed.

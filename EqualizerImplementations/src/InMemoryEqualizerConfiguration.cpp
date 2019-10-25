@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 #include <unordered_set>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <EqualizerImplementations/InMemoryEqualizerConfiguration.h>
 
 #include "EqualizerImplementations/InMemoryEqualizerConfiguration.h"
 
@@ -41,6 +40,8 @@ static constexpr int DEFAULT_LEVEL = 0;
 static constexpr int DEFAULT_MIN_LEVEL = -6;
 /// Default maximum band level in dB. +6 dB effectively doubling the amplitude of the band.
 static constexpr int DEFAULT_MAX_LEVEL = 6;
+/// Adjustment value used by AVS by default, in dB, when you, for example, say "Alexa, raise the bass".
+static constexpr int DEFAULT_ADJUST_DELTA = 1;
 
 std::set<EqualizerBand> InMemoryEqualizerConfiguration::getSupportedBands() const {
     return m_bandsSupported;
@@ -56,6 +57,10 @@ int InMemoryEqualizerConfiguration::getMinBandLevel() const {
 
 int InMemoryEqualizerConfiguration::getMaxBandLevel() const {
     return m_maxBandLevel;
+}
+
+int InMemoryEqualizerConfiguration::getDefaultBandDelta() const {
+    return m_defaultDelta;
 }
 
 EqualizerState InMemoryEqualizerConfiguration::getDefaultState() const {
@@ -79,11 +84,13 @@ bool InMemoryEqualizerConfiguration::isModeSupported(EqualizerMode mode) const {
 InMemoryEqualizerConfiguration::InMemoryEqualizerConfiguration(
     int minBandLevel,
     int maxBandLevel,
+    int defaultDelta,
     const std::set<EqualizerBand>& bandsSupported,
     const std::set<EqualizerMode>& modesSupported,
     EqualizerState defaultState) :
         m_maxBandLevel{maxBandLevel},
         m_minBandLevel{minBandLevel},
+        m_defaultDelta{defaultDelta},
         m_bandsSupported{bandsSupported},
         m_modesSupported{modesSupported},
         m_defaultState(defaultState),
@@ -106,6 +113,11 @@ bool InMemoryEqualizerConfiguration::validateConfiguration() {
                         .d("maxLevel", m_maxBandLevel)
                         .d("minLevel", m_minBandLevel));
         areBandExtremumsValid = false;
+        isValid = false;
+    }
+
+    if (m_defaultDelta == 0) {
+        ACSDK_ERROR(LX("validateConfigurationFailed").d("reason", "delta value for adjusting the band cannot be zero"));
         isValid = false;
     }
 
@@ -163,11 +175,12 @@ bool InMemoryEqualizerConfiguration::validateBandLevelMap(
 std::shared_ptr<InMemoryEqualizerConfiguration> InMemoryEqualizerConfiguration::create(
     int minBandLevel,
     int maxBandLevel,
+    int defaultDelta,
     const std::set<EqualizerBand>& bandsSupported,
     const std::set<EqualizerMode>& modesSupported,
     EqualizerState defaultState) {
-    auto configuration = std::shared_ptr<InMemoryEqualizerConfiguration>(
-        new InMemoryEqualizerConfiguration(minBandLevel, maxBandLevel, bandsSupported, modesSupported, defaultState));
+    auto configuration = std::shared_ptr<InMemoryEqualizerConfiguration>(new InMemoryEqualizerConfiguration(
+        minBandLevel, maxBandLevel, defaultDelta, bandsSupported, modesSupported, defaultState));
     if (!configuration->validateConfiguration()) {
         // Errors have already been logged by this point
         return nullptr;
@@ -179,6 +192,7 @@ std::shared_ptr<InMemoryEqualizerConfiguration> InMemoryEqualizerConfiguration::
     return create(
         DEFAULT_MIN_LEVEL,
         DEFAULT_MAX_LEVEL,
+        DEFAULT_ADJUST_DELTA,
         std::set<EqualizerBand>({EqualizerBand::BASS, EqualizerBand::MIDRANGE, EqualizerBand::TREBLE}),
         std::set<EqualizerMode>(),
         EqualizerState{EqualizerMode::NONE,
@@ -198,6 +212,7 @@ std::shared_ptr<InMemoryEqualizerConfiguration> InMemoryEqualizerConfiguration::
 InMemoryEqualizerConfiguration::InMemoryEqualizerConfiguration() :
         m_maxBandLevel{DEFAULT_LEVEL},
         m_minBandLevel{DEFAULT_LEVEL},
+        m_defaultDelta{DEFAULT_ADJUST_DELTA},
         m_defaultState{EqualizerMode::NONE, {{}}},
         m_isEnabled{false} {
 }

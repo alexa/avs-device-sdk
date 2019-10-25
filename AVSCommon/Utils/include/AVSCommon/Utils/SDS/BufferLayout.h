@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -461,21 +461,26 @@ uint8_t* SharedDataStream<T>::BufferLayout::getData(Index at) const {
     return m_data + (at % getDataSize()) * getHeader()->wordSize;
 }
 
+template <typename FieldType, typename ClassType>
+auto inline max_field_limit(FieldType(ClassType::*)) -> decltype(std::numeric_limits<FieldType>::max()) {
+    return std::numeric_limits<FieldType>::max();
+}
+
 template <typename T>
 bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders) {
     // Make sure parameters are not too large to store.
-    if (wordSize > std::numeric_limits<decltype(Header::wordSize)>::max()) {
+    if (wordSize > max_field_limit(&Header::wordSize)) {
         logger::acsdkError(logger::LogEntry(TAG, "initFailed")
                                .d("reason", "wordSizeTooLarge")
                                .d("wordSize", wordSize)
-                               .d("wordSizeLimit", std::numeric_limits<decltype(Header::wordSize)>::max()));
+                               .d("wordSizeLimit", max_field_limit(&Header::wordSize)));
         return false;
     }
-    if (maxReaders > std::numeric_limits<decltype(Header::maxReaders)>::max()) {
+    if (maxReaders > max_field_limit(&Header::maxReaders)) {
         logger::acsdkError(logger::LogEntry(TAG, "initFailed")
                                .d("reason", "maxReadersTooLarge")
                                .d("maxReaders", maxReaders)
-                               .d("maxReadersLimit", std::numeric_limits<decltype(Header::maxReaders)>::max()));
+                               .d("maxReadersLimit", max_field_limit(&Header::maxReaders)));
         return false;
     }
 
@@ -604,7 +609,9 @@ void SharedDataStream<T>::BufferLayout::disableReaderLocked(size_t id) {
 
 template <typename T>
 typename SharedDataStream<T>::Index SharedDataStream<T>::BufferLayout::wordsUntilWrap(Index after) const {
-    return alignSizeTo(after, getDataSize()) - after;
+    // The type of Index is uint64_t, size_t is 32 bits in a 32bits system.
+    // Passing an Index value to alignSizeTo may cause integer overflow.
+    return getDataSize() - (after % getDataSize());
 }
 
 template <typename T>

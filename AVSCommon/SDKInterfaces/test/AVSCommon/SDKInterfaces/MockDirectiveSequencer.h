@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,11 +30,19 @@ public:
     MockDirectiveSequencer();
     MOCK_METHOD1(addDirectiveHandler, bool(std::shared_ptr<DirectiveHandlerInterface> handler));
     MOCK_METHOD1(removeDirectiveHandler, bool(std::shared_ptr<DirectiveHandlerInterface> handler));
-    MOCK_METHOD1(setDialogRequestId, void(const std::string& dialogRequestId));
+    inline void setDialogRequestId(const std::string& dialogRequestId) {
+        m_dialogRequestId = dialogRequestId;
+    };
+
+    inline std::string getDialogRequestId() {
+        return m_dialogRequestId;
+    };
     MOCK_METHOD1(onDirective, bool(std::shared_ptr<avsCommon::avs::AVSDirective> directive));
     MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(disable, void());
     MOCK_METHOD0(enable, void());
+
+    std::string m_dialogRequestId;
 };
 
 inline MockDirectiveSequencer::MockDirectiveSequencer() :

@@ -10,7 +10,8 @@ add_library(UtilsCommonTestLib
   TestableAttachmentWriter.cpp
   TestableMessageObserver.cpp)
 target_include_directories(UtilsCommonTestLib PUBLIC
-        "${AVSCommon_INCLUDE_DIRS}"
+    "${AVSCommon_INCLUDE_DIRS}"
+    "${AVSCommon_SOURCE_DIR}/Utils/src/MediaPlayer"
 	"${AVSCommon_SOURCE_DIR}/Utils/test")
 target_link_libraries(UtilsCommonTestLib
         AVSCommon

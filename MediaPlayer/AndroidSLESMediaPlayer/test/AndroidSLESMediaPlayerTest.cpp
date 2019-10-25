@@ -175,7 +175,7 @@ protected:
         auto factory = std::make_shared<MockContentFetcherFactory>();
         m_player = AndroidSLESMediaPlayer::create(factory, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
         m_observer = std::make_shared<NiceMock<MockObserver>>();
-        m_player->setObserver(m_observer);
+        m_player->addObserver(m_observer);
     }
 
     std::shared_ptr<std::stringstream> createStream() {

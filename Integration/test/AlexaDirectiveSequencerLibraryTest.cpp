@@ -205,6 +205,8 @@ static const NamespaceAndName SET_ALERT_PAIR(NAMESPACE_ALERTS, NAME_SET_ALERT);
 static const std::chrono::seconds WAIT_FOR_TIMEOUT_DURATION(5);
 // This Integer to be used to specify a timeout in seconds for AuthDelegate to wait for LWA response.
 static const std::chrono::seconds SEND_EVENT_TIMEOUT_DURATION(20);
+// Time to wait before sending Recognize response to Alexa
+static const std::chrono::seconds RESPONSE_DELAY(2);
 
 /// JSON key to get the directive object of a message.
 static const std::string JSON_MESSAGE_DIRECTIVE_KEY = "directive";
@@ -1049,6 +1051,9 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, test_multiturnScenario) {
             params.result->setCompleted();
         }
     } while (!params.isHandle() || params.directive->getName() != NAME_EXPECT_SPEECH);
+
+    // Sleep to delay sending next Recognize request too soon and surprising Alexa.
+    std::this_thread::sleep_for(RESPONSE_DELAY);
 
     // Send back a recognize event.
     m_directiveSequencer->setDialogRequestId(SECOND_DIALOG_REQUEST_ID);

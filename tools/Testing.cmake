@@ -29,6 +29,9 @@ macro(discover_unit_tests includes libraries)
             # Do not include gtest_main due to double free issue
             # - https://github.com/google/googletest/issues/930
             target_link_libraries(${testname} ${libraries} gmock_main)
+            if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+                target_link_libraries(${testname} atomic)
+            endif()
             configure_test_command(${testname} "${inputs}" ${testsourcefile})
         endforeach()
     endif()

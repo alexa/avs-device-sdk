@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,9 @@ public:
         /// In this state, the @c SpeechSynthesizer is idle and not playing speech.
         FINISHED,
 
+        /// In this state, the @c SpeechSynthesizer is idle due to a barge in.
+        INTERRUPTED,
+
         /// In this state, the @c SpeechSynthesizer is gaining the channel focus while still not playing anything
         GAINING_FOCUS,
 
@@ -72,6 +75,9 @@ inline std::ostream& operator<<(
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
             stream << "FINISHED";
+            break;
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
+            stream << "INTERRUPTED";
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:
             stream << "GAINING_FOCUS";

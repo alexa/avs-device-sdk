@@ -150,6 +150,7 @@ RendererTest::RendererTest() :
 }
 
 RendererTest::~RendererTest() {
+    m_mediaPlayer->removeObserver(m_renderer);
     m_mediaPlayer.reset();
 }
 

@@ -67,7 +67,7 @@ std::ostream& operator<<(std::ostream& stream, const NotificationRenderer::State
 void NotificationRenderer::doShutdown() {
     ACSDK_DEBUG5(LX(__func__));
     if (m_mediaPlayer) {
-        m_mediaPlayer->setObserver(nullptr);
+        m_mediaPlayer->removeObserver(shared_from_this());
     }
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -81,7 +81,7 @@ std::shared_ptr<NotificationRenderer> NotificationRenderer::create(std::shared_p
         return nullptr;
     }
     std::shared_ptr<NotificationRenderer> result(new NotificationRenderer(mediaPlayer));
-    mediaPlayer->setObserver(result);
+    mediaPlayer->addObserver(result);
     return result;
 }
 

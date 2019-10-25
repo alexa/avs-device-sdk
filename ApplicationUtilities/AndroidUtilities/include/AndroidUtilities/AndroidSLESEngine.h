@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,13 +45,27 @@ public:
     static std::shared_ptr<AndroidSLESEngine> create();
 
     /**
-     * Creates an OpenSL ES audio recorder.
+     * Creates a microphone wrapper for an OpenSL ES audio recorder.
      *
      * @param stream The new microphone will write the audio recorded to this stream.
-     * @return A unique pointer to an @c AndroidSLESRecorder object if succeeds; otherwise return @c nullptr.
+     * @return A unique pointer to an @c AndroidSLESMicrophone object if succeeds; otherwise return @c nullptr.
      */
-    std::unique_ptr<AndroidSLESMicrophone> createMicrophoneRecorder(
+    std::unique_ptr<AndroidSLESMicrophone> createAndroidMicrophone(
         std::shared_ptr<avsCommon::avs::AudioInputStream> stream);
+
+    /**
+     * Creates an OpenSL ES audio recorder.
+     *
+     * @return A unique pointer to a new OpenSL ES audio recorder.
+     */
+    std::unique_ptr<AndroidSLESObject> createAudioRecorder();
+
+    /**
+     * Creates an OpenSL ES audio recorder.
+     *
+     * @param[in] recorderObject The new OpenSL ES audio recorder.
+     */
+    void createAudioRecorder(SLObjectItf& recorderObject);
 
     /**
      * Creates an OpenSL ES audio player. Although the parameters are read-only, we cannot use const because android's

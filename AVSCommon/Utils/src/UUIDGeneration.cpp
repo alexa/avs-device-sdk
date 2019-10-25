@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 #include <random>
 #include <chrono>
 #include <sstream>
+#include <string>
 #include <iomanip>
+#include <cmath>
 #include <mutex>
 #include <climits>
 #include <algorithm>
@@ -54,6 +56,27 @@ static const size_t MAX_NUM_REPLACEMENT_BITS = CHAR_BIT;
 
 /// Number of bits in a hex digit.
 static const size_t BITS_IN_HEX_DIGIT = 4;
+
+/// Indicates if next UUID should be seeded. Must not be accessed unless g_mutex is locked.
+static bool g_seedNeeded = true;
+
+/// Lock to avoid collisions in generationing uuid and setting seed.
+static std::mutex g_mutex;
+
+/// Unique g_salt to use, settable by caller. Must not be accessed unless g_mutex is locked.
+static std::string g_salt("default");
+
+/// Entropy Threshold for sufficient uniqueness. Value chosen by experiment.
+static const double ENTROPY_THRESHOLD = 600;
+
+/// Catch for platforms where entropy is a hard coded value. Value chosen by experiment.
+static const int ENTROPY_REPEAT_THRESHOLD = 16;
+
+void setSalt(const std::string& newSalt) {
+    std::unique_lock<std::mutex> lock(g_mutex);
+    g_salt = newSalt;
+    g_seedNeeded = true;
+}
 
 /**
  * Randomly generate a string of hex digits. Before the conversion of hex to string,
@@ -124,17 +147,42 @@ static const std::string generateHex(
 }
 
 const std::string generateUUID() {
-    static bool seeded = false;
     static std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t> ibe;
-    static std::mutex mutex;
-    std::unique_lock<std::mutex> lock(mutex);
-    if (!seeded) {
+    std::unique_lock<std::mutex> lock(g_mutex);
+
+    static int consistentEntropyReports = 0;
+    static double priorEntropyResult = 0;
+
+    if (g_seedNeeded) {
         std::random_device rd;
-        ibe.seed(
-            rd() +
-            std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch())
-                .count());
-        seeded = true;
+
+        double currentEntropy = rd.entropy();
+        if (std::fabs(currentEntropy - priorEntropyResult) < std::numeric_limits<double>::epsilon()) {
+            ++consistentEntropyReports;
+        } else {
+            consistentEntropyReports = 0;
+        }
+        priorEntropyResult = currentEntropy;
+
+        long randomTimeComponent = rd() + std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                              std::chrono::steady_clock::now().time_since_epoch())
+                                              .count();
+        std::string fullSeed = g_salt + std::to_string(randomTimeComponent);
+        std::seed_seq seed(fullSeed.begin(), fullSeed.end());
+        ibe.seed(seed);
+
+        if (currentEntropy > ENTROPY_THRESHOLD) {
+            g_seedNeeded = false;
+        } else {
+            ACSDK_WARN(LX("low entropy on call to generate UUID").d("current entropy", currentEntropy));
+        }
+
+        if (consistentEntropyReports > ENTROPY_REPEAT_THRESHOLD) {
+            g_seedNeeded = false;
+            ACSDK_WARN(LX("multiple repeat values for entropy")
+                           .d("current entropy", currentEntropy)
+                           .d("consistent entropy reports", consistentEntropyReports));
+        }
     }
 
     std::ostringstream uuidText;

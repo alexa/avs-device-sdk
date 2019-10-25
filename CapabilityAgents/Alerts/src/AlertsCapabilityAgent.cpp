@@ -815,6 +815,9 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             alertIsActive = true;
             sendEvent(ALERT_ENTERED_BACKGROUND_EVENT_NAME, alertToken);
             break;
+
+        case AlertObserverInterface::State::DELETED:
+            break;
     }
 
     if (alertIsActive) {
@@ -965,7 +968,11 @@ void AlertsCapabilityAgent::setNextAlertVolume(int64_t volume) {
     ACSDK_DEBUG5(LX(__func__).d("New Alerts volume", volume));
 
     m_speakerManager
-        ->setVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_ALERTS_VOLUME, static_cast<int8_t>(volume))
+        ->setVolume(
+            SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+            static_cast<int8_t>(volume),
+            false,
+            SpeakerManagerObserverInterface::Source::DIRECTIVE)
         .get();
 
     // Always notify AVS of volume changes here

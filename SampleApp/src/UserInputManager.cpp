@@ -70,11 +70,15 @@ enum class SettingsValues : char {
     DO_NOT_DISTURB = '2',
     WAKEWORD_CONFIRMATION = '3',
     SPEECH_CONFIRMATION = '4',
-    TIME_ZONE = '5'
+    TIME_ZONE = '5',
+    QUIT = 'q'
 };
 
 /// The index of the first option in displaying a list of options.
 static const unsigned OPTION_ENUM_START = 1;
+
+/// The number used to quit a numeric options menu
+static const unsigned OPTION_ENUM_QUIT = 0;
 
 static const std::unordered_map<char, std::string> TZ_VALUES({{'1', "America/Vancouver"},
                                                               {'2', "America/Edmonton"},
@@ -489,6 +493,8 @@ void boolSettingMenu(std::function<void(bool)> setFunction) {
         case DISABLE:
             setFunction(false);
             return;
+        case QUIT:
+            return;
     }
 }
 
@@ -502,25 +508,33 @@ void UserInputManager::settingsMenu() {
             unsigned int optionSelected;
             m_interactionManager->locale();
             std::cin >> optionSelected;
-            auto numOfSupportedLocales = m_localeAssetsManager->getSupportedLocales().size();
-            auto numOfSupportedLocaleCombinations = m_localeAssetsManager->getSupportedLocaleCombinations().size();
-            if (optionSelected <= numOfSupportedLocales && optionSelected >= OPTION_ENUM_START) {
-                std::string locale = *std::next(
-                    m_localeAssetsManager->getSupportedLocales().begin(), optionSelected - OPTION_ENUM_START);
-                m_interactionManager->setLocale({locale});
-            } else if (
-                optionSelected > numOfSupportedLocales &&
-                optionSelected <= (numOfSupportedLocales + numOfSupportedLocaleCombinations)) {
-                auto index = optionSelected - numOfSupportedLocales - OPTION_ENUM_START;
-                auto locales = *std::next(m_localeAssetsManager->getSupportedLocaleCombinations().begin(), index);
-                m_interactionManager->setLocale(locales);
+            if (!std::cin.fail()) {
+                auto numOfSupportedLocales = m_localeAssetsManager->getSupportedLocales().size();
+                auto numOfSupportedLocaleCombinations = m_localeAssetsManager->getSupportedLocaleCombinations().size();
+                if (optionSelected <= numOfSupportedLocales && optionSelected >= OPTION_ENUM_START) {
+                    std::string locale = *std::next(
+                        m_localeAssetsManager->getSupportedLocales().begin(), optionSelected - OPTION_ENUM_START);
+                    m_interactionManager->setLocale({locale});
+                } else if (
+                    optionSelected > numOfSupportedLocales &&
+                    optionSelected <= (numOfSupportedLocales + numOfSupportedLocaleCombinations)) {
+                    auto index = optionSelected - numOfSupportedLocales - OPTION_ENUM_START;
+                    auto locales = *std::next(m_localeAssetsManager->getSupportedLocaleCombinations().begin(), index);
+                    m_interactionManager->setLocale(locales);
+                } else if (OPTION_ENUM_QUIT == optionSelected) {
+                    return;
+                } else {
+                    m_interactionManager->errorValue();
+                }
             } else {
                 m_interactionManager->errorValue();
+                // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+                // input.
+                std::cin.clear();
+                // Ignore anything else on the same line as the non-number so that it does not cause another parse
+                // failure.
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
-            // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect input.
-            std::cin.clear();
-            // Ignore anything else on the same line as the non-number so that it does not cause another parse failure.
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return;
         }
         case (char)SettingsValues::DO_NOT_DISTURB: {
@@ -553,13 +567,21 @@ void UserInputManager::settingsMenu() {
             auto searchTz = TZ_VALUES.find(tzValue);
             if (searchTz != TZ_VALUES.end()) {
                 m_interactionManager->setTimeZone(searchTz->second);
+            } else if (QUIT == tzValue) {
+                return;
             } else {
                 m_interactionManager->errorValue();
             }
             return;
         }
+        case (char)SettingsValues::QUIT: {
+            return;
+        }
+        default: {
+            m_interactionManager->errorValue();
+            return;
+        }
     }
-    m_interactionManager->help();
 }
 
 }  // namespace sampleApp

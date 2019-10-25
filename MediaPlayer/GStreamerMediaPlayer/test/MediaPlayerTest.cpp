@@ -652,7 +652,7 @@ void MediaPlayerTest::SetUp() {
         "",
         GetParam());
     ASSERT_TRUE(m_mediaPlayer);
-    m_mediaPlayer->setObserver(m_playerObserver);
+    m_mediaPlayer->addObserver(m_playerObserver);
 }
 
 void MediaPlayerTest::setAttachmentReaderSource(

@@ -92,7 +92,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         externalMusicProviderSpeakers,
     const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
+    std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
@@ -152,7 +152,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             externalMusicProviderSpeakers,
             adapterCreationMap,
             speakMediaPlayer,
-            audioMediaPlayer,
+            std::move(audioMediaPlayerFactory),
             alertsMediaPlayer,
             notificationsMediaPlayer,
             bluetoothMediaPlayer,
@@ -217,7 +217,7 @@ bool DefaultClient::initialize(
         externalMusicProviderSpeakers,
     const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
+    std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
@@ -279,8 +279,8 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    if (!audioMediaPlayer) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioMediaPlayer"));
+    if (!audioMediaPlayerFactory) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioMediaPlayerFactory"));
         return false;
     }
 
@@ -605,7 +605,7 @@ bool DefaultClient::initialize(
      * interface of AVS.
      */
     m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
-        audioMediaPlayer,
+        std::move(audioMediaPlayerFactory),
         m_connectionManager,
         m_audioFocusManager,
         contextManager,
@@ -616,14 +616,11 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {speakSpeaker,
-                                                                                            audioSpeaker,
-                                                                                            alertsSpeaker,
-                                                                                            notificationsSpeaker,
-                                                                                            bluetoothSpeaker,
-                                                                                            ringtoneSpeaker,
-                                                                                            systemSoundSpeaker};
-
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allSpeakers = {
+        speakSpeaker, alertsSpeaker, notificationsSpeaker, bluetoothSpeaker, ringtoneSpeaker, systemSoundSpeaker};
+    if (audioSpeaker) {
+        allSpeakers.push_back(audioSpeaker);
+    }
 #ifdef ENABLE_PCC
     allSpeakers.push_back(phoneSpeaker);
 #endif

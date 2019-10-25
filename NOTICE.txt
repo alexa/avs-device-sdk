@@ -1,5 +1,5 @@
 AVS Device SDK
-Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 ***************************
 AVS DEVICE SDK COMPONENTS
@@ -13,7 +13,6 @@ License, Version 2.0 (the "License"):
 - Alexa Communications Library (ACL)
 - Alexa Directive Sequencer Library (ADSL)
 - Audio Input Processor (AIP) / Speech Recognizer Capability Agent
-- AudioPlayer Capability Agent
 - Certified Sender
 - Context Manager
 - Default Client
@@ -41,6 +40,19 @@ or in the "license" file accompanying this file. This file is distributed on
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied. See the License for the specific language governing permissions and
 limitations under the License.
+
+***************************
+AVS DEVICE SDK COMPONENTS
+***************************
+
+The following AVS Device SDK component is licensed under the Amazon Software License:
+
+- AudioPlayer Capability Agent
+
+You may not use this file except in compliance with the Amazon Software License. A copy
+of the Amazon Software License is located at:
+
+  http://aws.amazon.com/asl/
 
 ******************
 ALEXA AUDIO ASSETS

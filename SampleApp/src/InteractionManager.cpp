@@ -64,8 +64,11 @@ InteractionManager::InteractionManager(
         m_wakeWordAudioProvider{wakeWordAudioProvider},
         m_isHoldOccurring{false},
         m_isTapOccurring{false},
+        m_isCallConnected{false},
         m_isMicOn{true} {
-    m_micWrapper->startStreamingMicrophoneData();
+    if (m_wakeWordAudioProvider) {
+        m_micWrapper->startStreamingMicrophoneData();
+    }
 };
 
 void InteractionManager::begin() {
@@ -118,11 +121,15 @@ void InteractionManager::microphoneToggle() {
         }
         if (m_isMicOn) {
             m_isMicOn = false;
-            m_micWrapper->stopStreamingMicrophoneData();
+            if (m_micWrapper->isStreaming()) {
+                m_micWrapper->stopStreamingMicrophoneData();
+            }
             m_userInterface->microphoneOff();
         } else {
             m_isMicOn = true;
-            m_micWrapper->startStreamingMicrophoneData();
+            if (!m_micWrapper->isStreaming() && m_wakeWordAudioProvider) {
+                m_micWrapper->startStreamingMicrophoneData();
+            }
             m_userInterface->microphoneOn();
         }
     });
@@ -308,10 +315,40 @@ void InteractionManager::stopCall() {
 }
 
 void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
-    // reset tap-to-talk state
-    if (DialogUXState::LISTENING != state) {
-        m_isTapOccurring = false;
-    }
+    m_executor.submit([this, state]() {
+        if (DialogUXState::LISTENING == state) {
+            if (m_isMicOn && !m_micWrapper->isStreaming()) {
+                m_micWrapper->startStreamingMicrophoneData();
+            }
+        } else {
+            // reset tap-to-talk state
+            m_isTapOccurring = false;
+
+            // if wakeword is disabled and no call is occurring, turn off microphone
+            if (!m_wakeWordAudioProvider && !m_isCallConnected && m_micWrapper->isStreaming()) {
+                m_micWrapper->stopStreamingMicrophoneData();
+            }
+        }
+    });
+}
+
+void InteractionManager::onCallStateChange(CallState state) {
+    m_executor.submit([this, state]() {
+        if (CallState::CALL_CONNECTED == state) {
+            if (!m_micWrapper->isStreaming()) {
+                m_micWrapper->startStreamingMicrophoneData();
+            }
+            m_isCallConnected = true;
+        } else {
+            // reset call state
+            m_isCallConnected = false;
+
+            // if wakeword is disabled, turn off microphone when call is not connected and tap is not occurring
+            if (!m_wakeWordAudioProvider && !m_isTapOccurring && m_micWrapper->isStreaming()) {
+                m_micWrapper->stopStreamingMicrophoneData();
+            }
+        }
+    });
 }
 
 void InteractionManager::setSpeechConfirmation(settings::SpeechConfirmationSettingType value) {

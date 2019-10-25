@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 1.15.0 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 1.16.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/CapabilityAgents/ExternalMediaPlayer/src/ExternalMediaPlayerAdapters")
     set(HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS ON)

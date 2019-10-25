@@ -972,6 +972,8 @@ TEST_F(NotificationsCapabilityAgentTest, test_clearData) {
 
     m_notificationsStorage->getIndicatorState(&state);
     ASSERT_EQ(state, IndicatorState::OFF);
+
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
 }
 
 }  // namespace test

@@ -58,7 +58,7 @@ static const std::unordered_map<std::string, int> MEDIAPLAYER_ACCEPTED_KEYS = {{
                                                                                {"channels", G_TYPE_INT}};
 
 /// A counter used to increment the source id when a new source is set.
-static MediaPlayer::SourceId g_id{0};
+static std::atomic<MediaPlayer::SourceId> g_id{1};
 
 /// A link to @c MediaPlayerInterface::ERROR.
 static const MediaPlayer::SourceId ERROR_SOURCE_ID = MediaPlayer::ERROR;
@@ -325,12 +325,36 @@ std::chrono::milliseconds MediaPlayer::getOffset(MediaPlayer::SourceId id) {
     return MEDIA_PLAYER_INVALID_OFFSET;
 }
 
-void MediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> observer) {
-    ACSDK_DEBUG9(LX("setObserverCalled").d("name", RequiresShutdown::name()));
+void MediaPlayer::addObserver(std::shared_ptr<MediaPlayerObserverInterface> observer) {
+    if (nullptr == observer) {
+        ACSDK_ERROR(LX("addObserverCalled").m("nullObserver"));
+        return;
+    }
+
+    ACSDK_DEBUG9(LX("addObserverCalled").d("name", RequiresShutdown::name()));
     std::promise<void> promise;
     auto future = promise.get_future();
     std::function<gboolean()> callback = [this, &promise, &observer]() {
-        handleSetObserver(&promise, observer);
+        handleAddObserver(&promise, observer);
+        return false;
+    };
+
+    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+        future.wait();
+    }
+}
+
+void MediaPlayer::removeObserver(std::shared_ptr<MediaPlayerObserverInterface> observer) {
+    if (nullptr == observer) {
+        ACSDK_ERROR(LX("removeObserverCalled").m("nullObserver"));
+        return;
+    }
+
+    ACSDK_DEBUG9(LX("removeObserverCalled").d("name", RequiresShutdown::name()));
+    std::promise<void> promise;
+    auto future = promise.get_future();
+    std::function<gboolean()> callback = [this, &promise, &observer]() {
+        handleRemoveObserver(&promise, observer);
         return false;
     };
 
@@ -577,7 +601,6 @@ MediaPlayer::MediaPlayer(
         m_playbackFinishedSent{false},
         m_isPaused{false},
         m_isBufferUnderrun{false},
-        m_playerObserver{nullptr},
         m_currentId{ERROR},
         m_playPending{false},
         m_pausePending{false},
@@ -945,7 +968,9 @@ void MediaPlayer::doShutdown() {
         m_urlConverter->shutdown();
     }
     m_urlConverter.reset();
-    m_playerObserver.reset();
+
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    m_playerObservers.clear();
 }
 
 gboolean MediaPlayer::onCallback(const std::function<gboolean()>* callback) {
@@ -1190,9 +1215,14 @@ std::unique_ptr<const VectorOfTags> MediaPlayer::collectTags(GstMessage* message
 }
 
 void MediaPlayer::sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> vectorOfTags) {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     ACSDK_DEBUG(LX("callingOnTags").d("name", RequiresShutdown::name()));
-    if (m_playerObserver) {
-        m_playerObserver->onTags(m_currentId, std::move(vectorOfTags));
+    for (const auto& observer : m_playerObservers) {
+        observer->onTags(m_currentId, std::move(vectorOfTags));
     }
 }
 
@@ -1228,7 +1258,8 @@ void MediaPlayer::handleSetAttachmentReaderSource(
     }
 
     m_source = source;
-    m_currentId = ++g_id;
+    m_currentId = g_id.fetch_add(1);
+
     m_offsetManager.setIsSeekable(true);
     promise->set_value(m_currentId);
 }
@@ -1263,7 +1294,8 @@ void MediaPlayer::handleSetIStreamSource(
     }
 
     m_source = source;
-    m_currentId = ++g_id;
+    m_currentId = g_id.fetch_add(1);
+
     promise->set_value(m_currentId);
 }
 
@@ -1613,36 +1645,53 @@ std::chrono::milliseconds MediaPlayer::getCurrentStreamOffset() {
     return offsetInMilliseconds;
 }
 
-void MediaPlayer::handleSetObserver(
+void MediaPlayer::handleAddObserver(
     std::promise<void>* promise,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) {
-    ACSDK_DEBUG(LX("handleSetObserverCalled").d("name", RequiresShutdown::name()));
-    m_playerObserver = observer;
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    ACSDK_DEBUG(LX("handleAddObserverCalled").d("name", RequiresShutdown::name()));
+    m_playerObservers.insert(observer);
+    promise->set_value();
+}
+
+void MediaPlayer::handleRemoveObserver(
+    std::promise<void>* promise,
+    std::shared_ptr<MediaPlayerObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    ACSDK_DEBUG(LX("handleRemoveObserverCalled").d("name", RequiresShutdown::name()));
+    m_playerObservers.erase(observer);
     promise->set_value();
 }
 
 void MediaPlayer::sendPlaybackStarted() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     if (!m_playbackStartedSent) {
         ACSDK_DEBUG(LX("callingOnPlaybackStarted").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
         m_playbackStartedSent = true;
         m_playPending = false;
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackStarted(m_currentId);
+        for (const auto& observer : m_playerObservers) {
+            observer->onPlaybackStarted(m_currentId);
         }
     }
 }
 
 void MediaPlayer::sendPlaybackFinished() {
-    if (m_currentId == ERROR_SOURCE_ID) {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown() || ERROR_SOURCE_ID == m_currentId) {
         return;
     }
+
     m_isPaused = false;
     m_playbackStartedSent = false;
     if (!m_playbackFinishedSent) {
         m_playbackFinishedSent = true;
         ACSDK_DEBUG(LX("callingOnPlaybackFinished").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
-        if (m_playerObserver) {
-            m_playerObserver->onPlaybackFinished(m_currentId);
+        for (const auto& observer : m_playerObservers) {
+            observer->onPlaybackFinished(m_currentId);
         }
     }
 
@@ -1654,30 +1703,43 @@ void MediaPlayer::sendPlaybackFinished() {
 }
 
 void MediaPlayer::sendPlaybackPaused() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     ACSDK_DEBUG(LX("callingOnPlaybackPaused").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
     m_pausePending = false;
     m_isPaused = true;
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackPaused(m_currentId);
+    for (const auto& observer : m_playerObservers) {
+        observer->onPlaybackPaused(m_currentId);
     }
 }
 
 void MediaPlayer::sendPlaybackResumed() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     ACSDK_DEBUG(LX("callingOnPlaybackResumed").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
     m_resumePending = false;
     m_isPaused = false;
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackResumed(m_currentId);
+    for (const auto& observer : m_playerObservers) {
+        observer->onPlaybackResumed(m_currentId);
     }
 }
 
 void MediaPlayer::sendPlaybackStopped() {
-    if (m_currentId == ERROR_SOURCE_ID) {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown() || ERROR_SOURCE_ID == m_currentId) {
         return;
     }
     ACSDK_DEBUG(LX("callingOnPlaybackStopped").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
-    if (m_playerObserver && ERROR_SOURCE_ID != m_currentId) {
-        m_playerObserver->onPlaybackStopped(m_currentId);
+    if (ERROR_SOURCE_ID != m_currentId) {
+        for (const auto& observer : m_playerObservers) {
+            observer->onPlaybackStopped(m_currentId);
+        }
     }
 
     tearDownTransientPipelineElements(false);
@@ -1688,9 +1750,11 @@ void MediaPlayer::sendPlaybackStopped() {
 }
 
 void MediaPlayer::sendPlaybackError(const ErrorType& type, const std::string& error) {
-    if (m_currentId == ERROR_SOURCE_ID) {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown() || ERROR_SOURCE_ID == m_currentId) {
         return;
     }
+
     ACSDK_DEBUG(LX("callingOnPlaybackError")
                     .d("name", RequiresShutdown::name())
                     .d("type", type)
@@ -1700,10 +1764,9 @@ void MediaPlayer::sendPlaybackError(const ErrorType& type, const std::string& er
     m_pausePending = false;
     m_resumePending = false;
     m_pauseImmediately = false;
-    if (m_playerObserver) {
-        m_playerObserver->onPlaybackError(m_currentId, type, error);
+    for (const auto& observer : m_playerObservers) {
+        observer->onPlaybackError(m_currentId, type, error);
     }
-
     tearDownTransientPipelineElements(false);
     if (m_urlConverter) {
         m_urlConverter->shutdown();
@@ -1712,16 +1775,26 @@ void MediaPlayer::sendPlaybackError(const ErrorType& type, const std::string& er
 }
 
 void MediaPlayer::sendBufferUnderrun() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     ACSDK_DEBUG(LX("callingOnBufferUnderrun").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
-    if (m_playerObserver) {
-        m_playerObserver->onBufferUnderrun(m_currentId);
+    for (const auto& observer : m_playerObservers) {
+        observer->onBufferUnderrun(m_currentId);
     }
 }
 
 void MediaPlayer::sendBufferRefilled() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown()) {
+        return;
+    }
+
     ACSDK_DEBUG(LX("callingOnBufferRefilled").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
-    if (m_playerObserver) {
-        m_playerObserver->onBufferRefilled(m_currentId);
+    for (const auto& observer : m_playerObservers) {
+        observer->onBufferRefilled(m_currentId);
     }
 }
 

@@ -67,6 +67,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/MacAddressString.cpp
+    Utils/src/MediaPlayer/PooledMediaPlayerFactory.cpp
     Utils/src/Metrics.cpp
     Utils/src/Network/InternetConnectionMonitor.cpp
     Utils/src/RequiresShutdown.cpp

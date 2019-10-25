@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,15 +32,25 @@ namespace alexaClientSDK {
 namespace applicationUtilities {
 namespace androidUtilities {
 
+std::unique_ptr<AndroidSLESMicrophone> AndroidSLESMicrophone::create(
+    std::shared_ptr<AndroidSLESEngine> engine,
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream) {
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer =
+        stream->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
+    if (!writer) {
+        ACSDK_ERROR(LX("createAndroidSLESMicrophoneFailed").d("reason", "failed to create writer"));
+        return nullptr;
+    }
+
+    return std::unique_ptr<AndroidSLESMicrophone>(new AndroidSLESMicrophone(engine, writer));
+}
+
 AndroidSLESMicrophone::AndroidSLESMicrophone(
     std::shared_ptr<AndroidSLESEngine> engine,
-    std::shared_ptr<AndroidSLESObject> recorderObject,
-    SLRecordItf recorderInterface,
-    std::unique_ptr<AndroidSLESBufferQueue> queue) :
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer) :
         m_engineObject{engine},
-        m_recorderObject{std::move(recorderObject)},
-        m_recorderInterface{recorderInterface},
-        m_queue(std::move(queue)) {
+        m_writer{writer},
+        m_isStreaming{false} {
 }
 
 SLDataSink AndroidSLESMicrophone::createSinkConfiguration() {
@@ -71,10 +81,15 @@ AndroidSLESMicrophone::~AndroidSLESMicrophone() {
 
 bool AndroidSLESMicrophone::configureRecognizeMode() {
     SLAndroidConfigurationItf configurationInterface;
+    if (!m_recorderObject) {
+        ACSDK_ERROR(LX("configureRecognizeModeFailed").d("reason", "recorderObjectUnavailable"));
+        return false;
+    }
+
     if (!m_recorderObject->getInterface(SL_IID_RECORD, &configurationInterface) || !configurationInterface) {
-        ACSDK_ERROR(LX("configureRecognizeModeFailed")
-                        .d("reason", "configurationInterfaceUnavailable")
-                        .d("configuration", configurationInterface));
+        ACSDK_WARN(LX("configureRecognizeModeFailed")
+                       .d("reason", "configurationInterfaceUnavailable")
+                       .d("configuration", configurationInterface));
         return false;
     }
 
@@ -83,21 +98,42 @@ bool AndroidSLESMicrophone::configureRecognizeMode() {
         (*configurationInterface)
             ->SetConfiguration(configurationInterface, SL_ANDROID_KEY_RECORDING_PRESET, &presetValue, sizeof(SLuint32));
     if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("configureRecognizeModeFailed").d("reason", "cannot set configuration").d("result", result));
+        ACSDK_WARN(LX("configureRecognizeModeFailed").d("reason", "cannot set configuration").d("result", result));
         return false;
     }
     return true;
 }
 
+bool AndroidSLESMicrophone::isStreaming() {
+    return m_isStreaming;
+}
+
 bool AndroidSLESMicrophone::startStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
+    m_recorderObject = m_engineObject->createAudioRecorder();
+    if (!m_recorderObject) {
+        ACSDK_ERROR(LX("startStreamingFailed").d("reason", "Failed to create recorder."));
+        return false;
+    }
 
-    // Ensure that the buffers are clean
-    stopLocked();
+    if (!m_recorderObject->getInterface(SL_IID_RECORD, &m_recorderInterface)) {
+        ACSDK_ERROR(LX("startStreamingFailed").d("reason", "Failed to get recorder interface."));
+        return false;
+    }
+
+    m_queue = AndroidSLESBufferQueue::create(m_recorderObject, m_writer);
+    if (!m_queue) {
+        ACSDK_ERROR(LX("startStreamingFailed").d("reason", "Failed to create buffer queue."));
+        return false;
+    }
+
+    if (!configureRecognizeMode()) {
+        ACSDK_WARN(LX("Failed to set Recognize mode. This might affect the voice recognition."));
+    }
 
     if (!m_queue->enqueueBuffers()) {
-        ACSDK_ERROR(LX("startStreamingFailed").d("reason", "failed to enqueue buffers"));
+        ACSDK_ERROR(LX("startStreamingFailed").d("reason", "Failed to enqueue buffers."));
         return false;
     }
 
@@ -108,23 +144,31 @@ bool AndroidSLESMicrophone::startStreamingMicrophoneData() {
         return false;
     }
 
+    m_isStreaming = true;
     return true;
 }
 
 bool AndroidSLESMicrophone::stopStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
-    return stopLocked();
-}
 
-bool AndroidSLESMicrophone::stopLocked() {
-    auto result = (*m_recorderInterface)->SetRecordState(m_recorderInterface, SL_RECORDSTATE_STOPPED);
-    if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("stopStreamingFailed").d("result", result));
+    if (m_recorderObject && m_recorderInterface) {
+        auto result = (*m_recorderInterface)->SetRecordState(m_recorderInterface, SL_RECORDSTATE_STOPPED);
+        if (result != SL_RESULT_SUCCESS) {
+            ACSDK_ERROR(LX("stopStreamingFailed").d("result", result));
+            return false;
+        }
+
+        // Unblock Android microphone.
+        m_recorderObject.reset();
+        m_recorderInterface = nullptr;
+        m_queue.reset();
+        m_isStreaming = false;
+        return true;
+    } else {
+        ACSDK_ERROR(LX("stopStreamingFailed").d("reason", "Recorder object or interface not available."));
         return false;
     }
-
-    return m_queue->clearBuffers();
 }
 
 }  // namespace androidUtilities

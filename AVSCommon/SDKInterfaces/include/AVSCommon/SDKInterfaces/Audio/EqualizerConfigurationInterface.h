@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -72,6 +72,13 @@ public:
      * @return The maximum band value supported by the device.
      */
     virtual int getMaxBandLevel() const = 0;
+
+    /**
+     * Returns the default value of band value changes.
+     *
+     * @return The default value of band value changes.
+     */
+    virtual int getDefaultBandDelta() const = 0;
 
     /**
      * Returns @c EqualizerState object defining default values for equalizer mode and band levels. These values should

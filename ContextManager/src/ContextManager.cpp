@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -277,7 +277,7 @@ Value ContextManager::buildState(
     }
 
     if (payload.Parse(jsonPayloadValue).HasParseError()) {
-        ACSDK_ERROR(LX("buildStateFailed").d("reason", "parseError").d("payload", jsonPayloadValue));
+        ACSDK_ERROR(LX("buildStateFailed").d("reason", "parseError").sensitive("payload", jsonPayloadValue));
         return state;
     }
 

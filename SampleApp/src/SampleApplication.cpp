@@ -17,6 +17,7 @@
 #include <ACL/Transport/HTTP2TransportFactory.h>
 #include <ACL/Transport/PostConnectSynchronizer.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
+#include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 
 #include "SampleApp/ConnectionObserver.h"
 #include "SampleApp/KeywordObserver.h"
@@ -117,6 +118,10 @@ static const size_t WORD_SIZE = 2;
 /// The maximum number of readers of the stream.
 static const size_t MAX_READERS = 10;
 
+/// The default number of MediaPlayers used by AudioPlayer CA/
+/// Can be overridden in the Configuration using @c AUDIO_MEDIAPLAYER_POOL_SIZE_KEY
+static const unsigned int AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT = 2;
+
 /// The amount of audio data to keep in the ring buffer.
 static const std::chrono::seconds AMOUNT_OF_AUDIO_DATA_IN_BUFFER = std::chrono::seconds(15);
 
@@ -137,6 +142,9 @@ static const std::string ENDPOINT_KEY("endpoint");
 
 /// Key for setting if display cards are supported or not under the @c SAMPLE_APP_CONFIG_KEY configuration node.
 static const std::string DISPLAY_CARD_KEY("displayCardsSupported");
+
+/// Key for the Audio MediaPlayer pool size.
+static const std::string AUDIO_MEDIAPLAYER_POOL_SIZE_KEY("audioMediaPlayerPoolSize");
 
 using namespace capabilityAgents::externalMediaPlayer;
 
@@ -258,14 +266,14 @@ SampleApplication::~SampleApplication() {
     }
 
     // Now it's safe to shut down the MediaPlayers.
+    for (auto& mediaPlayer : m_audioMediaPlayerPool) {
+        mediaPlayer->shutdown();
+    }
     for (auto& mediaPlayer : m_adapterMediaPlayers) {
         mediaPlayer->shutdown();
     }
     if (m_speakMediaPlayer) {
         m_speakMediaPlayer->shutdown();
-    }
-    if (m_audioMediaPlayer) {
-        m_audioMediaPlayer->shutdown();
     }
     if (m_alertsMediaPlayer) {
         m_alertsMediaPlayer->shutdown();
@@ -287,6 +295,12 @@ SampleApplication::~SampleApplication() {
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     if (m_commsMediaPlayer) {
         m_commsMediaPlayer->shutdown();
+    }
+#endif
+
+#ifdef ENABLE_PCC
+    if (m_phoneMediaPlayer) {
+        m_phoneMediaPlayer->shutdown();
     }
 #endif
 
@@ -428,14 +442,36 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker;
-    std::tie(m_audioMediaPlayer, audioSpeaker) = createApplicationMediaPlayer(
-        httpContentFetcherFactory,
-        equalizerEnabled,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
-        "AudioMediaPlayer");
-    if (!m_audioMediaPlayer || !audioSpeaker) {
-        ACSDK_CRITICAL(LX("Failed to create media player for content!"));
+    int poolSize;
+    sampleAppConfig.getInt(AUDIO_MEDIAPLAYER_POOL_SIZE_KEY, &poolSize, AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT);
+
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers;
+    for (int index = 0; index < poolSize; index++) {
+        std::shared_ptr<ApplicationMediaPlayer> mediaPlayer;
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker;
+
+        std::tie(mediaPlayer, speaker) = createApplicationMediaPlayer(
+            httpContentFetcherFactory,
+            equalizerEnabled,
+            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+            "AudioMediaPlayer");
+        if (!mediaPlayer || !speaker) {
+            ACSDK_CRITICAL(LX("Failed to create media player for audio!"));
+            return false;
+        }
+        m_audioMediaPlayerPool.push_back(mediaPlayer);
+        additionalSpeakers.push_back(speaker);
+        // Creating equalizers
+        if (nullptr != equalizerRuntimeSetup) {
+            equalizerRuntimeSetup->addEqualizer(mediaPlayer);
+        }
+    }
+
+    std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> pool(
+        m_audioMediaPlayerPool.begin(), m_audioMediaPlayerPool.end());
+    m_audioMediaPlayerFactory = mediaPlayer::PooledMediaPlayerFactory::create(pool);
+    if (!m_audioMediaPlayerFactory) {
+        ACSDK_CRITICAL(LX("Failed to create media player factory for content!"));
         return false;
     }
 
@@ -511,14 +547,13 @@ bool SampleApplication::initialize(
 
 #ifdef ENABLE_PCC
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker;
-    std::shared_ptr<ApplicationMediaPlayer> phoneMediaPlayer;
-    std::tie(phoneMediaPlayer, phoneSpeaker) = createApplicationMediaPlayer(
+    std::tie(m_phoneMediaPlayer, phoneSpeaker) = createApplicationMediaPlayer(
         httpContentFetcherFactory,
         false,
         avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         "PhoneMediaPlayer");
 
-    if (!phoneMediaPlayer || !phoneSpeaker) {
+    if (!m_phoneMediaPlayer || !phoneSpeaker) {
         ACSDK_CRITICAL(LX("Failed to create media player for phone!"));
         return false;
     }
@@ -539,19 +574,12 @@ bool SampleApplication::initialize(
     }
 #endif
 
-    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers;
-
     if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup, additionalSpeakers)) {
         ACSDK_CRITICAL(LX("Could not create mediaPlayers for adapters"));
         return false;
     }
 
     auto audioFactory = std::make_shared<alexaClientSDK::applicationUtilities::resources::audio::AudioFactory>();
-
-    // Creating equalizers
-    if (nullptr != equalizerRuntimeSetup) {
-        equalizerRuntimeSetup->addEqualizer(m_audioMediaPlayer);
-    }
 
     // Creating the alert storage object to be used for rendering and storing alerts.
     auto alertStorage =
@@ -623,6 +651,12 @@ bool SampleApplication::initialize(
         ACSDK_CRITICAL(LX("Creation of DeviceInfo failed!"));
         return false;
     }
+
+    /*
+     * Supply a SALT for UUID generation, this should be as unique to each individual device as possible
+     */
+    alexaClientSDK::avsCommon::utils::uuidGeneration::setSalt(
+        deviceInfo->getClientId() + deviceInfo->getDeviceSerialNumber());
 
     /*
      * Creating the AuthDelegate - this component takes care of LWA and authorization of the client.
@@ -742,14 +776,14 @@ bool SampleApplication::initialize(
             m_externalMusicProviderSpeakersMap,
             m_adapterToCreateFuncMap,
             m_speakMediaPlayer,
-            m_audioMediaPlayer,
+            std::move(m_audioMediaPlayerFactory),
             m_alertsMediaPlayer,
             m_notificationsMediaPlayer,
             m_bluetoothMediaPlayer,
             m_ringtoneMediaPlayer,
             m_systemSoundMediaPlayer,
             speakSpeaker,
-            audioSpeaker,
+            nullptr,  // added into 'additionalSpeakers
             alertsSpeaker,
             notificationsSpeaker,
             bluetoothSpeaker,
@@ -857,7 +891,7 @@ bool SampleApplication::initialize(
     std::shared_ptr<PortAudioMicrophoneWrapper> micWrapper = PortAudioMicrophoneWrapper::create(sharedDataStream);
 #elif defined(ANDROID_MICROPHONE)
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESMicrophone> micWrapper =
-        m_openSlEngine->createMicrophoneRecorder(sharedDataStream);
+        m_openSlEngine->createAndroidMicrophone(sharedDataStream);
 #else
 #error "No audio input provided"
 #endif
@@ -930,6 +964,7 @@ bool SampleApplication::initialize(
 #endif
 
     client->addAlexaDialogStateObserver(m_interactionManager);
+    client->addCallStateObserver(m_interactionManager);
 
 #ifdef ENABLE_REVOKE_AUTH
     // Creating the revoke authorization observer.

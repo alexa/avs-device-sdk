@@ -62,7 +62,7 @@ static bool fileExists(const std::string& file) {
     return dbFile.good();
 }
 
-class SQLiteDeviceSettingsStorageTest : public ::testing::Test {
+class SQLiteDeviceSettingStorageTest : public ::testing::Test {
 public:
     /// SetUp before each test case.
     void SetUp();
@@ -71,7 +71,7 @@ public:
     void TearDown();
 
 protected:
-    /// Open dataabse;
+    /// Open database;
     /// @return @c true if it succeed; @c false otherwise.
     bool openDB();
 
@@ -82,21 +82,21 @@ protected:
     std::unique_ptr<SQLiteDeviceSettingStorage> m_db;
 };
 
-void SQLiteDeviceSettingsStorageTest::closeDB() {
+void SQLiteDeviceSettingStorageTest::closeDB() {
     if (m_db) {
         m_db->close();
     }
     m_db.reset();
 }
 
-bool SQLiteDeviceSettingsStorageTest::openDB() {
+bool SQLiteDeviceSettingStorageTest::openDB() {
     m_db = SQLiteDeviceSettingStorage::create(ConfigurationNode::getRoot());
     EXPECT_THAT(m_db, NotNull());
     EXPECT_TRUE(m_db && m_db->open());
     return !Test::HasFailure();
 }
 
-void SQLiteDeviceSettingsStorageTest::SetUp() {
+void SQLiteDeviceSettingStorageTest::SetUp() {
     // Initialize Global ConfigurationNode with valid value.
     auto json = std::shared_ptr<std::stringstream>(new std::stringstream());
     *json << deviceSettingJSON;
@@ -109,7 +109,7 @@ void SQLiteDeviceSettingsStorageTest::SetUp() {
     }
 }
 
-void SQLiteDeviceSettingsStorageTest::TearDown() {
+void SQLiteDeviceSettingStorageTest::TearDown() {
     configuration::ConfigurationNode::uninitialize();
     closeDB();
 
@@ -121,7 +121,7 @@ void SQLiteDeviceSettingsStorageTest::TearDown() {
 /**
  * Test storing status and values to the database.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_insertUpdateSettingValue) {
+TEST_F(SQLiteDeviceSettingStorageTest, insertUpdateSettingValue) {
     const std::string key = "AAAA";
     const std::string value1 = "BBBBB";
     const std::string value2 = "CCCCC";
@@ -173,7 +173,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_insertUpdateSettingValue) {
 /**
  * Test that create an entry with non escaped key works.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringKey) {
+TEST_F(SQLiteDeviceSettingStorageTest, test_storeSettingWithNonEscapedStringKey) {
     const std::string key = R"(non-escaped'\%$#*?!`"key)";
     const std::string value = "value2";
     const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
@@ -193,7 +193,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringKey
 /**
  * Test that create an entry with non escaped characters works.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringValue) {
+TEST_F(SQLiteDeviceSettingStorageTest, test_storeSettingWithNonEscapedStringValue) {
     const std::string key = "key";
     const std::string value = R"(non-escaped'\%$#*?!`"chars)";
     const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
@@ -213,7 +213,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_storeSettingWithNonEscapedStringVal
 /**
  * Test that delete an entry with non escaped key works.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSettingWithNonEscapedStringKey) {
+TEST_F(SQLiteDeviceSettingStorageTest, test_deleteSettingWithNonEscapedStringKey) {
     const std::string key = R"(non-escaped'\%$#*?!`"key)";
 
     // Open the database and add an entry with the given key.
@@ -227,7 +227,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSettingWithNonEscapedStringKe
 /**
  * Test removing an entry from the database.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSetting) {
+TEST_F(SQLiteDeviceSettingStorageTest, deleteSetting) {
     const std::string key = "AAAA";
     const std::string value1 = "BBBBB";
     const SettingStatus localStatus = SettingStatus::LOCAL_CHANGE_IN_PROGRESS;
@@ -257,7 +257,7 @@ TEST_F(SQLiteDeviceSettingsStorageTest, test_deleteSetting) {
 /**
  * Test replace values of multiple rows.
  */
-TEST_F(SQLiteDeviceSettingsStorageTest, test_replaceMultipleEntries) {
+TEST_F(SQLiteDeviceSettingStorageTest, replaceMultipleEntries) {
     const std::string key = "AAAA";
     const std::string key2 = "KKKK";
     const std::string value1 = "BBBBB";

@@ -71,6 +71,9 @@ static constexpr size_t SAMPLE_SIZE_BYTES = SAMPLE_SIZE_BITS / 8;
 /// Multiplier to convert dB to mB.
 static constexpr int DECIBELL_TO_MILLIBELL_MULT = 100;
 
+/// A counter used to increment the source id when a new source is set.
+static std::atomic<MediaPlayerInterface::SourceId> g_id{1};
+
 /// The data locator used to configure the android media player to use a buffer queue.
 static SLDataLocator_AndroidSimpleBufferQueue DATA_LOCATOR = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE,
                                                               AndroidSLESMediaQueue::NUMBER_OF_BUFFERS};
@@ -184,11 +187,10 @@ bool AndroidSLESMediaPlayer::play(SourceId id) {
                                 .d("id", id));
                 return false;
             }
-
-            if (m_observer) {
-                m_observer->onPlaybackStarted(id);
+            auto observers = m_observers;
+            for (const auto& observer : observers) {
+                observer->onPlaybackStarted(id);
             }
-
             return true;
         }
         ACSDK_ERROR(LX("playFailed")
@@ -243,8 +245,9 @@ bool AndroidSLESMediaPlayer::stopLocked() {
                             .d("id", m_sourceId));
             return false;
         }
-        if (m_observer) {
-            m_observer->onPlaybackStopped(m_sourceId);
+        auto observers = m_observers;
+        for (const auto& observer : observers) {
+            observer->onPlaybackStopped(m_sourceId);
         }
     }
     return true;
@@ -275,11 +278,10 @@ bool AndroidSLESMediaPlayer::pause(SourceId id) {
                                 .d("id", id));
                 return false;
             }
-
-            if (m_observer) {
-                m_observer->onPlaybackPaused(id);
+            auto observers = m_observers;
+            for (const auto& observer : observers) {
+                observer->onPlaybackPaused(id);
             }
-
             return true;
         }
         ACSDK_ERROR(LX("pauseFailed")
@@ -322,11 +324,10 @@ bool AndroidSLESMediaPlayer::resume(SourceId id) {
                                 .d("id", id));
                 return false;
             }
-
-            if (m_observer) {
-                m_observer->onPlaybackResumed(id);
+            auto observers = m_observers;
+            for (const auto& observer : observers) {
+                observer->onPlaybackResumed(id);
             }
-
             return true;
         }
         ACSDK_ERROR(LX("resumeFailed")
@@ -354,16 +355,34 @@ uint64_t AndroidSLESMediaPlayer::getNumBytesBuffered() {
     return m_mediaQueue->getNumBytesBuffered();
 }
 
-void AndroidSLESMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
+void AndroidSLESMediaPlayer::addObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
+    if (m_hasShutdown) {
+        ACSDK_ERROR(LX("addObserverFailed").d("name", RequiresShutdown::name()).d("reason", "playerHasShutdown"));
+        return;
+    }
+
+    if (!playerObserver) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "observer is null"));
+        return;
+    }
     std::lock_guard<std::mutex> lock{m_operationMutex};
-    m_observer = playerObserver;
+    m_observers.insert(playerObserver);
+}
+
+void AndroidSLESMediaPlayer::removeObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
+    if (!playerObserver) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "observer is null"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    m_observers.erase(playerObserver);
 }
 
 void AndroidSLESMediaPlayer::doShutdown() {
     ACSDK_DEBUG9(LX(__func__).d("name", RequiresShutdown::name()));
     std::lock_guard<std::mutex> lock{m_operationMutex};
     stopLocked();
-    m_observer.reset();
+    m_observers.clear();
     m_sourceId = ERROR;
     m_hasShutdown = true;
 
@@ -397,7 +416,7 @@ MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
         }
 
         stopLocked();
-        m_sourceId++;
+        m_sourceId = g_id.fetch_add(1);
         m_almostDone = false;
         m_initialOffset = offset;
     }
@@ -548,7 +567,7 @@ void AndroidSLESMediaPlayer::onQueueEvent(
         SLint32 result;
         SLuint32 state;
         switch (status) {
-            case AndroidSLESMediaQueue::QueueEvent::ERROR:
+            case AndroidSLESMediaQueue::QueueEvent::ERROR: {
                 result = (*m_player)->GetPlayState(m_player, &state);
                 if (result != SL_RESULT_SUCCESS) {
                     ACSDK_ERROR(LX("onQueueEventFailed")
@@ -567,13 +586,14 @@ void AndroidSLESMediaPlayer::onQueueEvent(
                                         .d("id", m_sourceId));
                         break;
                     }
-
-                    if (m_observer) {
-                        m_observer->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, reason);
+                    auto observers = m_observers;
+                    for (const auto& observer : observers) {
+                        observer->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, reason);
                     }
                 }
                 break;
-            case AndroidSLESMediaQueue::QueueEvent::FINISHED_PLAYING:
+            }
+            case AndroidSLESMediaQueue::QueueEvent::FINISHED_PLAYING: {
                 result = (*m_player)->SetPlayState(m_player, SL_PLAYSTATE_STOPPED);
                 if (result != SL_RESULT_SUCCESS) {
                     ACSDK_ERROR(LX("onQueueEventFailed")
@@ -582,14 +602,16 @@ void AndroidSLESMediaPlayer::onQueueEvent(
                                     .d("id", m_sourceId));
                     break;
                 }
-
-                if (m_observer) {
-                    m_observer->onPlaybackFinished(m_sourceId);
+                auto observers = m_observers;
+                for (const auto& observer : observers) {
+                    observer->onPlaybackFinished(m_sourceId);
                 }
                 break;
-            case AndroidSLESMediaQueue::QueueEvent::FINISHED_READING:
+            }
+            case AndroidSLESMediaQueue::QueueEvent::FINISHED_READING: {
                 m_almostDone = true;
                 break;
+            }
         }
     } else {
         ACSDK_DEBUG9(LX("eventIgnored")
@@ -602,7 +624,7 @@ void AndroidSLESMediaPlayer::onQueueEvent(
 
 void AndroidSLESMediaPlayer::onPrefetchStatusChange(SLuint32 event) {
     std::lock_guard<std::mutex> lock{m_operationMutex};
-    if (m_observer && m_prefetchStatus && (event & SL_PREFETCHEVENT_STATUSCHANGE)) {
+    if (!m_observers.empty() && m_prefetchStatus && (event & SL_PREFETCHEVENT_STATUSCHANGE)) {
         uint32_t status;
         auto result = (*m_prefetchStatus)->GetPrefetchStatus(m_prefetchStatus, &status);
         if (result != SL_RESULT_SUCCESS) {
@@ -610,17 +632,20 @@ void AndroidSLESMediaPlayer::onPrefetchStatusChange(SLuint32 event) {
             return;
         }
 
-        ACSDK_DEBUG9(LX("onPrefetchStatusChange")
-                         .d("name", RequiresShutdown::name())
-                         .d("event", event)
-                         .d("observer", m_observer)
-                         .d("status", status));
+        ACSDK_DEBUG9(
+            LX("onPrefetchStatusChange").d("name", RequiresShutdown::name()).d("event", event).d("status", status));
         if ((SL_PREFETCHSTATUS_UNDERFLOW == status)) {
             if (!m_almostDone) {
-                m_observer->onBufferUnderrun(m_sourceId);
+                auto observers = m_observers;
+                for (const auto& observer : observers) {
+                    observer->onBufferUnderrun(m_sourceId);
+                }
             }
         } else if (SL_PREFETCHSTATUS_SUFFICIENTDATA == status) {
-            m_observer->onBufferRefilled(m_sourceId);
+            auto observers = m_observers;
+            for (const auto& observer : observers) {
+                observer->onBufferRefilled(m_sourceId);
+            }
         }
     }
 }

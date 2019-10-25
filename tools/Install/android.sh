@@ -314,6 +314,9 @@ configure_host() {
   [ ! -d "${JNILIBS}" ] && mkdir -p "${JNILIBS}"
   [ ! -L "${JNILIBS}/${ANDROID_ABI}" ] && ln -sf "${INSTALL_TARGET_LIB}/" "${JNILIBS}/${ANDROID_ABI}"
 
+  # Prepend install path to PKG_CONFIG_PATH.
+  export PKG_CONFIG_PATH=${INSTALL_TARGET_LIB}/pkgconfig:${PKG_CONFIG_PATH:-""}
+
   # Print installation summary
   printInfo   "ANDROID_HOME:         ${ANDROID_HOME}" \
               "ANDROID_NDK:          ${ANDROID_NDK}" \
@@ -421,6 +424,9 @@ install_dependencies() {
           mkdir -p "${OPENSSL_BUILD_TARGET}"
           pushd "${OPENSSL_BUILD_TARGET}"
           sed ${SED_IN_PLACE_BACKUP_OPTION} "s/-mandroid//" "${OPENSSL_LIBRARY_SOURCE}/Configurations/10-main.conf"
+          # Get unversioned shared lib names:
+          # Part 1. update .so names in the config
+          sed ${SED_IN_PLACE_BACKUP_OPTION} 's/\.so\.\\\$(SHLIB_MAJOR)\.\\\$(SHLIB_MINOR)/\.so/' "${OPENSSL_LIBRARY_SOURCE}/Configurations/10-main.conf"
           "${OPENSSL_LIBRARY_SOURCE}/Configure" \
                   "${OPENSSL_TARGET}" \
                   -DARCH="${OPENSSL_ARCH}" \
@@ -454,7 +460,12 @@ install_dependencies() {
       make depend
       make all -j ${NUM_THREADS}
       removeSymbolsFromRelObjFiles .
-      make install_sw
+      # Get unversioned shared lib names
+      # Part 2. trick make into not creating symlinks: existing link-shared files will force openssl make to skip symlinks creation.
+      mkdir -p ${OPENSSL_BUILD_TARGET}/lib
+      echo "place-holder make target for avoiding symlinks" >> ${OPENSSL_BUILD_TARGET}/lib/link-shared
+      make SHLIB_EXT=.so install_sw
+      rm ${OPENSSL_BUILD_TARGET}/lib/link-shared
       popd
 
       echo "Built on $(date)" > ${DONE_FILE}

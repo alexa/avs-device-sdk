@@ -463,7 +463,7 @@ bool Bluetooth::init() {
          avsCommon::utils::bluetooth::BluetoothEventType::STREAMING_STATE_CHANGED},
         shared_from_this());
 
-    m_mediaPlayer->setObserver(shared_from_this());
+    m_mediaPlayer->addObserver(shared_from_this());
 
     executeUpdateContext();
 
@@ -538,7 +538,7 @@ void Bluetooth::doShutdown() {
     m_mediaAttachmentWriter.reset();
 
     // MediaPlayer
-    m_mediaPlayer->setObserver(nullptr);
+    m_mediaPlayer->removeObserver(shared_from_this());
     if (MediaPlayerInterface::ERROR != m_sourceId) {
         m_mediaPlayer->stop(m_sourceId);
     }

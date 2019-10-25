@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public:
      */
     static std::unique_ptr<AndroidSLESBufferQueue> create(
         std::shared_ptr<AndroidSLESObject> queueObject,
-        std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> writer);
+        std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer);
 
     /**
      * The callback function to be called when a buffer has been filled with recorded data. This function will copy the
@@ -90,7 +90,7 @@ private:
     AndroidSLESBufferQueue(
         std::shared_ptr<AndroidSLESObject> slObject,
         SLAndroidSimpleBufferQueueItf bufferQueue,
-        std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> writer);
+        std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> writer);
 
     /// Enqueue buffer and increment m_index. This function should only be called with a lock.
     bool enqueueBufferLocked();
@@ -113,7 +113,7 @@ private:
     std::array<std::array<int16_t, BUFFER_SIZE>, NUMBER_OF_BUFFERS> m_buffers;
 
     /// The writer that will be used to write audio data into the sds.
-    std::unique_ptr<avsCommon::avs::AudioInputStream::Writer> m_writer;
+    std::shared_ptr<avsCommon::avs::AudioInputStream::Writer> m_writer;
 
     /// Index of the next available buffer.
     std::size_t m_index;

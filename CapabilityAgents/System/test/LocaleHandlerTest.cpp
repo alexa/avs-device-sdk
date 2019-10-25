@@ -110,7 +110,7 @@ void LocaleHandlerTest::SetUp() {
     m_mockExceptionEncounteredSender =
         std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
     m_mockLocaleSettingMessageSender = std::make_shared<MockSettingEventSender>();
-    m_mockWakeWordSettingMessageSender = std::make_shared<MockSettingEventSender>();
+    m_mockWakeWordSettingMessageSender = std::make_shared<NiceMock<MockSettingEventSender>>();
     m_mockAssetsManager = std::make_shared<NiceMock<MockLocaleAssetsManager>>();
 
     // Assets manager by default will allow all operations.
@@ -127,6 +127,11 @@ void LocaleHandlerTest::SetUp() {
     }));
     ON_CALL(*m_mockAssetsManager, getDefaultLocale()).WillByDefault(InvokeWithoutArgs([] { return DEFAULT_LOCALE; }));
     ON_CALL(*m_mockAssetsManager, changeAssets(_, _)).WillByDefault(InvokeWithoutArgs([] { return true; }));
+
+    EXPECT_CALL(*m_mockDeviceSettingStorage, loadSetting("System.locales"))
+        .WillOnce(Return(std::make_pair(SettingStatus::SYNCHRONIZED, R"(["en-CA"])")));
+    EXPECT_CALL(*m_mockDeviceSettingStorage, loadSetting("SpeechRecognizer.wakeWords"))
+        .WillOnce(Return(std::make_pair(SettingStatus::SYNCHRONIZED, "")));
 
     // Allow AVS for events for wake words to be always sent successfully;
     auto settingSendEventSuccess = [](const std::string& value) {

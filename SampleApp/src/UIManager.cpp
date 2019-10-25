@@ -167,16 +167,12 @@ static const std::string LIMITED_HELP_MESSAGE =
 static const std::string SETTINGS_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
     "|                          Setting Options:                                  |\n"
-    "| Change Language:                                                           |\n"
-    "|       Press '1' followed by Enter to see language options.                 |\n"
-    "| Change Do Not Disturb mode:                                                |\n"
-    "|       Press '2' followed by Enter to see Do Not Disturb options.           |\n"
-    "| Change Wake Word Confirmation:                                             |\n"
-    "|       Press '3' followed by Enter to see wake word confirmation options.   |\n"
-    "| Change Speech Confirmation:                                                |\n"
-    "|       Press '4' followed by Enter to see speech confirmation options.      |\n"
-    "| Change Time Zone:                                                          |\n"
-    "|       Press '5' followed by Enter to see time zone options.                |\n"
+    "|  Press '1' followed by Enter to see language options.                      |\n"
+    "|  Press '2' followed by Enter to see Do Not Disturb options.                |\n"
+    "|  Press '3' followed by Enter to see wake word confirmation options.        |\n"
+    "|  Press '4' followed by Enter to see speech confirmation options.           |\n"
+    "|  Press '5' followed by Enter to see time zone options.                     |\n"
+    "|  Press 'q' followed by Enter to exit Settings Options.                     |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string LOCALE_MESSAGE_HEADER =
@@ -326,11 +322,12 @@ static const std::string ENABLE_SETTING_MENU =
     "|                                                                            |\n"
     "| Press 'E' followed by Enter to enable this configuration.                  |\n"
     "| Press 'D' followed by Enter to disable this configuration.                 |\n"
+    "| Press 'q' followed by Enter to quit this configuration menu.               |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string TIMEZONE_SETTING_MENU =
     "+----------------------------------------------------------------------------+\n"
-    "|                          TimeZone Configuration:                           |"
+    "|                          TimeZone Configuration:                           |\n"
     "|                                                                            |\n"
     "| Press '1' followed by Enter to set the time zone to America/Vancouver.     |\n"
     "| Press '2' followed by Enter to set the time zone to America/Edmonton.      |\n"
@@ -338,6 +335,7 @@ static const std::string TIMEZONE_SETTING_MENU =
     "| Press '4' followed by Enter to set the time zone to America/Toronto.       |\n"
     "| Press '5' followed by Enter to set the time zone to America/Halifax.       |\n"
     "| Press '6' followed by Enter to set the time zone to America/St_Johns.      |\n"
+    "| Press 'q' followed by Enter to quit this configuration menu.               |\n"
     "+----------------------------------------------------------------------------+\n";
 
 static const std::string RESET_WARNING =
@@ -553,6 +551,7 @@ void UIManager::printLocaleScreen() {
                 "\n";
             option++;
         }
+        optionString += "| Press '0' followed by Enter to quit.\n";
         ConsolePrinter::simplePrint(LOCALE_MESSAGE_HEADER + optionString + LOCALE_MESSAGE_FOOTER);
     };
 

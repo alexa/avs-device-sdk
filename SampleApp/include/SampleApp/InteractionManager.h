@@ -20,6 +20,7 @@
 
 #include <Audio/MicrophoneInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
@@ -50,6 +51,7 @@ namespace sampleApp {
  */
 class InteractionManager
         : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::CallStateObserverInterface
         , public avsCommon::utils::RequiresShutdown {
 public:
     /**
@@ -268,6 +270,11 @@ public:
      */
     void onDialogUXStateChanged(DialogUXState newState) override;
 
+    /**
+     * CallStateObserverInterface methods
+     */
+    void onCallStateChange(CallState newState) override;
+
 #ifdef ENABLE_PCC
     /**
      * Should be called whenever a user selects Phone Control.
@@ -397,7 +404,10 @@ private:
     /// Whether a tap is currently occurring.
     bool m_isTapOccurring;
 
-    /// Whether the microphone is currently turned on.
+    /// Whether a call is currently connected.
+    bool m_isCallConnected;
+
+    /// Whether the microphone is currently on.
     bool m_isMicOn;
 
     /**

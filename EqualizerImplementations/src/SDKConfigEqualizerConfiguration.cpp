@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,8 @@ using namespace avsCommon::utils::error;
         }
     },
     "minLevel": -6,
-    "maxLevel": 6
+    "maxLevel": 6,
+    "defaultDelta": 1
 }
 
 */
@@ -76,6 +77,8 @@ static const std::string DEFAULT_STATE_CONFIG_KEY = "defaultState";
 static const std::string MIN_LEVEL_CONFIG_KEY = "minLevel";
 /// JSON key for "maxLevel" value.
 static const std::string MAX_LEVEL_CONFIG_KEY = "maxLevel";
+/// JSON key for "defaultDelta" value.
+static const std::string DEFAULT_DELTA_CONFIG_KEY = "defaultDelta";
 
 const bool SDKConfigEqualizerConfiguration::BAND_IS_SUPPORTED_IF_MISSING_IN_CONFIG;
 const bool SDKConfigEqualizerConfiguration::MODE_IS_SUPPORTED_IF_MISSING_IN_CONFIG;
@@ -98,9 +101,11 @@ std::shared_ptr<SDKConfigEqualizerConfiguration> SDKConfigEqualizerConfiguration
 
     int minLevel;
     int maxLevel;
+    int defaultDelta;
 
     configRoot.getInt(MIN_LEVEL_CONFIG_KEY, &minLevel, defaultConfiguration->getMinBandLevel());
     configRoot.getInt(MAX_LEVEL_CONFIG_KEY, &maxLevel, defaultConfiguration->getMaxBandLevel());
+    configRoot.getInt(DEFAULT_DELTA_CONFIG_KEY, &defaultDelta, defaultConfiguration->getDefaultBandDelta());
 
     auto supportedBandsBranch = configRoot[BANDS_CONFIG_KEY];
     if (supportedBandsBranch) {
@@ -196,8 +201,8 @@ std::shared_ptr<SDKConfigEqualizerConfiguration> SDKConfigEqualizerConfiguration
     }
 
     // Initialize configuration
-    auto config = std::shared_ptr<SDKConfigEqualizerConfiguration>(
-        new SDKConfigEqualizerConfiguration(minLevel, maxLevel, bandsSupported, modesSupported, defaultState));
+    auto config = std::shared_ptr<SDKConfigEqualizerConfiguration>(new SDKConfigEqualizerConfiguration(
+        minLevel, maxLevel, defaultDelta, bandsSupported, modesSupported, defaultState));
 
     if (!config->validateConfiguration()) {
         // Validation messages are already in logs.
@@ -215,10 +220,17 @@ std::shared_ptr<SDKConfigEqualizerConfiguration> SDKConfigEqualizerConfiguration
 SDKConfigEqualizerConfiguration::SDKConfigEqualizerConfiguration(
     int minBandLevel,
     int maxBandLevel,
+    int defaultDelta,
     std::set<EqualizerBand> bandsSupported,
     std::set<avsCommon::sdkInterfaces::audio::EqualizerMode> modesSupported,
     EqualizerState defaultState) :
-        InMemoryEqualizerConfiguration(minBandLevel, maxBandLevel, bandsSupported, modesSupported, defaultState) {
+        InMemoryEqualizerConfiguration(
+            minBandLevel,
+            maxBandLevel,
+            defaultDelta,
+            bandsSupported,
+            modesSupported,
+            defaultState) {
 }
 
 SDKConfigEqualizerConfiguration::SDKConfigEqualizerConfiguration() : InMemoryEqualizerConfiguration() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -103,6 +103,7 @@ void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserverInterface:
                 setState(DialogUXStateObserverInterface::DialogUXState::SPEAKING);
                 return;
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
+            case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
                 tryEnterIdleState();
                 return;
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::LOSING_FOCUS:
@@ -162,7 +163,8 @@ void DialogUXStateAggregator::tryEnterIdleStateOnTimer() {
     m_executor.submit([this]() {
         if (m_currentState != sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE &&
             m_audioInputProcessorState == AudioInputProcessorObserverInterface::State::IDLE &&
-            m_speechSynthesizerState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED) {
+            (m_speechSynthesizerState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED ||
+             m_speechSynthesizerState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED)) {
             setState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
     });

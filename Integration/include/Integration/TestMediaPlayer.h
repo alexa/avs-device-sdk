@@ -24,6 +24,7 @@
 #include <iostream>
 #include <string>
 #include <future>
+#include <unordered_set>
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
@@ -66,14 +67,17 @@ public:
 
     std::chrono::milliseconds getOffset(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
 
-    void setObserver(
+    void addObserver(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
+
+    void removeObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
 
     uint64_t getNumBytesBuffered() override;
 
 private:
-    /// Observer to notify of state changes.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_observer;
+    /// Observers to notify of state changes.
+    std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface>> m_observers;
     /// Flag to indicate when a playback finished notification has been sent to the observer.
     bool m_playbackFinished = false;
     /// The AttachmentReader to read audioData from.

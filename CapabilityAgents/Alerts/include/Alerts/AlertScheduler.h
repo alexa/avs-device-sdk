@@ -257,6 +257,14 @@ private:
      */
     void deactivateActiveAlertHelperLocked(Alert::StopReason reason);
 
+    /**
+     * A handler function to erase the alert from the alert storage database and then to notify it's observers
+     * that the alert has been deleted.
+     *
+     * @param alert  The alert to be erased.
+     */
+    void eraseAlert(std::shared_ptr<Alert> alert);
+
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
 

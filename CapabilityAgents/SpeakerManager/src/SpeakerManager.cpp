@@ -280,10 +280,11 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
 
                 // Unmute before volume change.
                 // Do not send a MuteChanged Event.
-                if (executeSetMute(directiveType, false, SpeakerManagerObserverInterface::Source::DIRECTIVE, true) &&
+                if (executeSetMute(directiveType, false, true, SpeakerManagerObserverInterface::Source::DIRECTIVE) &&
                     executeSetVolume(
                         directiveType,
                         static_cast<int8_t>(volume),
+                        false,
                         SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
                     executeSetHandlingCompleted(info);
                 } else {
@@ -313,10 +314,11 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
 
                 // Unmute before volume change.
                 // Do not send a MuteChanged Event.
-                if (executeSetMute(directiveType, false, SpeakerManagerObserverInterface::Source::DIRECTIVE, true) &&
+                if (executeSetMute(directiveType, false, true, SpeakerManagerObserverInterface::Source::DIRECTIVE) &&
                     executeAdjustVolume(
                         directiveType,
                         static_cast<int8_t>(delta),
+                        false,
                         SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
                     executeSetHandlingCompleted(info);
                 } else {
@@ -346,7 +348,8 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
                 if (!mute) {
                     success = executeRestoreVolume(directiveType, SpeakerManagerObserverInterface::Source::DIRECTIVE);
                 }
-                success &= executeSetMute(directiveType, mute, SpeakerManagerObserverInterface::Source::DIRECTIVE);
+                success &=
+                    executeSetMute(directiveType, mute, false, SpeakerManagerObserverInterface::Source::DIRECTIVE);
 
                 if (success) {
                     executeSetHandlingCompleted(info);
@@ -490,19 +493,23 @@ bool SpeakerManager::updateContextManager(
     return true;
 }
 
-std::future<bool> SpeakerManager::setVolume(SpeakerInterface::Type type, int8_t volume, bool forceNoNotifications) {
+std::future<bool> SpeakerManager::setVolume(
+    SpeakerInterface::Type type,
+    int8_t volume,
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("setVolumeCalled").d("volume", static_cast<int>(volume)));
-    return m_executor.submit([this, type, volume, forceNoNotifications] {
+    return m_executor.submit([this, type, volume, forceNoNotifications, source] {
         return withinBounds(volume, AVS_SET_VOLUME_MIN, AVS_SET_VOLUME_MAX) &&
-               executeSetVolume(type, volume, SpeakerManagerObserverInterface::Source::LOCAL_API, forceNoNotifications);
+               executeSetVolume(type, volume, forceNoNotifications, source);
     });
 }
 
 bool SpeakerManager::executeSetVolume(
     SpeakerInterface::Type type,
     int8_t volume,
-    SpeakerManagerObserverInterface::Source source,
-    bool forceNoNotifications) {
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("executeSetVolumeCalled").d("volume", static_cast<int>(volume)));
     if (m_speakerMap.count(type) == 0) {
         ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "noSpeakersWithType").d("type", type));
@@ -561,23 +568,26 @@ bool SpeakerManager::executeRestoreVolume(SpeakerInterface::Type type, SpeakerMa
         return true;
     }
 
-    return executeSetVolume(type, m_minUnmuteVolume, source, true);
+    return executeSetVolume(type, m_minUnmuteVolume, true, source);
 }
 
-std::future<bool> SpeakerManager::adjustVolume(SpeakerInterface::Type type, int8_t delta, bool forceNoNotifications) {
+std::future<bool> SpeakerManager::adjustVolume(
+    SpeakerInterface::Type type,
+    int8_t delta,
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("adjustVolumeCalled").d("delta", static_cast<int>(delta)));
-    return m_executor.submit([this, type, delta, forceNoNotifications] {
+    return m_executor.submit([this, type, delta, forceNoNotifications, source] {
         return withinBounds(delta, AVS_ADJUST_VOLUME_MIN, AVS_ADJUST_VOLUME_MAX) &&
-               executeAdjustVolume(
-                   type, delta, SpeakerManagerObserverInterface::Source::LOCAL_API, forceNoNotifications);
+               executeAdjustVolume(type, delta, forceNoNotifications, source);
     });
 }
 
 bool SpeakerManager::executeAdjustVolume(
     SpeakerInterface::Type type,
     int8_t delta,
-    SpeakerManagerObserverInterface::Source source,
-    bool forceNoNotifications) {
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("executeAdjustVolumeCalled").d("delta", (int)delta));
     if (m_speakerMap.count(type) == 0) {
         ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "noSpeakersWithType").d("type", type));
@@ -624,18 +634,22 @@ bool SpeakerManager::executeAdjustVolume(
     return true;
 }
 
-std::future<bool> SpeakerManager::setMute(SpeakerInterface::Type type, bool mute, bool forceNoNotifications) {
+std::future<bool> SpeakerManager::setMute(
+    SpeakerInterface::Type type,
+    bool mute,
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("setMuteCalled").d("mute", mute));
-    return m_executor.submit([this, type, mute, forceNoNotifications] {
-        return executeSetMute(type, mute, SpeakerManagerObserverInterface::Source::LOCAL_API, forceNoNotifications);
+    return m_executor.submit([this, type, mute, forceNoNotifications, source] {
+        return executeSetMute(type, mute, forceNoNotifications, source);
     });
 }
 
 bool SpeakerManager::executeSetMute(
     SpeakerInterface::Type type,
     bool mute,
-    SpeakerManagerObserverInterface::Source source,
-    bool forceNoNotifications) {
+    bool forceNoNotifications,
+    SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("executeSetMuteCalled").d("mute", mute));
     if (m_speakerMap.count(type) == 0) {
         ACSDK_ERROR(LX("executeSetMuteFailed").d("reason", "noSpeakersWithType").d("type", type));

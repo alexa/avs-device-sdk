@@ -275,20 +275,13 @@ public:
     }
 
     /**
-     * This function sends an Event to AVS, deciding to include an audio attachment based upon a random factor.
+     * Sends a SynchronizeState Event to AVS.
      */
-    void sendRandomEvent() {
-        std::shared_ptr<InProcessAttachmentReader> attachmentReader;
-        std::string eventJson = SYNCHRONIZE_STATE_JSON;
-        auto status = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT;
-
-        if (rand() % 2) {
-            eventJson = CT_RECOGNIZE_EVENT_JSON;
-            attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
-            status = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS;
-        }
-
-        sendEvent(eventJson, status, std::chrono::seconds(40), attachmentReader);
+    void sendSynchronizeStateEvent() {
+        sendEvent(
+            SYNCHRONIZE_STATE_JSON,
+            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT,
+            std::chrono::seconds(40));
     }
 
     /// Context for running ACL based tests.
@@ -372,12 +365,7 @@ TEST_F(AlexaCommunicationsLibraryTest, test_sendEventAndReceiveDirective) {
 TEST_F(AlexaCommunicationsLibraryTest, test_sendEventsSerially) {
     const int NUMBER_OF_SUCCESSIVE_SENDS = 10;
     for (int i = 0; i < NUMBER_OF_SUCCESSIVE_SENDS; ++i) {
-        auto attachmentReader = createAttachmentReader(g_inputPath + "/" + RECOGNIZE_AUDIO_FILE_NAME);
-        sendEvent(
-            CT_RECOGNIZE_EVENT_JSON,
-            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
-            std::chrono::seconds(10),
-            attachmentReader);
+        sendSynchronizeStateEvent();
     }
 }
 
@@ -388,7 +376,7 @@ TEST_F(AlexaCommunicationsLibraryTest, test_sendEventsConcurrently) {
     std::vector<std::future<void>> futures;
 
     for (int i = 0; i < MAX_CONCURRENT_STREAMS; ++i) {
-        auto future = std::async(std::launch::async, [this]() { sendRandomEvent(); });
+        auto future = std::async(std::launch::async, [this]() { sendSynchronizeStateEvent(); });
         futures.push_back(std::move(future));
     }
 

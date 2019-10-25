@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ public:
     MOCK_CONST_METHOD0(getSupportedModes, std::set<EqualizerMode>());
     MOCK_CONST_METHOD0(getMinBandLevel, int());
     MOCK_CONST_METHOD0(getMaxBandLevel, int());
+    MOCK_CONST_METHOD0(getDefaultBandDelta, int());
     MOCK_CONST_METHOD0(getDefaultState, EqualizerState());
     MOCK_CONST_METHOD1(isBandSupported, bool(EqualizerBand));
     MOCK_CONST_METHOD1(isModeSupported, bool(EqualizerMode));

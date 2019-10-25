@@ -42,12 +42,14 @@
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include <MediaPlayer/MediaPlayer.h>
 #else
 #include "Integration/TestMediaPlayer.h"
 #endif
+
 #include <PlaybackController/PlaybackController.h>
 #include <PlaybackController/PlaybackRouter.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
@@ -63,12 +65,6 @@
 #include "Integration/TestExceptionEncounteredSender.h"
 #include "Integration/TestMessageSender.h"
 #include "Integration/TestSpeechSynthesizerObserver.h"
-
-#ifdef GSTREAMER_MEDIA_PLAYER
-#include "MediaPlayer/MediaPlayer.h"
-#else
-#include "Integration/TestMediaPlayer.h"
-#endif
 
 namespace alexaClientSDK {
 namespace integration {
@@ -392,9 +388,12 @@ protected:
         m_contentMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
 
+        std::vector<std::shared_ptr<MediaPlayerInterface>> players = {m_contentMediaPlayer};
+        auto mockFactory = mediaPlayer::PooledMediaPlayerFactory::create(players);
+
         // Create and register the AudioPlayer.
         m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
-            m_contentMediaPlayer,
+            std::move(mockFactory),
             m_avsConnectionManager,
             m_focusManager,
             m_context->getContextManager(),

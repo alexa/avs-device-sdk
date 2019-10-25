@@ -54,7 +54,7 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
     }
 
     auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer});
-    mediaPlayer->setObserver(renderer);
+    mediaPlayer->addObserver(renderer);
     return renderer;
 }
 

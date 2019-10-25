@@ -78,14 +78,14 @@
         // The database file should only be used for certifiedSender (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
     },
-    "notifications":{ 
+    "notifications":{
         // Path to Notifications database file. e.g. /home/ubuntu/Build/notifications.db
         // Note: The directory specified must be valid.
         // The database file (notifications.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for notifications (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_NOTIFICATIONS_DATABASE_FILE_PATH}"
     },
-    "sampleApp":{
+    "sampleApp": {
         // To specify if the SampleApp supports display cards.
         "displayCardsSupported":true
         // The firmware version of the device to send in SoftwareInfo event.
@@ -102,6 +102,14 @@
         //"portAudio":{
         //    "suggestedLatency": 0.150
         //}
+
+        // To specify the number of MediaPlayer instances for AudioPlayer to use,
+        // a value of '1' will result in limited pre-buffering:  It will buffer during introductory TTS, but not
+        // the next track.
+        // A value of '2' will allow next track buffering as well.  If multiple Play directives are expected to be enqueued,
+        // at the same time, and the memory is available, a value of 3 or more will allow additional buffering.
+        // The default is '2'.
+        // "audioMediaPlayerPoolSize": 1
     }
 
     // Example of specifying output format and the audioSink for the gstreamer-based MediaPlayer bundled with the SDK.
@@ -203,7 +211,9 @@
     //     // Minimum value an equalizer band could have (integer dB).
     //     "minLevel": -6,
     //     // Maximum value an equalizer band could have (integer dB).
-    //     "maxLevel": 6
+    //     "maxLevel": 6,
+    //     // Default delta value to adjust the equalizer band (integer dB).
+    //     "defaultDelta": 1
     // }
 
     // Example of setting the minUnmuteVolume level in SpeakerManager

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,6 +60,10 @@ bool DirectiveSequencer::removeDirectiveHandler(std::shared_ptr<DirectiveHandler
 
 void DirectiveSequencer::setDialogRequestId(const std::string& dialogRequestId) {
     m_directiveProcessor->setDialogRequestId(dialogRequestId);
+}
+
+std::string DirectiveSequencer::getDialogRequestId() {
+    return m_directiveProcessor->getDialogRequestId();
 }
 
 bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {

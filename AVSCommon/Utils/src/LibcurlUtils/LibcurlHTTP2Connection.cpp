@@ -309,10 +309,10 @@ void LibcurlHTTP2Connection::cleanupFinishedStreams() {
                 } else {
                     it->second->reportCompletion(HTTP2ResponseFinishedStatus::COMPLETE);
                 }
-                ACSDK_DEBUG(LX("streamFinished")
-                                .d("streamId", it->second->getId())
-                                .d("result", curl_easy_strerror(message->data.result))
-                                .d("CURLcode", message->data.result));
+                ACSDK_DEBUG7(LX("streamFinished")
+                                 .d("streamId", it->second->getId())
+                                 .d("result", curl_easy_strerror(message->data.result))
+                                 .d("CURLcode", message->data.result));
                 releaseStream(*(it->second));
             } else {
                 ACSDK_ERROR(

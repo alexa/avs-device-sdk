@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -299,9 +299,17 @@ private:
      */
     static const std::string TAG;
 
+    /**
+     * The maximum number of retires when create an SDS reader in case a write occurs interrupting reader creation.
+     */
+    static const int MAX_READER_CREATION_RETRIES;
+
     /// The @c BufferLayout of the shared buffer.
     std::shared_ptr<BufferLayout> m_bufferLayout;
 };
+
+template <typename T>
+const int SharedDataStream<T>::MAX_READER_CREATION_RETRIES = 3;
 
 template <typename T>
 const std::string SharedDataStream<T>::TAG = "SharedDataStream";
@@ -442,18 +450,42 @@ std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::creat
         if (startWithNewData) {
             // We're not moving the cursor again, so call updateUnconsumedCursor() now.
             m_bufferLayout->updateOldestUnconsumedCursor();
-        } else {
-            Index offset = m_bufferLayout->getDataSize();
-            if (m_bufferLayout->getHeader()->writeStartCursor < offset) {
-                offset = m_bufferLayout->getHeader()->writeStartCursor;
+            return reader;
+        }
+
+        auto headerPtr = m_bufferLayout->getHeader();
+        for (int i = 0; i < MAX_READER_CREATION_RETRIES; i++) {
+            auto offset = m_bufferLayout->getDataSize();
+            auto writeStartCursor = headerPtr->writeStartCursor.load();
+            if (writeStartCursor < offset) {
+                offset = writeStartCursor;
+            } else {
+                auto writeEndCursor = headerPtr->writeEndCursor.load();
+                if (writeEndCursor < writeStartCursor) {
+                    logger::acsdkError(logger::LogEntry(TAG, "createReaderLockedError")
+                                           .d("reason", "writeCursorBeyondEndCursor?")
+                                           .d("readerId", id));
+                    continue;
+                }
+                auto wordsBeingWritten = writeEndCursor - writeStartCursor;
+                if (offset < wordsBeingWritten) {
+                    logger::acsdkWarn(logger::LogEntry(TAG, "createReaderLockedWarning")
+                                          .d("reason", "detectedWriterOverflow")
+                                          .d("readerId", id));
+                    continue;
+                }
+                offset -= wordsBeingWritten;
             }
-            // Note: seek() will call updateUnconsumedCursor().
-            if (!reader->seek(offset, Reader::Reference::BEFORE_WRITER)) {
-                // Logged in seek().
-                return nullptr;
+
+            if (reader->seek(offset, Reader::Reference::BEFORE_WRITER)) {
+                // Note: seek() will call updateUnconsumedCursor() if it returns true.
+                return reader;
             }
         }
-        return reader;
+
+        logger::acsdkError(
+            logger::LogEntry(TAG, "createReaderLockedFailed").d("reason", "seekRetriesExhausted").d("readerId", id));
+        return nullptr;
     }
 }
 

@@ -1,4 +1,40 @@
-## ChangeLog
+### v1.16.0 released 10/25/2019:
+
+**Enhancements** 
+
+- Added support for SpeechSynthesizer v.1.2 which includes the new `playBehaviour` directive.  For more information, see [SpeechSynthesizer v1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2).
+- Added support for pre-buffering in [AudioPlayer](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html). You can optionally choose the number of instances MediaPlayer uses in the [AlexaClientSDKconfig.json](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json). Important: the contract for [MediaPlayerInterface](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html) has changed. You must now make sure that the `SourceId` value returned by `setSource()` is unique across all instances.
+- AudioPlayer is now licensed under the Amazon Software License instead of the Apache Software License.
+
+**Bug Fixes**
+
+- Fixed Android issue that caused the build script to ignore PKG_CONFIG_PATH. This sometimes caused the build to use a preinstalled dependency instead of the specific version downloaded by the Android script (e.g - openssl).
+- Fixed Android issue that prevented the Sample app from running at the same time as other applications using the microphone. Android doesn't inherently allow two applications to use the microphone. Pressing the mute button now temporarily stops Alexa from accessing the microphone.
+- Added 'quit' (– q) to the settings sub menu.
+- Fixed outdated dependencies issue in the Windows install script.
+- Fixed reminders issue that caused Notification LEDs to stay on, even after dismissing the alert.
+
+**Known Issues**
+
+* Music playback history isn't displayed in the Alexa app for certain account and device types.
+* When using Gnu Compiler Collection 8+ (GCC 8+), `-Wclass-memaccess` triggers warnings. You can ignore these, they don't cause the build to fail.
+* Android error `libDefaultClient.so not found` might occur. Resolve this by upgrading to ADB version 1.0.40.
+* If a device loses a network connection, the lost connection status isn't returned via local TTS. 
+* ACL encounters issues if it receives audio attachments but doesn't consume them.
+* `SpeechSynthesizerState` uses `GAINING_FOCUS` and `LOSING_FOCUS` as a  workaround for handling intermediate states.
+* Media steamed through Bluetooth might abruptly stop. To restart playback, resume the media in the source application or toggle next/previous.
+* If a connected Bluetooth device is inactive, the Alexa app might indicates that audio is playing.
+* The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation isn't yet supported.
+* When using some products, interrupted Bluetooth playback might not resume if other content is locally streamed.
+* `make integration` isn't available for Android. To run Android integration tests, manually upload the test binary and input file and run ADB.
+* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS) user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
+* A reminder TTS message doesn't play if the sample app restarts and loses a network connection. Instead, the default alarm tone plays twice.
+* `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
+* Bluetooth initialization must complete before connecting devices, otherwise devices are ignored.
+* The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
+* On some devices, Alexa gets stuck in a permanent listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
+* Exiting the `settings` menu doesn't provide a message to indicate that you are back in the main menu.
+
 
 ### v1.15.0 released 09/25/2019:
 

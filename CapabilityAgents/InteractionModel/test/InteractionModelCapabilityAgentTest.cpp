@@ -151,16 +151,16 @@ TEST_F(InteractionModelCapabilityAgentTest, test_processNewDialogRequestID) {
     auto directivePair = AVSDirective::create(CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING, nullptr, "");
     std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
 
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(TEST_DIALOG_REQUEST_AVS));
     m_interactionModelCA->handleDirectiveImmediately(directive);
+    ASSERT_EQ(TEST_DIALOG_REQUEST_AVS, m_mockDirectiveSequencer->getDialogRequestId());
 }
 
 /**
  * Test to verify if interface will ignore null directives
  */
 TEST_F(InteractionModelCapabilityAgentTest, test_processNullDirective) {
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_)).Times(0);
     m_interactionModelCA->handleDirectiveImmediately(nullptr);
+    ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
 }
 
 /**
@@ -174,11 +174,11 @@ TEST_F(InteractionModelCapabilityAgentTest, test_processInvalidDirective) {
     std::shared_ptr<AVSDirective> directive3 =
         AVSDirective::create(INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_3, nullptr, "").first;
 
-    EXPECT_CALL(*m_mockDirectiveSequencer, setDialogRequestId(_)).Times(0);
     EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(3);
     m_interactionModelCA->handleDirectiveImmediately(directive1);
     m_interactionModelCA->handleDirectiveImmediately(directive2);
     m_interactionModelCA->handleDirectiveImmediately(directive3);
+    ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
 }
 
 }  // namespace test

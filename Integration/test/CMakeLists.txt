@@ -14,6 +14,7 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
      "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
+     "${AVSCommon_SOURCE_DIR}/Utils/test"
      "${AudioPlayer_INCLUDE_DIRS}"
      "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
@@ -35,7 +36,8 @@ set(LINK_PATH ACL
         gmock
         KWD
         PlaybackController
-        SpeechSynthesizer)
+        SpeechSynthesizer
+        UtilsCommonTestLib)
 
 if(KITTAI_KEY_WORD_DETECTOR)
     SET(LINK_PATH ${LINK_PATH} KITTAI)
@@ -87,6 +89,9 @@ if(BUILD_TESTING)
         add_executable(${testName} ${testSourceFile})
         target_include_directories(${testName} PUBLIC "${INCLUDE_PATH}")
         target_link_libraries(${testName} "${LINK_PATH}")
+        if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+            target_link_libraries(${testName} atomic)
+        endif()
         add_test(NAME ${testName}
             COMMAND ${testName} ${SDK_CONFIG_FILE_TARGET} ${INTEGRATION_INPUTS}
             CONFIGURATIONS Integration)

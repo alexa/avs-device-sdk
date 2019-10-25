@@ -615,6 +615,7 @@ bool AudioInputProcessor::executeRecognize(
         generator.addMember(WAKE_WORD_KEY, string::stringToUpperCase(keyword));
     }
 
+    m_directiveSequencer->setDialogRequestId(uuidGeneration::generateUUID());
     return executeRecognize(provider, generator.toString(), startOfSpeechTimestamp, begin, keyword, KWDMetadata);
 }
 
@@ -837,9 +838,8 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
     }
 
     // Assemble the MessageRequest.  It will be sent by executeOnFocusChanged when we acquire the channel.
-    auto dialogRequestId = avsCommon::utils::uuidGeneration::generateUUID();
-    m_directiveSequencer->setDialogRequestId(dialogRequestId);
-    auto msgIdAndJsonEvent = buildJsonEventString("Recognize", dialogRequestId, m_recognizePayload, jsonContext);
+    auto msgIdAndJsonEvent =
+        buildJsonEventString("Recognize", m_directiveSequencer->getDialogRequestId(), m_recognizePayload, jsonContext);
     m_recognizeRequest = std::make_shared<avsCommon::avs::MessageRequest>(msgIdAndJsonEvent.second);
 
     if (m_KWDMetadataReader) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -79,14 +79,14 @@ AndroidSLESEngine::~AndroidSLESEngine() {
     m_created.clear();
 }
 
-std::unique_ptr<AndroidSLESMicrophone> AndroidSLESEngine::createMicrophoneRecorder(
+std::unique_ptr<AndroidSLESMicrophone> AndroidSLESEngine::createAndroidMicrophone(
     std::shared_ptr<avsCommon::avs::AudioInputStream> stream) {
-    auto writer = stream->createWriter(avsCommon::avs::AudioInputStream::Writer::Policy::NONBLOCKABLE);
-    if (!writer) {
-        ACSDK_ERROR(LX("createAndroidMicFailed").d("reason", "failed to create writer"));
-        return nullptr;
-    }
+    auto androidRecorder = AndroidSLESMicrophone::create(shared_from_this(), stream);
 
+    return androidRecorder;
+}
+
+std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createAudioRecorder() {
     auto audioSink = AndroidSLESMicrophone::createSinkConfiguration();
     auto audioSource = AndroidSLESMicrophone::createSourceConfiguration();
 
@@ -95,40 +95,10 @@ std::unique_ptr<AndroidSLESMicrophone> AndroidSLESEngine::createMicrophoneRecord
     const SLboolean requiredInterfaces[interfaceSize] = {SL_BOOLEAN_TRUE};
 
     SLObjectItf recorderObject;
-
     (*m_engine)->CreateAudioRecorder(
         m_engine, &recorderObject, &audioSource, &audioSink, interfaceSize, interfaceIDs, requiredInterfaces);
-    if (!recorderObject) {
-        ACSDK_ERROR(LX("initializeAndroidMicFailed").d("reason", "Failed to create recorder."));
-        return nullptr;
-    }
 
-    std::shared_ptr<AndroidSLESObject> recorder = AndroidSLESObject::create(recorderObject);
-    if (!recorder) {
-        ACSDK_ERROR(LX("initializeAndroidMicFailed").d("reason", "Failed to create recorder wrapper."));
-        return nullptr;
-    }
-
-    SLRecordItf recorderInterface;
-    if (!recorder->getInterface(SL_IID_RECORD, &recorderInterface)) {
-        ACSDK_ERROR(LX("initializeAndroidMicFailed").d("reason", "Failed to get recorder interface."));
-        return nullptr;
-    }
-
-    auto queueObject = AndroidSLESBufferQueue::create(recorder, std::move(writer));
-    if (!queueObject) {
-        ACSDK_ERROR(LX("createRecorderFailed").d("reason", "Failed to create buffer queue."));
-        return nullptr;
-    }
-
-    auto androidRecorder =
-        make_unique<AndroidSLESMicrophone>(shared_from_this(), recorder, recorderInterface, std::move(queueObject));
-
-    if (!androidRecorder->configureRecognizeMode()) {
-        ACSDK_WARN(LX("Failed to set Recognize mode. This might affect the voice recognition."));
-    }
-
-    return androidRecorder;
+    return AndroidSLESObject::create(recorderObject);
 }
 
 std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createOutputMix() const {

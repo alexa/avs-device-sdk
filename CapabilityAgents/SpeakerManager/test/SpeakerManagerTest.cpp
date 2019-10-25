@@ -629,14 +629,14 @@ TEST_P(SpeakerManagerTest, test_setVolume) {
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     for (auto type : getUniqueTypes(speakers)) {
-        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, type, expectedSettings)).Times(Exactly(1));
         if (SpeakerInterface::Type::AVS_SPEAKER_VOLUME == type) {
             EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
         }
 
-        std::future<bool> future = m_speakerManager->setVolume(type, AVS_SET_VOLUME_MAX);
+        std::future<bool> future = m_speakerManager->setVolume(type, AVS_SET_VOLUME_MAX, false, SpeakerManagerObserverInterface::Source::DIRECTIVE);
         ASSERT_TRUE(future.get());
     }
 }
@@ -662,14 +662,14 @@ TEST_P(SpeakerManagerTest, test_adjustVolume) {
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     for (auto type : getUniqueTypes(speakers)) {
-        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, type, expectedSettings)).Times(Exactly(1));
         if (SpeakerInterface::Type::AVS_SPEAKER_VOLUME == type) {
             EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
         }
 
-        std::future<bool> future = m_speakerManager->adjustVolume(type, AVS_ADJUST_VOLUME_MAX);
+        std::future<bool> future = m_speakerManager->adjustVolume(type, AVS_ADJUST_VOLUME_MAX, false, SpeakerManagerObserverInterface::Source::DIRECTIVE);
         ASSERT_TRUE(future.get());
     }
 }
@@ -694,14 +694,14 @@ TEST_P(SpeakerManagerTest, test_setMute) {
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     for (auto type : getUniqueTypes(speakers)) {
-        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::LOCAL_API, type, expectedSettings)).Times(Exactly(1));
+        EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(SpeakerManagerObserverInterface::Source::DIRECTIVE, type, expectedSettings)).Times(Exactly(1));
         if (SpeakerInterface::Type::AVS_SPEAKER_VOLUME == type) {
             EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, _, StateRefreshPolicy::NEVER, _)).Times(AnyNumber());
             EXPECT_CALL(*m_mockContextManager, setState(VOLUME_STATE, generateVolumeStateJson(expectedSettings), StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
         }
 
-        std::future<bool> future = m_speakerManager->setMute(type, MUTE);
+        std::future<bool> future = m_speakerManager->setMute(type, MUTE, false, SpeakerManagerObserverInterface::Source::DIRECTIVE);
         ASSERT_TRUE(future.get());
     }
 }

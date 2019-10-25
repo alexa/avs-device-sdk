@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -142,7 +142,7 @@ public:
 
     /**
      * This function sets the point at which the @c Reader's stream will close.  With the default parameters, this
-     * function will close t he stream immediately, without reading any additional data.  To schedule the stream to
+     * function will close the stream immediately, without reading any additional data.  To schedule the stream to
      * close once all the data which is currently in the buffer has been read, call
      * `close(0, Reference::BEFORE_WRITER)`. If another close point is desired, it can be specified using a different
      * @c offset and/or @c reference.

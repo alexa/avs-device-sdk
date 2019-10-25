@@ -39,7 +39,7 @@ namespace capabilityAgents {
 namespace speakerManager {
 
 /**
- * This class implementes a @c CapabilityAgent that handles the AVS @c Speaker API.
+ * This class implements a @c CapabilityAgent that handles the AVS @c Speaker API.
  *
  * The @c SpeakerManager can handle multiple @c SpeakerInterface objects. @c SpeakerInterface
  * are grouped by their respective types, and the volume and mute state will be consistent
@@ -97,15 +97,21 @@ public:
     std::future<bool> setVolume(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         int8_t volume,
-        bool forceNoNotifications = false) override;
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
     std::future<bool> adjustVolume(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         int8_t delta,
-        bool forceNoNotifications = false) override;
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
     std::future<bool> setMute(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         bool mute,
-        bool forceNoNotifications = false) override;
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
     std::future<bool> getSpeakerSettings(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
@@ -201,22 +207,23 @@ private:
      *
      * @param type The type of speaker to modify volume for.
      * @param volume The volume to change.
-     * @param source Whether the call is from AVS or locally.
      * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A bool indicating success.
      */
     bool executeSetVolume(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         int8_t volume,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API);
 
     /**
      * Function to restore the volume from a mute state. This runs on a worker thread and will not send an event or
      * notify an observer. Upon success, a VolumeChanged event will be sent to AVS.
      *
      * @param type The type of speaker to modify volume for.
-     * @param source Whether the call is from AVS or locally.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A bool indicating success.
      */
     bool executeRestoreVolume(
@@ -229,15 +236,16 @@ private:
      *
      * @param type The type of speaker to modify volume for.
      * @param delta The delta to change the volume by.
-     * @param source Whether the call is from AVS or locally.
      * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A bool indicating success.
      */
     bool executeAdjustVolume(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         int8_t delta,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API);
 
     /**
      * Function to set the mute for a specific @c Type. This runs on a worker thread.
@@ -245,15 +253,16 @@ private:
      *
      * @param type The type of speaker to modify mute for.
      * @param mute Whether to mute/unmute.
-     * @param source Whether the call is from AVS or locally.
      * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A bool indicating success.
      */
     bool executeSetMute(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         bool mute,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API);
 
     /**
      * Function to get the speaker settings for a specific @c Type.
@@ -273,7 +282,7 @@ private:
      *
      * @param settings The new settings.
      * @param eventName The event name to send.
-     * @param source Whether the call is from AVS or locally.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @param type The Speaker type.
      */
     void executeNotifySettingsChanged(

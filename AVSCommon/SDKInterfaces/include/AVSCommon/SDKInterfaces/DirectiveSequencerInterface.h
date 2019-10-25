@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -91,6 +91,14 @@ public:
      * @param dialogRequestId The new value for the current @c DialogRequestId.
      */
     virtual void setDialogRequestId(const std::string& dialogRequestId) = 0;
+
+    /**
+     * Returns the @c dialogRequestId currently in use for Directive handling. This may be the empty string if
+     * Directives have either experienced errors, or have been cancelled.
+     *
+     * @return dialogRequestId  The current dialog request id.
+     */
+    virtual std::string getDialogRequestId() = 0;
 
     /**
      * Sequence the handling of an @c AVSDirective.  The actual handling is done by whichever @c DirectiveHandler

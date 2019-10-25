@@ -25,6 +25,11 @@ namespace test {
 using namespace testing;
 
 const static std::chrono::milliseconds WAIT_LOOP_INTERVAL{1};
+std::vector<std::shared_ptr<MockMediaPlayer::Source>> MockMediaPlayer::m_sources;
+std::atomic<MediaPlayerInterface::SourceId> MockMediaPlayer::m_currentSourceId(MediaPlayerInterface::ERROR);
+MediaPlayerInterface::SourceId MockMediaPlayer::m_previousSourceId = MediaPlayerInterface::ERROR;
+bool MockMediaPlayer::m_isConcurrentEnabled = false;
+std::mutex MockMediaPlayer::m_globalMutex;
 
 std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     auto result = std::make_shared<NiceMock<MockMediaPlayer>>();
@@ -43,9 +48,15 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     return result;
 }
 
-MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"}, m_playerObserver{nullptr} {
-    // Create a 'source' for sourceId = 0
-    mockSetSource();
+void MockMediaPlayer::enableConcurrentMediaPlayers() {
+    m_isConcurrentEnabled = true;
+}
+
+MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"} {
+    if (m_sources.empty()) {
+        // Create a 'source' for sourceId = 0
+        mockSetSource();
+    }
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
@@ -65,28 +76,58 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(std::shared_ptr<std::i
     return streamSetSource(stream, repeat);
 }
 
-void MockMediaPlayer::setObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
-    m_playerObserver = playerObserver;
+void MockMediaPlayer::addObserver(
+    std::shared_ptr<alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer::observer> playerObserver) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_playerObservers.insert(playerObserver);
 }
 
-std::shared_ptr<MediaPlayerObserverInterface> MockMediaPlayer::getObserver() const {
-    return m_playerObserver;
+void MockMediaPlayer::removeObserver(
+    std::shared_ptr<alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer::observer> removeObserver) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    m_playerObservers.erase(removeObserver);
+}
+
+std::unordered_set<std::shared_ptr<MediaPlayerObserverInterface>> MockMediaPlayer::getObservers() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_playerObservers;
 }
 
 void MockMediaPlayer::doShutdown() {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_playerObserver.reset();
-    m_sources.clear();
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_playerObservers.clear();
+    }
+    {
+        std::lock_guard<std::mutex> lock(m_globalMutex);
+        m_sources.clear();
+        m_isConcurrentEnabled = false;
+        m_currentSourceId = MediaPlayerInterface::ERROR;
+        m_previousSourceId = MediaPlayerInterface::ERROR;
+    }
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::mockSetSource() {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::lock_guard<std::mutex> lock(m_globalMutex);
     SourceId result = m_sources.size();
     m_sources.emplace_back(std::make_shared<Source>(this, result));
+
+    if (!m_isConcurrentEnabled) {
+        m_previousSourceId = m_currentSourceId;
+        m_currentSourceId = result;
+    }
+
     return result;
 }
 
 bool MockMediaPlayer::mockPlay(SourceId sourceId) {
+    {
+        std::lock_guard<std::mutex> lock(m_globalMutex);
+        if (m_isConcurrentEnabled && isValidSourceId(sourceId)) {
+            m_previousSourceId = m_currentSourceId;
+            m_currentSourceId = sourceId;
+        }
+    }
     auto source = getCurrentSource(sourceId);
     if (!source) {
         return false;
@@ -122,7 +163,13 @@ bool MockMediaPlayer::mockResume(SourceId sourceId) {
 bool MockMediaPlayer::mockStop(SourceId sourceId) {
     auto source = getCurrentSource(sourceId);
     if (!source) {
-        return false;
+        // The AudioPlayer may have set a new MediaPlayer source before stopping
+        // the previous Player, so we need to allow a Stop on the player previous to the
+        // current player as well.
+        source = getPreviousSource(sourceId);
+        if (!source) {
+            return false;
+        }
     }
 
     source->stopwatch.stop();
@@ -155,7 +202,7 @@ bool MockMediaPlayer::mockSetOffset(SourceId sourceId, std::chrono::milliseconds
     if (!source) {
         return false;
     }
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::lock_guard<std::mutex> lock(m_globalMutex);
     source->offset = offset;
     return true;
 }
@@ -166,6 +213,15 @@ std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId sourceId) {
         return MEDIA_PLAYER_INVALID_OFFSET;
     }
     return source->stopwatch.getElapsed() + source->offset;
+}
+
+void MockMediaPlayer::resetWaitTimer() {
+    auto source = getCurrentSource(getCurrentSourceId());
+    if (!source) {
+        return;
+    }
+    source->stopwatch.reset();
+    source->started.resetStateReached();
 }
 
 bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds timeout) {
@@ -181,7 +237,11 @@ bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds tim
 }
 
 bool MockMediaPlayer::waitUntilPlaybackStarted(std::chrono::milliseconds timeout) {
-    return m_sources[getCurrentSourceId()]->started.wait(timeout);
+    return waitUntilPlaybackStarted(getCurrentSourceId(), timeout);
+}
+
+bool MockMediaPlayer::waitUntilPlaybackStarted(SourceId id, std::chrono::milliseconds timeout) {
+    return m_sources[id]->started.wait(timeout);
 }
 
 bool MockMediaPlayer::waitUntilPlaybackPaused(std::chrono::milliseconds timeout) {
@@ -205,8 +265,19 @@ bool MockMediaPlayer::waitUntilPlaybackError(std::chrono::milliseconds timeout) 
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::getCurrentSourceId() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    return m_sources.size() - 1;
+    return m_currentSourceId;
+}
+
+MediaPlayerInterface::SourceId MockMediaPlayer::getSourceId() {
+    std::unique_lock<std::mutex> lock(m_globalMutex);
+    for (auto iter = m_sources.rbegin(); iter != m_sources.rend(); ++iter) {
+        auto& source = *iter;
+        if (source->mockMediaPlayer == this) {
+            return source->sourceId;
+        }
+    }
+
+    return MediaPlayerInterface::ERROR;
 }
 
 MockMediaPlayer::SourceState::SourceState(
@@ -236,26 +307,27 @@ void MockMediaPlayer::SourceState::trigger() {
     if (m_stateReached) {
         return;
     }
-    m_thread = std::thread(&MockMediaPlayer::SourceState::notify, this, DEFAULT_TIME);
+    auto observers = m_source->mockMediaPlayer->getObservers();
+    m_thread = std::thread(&MockMediaPlayer::SourceState::notify, this, observers, DEFAULT_TIME);
     m_stateReached = true;
     m_wake.notify_all();
 }
 
-void MockMediaPlayer::SourceState::notify(const std::chrono::milliseconds timeout) {
+void MockMediaPlayer::SourceState::notify(
+    const std::unordered_set<std::shared_ptr<MediaPlayerObserverInterface>>& observers,
+    const std::chrono::milliseconds timeout) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    auto observer = m_source->mockMediaPlayer->m_playerObserver;
-    if (!m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); })) {
-        if (observer) {
-            lock.unlock();
+    auto timedOut = !m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); });
+    lock.unlock();
+    for (const auto& observer : observers) {
+        if (timedOut) {
             observer->onPlaybackError(
                 m_source->sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, m_name + ": wait to notify timed out");
+
+            return;
         }
-        return;
-    }
-    if (observer) {
         m_notifyFunction(observer, m_source->sourceId);
     }
-    return;
 }
 
 bool MockMediaPlayer::SourceState::wait(const std::chrono::milliseconds timeout) {
@@ -323,10 +395,26 @@ MockMediaPlayer::Source::Source(MockMediaPlayer* player, SourceId id) :
 }
 
 std::shared_ptr<MockMediaPlayer::Source> MockMediaPlayer::getCurrentSource(SourceId sourceId) {
-    if (ERROR == sourceId || sourceId != getCurrentSourceId()) {
+    std::unique_lock<std::mutex> lock(m_globalMutex);
+    if (!isValidSourceId(sourceId) || sourceId != m_currentSourceId) {
         return nullptr;
     }
     return m_sources[static_cast<size_t>(sourceId)];
+}
+
+std::shared_ptr<MockMediaPlayer::Source> MockMediaPlayer::getPreviousSource(SourceId sourceId) {
+    std::unique_lock<std::mutex> lock(m_globalMutex);
+    size_t sourceIndex = static_cast<size_t>(sourceId);
+    if (!isValidSourceId(sourceId) || sourceId != m_previousSourceId) {
+        return nullptr;
+    }
+    return m_sources[sourceIndex];
+}
+
+/// called in locked state
+bool MockMediaPlayer::isValidSourceId(SourceId sourceId) {
+    size_t sourceIndex = static_cast<size_t>(sourceId);
+    return ERROR != sourceId && sourceIndex > 0 && sourceIndex < m_sources.size();
 }
 
 }  // namespace test

@@ -201,7 +201,7 @@ public:
             m_nextMessagePromise->set_value(request);
             m_nextMessagePromise.reset();
         }
-        request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
+        request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS);
     }
 
     /**
@@ -262,15 +262,14 @@ void AlertsCapabilityAgentTest::SetUp() {
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
 
     ON_CALL(*(m_speakerManager.get()), getSpeakerSettings(_, _))
-        .WillByDefault(Invoke([](avsCommon::sdkInterfaces::SpeakerInterface::Type,
-                                 avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings*) {
+        .WillByDefault(Invoke([](SpeakerInterface::Type, SpeakerInterface::SpeakerSettings*) {
             std::promise<bool> promise;
             promise.set_value(true);
             return promise.get_future();
         }));
 
-    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _))
-        .WillByDefault(Invoke([](avsCommon::sdkInterfaces::SpeakerInterface::Type, int8_t, bool) {
+    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _, _))
+        .WillByDefault(Invoke([](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
             std::promise<bool> promise;
             promise.set_value(true);
             return promise.get_future();
@@ -336,15 +335,15 @@ void AlertsCapabilityAgentTest::testStartAlertWithContentVolume(
             }));
 
     std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool) {
+    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _, _))
+        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
             waitCV.notify_all();
             std::promise<bool> promise;
             promise.set_value(true);
             return promise.get_future();
         }));
 
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, _, _))
+    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, _, _, _))
         .Times(shouldResultInSetVolume ? 1 : 0);
 
     SpeakerInterface::SpeakerSettings speakerSettings{speakerVolume, false};
@@ -420,7 +419,8 @@ TEST_F(AlertsCapabilityAgentTest, test_avsAlertVolumeChangeNoAlert) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, VOLUME_PAYLOAD, attachmentManager, "");
 
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
+    EXPECT_CALL(
+        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _, _))
         .Times(1);
 
     std::static_pointer_cast<CapabilityAgent>(m_alertsCA)
@@ -446,7 +446,8 @@ TEST_F(AlertsCapabilityAgentTest, test_avsAlertVolumeChangeAlertPlaying) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, VOLUME_PAYLOAD, attachmentManager, "");
 
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
+    EXPECT_CALL(
+        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _, _))
         .Times(1);
 
     m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
@@ -520,12 +521,13 @@ TEST_F(AlertsCapabilityAgentTest, test_startAlertWithDialogChannelHigherVolume) 
  * Test invalid volume value handling.
  */
 TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMax) {
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _))
+    EXPECT_CALL(
+        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _, _))
         .Times(1);
 
     std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool) {
+    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _, _))
+        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
             waitCV.notify_all();
             std::promise<bool> promise;
             promise.set_value(true);
@@ -550,12 +552,13 @@ TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMax) {
  * Test invalid volume value handling.
  */
 TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMin) {
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _))
+    EXPECT_CALL(
+        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _, _))
         .Times(1);
 
     std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool) {
+    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _, _))
+        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
             waitCV.notify_all();
             std::promise<bool> promise;
             promise.set_value(true);

@@ -1,5 +1,5 @@
 set(SampleApp_SOURCES)
-list(APPEND SampleApp_SOURCES 
+list(APPEND SampleApp_SOURCES
     ConnectionObserver.cpp
     ConsolePrinter.cpp
     ConsoleReader.cpp
@@ -39,7 +39,7 @@ ENDIF()
 
 add_executable(SampleApp ${SampleApp_SOURCES})
 
-target_include_directories(SampleApp PUBLIC 
+target_include_directories(SampleApp PUBLIC
     "${SampleApp_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
     "${RegistrationManager_SOURCE_DIR}/include"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,14 +35,16 @@ public:
      * @param volume The volume to set. Values must be between [0,100].
      * @param forceNoNotifications Setting this to true will ensure no event is sent and no observer is notified.
      * Setting this to false does not guarantee that a notification will be sent.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A future to be set with the operation's result. The future must be checked for validity
      * before attempting to obtain the shared state. An invalid future indicates an internal error,
-     * and the caller should not assume the operation was succcessful.
+     * and the caller should not assume the operation was successful.
      */
     virtual std::future<bool> setVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        SpeakerInterface::Type type,
         int8_t volume,
-        bool forceNoNotifications = false) = 0;
+        bool forceNoNotifications = false,
+        SpeakerManagerObserverInterface::Source source = SpeakerManagerObserverInterface::Source::LOCAL_API) = 0;
 
     /**
      * Adjusts the volume for speakers of a certain @c Type with a volume delta.
@@ -51,14 +53,16 @@ public:
      * @param delta The delta to modify volume by. Values must be between [-100,100].
      * @param forceNoNotifications Setting this to true will ensure no event is sent and no observer is notified.
      * Setting this to false does not guarantee that a notification will be sent.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A future to be set with the operation's result. The future must be checked for validity
      * before attempting to obtain the shared state. An invalid future indicates an internal error,
-     * and the caller should not assume the operation was succcessful.
+     * and the caller should not assume the operation was successful.
      */
     virtual std::future<bool> adjustVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        SpeakerInterface::Type type,
         int8_t delta,
-        bool forceNoNotifications = false) = 0;
+        bool forceNoNotifications = false,
+        SpeakerManagerObserverInterface::Source source = SpeakerManagerObserverInterface::Source::LOCAL_API) = 0;
 
     /**
      * Sets the mute for speakers of a certain @c Type.
@@ -67,14 +71,16 @@ public:
      * @param mute A boolean indicating mute. true = mute, false = unmute.
      * @param forceNoNotifications Setting this to true will ensure no event is sent and no observer is notified.
      * Setting this to false does not guarantee that a notification will be sent.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @return A future to be set with the operation's result. The future must be checked for validity
      * before attempting to obtain the shared state. An invalid future indicates an internal error,
-     * and the caller should not assume the operation was succcessful.
+     * and the caller should not assume the operation was successful.
      */
     virtual std::future<bool> setMute(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        SpeakerInterface::Type type,
         bool mute,
-        bool forceNoNotifications = false) = 0;
+        bool forceNoNotifications = false,
+        SpeakerManagerObserverInterface::Source source = SpeakerManagerObserverInterface::Source::LOCAL_API) = 0;
 
     /**
      * Gets the speaker settings.
@@ -83,11 +89,11 @@ public:
      * @param[out] settings The settings if the operation was successful.
      * @return A future to be set with the operation's result. The future must be checked for validity
      * before attempting to obtain the shared state. An invalid future indicates an internal error,
-     * and the caller should not assume the operation was succcessful.
+     * and the caller should not assume the operation was successful.
      */
     virtual std::future<bool> getSpeakerSettings(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
-        avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) = 0;
+        SpeakerInterface::Type type,
+        SpeakerInterface::SpeakerSettings* settings) = 0;
 
     /**
      * Adds an observer to be notified when the SpeakerManager changes the @c SpeakerInterface::SpeakerSettings of a
@@ -96,8 +102,7 @@ public:
      * @param observer The observer to be notified when the @c SpeakerInterface::SpeakerSettings of a group successfully
      * changes.
      */
-    virtual void addSpeakerManagerObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) = 0;
+    virtual void addSpeakerManagerObserver(std::shared_ptr<SpeakerManagerObserverInterface> observer) = 0;
 
     /**
      * Removes an observer from being notified when the SpeakerManager changes the @c SpeakerInterface::SpeakerSettings
@@ -106,8 +111,7 @@ public:
      * @param observer The observer to be notified when the @c SpeakerInterface::SpeakerSettings of a group successfully
      * changes.
      */
-    virtual void removeSpeakerManagerObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) = 0;
+    virtual void removeSpeakerManagerObserver(std::shared_ptr<SpeakerManagerObserverInterface> observer) = 0;
 
     /**
      * Adds a speaker to be tracked by @c SpeakerManagerInterface.
@@ -118,7 +122,7 @@ public:
      * added.
      * @param speaker
      */
-    virtual void addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) = 0;
+    virtual void addSpeaker(std::shared_ptr<SpeakerInterface> speaker) = 0;
 
     /**
      * Destructor.

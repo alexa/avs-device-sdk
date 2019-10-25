@@ -53,7 +53,7 @@ std::shared_ptr<SystemSoundPlayer> SystemSoundPlayer::create(
 
     auto systemSoundPlayer =
         std::shared_ptr<SystemSoundPlayer>(new SystemSoundPlayer(mediaPlayer, soundPlayerAudioFactory));
-    mediaPlayer->setObserver(systemSoundPlayer);
+    mediaPlayer->addObserver(systemSoundPlayer);
 
     return systemSoundPlayer;
 }

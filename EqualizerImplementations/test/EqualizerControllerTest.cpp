@@ -43,12 +43,14 @@ using namespace equalizer;
 static constexpr int MIN_LEVEL = -10;
 /// Band level used as maximum value in tests
 static constexpr int MAX_LEVEL = 10;
-/// Band level below the minimum allowed.
+/// Band level below the minimum allowed
 static constexpr int BELOW_MIN_LEVEL = -11;
-/// Band level above the maximum allowed.
+/// Band level above the maximum allowed
 static constexpr int ABOVE_MAX_LEVEL = 11;
 /// Band level used as a default
 static constexpr int DEFAULT_LEVEL = 0;
+/// Default value to adjust band level
+static constexpr int DEFAULT_ADJUST_DELTA = 1;
 
 /// A sample default band level for MIDRANGE band
 static constexpr int DEFAULT_MIDRANGE = DEFAULT_LEVEL;
@@ -87,7 +89,8 @@ void EqualizerControllerTest::SetUp() {
         DEFAULT_MODE,
         EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_MIDRANGE}, {EqualizerBand::TREBLE, DEFAULT_TREBLE}})};
     auto modes = std::set<EqualizerMode>({EqualizerMode::NIGHT, EqualizerMode::TV});
-    m_configuration = InMemoryEqualizerConfiguration::create(MIN_LEVEL, MAX_LEVEL, bands, modes, defaultState);
+    m_configuration =
+        InMemoryEqualizerConfiguration::create(MIN_LEVEL, MAX_LEVEL, DEFAULT_ADJUST_DELTA, bands, modes, defaultState);
     m_storage = std::make_shared<NiceMock<MockEqualizerStorageInterface>>();
     m_modeController = std::make_shared<NiceMock<MockEqualizerModeControllerInterface>>();
 

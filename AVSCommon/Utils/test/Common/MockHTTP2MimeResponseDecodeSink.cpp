@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,11 +13,12 @@
  * permissions and limitations under the License.
  */
 
+#include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
+
 #include "AVSCommon/Utils/HTTP2/MockHTTP2MimeResponseDecodeSink.h"
 #include "AVSCommon/Utils/Common/Common.h"
 
@@ -68,10 +69,11 @@ HTTP2ReceiveDataStatus MockHTTP2MimeResponseDecodeSink::onReceiveMimeData(const 
         m_pauseCount++;
         return HTTP2ReceiveDataStatus::PAUSE;
     }
-    char temp[size + 1];
-    strncpy(temp, bytes, size);
+    std::vector<char> temp;
+    temp.resize(size + 1);
+    strncpy(temp.data(), bytes, size);
     temp[size] = '\0';
-    m_data.at(m_index) += temp;
+    m_data.at(m_index) += temp.data();
     return HTTP2ReceiveDataStatus::SUCCESS;
 }
 

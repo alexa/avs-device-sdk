@@ -289,7 +289,7 @@ TEST_F(NotificationRendererTest, test_renderNotificationWhileNotifying) {
 TEST_F(NotificationRendererTest, testShutdown) {
     m_renderer->shutdown();
     m_renderer.reset();
-    ASSERT_THAT(m_player->getObserver(), IsNull());
+    ASSERT_TRUE(m_player->getObservers().empty());
 }
 
 }  // namespace test

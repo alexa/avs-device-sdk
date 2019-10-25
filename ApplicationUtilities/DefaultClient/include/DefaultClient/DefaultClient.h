@@ -53,6 +53,7 @@
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
 #include <Bluetooth/Bluetooth.h>
 #include <Bluetooth/BluetoothStorageInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
@@ -124,7 +125,7 @@ public:
      * @param adapterCreationMap The map of <players, adapterCreationMethod> to use when creating the adapters for the
      * different music providers supported by ExternalMediaPlayer.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
-     * @param audioMediaPlayer The media player to use to play Alexa audio content from.
+     * @param audioMediaPlayerFactory The media player factory to use to generate players for Alexa audio content.
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param notificationsMediaPlayer The media player to play notification indicators.
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
@@ -179,7 +180,7 @@ public:
             externalMusicProviderSpeakers,
         const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
+        std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
@@ -593,7 +594,7 @@ private:
      * @param adapterCreationMap The map of <players, adapterCreationMethod> to use when creating the adapters for the
      * different music providers supported by ExternalMediaPlayer.
      * @param speakMediaPlayer The media player to use to play Alexa speech from.
-     * @param audioMediaPlayer The media player to use to play Alexa audio content from.
+     * @param audioMediaPlayerFactory The media player to use to generate players for Alexa audio content.
      * @param alertsMediaPlayer The media player to use to play alerts from.
      * @param notificationsMediaPlayer The media player to play notification indicators.
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
@@ -641,7 +642,7 @@ private:
             externalMusicProviderSpeakers,
         const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> audioMediaPlayer,
+        std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,

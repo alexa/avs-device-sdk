@@ -111,6 +111,62 @@ TEST_F(UUIDGenerationTest, test_uUIDVariant) {
 }
 
 /**
+ * Call @c setSalt without error, with various inputs
+ */
+TEST_F(UUIDGenerationTest, setSaltTest) {
+    setSalt("");
+    auto uuid = generateUUID();
+    ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+    ASSERT_EQ(UUID_LENGTH, uuid.length());
+    setSalt("G2A14Q02920602PT");
+    uuid = generateUUID();
+    ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+    ASSERT_EQ(UUID_LENGTH, uuid.length());
+    setSalt("123456789");
+    uuid = generateUUID();
+    ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+    ASSERT_EQ(UUID_LENGTH, uuid.length());
+}
+
+/**
+ * Call @c generateUUID and setSalt from multiple threads and check that all are able to complete
+ * successfully Check for uniqueness of the UUIDs generated.
+ */
+TEST_F(UUIDGenerationTest, test_multipleConcurrentSaltSettings) {
+    int no_of_threads = MAX_TEST_THREADS;
+    std::vector<std::future<std::string>> uuidRequesters;
+    std::unordered_set<std::string> uuidsGenerated;
+
+    for (int i = 0; i < no_of_threads; ++i) {
+        int operationSelection = rand() % 10;
+
+        if (operationSelection > 5) {
+            auto future_generate = std::async(std::launch::async, []() { return generateUUID(); });
+            uuidRequesters.push_back(std::move(future_generate));
+        } else {
+            auto future_seed = std::async(
+                std::launch::async,
+                [](int i) {
+                    setSalt(std::to_string(i));
+                    return generateUUID();
+                },
+                i);
+            uuidRequesters.push_back(std::move(future_seed));
+        }
+    }
+
+    for (auto& future : uuidRequesters) {
+        unsigned int prevSizeOfSet = uuidsGenerated.size();
+        auto uuid = future.get();
+        uuidsGenerated.insert(uuid);
+        ASSERT_EQ(UUID_LENGTH, uuid.length());
+        ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
+        ASSERT_EQ(UUID_VARIANT, strtoul(uuid.substr(UUID_VARIANT_OFFSET, 1).c_str(), nullptr, 16) & UUID_VARIANT);
+        ASSERT_EQ(prevSizeOfSet + 1, uuidsGenerated.size());
+    }
+}
+
+/**
  * Call @c generateUUID and check that the hyphens are in the right positions.
  */
 TEST_F(UUIDGenerationTest, test_uUIDHyphens) {

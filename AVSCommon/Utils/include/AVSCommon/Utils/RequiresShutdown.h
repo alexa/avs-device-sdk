@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -67,7 +67,14 @@ public:
     bool isShutdown() const;
 
 protected:
-    /// @copydoc shutdown()
+    /**
+     * Prepares/enables this object to be deleted.  This should be the last function called on this object prior to
+     * deleting (or resetting) its shared_ptr.
+     *
+     * @warning
+     * @li Attempting to call functions on this object after calling shutdown() can result in undefined behavior.
+     * @li Neglecting to call shutdown() on this object can result in resource leaks or other undefined behavior.
+     */
     virtual void doShutdown() = 0;
 
 private:

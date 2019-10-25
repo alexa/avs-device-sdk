@@ -104,9 +104,6 @@ static constexpr char LEVEL_DIRECTION_UP[] = "UP";
 /// String representing negative level adjustment.
 static constexpr char LEVEL_DIRECTION_DOWN[] = "DOWN";
 
-/// Adjustment value used by AVS by default, in dB, when you, for example, say "Alexa, raise the bass".
-static constexpr int64_t AVS_DEFAULT_ADJUST_DELTA = 1;
-
 std::shared_ptr<EqualizerCapabilityAgent> EqualizerCapabilityAgent::create(
     std::shared_ptr<alexaClientSDK::equalizer::EqualizerController> equalizerController,
     std::shared_ptr<CapabilitiesDelegateInterface> capabilitiesDelegate,
@@ -522,8 +519,9 @@ bool EqualizerCapabilityAgent::handleAdjustBandsDirective(
         EqualizerBand band = bandResult.value();
 
         // Assume default delta if none provided.
-        int64_t bandLevelDelta = AVS_DEFAULT_ADJUST_DELTA;
+        int64_t bandLevelDelta = eqConfig->getDefaultBandDelta();
         retrieveValue(bandDesc, JSON_KEY_LEVELDELTA, &bandLevelDelta);
+        ACSDK_DEBUG5(LX(__func__).d("modifying band with delta", bandLevelDelta));
 
         std::string direction;
         if (!retrieveValue(bandDesc, JSON_KEY_LEVELDIRECTION, &direction)) {

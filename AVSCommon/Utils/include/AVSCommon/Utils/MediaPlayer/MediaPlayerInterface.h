@@ -56,7 +56,7 @@ class MediaPlayerObserverInterface;
  */
 class MediaPlayerInterface {
 public:
-    /// A type that identifies which source is currently being operated on.
+    /// A type that identifies which source is currently being operated on.  This must be unique across all instances.
     using SourceId = uint64_t;
 
     /// An @c SourceId used to represent an error from calls to @c setSource().
@@ -77,7 +77,7 @@ public:
      * @param attachmentReader Object with which to read an incoming audio attachment.
      * @param format The audioFormat to be used to interpret raw audio data.
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
-     *     returned if the source failed to be set.
+     *     returned if the source failed to be set.  Must be unique across all instances.
      */
     virtual SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
@@ -95,7 +95,7 @@ public:
      * @param repeat An optional parameter to play the url source in a loop.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
-     *     returned if the source failed to be set.
+     *     returned if the source failed to be set.  Must be unique across all instances.
      */
     virtual SourceId setSource(
         const std::string& url,
@@ -113,7 +113,7 @@ public:
      * @param repeat Whether the audio stream should be played in a loop until stopped.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
-     * returned if the source failed to be set.
+     * returned if the source failed to be set.  Must be unique across all instances.
      */
     virtual SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
 
@@ -133,7 +133,7 @@ public:
      * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStarted()
      * or to @c MediaPlayerObserverInterface::onPlaybackError().
      *
-     * @param id The id of the source on which to operate.
+     * @param id The unique id of the source on which to operate.
      *
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
@@ -151,7 +151,7 @@ public:
      * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStopped()
      * or to @c MediaPlayerObserverInterface::onPlaybackError().
      *
-     * @param id The id of the source on which to operate.
+     * @param id The unique id of the source on which to operate.
      *
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
@@ -176,7 +176,7 @@ public:
      * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackPaused()
      * or to @c MediaPlayerObserverInterface::onPlaybackError().
      *
-     * @param id The id of the source on which to operate.
+     * @param id The unique id of the source on which to operate.
      *
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
@@ -198,7 +198,7 @@ public:
      * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackResumed()
      * or to @c MediaPlayerObserverInterface::onPlaybackError().
      *
-     * @param id The id of the source on which to operate.
+     * @param id The unique id of the source on which to operate.
      *
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
@@ -207,7 +207,7 @@ public:
     /**
      * Returns the offset, in milliseconds, of the media source.
      *
-     * @param id The id of the source on which to operate.
+     * @param id The unique id of the source on which to operate.
      *
      * @return If the specified source is playing, the offset in milliseconds that the source has been playing
      *      will be returned. If the specified source is not playing, the last offset it played will be returned.
@@ -222,11 +222,19 @@ public:
     virtual uint64_t getNumBytesBuffered() = 0;
 
     /**
-     * Sets an observer to be notified when playback state changes.
+     * Adds an observer to be notified when playback state changes.
      *
      * @param playerObserver The observer to send the notifications to.
      */
-    virtual void setObserver(
+    virtual void addObserver(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) = 0;
+
+    /**
+     * Removes an observer to be notified when playback state changes.
+     *
+     * @param playerObserver The observer to be removed
+     */
+    virtual void removeObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) = 0;
 };
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ public:
      *
      * @param minBandLevel Minimum band level supported by the equalizer.
      * @param maxBandLevel Maximum band level supported by the equalizer.
+     * @param defaultDelta Default delta value to adjust the equalizer.
      * @param bandsSupported A set of bands supported by the equalizer.
      * @param modesSupported A set of modes supported by the equalizer.
      * @param defaultState Default state of the equalizer used when there is no state stored in a persistent storage or
@@ -50,6 +51,7 @@ public:
     static std::shared_ptr<InMemoryEqualizerConfiguration> create(
         int minBandLevel,
         int maxBandLevel,
+        int defaultDelta,
         const std::set<avsCommon::sdkInterfaces::audio::EqualizerBand>& bandsSupported,
         const std::set<avsCommon::sdkInterfaces::audio::EqualizerMode>& modesSupported,
         avsCommon::sdkInterfaces::audio::EqualizerState defaultState);
@@ -80,6 +82,8 @@ public:
 
     int getMaxBandLevel() const override;
 
+    int getDefaultBandDelta() const override;
+
     avsCommon::sdkInterfaces::audio::EqualizerState getDefaultState() const override;
 
     bool isBandSupported(avsCommon::sdkInterfaces::audio::EqualizerBand band) const override;
@@ -93,6 +97,7 @@ protected:
      *
      * @param minBandLevel Minimum band level supported by the equalizer.
      * @param maxBandLevel Maximum band level supported by the equalizer.
+     * @param defaultDelta Default delta value to adjust the equalizer.
      * @param bandsSupported A set of bands supported by the equalizer.
      * @param modesSupported A set of modes supported by the equalizer.
      * @param defaultState Default state of the equalizer used when there is no state stored in a persistent storage or
@@ -101,6 +106,7 @@ protected:
     InMemoryEqualizerConfiguration(
         int minBandLevel,
         int maxBandLevel,
+        int defaultDelta,
         const std::set<avsCommon::sdkInterfaces::audio::EqualizerBand>& bandsSupported,
         const std::set<avsCommon::sdkInterfaces::audio::EqualizerMode>& modesSupported,
         avsCommon::sdkInterfaces::audio::EqualizerState defaultState);
@@ -136,6 +142,9 @@ private:
 
     /// Minimum supported level for an equalizer band.
     int m_minBandLevel;
+
+    /// Default delta value to adjust the equalizer band.
+    int m_defaultDelta;
 
     /// Set of bands supported.
     std::set<avsCommon::sdkInterfaces::audio::EqualizerBand> m_bandsSupported;
