@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="293,5,503,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html" title="Mock class that implements the Observer. " alt="" coords="293,68,504,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1_aip_state_observer.html" title="alexaClientSDK::integration\l::AipStateObserver" alt="" coords="306,131,490,169"/>
+<area shape="rect" id="node1" title="A state observer for an AudioInputProcessor." alt="" coords="5,61,245,113"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title=" " alt="" coords="293,5,503,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html" title="Mock class that implements the Observer." alt="" coords="293,68,504,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1integration_1_1_aip_state_observer.html" title=" " alt="" coords="306,131,490,169"/>
 </map>

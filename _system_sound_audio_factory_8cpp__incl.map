@@ -1,7 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/src/SystemSoundAudioFactory.cpp" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/src/SystemSoundAudioFactory.cpp">
-<area shape="rect" id="node2" href="$_stream_functions_8h.html" title="AVSCommon/Utils/Stream\l/StreamFunctions.h" alt="" coords="5,199,183,237"/>
-<area shape="rect" id="node5" href="$med__ui__endpointing_8wav_8h.html" title="Audio/Data/med_ui_endpointing.wav.h" alt="" coords="440,119,689,144"/>
-<area shape="rect" id="node6" href="$med__ui__wakesound_8wav_8h.html" title="Audio/Data/med_ui_wakesound.wav.h" alt="" coords="713,119,960,144"/>
-<area shape="rect" id="node7" href="$_system_sound_audio_factory_8h.html" title="Audio/SystemSoundAudioFactory.h" alt="" coords="185,119,416,144"/>
-<area shape="rect" id="node8" href="$_system_sound_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/SystemSoundAudioFactory\lInterface.h" alt="" coords="207,192,432,244"/>
+<area shape="rect" id="node1" title=" " alt="" coords="315,5,550,71"/>
+<area shape="rect" id="node2" href="$_stream_functions_8h.html" title=" " alt="" coords="5,199,183,237"/>
+<area shape="rect" id="node5" href="$med__ui__endpointing_8wav_8h.html" title=" " alt="" coords="440,119,689,144"/>
+<area shape="rect" id="node6" href="$med__ui__wakesound_8wav_8h.html" title=" " alt="" coords="713,119,960,144"/>
+<area shape="rect" id="node7" href="$_system_sound_audio_factory_8h.html" title=" " alt="" coords="185,119,416,144"/>
+<area shape="rect" id="node3" title=" " alt="" coords="178,292,247,317"/>
+<area shape="rect" id="node4" title=" " alt="" coords="71,292,136,317"/>
+<area shape="rect" id="node8" href="$_system_sound_audio_factory_interface_8h.html" title=" " alt="" coords="207,192,432,244"/>
+<area shape="rect" id="node9" title=" " alt="" coords="280,292,359,317"/>
 </map>

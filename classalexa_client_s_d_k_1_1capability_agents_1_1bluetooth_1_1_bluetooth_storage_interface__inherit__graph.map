@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::capabilityAgents::bluetooth::BluetoothStorageInterface" name="alexaClientSDK::capabilityAgents::bluetooth::BluetoothStorageInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html" title="A concrete implementation of BluetoothStorageInterface using SQLite. " alt="" coords="8,105,238,157"/>
+<area shape="rect" id="node1" title="A storage interface used for Bluetooth that should provide UUID to MAC mappings and maintain insertio..." alt="" coords="5,5,241,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html" title="A concrete implementation of BluetoothStorageInterface using SQLite." alt="" coords="8,105,238,157"/>
 </map>

@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::integration::AipStateObserver" name="alexaClientSDK::integration::AipStateObserver">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html" title="A state observer for an AudioInputProcessor. " alt="" coords="5,5,245,57"/>
+<area shape="rect" id="node1" title=" " alt="" coords="33,105,217,144"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html" title="A state observer for an AudioInputProcessor." alt="" coords="5,5,245,57"/>
 </map>

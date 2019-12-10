@@ -1,8 +1,10 @@
 <map id="alexaClientSDK::capabilityAgents::alerts::Alert" name="alexaClientSDK::capabilityAgents::alerts::Alert">
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html" title="alexaClientSDK::capability\lAgents::alerts::Alarm" alt="" coords="480,5,658,44"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_reminder.html" title="alexaClientSDK::capability\lAgents::alerts::Reminder" alt="" coords="480,68,658,107"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert.html" title="alexaClientSDK::capability\lAgents::alerts::test::MockAlert" alt="" coords="470,131,669,169"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_test_alert.html" title="alexaClientSDK::capability\lAgents::alerts::test::TestAlert" alt="" coords="474,193,665,232"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_timer.html" title="alexaClientSDK::capability\lAgents::alerts::Timer" alt="" coords="480,256,658,295"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html" title="alexaClientSDK::capability\lAgents::alerts::renderer\l::RendererObserverInterface" alt="" coords="5,89,196,141"/>
+<area shape="rect" id="node1" title=" " alt="" coords="244,131,422,169"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alarm.html" title=" " alt="" coords="480,5,658,44"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_reminder.html" title=" " alt="" coords="480,68,658,107"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert.html" title=" " alt="" coords="470,131,669,169"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_test_alert.html" title=" " alt="" coords="474,193,665,232"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_timer.html" title=" " alt="" coords="480,256,658,295"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html" title=" " alt="" coords="5,89,196,141"/>
+<area shape="rect" id="node3" title=" " alt="" coords="33,165,168,204"/>
 </map>

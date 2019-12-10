@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::AudioPlayer" alt="" coords="277,5,497,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="291,68,483,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="273,144,502,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockRenderInfoCardsPlayer" alt="" coords="273,207,502,259"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,103,225,155"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html" title=" " alt="" coords="277,5,497,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title=" " alt="" coords="291,68,483,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title=" " alt="" coords="273,144,502,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player.html" title=" " alt="" coords="273,207,502,259"/>
 </map>

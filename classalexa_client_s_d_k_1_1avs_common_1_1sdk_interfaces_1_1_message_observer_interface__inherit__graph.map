@@ -1,7 +1,8 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::MessageObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::MessageObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_observer.html" title="This class allows us to test MessageObserver interaction. " alt="" coords="288,5,486,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html" title="alexaClientSDK::adsl\l::MessageInterpreter" alt="" coords="314,68,460,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="282,131,492,169"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_message_observer.html" title="alexaClientSDK::avsCommon\l::utils::TestableMessageObserver" alt="" coords="278,193,496,232"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html" title="Minimal implementation of a message observer for integration tests. " alt="" coords="295,256,479,295"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,124,230,176"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_observer.html" title="This class allows us to test MessageObserver interaction." alt="" coords="288,5,486,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html" title=" " alt="" coords="314,68,460,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title=" " alt="" coords="282,131,492,169"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_message_observer.html" title=" " alt="" coords="278,193,496,232"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_client_message_handler.html" title="Minimal implementation of a message observer for integration tests." alt="" coords="295,256,479,295"/>
 </map>

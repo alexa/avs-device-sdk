@@ -1,17 +1,34 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/src/DBusProxy.cpp" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/src/DBusProxy.cpp">
-<area shape="rect" id="node3" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1092,105,1268,144"/>
-<area shape="rect" id="node24" href="$_blue_z_constants_8h.html" title="BlueZ/BlueZConstants.h" alt="" coords="1292,112,1458,137"/>
-<area shape="rect" id="node25" href="$_d_bus_proxy_8h.html" title="BlueZ/DBusProxy.h" alt="" coords="516,112,653,137"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1469,192,1683,231"/>
-<area shape="rect" id="node16" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="672,279,848,317"/>
-<area shape="rect" id="node17" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1030,192,1206,231"/>
-<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="723,192,920,231"/>
-<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1180,365,1356,404"/>
-<area shape="rect" id="node18" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="962,279,1138,317"/>
-<area shape="rect" id="node20" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1575,365,1751,404"/>
-<area shape="rect" id="node26" href="$_blue_z_utils_8h.html" title="BlueZUtils.h" alt="" coords="454,199,547,224"/>
-<area shape="rect" id="node27" href="$_managed_g_variant_8h.html" title="BlueZ/ManagedGVariant.h" alt="" coords="369,372,547,397"/>
-<area shape="rect" id="node29" href="$_managed_g_error_8h.html" title="BlueZ/ManagedGError.h" alt="" coords="25,372,191,397"/>
-<area shape="rect" id="node30" href="$_g_variant_tuple_reader_8h.html" title="BlueZ/GVariantTupleReader.h" alt="" coords="66,285,265,311"/>
-<area shape="rect" id="node32" href="$_g_variant_map_reader_8h.html" title="BlueZ/GVariantMapReader.h" alt="" coords="288,285,480,311"/>
+<area shape="rect" id="node1" title=" " alt="" coords="749,5,953,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="317,199,430,224"/>
+<area shape="rect" id="node3" href="$_logger_8h.html" title=" " alt="" coords="1092,105,1268,144"/>
+<area shape="rect" id="node24" href="$_blue_z_constants_8h.html" title=" " alt="" coords="1292,112,1458,137"/>
+<area shape="rect" id="node25" href="$_d_bus_proxy_8h.html" title=" " alt="" coords="516,112,653,137"/>
+<area shape="rect" id="node4" title=" " alt="" coords="945,199,1005,224"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1388,285,1450,311"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1306,285,1364,311"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1162,285,1231,311"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1759,452,1817,477"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title=" " alt="" coords="1469,192,1683,231"/>
+<area shape="rect" id="node16" href="$_level_8h.html" title=" " alt="" coords="672,279,848,317"/>
+<area shape="rect" id="node17" href="$_log_entry_8h.html" title=" " alt="" coords="1030,192,1206,231"/>
+<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="723,192,920,231"/>
+<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1180,365,1356,404"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1625,285,1690,311"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1713,285,1786,311"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1234,452,1303,477"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1810,285,1849,311"/>
+<area shape="rect" id="node14" title=" " alt="" coords="608,452,662,477"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1873,285,2021,311"/>
+<area shape="rect" id="node18" href="$_log_entry_stream_8h.html" title=" " alt="" coords="962,279,1138,317"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1015,372,1084,397"/>
+<area shape="rect" id="node20" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1575,365,1751,404"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1623,452,1703,477"/>
+<area shape="rect" id="node26" href="$_blue_z_utils_8h.html" title=" " alt="" coords="454,199,547,224"/>
+<area shape="rect" id="node27" href="$_managed_g_variant_8h.html" title=" " alt="" coords="369,372,547,397"/>
+<area shape="rect" id="node29" href="$_managed_g_error_8h.html" title=" " alt="" coords="25,372,191,397"/>
+<area shape="rect" id="node30" href="$_g_variant_tuple_reader_8h.html" title=" " alt="" coords="66,285,265,311"/>
+<area shape="rect" id="node32" href="$_g_variant_map_reader_8h.html" title=" " alt="" coords="288,285,480,311"/>
+<area shape="rect" id="node28" title=" " alt="" coords="184,452,256,477"/>
+<area shape="rect" id="node31" title=" " alt="" coords="216,372,294,397"/>
 </map>

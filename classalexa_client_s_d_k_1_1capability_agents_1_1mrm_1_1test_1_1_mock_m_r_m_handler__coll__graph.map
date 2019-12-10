@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler" name="alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_handler_interface.html" title="alexaClientSDK::capability\lAgents::mrm::MRMHandlerInterface" alt="" coords="10,92,245,131"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="29,5,226,44"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,179,249,217"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_handler_interface.html" title=" " alt="" coords="10,92,245,131"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="29,5,226,44"/>
 </map>

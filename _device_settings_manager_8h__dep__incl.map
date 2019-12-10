@@ -1,39 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceSettingsManager.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceSettingsManager.h">
-<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="788,232,1015,297"/>
-<area shape="rect" id="node13" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DeviceSettingsManagerBuilder.h" alt="" coords="1040,232,1267,297"/>
-<area shape="rect" id="node15" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="1684,119,1940,171"/>
-<area shape="rect" id="node17" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="2250,232,2449,297"/>
-<area shape="rect" id="node21" href="$_do_not_disturb_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/include\l/DoNotDisturbCA/DoNotDisturbCapability\lAgent.h" alt="" coords="768,105,1034,184"/>
-<area shape="rect" id="node24" href="$_locale_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/LocaleHandler.h" alt="" coords="3112,112,3275,177"/>
-<area shape="rect" id="node25" href="$_locale_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/LocaleHandler.cpp" alt="" coords="3053,239,3259,291"/>
-<area shape="rect" id="node26" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="3384,239,3618,291"/>
-<area shape="rect" id="node27" href="$_time_zone_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/TimeZoneHandler.h" alt="" coords="2606,112,2770,177"/>
-<area shape="rect" id="node29" href="$_time_zone_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/TimeZoneHandler\lTest.cpp" alt="" coords="2824,232,3029,297"/>
-<area shape="rect" id="node30" href="$_state_report_generator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/StateReportGenerator\lTest.cpp" alt="" coords="3600,112,3830,177"/>
-<area shape="rect" id="node31" href="$_u_i_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UIManager.h" alt="" coords="190,119,364,171"/>
-<area shape="rect" id="node33" href="$_locale_wake_words_setting_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/Types/LocaleWakeWords\lSetting.h" alt="" coords="3349,112,3576,177"/>
-<area shape="rect" id="node36" href="$_setting_callback_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingCallback\lAdapterTest.cpp" alt="" coords="3854,119,4074,171"/>
-<area shape="rect" id="node37" href="$_setting_callbacks_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingCallbacks\lTest.cpp" alt="" coords="4097,119,4324,171"/>
-<area shape="rect" id="node38" href="$_settings_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\lManagerTest.cpp" alt="" coords="4348,119,4524,171"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1609,352,1837,404"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="517,459,740,511"/>
-<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="794,352,1009,404"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="519,559,737,611"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="761,559,967,611"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="518,659,738,711"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="762,659,964,711"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="529,759,727,797"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="843,759,1123,797"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="764,465,1039,504"/>
-<area shape="rect" id="node14" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="2430,345,2645,411"/>
-<area shape="rect" id="node16" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1291,239,1511,291"/>
-<area shape="rect" id="node18" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1585,239,1757,291"/>
-<area shape="rect" id="node19" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1781,232,1993,297"/>
-<area shape="rect" id="node20" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="2017,239,2226,291"/>
-<area shape="rect" id="node22" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="315,232,525,297"/>
-<area shape="rect" id="node23" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/DoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="549,232,763,297"/>
-<area shape="rect" id="node28" href="$_time_zone_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/TimeZoneHandler.cpp" alt="" coords="2575,239,2801,291"/>
-<area shape="rect" id="node32" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="5,245,240,284"/>
-<area shape="rect" id="node34" href="$_locale_wake_words_setting_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/Types\l/LocaleWakeWordsSetting.cpp" alt="" coords="3917,239,4120,291"/>
-<area shape="rect" id="node35" href="$_locale_wake_words_setting_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/LocaleWake\lWordsSettingTest.cpp" alt="" coords="3643,239,3843,291"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2787,5,3016,57"/>
+<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="2194,459,2421,524"/>
+<area shape="rect" id="node12" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="2984,345,3212,411"/>
+<area shape="rect" id="node14" href="$_audio_input_processor_8h.html" title=" " alt="" coords="607,352,863,404"/>
+<area shape="rect" id="node16" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="718,459,918,524"/>
+<area shape="rect" id="node20" href="$_renderer_8h.html" title=" " alt="" coords="2118,105,2270,171"/>
+<area shape="rect" id="node25" href="$_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="1925,459,2106,524"/>
+<area shape="rect" id="node32" href="$_renderer_test_8cpp.html" title=" " alt="" coords="2231,225,2383,291"/>
+<area shape="rect" id="node33" href="$_do_not_disturb_capability_agent_8h.html" title=" " alt="" coords="2458,219,2724,297"/>
+<area shape="rect" id="node36" href="$_locale_handler_8h.html" title=" " alt="" coords="3437,105,3601,171"/>
+<area shape="rect" id="node37" href="$_locale_handler_8cpp.html" title=" " alt="" coords="3379,232,3584,284"/>
+<area shape="rect" id="node38" href="$_locale_handler_test_8cpp.html" title=" " alt="" coords="3710,232,3944,284"/>
+<area shape="rect" id="node39" href="$_time_zone_handler_8h.html" title=" " alt="" coords="3059,105,3222,171"/>
+<area shape="rect" id="node41" href="$_time_zone_handler_test_8cpp.html" title=" " alt="" coords="2800,225,3004,291"/>
+<area shape="rect" id="node42" href="$_state_report_generator_test_8cpp.html" title=" " alt="" coords="3926,105,4155,171"/>
+<area shape="rect" id="node43" href="$_u_i_manager_8h.html" title=" " alt="" coords="1200,112,1374,164"/>
+<area shape="rect" id="node45" href="$_locale_wake_words_setting_8h.html" title=" " alt="" coords="3675,105,3902,171"/>
+<area shape="rect" id="node48" href="$_setting_callback_adapter_test_8cpp.html" title=" " alt="" coords="4180,112,4400,164"/>
+<area shape="rect" id="node49" href="$_setting_callbacks_test_8cpp.html" title=" " alt="" coords="4423,112,4650,164"/>
+<area shape="rect" id="node50" href="$_settings_manager_test_8cpp.html" title=" " alt="" coords="4674,112,4850,164"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="3132,572,3360,624"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="1922,672,2145,724"/>
+<area shape="rect" id="node10" href="$_keyword_observer_8h.html" title=" " alt="" coords="2200,572,2415,624"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="1925,772,2143,824"/>
+<area shape="rect" id="node9" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="2167,772,2373,824"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title=" " alt="" coords="1924,872,2144,924"/>
+<area shape="rect" id="node8" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="2168,872,2370,924"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="2118,972,2398,1011"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="2169,679,2445,717"/>
+<area shape="rect" id="node13" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="3140,459,3355,524"/>
+<area shape="rect" id="node15" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="475,465,695,517"/>
+<area shape="rect" id="node17" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="941,465,1113,517"/>
+<area shape="rect" id="node18" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="5,459,217,524"/>
+<area shape="rect" id="node19" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="241,465,451,517"/>
+<area shape="rect" id="node21" href="$_alert_8h.html" title=" " alt="" coords="1756,225,1909,291"/>
+<area shape="rect" id="node31" href="$_renderer_8cpp.html" title=" " alt="" coords="1509,232,1732,284"/>
+<area shape="rect" id="node22" href="$_alarm_8h.html" title=" " alt="" coords="1756,345,1909,411"/>
+<area shape="rect" id="node24" href="$_alerts_capability_agent_8h.html" title=" " alt="" coords="1933,345,2097,411"/>
+<area shape="rect" id="node26" href="$_reminder_8h.html" title=" " alt="" coords="1228,345,1381,411"/>
+<area shape="rect" id="node27" href="$_alert_storage_interface_8h.html" title=" " alt="" coords="2121,345,2334,411"/>
+<area shape="rect" id="node28" href="$_capability_agents_2_alerts_2include_2_alerts_2_timer_8h.html" title=" " alt="" coords="1404,345,1557,411"/>
+<area shape="rect" id="node29" href="$_alert_8cpp.html" title=" " alt="" coords="1580,352,1733,404"/>
+<area shape="rect" id="node30" href="$_alert_test_8cpp.html" title=" " alt="" coords="1039,352,1204,404"/>
+<area shape="rect" id="node23" href="$_alarm_8cpp.html" title=" " alt="" coords="1748,465,1901,517"/>
+<area shape="rect" id="node34" href="$_do_not_disturb_capability_agent_8cpp.html" title=" " alt="" coords="2510,345,2720,411"/>
+<area shape="rect" id="node35" href="$_do_not_disturb_capability_agent_test_8cpp.html" title=" " alt="" coords="2744,345,2958,411"/>
+<area shape="rect" id="node40" href="$_time_zone_handler_8cpp.html" title=" " alt="" coords="3028,232,3253,284"/>
+<area shape="rect" id="node44" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="1170,239,1405,277"/>
+<area shape="rect" id="node46" href="$_locale_wake_words_setting_8cpp.html" title=" " alt="" coords="4243,232,4446,284"/>
+<area shape="rect" id="node47" href="$_locale_wake_words_setting_test_8cpp.html" title=" " alt="" coords="4019,232,4219,284"/>
 </map>

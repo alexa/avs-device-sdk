@@ -1,9 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/UrlContentToAttachmentConverter.h" name="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/UrlContentToAttachmentConverter.h">
-<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="307,119,570,184"/>
-<area shape="rect" id="node5" href="$_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/MediaPlayer.h" alt="" coords="702,119,932,184"/>
-<area shape="rect" id="node6" href="$_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/MediaPlayer.cpp" alt="" coords="609,232,838,284"/>
-<area shape="rect" id="node8" href="$_url_content_to_attachment_converter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/UrlContentToAttachmentConverter.cpp" alt="" coords="955,125,1209,177"/>
-<area shape="rect" id="node3" href="$_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="5,232,268,284"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="292,232,584,284"/>
-<area shape="rect" id="node7" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="862,232,1092,284"/>
+<area shape="rect" id="node1" title=" " alt="" coords="613,5,869,71"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title=" " alt="" coords="307,119,570,184"/>
+<area shape="rect" id="node5" href="$_media_player_8h.html" title=" " alt="" coords="702,119,932,184"/>
+<area shape="rect" id="node6" href="$_media_player_8cpp.html" title=" " alt="" coords="609,232,838,284"/>
+<area shape="rect" id="node8" href="$_url_content_to_attachment_converter_8cpp.html" title=" " alt="" coords="955,125,1209,177"/>
+<area shape="rect" id="node3" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="5,232,268,284"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="292,232,584,284"/>
+<area shape="rect" id="node7" href="$_media_player_test_8cpp.html" title=" " alt="" coords="862,232,1092,284"/>
 </map>

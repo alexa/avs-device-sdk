@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterState" name="alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterState">
-<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::externalMedia\lPlayer::AdapterSessionState" alt="" coords="5,5,205,57"/>
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::externalMedia\lPlayer::AdapterPlaybackState" alt="" coords="5,81,205,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="340,44,539,96"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_session_state.html" title=" " alt="" coords="5,5,205,57"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html" title=" " alt="" coords="5,81,205,133"/>
 </map>

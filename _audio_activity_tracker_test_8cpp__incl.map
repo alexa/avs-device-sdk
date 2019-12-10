@@ -1,27 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AFML/test/AudioActivityTrackerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AFML/test/AudioActivityTrackerTest.cpp">
-<area shape="rect" id="node12" href="$_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="2704,105,2895,144"/>
-<area shape="rect" id="node20" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="255,105,425,144"/>
-<area shape="rect" id="node34" href="$_string_utils_8h.html" title="AVSCommon/Utils/String\l/StringUtils.h" alt="" coords="1140,365,1310,404"/>
-<area shape="rect" id="node35" href="$_audio_activity_tracker_8h.html" title="AFML/AudioActivityTracker.h" alt="" coords="2470,199,2662,224"/>
-<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3810,279,4000,317"/>
-<area shape="rect" id="node14" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="4313,365,4508,404"/>
-<area shape="rect" id="node17" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="3810,365,4000,404"/>
-<area shape="rect" id="node18" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="3791,452,4020,491"/>
-<area shape="rect" id="node19" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="4076,365,4288,404"/>
-<area shape="rect" id="node23" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="800,192,976,231"/>
-<area shape="rect" id="node24" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="800,279,976,317"/>
-<area shape="rect" id="node28" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="853,365,1067,404"/>
-<area shape="rect" id="node30" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="592,452,768,491"/>
-<area shape="rect" id="node31" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="229,365,405,404"/>
-<area shape="rect" id="node32" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="581,365,778,404"/>
-<area shape="rect" id="node33" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1885,365,2061,404"/>
-<area shape="rect" id="node37" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3441,365,3633,404"/>
-<area shape="rect" id="node38" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3019,279,3245,317"/>
-<area shape="rect" id="node40" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2215,365,2403,404"/>
-<area shape="rect" id="node41" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2545,279,2740,317"/>
-<area shape="rect" id="node47" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1739,372,1860,397"/>
-<area shape="rect" id="node50" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1536,285,1746,311"/>
-<area shape="rect" id="node46" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="3040,365,3234,404"/>
-<area shape="rect" id="node48" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1766,452,1959,491"/>
-<area shape="rect" id="node49" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1751,539,1963,564"/>
+<area shape="rect" id="node1" title=" " alt="" coords="3311,5,3502,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1387,799,1450,824"/>
+<area shape="rect" id="node3" title=" " alt="" coords="45,459,101,484"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1181,459,1251,484"/>
+<area shape="rect" id="node5" title=" " alt="" coords="378,545,437,571"/>
+<area shape="rect" id="node6" title=" " alt="" coords="3280,199,3394,224"/>
+<area shape="rect" id="node7" title=" " alt="" coords="3570,112,3664,137"/>
+<area shape="rect" id="node8" title=" " alt="" coords="3439,545,3588,571"/>
+<area shape="rect" id="node9" title=" " alt="" coords="3689,112,3826,137"/>
+<area shape="rect" id="node10" title=" " alt="" coords="3850,112,4006,137"/>
+<area shape="rect" id="node11" title=" " alt="" coords="4029,112,4152,137"/>
+<area shape="rect" id="node12" href="$_mock_context_manager_8h.html" title=" " alt="" coords="3152,105,3343,144"/>
+<area shape="rect" id="node32" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="3397,452,3567,491"/>
+<area shape="rect" id="node34" href="$_string_utils_8h.html" title=" " alt="" coords="3204,452,3374,491"/>
+<area shape="rect" id="node35" href="$_audio_activity_tracker_8h.html" title=" " alt="" coords="1610,112,1802,137"/>
+<area shape="rect" id="node13" href="$_context_manager_interface_8h.html" title=" " alt="" coords="2598,192,2789,231"/>
+<area shape="rect" id="node14" title=" " alt="" coords="2205,545,2259,571"/>
+<area shape="rect" id="node15" href="$_capability_tag_8h.html" title=" " alt="" coords="2061,452,2254,491"/>
+<area shape="rect" id="node23" href="$_state_refresh_policy_8h.html" title=" " alt="" coords="2987,279,3199,317"/>
+<area shape="rect" id="node24" href="$_alexa_state_change_cause_type_8h.html" title=" " alt="" coords="2328,452,2543,491"/>
+<area shape="rect" id="node25" href="$_context_manager_observer_interface_8h.html" title=" " alt="" coords="2467,365,2709,404"/>
+<area shape="rect" id="node28" href="$_context_requester_interface_8h.html" title=" " alt="" coords="2885,452,3080,491"/>
+<area shape="rect" id="node30" href="$_state_provider_interface_8h.html" title=" " alt="" coords="2200,279,2391,317"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2333,545,2403,571"/>
+<area shape="rect" id="node17" href="$_optional_8h.html" title=" " alt="" coords="1986,545,2181,571"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title=" " alt="" coords="2852,625,3028,664"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="1508,712,1684,751"/>
+<area shape="rect" id="node20" title=" " alt="" coords="719,799,779,824"/>
+<area shape="rect" id="node21" title=" " alt="" coords="446,799,503,824"/>
+<area shape="rect" id="node22" title=" " alt="" coords="3183,799,3241,824"/>
+<area shape="rect" id="node26" href="$_capability_state_8h.html" title=" " alt="" coords="2567,452,2760,491"/>
+<area shape="rect" id="node27" title=" " alt="" coords="2953,545,3012,571"/>
+<area shape="rect" id="node29" href="$_context_request_token_8h.html" title=" " alt="" coords="2586,539,2777,577"/>
+<area shape="rect" id="node31" href="$_namespace_and_name_8h.html" title=" " alt="" coords="2112,365,2341,404"/>
+<area shape="rect" id="node33" title=" " alt="" coords="2486,545,2533,571"/>
+<area shape="rect" id="node36" title=" " alt="" coords="1475,545,1591,571"/>
+<area shape="rect" id="node37" href="$_capability_configuration_8h.html" title=" " alt="" coords="1455,452,1648,491"/>
+<area shape="rect" id="node38" href="$_capability_configuration_interface_8h.html" title=" " alt="" coords="1392,365,1618,404"/>
+<area shape="rect" id="node40" href="$_requires_shutdown_8h.html" title=" " alt="" coords="978,365,1166,404"/>
+<area shape="rect" id="node41" href="$_executor_8h.html" title=" " alt="" coords="564,365,758,404"/>
+<area shape="rect" id="node47" href="$_channel_8h.html" title=" " alt="" coords="1795,285,1916,311"/>
+<area shape="rect" id="node50" href="$_activity_tracker_interface_8h.html" title=" " alt="" coords="2812,199,3022,224"/>
+<area shape="rect" id="node39" title=" " alt="" coords="1274,459,1381,484"/>
+<area shape="rect" id="node42" title=" " alt="" coords="175,459,304,484"/>
+<area shape="rect" id="node43" title=" " alt="" coords="699,459,757,484"/>
+<area shape="rect" id="node44" title=" " alt="" coords="619,545,698,571"/>
+<area shape="rect" id="node45" title=" " alt="" coords="781,459,832,484"/>
+<area shape="rect" id="node46" href="$_task_thread_8h.html" title=" " alt="" coords="429,452,624,491"/>
+<area shape="rect" id="node48" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="1845,365,2037,404"/>
+<area shape="rect" id="node49" href="$_focus_state_8h.html" title=" " alt="" coords="1723,459,1936,484"/>
 </map>

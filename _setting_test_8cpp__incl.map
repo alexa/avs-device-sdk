@@ -1,24 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/test/SettingTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/test/SettingTest.cpp">
-<area shape="rect" id="node6" href="$_setting_8h.html" title="Settings/Setting.h" alt="" coords="1462,92,1588,117"/>
-<area shape="rect" id="node47" href="$_mock_setting_protocol_8h.html" title="Settings/MockSettingProtocol.h" alt="" coords="478,165,685,191"/>
-<area shape="rect" id="node48" href="$_mock_setting_observer_8h.html" title="Settings/MockSettingObserver.h" alt="" coords="193,165,405,191"/>
-<area shape="rect" id="node10" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2437,499,2613,537"/>
-<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2739,325,2915,364"/>
-<area shape="rect" id="node29" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="2256,332,2440,357"/>
-<area shape="rect" id="node30" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="1730,245,1908,271"/>
-<area shape="rect" id="node35" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="690,239,854,277"/>
-<area shape="rect" id="node42" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="809,165,972,191"/>
-<area shape="rect" id="node43" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2427,165,2655,191"/>
-<area shape="rect" id="node12" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2627,585,2803,624"/>
-<area shape="rect" id="node14" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2821,672,2997,711"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2336,412,2512,451"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2637,499,2851,537"/>
-<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1947,585,2123,624"/>
-<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2064,499,2261,537"/>
-<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1877,672,2053,711"/>
-<area shape="rect" id="node33" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1951,332,2182,357"/>
-<area shape="rect" id="node34" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="643,412,813,451"/>
-<area shape="rect" id="node36" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1141,325,1336,364"/>
-<area shape="rect" id="node40" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1355,412,1549,451"/>
-<area shape="rect" id="node45" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2836,239,3006,277"/>
+<area shape="rect" id="node1" title=" " alt="" coords="335,5,554,44"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1054,759,1123,784"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2631,679,2685,704"/>
+<area shape="rect" id="node4" title=" " alt="" coords="175,245,290,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="3406,92,3500,117"/>
+<area shape="rect" id="node6" href="$_setting_8h.html" title=" " alt="" coords="1783,92,1909,117"/>
+<area shape="rect" id="node48" href="$_mock_setting_protocol_8h.html" title=" " alt="" coords="341,165,548,191"/>
+<area shape="rect" id="node49" href="$_mock_setting_observer_8h.html" title=" " alt="" coords="5,165,217,191"/>
+<area shape="rect" id="node7" title=" " alt="" coords="655,505,733,531"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1717,592,1775,617"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1517,419,1569,444"/>
+<area shape="rect" id="node10" href="$_log_entry_8h.html" title=" " alt="" coords="2377,499,2553,537"/>
+<area shape="rect" id="node17" href="$_logger_utils_8h.html" title=" " alt="" coords="2251,325,2427,364"/>
+<area shape="rect" id="node29" href="$_set_setting_result_8h.html" title=" " alt="" coords="1299,332,1483,357"/>
+<area shape="rect" id="node30" href="$_setting_interface_8h.html" title=" " alt="" coords="1757,245,1935,271"/>
+<area shape="rect" id="node35" href="$_setting_protocol_interface_8h.html" title=" " alt="" coords="1028,239,1192,277"/>
+<area shape="rect" id="node42" href="$_setting_status_8h.html" title=" " alt="" coords="2060,165,2224,191"/>
+<area shape="rect" id="node43" href="$_setting_string_conversion_8h.html" title=" " alt="" coords="2591,165,2819,191"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2758,592,2827,617"/>
+<area shape="rect" id="node12" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2170,585,2346,624"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1374,679,1443,704"/>
+<area shape="rect" id="node14" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="2170,672,2346,711"/>
+<area shape="rect" id="node15" title=" " alt="" coords="2218,759,2298,784"/>
+<area shape="rect" id="node16" title=" " alt="" coords="3137,759,3195,784"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1799,592,1861,617"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="2251,412,2427,451"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1638,505,1699,531"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title=" " alt="" coords="2139,499,2353,537"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title=" " alt="" coords="2851,585,3027,624"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="2779,499,2976,537"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1627,672,1803,711"/>
+<area shape="rect" id="node22" title=" " alt="" coords="2082,592,2146,617"/>
+<area shape="rect" id="node23" title=" " alt="" coords="1986,592,2058,617"/>
+<area shape="rect" id="node24" title=" " alt="" coords="2696,592,2735,617"/>
+<area shape="rect" id="node25" title=" " alt="" coords="2471,592,2620,617"/>
+<area shape="rect" id="node31" title=" " alt="" coords="1739,332,1822,357"/>
+<area shape="rect" id="node32" title=" " alt="" coords="1608,332,1716,357"/>
+<area shape="rect" id="node33" href="$_guarded_value_8h.html" title=" " alt="" coords="1845,419,2076,444"/>
+<area shape="rect" id="node34" href="$_setting_observer_interface_8h.html" title=" " alt="" coords="284,412,453,451"/>
+<area shape="rect" id="node36" href="$_executor_8h.html" title=" " alt="" coords="878,325,1072,364"/>
+<area shape="rect" id="node37" title=" " alt="" coords="629,419,758,444"/>
+<area shape="rect" id="node38" title=" " alt="" coords="833,419,891,444"/>
+<area shape="rect" id="node39" title=" " alt="" coords="916,419,971,444"/>
+<area shape="rect" id="node40" href="$_task_thread_8h.html" title=" " alt="" coords="1046,412,1240,451"/>
+<area shape="rect" id="node41" title=" " alt="" coords="1114,505,1173,531"/>
+<area shape="rect" id="node44" title=" " alt="" coords="2657,245,2696,271"/>
+<area shape="rect" id="node45" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="2772,239,2942,277"/>
+<area shape="rect" id="node46" title=" " alt="" coords="2865,332,2925,357"/>
+<area shape="rect" id="node47" title=" " alt="" coords="2794,332,2842,357"/>
 </map>

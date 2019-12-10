@@ -1,0 +1,35 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/src/TimingAdapterFactory.cpp" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/src/TimingAdapterFactory.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="443,5,645,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="173,605,243,631"/>
+<area shape="rect" id="node3" href="$_timing_adapter_factory_8h.html" title=" " alt="" coords="733,185,952,211"/>
+<area shape="rect" id="node28" href="$_caption_timing_adapter_8h.html" title=" " alt="" coords="434,105,654,131"/>
+<area shape="rect" id="node4" href="$_caption_presenter_interface_8h.html" title=" " alt="" coords="872,265,1053,304"/>
+<area shape="rect" id="node26" href="$_caption_timing_adapter_interface_8h.html" title=" " alt="" coords="632,272,848,297"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1043,352,1095,377"/>
+<area shape="rect" id="node6" href="$_focus_state_8h.html" title=" " alt="" coords="867,432,1080,457"/>
+<area shape="rect" id="node8" href="$_caption_frame_8h.html" title=" " alt="" coords="682,352,798,377"/>
+<area shape="rect" id="node24" href="$_caption_line_8h.html" title=" " alt="" coords="688,432,792,457"/>
+<area shape="rect" id="node25" href="$_text_style_8h.html" title=" " alt="" coords="913,519,999,544"/>
+<area shape="rect" id="node7" title=" " alt="" coords="834,519,888,544"/>
+<area shape="rect" id="node9" title=" " alt="" coords="249,692,311,717"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1234,605,1307,631"/>
+<area shape="rect" id="node11" title=" " alt="" coords="287,519,345,544"/>
+<area shape="rect" id="node12" href="$_media_player_observer_interface_8h.html" title=" " alt="" coords="390,425,607,464"/>
+<area shape="rect" id="node13" href="$_error_types_8h.html" title=" " alt="" coords="602,512,811,551"/>
+<area shape="rect" id="node15" href="$_media_player_interface_8h.html" title=" " alt="" coords="419,519,578,544"/>
+<area shape="rect" id="node14" title=" " alt="" coords="907,692,976,717"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1150,605,1210,631"/>
+<area shape="rect" id="node17" title=" " alt="" coords="550,605,605,631"/>
+<area shape="rect" id="node18" href="$_attachment_reader_8h.html" title=" " alt="" coords="629,599,830,637"/>
+<area shape="rect" id="node21" href="$_audio_format_8h.html" title=" " alt="" coords="854,605,1076,631"/>
+<area shape="rect" id="node22" href="$_source_config_8h.html" title=" " alt="" coords="317,599,526,637"/>
+<area shape="rect" id="node19" title=" " alt="" coords="584,692,648,717"/>
+<area shape="rect" id="node20" href="$_reader_policy_8h.html" title=" " alt="" coords="672,685,834,724"/>
+<area shape="rect" id="node23" title=" " alt="" coords="383,692,459,717"/>
+<area shape="rect" id="node27" href="$_delay_interface_8h.html" title=" " alt="" coords="55,352,174,377"/>
+<area shape="rect" id="node29" title=" " alt="" coords="262,272,322,297"/>
+<area shape="rect" id="node30" title=" " alt="" coords="498,272,558,297"/>
+<area shape="rect" id="node31" href="$_task_thread_8h.html" title=" " alt="" coords="312,179,507,217"/>
+<area shape="rect" id="node33" href="$_system_clock_delay_8h.html" title=" " alt="" coords="43,185,186,211"/>
+<area shape="rect" id="node32" title=" " alt="" coords="346,272,425,297"/>
+</map>

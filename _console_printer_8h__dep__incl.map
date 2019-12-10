@@ -1,12 +1,18 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/ConsolePrinter.h">
-<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="126,105,345,157"/>
-<area shape="rect" id="node5" href="$_console_printer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsolePrinter.cpp" alt="" coords="369,112,626,151"/>
-<area shape="rect" id="node6" href="$_console_reader_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/ConsoleReader.cpp" alt="" coords="650,112,911,151"/>
-<area shape="rect" id="node7" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="935,112,1180,151"/>
-<area shape="rect" id="node8" href="$_port_audio_microphone_wrapper_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/PortAudio\lMicrophoneWrapper.cpp" alt="" coords="1204,105,1407,157"/>
-<area shape="rect" id="node9" href="$_sample_equalizer_mode_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleEqualizer\lModeController.cpp" alt="" coords="1431,105,1676,157"/>
-<area shape="rect" id="node10" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1701,112,1935,151"/>
-<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1959,105,2162,157"/>
-<area shape="rect" id="node3" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,205,204,244"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,205,507,244"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1762,5,1959,57"/>
+<area shape="rect" id="node2" href="$_sample_application_8h.html" title=" " alt="" coords="126,105,345,157"/>
+<area shape="rect" id="node5" href="$_caption_presenter_8cpp.html" title=" " alt="" coords="368,112,641,151"/>
+<area shape="rect" id="node6" href="$_console_printer_8cpp.html" title=" " alt="" coords="665,112,922,151"/>
+<area shape="rect" id="node7" href="$_console_reader_8cpp.html" title=" " alt="" coords="946,112,1207,151"/>
+<area shape="rect" id="node8" href="$_gui_renderer_8cpp.html" title=" " alt="" coords="1231,112,1476,151"/>
+<area shape="rect" id="node9" href="$_mode_controller_handler_8cpp.html" title=" " alt="" coords="1500,105,1736,157"/>
+<area shape="rect" id="node10" href="$_port_audio_microphone_wrapper_8cpp.html" title=" " alt="" coords="1759,105,1962,157"/>
+<area shape="rect" id="node11" href="$_power_controller_handler_8cpp.html" title=" " alt="" coords="1986,105,2226,157"/>
+<area shape="rect" id="node12" href="$_range_controller_handler_8cpp.html" title=" " alt="" coords="2251,105,2492,157"/>
+<area shape="rect" id="node13" href="$_sample_equalizer_mode_controller_8cpp.html" title=" " alt="" coords="2515,105,2760,157"/>
+<area shape="rect" id="node14" href="$_toggle_controller_handler_8cpp.html" title=" " alt="" coords="2784,105,3025,157"/>
+<area shape="rect" id="node15" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="3050,112,3285,151"/>
+<area shape="rect" id="node16" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="3309,105,3511,157"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title=" " alt="" coords="5,205,204,244"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title=" " alt="" coords="227,205,507,244"/>
 </map>

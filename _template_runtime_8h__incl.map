@@ -1,33 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/TemplateRuntime.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/TemplateRuntime.h">
-<area shape="rect" id="node8" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2757,119,2949,157"/>
-<area shape="rect" id="node27" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3986,205,4179,244"/>
-<area shape="rect" id="node28" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="4153,119,4379,157"/>
-<area shape="rect" id="node29" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="2706,492,2936,531"/>
-<area shape="rect" id="node30" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1935,299,2126,337"/>
-<area shape="rect" id="node33" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="1561,392,1780,444"/>
-<area shape="rect" id="node37" href="$_render_player_info_cards_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lInterface.h" alt="" coords="2222,292,2436,344"/>
-<area shape="rect" id="node38" href="$_template_runtime_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="1290,399,1536,437"/>
-<area shape="rect" id="node39" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1093,492,1280,531"/>
-<area shape="rect" id="node41" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="723,299,917,337"/>
-<area shape="rect" id="node46" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="313,299,487,337"/>
-<area shape="rect" id="node10" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2577,399,2806,437"/>
-<area shape="rect" id="node11" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="3391,205,3656,244"/>
-<area shape="rect" id="node14" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2209,399,2401,437"/>
-<area shape="rect" id="node16" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2486,492,2682,531"/>
-<area shape="rect" id="node18" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2564,205,2755,244"/>
-<area shape="rect" id="node19" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="3050,205,3241,244"/>
-<area shape="rect" id="node26" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3033,299,3257,337"/>
-<area shape="rect" id="node12" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="3538,299,3760,337"/>
-<area shape="rect" id="node15" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2021,499,2234,524"/>
-<area shape="rect" id="node20" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="3067,405,3290,431"/>
-<area shape="rect" id="node24" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="3281,299,3514,337"/>
-<area shape="rect" id="node22" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="2960,492,3173,531"/>
-<area shape="rect" id="node23" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="3400,499,3512,524"/>
-<area shape="rect" id="node25" href="$_blocking_policy_8h.html" title="BlockingPolicy.h" alt="" coords="3592,405,3709,431"/>
-<area shape="rect" id="node32" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="1906,405,2134,431"/>
-<area shape="rect" id="node34" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="1672,499,1896,524"/>
-<area shape="rect" id="node36" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="1355,492,1546,531"/>
-<area shape="rect" id="node44" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="723,399,917,437"/>
-<area shape="rect" id="node47" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="85,399,261,437"/>
-<area shape="rect" id="node48" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="237,492,413,531"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1918,5,2165,71"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1113,759,1176,784"/>
+<area shape="rect" id="node3" title=" " alt="" coords="430,499,488,524"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1440,499,1510,524"/>
+<area shape="rect" id="node5" title=" " alt="" coords="2855,839,2909,864"/>
+<area shape="rect" id="node6" title=" " alt="" coords="3168,305,3284,331"/>
+<area shape="rect" id="node7" title=" " alt="" coords="3176,212,3283,237"/>
+<area shape="rect" id="node8" href="$_capability_agent_8h.html" title=" " alt="" coords="1945,119,2138,157"/>
+<area shape="rect" id="node32" href="$_capability_configuration_8h.html" title=" " alt="" coords="2859,205,3052,244"/>
+<area shape="rect" id="node33" href="$_capability_configuration_interface_8h.html" title=" " alt="" coords="2276,119,2501,157"/>
+<area shape="rect" id="node34" href="$_dialog_u_x_state_observer_interface_8h.html" title=" " alt="" coords="3045,492,3276,531"/>
+<area shape="rect" id="node35" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="3358,399,3549,437"/>
+<area shape="rect" id="node38" href="$_render_player_info_cards_observer_interface_8h.html" title=" " alt="" coords="968,392,1187,444"/>
+<area shape="rect" id="node41" href="$_render_player_info_cards_provider_interface_8h.html" title=" " alt="" coords="917,292,1131,344"/>
+<area shape="rect" id="node42" href="$_template_runtime_observer_interface_8h.html" title=" " alt="" coords="3702,399,3949,437"/>
+<area shape="rect" id="node43" href="$_requires_shutdown_8h.html" title=" " alt="" coords="656,399,844,437"/>
+<area shape="rect" id="node44" href="$_executor_8h.html" title=" " alt="" coords="295,399,490,437"/>
+<area shape="rect" id="node50" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="512,492,686,531"/>
+<area shape="rect" id="node9" title=" " alt="" coords="777,759,837,784"/>
+<area shape="rect" id="node10" href="$_namespace_and_name_8h.html" title=" " alt="" coords="2763,299,2992,337"/>
+<area shape="rect" id="node19" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="1523,205,1788,244"/>
+<area shape="rect" id="node21" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="3300,492,3493,531"/>
+<area shape="rect" id="node23" href="$_context_requester_interface_8h.html" title=" " alt="" coords="1944,205,2140,244"/>
+<area shape="rect" id="node29" href="$_state_provider_interface_8h.html" title=" " alt="" coords="2253,205,2444,244"/>
+<area shape="rect" id="node30" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="1206,299,1397,337"/>
+<area shape="rect" id="node31" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="1363,399,1587,437"/>
+<area shape="rect" id="node11" href="$_capability_tag_8h.html" title=" " alt="" coords="2677,399,2870,437"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2571,585,2641,611"/>
+<area shape="rect" id="node13" href="$_optional_8h.html" title=" " alt="" coords="2174,499,2369,524"/>
+<area shape="rect" id="node14" href="$_logger_utils_8h.html" title=" " alt="" coords="1319,579,1495,617"/>
+<area shape="rect" id="node15" href="$_logger_8h.html" title=" " alt="" coords="1382,665,1558,704"/>
+<area shape="rect" id="node16" title=" " alt="" coords="609,759,667,784"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1889,759,1947,784"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title=" " alt="" coords="1688,752,1864,791"/>
+<area shape="rect" id="node20" href="$_exception_error_type_8h.html" title=" " alt="" coords="1523,299,1745,337"/>
+<area shape="rect" id="node22" href="$_focus_state_8h.html" title=" " alt="" coords="3386,585,3599,611"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1869,305,1929,331"/>
+<area shape="rect" id="node25" href="$_a_v_s_context_8h.html" title=" " alt="" coords="2472,305,2689,331"/>
+<area shape="rect" id="node27" href="$_context_request_token_8h.html" title=" " alt="" coords="2156,299,2347,337"/>
+<area shape="rect" id="node28" href="$_endpoint_identifier_8h.html" title=" " alt="" coords="2319,665,2522,704"/>
+<area shape="rect" id="node26" title=" " alt="" coords="2945,405,2992,431"/>
+<area shape="rect" id="node36" title=" " alt="" coords="681,585,736,611"/>
+<area shape="rect" id="node37" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="3517,499,3745,524"/>
+<area shape="rect" id="node39" href="$_player_activity_8h.html" title=" " alt="" coords="2494,499,2718,524"/>
+<area shape="rect" id="node40" href="$_media_properties_interface_8h.html" title=" " alt="" coords="1116,665,1307,704"/>
+<area shape="rect" id="node45" title=" " alt="" coords="403,585,532,611"/>
+<area shape="rect" id="node46" title=" " alt="" coords="55,585,133,611"/>
+<area shape="rect" id="node47" title=" " alt="" coords="35,499,86,524"/>
+<area shape="rect" id="node48" href="$_task_thread_8h.html" title=" " alt="" coords="110,492,304,531"/>
+<area shape="rect" id="node49" title=" " alt="" coords="258,585,317,611"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html" title="Mock class that implements the ContextManager. " alt="" coords="278,5,475,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html" title="alexaClientSDK::contextManager\l::ContextManager" alt="" coords="267,81,485,120"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,40,219,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html" title="Mock class that implements the ContextManager." alt="" coords="278,5,475,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html" title=" " alt="" coords="267,81,485,120"/>
 </map>

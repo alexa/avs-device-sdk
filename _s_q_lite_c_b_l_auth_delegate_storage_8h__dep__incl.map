@@ -1,8 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h">
-<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="5,125,158,177"/>
-<area shape="rect" id="node3" href="$_auth_delegate_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="182,125,384,177"/>
-<area shape="rect" id="node4" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="407,125,647,177"/>
-<area shape="rect" id="node5" href="$_alexa_communications_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaCommunicationsLibraryTest.cpp" alt="" coords="671,125,919,177"/>
-<area shape="rect" id="node6" href="$_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/SQLiteCBLAuth\lDelegateStorage.cpp" alt="" coords="943,119,1194,184"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1218,132,1498,171"/>
+<area shape="rect" id="node1" title=" " alt="" coords="516,5,804,71"/>
+<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="5,125,158,177"/>
+<area shape="rect" id="node3" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="182,125,384,177"/>
+<area shape="rect" id="node4" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="407,125,647,177"/>
+<area shape="rect" id="node5" href="$_alexa_communications_library_test_8cpp.html" title=" " alt="" coords="671,125,919,177"/>
+<area shape="rect" id="node6" href="$_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html" title=" " alt="" coords="943,119,1194,184"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="1218,132,1498,171"/>
 </map>

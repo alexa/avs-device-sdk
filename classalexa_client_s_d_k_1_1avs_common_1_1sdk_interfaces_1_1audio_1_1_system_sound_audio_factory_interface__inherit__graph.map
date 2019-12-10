@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_system_sound_audio_factory.html" title="alexaClientSDK::application\lUtilities::resources::audio\l::SystemSoundAudioFactory" alt="" coords="326,5,516,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_system_sound_audio_factory.html" title="Mock class that implements SystemSoundAudioFactoryInterface. " alt="" coords="296,81,547,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,44,248,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_system_sound_audio_factory.html" title=" " alt="" coords="326,5,516,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_system_sound_audio_factory.html" title="Mock class that implements SystemSoundAudioFactoryInterface." alt="" coords="296,81,547,133"/>
 </map>

@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface::Context" name="alexaClientSDK::avsCommon::sdkInterfaces::AudioPlayerObserverInterface::Context">
+<area shape="rect" id="node1" title="The context of the AudioPlayer when the observer is notified of the PlayerActivity state change." alt="" coords="5,105,248,157"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html" title=" " alt="" coords="28,5,225,44"/>
+</map>

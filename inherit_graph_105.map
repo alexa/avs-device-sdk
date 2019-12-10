@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_response.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHTTPResponse" alt="" coords="5,5,202,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface.html" title=" " alt="" coords="5,40,215,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html" title=" " alt="" coords="263,5,501,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_toggle_controller_handler.html" title=" " alt="" coords="288,81,477,120"/>
 </map>

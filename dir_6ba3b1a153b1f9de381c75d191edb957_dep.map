@@ -1,10 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils">
-<area shape="rect" id="node1" href="dir_6ba3b1a153b1f9de381c75d191edb957.html" title="LibcurlUtils" alt="" coords="111,51,198,99"/>
-<area shape="rect" id="node2" href="dir_432ae366851f981ad5bcb252f92369c5.html" title="Logger" alt="" coords="5,147,77,195"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000096_000097.html" title="2" alt="" coords="86,135,93,148"/>
-<area shape="rect" id="node3" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="101,147,208,195"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000096_000016.html" title="3" alt="" coords="159,121,167,135"/>
-<area shape="rect" id="node4" href="dir_0bf0f45007ff5e6885dc23c0041db988.html" title="HTTP2" alt="" coords="232,147,304,195"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000096_000094.html" title="4" alt="" coords="227,122,235,135"/>
-<area shape="rect" id="clust1" href="dir_ee116be5d1129358ffaec72096859541.html" title="Utils" alt="" coords="101,16,208,109"/>
+<area shape="rect" id="node1" href="dir_6ba3b1a153b1f9de381c75d191edb957.html" title="LibcurlUtils" alt="" coords="43,51,130,99"/>
+<area shape="rect" id="node2" href="dir_432ae366851f981ad5bcb252f92369c5.html" title="Logger" alt="" coords="5,243,77,291"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000104_000105.html" title="2" alt="" coords="28,216,35,229"/>
+<area shape="rect" id="node3" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="33,147,140,195"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000104_000018.html" title="3" alt="" coords="91,121,99,135"/>
+<area shape="rect" id="node4" href="dir_0bf0f45007ff5e6885dc23c0041db988.html" title="HTTP2" alt="" coords="164,147,236,195"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000104_000102.html" title="4" alt="" coords="159,122,167,135"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000018_000105.html" title="2" alt="" coords="65,223,72,236"/>
+<area shape="rect" id="clust1" href="dir_ee116be5d1129358ffaec72096859541.html" title="Utils" alt="" coords="33,16,140,109"/>
 </map>

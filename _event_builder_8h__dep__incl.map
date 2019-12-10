@@ -1,21 +1,29 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/EventBuilder.h">
-<area shape="rect" id="node2" href="$_post_connect_synchronizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSynchronizer.cpp" alt="" coords="5,112,209,164"/>
-<area shape="rect" id="node3" href="$_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/CapabilityAgent.cpp" alt="" coords="233,112,414,164"/>
-<area shape="rect" id="node4" href="$_event_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="438,112,619,164"/>
-<area shape="rect" id="node5" href="$_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="643,112,870,164"/>
-<area shape="rect" id="node6" href="$_playback_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/src\l/PlaybackController.cpp" alt="" coords="894,105,1056,171"/>
-<area shape="rect" id="node7" href="$_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="1080,105,1281,171"/>
-<area shape="rect" id="node8" href="$_state_report_generator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/StateReportGenerator.cpp" alt="" coords="1305,112,1555,164"/>
-<area shape="rect" id="node9" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="1579,105,1795,171"/>
-<area shape="rect" id="node10" href="$_setting_event_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingEventSender.h" alt="" coords="1819,112,2025,164"/>
-<area shape="rect" id="node11" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DeviceSettingsManagerBuilder.h" alt="" coords="977,219,1205,284"/>
-<area shape="rect" id="node14" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="1229,225,1449,277"/>
-<area shape="rect" id="node15" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="1473,219,1672,284"/>
-<area shape="rect" id="node16" href="$_locale_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/LocaleHandler.cpp" alt="" coords="1697,225,1902,277"/>
-<area shape="rect" id="node17" href="$_report_state_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/ReportStateHandler.cpp" alt="" coords="1926,225,2163,277"/>
-<area shape="rect" id="node18" href="$_time_zone_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/TimeZoneHandler.cpp" alt="" coords="2186,225,2412,277"/>
-<area shape="rect" id="node19" href="$_setting_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/SettingEvent\lSender.cpp" alt="" coords="2436,225,2635,277"/>
-<area shape="rect" id="node20" href="$_setting_event_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingEvent\lSenderTest.cpp" alt="" coords="2659,225,2862,277"/>
-<area shape="rect" id="node12" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="854,339,1083,391"/>
-<area shape="rect" id="node13" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="1106,332,1322,397"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1566,5,1790,57"/>
+<area shape="rect" id="node2" href="$_a_v_s_context_8cpp.html" title=" " alt="" coords="5,112,186,164"/>
+<area shape="rect" id="node3" href="$_a_v_s_message_header_8cpp.html" title=" " alt="" coords="211,112,392,164"/>
+<area shape="rect" id="node4" href="$_capability_agent_8cpp.html" title=" " alt="" coords="416,112,597,164"/>
+<area shape="rect" id="node5" href="$_event_builder_8cpp.html" title=" " alt="" coords="621,112,802,164"/>
+<area shape="rect" id="node6" href="$_exception_encountered_sender_8cpp.html" title=" " alt="" coords="826,112,1053,164"/>
+<area shape="rect" id="node7" href="$_event_builder_test_8cpp.html" title=" " alt="" coords="1077,112,1261,164"/>
+<area shape="rect" id="node8" href="$_post_connect_verify_gateway_sender_8cpp.html" title=" " alt="" coords="1286,112,1562,164"/>
+<area shape="rect" id="node9" href="$_discovery_utils_8cpp.html" title=" " alt="" coords="1586,112,1771,164"/>
+<area shape="rect" id="node10" href="$_alexa_interface_message_sender_8cpp.html" title=" " alt="" coords="1795,105,2018,171"/>
+<area shape="rect" id="node11" href="$_playback_controller_8cpp.html" title=" " alt="" coords="2042,105,2203,171"/>
+<area shape="rect" id="node12" href="$_software_info_send_request_8cpp.html" title=" " alt="" coords="2227,105,2428,171"/>
+<area shape="rect" id="node13" href="$_state_report_generator_8cpp.html" title=" " alt="" coords="2452,112,2702,164"/>
+<area shape="rect" id="node14" href="$_alexa_directive_sequencer_library_test_8cpp.html" title=" " alt="" coords="2727,105,2942,171"/>
+<area shape="rect" id="node15" href="$_setting_event_sender_8h.html" title=" " alt="" coords="2966,112,3172,164"/>
+<area shape="rect" id="node27" href="$_post_connect_synchronize_state_sender_8cpp.html" title=" " alt="" coords="3195,105,3423,171"/>
+<area shape="rect" id="node16" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="2047,219,2275,284"/>
+<area shape="rect" id="node19" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="2299,225,2519,277"/>
+<area shape="rect" id="node20" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="2543,219,2742,284"/>
+<area shape="rect" id="node21" href="$_alerts_capability_agent_8cpp.html" title=" " alt="" coords="2766,219,2943,284"/>
+<area shape="rect" id="node22" href="$_locale_handler_8cpp.html" title=" " alt="" coords="2967,225,3172,277"/>
+<area shape="rect" id="node23" href="$_report_state_handler_8cpp.html" title=" " alt="" coords="3196,225,3433,277"/>
+<area shape="rect" id="node24" href="$_time_zone_handler_8cpp.html" title=" " alt="" coords="3456,225,3682,277"/>
+<area shape="rect" id="node25" href="$_setting_event_sender_8cpp.html" title=" " alt="" coords="3706,225,3905,277"/>
+<area shape="rect" id="node26" href="$_setting_event_sender_test_8cpp.html" title=" " alt="" coords="3929,225,4132,277"/>
+<area shape="rect" id="node17" href="$_default_client_8cpp.html" title=" " alt="" coords="1924,339,2152,391"/>
+<area shape="rect" id="node18" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="2176,332,2392,397"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::mediaPlayer::android::DecoderInterface" name="alexaClientSDK::mediaPlayer::android::DecoderInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_decoder.html" title="alexaClientSDK::mediaPlayer\l::android::FFmpegDecoder" alt="" coords="250,5,446,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_decoder.html" title="Mock decoder. " alt="" coords="250,68,446,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,37,202,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_decoder.html" title=" " alt="" coords="250,5,446,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_decoder.html" title="Mock decoder." alt="" coords="250,68,446,107"/>
 </map>

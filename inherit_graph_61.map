@@ -1,6 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::HTTPContentFetcher\lInterface" alt="" coords="5,75,247,127"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_lib_curl_http_content_fetcher.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lLibCurlHttpContentFetcher" alt="" coords="307,5,504,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher.html" title="A mock content fetcher. " alt="" coords="308,81,504,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html" title="A mock content fetcher. " alt="" coords="295,144,516,183"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html" title=" " alt="" coords="5,40,219,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html" title="Mock class that implements the ContextManager." alt="" coords="278,5,475,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html" title=" " alt="" coords="267,81,485,120"/>
 </map>

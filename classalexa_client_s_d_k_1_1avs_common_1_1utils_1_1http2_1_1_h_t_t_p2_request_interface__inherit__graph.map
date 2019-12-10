@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::utils::http2::HTTP2RequestInterface" name="alexaClientSDK::avsCommon::utils::http2::HTTP2RequestInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::http2::test::MockHTTP2\lRequest" alt="" coords="294,5,494,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lLibcurlHTTP2Request" alt="" coords="296,81,492,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,51,246,89"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html" title=" " alt="" coords="294,5,494,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_request.html" title=" " alt="" coords="296,81,492,133"/>
 </map>

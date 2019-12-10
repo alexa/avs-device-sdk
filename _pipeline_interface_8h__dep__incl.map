@@ -1,12 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/PipelineInterface.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/PipelineInterface.h">
-<area shape="rect" id="node2" href="$_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/MediaPlayer.h" alt="" coords="157,232,387,297"/>
-<area shape="rect" id="node5" href="$_source_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/SourceInterface.h" alt="" coords="309,119,539,184"/>
-<area shape="rect" id="node3" href="$_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/MediaPlayer.cpp" alt="" coords="225,459,455,511"/>
-<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="5,352,235,404"/>
-<area shape="rect" id="node6" href="$_base_stream_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/BaseStreamSource.h" alt="" coords="487,232,716,297"/>
-<area shape="rect" id="node7" href="$_attachment_reader_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/AttachmentReaderSource.h" alt="" coords="816,345,1046,411"/>
-<area shape="rect" id="node9" href="$_i_stream_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/IStreamSource.h" alt="" coords="309,345,539,411"/>
-<area shape="rect" id="node11" href="$_base_stream_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/BaseStreamSource.cpp" alt="" coords="563,352,792,404"/>
-<area shape="rect" id="node8" href="$_attachment_reader_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/AttachmentReaderSource.cpp" alt="" coords="799,459,1062,511"/>
-<area shape="rect" id="node10" href="$_i_stream_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/IStreamSource.cpp" alt="" coords="479,459,708,511"/>
+<area shape="rect" id="node1" title=" " alt="" coords="233,5,463,71"/>
+<area shape="rect" id="node2" href="$_media_player_8h.html" title=" " alt="" coords="157,232,387,297"/>
+<area shape="rect" id="node5" href="$_source_interface_8h.html" title=" " alt="" coords="309,119,539,184"/>
+<area shape="rect" id="node3" href="$_media_player_8cpp.html" title=" " alt="" coords="225,459,455,511"/>
+<area shape="rect" id="node4" href="$_media_player_test_8cpp.html" title=" " alt="" coords="5,352,235,404"/>
+<area shape="rect" id="node6" href="$_base_stream_source_8h.html" title=" " alt="" coords="487,232,716,297"/>
+<area shape="rect" id="node7" href="$_attachment_reader_source_8h.html" title=" " alt="" coords="816,345,1046,411"/>
+<area shape="rect" id="node9" href="$_i_stream_source_8h.html" title=" " alt="" coords="309,345,539,411"/>
+<area shape="rect" id="node11" href="$_base_stream_source_8cpp.html" title=" " alt="" coords="563,352,792,404"/>
+<area shape="rect" id="node8" href="$_attachment_reader_source_8cpp.html" title=" " alt="" coords="799,459,1062,511"/>
+<area shape="rect" id="node10" href="$_i_stream_source_8cpp.html" title=" " alt="" coords="479,459,708,511"/>
 </map>

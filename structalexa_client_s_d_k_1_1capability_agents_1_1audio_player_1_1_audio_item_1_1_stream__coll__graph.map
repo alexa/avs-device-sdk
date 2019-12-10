@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream" name="alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream">
-<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html" title="Contains values for progress reports. " alt="" coords="5,5,213,57"/>
+<area shape="rect" id="node1" title="Contains the parameters of the stream." alt="" coords="5,119,213,171"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html" title="Contains values for progress reports." alt="" coords="5,5,213,57"/>
 </map>

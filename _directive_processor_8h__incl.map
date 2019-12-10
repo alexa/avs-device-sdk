@@ -1,28 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ADSL/include/ADSL/DirectiveProcessor.h" name="/workplace/avs&#45;device&#45;sdk/ADSL/include/ADSL/DirectiveProcessor.h">
-<area shape="rect" id="node12" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2705,439,2927,464"/>
-<area shape="rect" id="node41" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2547,265,2738,304"/>
-<area shape="rect" id="node47" href="$_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="2596,105,2758,131"/>
-<area shape="rect" id="node15" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="1460,512,1673,551"/>
-<area shape="rect" id="node39" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="2863,1025,2975,1051"/>
-<area shape="rect" id="node17" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1466,599,1667,637"/>
-<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="239,845,441,884"/>
-<area shape="rect" id="node23" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="523,685,725,724"/>
-<area shape="rect" id="node22" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="339,932,501,971"/>
-<area shape="rect" id="node24" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1427,685,1589,724"/>
-<area shape="rect" id="node38" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1575,939,1678,964"/>
-<area shape="rect" id="node26" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1104,772,1251,797"/>
-<area shape="rect" id="node28" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="829,932,1005,971"/>
-<area shape="rect" id="node33" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="878,852,986,877"/>
-<area shape="rect" id="node34" href="$_reader_8h.html" title="Reader.h" alt="" coords="1102,852,1178,877"/>
-<area shape="rect" id="node37" href="$_writer_8h.html" title="Writer.h" alt="" coords="1301,852,1368,877"/>
-<area shape="rect" id="node29" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1179,1019,1355,1057"/>
-<area shape="rect" id="node31" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1530,1105,1744,1144"/>
-<area shape="rect" id="node32" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2056,1105,2232,1144"/>
-<area shape="rect" id="node40" href="$_a_v_s_message_header_8h.html" title="AVSMessageHeader.h" alt="" coords="2864,1112,3019,1137"/>
-<area shape="rect" id="node42" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2872,352,3104,391"/>
-<area shape="rect" id="node46" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2522,352,2747,391"/>
-<area shape="rect" id="node43" href="$_namespace_and_name_8h.html" title="NamespaceAndName.h" alt="" coords="2952,439,3115,464"/>
-<area shape="rect" id="node44" href="$_blocking_policy_8h.html" title="BlockingPolicy.h" alt="" coords="3139,439,3256,464"/>
-<area shape="rect" id="node49" href="$_handler_and_policy_8h.html" title="AVSCommon/AVS/HandlerAnd\lPolicy.h" alt="" coords="2575,179,2780,217"/>
-<area shape="rect" id="node50" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1954,1019,2142,1057"/>
+<area shape="rect" id="node1" title=" " alt="" coords="446,5,616,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,105,57,131"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1787,792,1916,817"/>
+<area shape="rect" id="node4" title=" " alt="" coords="131,105,190,131"/>
+<area shape="rect" id="node5" title=" " alt="" coords="213,105,292,131"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1151,1139,1221,1164"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1925,1139,1983,1164"/>
+<area shape="rect" id="node8" title=" " alt="" coords="309,1139,348,1164"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1448,1219,1502,1244"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1127,105,1186,131"/>
+<area shape="rect" id="node11" title=" " alt="" coords="416,445,532,471"/>
+<area shape="rect" id="node12" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="912,445,1135,471"/>
+<area shape="rect" id="node41" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="861,265,1052,304"/>
+<area shape="rect" id="node48" href="$_directive_router_8h.html" title=" " alt="" coords="450,105,612,131"/>
+<area shape="rect" id="node13" title=" " alt="" coords="520,1139,593,1164"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1133,532,1185,557"/>
+<area shape="rect" id="node15" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="2684,525,2896,564"/>
+<area shape="rect" id="node36" href="$_a_v_s_message_8h.html" title=" " alt="" coords="964,619,1077,644"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2812,1139,2874,1164"/>
+<area shape="rect" id="node17" href="$_attachment_8h.html" title=" " alt="" coords="2689,612,2891,651"/>
+<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title=" " alt="" coords="2942,699,3144,737"/>
+<area shape="rect" id="node23" href="$_attachment_writer_8h.html" title=" " alt="" coords="3142,872,3344,911"/>
+<area shape="rect" id="node18" title=" " alt="" coords="2729,1052,2789,1077"/>
+<area shape="rect" id="node22" href="$_reader_policy_8h.html" title=" " alt="" coords="2892,785,3053,824"/>
+<area shape="rect" id="node24" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="2365,699,2527,737"/>
+<area shape="rect" id="node35" href="$_writer_policy_8h.html" title=" " alt="" coords="2553,699,2715,737"/>
+<area shape="rect" id="node20" title=" " alt="" coords="3134,1139,3198,1164"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1939,792,2009,817"/>
+<area shape="rect" id="node25" title=" " alt="" coords="2269,1139,2327,1164"/>
+<area shape="rect" id="node26" href="$_shared_data_stream_8h.html" title=" " alt="" coords="2373,792,2519,817"/>
+<area shape="rect" id="node27" title=" " alt="" coords="2555,879,2614,904"/>
+<area shape="rect" id="node28" href="$_logger_utils_8h.html" title=" " alt="" coords="2355,872,2531,911"/>
+<area shape="rect" id="node29" href="$_logger_8h.html" title=" " alt="" coords="2355,959,2531,997"/>
+<area shape="rect" id="node30" title=" " alt="" coords="1579,1139,1648,1164"/>
+<area shape="rect" id="node31" href="$_configuration_node_8h.html" title=" " alt="" coords="2067,1045,2281,1084"/>
+<area shape="rect" id="node32" href="$_level_8h.html" title=" " alt="" coords="2351,1132,2527,1171"/>
+<area shape="rect" id="node33" href="$_log_entry_8h.html" title=" " alt="" coords="1614,1045,1790,1084"/>
+<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="2457,1045,2654,1084"/>
+<area shape="rect" id="node37" href="$_optional_8h.html" title=" " alt="" coords="1208,792,1403,817"/>
+<area shape="rect" id="node38" href="$_a_v_s_message_endpoint_8h.html" title=" " alt="" coords="718,699,932,737"/>
+<area shape="rect" id="node40" href="$_a_v_s_message_header_8h.html" title=" " alt="" coords="667,959,881,997"/>
+<area shape="rect" id="node39" title=" " alt="" coords="494,792,541,817"/>
+<area shape="rect" id="node42" href="$_directive_handler_configuration_8h.html" title=" " alt="" coords="568,352,801,391"/>
+<area shape="rect" id="node47" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="1103,352,1327,391"/>
+<area shape="rect" id="node43" href="$_blocking_policy_8h.html" title=" " alt="" coords="556,445,786,471"/>
+<area shape="rect" id="node45" href="$_directive_routing_rule_8h.html" title=" " alt="" coords="1210,439,1442,477"/>
+<area shape="rect" id="node44" title=" " alt="" coords="471,532,524,557"/>
+<area shape="rect" id="node46" href="$_capability_tag_8h.html" title=" " alt="" coords="1469,699,1662,737"/>
+<area shape="rect" id="node49" href="$_handler_and_policy_8h.html" title=" " alt="" coords="652,179,856,217"/>
+<area shape="rect" id="node50" href="$_requires_shutdown_8h.html" title=" " alt="" coords="1411,959,1598,997"/>
 </map>

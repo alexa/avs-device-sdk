@@ -1,36 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleApplication.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleApplication.cpp">
-<area shape="rect" id="node2" href="$_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="529,285,762,311"/>
-<area shape="rect" id="node17" href="$_h_t_t_p2_transport_factory_8h.html" title="ACL/Transport/HTTP2Transport\lFactory.h" alt="" coords="958,192,1168,231"/>
-<area shape="rect" id="node18" href="$_post_connect_synchronizer_8h.html" title="ACL/Transport/PostConnect\lSynchronizer.h" alt="" coords="1069,279,1257,317"/>
-<area shape="rect" id="node19" href="$_libcurl_h_t_t_p2_connection_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlHTTP2ConnectionFactory.h" alt="" coords="4041,99,4269,137"/>
-<area shape="rect" id="node20" href="$_connection_observer_8h.html" title="SampleApp/ConnectionObserver.h" alt="" coords="4179,285,4406,311"/>
-<area shape="rect" id="node21" href="$_keyword_observer_8h.html" title="SampleApp/KeywordObserver.h" alt="" coords="1243,199,1454,224"/>
-<area shape="rect" id="node22" href="$_locale_assets_manager_8h.html" title="SampleApp/LocaleAssetsManager.h" alt="" coords="1761,199,1997,224"/>
-<area shape="rect" id="node23" href="$_sample_application_8h.html" title="SampleApp/SampleApplication.h" alt="" coords="1491,105,1707,131"/>
-<area shape="rect" id="node24" href="$_capabilities_delegate_8h.html" title="CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="1578,192,1737,231"/>
-<area shape="rect" id="node25" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="2349,285,2558,311"/>
-<area shape="rect" id="node26" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2501,365,2715,404"/>
-<area shape="rect" id="node27" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="680,192,884,231"/>
-<area shape="rect" id="node28" href="$_bluetooth_device_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceManager\lInterface.h" alt="" coords="127,92,362,144"/>
-<area shape="rect" id="node29" href="$_h_t_t_p_content_fetcher_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HTTPContentFetcherFactory.h" alt="" coords="877,99,1083,137"/>
-<area shape="rect" id="node30" href="$_http_put_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPut.h" alt="" coords="3403,365,3603,404"/>
-<area shape="rect" id="node31" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3694,279,3870,317"/>
-<area shape="rect" id="node32" href="$_logger_sink_manager_8h.html" title="AVSCommon/Utils/Logger\l/LoggerSinkManager.h" alt="" coords="3744,192,3920,231"/>
-<area shape="rect" id="node33" href="$_internet_connection_monitor_8h.html" title="AVSCommon/Utils/Network\l/InternetConnectionMonitor.h" alt="" coords="3064,279,3257,317"/>
-<area shape="rect" id="node34" href="$_s_q_lite_alert_storage_8h.html" title="Alerts/Storage/SQLiteAlert\lStorage.h" alt="" coords="2977,192,3154,231"/>
-<area shape="rect" id="node35" href="$_audio_factory_8h.html" title="Audio/AudioFactory.h" alt="" coords="4293,105,4441,131"/>
-<area shape="rect" id="node36" href="$_s_q_lite_bluetooth_storage_8h.html" title="Bluetooth/SQLiteBluetooth\lStorage.h" alt="" coords="1944,279,2123,317"/>
-<area shape="rect" id="node37" href="$_c_b_l_auth_delegate_8h.html" title="CBLAuthDelegate/CBLAuthDelegate.h" alt="" coords="2137,199,2386,224"/>
-<area shape="rect" id="node38" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="CBLAuthDelegate/SQLiteCBLAuth\lDelegateStorage.h" alt="" coords="4187,192,4413,231"/>
-<area shape="rect" id="node39" href="$_s_q_lite_notifications_storage_8h.html" title="Notifications/SQLiteNotifications\lStorage.h" alt="" coords="3944,279,4155,317"/>
-<area shape="rect" id="node40" href="$_sample_equalizer_mode_controller_8h.html" title="SampleApp/SampleEqualizer\lModeController.h" alt="" coords="1848,365,2043,404"/>
-<area shape="rect" id="node41" href="$_s_q_lite_misc_storage_8h.html" title="SQLiteStorage/SQLiteMisc\lStorage.h" alt="" coords="2773,192,2953,231"/>
-<area shape="rect" id="node42" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="2582,279,2787,317"/>
-<area shape="rect" id="node43" href="$_equalizer_controller_8h.html" title="EqualizerImplementations\l/EqualizerController.h" alt="" coords="3678,365,3853,404"/>
-<area shape="rect" id="node44" href="$_in_memory_equalizer_configuration_8h.html" title="EqualizerImplementations\l/InMemoryEqualizerConfiguration.h" alt="" coords="3149,365,3379,404"/>
-<area shape="rect" id="node45" href="$_misc_d_b_equalizer_storage_8h.html" title="EqualizerImplementations\l/MiscDBEqualizerStorage.h" alt="" coords="2739,365,2923,404"/>
-<area shape="rect" id="node46" href="$_s_d_k_config_equalizer_configuration_8h.html" title="EqualizerImplementations\l/SDKConfigEqualizerConfiguration.h" alt="" coords="3280,279,3517,317"/>
-<area shape="rect" id="node14" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="550,365,741,404"/>
-<area shape="rect" id="node15" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="548,452,743,491"/>
-<area shape="rect" id="node16" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="96,452,286,491"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2998,5,3278,44"/>
+<area shape="rect" id="node2" href="$_context_manager_8h.html" title=" " alt="" coords="4107,99,4339,124"/>
+<area shape="rect" id="node12" href="$_device_info_8h.html" title=" " alt="" coords="2518,192,2726,217"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title=" " alt="" coords="2272,285,2486,324"/>
+<area shape="rect" id="node14" href="$_h_t_t_p2_transport_factory_8h.html" title=" " alt="" coords="431,285,642,324"/>
+<area shape="rect" id="node15" href="$_post_connect_sequencer_factory_8h.html" title=" " alt="" coords="716,285,904,324"/>
+<area shape="rect" id="node16" href="$_libcurl_h_t_t_p2_connection_factory_8h.html" title=" " alt="" coords="5285,92,5513,131"/>
+<area shape="rect" id="node17" href="$_u_u_i_d_generation_8h.html" title=" " alt="" coords="5537,92,5770,131"/>
+<area shape="rect" id="node18" href="$_a_v_s_gateway_manager_8h.html" title=" " alt="" coords="1801,185,2035,224"/>
+<area shape="rect" id="node19" href="$_a_v_s_gateway_manager_storage_8h.html" title=" " alt="" coords="899,185,1113,224"/>
+<area shape="rect" id="node20" href="$_synchronize_state_sender_factory_8h.html" title=" " alt="" coords="928,285,1155,324"/>
+<area shape="rect" id="node21" href="$_connection_observer_8h.html" title=" " alt="" coords="5134,292,5360,317"/>
+<area shape="rect" id="node22" href="$_keyword_observer_8h.html" title=" " alt="" coords="146,292,357,317"/>
+<area shape="rect" id="node23" href="$_locale_assets_manager_8h.html" title=" " alt="" coords="286,99,523,124"/>
+<area shape="rect" id="node24" href="$_sample_application_8h.html" title=" " alt="" coords="3719,99,3935,124"/>
+<area shape="rect" id="node25" href="$_capabilities_delegate_8h.html" title=" " alt="" coords="3977,185,4136,224"/>
+<area shape="rect" id="node26" href="$_alexa_client_s_d_k_init_8h.html" title=" " alt="" coords="571,185,774,224"/>
+<area shape="rect" id="node27" href="$_bluetooth_device_manager_interface_8h.html" title=" " alt="" coords="4362,279,4597,331"/>
+<area shape="rect" id="node28" href="$_h_t_t_p_content_fetcher_factory_8h.html" title=" " alt="" coords="5,92,212,131"/>
+<area shape="rect" id="node29" href="$_logger_8h.html" title=" " alt="" coords="1601,185,1776,224"/>
+<area shape="rect" id="node30" href="$_logger_sink_manager_8h.html" title=" " alt="" coords="1549,92,1724,131"/>
+<area shape="rect" id="node31" href="$_internet_connection_monitor_8h.html" title=" " alt="" coords="4815,185,5007,224"/>
+<area shape="rect" id="node32" href="$_s_q_lite_alert_storage_8h.html" title=" " alt="" coords="2750,185,2928,224"/>
+<area shape="rect" id="node33" href="$_audio_factory_8h.html" title=" " alt="" coords="5795,99,5942,124"/>
+<area shape="rect" id="node34" href="$_s_q_lite_bluetooth_storage_8h.html" title=" " alt="" coords="3599,185,3778,224"/>
+<area shape="rect" id="node35" href="$_c_b_l_auth_delegate_8h.html" title=" " alt="" coords="2366,99,2616,124"/>
+<area shape="rect" id="node36" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title=" " alt="" coords="5385,285,5611,324"/>
+<area shape="rect" id="node37" href="$_s_q_lite_capabilities_delegate_storage_8h.html" title=" " alt="" coords="3340,179,3525,231"/>
+<area shape="rect" id="node38" href="$_s_q_lite_notifications_storage_8h.html" title=" " alt="" coords="3104,185,3315,224"/>
+<area shape="rect" id="node39" href="$_caption_presenter_8h.html" title=" " alt="" coords="5966,99,6174,124"/>
+<area shape="rect" id="node40" href="$_sample_equalizer_mode_controller_8h.html" title=" " alt="" coords="4620,285,4815,324"/>
+<area shape="rect" id="node41" href="$_s_q_lite_misc_storage_8h.html" title=" " alt="" coords="2060,185,2240,224"/>
+<area shape="rect" id="node42" href="$_s_q_lite_device_setting_storage_8h.html" title=" " alt="" coords="2965,92,3170,131"/>
+<area shape="rect" id="node43" href="$_equalizer_controller_8h.html" title=" " alt="" coords="4840,285,5015,324"/>
+<area shape="rect" id="node44" href="$_in_memory_equalizer_configuration_8h.html" title=" " alt="" coords="1488,285,1718,324"/>
+<area shape="rect" id="node45" href="$_misc_d_b_equalizer_storage_8h.html" title=" " alt="" coords="1230,285,1414,324"/>
+<area shape="rect" id="node46" href="$_s_d_k_config_equalizer_configuration_8h.html" title=" " alt="" coords="1238,185,1475,224"/>
+<area shape="rect" id="node47" title=" " alt="" coords="6198,99,6275,124"/>
+<area shape="rect" id="node48" title=" " alt="" coords="6299,99,6358,124"/>
+<area shape="rect" id="node49" title=" " alt="" coords="6382,99,6445,124"/>
+<area shape="rect" id="node50" title=" " alt="" coords="6469,99,6535,124"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1844,292,1904,317"/>
+<area shape="rect" id="node4" title=" " alt="" coords="4803,379,4841,404"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1958,379,2027,404"/>
+<area shape="rect" id="node6" title=" " alt="" coords="3801,192,3853,217"/>
+<area shape="rect" id="node7" title=" " alt="" coords="3190,379,3248,404"/>
+<area shape="rect" id="node8" title=" " alt="" coords="3772,292,3888,317"/>
+<area shape="rect" id="node9" title=" " alt="" coords="3912,292,4019,317"/>
+<area shape="rect" id="node10" href="$_capability_tag_8h.html" title=" " alt="" coords="4311,185,4504,224"/>
+<area shape="rect" id="node11" href="$_state_refresh_policy_8h.html" title=" " alt="" coords="4528,185,4740,224"/>
 </map>

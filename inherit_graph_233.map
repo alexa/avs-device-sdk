@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_callbacks.html" title="alexaClientSDK::settings\l::SettingCallbacks\&lt; ManagerT \&gt;" alt="" coords="5,5,217,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html" title=" " alt="" coords="5,81,183,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html" title=" " alt="" coords="241,5,419,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html" title=" " alt="" coords="231,81,429,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_alert_storage.html" title=" " alt="" coords="233,157,427,209"/>
 </map>

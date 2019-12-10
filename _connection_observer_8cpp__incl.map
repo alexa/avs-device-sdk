@@ -1,5 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/ConnectionObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/ConnectionObserver.cpp">
-<area shape="rect" id="node2" href="$_connection_observer_8h.html" title="SampleApp/ConnectionObserver.h" alt="" coords="160,105,387,131"/>
-<area shape="rect" id="node6" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="326,179,517,217"/>
-<area shape="rect" id="node8" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="542,179,790,217"/>
+<area shape="rect" id="node1" title=" " alt="" coords="168,5,380,57"/>
+<area shape="rect" id="node2" href="$_connection_observer_8h.html" title=" " alt="" coords="160,105,387,131"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,185,67,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="92,185,221,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="245,185,303,211"/>
+<area shape="rect" id="node6" href="$_auth_observer_interface_8h.html" title=" " alt="" coords="326,179,517,217"/>
+<area shape="rect" id="node8" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="542,179,790,217"/>
+<area shape="rect" id="node7" title=" " alt="" coords="387,265,456,291"/>
+<area shape="rect" id="node9" title=" " alt="" coords="629,265,702,291"/>
 </map>

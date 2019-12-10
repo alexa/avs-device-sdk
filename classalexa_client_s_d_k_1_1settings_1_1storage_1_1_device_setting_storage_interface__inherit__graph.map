@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::settings::storage::DeviceSettingStorageInterface" name="alexaClientSDK::settings::storage::DeviceSettingStorageInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html" title="alexaClientSDK::settings\l::storage::SQLiteDeviceSetting\lStorage" alt="" coords="273,5,477,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1test_1_1_mock_device_setting_storage.html" title="alexaClientSDK::settings\l::storage::test::MockDeviceSetting\lStorage" alt="" coords="263,81,487,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,44,215,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html" title=" " alt="" coords="273,5,477,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1test_1_1_mock_device_setting_storage.html" title=" " alt="" coords="263,81,487,133"/>
 </map>

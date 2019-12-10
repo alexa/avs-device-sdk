@@ -1,0 +1,11 @@
+<map id="alexaClientSDK::capabilityAgents::toggleController::ToggleControllerCapabilityAgent" name="alexaClientSDK::capabilityAgents::toggleController::ToggleControllerCapabilityAgent">
+<area shape="rect" id="node1" title=" " alt="" coords="557,223,776,275"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title=" " alt="" coords="294,125,491,164"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title=" " alt="" coords="10,5,224,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title=" " alt="" coords="7,81,227,133"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title=" " alt="" coords="18,157,215,209"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title=" " alt="" coords="5,233,228,285"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_observer_interface.html" title=" " alt="" coords="276,188,509,240"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="294,264,491,303"/>
+<area shape="rect" id="node9" title=" " alt="" coords="297,327,488,379"/>
+</map>

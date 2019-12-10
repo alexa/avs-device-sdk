@@ -1,6 +1,10 @@
 <map id="alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate" name="alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lInterface" alt="" coords="11,5,249,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="5,81,255,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="32,144,229,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title="alexaClientSDK::registration\lManager::CustomerDataHandler" alt="" coords="23,207,237,245"/>
+<area shape="rect" id="node1" title=" " alt="" coords="598,189,802,228"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title=" " alt="" coords="306,5,543,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="5,5,251,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="326,81,523,120"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html" title=" " alt="" coords="299,144,550,196"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_status_observer_interface.html" title=" " alt="" coords="308,220,541,272"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title=" " alt="" coords="317,296,531,335"/>
+<area shape="rect" id="node8" title=" " alt="" coords="310,359,539,397"/>
 </map>

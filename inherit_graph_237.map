@@ -1,8 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html" title="alexaClientSDK::settings\l::SettingProtocolInterface" alt="" coords="5,144,176,183"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_setting_protocol.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DNDSetting\lProtocol" alt="" coords="224,5,450,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_cloud_controlled_setting_protocol.html" title="alexaClientSDK::settings\l::CloudControlledSettingProtocol" alt="" coords="230,81,445,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1_device_controlled_setting_protocol.html" title="alexaClientSDK::settings\l::DeviceControlledSettingProtocol" alt="" coords="227,144,448,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html" title="alexaClientSDK::settings\l::SharedAVSSettingProtocol" alt="" coords="243,207,431,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_protocol.html" title="alexaClientSDK::settings\l::test::MockSettingProtocol" alt="" coords="247,269,427,308"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item.html" title="Struct which contains all the fields which define an audio item for a Play directive." alt="" coords="5,5,213,44"/>
 </map>

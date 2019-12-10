@@ -1,4 +1,6 @@
 <map id="alexaClientSDK::capabilityAgents::audioPlayer::AudioItem" name="alexaClientSDK::capabilityAgents::audioPlayer::AudioItem">
-<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html" title="Contains the parameters of the stream. " alt="" coords="5,119,213,171"/>
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html" title="Contains values for progress reports. " alt="" coords="5,5,213,57"/>
+<area shape="rect" id="node1" title="Struct which contains all the fields which define an audio item for a Play directive." alt="" coords="688,60,896,99"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html" title="Contains the parameters of the stream." alt="" coords="357,5,565,57"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html" title="Contains values for progress reports." alt="" coords="5,5,213,57"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1captions_1_1_caption_data.html" title=" " alt="" coords="375,81,547,120"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::KeyWordDetector\lStateObserverInterface" alt="" coords="5,31,226,83"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html" title="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..." alt="" coords="274,5,449,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1test_state_observer.html" title="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..." alt="" coords="279,68,444,107"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_manager_interface.html" title=" " alt="" coords="5,40,262,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_manager.html" title="Mocks an endpoint registration manager." alt="" coords="310,5,576,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_registration_manager.html" title=" " alt="" coords="341,81,546,120"/>
 </map>

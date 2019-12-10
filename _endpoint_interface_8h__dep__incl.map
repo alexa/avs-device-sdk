@@ -1,0 +1,24 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h">
+<area shape="rect" id="node1" title=" " alt="" coords="530,5,770,71"/>
+<area shape="rect" id="node2" href="$_endpoint_registration_manager_interface_8h.html" title=" " alt="" coords="212,119,539,184"/>
+<area shape="rect" id="node4" href="$_endpoint_builder_8h.html" title=" " alt="" coords="571,239,764,291"/>
+<area shape="rect" id="node17" href="$_endpoint_registration_manager_8h.html" title=" " alt="" coords="5,232,217,297"/>
+<area shape="rect" id="node19" href="$_endpoint_registration_manager_test_8cpp.html" title=" " alt="" coords="703,352,898,404"/>
+<area shape="rect" id="node20" href="$_mock_endpoint_8h.html" title=" " alt="" coords="613,119,833,184"/>
+<area shape="rect" id="node21" href="$_endpoint_8h.html" title=" " alt="" coords="936,125,1092,177"/>
+<area shape="rect" id="node3" href="$_mock_endpoint_registration_manager_8h.html" title=" " alt="" coords="241,232,547,297"/>
+<area shape="rect" id="node5" href="$_default_client_8h.html" title=" " alt="" coords="342,345,569,411"/>
+<area shape="rect" id="node16" href="$_endpoint_builder_8cpp.html" title=" " alt="" coords="983,352,1170,404"/>
+<area shape="rect" id="node6" href="$_default_client_8cpp.html" title=" " alt="" coords="189,459,417,511"/>
+<area shape="rect" id="node7" href="$_interaction_manager_8h.html" title=" " alt="" coords="312,559,535,611"/>
+<area shape="rect" id="node14" href="$_keyword_observer_8h.html" title=" " alt="" coords="557,459,772,511"/>
+<area shape="rect" id="node8" href="$_user_input_manager_8h.html" title=" " alt="" coords="465,659,683,711"/>
+<area shape="rect" id="node13" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="235,659,441,711"/>
+<area shape="rect" id="node9" href="$_sample_application_8h.html" title=" " alt="" coords="556,759,776,811"/>
+<area shape="rect" id="node12" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="330,759,532,811"/>
+<area shape="rect" id="node10" href="$main_8cpp.html" title=" " alt="" coords="509,859,708,897"/>
+<area shape="rect" id="node11" href="$_sample_application_8cpp.html" title=" " alt="" coords="731,859,1011,897"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="559,565,834,604"/>
+<area shape="rect" id="node18" href="$_endpoint_registration_manager_8cpp.html" title=" " alt="" coords="18,352,205,404"/>
+<area shape="rect" id="node22" href="$_endpoint_8cpp.html" title=" " alt="" coords="908,245,1120,284"/>
+</map>

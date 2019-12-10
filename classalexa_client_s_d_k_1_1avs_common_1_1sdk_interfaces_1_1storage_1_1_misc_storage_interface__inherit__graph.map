@@ -1,5 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_stub_misc_storage.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::storage\l::test::StubMiscStorage" alt="" coords="266,5,463,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_test_misc_storage.html" title="alexaClientSDK::capabilities\lDelegate::test::TestMiscStorage" alt="" coords="260,81,469,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html" title="alexaClientSDK::storage\l::sqliteStorage::SQLiteMiscStorage" alt="" coords="250,144,479,183"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,40,202,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_stub_misc_storage.html" title=" " alt="" coords="266,5,463,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html" title=" " alt="" coords="250,81,479,120"/>
 </map>

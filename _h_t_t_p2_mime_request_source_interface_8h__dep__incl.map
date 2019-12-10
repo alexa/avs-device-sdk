@@ -1,12 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h">
-<area shape="rect" id="node2" href="$_message_request_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestHandler.h" alt="" coords="30,132,276,184"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_mime_request_encoder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/HTTP2/HTTP2MimeRequestEncoder.h" alt="" coords="300,125,556,191"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/HTTP2/HTTP2MimeRequestEncoder.cpp" alt="" coords="461,259,752,311"/>
-<area shape="rect" id="node8" href="$_mock_h_t_t_p2_mime_request_encode_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/HTTP2/MockHTTP2MimeRequestEncode\lSource.h" alt="" coords="737,119,1010,197"/>
-<area shape="rect" id="node3" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="229,259,387,311"/>
-<area shape="rect" id="node4" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="5,259,205,311"/>
-<area shape="rect" id="node7" href="$_m_i_m_e_parser_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/MIMEParserTest.cpp" alt="" coords="702,379,876,431"/>
-<area shape="rect" id="node9" href="$_mock_h_t_t_p2_mime_response_decode_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/HTTP2/MockHTTP2MimeResponseDecode\lSink.h" alt="" coords="1114,245,1398,324"/>
-<area shape="rect" id="node11" href="$_mock_h_t_t_p2_mime_request_encode_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MockHTTP2MimeRequest\lEncodeSource.cpp" alt="" coords="826,252,1091,317"/>
-<area shape="rect" id="node10" href="$_mock_h_t_t_p2_mime_response_decode_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MockHTTP2MimeResponse\lDecodeSink.cpp" alt="" coords="1119,372,1393,437"/>
+<area shape="rect" id="node1" title=" " alt="" coords="368,5,669,71"/>
+<area shape="rect" id="node2" href="$_message_request_handler_8h.html" title=" " alt="" coords="30,132,276,184"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_mime_request_encoder_8h.html" title=" " alt="" coords="300,125,556,191"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title=" " alt="" coords="461,259,752,311"/>
+<area shape="rect" id="node8" href="$_mock_h_t_t_p2_mime_request_encode_source_8h.html" title=" " alt="" coords="737,119,1010,197"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="229,259,387,311"/>
+<area shape="rect" id="node4" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="5,259,205,311"/>
+<area shape="rect" id="node7" href="$_m_i_m_e_parser_test_8cpp.html" title=" " alt="" coords="702,379,876,431"/>
+<area shape="rect" id="node9" href="$_mock_h_t_t_p2_mime_response_decode_sink_8h.html" title=" " alt="" coords="1114,245,1398,324"/>
+<area shape="rect" id="node11" href="$_mock_h_t_t_p2_mime_request_encode_source_8cpp.html" title=" " alt="" coords="826,252,1091,317"/>
+<area shape="rect" id="node10" href="$_mock_h_t_t_p2_mime_response_decode_sink_8cpp.html" title=" " alt="" coords="1119,372,1393,437"/>
 </map>

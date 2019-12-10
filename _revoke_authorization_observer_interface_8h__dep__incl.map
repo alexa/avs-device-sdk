@@ -1,8 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h">
-<area shape="rect" id="node2" href="$_mock_revoke_authorization_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockRevokeAuthorizationObserver.h" alt="" coords="7,119,252,184"/>
-<area shape="rect" id="node4" href="$_revoke_authorization_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/RevokeAuthorizationHandler.h" alt="" coords="278,119,483,184"/>
-<area shape="rect" id="node6" href="$_revoke_authorization_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/RevokeAuthorization\lObserver.h" alt="" coords="522,119,743,184"/>
-<area shape="rect" id="node3" href="$_revoke_authorization_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp" alt="" coords="5,232,249,297"/>
-<area shape="rect" id="node5" href="$_revoke_authorization_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/RevokeAuthorization\lHandler.cpp" alt="" coords="273,232,491,297"/>
-<area shape="rect" id="node7" href="$_revoke_authorization_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/RevokeAuthorization\lObserver.cpp" alt="" coords="515,239,782,291"/>
+<area shape="rect" id="node1" title=" " alt="" coords="248,5,513,71"/>
+<area shape="rect" id="node2" href="$_mock_revoke_authorization_observer_8h.html" title=" " alt="" coords="7,119,252,184"/>
+<area shape="rect" id="node4" href="$_revoke_authorization_handler_8h.html" title=" " alt="" coords="278,119,483,184"/>
+<area shape="rect" id="node6" href="$_revoke_authorization_observer_8h.html" title=" " alt="" coords="522,119,743,184"/>
+<area shape="rect" id="node3" href="$_revoke_authorization_handler_test_8cpp.html" title=" " alt="" coords="5,232,249,297"/>
+<area shape="rect" id="node5" href="$_revoke_authorization_handler_8cpp.html" title=" " alt="" coords="273,232,491,297"/>
+<area shape="rect" id="node7" href="$_revoke_authorization_observer_8cpp.html" title=" " alt="" coords="515,239,782,291"/>
 </map>

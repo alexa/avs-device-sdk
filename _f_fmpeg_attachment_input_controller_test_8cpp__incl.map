@@ -1,8 +1,22 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp">
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="794,219,996,257"/>
-<area shape="rect" id="node15" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1362,225,1583,251"/>
-<area shape="rect" id="node16" href="$med__alerts__notification__01_8___t_t_h___8mp3_8h.html" title="Audio/Data/med_alerts\l_notification_01._TTH\l_.mp3.h" alt="" coords="1413,119,1570,171"/>
-<area shape="rect" id="node17" href="$_f_fmpeg_attachment_input_controller_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegAttachmentInputController.h" alt="" coords="1098,125,1338,164"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="817,305,979,344"/>
-<area shape="rect" id="node19" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1020,219,1245,257"/>
+<area shape="rect" id="node1" title=" " alt="" coords="601,5,893,71"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,132,57,157"/>
+<area shape="rect" id="node3" title=" " alt="" coords="81,132,150,157"/>
+<area shape="rect" id="node4" title=" " alt="" coords="174,132,289,157"/>
+<area shape="rect" id="node5" title=" " alt="" coords="312,132,406,157"/>
+<area shape="rect" id="node6" title=" " alt="" coords="431,132,584,157"/>
+<area shape="rect" id="node7" title=" " alt="" coords="608,132,734,157"/>
+<area shape="rect" id="node8" title=" " alt="" coords="759,132,890,157"/>
+<area shape="rect" id="node9" title=" " alt="" coords="914,132,1023,157"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title=" " alt="" coords="794,219,996,257"/>
+<area shape="rect" id="node15" href="$_audio_format_8h.html" title=" " alt="" coords="1362,225,1583,251"/>
+<area shape="rect" id="node16" href="$med__alerts__notification__01_8___t_t_h___8mp3_8h.html" title=" " alt="" coords="1413,119,1570,171"/>
+<area shape="rect" id="node17" href="$_f_fmpeg_attachment_input_controller_8h.html" title=" " alt="" coords="1098,125,1338,164"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1008,312,1070,337"/>
+<area shape="rect" id="node12" title=" " alt="" coords="728,312,793,337"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1096,312,1166,337"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title=" " alt="" coords="817,305,979,344"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1268,225,1338,251"/>
+<area shape="rect" id="node19" href="$_f_fmpeg_input_controller_interface_8h.html" title=" " alt="" coords="1020,219,1245,257"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1190,312,1240,337"/>
 </map>

@@ -1,23 +1,38 @@
 <map id="/workplace/avs&#45;device&#45;sdk/KWD/Sensory/include/Sensory/SensoryKeywordDetector.h" name="/workplace/avs&#45;device&#45;sdk/KWD/Sensory/include/Sensory/SensoryKeywordDetector.h">
-<area shape="rect" id="node6" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="662,192,884,217"/>
-<area shape="rect" id="node8" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="305,279,503,317"/>
-<area shape="rect" id="node39" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="441,185,639,224"/>
-<area shape="rect" id="node40" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="908,179,1124,231"/>
-<area shape="rect" id="node41" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="290,105,508,131"/>
-<area shape="rect" id="node9" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="323,365,485,404"/>
-<area shape="rect" id="node13" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1131,452,1277,477"/>
-<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="812,599,988,637"/>
-<area shape="rect" id="node32" href="$_buffer_layout_8h.html" title="BufferLayout.h" alt="" coords="783,525,891,551"/>
-<area shape="rect" id="node33" href="$_reader_8h.html" title="Reader.h" alt="" coords="1166,525,1242,551"/>
-<area shape="rect" id="node37" href="$_writer_8h.html" title="Writer.h" alt="" coords="1362,525,1430,551"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="812,685,988,724"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="926,772,1140,811"/>
-<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="435,859,611,897"/>
-<area shape="rect" id="node26" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1316,772,1492,811"/>
-<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="655,772,852,811"/>
-<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1721,945,1897,984"/>
-<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1399,859,1575,897"/>
-<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1276,945,1452,984"/>
-<area shape="rect" id="node36" href="$_reader_policy_8h.html" title="ReaderPolicy.h" alt="" coords="1063,605,1174,631"/>
-<area shape="rect" id="node38" href="$_writer_policy_8h.html" title="WriterPolicy.h" alt="" coords="1593,605,1695,631"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1065,5,1304,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="302,705,363,731"/>
+<area shape="rect" id="node3" title=" " alt="" coords="543,879,597,904"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1396,105,1455,131"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1295,192,1402,217"/>
+<area shape="rect" id="node6" href="$_audio_format_8h.html" title=" " alt="" coords="5,192,227,217"/>
+<area shape="rect" id="node8" href="$_audio_input_stream_8h.html" title=" " alt="" coords="959,279,1157,317"/>
+<area shape="rect" id="node32" href="$_key_word_observer_interface_8h.html" title=" " alt="" coords="1074,185,1271,224"/>
+<area shape="rect" id="node34" href="$_key_word_detector_state_observer_interface_8h.html" title=" " alt="" coords="1426,179,1642,231"/>
+<area shape="rect" id="node35" href="$_abstract_keyword_detector_8h.html" title=" " alt="" coords="1002,105,1220,131"/>
+<area shape="rect" id="node36" title=" " alt="" coords="1480,105,1537,131"/>
+<area shape="rect" id="node7" title=" " alt="" coords="75,879,144,904"/>
+<area shape="rect" id="node9" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="985,365,1147,404"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1638,959,1696,984"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1470,792,1528,817"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1001,452,1130,477"/>
+<area shape="rect" id="node13" href="$_shared_data_stream_8h.html" title=" " alt="" coords="1154,452,1300,477"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1334,532,1394,557"/>
+<area shape="rect" id="node15" title=" " alt="" coords="761,792,826,817"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1187,959,1256,984"/>
+<area shape="rect" id="node17" href="$_logger_utils_8h.html" title=" " alt="" coords="1084,525,1260,564"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1384,792,1446,817"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="1030,612,1206,651"/>
+<area shape="rect" id="node20" title=" " alt="" coords="469,792,537,817"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title=" " alt="" coords="1011,699,1224,737"/>
+<area shape="rect" id="node25" href="$_level_8h.html" title=" " alt="" coords="562,785,738,824"/>
+<area shape="rect" id="node26" href="$_log_entry_8h.html" title=" " alt="" coords="438,699,614,737"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="739,699,936,737"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1134,872,1310,911"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1187,792,1259,817"/>
+<area shape="rect" id="node23" title=" " alt="" coords="951,792,991,817"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1014,792,1163,817"/>
+<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title=" " alt="" coords="84,785,260,824"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="343,872,519,911"/>
+<area shape="rect" id="node29" title=" " alt="" coords="391,959,471,984"/>
+<area shape="rect" id="node33" title=" " alt="" coords="1673,285,1725,311"/>
 </map>

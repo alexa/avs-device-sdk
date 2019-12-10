@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_request_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2RequestInterface" alt="" coords="5,51,246,89"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::http2::test::MockHTTP2\lRequest" alt="" coords="294,5,494,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lLibcurlHTTP2Request" alt="" coords="296,81,492,133"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_revoke_authorization_observer_interface.html" title=" " alt="" coords="5,40,244,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_revoke_authorization_observer.html" title=" " alt="" coords="292,5,523,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_revoke_authorization_observer.html" title=" " alt="" coords="304,81,511,120"/>
 </map>

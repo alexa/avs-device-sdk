@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::capabilitiesDelegate::DiscoveryEventSenderInterface" name="alexaClientSDK::capabilitiesDelegate::DiscoveryEventSenderInterface">
+<area shape="rect" id="node1" title=" " alt="" coords="299,51,569,89"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_post_connect_capabilities_publisher.html" title=" " alt="" coords="621,5,848,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html" title=" " alt="" coords="617,81,852,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="5,44,251,96"/>
+</map>

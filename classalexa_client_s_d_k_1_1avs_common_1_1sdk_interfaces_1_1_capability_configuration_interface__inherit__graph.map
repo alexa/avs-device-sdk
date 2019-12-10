@@ -1,20 +1,21 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::CapabilityConfigurationInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::CapabilityConfigurationInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html" title="alexaClientSDK::afml\l::AudioActivityTracker" alt="" coords="372,5,522,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html" title="alexaClientSDK::afml\l::VisualActivityTracker" alt="" coords="371,68,523,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_test_capability_provider.html" title="alexaClientSDK::capabilities\lDelegate::test::TestCapabilityProvider" alt="" coords="325,131,569,169"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html" title="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor" alt="" coords="337,193,557,232"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::capability\lAgents::alerts::AlertsCapabilityAgent" alt="" coords="328,256,566,295"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html" title="alexaClientSDK::capability\lAgents::audioPlayer::AudioPlayer" alt="" coords="337,319,557,357"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html" title="alexaClientSDK::capability\lAgents::bluetooth::Bluetooth" alt="" coords="353,381,541,420"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DoNotDisturb\lCapabilityAgent" alt="" coords="329,444,565,496"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html" title="alexaClientSDK::capability\lAgents::equalizer::EqualizerCapabilityAgent" alt="" coords="307,520,587,559"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="351,583,543,635"/>
-<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html" title="alexaClientSDK::capability\lAgents::interactionModel\l::InteractionModelCapabilityAgent" alt="" coords="337,659,557,711"/>
-<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="332,735,562,773"/>
-<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::capability\lAgents::notifications::\lNotificationsCapabilityAgent" alt="" coords="353,797,541,849"/>
-<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackController" alt="" coords="357,873,537,925"/>
-<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManager" alt="" coords="358,949,536,1001"/>
-<area shape="rect" id="node17" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="356,1025,538,1077"/>
-<area shape="rect" id="node18" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_system_capability_provider.html" title="alexaClientSDK::capability\lAgents::system::SystemCapability\lProvider" alt="" coords="336,1101,558,1153"/>
-<area shape="rect" id="node19" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime" alt="" coords="358,1177,536,1229"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,561,259,613"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html" title=" " alt="" coords="372,5,522,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html" title=" " alt="" coords="371,68,523,107"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html" title=" " alt="" coords="337,131,557,169"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title=" " alt="" coords="328,193,566,232"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1api_gateway_1_1_api_gateway_capability_agent.html" title=" " alt="" coords="337,256,557,308"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html" title=" " alt="" coords="337,332,557,371"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html" title=" " alt="" coords="353,395,541,433"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title=" " alt="" coords="329,457,565,509"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html" title=" " alt="" coords="307,533,587,572"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title=" " alt="" coords="351,596,543,648"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html" title=" " alt="" coords="337,672,557,724"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title=" " alt="" coords="332,748,562,787"/>
+<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html" title=" " alt="" coords="353,811,541,863"/>
+<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html" title=" " alt="" coords="357,887,537,939"/>
+<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html" title=" " alt="" coords="358,963,536,1015"/>
+<area shape="rect" id="node17" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title=" " alt="" coords="356,1039,538,1091"/>
+<area shape="rect" id="node18" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_system_capability_provider.html" title=" " alt="" coords="336,1115,558,1167"/>
+<area shape="rect" id="node19" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title=" " alt="" coords="358,1191,536,1243"/>
 </map>

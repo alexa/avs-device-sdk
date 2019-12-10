@@ -1,6 +1,18 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMessageRequest.h">
-<area shape="rect" id="node2" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="308,105,557,131"/>
-<area shape="rect" id="node14" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="781,179,1027,217"/>
-<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="177,179,378,217"/>
-<area shape="rect" id="node13" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="18,265,180,304"/>
+<area shape="rect" id="node1" title=" " alt="" coords="346,5,518,57"/>
+<area shape="rect" id="node2" href="$_message_request_8h.html" title=" " alt="" coords="308,105,557,131"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,185,75,211"/>
+<area shape="rect" id="node6" title=" " alt="" coords="98,185,152,211"/>
+<area shape="rect" id="node14" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="781,179,1027,217"/>
+<area shape="rect" id="node16" title=" " alt="" coords="631,105,745,131"/>
+<area shape="rect" id="node3" title=" " alt="" coords="403,185,462,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="486,185,544,211"/>
+<area shape="rect" id="node7" title=" " alt="" coords="568,185,675,211"/>
+<area shape="rect" id="node8" title=" " alt="" coords="699,185,757,211"/>
+<area shape="rect" id="node9" href="$_attachment_reader_8h.html" title=" " alt="" coords="177,179,378,217"/>
+<area shape="rect" id="node10" title=" " alt="" coords="204,272,266,297"/>
+<area shape="rect" id="node11" title=" " alt="" coords="289,272,354,297"/>
+<area shape="rect" id="node12" title=" " alt="" coords="377,272,447,297"/>
+<area shape="rect" id="node13" href="$_reader_policy_8h.html" title=" " alt="" coords="18,265,180,304"/>
+<area shape="rect" id="node15" title=" " alt="" coords="868,272,940,297"/>
 </map>

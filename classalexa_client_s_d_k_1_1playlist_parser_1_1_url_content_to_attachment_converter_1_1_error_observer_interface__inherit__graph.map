@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface" name="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="19,105,215,144"/>
+<area shape="rect" id="node1" title="Class to observe errors that arise from converting a URL to to an Attachment." alt="" coords="5,5,229,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title=" " alt="" coords="19,105,215,144"/>
 </map>

@@ -1,32 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESMediaPlayer.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESMediaPlayer.h">
-<area shape="rect" id="node4" href="$_equalizer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerInterface.h" alt="" coords="1071,119,1261,157"/>
-<area shape="rect" id="node9" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="475,392,678,444"/>
-<area shape="rect" id="node12" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="3603,119,3793,157"/>
-<area shape="rect" id="node14" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="3374,299,3582,337"/>
-<area shape="rect" id="node21" href="$_iterative_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/IterativePlaylistParser\lInterface.h" alt="" coords="5,292,199,344"/>
-<area shape="rect" id="node23" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="853,399,1041,437"/>
-<area shape="rect" id="node26" href="$_android_s_l_e_s_engine_8h.html" title="AndroidUtilities/Android\lSLESEngine.h" alt="" coords="4195,119,4355,157"/>
-<area shape="rect" id="node28" href="$_android_s_l_e_s_object_8h.html" title="AndroidUtilities/Android\lSLESObject.h" alt="" coords="3929,205,4089,244"/>
-<area shape="rect" id="node34" href="$_equalizer_band_mapper_interface_8h.html" title="EqualizerImplementations\l/EqualizerBandMapperInterface.h" alt="" coords="1739,119,1959,157"/>
-<area shape="rect" id="node35" href="$_url_content_to_attachment_converter_8h.html" title="PlaylistParser/UrlContent\lToAttachmentConverter.h" alt="" coords="1285,119,1457,157"/>
-<area shape="rect" id="node43" href="$_android_s_l_e_s_media_queue_8h.html" title="AndroidSLESMediaPlayer\l/AndroidSLESMediaQueue.h" alt="" coords="2150,119,2342,157"/>
-<area shape="rect" id="node46" href="$_playback_configuration_8h.html" title="AndroidSLESMediaPlayer\l/PlaybackConfiguration.h" alt="" coords="4012,399,4187,437"/>
-<area shape="rect" id="node47" href="$_f_fmpeg_decoder_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegDecoder.h" alt="" coords="2520,299,2695,337"/>
-<area shape="rect" id="node5" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="1107,212,1230,237"/>
-<area shape="rect" id="node11" href="$_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="476,492,691,531"/>
-<area shape="rect" id="node18" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="3238,399,3440,437"/>
-<area shape="rect" id="node20" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="3515,405,3737,431"/>
-<area shape="rect" id="node22" href="$_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="1758,405,1979,431"/>
-<area shape="rect" id="node27" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="4176,205,4374,244"/>
-<area shape="rect" id="node30" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1507,399,1683,437"/>
-<area shape="rect" id="node31" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2319,299,2495,337"/>
-<area shape="rect" id="node32" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="4312,399,4495,437"/>
-<area shape="rect" id="node36" href="$_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1558,205,1760,244"/>
-<area shape="rect" id="node37" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="2719,299,2925,337"/>
-<area shape="rect" id="node38" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="1481,299,1683,337"/>
-<area shape="rect" id="node39" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2105,399,2299,437"/>
-<area shape="rect" id="node41" href="$_content_decrypter_8h.html" title="PlaylistParser/ContentDecrypter.h" alt="" coords="585,212,806,237"/>
-<area shape="rect" id="node42" href="$_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="981,305,1180,331"/>
-<area shape="rect" id="node45" href="$_decoder_interface_8h.html" title="AndroidSLESMediaPlayer\l/DecoderInterface.h" alt="" coords="3761,399,3936,437"/>
-<area shape="rect" id="node50" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="2939,399,3164,437"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1846,5,2109,71"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,125,113,151"/>
+<area shape="rect" id="node3" title=" " alt="" coords="596,499,653,524"/>
+<area shape="rect" id="node4" title=" " alt="" coords="4004,305,4141,331"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_engine_8h.html" title=" " alt="" coords="4055,119,4215,157"/>
+<area shape="rect" id="node8" href="$_android_s_l_e_s_object_8h.html" title=" " alt="" coords="2838,205,2998,244"/>
+<area shape="rect" id="node17" href="$_equalizer_interface_8h.html" title=" " alt="" coords="742,119,933,157"/>
+<area shape="rect" id="node21" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title=" " alt="" coords="217,392,421,444"/>
+<area shape="rect" id="node23" href="$_speaker_interface_8h.html" title=" " alt="" coords="4493,205,4684,244"/>
+<area shape="rect" id="node25" href="$_media_player_interface_8h.html" title=" " alt="" coords="3671,299,3879,337"/>
+<area shape="rect" id="node30" href="$_source_config_8h.html" title=" " alt="" coords="3863,399,4071,437"/>
+<area shape="rect" id="node32" href="$_iterative_playlist_parser_interface_8h.html" title=" " alt="" coords="237,292,430,344"/>
+<area shape="rect" id="node34" href="$_requires_shutdown_8h.html" title=" " alt="" coords="882,399,1070,437"/>
+<area shape="rect" id="node35" href="$_equalizer_band_mapper_interface_8h.html" title=" " alt="" coords="1092,119,1312,157"/>
+<area shape="rect" id="node36" href="$_url_content_to_attachment_converter_8h.html" title=" " alt="" coords="1336,119,1508,157"/>
+<area shape="rect" id="node44" href="$_android_s_l_e_s_media_queue_8h.html" title=" " alt="" coords="1881,119,2074,157"/>
+<area shape="rect" id="node47" href="$_playback_configuration_8h.html" title=" " alt="" coords="3511,399,3687,437"/>
+<area shape="rect" id="node48" href="$_f_fmpeg_decoder_8h.html" title=" " alt="" coords="2550,299,2725,337"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1224,579,1294,604"/>
+<area shape="rect" id="node7" href="$_audio_input_stream_8h.html" title=" " alt="" coords="4109,205,4307,244"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1858,499,1937,524"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title=" " alt="" coords="1448,399,1624,437"/>
+<area shape="rect" id="node14" href="$_logger_utils_8h.html" title=" " alt="" coords="2350,299,2526,337"/>
+<area shape="rect" id="node15" href="$_memory_8h.html" title=" " alt="" coords="3029,399,3212,437"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1330,499,1391,524"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2911,499,2973,524"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1508,499,1565,524"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2509,499,2561,524"/>
+<area shape="rect" id="node18" href="$_equalizer_types_8h.html" title=" " alt="" coords="633,212,757,237"/>
+<area shape="rect" id="node19" title=" " alt="" coords="605,305,657,331"/>
+<area shape="rect" id="node20" title=" " alt="" coords="755,499,809,524"/>
+<area shape="rect" id="node22" href="$_h_t_t_p_content_fetcher_interface_8h.html" title=" " alt="" coords="357,492,572,531"/>
+<area shape="rect" id="node24" title=" " alt="" coords="3968,499,4038,524"/>
+<area shape="rect" id="node26" title=" " alt="" coords="3760,499,3820,524"/>
+<area shape="rect" id="node27" title=" " alt="" coords="2667,499,2723,524"/>
+<area shape="rect" id="node28" href="$_attachment_reader_8h.html" title=" " alt="" coords="3286,399,3488,437"/>
+<area shape="rect" id="node29" href="$_audio_format_8h.html" title=" " alt="" coords="4095,405,4317,431"/>
+<area shape="rect" id="node31" title=" " alt="" coords="3868,499,3944,524"/>
+<area shape="rect" id="node33" href="$_playlist_parser_observer_interface_8h.html" title=" " alt="" coords="2019,405,2240,431"/>
+<area shape="rect" id="node37" href="$_in_process_attachment_8h.html" title=" " alt="" coords="1510,205,1712,244"/>
+<area shape="rect" id="node38" href="$_in_process_attachment_reader_8h.html" title=" " alt="" coords="2749,299,2955,337"/>
+<area shape="rect" id="node39" href="$_in_process_attachment_writer_8h.html" title=" " alt="" coords="1459,299,1661,337"/>
+<area shape="rect" id="node40" href="$_executor_8h.html" title=" " alt="" coords="1800,399,1995,437"/>
+<area shape="rect" id="node42" href="$_content_decrypter_8h.html" title=" " alt="" coords="960,212,1182,237"/>
+<area shape="rect" id="node43" href="$_playlist_parser_8h.html" title=" " alt="" coords="984,305,1182,331"/>
+<area shape="rect" id="node41" title=" " alt="" coords="2112,499,2241,524"/>
+<area shape="rect" id="node45" title=" " alt="" coords="2040,212,2230,237"/>
+<area shape="rect" id="node46" href="$_decoder_interface_8h.html" title=" " alt="" coords="2366,399,2541,437"/>
+<area shape="rect" id="node49" title=" " alt="" coords="2832,405,2905,431"/>
+<area shape="rect" id="node50" title=" " alt="" coords="2667,405,2809,431"/>
 </map>

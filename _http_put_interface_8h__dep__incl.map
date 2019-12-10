@@ -1,12 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h">
-<area shape="rect" id="node2" href="$_http_put_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/HttpPut.h" alt="" coords="137,119,317,184"/>
-<area shape="rect" id="node5" href="$_capabilities_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="400,119,593,184"/>
-<area shape="rect" id="node6" href="$_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="265,232,459,284"/>
-<area shape="rect" id="node10" href="$_testable_http_put_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.h" alt="" coords="782,125,995,177"/>
-<area shape="rect" id="node3" href="$_http_put_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/HttpPut.cpp" alt="" coords="5,232,190,284"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="298,332,578,371"/>
-<area shape="rect" id="node7" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="777,232,1000,284"/>
-<area shape="rect" id="node8" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="534,232,753,284"/>
-<area shape="rect" id="node9" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="601,332,800,371"/>
-<area shape="rect" id="node11" href="$_testable_http_put_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Common/TestableHttpPut.cpp" alt="" coords="1024,232,1252,284"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,207,71"/>
+<area shape="rect" id="node2" href="$_http_put_8h.html" title=" " alt="" coords="16,119,196,184"/>
+<area shape="rect" id="node3" href="$_http_put_8cpp.html" title=" " alt="" coords="13,232,199,284"/>
 </map>

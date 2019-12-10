@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['issue_5ftemplate',['issue_template',['../md__workplace_avs-device-sdk_issue_template.html',1,'']]]
+  ['deprecated_20list_16040',['Deprecated List',['../deprecated.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['need_20help_3f',['Need help?',['../md__workplace_avs-device-sdk__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]]
+  ['issue_5ftemplate_16041',['issue_template',['../md__workplace_avs-device-sdk_issue_template.html',1,'']]]
 ];

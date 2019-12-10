@@ -1,34 +1,35 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/PlayerActivity.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/PlayerActivity.h">
-<area shape="rect" id="node2" href="$_audio_player_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="817,105,1057,171"/>
-<area shape="rect" id="node15" href="$_audio_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/include/AudioPlayer\l/AudioPlayer.h" alt="" coords="513,332,732,397"/>
-<area shape="rect" id="node19" href="$_render_player_info_cards_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserverInterface.h" alt="" coords="1193,105,1476,171"/>
-<area shape="rect" id="node31" href="$_template_runtime_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="1646,219,1893,284"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="993,572,1220,637"/>
-<area shape="rect" id="node14" href="$_audio_player_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/AudioPlayerInterface.h" alt="" coords="660,219,900,284"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1035,685,1263,737"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1163,785,1386,837"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="797,685,1011,737"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1167,885,1385,937"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="937,885,1143,937"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="953,985,1172,1037"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1196,985,1398,1037"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="985,1085,1183,1124"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="681,1085,961,1124"/>
-<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="858,792,1134,831"/>
-<area shape="rect" id="node16" href="$_audio_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/src/AudioPlayer.cpp" alt="" coords="5,459,224,511"/>
-<area shape="rect" id="node17" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="248,452,445,517"/>
-<area shape="rect" id="node18" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="470,459,679,511"/>
-<area shape="rect" id="node20" href="$_render_player_info_cards_provider_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProviderInterface.h" alt="" coords="1079,219,1356,284"/>
-<area shape="rect" id="node28" href="$_template_runtime_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/include\l/TemplateRuntime/TemplateRuntime.h" alt="" coords="1484,332,1732,397"/>
-<area shape="rect" id="node30" href="$_template_runtime_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/TemplateRuntimeTest.cpp" alt="" coords="1321,452,1500,517"/>
-<area shape="rect" id="node21" href="$_external_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/include\l/ExternalMediaPlayer/ExternalMedia\lPlayer.h" alt="" coords="703,445,940,524"/>
-<area shape="rect" id="node24" href="$_m_r_m_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/include/MRM/MRMCapability\lAgent.h" alt="" coords="1065,452,1297,517"/>
-<area shape="rect" id="node27" href="$_m_r_m_handler_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/include/MRM/MRMHandlerInterface.h" alt="" coords="1075,339,1359,391"/>
-<area shape="rect" id="node22" href="$_external_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/src\l/ExternalMediaPlayer.cpp" alt="" coords="796,572,969,637"/>
-<area shape="rect" id="node23" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="524,572,721,637"/>
-<area shape="rect" id="node25" href="$_m_r_m_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/src/MRMCapabilityAgent.cpp" alt="" coords="1244,579,1476,631"/>
-<area shape="rect" id="node26" href="$_m_r_m_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/MRM/test/MRMCapabilityAgent\lTest.cpp" alt="" coords="1500,572,1711,637"/>
-<area shape="rect" id="node29" href="$_template_runtime_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/src/Template\lRuntime.cpp" alt="" coords="1524,452,1732,517"/>
-<area shape="rect" id="node32" href="$_gui_renderer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/GuiRenderer.h" alt="" coords="1414,685,1599,737"/>
-<area shape="rect" id="node33" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="1461,792,1706,831"/>
+<area shape="rect" id="node1" title=" " alt="" coords="966,5,1194,57"/>
+<area shape="rect" id="node2" href="$_audio_player_observer_interface_8h.html" title=" " alt="" coords="817,105,1057,171"/>
+<area shape="rect" id="node15" href="$_audio_player_8h.html" title=" " alt="" coords="513,332,732,397"/>
+<area shape="rect" id="node19" href="$_render_player_info_cards_observer_interface_8h.html" title=" " alt="" coords="1193,105,1476,171"/>
+<area shape="rect" id="node31" href="$_template_runtime_observer_interface_8h.html" title=" " alt="" coords="1646,219,1893,284"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title=" " alt="" coords="993,572,1220,637"/>
+<area shape="rect" id="node14" href="$_audio_player_interface_8h.html" title=" " alt="" coords="660,219,900,284"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title=" " alt="" coords="1035,685,1263,737"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title=" " alt="" coords="1163,785,1386,837"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title=" " alt="" coords="797,685,1011,737"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title=" " alt="" coords="1167,885,1385,937"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="937,885,1143,937"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title=" " alt="" coords="953,985,1172,1037"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="1196,985,1398,1037"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title=" " alt="" coords="985,1085,1183,1124"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title=" " alt="" coords="681,1085,961,1124"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="858,792,1134,831"/>
+<area shape="rect" id="node16" href="$_audio_player_8cpp.html" title=" " alt="" coords="5,459,224,511"/>
+<area shape="rect" id="node17" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="248,452,445,517"/>
+<area shape="rect" id="node18" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="470,459,679,511"/>
+<area shape="rect" id="node20" href="$_render_player_info_cards_provider_interface_8h.html" title=" " alt="" coords="1079,219,1356,284"/>
+<area shape="rect" id="node28" href="$_template_runtime_8h.html" title=" " alt="" coords="1484,332,1732,397"/>
+<area shape="rect" id="node30" href="$_template_runtime_test_8cpp.html" title=" " alt="" coords="1321,452,1500,517"/>
+<area shape="rect" id="node21" href="$_external_media_player_8h.html" title=" " alt="" coords="703,445,940,524"/>
+<area shape="rect" id="node24" href="$_m_r_m_capability_agent_8h.html" title=" " alt="" coords="1065,452,1297,517"/>
+<area shape="rect" id="node27" href="$_m_r_m_handler_interface_8h.html" title=" " alt="" coords="1075,339,1359,391"/>
+<area shape="rect" id="node22" href="$_external_media_player_8cpp.html" title=" " alt="" coords="796,572,969,637"/>
+<area shape="rect" id="node23" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="524,572,721,637"/>
+<area shape="rect" id="node25" href="$_m_r_m_capability_agent_8cpp.html" title=" " alt="" coords="1244,579,1476,631"/>
+<area shape="rect" id="node26" href="$_m_r_m_capability_agent_test_8cpp.html" title=" " alt="" coords="1500,572,1711,637"/>
+<area shape="rect" id="node29" href="$_template_runtime_8cpp.html" title=" " alt="" coords="1524,452,1732,517"/>
+<area shape="rect" id="node32" href="$_gui_renderer_8h.html" title=" " alt="" coords="1414,685,1599,737"/>
+<area shape="rect" id="node33" href="$_gui_renderer_8cpp.html" title=" " alt="" coords="1461,792,1706,831"/>
 </map>

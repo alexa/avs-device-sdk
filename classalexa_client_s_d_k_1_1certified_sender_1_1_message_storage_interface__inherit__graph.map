@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::certifiedSender::MessageStorageInterface" name="alexaClientSDK::certifiedSender::MessageStorageInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_message_storage.html" title="alexaClientSDK::capability\lAgents::alerts::test::StubMessage\lStorage" alt="" coords="284,5,505,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title="alexaClientSDK::certified\lSender::SQLiteMessageStorage" alt="" coords="288,81,501,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html" title="alexaClientSDK::certified\lSender::test::MockMessageStorage" alt="" coords="278,144,511,183"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,113,230,152"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_message_storage.html" title=" " alt="" coords="284,5,505,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title=" " alt="" coords="288,81,501,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html" title=" " alt="" coords="278,144,511,183"/>
 </map>

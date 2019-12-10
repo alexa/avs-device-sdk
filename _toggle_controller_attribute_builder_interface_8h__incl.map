@@ -1,0 +1,32 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributeBuilderInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributeBuilderInterface.h">
+<area shape="rect" id="node1" title=" " alt="" coords="176,5,449,84"/>
+<area shape="rect" id="node2" href="$_capability_resources_8h.html" title=" " alt="" coords="86,205,278,244"/>
+<area shape="rect" id="node10" href="$_optional_8h.html" title=" " alt="" coords="270,292,465,317"/>
+<area shape="rect" id="node30" href="$_toggle_controller_attributes_8h.html" title=" " alt="" coords="89,132,275,157"/>
+<area shape="rect" id="node3" title=" " alt="" coords="337,799,395,824"/>
+<area shape="rect" id="node4" title=" " alt="" coords="522,719,576,744"/>
+<area shape="rect" id="node5" title=" " alt="" coords="43,292,94,317"/>
+<area shape="rect" id="node6" href="$_alexa_asset_id_8h.html" title=" " alt="" coords="220,372,443,397"/>
+<area shape="rect" id="node7" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="168,539,388,577"/>
+<area shape="rect" id="node8" title=" " alt="" coords="230,632,278,657"/>
+<area shape="rect" id="node9" title=" " alt="" coords="404,632,443,657"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title=" " alt="" coords="467,365,643,404"/>
+<area shape="rect" id="node12" title=" " alt="" coords="518,632,580,657"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title=" " alt="" coords="1046,452,1222,491"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1593,545,1654,571"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1113,632,1171,657"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1646,632,1715,657"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title=" " alt="" coords="783,539,997,577"/>
+<area shape="rect" id="node22" href="$_level_8h.html" title=" " alt="" coords="1195,625,1371,664"/>
+<area shape="rect" id="node23" href="$_log_entry_8h.html" title=" " alt="" coords="1393,539,1569,577"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1171,539,1368,577"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1655,712,1831,751"/>
+<area shape="rect" id="node18" title=" " alt="" coords="923,632,987,657"/>
+<area shape="rect" id="node19" title=" " alt="" coords="654,632,726,657"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1549,799,1618,824"/>
+<area shape="rect" id="node21" title=" " alt="" coords="750,632,899,657"/>
+<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1446,625,1622,664"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1353,719,1422,744"/>
+<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1446,712,1622,751"/>
+<area shape="rect" id="node27" title=" " alt="" coords="1444,799,1525,824"/>
+</map>
