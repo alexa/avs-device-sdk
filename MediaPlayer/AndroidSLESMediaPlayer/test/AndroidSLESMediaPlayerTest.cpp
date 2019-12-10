@@ -159,6 +159,7 @@ public:
     MOCK_METHOD1(onPlaybackPaused, void(SourceId));
     MOCK_METHOD1(onPlaybackResumed, void(SourceId));
     MOCK_METHOD3(onPlaybackError, void(SourceId, const ErrorType&, std::string));
+    MOCK_METHOD1(onBufferingComplete, void(SourceId));
 
     MOCK_METHOD1(onBufferRefilled, void(SourceId));
     MOCK_METHOD1(onBufferUnderrun, void(SourceId));
@@ -308,6 +309,7 @@ TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
     auto id = m_player->setSource(createStream(), false);
 
     WaitEvent finishedEvent;
+    EXPECT_CALL(*m_observer, onBufferingComplete(id)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
         finishedEvent.wakeUp();

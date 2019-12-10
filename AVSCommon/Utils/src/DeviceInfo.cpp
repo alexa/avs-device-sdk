@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
 
 #include "AVSCommon/Utils/DeviceInfo.h"
 
-#include <AVSCommon/Utils/Logger/Logger.h>
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -39,12 +40,20 @@ const std::string CONFIG_KEY_CLIENT_ID = "clientId";
 const std::string CONFIG_KEY_PRODUCT_ID = "productId";
 /// Name of deviceSerialNumber value in DeviceInfo's @c ConfigurationNode.
 const std::string CONFIG_KEY_DSN = "deviceSerialNumber";
+/// Key for the device manufacturer name in DeviceInfo's @c ConfigurationNode.
+const std::string CONFIG_KEY_MANUFACTURER_NAME = "manufacturerName";
+/// Key for the device description in DeviceInfo's @c ConfigurationNode.
+const std::string CONFIG_KEY_DESCRIPTION = "description";
+/// String used to join attributes in the generation of the default endpoint id.
+const std::string ENDPOINT_ID_CONCAT = "::";
 
 std::unique_ptr<DeviceInfo> DeviceInfo::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     std::string clientId;
     std::string productId;
     std::string deviceSerialNumber;
+    std::string manufacturerName;
+    std::string description;
     const std::string errorEvent = "createFailed";
     const std::string errorReasonKey = "reason";
     const std::string errorValueKey = "key";
@@ -72,13 +81,26 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
         return nullptr;
     }
 
-    return create(clientId, productId, deviceSerialNumber);
+    if (!deviceInfoConfiguration.getString(CONFIG_KEY_MANUFACTURER_NAME, &manufacturerName)) {
+        ACSDK_ERROR(
+            LX(errorEvent).d(errorReasonKey, "missingManufacturerName").d(errorValueKey, CONFIG_KEY_MANUFACTURER_NAME));
+        return nullptr;
+    }
+
+    if (!deviceInfoConfiguration.getString(CONFIG_KEY_DESCRIPTION, &description)) {
+        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "missingDescription").d(errorValueKey, CONFIG_KEY_DESCRIPTION));
+        return nullptr;
+    }
+
+    return create(clientId, productId, deviceSerialNumber, manufacturerName, description);
 }
 
 std::unique_ptr<DeviceInfo> DeviceInfo::create(
     const std::string& clientId,
     const std::string& productId,
-    const std::string& deviceSerialNumber) {
+    const std::string& deviceSerialNumber,
+    const std::string& manufacturerName,
+    const std::string& description) {
     const std::string errorEvent = "createFailed";
     const std::string errorReasonKey = "reason";
     const std::string errorValueKey = "key";
@@ -98,7 +120,19 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
         return nullptr;
     }
 
-    std::unique_ptr<DeviceInfo> instance(new DeviceInfo(clientId, productId, deviceSerialNumber));
+    if (manufacturerName.empty()) {
+        ACSDK_ERROR(
+            LX(errorEvent).d(errorReasonKey, "missingManufacturerName").d(errorValueKey, CONFIG_KEY_MANUFACTURER_NAME));
+        return nullptr;
+    }
+
+    if (description.empty()) {
+        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "missingDescription").d(errorValueKey, CONFIG_KEY_DESCRIPTION));
+        return nullptr;
+    }
+
+    std::unique_ptr<DeviceInfo> instance(
+        new DeviceInfo(clientId, productId, deviceSerialNumber, manufacturerName, description));
 
     return instance;
 }
@@ -113,6 +147,10 @@ std::string DeviceInfo::getProductId() const {
 
 std::string DeviceInfo::getDeviceSerialNumber() const {
     return m_deviceSerialNumber;
+}
+
+sdkInterfaces::endpoints::EndpointIdentifier DeviceInfo::getDefaultEndpointId() const {
+    return m_clientId + ENDPOINT_ID_CONCAT + m_productId + ENDPOINT_ID_CONCAT + m_deviceSerialNumber;
 }
 
 bool DeviceInfo::operator==(const DeviceInfo& rhs) {
@@ -136,10 +174,14 @@ bool DeviceInfo::operator!=(const DeviceInfo& rhs) {
 DeviceInfo::DeviceInfo(
     const std::string& clientId,
     const std::string& productId,
-    const std::string& deviceSerialNumber) :
+    const std::string& deviceSerialNumber,
+    const std::string& manufacturerName,
+    const std::string& description) :
         m_clientId{clientId},
         m_productId{productId},
-        m_deviceSerialNumber{deviceSerialNumber} {
+        m_deviceSerialNumber{deviceSerialNumber},
+        m_manufacturer{manufacturerName},
+        m_deviceDescription{description} {
 }
 
 }  // namespace utils

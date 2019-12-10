@@ -97,7 +97,7 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
 
     // Allow custom path extension, if provided by the sender of the MessageRequest
 
-    auto url = context->getEndpoint();
+    auto url = context->getAVSGateway();
     if (messageRequest->getUriPathExtension().empty()) {
         url += AVS_EVENT_URL_PATH_EXTENSION;
     } else {
@@ -289,6 +289,7 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
     static const std::unordered_map<long, MessageRequestObserverInterface::Status> responseToResult = {
         {HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
         {HTTPResponseCode::SUCCESS_OK, MessageRequestObserverInterface::Status::SUCCESS},
+        {HTTPResponseCode::SUCCESS_ACCEPTED, MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED},
         {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
         {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
         {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},

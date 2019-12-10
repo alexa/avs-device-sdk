@@ -39,6 +39,7 @@
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -105,6 +106,7 @@ public:
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
+     * @param powerResourceManager Power Resource Manager.
      * @return A @c std::shared_ptr to the new @c AudioInputProcessor instance.
      */
     static std::shared_ptr<AudioInputProcessor> create(
@@ -121,7 +123,8 @@ public:
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting = nullptr,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
-        AudioProvider defaultAudioProvider = AudioProvider::null());
+        AudioProvider defaultAudioProvider = AudioProvider::null(),
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     /**
      * Adds an observer to be notified of AudioInputProcessor state changes.
@@ -292,6 +295,7 @@ private:
      * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
      * device supports wake words.
      * @param capabilitiesConfiguration The SpeechRecognizer capabilities configuration.
+     * @param powerResourceManager Power Resource Manager.
      *
      * @note This constructor is private so that users are forced to use the @c create() factory function.  The primary
      *     reason for this is to ensure that a @c std::shared_ptr to the instance exists, which is a requirement for
@@ -310,7 +314,8 @@ private:
         std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
-        std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration);
+        std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -542,6 +547,12 @@ private:
      */
     bool handleSetWakeWords(std::shared_ptr<DirectiveInfo> info);
 
+    /**
+     * Acquire power resource when listening and release power resource when finished listening.
+     * @param newState The new state of AIP.
+     */
+    void managePowerResource(ObserverInterface::State newState);
+
     /// The Directive Sequencer to register with for receiving directives.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 
@@ -663,14 +674,6 @@ private:
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
-    /**
-     * @c Executor which queues up operations from asynchronous API calls.
-     *
-     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
-     *     before the Executor Thread Variables are destroyed.
-     */
-    avsCommon::utils::threading::Executor m_executor;
-
     /// The wake word confirmation setting.
     std::shared_ptr<settings::WakeWordConfirmationSetting> m_wakeWordConfirmation;
 
@@ -679,6 +682,17 @@ private:
 
     /// The wake words setting. This field is optional and it is only used if the device supports wake words.
     std::shared_ptr<settings::WakeWordsSetting> m_wakeWordsSetting;
+
+    /// The power resource manager
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> m_powerResourceManager;
+
+    /**
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 }  // namespace aip

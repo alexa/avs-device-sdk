@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/PingHandler.h"
 #include "ACL/Transport/PostConnectFactoryInterface.h"
 #include "ACL/Transport/PostConnectObserverInterface.h"
-#include "ACL/Transport/PostConnectSendMessageInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
 
@@ -48,7 +48,7 @@ class HTTP2Transport
         : public std::enable_shared_from_this<HTTP2Transport>
         , public TransportInterface
         , public PostConnectObserverInterface
-        , public PostConnectSendMessageInterface
+        , public avsCommon::sdkInterfaces::PostConnectSendMessageInterface
         , public avsCommon::sdkInterfaces::AuthObserverInterface
         , public ExchangeHandlerContextInterface {
 public:
@@ -69,7 +69,7 @@ public:
      * A function that creates a HTTP2Transport object.
      *
      * @param authDelegate The AuthDelegate implementation.
-     * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param avsGateway The URL for the AVS gateway of this object.
      * @param http2Connection Instance of HTTP2ConnectionInterface with which to perform HTTP2 operations.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
@@ -80,7 +80,7 @@ public:
      */
     static std::shared_ptr<HTTP2Transport> create(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        const std::string& avsEndpoint,
+        const std::string& avsGateway,
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
@@ -125,6 +125,7 @@ public:
     /// @name PostConnectObserverInterface methods.
     /// @{
     void onPostConnected() override;
+    void onUnRecoverablePostConnectFailure() override;
     /// @}
 
     /// @name AuthObserverInterface methods
@@ -153,7 +154,7 @@ public:
     void onForbidden(const std::string& authToken = "") override;
     std::shared_ptr<avsCommon::utils::http2::HTTP2RequestInterface> createAndSendRequest(
         const avsCommon::utils::http2::HTTP2RequestConfig& cfg) override;
-    std::string getEndpoint() override;
+    std::string getAVSGateway() override;
     /// @}
 
 private:
@@ -189,7 +190,7 @@ private:
      * HTTP2Transport Constructor.
      *
      * @param authDelegate The AuthDelegate implementation.
-     * @param avsEndpoint The URL for the AVS endpoint of this object.
+     * @param avsGateway The URL for the AVS gateway of this object.
      * @param http2Connection Instance of HTTP2ConnectionInterface with which to perform HTTP2 operations.
      * @param messageConsumer The MessageConsumerInterface to pass messages to.
      * @param attachmentManager The attachment manager that manages the attachments.
@@ -199,7 +200,7 @@ private:
      */
     HTTP2Transport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        const std::string& avsEndpoint,
+        const std::string& avsGateway,
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
@@ -354,7 +355,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// The URL of the AVS server we will connect to.
-    std::string m_avsEndpoint;
+    std::string m_avsGateway;
 
     /// The HTTP2ConnectionInterface with which to perform HTTP2 operations.
     std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> m_http2Connection;

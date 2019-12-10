@@ -46,15 +46,20 @@ public:
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* audioFormat = nullptr) override;
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<std::istream> stream,
-        bool repeat) override;
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
         bool repeat = false) override;
 
     bool play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;

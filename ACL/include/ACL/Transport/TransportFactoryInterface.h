@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public:
      * Creates a new transport.
      *
      * @param authDelegate The AuthDelegateInterface to use for authentication and authorization with AVS.
-     * @param avsEndpoint The URL for the AVS server we will connect to.
+     * @param avsGateway The URL for the AVS server we will connect to.
      * @param messageConsumerInterface The object which should be notified on messages which arrive from AVS.
      * @param transportObserverInterface A pointer to the transport observer the new transport should notify.
      * @return A new MessageRouter object.
@@ -46,7 +46,7 @@ public:
     virtual std::shared_ptr<TransportInterface> createTransport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        const std::string& avsEndpoint,
+        const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<TransportObserverInterface> transportObserverInterface) = 0;
 

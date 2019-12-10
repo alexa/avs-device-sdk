@@ -167,6 +167,9 @@ static const std::string WAKE_WORDS_REPORT_EVENT_NAME = "WakeWordsReport";
 /// The value of the payload key for wake words.
 static const std::string WAKE_WORDS_PAYLOAD_KEY = "wakeWords";
 
+/// The component name of power management
+static const std::string POWER_RESOURCE_COMPONENT_NAME = "AudioInputProcessor";
+
 /**
  * Creates the SpeechRecognizer capability configuration.
  *
@@ -190,7 +193,8 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
     std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
     std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
-    AudioProvider defaultAudioProvider) {
+    AudioProvider defaultAudioProvider,
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) {
     if (!directiveSequencer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullDirectiveSequencer"));
         return nullptr;
@@ -248,7 +252,8 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         wakeWordConfirmation,
         speechConfirmation,
         wakeWordsSetting,
-        capabilitiesConfiguration));
+        capabilitiesConfiguration,
+        powerResourceManager));
 
     if (aip) {
         dialogUXStateAggregator->addObserver(aip);
@@ -421,7 +426,8 @@ AudioInputProcessor::AudioInputProcessor(
     std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
     std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
     std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
-    std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration) :
+    std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"AudioInputProcessor"},
         m_directiveSequencer{directiveSequencer},
@@ -442,7 +448,8 @@ AudioInputProcessor::AudioInputProcessor(
         m_precedingExpectSpeechInitiator{nullptr},
         m_wakeWordConfirmation{wakeWordConfirmation},
         m_speechConfirmation{speechConfirmation},
-        m_wakeWordsSetting{wakeWordsSetting} {
+        m_wakeWordsSetting{wakeWordsSetting},
+        m_powerResourceManager{powerResourceManager} {
     m_capabilityConfigurations.insert(capabilitiesConfiguration);
 }
 
@@ -615,7 +622,6 @@ bool AudioInputProcessor::executeRecognize(
         generator.addMember(WAKE_WORD_KEY, string::stringToUpperCase(keyword));
     }
 
-    m_directiveSequencer->setDialogRequestId(uuidGeneration::generateUUID());
     return executeRecognize(provider, generator.toString(), startOfSpeechTimestamp, begin, keyword, KWDMetadata);
 }
 
@@ -780,6 +786,8 @@ bool AudioInputProcessor::executeRecognize(
     // Code below this point changes the state of AIP.  Formally update state now, and don't error out without calling
     // executeResetState() after this point.
     setState(ObserverInterface::State::RECOGNIZING);
+
+    m_directiveSequencer->setDialogRequestId(uuidGeneration::generateUUID());
 
     // Note that we're preparing to send a Recognize event.
     m_preparingToSend = true;
@@ -1091,6 +1099,8 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
 
     ACSDK_DEBUG(LX("setState").d("from", m_state).d("to", state));
     m_state = state;
+    managePowerResource(m_state);
+
     for (auto observer : m_observers) {
         observer->onStateChanged(m_state);
     }
@@ -1133,7 +1143,6 @@ void AudioInputProcessor::onSendCompleted(avsCommon::sdkInterfaces::MessageReque
     ACSDK_DEBUG(LX("onSendCompleted").d("status", status));
 
     if (status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS ||
-        status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT ||
         status == avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::PENDING) {
         // Stop listening from audio input source when the recognize event steam is closed.
         ACSDK_DEBUG5(LX("stopCapture").d("reason", "streamClosed"));
@@ -1263,6 +1272,24 @@ bool AudioInputProcessor::handleSetWakeWords(std::shared_ptr<DirectiveInfo> info
     removeDirective(info);
 
     return true;
+}
+
+void AudioInputProcessor::managePowerResource(ObserverInterface::State newState) {
+    if (!m_powerResourceManager) {
+        return;
+    }
+
+    ACSDK_DEBUG5(LX(__func__).d("state", newState));
+    switch (newState) {
+        case ObserverInterface::State::RECOGNIZING:
+        case ObserverInterface::State::EXPECTING_SPEECH:
+            m_powerResourceManager->acquirePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            break;
+        case ObserverInterface::State::BUSY:
+        case ObserverInterface::State::IDLE:
+            m_powerResourceManager->releasePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            break;
+    }
 }
 
 }  // namespace aip

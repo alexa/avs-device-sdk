@@ -84,24 +84,7 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
         return false;
     }
 
-    // TODO: ACSDK-2218
-    // This additional check is made as a temporary solution to fix the problem with InteractionModel.NewDialogRequest
-    // directives having a dialogRequestID in the payload even though it should be handled immediately. This additional
-    // checking should be removed when a new InteractionModel version has been implemented which fixes the problem in
-    // the directive.
-    bool bypassDialogRequestIDCheck =
-        directive->getName() == "NewDialogRequest" && directive->getNamespace() == "InteractionModel";
-
-    if (bypassDialogRequestIDCheck) {
-        ACSDK_INFO(LX("onDirective")
-                       .d("messageId", directive->getMessageId())
-                       .d("action", "bypassingDialogRequestIdCheck")
-                       .d("reason", "routinesDirectiveContainsDialogRequestId")
-                       .d("namespace", directive->getNamespace())
-                       .d("name", directive->getName())
-                       .d("directivesDialogRequestId", directive->getDialogRequestId())
-                       .d("dialogRequestId", m_dialogRequestId));
-    } else if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
+    if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
         ACSDK_INFO(LX("onDirective")
                        .d("messageId", directive->getMessageId())
                        .d("action", "dropped")
@@ -210,6 +193,8 @@ void DirectiveProcessor::onHandlingFailed(std::shared_ptr<AVSDirective> directiv
     std::unique_lock<std::mutex> lock(m_mutex);
     ACSDK_DEBUG(LX("onHandlingFailed")
                     .d("messageId", directive->getMessageId())
+                    .d("namespace", directive->getNamespace())
+                    .d("name", directive->getName())
                     .d("directiveBeingPreHandled",
                        m_directiveBeingPreHandled ? m_directiveBeingPreHandled->getMessageId() : "(nullptr)")
                     .d("description", description));

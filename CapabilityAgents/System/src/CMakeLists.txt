@@ -1,7 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=system")
 
 add_library(AVSSystem SHARED
-    "${CMAKE_CURRENT_LIST_DIR}/EndpointHandler.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/LocaleHandler.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/ReportStateHandler.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/SoftwareInfoSender.cpp"

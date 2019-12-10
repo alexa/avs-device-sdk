@@ -148,7 +148,6 @@ static const std::string IDLE_PLAYBACK_STATE =
         "\"repeat\":\"NOT_REPEATED\","
         "\"favorite\":\"NOT_RATED\","
         "\"positionMilliseconds\":0,"
-        "\"uncertaintyInMilliseconds\":0,"
         "\"players\":[{"
             "\"playerId\":\"\","
             "\"state\":\"IDLE\","

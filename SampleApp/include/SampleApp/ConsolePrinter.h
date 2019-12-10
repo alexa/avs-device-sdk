@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,9 +52,17 @@ public:
     /**
      * Prints a multi-line message with a pretty format with a \n after.
      *
-     * @param stringToPrint The string to print.
+     * @param lines The strings to print.
      */
     static void prettyPrint(std::initializer_list<std::string> lines);
+
+    /**
+     * Prints a decorated multi-line message with a pretty format with a newline after,
+     * along with an "Alexa Says" header, used for outputting captions.
+     *
+     * @param lines The strings representing captions from Alexa's voice.
+     */
+    static void captionsPrint(const std::vector<std::string>& lines);
 
     void emit(
         avsCommon::utils::logger::Level level,

@@ -129,9 +129,34 @@ public:
     void printSettingsScreen();
 
     /**
+     * Prints the Endpoint Controller Options screen.
+     */
+    void printEndpointControllerScreen();
+
+    /**
      * Prints the Locale Options screen.
      */
     void printLocaleScreen();
+
+    /**
+     * Prints the Power Controller Options screen.
+     */
+    void printPowerControllerScreen();
+
+    /**
+     * Prints the Toggle Controller Options screen.
+     */
+    void printToggleControllerScreen();
+
+    /**
+     * Prints the Mode Controller Options screen.
+     */
+    void printModeControllerScreen();
+
+    /**
+     * Prints the Range Controller Options screen.
+     */
+    void printRangeControllerScreen();
 
     /**
      * Prints the Speaker Control Options screen. This prompts the user to select a @c SpeakerInterface::Type to modify.
@@ -182,10 +207,22 @@ public:
     void printCalendarItemsScreen();
 #endif
 
+#ifdef ENABLE_COMMS
     /**
      * Prints the Comms Control Options screen. This gives the user the possible Comms control options.
      */
     void printCommsControlScreen();
+
+    /**
+     *  Prints the dtmf screen. This prompts the user to enter dtmf tones.
+     */
+    void printDtmfScreen();
+
+    /**
+     * Prints the Error Message for Invalid dtmf input.
+     */
+    void printDtmfErrorScreen();
+#endif
 
     /**
      * Prints the Error Message for Wrong Input.
@@ -229,6 +266,11 @@ public:
      * @return @true if it succeeds to configure the settings notifications; @c false otherwise.
      */
     bool configureSettingsNotifications(std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
+
+    /**
+     * Prints menu for alarm volume ramp.
+     */
+    void printAlarmVolumeRampScreen();
 
     /**
      * Prints menu for wake word confirmation.

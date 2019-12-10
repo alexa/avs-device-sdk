@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,12 +19,10 @@
 #include <memory>
 
 #include "ACL/Transport/PostConnectObserverInterface.h"
-#include "ACL/Transport/PostConnectSendMessageInterface.h"
+#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
 
 namespace alexaClientSDK {
 namespace acl {
-
-class HTTP2Transport;
 
 /**
  * Interface for post-connect objects which should be used to perform activities after a connection is established.
@@ -32,14 +30,18 @@ class HTTP2Transport;
 class PostConnectInterface {
 public:
     /**
-     * The main method which is responsible for doing the PostConnect action
-     * of the specific PostConnect object type.
+     * The main method which is responsible for doing the PostConnect action.
      *
-     * @param transport The transport to which the post connect is associated..
+     * @note: This method is not expected to be called twice throughout the lifecycle of the object.
      *
-     * @return A boolean to indicate that the post connect process has been successfully initiated
+     * @param postConnectSender The @c PostConnectSendMessageInterface to send post connect messages.
+     * @param postConnectObserver The @c PostConnectObserverInterface to get notified on success or failure of the
+     * post connect action.
+     * @return A boolean to indicate that the post connect process has been successfully initiated.
      */
-    virtual bool doPostConnect(std::shared_ptr<HTTP2Transport> transport) = 0;
+    virtual bool doPostConnect(
+        std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+        std::shared_ptr<PostConnectObserverInterface> postConnectObserver) = 0;
 
     /**
      * Handle notification that the connection has been lost.

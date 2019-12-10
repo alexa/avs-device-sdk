@@ -23,13 +23,14 @@
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
+#include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <ContextManager/ContextManager.h>
+#include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
@@ -144,10 +145,27 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthD
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
         return nullptr;
     }
-    avsCommunication->m_contextManager = contextManager::ContextManager::create();
+
+    auto config = avsCommon::utils::configuration::ConfigurationNode::getRoot();
+    EXPECT_TRUE(config);
+    if (!config) {
+        return nullptr;
+    }
+
+    auto deviceInfo = avsCommon::utils::DeviceInfo::create(config);
+    EXPECT_TRUE(deviceInfo);
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "createDeviceInfoFailed"));
+        return nullptr;
+    }
+    avsCommunication->m_contextManager = contextManager::ContextManager::create(*deviceInfo);
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
-    auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(avsCommunication->m_contextManager);
+    auto synchronizeStateSenderFactory =
+        synchronizeStateSender::SynchronizeStateSenderFactory::create(avsCommunication->m_contextManager);
+    std::vector<std::shared_ptr<PostConnectOperationProviderInterface>> providers;
+    providers.push_back(synchronizeStateSenderFactory);
+    auto postConnectFactory = acl::PostConnectSequencerFactory::create(providers);
     auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
     auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     avsCommunication->m_messageRouter = std::make_shared<MessageRouter>(

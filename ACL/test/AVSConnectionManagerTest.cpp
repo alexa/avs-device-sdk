@@ -64,8 +64,8 @@ public:
     MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(getConnectionStatus, MessageRouterInterface::ConnectionStatus());
     MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
-    MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
-    MOCK_METHOD0(getAVSEndpoint, std::string());
+    MOCK_METHOD1(setAVSGateway, void(const std::string& avsGateway));
+    MOCK_METHOD0(getAVSGateway, std::string());
     MOCK_METHOD1(setObserver, void(std::shared_ptr<MessageRouterObserverInterface> observer));
 };
 
@@ -223,20 +223,20 @@ TEST_F(AVSConnectionManagerTest, test_sendMessageRequest) {
 }
 
 /**
- * Test setAVSEndpoint and expect a call to messageRouter's setAVSEndpoint.
+ * Test setAVSGateway and expect a call to messageRouter's setAVSGateway.
  */
-TEST_F(AVSConnectionManagerTest, test_setAVSEndpoint) {
-    EXPECT_CALL(*m_messageRouter, setAVSEndpoint(_)).Times(1);
-    m_avsConnectionManager->setAVSEndpoint("AVSEndpoint");
+TEST_F(AVSConnectionManagerTest, test_setAVSGateway) {
+    EXPECT_CALL(*m_messageRouter, setAVSGateway(_)).Times(1);
+    m_avsConnectionManager->setAVSGateway("AVSGateway");
 }
 
 /**
- * Test getAVSEndpoint and expect a call to messageRouter's getAVSEndpoint.
+ * Test getAVSGateway and expect a call to messageRouter's getAVSGateway.
  */
-TEST_F(AVSConnectionManagerTest, getAVSEndpointTest) {
-    auto endpoint = "AVSEndpoint";
-    EXPECT_CALL(*m_messageRouter, getAVSEndpoint()).Times(1).WillOnce(Return(endpoint));
-    ASSERT_EQ(endpoint, m_avsConnectionManager->getAVSEndpoint());
+TEST_F(AVSConnectionManagerTest, getAVSGatewayTest) {
+    auto gateway = "AVSGateway";
+    EXPECT_CALL(*m_messageRouter, getAVSGateway()).Times(1).WillOnce(Return(gateway));
+    ASSERT_EQ(gateway, m_avsConnectionManager->getAVSGateway());
 }
 
 /**

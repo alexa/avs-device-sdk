@@ -70,20 +70,13 @@ public:
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface> getHostController() override;
     std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>> getDiscoveredDevices()
         override;
-
+    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> getEventBus() override;
     ///@}
 
     // @name RequiresShutdown Functions
     /// @{
     void doShutdown() override;
     /// @}
-
-    /**
-     * Get the @c BluetoothEventBus used by this device manager to post bluetooth related events.
-     *
-     * @return A @c BluetoothEventBus object associated with the device manager.
-     */
-    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> getEventBus();
 
     /**
      * Get the SINK @c MediaEndpoint associated with the device manager

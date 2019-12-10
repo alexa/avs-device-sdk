@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ namespace settings {
  * @code
  *
  * MyClass(std::shared_ptr<DeviceSettingManagers> manager) : m_callbacks {manager} {
- *     m_callbacks.add<ASCENDING_ALARM>([](bool enable, SettingNotifications notification){
+ *     m_callbacks.add<ALARM_VOLUME_RAMP>([](bool enable, SettingNotifications notification){
  *         // do something...
  *     });
  *     m_callbacks.add<TIMEZONE>(staticFunction);

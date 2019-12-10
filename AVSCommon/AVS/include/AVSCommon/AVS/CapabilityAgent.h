@@ -76,13 +76,6 @@ public:
 
     void onFocusChanged(FocusState newFocus) override;
 
-    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
-        override;
-
-    void onContextAvailable(const std::string& jsonContext) override;
-
-    void onContextFailure(const sdkInterfaces::ContextRequestError error) override;
-
 protected:
     /**
      * Constructor for a Capability Agent.

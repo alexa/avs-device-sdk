@@ -37,6 +37,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 
 #include "Integration/ACLTestContext.h"
@@ -68,6 +69,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::sds;
+using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace contextManager;
 using namespace sdkInterfaces;
@@ -348,13 +350,21 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            m_dialogUXStateAggregator);
+            nullptr,
+            m_dialogUXStateAggregator,
+            nullptr);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
         m_speechSynthesizerObserver = std::make_shared<TestSpeechSynthesizerObserver>();
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
         m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_directiveHandler));
+
+        m_interactionModelCA =
+            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        ASSERT_NE(nullptr, m_interactionModelCA);
+        ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
+        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
     }
 
     /**
@@ -512,6 +522,7 @@ protected:
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
     std::shared_ptr<FocusManager> m_focusManager;
     std::shared_ptr<TestClient> m_testClient;

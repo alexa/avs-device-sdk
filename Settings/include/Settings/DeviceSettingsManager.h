@@ -23,6 +23,7 @@
 #include "Settings/SettingInterface.h"
 #include "Settings/SettingsManager.h"
 #include "Settings/SpeechConfirmationSettingType.h"
+#include "Settings/Types/AlarmVolumeRampTypes.h"
 #include "Settings/WakeWordConfirmationSettingType.h"
 
 namespace alexaClientSDK {
@@ -42,6 +43,9 @@ using WakeWords = std::set<WakeWord>;
 
 /// Type for do not disturb setting.
 using DoNotDisturbSetting = SettingInterface<bool>;
+
+/// Forward declaration for AlarmVolumeRamp setting.
+using AlarmVolumeRampSetting = SettingInterface<types::AlarmVolumeRampTypes>;
 
 /// Type for wake word confirmation setting.
 using WakeWordConfirmationSetting = SettingInterface<WakeWordConfirmationSettingType>;
@@ -63,11 +67,20 @@ using LocalesSetting = SettingInterface<DeviceLocales>;
  *
  * @note This enumeration must reflect the order that the settings show up in the DeviceSettingsManager declaration.
  */
-enum DeviceSettingsIndex { DO_NOT_DISTURB, WAKEWORD_CONFIRMATION, SPEECH_CONFIRMATION, TIMEZONE, WAKE_WORDS, LOCALE };
+enum DeviceSettingsIndex {
+    DO_NOT_DISTURB,
+    ALARM_VOLUME_RAMP,
+    WAKEWORD_CONFIRMATION,
+    SPEECH_CONFIRMATION,
+    TIMEZONE,
+    WAKE_WORDS,
+    LOCALE
+};
 
 /// The DeviceSettingsManager will manage all common settings to alexa devices.
 using DeviceSettingsManager = SettingsManager<
     DoNotDisturbSetting,
+    AlarmVolumeRampSetting,
     WakeWordConfirmationSetting,
     SpeechConfirmationSetting,
     TimeZoneSetting,

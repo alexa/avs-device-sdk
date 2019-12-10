@@ -95,6 +95,11 @@ public:
          */
         uint8_t maxReaders;
 
+        /**
+         * This field specifies the maximum number of ephemeral @c Readers created without specifying an @c id.
+         */
+        uint8_t maxEphemeralReaders;
+
         /// This field contains the condition variable used to notify @c Readers that data is available.
         ConditionVariable dataAvailableConditionVariable;
 
@@ -234,9 +239,10 @@ public:
      * @param wordSize The size (in bytes) of words in the stream.  All @c SharedDataStream operations that work with
      *     data or position in the stream are quantified in words.
      * @param maxReaders The maximum number of readers the stream will support.
+     * @param maxEphemeralReaders The maximum number of readers that can be created without specifying a reader id.
      * @return @c false if wordSize or maxReaders are too large to be stored, else @c true.
      */
-    bool init(size_t wordSize, size_t maxReaders);
+    bool init(size_t wordSize, size_t maxReaders, size_t maxEphemeralReaders);
 
     /**
      * This function tries to attach this @c BufferLayout to a @c Buffer which was already initialized by another
@@ -467,7 +473,7 @@ auto inline max_field_limit(FieldType(ClassType::*)) -> decltype(std::numeric_li
 }
 
 template <typename T>
-bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders) {
+bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders, size_t maxEphemeralReaders) {
     // Make sure parameters are not too large to store.
     if (wordSize > max_field_limit(&Header::wordSize)) {
         logger::acsdkError(logger::LogEntry(TAG, "initFailed")
@@ -504,6 +510,7 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders)
     header->traitsNameHash = stableHash(T::traitsName);
     header->wordSize = wordSize;
     header->maxReaders = maxReaders;
+    header->maxEphemeralReaders = maxEphemeralReaders;
     header->isWriterEnabled = false;
     header->hasWriterBeenClosed = false;
     header->writeStartCursor = 0;

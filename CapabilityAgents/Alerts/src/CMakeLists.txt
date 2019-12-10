@@ -15,9 +15,10 @@ target_include_directories(Alerts PUBLIC
         "${AudioResources_SOURCE_DIR}/include"
         "${CertifiedSender_SOURCE_DIR}/include"
         "${SQLiteStorage_SOURCE_DIR}/include"
-        "${RegistrationManager_SOURCE_DIR}/include")
+        "${RegistrationManager_SOURCE_DIR}/include"
+        "${DeviceSettings_SOURCE_DIR}/include")
 
-target_link_libraries(Alerts AudioResources AVSCommon CertifiedSender SQLiteStorage RegistrationManager)
+target_link_libraries(Alerts AudioResources AVSCommon CertifiedSender SQLiteStorage RegistrationManager DeviceSettings)
 
 # install target
 asdk_install()

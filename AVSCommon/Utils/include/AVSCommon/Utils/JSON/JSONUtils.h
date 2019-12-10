@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_JSON_JSONUTILS_H_
 
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -97,6 +98,15 @@ bool convertToValue(const rapidjson::Value& documentNode, uint64_t* value);
  * @return @c true If the node was successfully converted, @c false otherwise.
  */
 bool convertToValue(const rapidjson::Value& documentNode, bool* value);
+
+/**
+ * Converts a given rapidjson value node to a double. The node must be double type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the double value.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+bool convertToValue(const rapidjson::Value& documentNode, double* value);
 
 /**
  * A template function to find and retrieve a value of type T from a direct child of the
@@ -211,6 +221,16 @@ CollectionT retrieveStringArray(const rapidjson::Value& value);
  */
 template <class CollectionT>
 std::string convertToJsonString(const CollectionT& elements);
+
+/**
+ * Retrieve a string map from a @c rapidjson value with the given key.
+ *
+ * @param value A @c Value that represents a string map.
+ * @param key The name of the array being looked for.
+ * @return The output collection which will contain all extracted elements.  An empty collection if value
+ * contains non-string elements or if the key was not found.
+ */
+std::map<std::string, std::string> retrieveStringMap(const rapidjson::Value& value, const std::string& key);
 
 //----- Templated functions implementation and specializations.
 

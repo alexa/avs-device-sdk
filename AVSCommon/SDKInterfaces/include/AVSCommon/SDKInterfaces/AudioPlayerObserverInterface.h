@@ -20,6 +20,7 @@
 #include <string>
 
 #include <AVSCommon/AVS/PlayerActivity.h>
+#include <AVSCommon/AVS/PlayRequestor.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -42,6 +43,9 @@ public:
 
         /// The offset in millisecond from the start of the @c AudioItem.
         std::chrono::milliseconds offset;
+
+        /// The @c PlayRequestor object in @c Play directive.
+        avsCommon::avs::PlayRequestor playRequestor;
     };
 
     /**

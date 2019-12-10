@@ -160,6 +160,20 @@ public:
     }
 
     /**
+     * This is an indication to the observer that the @c MediaPlayer has completed buffering of the source specified by
+     * the id.  This can be sent anytime after a source is set.
+     * This notification is part of @c AudioPlayer's implementation for pre-buffering, and must be called by
+     * @c MediaPlayer implementations for this feature to work properly.
+     *
+     * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
+     * further processing.
+     *
+     * @param id The id of the source to which this callback corresponds to.
+     */
+    virtual void onBufferingComplete(SourceId id) {
+    }
+
+    /**
      * This is an indication to the observer that the @c MediaPlayer has found tags in the stream.
      * Tags are key value pairs extracted from the metadata of the stream. There can be multiple
      * tags that have the same key. Vector preserves the order of insertion

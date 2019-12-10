@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/Memory/Memory.h"
 
 #include "ACL/AVSConnectionManager.h"
@@ -145,12 +145,12 @@ bool AVSConnectionManager::isConnected() const {
     return m_messageRouter->getConnectionStatus().first == ConnectionStatusObserverInterface::Status::CONNECTED;
 }
 
-void AVSConnectionManager::setAVSEndpoint(const std::string& avsEndpoint) {
-    m_messageRouter->setAVSEndpoint(avsEndpoint);
+void AVSConnectionManager::setAVSGateway(const std::string& avsGateway) {
+    m_messageRouter->setAVSGateway(avsGateway);
 }
 
-std::string AVSConnectionManager::getAVSEndpoint() {
-    return m_messageRouter->getAVSEndpoint();
+std::string AVSConnectionManager::getAVSGateway() {
+    return m_messageRouter->getAVSGateway();
 }
 
 void AVSConnectionManager::onConnectionStatusChanged(bool connected) {

@@ -64,7 +64,8 @@ std::shared_ptr<PingHandler> PingHandler::create(
 
     std::shared_ptr<PingHandler> handler(new PingHandler(context, authToken));
 
-    HTTP2RequestConfig cfg{HTTP2RequestType::GET, context->getEndpoint() + AVS_PING_URL_PATH_EXTENSION, PING_ID_PREFIX};
+    HTTP2RequestConfig cfg{
+        HTTP2RequestType::GET, context->getAVSGateway() + AVS_PING_URL_PATH_EXTENSION, PING_ID_PREFIX};
     cfg.setRequestSource(handler);
     cfg.setResponseSink(handler);
     cfg.setTransferTimeout(PING_TRANSFER_TIMEOUT);

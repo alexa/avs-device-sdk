@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -74,8 +74,8 @@ void TestMessageSender::reconnect() {
     m_connectionManager->reconnect();
 }
 
-void TestMessageSender::setAVSEndpoint(const std::string& avsEndpoint) {
-    m_connectionManager->setAVSEndpoint(avsEndpoint);
+void TestMessageSender::setAVSGateway(const std::string& avsGateway) {
+    m_connectionManager->setAVSGateway(avsGateway);
 }
 
 void TestMessageSender::addConnectionStatusObserver(

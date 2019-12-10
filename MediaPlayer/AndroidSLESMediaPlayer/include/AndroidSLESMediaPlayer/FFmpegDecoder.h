@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ extern "C" {
 #include "AndroidSLESMediaPlayer/DecoderInterface.h"
 #include "AndroidSLESMediaPlayer/FFmpegInputControllerInterface.h"
 #include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
+#include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
 
 struct AVCodec;
 struct AVCodecContext;
@@ -40,6 +41,8 @@ struct AVFrame;
 struct AVInputFormat;
 struct AVIOContext;
 struct SwrContext;
+struct AVFilterGraph;
+struct AVFilterContext;
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
@@ -69,7 +72,8 @@ public:
      */
     static std::unique_ptr<FFmpegDecoder> create(
         std::unique_ptr<FFmpegInputControllerInterface> inputController,
-        const PlaybackConfiguration& outputConfig);
+        const PlaybackConfiguration& outputConfig,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig());
 
     /// @name DecoderInterface method overrides.
     /// @{
@@ -105,7 +109,8 @@ private:
         std::unique_ptr<FFmpegInputControllerInterface> inputController,
         AVSampleFormat format,
         LayoutMask layout,
-        int sampleRate);
+        int sampleRate,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config);
 
     /**
      * This enumeration represents the states that the decoder can be in. The possible transitions are:
@@ -246,6 +251,13 @@ private:
     void initialize();
 
     /**
+     * Initialize the decoder audio filters.
+     *
+     * If there is an unrecoverable error, it will return false and set the decoder to @c INVALID state.
+     */
+    bool initializeFilters();
+
+    /**
      * Parse the status returned by an FFmpeg function.
      *
      * - If there was a unrecoverable error, set the decoder state to @c INVALID.
@@ -283,6 +295,15 @@ private:
     /// Pointer to the resample context.
     std::shared_ptr<SwrContext> m_swrContext;
 
+    /// Pointer to the filter graph context. Used when alarm volume ramp is enabled.
+    std::shared_ptr<AVFilterGraph> m_filterGraph;
+
+    /// Pointers to the input and output filters of the filter context.
+    /// The filter graph context owns these, the shared_ptrs are initialized
+    /// with a noop deleter.
+    std::shared_ptr<AVFilterContext> m_filterInput;
+    std::shared_ptr<AVFilterContext> m_filterOutput;
+
     /// Object that keeps the unread data leftover from the last @c read.
     UnreadData m_unreadData;
 
@@ -294,6 +315,12 @@ private:
 
     /// Time when the initialize method started. This is used to abort initialization that might be taking too long.
     std::chrono::time_point<std::chrono::steady_clock> m_initializeStartTime;
+
+    /// The source config (for fade in)
+    avsCommon::utils::mediaPlayer::SourceConfig m_sourceConfig;
+
+    /// The sum total of audio sample duration decoded, in milliseconds
+    long long m_decodedSampleTime = 0;
 };
 
 }  // namespace android

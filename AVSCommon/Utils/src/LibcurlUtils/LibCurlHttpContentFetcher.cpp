@@ -368,7 +368,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                     int finalResponseCodeId = 0;
                     auto curlReturnValue =
                         curl_easy_getinfo(m_curlWrapper.getCurlHandle(), CURLINFO_RESPONSE_CODE, &finalResponseCodeId);
-                    finalResponseCode = intToHTTPResponseCode(finalResponseCode);
+                    finalResponseCode = intToHTTPResponseCode(finalResponseCodeId);
                     if (curlReturnValue != CURLE_OK) {
                         ACSDK_ERROR(LX("curlEasyGetInfoFailed").d("error", curl_easy_strerror(curlReturnValue)));
                         break;

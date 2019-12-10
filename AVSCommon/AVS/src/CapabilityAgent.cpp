@@ -145,18 +145,6 @@ void CapabilityAgent::onFocusChanged(FocusState) {
     // default no-op
 }
 
-void CapabilityAgent::provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextAvailable(const std::string&) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextFailure(const sdkInterfaces::ContextRequestError) {
-    // default no-op
-}
-
 const std::pair<std::string, std::string> CapabilityAgent::buildJsonEventString(
     const std::string& eventName,
     const std::string& dialogRequestIdString,

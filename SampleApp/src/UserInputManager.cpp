@@ -22,6 +22,10 @@
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
 
+#ifdef RANGE_CONTROLLER
+#include "SampleApp/ModeControllerHandler.h"
+#endif
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -50,6 +54,10 @@ static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
 static const char RESET = 'k';
 static const char REAUTHORIZE = 'z';
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+static const char ENDPOINT_CONTROLLER = 'e';
+#endif
+
 #ifdef ENABLE_COMMS
 static const char COMMS_CONTROL = 'd';
 #endif
@@ -71,8 +79,65 @@ enum class SettingsValues : char {
     WAKEWORD_CONFIRMATION = '3',
     SPEECH_CONFIRMATION = '4',
     TIME_ZONE = '5',
+    ALARM_VOLUME_RAMP = '6',
     QUIT = 'q'
 };
+
+#ifdef ENABLE_COMMS
+static const std::unordered_map<char, CallManagerInterface::DTMFTone> dtmfToneMaps = {
+    {'0', CallManagerInterface::DTMFTone::DTMF_ZERO},
+    {'1', CallManagerInterface::DTMFTone::DTMF_ONE},
+    {'2', CallManagerInterface::DTMFTone::DTMF_TWO},
+    {'3', CallManagerInterface::DTMFTone::DTMF_THREE},
+    {'4', CallManagerInterface::DTMFTone::DTMF_FOUR},
+    {'5', CallManagerInterface::DTMFTone::DTMF_FIVE},
+    {'6', CallManagerInterface::DTMFTone::DTMF_SIX},
+    {'7', CallManagerInterface::DTMFTone::DTMF_SEVEN},
+    {'8', CallManagerInterface::DTMFTone::DTMF_EIGHT},
+    {'9', CallManagerInterface::DTMFTone::DTMF_NINE},
+    {'*', CallManagerInterface::DTMFTone::DTMF_STAR},
+    {'#', CallManagerInterface::DTMFTone::DTMF_POUND},
+};
+#endif
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+enum class EndpointControllerMenuChoice : char {
+#ifdef POWER_CONTROLLER
+    POWER_CONTROLLER_OPTION = '1',
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+    TOGGLE_CONTROLLER_OPTION = '2',
+#endif
+
+#ifdef MODE_CONTROLLER
+    MODE_CONTROLLER_OPTION = '3',
+#endif
+
+#ifdef RANGE_CONTROLLER
+    RANGE_CONTROLLER_OPTION = '4',
+#endif
+
+    QUIT = 'q'
+};
+
+#ifdef POWER_CONTROLLER
+static const char POWER_CONTROLLER_ON = '1';
+static const char POWER_CONTROLLER_OFF = '2';
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+static const char TOGGLE_CONTROLLER_ON = '1';
+static const char TOGGLE_CONTROLLER_OFF = '2';
+#endif
+
+#ifdef MODE_CONTROLLER
+static const char MODE_RED = '1';
+static const char MODE_GREEN = '2';
+static const char MODE_BLUE = '3';
+#endif
+
+#endif
 
 /// The index of the first option in displaying a list of options.
 static const unsigned OPTION_ENUM_START = 1;
@@ -150,6 +215,32 @@ bool UserInputManager::readConsoleInput(char* input) {
     return false;
 }
 
+#ifdef ENABLE_COMMS
+static bool isValidDtmf(const std::string& dtmfTones) {
+    int dtmfLength = dtmfTones.length();
+    for (int i = 0; i < dtmfLength; i++) {
+        auto dtmfIterator = dtmfToneMaps.find(dtmfTones[i]);
+        if (dtmfIterator == dtmfToneMaps.end()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool UserInputManager::sendDtmf(const std::string& dtmfTones) {
+    int dtmfLength = dtmfTones.length();
+    if (!isValidDtmf(dtmfTones)) {
+        return false;
+    }
+
+    for (int i = 0; i < dtmfLength; i++) {
+        auto dtmfIterator = dtmfToneMaps.find(dtmfTones[i]);
+        m_interactionManager->sendDtmf(dtmfIterator->second);
+    }
+    return true;
+}
+#endif
+
 SampleAppReturnCode UserInputManager::run() {
     bool userTriggeredLogout = false;
     m_interactionManager->begin();
@@ -183,6 +274,10 @@ SampleAppReturnCode UserInputManager::run() {
 #endif
         } else if (x == SETTINGS) {
             settingsMenu();
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+        } else if (x == ENDPOINT_CONTROLLER) {
+            endpointControllerMenu();
+#endif
         } else if (x == INFO) {
             if (m_limitedInteraction) {
                 m_interactionManager->limitedHelp();
@@ -239,6 +334,7 @@ SampleAppReturnCode UserInputManager::run() {
             m_interactionManager->commsControl();
             char commsChoice;
             bool continueWhileLoop = true;
+            std::string dtmfTones;
             while (continueWhileLoop) {
                 std::cin >> commsChoice;
                 switch (commsChoice) {
@@ -249,6 +345,14 @@ SampleAppReturnCode UserInputManager::run() {
                     case 's':
                     case 'S':
                         m_interactionManager->stopCall();
+                        break;
+                    case 'd':
+                    case 'D':
+                        m_interactionManager->dtmfControl();
+                        std::cin >> dtmfTones;
+                        if (!sendDtmf(dtmfTones)) {
+                            m_interactionManager->errorDtmf();
+                        }
                         break;
                     case 'q':
                         m_interactionManager->help();
@@ -535,6 +639,10 @@ void UserInputManager::settingsMenu() {
                 // failure.
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
+            // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect input.
+            std::cin.clear();
+            // Ignore anything else on the same line as the non-number so that it does not cause another parse failure.
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return;
         }
         case (char)SettingsValues::DO_NOT_DISTURB: {
@@ -574,6 +682,11 @@ void UserInputManager::settingsMenu() {
             }
             return;
         }
+        case (char)SettingsValues::ALARM_VOLUME_RAMP: {
+            m_interactionManager->alarmVolumeRamp();
+            boolSettingMenu([this](bool enable) { m_interactionManager->setAlarmVolumeRamp(enable); });
+            return;
+        }
         case (char)SettingsValues::QUIT: {
             return;
         }
@@ -583,6 +696,115 @@ void UserInputManager::settingsMenu() {
         }
     }
 }
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+void UserInputManager::endpointControllerMenu() {
+    m_interactionManager->endpointController();
+    char y;
+    std::cin >> y;
+    switch (y) {
+#ifdef POWER_CONTROLLER
+        case static_cast<char>(EndpointControllerMenuChoice::POWER_CONTROLLER_OPTION): {
+            char optionSelected;
+            m_interactionManager->powerController();
+            std::cin >> optionSelected;
+            if (!std::cin.fail()) {
+                if (optionSelected == POWER_CONTROLLER_ON) {
+                    m_interactionManager->setPowerState(true);
+                } else if (optionSelected == POWER_CONTROLLER_OFF) {
+                    m_interactionManager->setPowerState(false);
+                } else if (QUIT == optionSelected) {
+                    return;
+                } else {
+                    m_interactionManager->errorValue();
+                }
+            } else {
+                m_interactionManager->errorValue();
+                // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+                // input.
+                std::cin.clear();
+                // Ignore anything else on the same line as the non-number so that it does not cause another parse
+                // failure.
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            return;
+        }
+#endif
+#ifdef TOGGLE_CONTROLLER
+        case static_cast<char>(EndpointControllerMenuChoice::TOGGLE_CONTROLLER_OPTION): {
+            char optionSelected;
+            m_interactionManager->toggleController();
+            std::cin >> optionSelected;
+            if (!std::cin.fail()) {
+                if (optionSelected == TOGGLE_CONTROLLER_ON) {
+                    m_interactionManager->setToggleState(true);
+                } else if (optionSelected == TOGGLE_CONTROLLER_OFF) {
+                    m_interactionManager->setToggleState(false);
+                } else if (QUIT == optionSelected) {
+                    return;
+                } else {
+                    m_interactionManager->errorValue();
+                }
+            } else {
+                m_interactionManager->errorValue();
+                // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+                // input.
+                std::cin.clear();
+                // Ignore anything else on the same line as the non-number so that it does not cause another parse
+                // failure.
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            return;
+        }
+#endif
+#ifdef MODE_CONTROLLER
+        case static_cast<char>(EndpointControllerMenuChoice::MODE_CONTROLLER_OPTION): {
+            char optionSelected;
+            m_interactionManager->modeController();
+            std::cin >> optionSelected;
+            if (!std::cin.fail()) {
+                if (optionSelected == MODE_RED) {
+                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_RED);
+                } else if (optionSelected == MODE_GREEN) {
+                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_GREEN);
+                } else if (optionSelected == MODE_BLUE) {
+                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_BLUE);
+                } else if (QUIT == optionSelected) {
+                    return;
+                } else {
+                    m_interactionManager->errorValue();
+                }
+            } else {
+                m_interactionManager->errorValue();
+                // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+                // input.
+                std::cin.clear();
+                // Ignore anything else on the same line as the non-number so that it does not cause another parse
+                // failure.
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            return;
+        }
+#endif
+#ifdef RANGE_CONTROLLER
+        case static_cast<char>(EndpointControllerMenuChoice::RANGE_CONTROLLER_OPTION): {
+            double value;
+            m_interactionManager->rangeController();
+            std::cin >> value;
+            m_interactionManager->setRangeValue(value);
+            return;
+        }
+#endif
+        case static_cast<char>(EndpointControllerMenuChoice::QUIT): {
+            return;
+        }
+        default: {
+            m_interactionManager->errorValue();
+            return;
+        }
+    }
+}
+#endif
 
 }  // namespace sampleApp
 }  // namespace alexaClientSDK

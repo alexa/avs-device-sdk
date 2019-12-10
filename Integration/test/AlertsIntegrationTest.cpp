@@ -36,6 +36,9 @@
 #include <Alerts/AlertObserverInterface.h>
 #include <Alerts/AlertsCapabilityAgent.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
+#include <Settings/MockSetting.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
 #include <Audio/AlertsAudioFactory.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
@@ -52,7 +55,9 @@
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <Settings/MockSetting.h>
 #include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/Types/AlarmVolumeRampTypes.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/UserInactivityMonitor.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
@@ -88,6 +93,7 @@ using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace capabilityAgents::aip;
 using namespace afml;
+using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
 using namespace settings;
@@ -308,6 +314,8 @@ protected:
         m_compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;
         m_compatibleAudioFormat.encoding = COMPATIBLE_ENCODING;
 
+        m_mockAlarmVolumeRampSetting =
+            std::make_shared<MockSetting<types::AlarmVolumeRampTypes>>(types::getAlarmVolumeRampDefault());
         m_mockWakeWordConfirmationSetting =
             std::make_shared<MockSetting<WakeWordConfirmationSettingType>>(getWakeWordConfirmationDefault());
         m_mockSpeechConfirmationSetting =
@@ -379,6 +387,7 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
+            nullptr,
             m_dialogUXStateAggregator);
         ASSERT_NE(nullptr, m_speechSynthesizer);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
@@ -386,12 +395,18 @@ protected:
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
         m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
+        m_interactionModelCA =
+            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        ASSERT_NE(nullptr, m_interactionModelCA);
+        ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
+        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_rendererMediaPlayer = MediaPlayer::create(nullptr);
 #else
         m_rendererMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
-        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer);
+        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer, m_deviceSettingsManager);
 
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
@@ -420,7 +435,8 @@ protected:
             m_alertStorage,
             alertsAudioFactory,
             m_alertRenderer,
-            m_customerDataManager);
+            m_customerDataManager,
+            m_mockAlarmVolumeRampSetting);
         ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->addObserver(m_alertObserver);
         m_alertsAgent->onLocalStop();
@@ -582,9 +598,11 @@ protected:
     std::shared_ptr<TestClient> m_testDialogClient;
     std::shared_ptr<TestAlertObserver> m_AlertsAgentObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<capabilityAgents::alerts::storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<MockSetting<types::AlarmVolumeRampTypes>> m_mockAlarmVolumeRampSetting;
     std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
     std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;
     std::shared_ptr<renderer::RendererInterface> m_alertRenderer;
@@ -1330,6 +1348,9 @@ TEST_F(AlertsTest, test_handleOneTimerWithVocalStop) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
 
+    ASSERT_EQ(
+        m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state,
+        AlertObserverInterface::State::SCHEDULED_FOR_LATER);
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::READY);
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STARTED);
 

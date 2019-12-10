@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -109,6 +109,7 @@ std::shared_ptr<CapabilityConfiguration> getAudioActivityTrackerCapabilityConfig
 }
 
 void AudioActivityTracker::doShutdown() {
+    m_contextManager->removeStateProvider(CONTEXT_MANAGER_STATE);
     m_executor.shutdown();
     m_contextManager.reset();
 }

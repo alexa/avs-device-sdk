@@ -666,6 +666,7 @@ install_dependencies() {
                   --enable-decoders \
                   --enable-demuxers \
                   --enable-protocols \
+                  --enable-filter=volume \
                   --pkg-config=true # Hack to allow us to use openssl.
           popd
       fi

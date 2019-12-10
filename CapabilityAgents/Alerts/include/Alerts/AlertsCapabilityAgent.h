@@ -36,8 +36,9 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
-
 #include <CertifiedSender/CertifiedSender.h>
+#include <Settings/Setting.h>
+#include <Settings/SettingEventMetadata.h>
 
 #include <chrono>
 #include <set>
@@ -78,6 +79,7 @@ public:
      * @param alertsAudioFactory A provider of audio streams specific to Alerts.
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param alarmVolumeRampSetting The alarm volume ramp setting.
      * @return A pointer to an object of this type, or nullptr if there were problems during construction.
      */
     static std::shared_ptr<AlertsCapabilityAgent> create(
@@ -91,7 +93,8 @@ public:
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -168,6 +171,13 @@ public:
      */
     void clearData() override;
 
+    /**
+     * Return the alarm volume ramp event metadata.
+     *
+     * @return The alarm volume ramp event metadata.
+     */
+    static settings::SettingEventMetadata getAlarmVolumeRampMetadata();
+
 private:
     /**
      * Constructor.
@@ -182,6 +192,7 @@ private:
      * @param alertsAudioFactory A provider of audio streams specific to Alerts.
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param alarmVolumeRampSetting The alarm volume ramp setting.
      */
     AlertsCapabilityAgent(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -193,12 +204,15 @@ private:
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting);
 
     void doShutdown() override;
 
     /**
      * Initializes this object.
+     *
+     * @return @c true if it succeeds; @c false otherwise.
      */
     bool initialize();
 
@@ -376,6 +390,17 @@ private:
         const rapidjson::Document& payload);
 
     /**
+     * A helper function to handle the SetAlarmVolumeRamp directive.
+     *
+     * @param directive The AVS Directive.
+     * @param payload The payload containing the new value for alarm volume ramp.
+     * @return Whether the directive processing was successful.
+     */
+    bool handleSetAlarmVolumeRamp(
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+        const rapidjson::Document& payload);
+
+    /**
      * Utility function to send a single alert related Event to AVS. If isCertified is set to true, then the Event
      * will be guaranteed to be sent to AVS at some point in the future, even if there is no currently active
      * connection.  If it is set to false, and there is no currently active connection, the Event will not be sent.
@@ -516,6 +541,11 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /**
+     * The alarm volume ramp setting.
+     */
+    std::shared_ptr<settings::AlarmVolumeRampSetting> m_alarmVolumeRampSetting;
 };
 
 }  // namespace alerts

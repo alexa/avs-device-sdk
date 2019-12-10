@@ -78,6 +78,35 @@ public:
      */
     bool finishObject();
 
+    /**
+     * Starts a new array with the given key.
+     *
+     * @param key The new array name.
+     * @return @c true if it succeeds to create a new object and @c false if it fails.
+     */
+    bool startArray(const std::string& key);
+
+    /**
+     * Starts a new array object element.
+     *
+     * @return @c true if it succeeds to create a new object and @c false if it fails.
+     */
+    bool startArrayElement();
+
+    /**
+     * Finish the last array element that has been opened.
+     *
+     * @return @c true if the last object was closed @c false if it fails.
+     */
+    bool finishArrayElement();
+
+    /**
+     * Finish the last array that has been opened.
+     *
+     * @return @c true if the last object was closed @c false if it fails.
+     */
+    bool finishArray();
+
     ///@{
     /**
      * Add a new member with the key and value.
@@ -93,6 +122,7 @@ public:
     bool addMember(const std::string& key, int value);
     bool addMember(const std::string& key, unsigned int value);
     bool addMember(const std::string& key, bool value);
+    bool addMember(const std::string& key, double value);
     ///@}
 
     /**

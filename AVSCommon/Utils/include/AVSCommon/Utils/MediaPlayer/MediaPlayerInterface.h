@@ -23,6 +23,7 @@
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include "AVSCommon/Utils/AudioFormat.h"
+#include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -73,15 +74,19 @@ public:
      *
      * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
      * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
+     * Also, an implementation must call @c MediaPlayerObserverInterface::onBufferingComplete() when this source has
+     * been fully buffered
      *
      * @param attachmentReader Object with which to read an incoming audio attachment.
      * @param format The audioFormat to be used to interpret raw audio data.
+     * @param config Media configuration of source.
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      *     returned if the source failed to be set.  Must be unique across all instances.
      */
     virtual SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* format = nullptr) = 0;
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const SourceConfig& config = emptySourceConfig()) = 0;
 
     /**
      * Set a url source to play. The source should be set before making calls to any of the playback control APIs. If
@@ -89,9 +94,12 @@ public:
      *
      * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
      * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
+     * Also, an implementation must call @c MediaPlayerObserverInterface::onBufferingComplete() when this source has
+     * been fully buffered
      *
      * @param url The url to set as the source.
      * @param offset An optional offset parameter to start playing from when a @c play() call is made.
+     * @param config Media configuration of source.
      * @param repeat An optional parameter to play the url source in a loop.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
@@ -100,6 +108,7 @@ public:
     virtual SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const SourceConfig& config = emptySourceConfig(),
         bool repeat = false) = 0;
 
     /**
@@ -108,14 +117,20 @@ public:
      *
      * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
      * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
+     * Also, an implementation must call @c MediaPlayerObserverInterface::onBufferingComplete() when this source has
+     * been fully buffered
      *
      * @param stream Object from which to read an incoming audio stream.
      * @param repeat Whether the audio stream should be played in a loop until stopped.
+     * @param config Media configuration of source.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      * returned if the source failed to be set.  Must be unique across all instances.
      */
-    virtual SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) = 0;
+    virtual SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat = false,
+        const SourceConfig& config = emptySourceConfig()) = 0;
 
     /**
      * Starts playing audio specified by the @c setSource() call.

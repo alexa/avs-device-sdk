@@ -45,6 +45,18 @@ InteractionManager::InteractionManager(
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
     std::shared_ptr<sampleApp::GuiRenderer> guiRenderer,
     capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
+#ifdef POWER_CONTROLLER
+    std::shared_ptr<PowerControllerHandler> powerControllerHandler,
+#endif
+#ifdef TOGGLE_CONTROLLER
+    std::shared_ptr<ToggleControllerHandler> toggleControllerHandler,
+#endif
+#ifdef RANGE_CONTROLLER
+    std::shared_ptr<RangeControllerHandler> rangeControllerHandler,
+#endif
+#ifdef MODE_CONTROLLER
+    std::shared_ptr<ModeControllerHandler> modeControllerHandler,
+#endif
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
@@ -62,6 +74,18 @@ InteractionManager::InteractionManager(
         m_holdToTalkAudioProvider{holdToTalkAudioProvider},
         m_tapToTalkAudioProvider{tapToTalkAudioProvider},
         m_wakeWordAudioProvider{wakeWordAudioProvider},
+#ifdef POWER_CONTROLLER
+        m_powerControllerHandler{powerControllerHandler},
+#endif
+#ifdef TOGGLE_CONTROLLER
+        m_toggleControllerHandler{toggleControllerHandler},
+#endif
+#ifdef RANGE_CONTROLLER
+        m_rangeControllerHandler{rangeControllerHandler},
+#endif
+#ifdef MODE_CONTROLLER
+        m_modeControllerHandler{modeControllerHandler},
+#endif
         m_isHoldOccurring{false},
         m_isTapOccurring{false},
         m_isCallConnected{false},
@@ -90,8 +114,42 @@ void InteractionManager::settings() {
     m_executor.submit([this]() { m_userInterface->printSettingsScreen(); });
 }
 
+#if ENABLE_ENDPOINT_CONTROLLERS_MENU
+void InteractionManager::endpointController() {
+    m_executor.submit([this]() { m_userInterface->printEndpointControllerScreen(); });
+}
+#endif
+
+#ifdef POWER_CONTROLLER
+void InteractionManager::powerController() {
+    m_executor.submit([this]() { m_userInterface->printPowerControllerScreen(); });
+}
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+void InteractionManager::toggleController() {
+    m_executor.submit([this]() { m_userInterface->printToggleControllerScreen(); });
+}
+#endif
+
+#ifdef MODE_CONTROLLER
+void InteractionManager::modeController() {
+    m_executor.submit([this]() { m_userInterface->printModeControllerScreen(); });
+}
+#endif
+
+#ifdef RANGE_CONTROLLER
+void InteractionManager::rangeController() {
+    m_executor.submit([this]() { m_userInterface->printRangeControllerScreen(); });
+}
+#endif
+
 void InteractionManager::locale() {
     m_executor.submit([this]() { m_userInterface->printLocaleScreen(); });
+}
+
+void InteractionManager::alarmVolumeRamp() {
+    m_executor.submit([this]() { m_userInterface->printAlarmVolumeRampScreen(); });
 }
 
 void InteractionManager::wakewordConfirmation() {
@@ -284,6 +342,7 @@ void InteractionManager::confirmReauthorizeDevice() {
     m_executor.submit([this]() { m_userInterface->printReauthorizeConfirmation(); });
 }
 
+#ifdef ENABLE_COMMS
 void InteractionManager::commsControl() {
     m_executor.submit([this]() {
         if (m_client->isCommsEnabled()) {
@@ -313,6 +372,25 @@ void InteractionManager::stopCall() {
         }
     });
 }
+
+void InteractionManager::sendDtmf(avsCommon::sdkInterfaces::CallManagerInterface::DTMFTone dtmfTone) {
+    m_executor.submit([this, dtmfTone]() {
+        if (m_client->isCommsEnabled()) {
+            m_client->sendDtmf(dtmfTone);
+        } else {
+            m_userInterface->printCommsNotSupported();
+        }
+    });
+}
+
+void InteractionManager::dtmfControl() {
+    m_executor.submit([this]() { m_userInterface->printDtmfScreen(); });
+}
+
+void InteractionManager::errorDtmf() {
+    m_executor.submit([this]() { m_userInterface->printDtmfErrorScreen(); });
+}
+#endif
 
 void InteractionManager::onDialogUXStateChanged(DialogUXState state) {
     m_executor.submit([this, state]() {
@@ -366,6 +444,34 @@ void InteractionManager::setTimeZone(const std::string& value) {
 void InteractionManager::setLocale(const settings::DeviceLocales& value) {
     m_client->getSettingsManager()->setValue<settings::LOCALE>(value);
 }
+
+void InteractionManager::setAlarmVolumeRamp(bool enable) {
+    m_client->getSettingsManager()->setValue<settings::ALARM_VOLUME_RAMP>(settings::types::toAlarmRamp(enable));
+}
+
+#ifdef POWER_CONTROLLER
+void InteractionManager::setPowerState(const bool powerState) {
+    m_powerControllerHandler->setPowerState(powerState);
+}
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+void InteractionManager::setToggleState(const bool toggleState) {
+    m_toggleControllerHandler->setToggleState(toggleState);
+}
+#endif
+
+#ifdef RANGE_CONTROLLER
+void InteractionManager::setRangeValue(const int rangeValue) {
+    m_rangeControllerHandler->setRangeValue(rangeValue);
+}
+#endif
+
+#ifdef MODE_CONTROLLER
+void InteractionManager::setMode(const std::string mode) {
+    m_modeControllerHandler->setMode(mode);
+}
+#endif
 
 #ifdef ENABLE_PCC
 void InteractionManager::phoneControl() {

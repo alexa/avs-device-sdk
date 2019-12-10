@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ struct AVFormatContext;
 struct AVPacket;
 struct AVFrame;
 struct SwrContext;
+struct AVFilterGraph;
+struct AVFilterContext;
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
@@ -49,6 +51,8 @@ using AVFormatContextDeleter = FFmpegDeleter<AVFormatContext>;
 using AVPacketDeleter = FFmpegDeleter<AVPacket>;
 using AVFrameDeleter = FFmpegDeleter<AVFrame>;
 using SwrContextDeleter = FFmpegDeleter<SwrContext>;
+using AVFilterGraphDeleter = FFmpegDeleter<AVFilterGraph>;
+using AVFilterContextDeleter = FFmpegDeleter<AVFilterContext>;
 /// @}
 
 }  // namespace android

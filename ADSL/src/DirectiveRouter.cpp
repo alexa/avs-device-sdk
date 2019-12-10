@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,10 @@
 #include <sstream>
 #include <vector>
 
+#include <AVSCommon/AVS/DirectiveRoutingRule.h>
+#include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Optional.h>
 
 #include "ADSL/DirectiveRouter.h"
 
@@ -36,6 +39,7 @@ namespace alexaClientSDK {
 namespace adsl {
 
 using namespace avsCommon::avs;
+using namespace avsCommon::avs::directiveRoutingRule;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 
@@ -56,9 +60,14 @@ bool DirectiveRouter::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterf
     }
 
     auto configuration = handler->getConfiguration();
-    for (auto item : configuration) {
+    for (auto& item : configuration) {
         if (!(item.second.isValid())) {
             ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "nonePolicy"));
+            return false;
+        }
+        if (!isDirectiveRoutingRuleValid(item.first)) {
+            ACSDK_ERROR(LX("addDirectiveHandlersFailed").d("reason", "invalidRule").d("rule", item.first));
+            return false;
         }
         auto it = m_configuration.find(item.first);
         if (m_configuration.end() != it) {
@@ -143,7 +152,7 @@ bool DirectiveRouter::removeDirectiveHandler(std::shared_ptr<DirectiveHandlerInt
 
 bool DirectiveRouter::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
-    auto handlerAndPolicy = getdHandlerAndPolicyLocked(directive);
+    auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
     if (!handlerAndPolicy) {
         ACSDK_WARN(LX("handleDirectiveImmediatelyFailed")
                        .d("messageId", directive->getMessageId())
@@ -253,30 +262,44 @@ DirectiveRouter::HandlerCallScope::~HandlerCallScope() {
 BlockingPolicy DirectiveRouter::getPolicy(const std::shared_ptr<AVSDirective>& directive) {
     std::unique_lock<std::mutex> lock(m_mutex);
 
-    return getdHandlerAndPolicyLocked(directive).policy;
+    return getHandlerAndPolicyLocked(directive).policy;
 }
 
-HandlerAndPolicy DirectiveRouter::getdHandlerAndPolicyLocked(const std::shared_ptr<AVSDirective>& directive) {
+HandlerAndPolicy DirectiveRouter::getHandlerAndPolicyLocked(const std::shared_ptr<AVSDirective>& directive) {
     if (!directive) {
         ACSDK_ERROR(LX("getConfiguredHandlerAndPolicyLockedFailed").d("reason", "nullptrDirective"));
         return HandlerAndPolicy();
     }
 
-    // First, look for an exact match.  If not found, then look for a wildcard handler for the AVS namespace.
-    auto it = m_configuration.find(NamespaceAndName(directive->getNamespace(), directive->getName()));
-    if (m_configuration.end() == it) {
-        it = m_configuration.find(NamespaceAndName(directive->getNamespace(), "*"));
+    // Look for a matching rule.
+    const auto nameSpace = directive->getNamespace();
+    const auto name = directive->getName();
+    const auto endpointId = directive->getEndpoint().hasValue() ? directive->getEndpoint().value().endpointId : "";
+    auto instance = avsCommon::utils::Optional<std::string>();
+    if (!directive->getHeader()->getInstance().empty()) {
+        instance.set(directive->getHeader()->getInstance());
     }
 
-    if (m_configuration.end() == it) {
-        return HandlerAndPolicy();
+    std::vector<DirectiveRoutingRule> matchers = {routingRulePerDirective(endpointId, instance, nameSpace, name),
+                                                  routingRulePerNamespace(endpointId, instance, nameSpace),
+                                                  routingRulePerInstance(endpointId, instance),
+                                                  routingRulePerNamespaceAnyInstance(endpointId, nameSpace),
+                                                  routingRulePerEndpoint(endpointId)};
+
+    for (const auto& matcher : matchers) {
+        auto it = m_configuration.find(matcher);
+        if (it != m_configuration.end()) {
+            ACSDK_DEBUG5(LX(__func__).m("configuration found").sensitive("config", it->first));
+            return it->second;
+        }
     }
 
-    return it->second;
+    ACSDK_DEBUG5(LX(__func__).m("noMatcher").sensitive("matcher", matchers[0]));
+    return HandlerAndPolicy();
 }
 
 std::shared_ptr<DirectiveHandlerInterface> DirectiveRouter::getHandlerLocked(std::shared_ptr<AVSDirective> directive) {
-    auto handlerAndPolicy = getdHandlerAndPolicyLocked(directive);
+    auto handlerAndPolicy = getHandlerAndPolicyLocked(directive);
     if (!handlerAndPolicy) {
         ACSDK_DEBUG0(
             LX("noHandlerFoundForDirective").d("namespace", directive->getNamespace()).d("name", directive->getName()));

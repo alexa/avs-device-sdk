@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,18 +18,18 @@
 
 #include <unordered_map>
 
-#include "NamespaceAndName.h"
-#include "BlockingPolicy.h"
+#include "AVSCommon/AVS/BlockingPolicy.h"
+#include "AVSCommon/AVS/DirectiveRoutingRule.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
 /**
- * Map of @c NamespaceAndName values to @c BlockingPolicy with which to register a @c DirectiveHandlerInterface to a @c
- * DirectiveSequencer.
+ * Map of blocking policies per @c DirectiveRoutingRule. This is used by a @c DirectiveHandlerInterface
+ * to declare which directives it can handle.
  */
-using DirectiveHandlerConfiguration = std::unordered_map<NamespaceAndName, BlockingPolicy>;
+using DirectiveHandlerConfiguration = std::unordered_map<directiveRoutingRule::DirectiveRoutingRule, BlockingPolicy>;
 
 }  // namespace avs
 }  // namespace avsCommon

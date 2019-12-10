@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,11 @@ public:
      * post-connect processing.
      */
     virtual void onPostConnected() = 0;
+
+    /**
+     * Called when a PostConnect object failed to complete the post-connect processing.
+     */
+    virtual void onUnRecoverablePostConnectFailure() = 0;
 };
 
 }  // namespace acl

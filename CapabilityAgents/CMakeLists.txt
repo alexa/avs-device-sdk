@@ -5,6 +5,8 @@ include(../build/BuildDefaults.cmake)
 
 add_subdirectory("AIP")
 add_subdirectory("Alerts")
+add_subdirectory("Alexa")
+add_subdirectory("ApiGateway")
 add_subdirectory("AudioPlayer")
 add_subdirectory("Bluetooth")
 add_subdirectory("DoNotDisturb")
@@ -30,3 +32,20 @@ endif()
 if (MCC)
     add_subdirectory("MeetingClientController")
 endif()
+
+if (ENDPOINT_CONTROLLERS_POWER_CONTROLLER)
+    add_subdirectory("PowerController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_TOGGLE_CONTROLLER)
+    add_subdirectory("ToggleController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_RANGE_CONTROLLER)
+    add_subdirectory("RangeController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_MODE_CONTROLLER)
+    add_subdirectory("ModeController")
+endif()
+

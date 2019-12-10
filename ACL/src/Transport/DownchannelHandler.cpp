@@ -66,7 +66,7 @@ std::shared_ptr<DownchannelHandler> DownchannelHandler::create(
     std::shared_ptr<DownchannelHandler> handler(new DownchannelHandler(context, authToken));
 
     HTTP2RequestConfig cfg{
-        HTTP2RequestType::GET, context->getEndpoint() + AVS_DOWNCHANNEL_URL_PATH_EXTENSION, DOWNCHANNEL_ID_PREFIX};
+        HTTP2RequestType::GET, context->getAVSGateway() + AVS_DOWNCHANNEL_URL_PATH_EXTENSION, DOWNCHANNEL_ID_PREFIX};
     cfg.setRequestSource(handler);
     cfg.setResponseSink(std::make_shared<HTTP2MimeResponseDecoder>(
         std::make_shared<MimeResponseSink>(handler, messageConsumer, attachmentManager, cfg.getId())));
@@ -108,6 +108,7 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
     switch (intToHTTPResponseCode(responseCode)) {
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
+        case HTTPResponseCode::SUCCESS_ACCEPTED:
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
         case HTTPResponseCode::SUCCESS_END_CODE:
         case HTTPResponseCode::REDIRECTION_MULTIPLE_CHOICES:

@@ -53,6 +53,12 @@ ANDROID_CONFIG_FILE=""
 # Default device serial number if nothing is specified
 DEVICE_SERIAL_NUMBER="123456"
 
+# Default device manufacturer name
+DEVICE_MANUFACTURER_NAME=${DEVICE_MANUFACTURER_NAME:-"Test Manufacturer"}
+
+# Default device description
+DEVICE_DESCRIPTION=${DEVICE_DESCRIPTION:-"Test Device"}
+
 GSTREAMER_AUDIO_SINK="autoaudiosink"
 
 build_port_audio() {
@@ -97,6 +103,8 @@ show_help() {
   echo  'Optional parameters'
   echo  '  -s <serial-number>  If nothing is provided, the default device serial number is 123456'
   echo  '  -a <file-name>      The file that contains Android installation configurations (e.g. androidConfig.txt)'
+  echo  '  -d <description>    The description of the device.'
+  echo  '  -m <manufacturer>   The device manufacturer name.'
   echo  '  -h                  Display this help and exit'
 }
 
@@ -113,7 +121,7 @@ if [ ! -f "$CONFIG_JSON_FILE" ]; then
 fi
 shift 1
 
-OPTIONS=s:a:h
+OPTIONS=s:a:m:d:h
 while getopts "$OPTIONS" opt ; do
     case $opt in
         s )
@@ -126,6 +134,12 @@ while getopts "$OPTIONS" opt ; do
                 exit 1
             fi
             source $ANDROID_CONFIG_FILE
+            ;;
+        d )
+            DEVICE_DESCRIPTION="$OPTARG"
+            ;;
+        m )
+            DEVICE_MANUFACTURER_NAME="$OPTARG"
             ;;
         h )
             show_help
@@ -264,7 +278,8 @@ cat << EOF > "$OUTPUT_CONFIG_FILE"
 EOF
 
 cd $INSTALL_BASE
-bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE
+bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE \
+  -DSDK_CONFIG_MANUFACTURER_NAME="$DEVICE_MANUFACTURER_NAME" -DSDK_CONFIG_DEVICE_DESCRIPTION="$DEVICE_DESCRIPTION"
 
 # Delete first line from temp file to remove opening bracket
 sed -i -e "1d" $TEMP_CONFIG_FILE

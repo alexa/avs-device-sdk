@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,13 @@ public:
      * Constructor.
      */
     TimePoint();
+
+    /**
+     * Build a @c TimePoint that represents the time now.
+     *
+     * @return A @c TimePoint representing the time now.
+     */
+    static TimePoint now();
 
     /**
      * Sets the time with an ISO-8601 formatted string.  This will update the object's Unix time to the relative value.

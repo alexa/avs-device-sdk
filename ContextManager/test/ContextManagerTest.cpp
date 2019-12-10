@@ -13,9 +13,11 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/Utils/Logger/Logger.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/WaitEvent.h>
 
 #include "ContextManager/ContextManager.h"
 
@@ -39,557 +41,77 @@ static const std::string TAG("ContextManagerTest");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// Payload for SpeechSynthesizer state when it is playing back audio.
-static const std::string SPEECH_SYNTHESIZER_PAYLOAD_PLAYING =
-    "{"
-    "\"playerActivity\":\"PLAYING\","
-    "\"offsetInMilliseconds\":5,"
-    "\"token\":\"\""
-    "}";
-/// Payload for SpeechSynthesizer state when playback has finished.
-static const std::string SPEECH_SYNTHESIZER_PAYLOAD_FINISHED =
-    "{"
-    "\"playerActivity\":\"FINISHED\","
-    "\"offsetInMilliseconds\":0,"
-    "\"token\":\"\""
-    "}";
-
-/// Payload for AudioPlayer.
-static const std::string AUDIO_PLAYER_PAYLOAD =
-    "{"
-    "\"playerActivity\":\"FINISHED\","
-    "\"offsetInMilliseconds\":0,"
-    "\"token\":\"\""
-    "}";
-
-/// Payload for Alerts.
-static const std::string ALERTS_PAYLOAD =
-    "{"
-    "\"allAlerts\": ["
-    "{"
-    "\"token\": \"\","
-    "\"type\": \"TIMER\","
-    "\"scheduledTime\": \"\""
-    "}"
-    "],"
-    "\"activeAlerts\": ["
-    "{"
-    "\"token\": \"\","
-    "\"type\": \"TIMER\","
-    "\"scheduledTime\": \"\""
-    "}"
-    "]"
-    "}";
-
-/// Context used for testing.
-static const std::string CONTEXT_TEST =
-    "{"
-    "\"context\":["
-    "{"
-    "\"header\":{"
-    "\"namespace\":\"AudioPlayer\","
-    "\"name\":\"PlaybackState\""
-    "},"
-    "\"payload\":{"
-    "\"playerActivity\":\"FINISHED\","
-    "\"offsetInMilliseconds\":0,"
-    "\"token\":\"\""
-    "}"
-    "},"
-    "{"
-    "\"header\":{"
-    "\"namespace\":\"SpeechSynthesizer\","
-    "\"name\":\"SpeechState\""
-    "},"
-    "\"payload\":{"
-    "\"playerActivity\":\"FINISHED\","
-    "\"offsetInMilliseconds\":0,"
-    "\"token\":\"\""
-    "}"
-    "}"
-    "]"
-    "}";
-
-/// Default time @c doProvide sleeps before it calls @c setState.
-static const std::chrono::milliseconds DEFAULT_SLEEP_TIME = std::chrono::milliseconds(10);
-
-/// Time @c doProvide sleeps before it calls @c setState to induce a timeout.
-static const std::chrono::milliseconds TIMEOUT_SLEEP_TIME = std::chrono::milliseconds(100);
-
-/**
- * Default timeout for the @c ContextRequester to get the context.This needs to be modified if the
- * @c TIMEOUT_SLEEP_TIME is modified. The value should be less than the @c TIMEOUT_SLEEP_TIME.
- */
-static const std::chrono::milliseconds DEFAULT_TIMEOUT = std::chrono::milliseconds(50);
-
-/// Timeout for the @c ContextRequester to get the failure.
-static const std::chrono::milliseconds FAILURE_TIMEOUT = std::chrono::milliseconds(220);
-
-/// Namespace for SpeechSynthesizer.
-static const std::string NAMESPACE_SPEECH_SYNTHESIZER("SpeechSynthesizer");
-
-/// Namespace for AudioPlayer.
-static const std::string NAMESPACE_AUDIO_PLAYER("AudioPlayer");
-
-/// Namespace for Alerts.
-static const std::string NAMESPACE_ALERTS("Alerts");
-
-/// Name for SpeechSynthesizer state.
-static const std::string NAME_SPEECH_STATE("SpeechState");
-
-/// Name for AudioPlayer state.
-static const std::string NAME_PLAYBACK_STATE("PlaybackState");
-
-/// Name for Alerts state.
-static const std::string NAME_ALERTS_STATE("AlertsState");
-
-/// SpeechSynthesizer namespace and name
-static const NamespaceAndName SPEECH_SYNTHESIZER(NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEECH_STATE);
-
-/// AudioPlayer namespace and name
-static const NamespaceAndName AUDIO_PLAYER(NAMESPACE_AUDIO_PLAYER, NAME_PLAYBACK_STATE);
-
-/// Alerts namespace and name
-static const NamespaceAndName ALERTS(NAMESPACE_ALERTS, NAME_ALERTS_STATE);
-
-/// Dummy provider namespace and name
-static const NamespaceAndName DUMMY_PROVIDER("Dummy", "DummyName");
-
-/**
- * @c MockContextRequester used to verify @c ContextManager behavior.
- */
-class MockContextRequester : public ContextRequesterInterface {
-public:
-    /**
-     * Creates an instance of the @c MockContextRequester.
-     *
-     * @param contextManager Pointer to an instance of the @c ContextManager.
-     * @return A shared pointer to an instance of the @c MockContextRequester.
-     */
-    static std::shared_ptr<MockContextRequester> create(std::shared_ptr<ContextManager> contextManager);
-
-    /**
-     * Constructor
-     *
-     * @param contextManager Pointer to an instance of the @c ContextManager.
-     */
-    MockContextRequester(std::shared_ptr<ContextManager> contextManager);
-
-    ~MockContextRequester();
-
-    void onContextAvailable(const std::string& context) override;
-
-    void onContextFailure(const ContextRequestError error) override;
-
-    /**
-     * Waits for a specified time for the context to be available @c getContext.
-     *
-     * @param duration Number of milliseconds to wait before giving up.
-     * @return @c true if a context or failure was received within the specified duration, else @c false.
-     */
-    bool waitForContext(const std::chrono::milliseconds duration = std::chrono::milliseconds(200));
-
-    /**
-     * Waits for a specified time for the context request to fail on a @c getContext.
-     *
-     * @param duration Number of milliseconds to wait before giving up.
-     * @return @c true if a failure was received within the specified duration, else @c false.
-     */
-    bool waitForFailure(const std::chrono::milliseconds duration = std::chrono::milliseconds(200));
-
-    /**
-     * Function to read the stored context.
-     *
-     * @return The context.
-     */
-    std::string& getContextString();
-
-    /**
-     * Function to read check context string JSON against the reference context JSON with unordered states.
-     *
-     * @return  @c true if both JSON context strings are equivalent, else @c false.
-     */
-    bool checkContextString(const std::string& a, const std::string& b);
-
-private:
-    /// Instance of @ ContextManager
-    std::shared_ptr<ContextManager> m_contextManager;
-
-    /// Condition variable to wake the @ waitForContext.
-    std::condition_variable m_wakeTriggerSuccess;
-
-    /// Condition variable to wake the @ waitForFailure.
-    std::condition_variable m_wakeTriggerFailure;
-
-    /// mutex to protect @c m_contextAvailable.
-    std::mutex m_mutexSuccess;
-
-    /// mutex to protect @c m_contextFailure.
-    std::mutex m_mutexFailure;
-
-    /// Flag to indicate context is available.
-    bool m_contextAvailable;
-
-    /// Flag to indicate there was a failure during @c getContext.
-    bool m_contextFailure;
-
-    /// String to hold the context returned by the @c ContextManager.
-    std::string m_context;
-
-    /**
-     * Function to convert a JSON object to string.
-     *
-     *@param documentNode the JSON object.
-     *@return  the serialized JSON string
-     */
-    std::string serializeJSONObjectToString(const rapidjson::Value& documentNode);
-};
-
-std::shared_ptr<MockContextRequester> MockContextRequester::create(std::shared_ptr<ContextManager> contextManager) {
-    auto result = std::make_shared<MockContextRequester>(contextManager);
-    return result;
-}
-
-MockContextRequester::MockContextRequester(std::shared_ptr<ContextManager> contextManager) :
-        m_contextManager{contextManager},
-        m_contextAvailable{false},
-        m_contextFailure{false} {
-}
-
-MockContextRequester::~MockContextRequester() {
-}
-
-void MockContextRequester::onContextAvailable(const std::string& context) {
-    std::unique_lock<std::mutex> lock(m_mutexSuccess);
-    m_context = context;
-    m_contextAvailable = true;
-    m_wakeTriggerSuccess.notify_one();
-}
-
-void MockContextRequester::onContextFailure(const ContextRequestError error) {
-    std::unique_lock<std::mutex> lock(m_mutexFailure);
-    m_contextFailure = true;
-    m_wakeTriggerFailure.notify_one();
-}
-
-bool MockContextRequester::waitForContext(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutexSuccess);
-    if (!m_wakeTriggerSuccess.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure); })) {
-        return false;
-    }
-    return true;
-}
-
-bool MockContextRequester::waitForFailure(const std::chrono::milliseconds duration) {
-    std::unique_lock<std::mutex> lock(m_mutexFailure);
-    if (!m_wakeTriggerFailure.wait_for(lock, duration, [this]() { return (m_contextAvailable || m_contextFailure); })) {
-        return false;
-    }
-    return true;
-}
-
-std::string& MockContextRequester::getContextString() {
-    return m_context;
-}
-
-std::string MockContextRequester::serializeJSONObjectToString(const rapidjson::Value& documentNode) {
-    if (!documentNode.IsObject()) {
-        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed")
-                        .d("reason", "invalidType")
-                        .d("expectedType", rapidjson::Type::kObjectType)
-                        .d("type", documentNode.GetType()));
-        return "";
-    }
-
-    rapidjson::StringBuffer stringBuffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(stringBuffer);
-
-    if (!documentNode.Accept(writer)) {
-        ACSDK_ERROR(LX("serializeJSONObjectToStringFailed").d("reason", "acceptFailed").d("handler", "Writer"));
-        return "";
-    }
-
-    return stringBuffer.GetString();
-}
-bool MockContextRequester::checkContextString(const std::string& a, const std::string& b) {
-    rapidjson::Document ajson;
-    rapidjson::Document bjson;
-    const char contextstr[] = "context";
-
-    ajson.Parse(a.c_str());
-    if (!ajson.HasMember(contextstr)) {
-        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", a));
-        return false;
-    }
-
-    bjson.Parse(b.c_str());
-    if (!bjson.HasMember(contextstr)) {
-        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", b));
-        return false;
-    }
-
-    const rapidjson::Value& acontext = ajson[contextstr];
-    const rapidjson::Value& bcontext = bjson[contextstr];
-
-    if (!acontext.IsArray()) {
-        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", a));
-        return false;
-    }
-
-    if (!bcontext.IsArray()) {
-        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "invalidContextString").d("json", b));
-        return false;
-    }
-
-    if (acontext.Size() != bcontext.Size()) {
-        ACSDK_ERROR(LX("checkContextStringFailed").d("reason", "contextStringNotMatched").d("value", a).d("ref", b));
-        return false;
-    }
-
-    for (rapidjson::Value::ConstValueIterator itr = acontext.Begin(); itr != acontext.End(); ++itr) {
-        bool entryMatch = false;
-        std::string aconstring;
-        aconstring = serializeJSONObjectToString(*itr);
-
-        for (rapidjson::Value::ConstValueIterator itr2 = bcontext.Begin(); itr2 != bcontext.End(); ++itr2) {
-            std::string bconstring;
-
-            bconstring = serializeJSONObjectToString(*itr);
-            if (aconstring == bconstring) {
-                entryMatch = true;
-                break;
-            }
-        }
-        if (!entryMatch) {
-            ACSDK_ERROR(
-                LX("checkContextStringFailed").d("reason", "contextStringNotMatched").d("value", a).d("ref", b));
-            return false;
-        }
-    }
-
-    return true;
-}
-/**
- * @c MockStateProvider used to verify @c ContextManager behavior.
- */
+/// Mock state provider.
 class MockStateProvider : public StateProviderInterface {
 public:
-    /**
-     * Creates an instance of the @c MockStateProvider.
-     *
-     * @param contextManager Pointer to an instance of the @c ContextManager.
-     * @param namespaceAndName The namespace and name of the @c StateProvider.
-     * @param jsonState The state of the @c StateProvider set in response to the @c provideState.
-     * @param refreshPolicy The refresh policy for the state set in response to the @c provideState.
-     * @param delayTime The time @c m_doProvideThread sleeps before updating state via @c setState.
-     * @return A pointer to an instance of the @c MockStateProvider.
-     */
-    static std::shared_ptr<MockStateProvider> create(
-        std::shared_ptr<ContextManager> contextManager,
-        const NamespaceAndName& namespaceAndName,
-        const std::string& state,
-        const StateRefreshPolicy& refreshPolicy,
-        const std::chrono::milliseconds delayTime);
-
-    /**
-     * Constructor. It sets up the state and refresh policy that needs to be sent in response to a @c provideContext
-     * request.
-     *
-     * @param contextManager Pointer to an instance of the @c ContextManager.
-     * @param namespaceAndName The namespace and name of the @c StateProvider.
-     * @param jsonState The state of the @c StateProvider set in response to the @c provideState.
-     * @param refreshPolicy The refresh policy for the state set in response to the @c provideState.
-     * @param delayTime The time @c m_doProvideThread sleeps before updating state via @c setState.
-     * @return A pointer to an instance of the @c MockStateProvider.
-     */
-    MockStateProvider(
-        std::shared_ptr<ContextManager> contextManager,
-        const NamespaceAndName& namespaceAndName,
-        const std::string& state,
-        const StateRefreshPolicy& refreshPolicy,
-        const std::chrono::milliseconds delayTime);
-
-    ~MockStateProvider();
-
-    void provideState(const NamespaceAndName& stateProviderName, unsigned int currentstateRequestToken) override;
-
-    /**
-     * Method for m_doProvideThread. It waits for @c m_delayTime and then calls @c setState with the state @c m_state
-     * and the refresh policy @c m_refreshPolicy the @c stateProviderInterface was initialized with.
-     */
-    void doProvideState();
-
-    unsigned int getCurrentstateRequestToken();
-
-private:
-    /// Pointer to an instance of the @c ContextManager
-    std::shared_ptr<ContextManager> m_contextManager;
-
-    /// The namespace and name of the @c stateProviderInterface
-    NamespaceAndName m_namespaceAndName;
-
-    /// The state provided to the @c ContextManager via @c setState.
-    std::string m_state;
-
-    /// The refresh policy for the state provided to the @c ContextManager via @c setState.
-    StateRefreshPolicy m_refreshPolicy;
-
-    /// The token provided by the @c ContextManager.
-    unsigned int m_stateRequestToken;
-
-    /// Thread to execute the doProvide.
-    std::thread m_doProvideThread;
-
-    /// Mutex to protect the @c m_provideState.
-    std::mutex m_providerMutex;
-
-    /// The condition variable used to wake up @c m_doProvideThread when the @c ContextManager requests for state.
-    std::condition_variable m_providerWakeTrigger;
-
-    /// The time the @c m_doProvideThread sleeps before providing state.
-    std::chrono::milliseconds m_delayTime;
-
-    /// Flag to indicate when a @c provideState has been called.
-    bool m_provideState;
-
-    /// Flag to indicate when the @c MockStateProvider is shutting down. When set, @c m_doProvideThread needs to return.
-    bool m_stateProviderShutdown;
+    MOCK_METHOD2(
+        provideState,
+        void(const avs::CapabilityTag& stateProviderName, const ContextRequestToken stateRequestToken));
 };
 
-std::shared_ptr<MockStateProvider> MockStateProvider::create(
-    std::shared_ptr<ContextManager> contextManager,
-    const NamespaceAndName& stateProviderName,
-    const std::string& state,
-    const StateRefreshPolicy& refreshPolicy,
-    const std::chrono::milliseconds delayTime) {
-    auto result =
-        std::make_shared<MockStateProvider>(contextManager, stateProviderName, state, refreshPolicy, delayTime);
-    return result;
-}
+/// Mock legacy state provider.
+struct MockLegacyStateProvider : public StateProviderInterface {
+    MOCK_METHOD2(
+        provideState,
+        void(const avs::NamespaceAndName& stateProviderName, const ContextRequestToken stateRequestToken));
+};
 
-MockStateProvider::MockStateProvider(
-    std::shared_ptr<ContextManager> contextManager,
-    const NamespaceAndName& stateProviderName,
-    const std::string& state,
-    const StateRefreshPolicy& refreshPolicy,
-    const std::chrono::milliseconds delayTime) :
-        m_contextManager{contextManager},
-        m_namespaceAndName{stateProviderName},
-        m_state{state},
-        m_refreshPolicy{refreshPolicy},
-        m_stateRequestToken{0},
-        m_delayTime{delayTime},
-        m_provideState{false},
-        m_stateProviderShutdown{false} {
-    m_doProvideThread = std::thread(&MockStateProvider::doProvideState, this);
-}
+/// Mock context requester.
+struct MockContextRequester : public ContextRequesterInterface {
+    MOCK_METHOD3(
+        onContextAvailable,
+        void(const std::string& endpointId, const avs::AVSContext& endpointContext, ContextRequestToken requestToken));
+    MOCK_METHOD2(onContextFailure, void(const ContextRequestError error, ContextRequestToken token));
+};
 
-MockStateProvider::~MockStateProvider() {
-    std::unique_lock<std::mutex> lock(m_providerMutex);
-    m_stateProviderShutdown = true;
-    m_providerWakeTrigger.notify_one();
-    lock.unlock();
-    if (m_doProvideThread.joinable()) {
-        m_doProvideThread.join();
-    }
-}
-
-void MockStateProvider::provideState(const NamespaceAndName& stateProviderName, unsigned int stateRequestToken) {
-    m_stateRequestToken = stateRequestToken;
-    std::lock_guard<std::mutex> lock(m_providerMutex);
-    m_provideState = true;
-    m_providerWakeTrigger.notify_one();
-}
-
-void MockStateProvider::doProvideState() {
-    while (true) {
-        std::unique_lock<std::mutex> lock(m_providerMutex);
-        m_providerWakeTrigger.wait(lock, [this]() { return (m_provideState || m_stateProviderShutdown); });
-        if (m_stateProviderShutdown) {
-            lock.unlock();
-            return;
-        }
-        std::this_thread::sleep_for(m_delayTime);
-        EXPECT_EQ(
-            SetStateResult::SUCCESS,
-            m_contextManager->setState(m_namespaceAndName, m_state, m_refreshPolicy, m_stateRequestToken));
-        m_provideState = false;
-        lock.unlock();
-    }
-}
-
-unsigned int MockStateProvider::getCurrentstateRequestToken() {
-    return m_stateRequestToken;
-}
+/// Mock context observer.
+struct MockContextObserver : public ContextManagerObserverInterface {
+    MOCK_METHOD3(
+        onStateChanged,
+        void(const avs::CapabilityTag& identifier, const avs::CapabilityState& state, AlexaStateChangeCauseType cause));
+};
 
 /// Context Manager Test
 class ContextManagerTest : public ::testing::Test {
-public:
+protected:
     /**
-     * Setup the @c ContextManagerTest.  Creates a @c ContextManager. Creates a couple of @c MockStateProviders and
-     * a @c MockContextRequester.
+     * Creates a @c ContextManager.
      */
     void SetUp() override;
 
     /// @c ContextManager to test
-    std::shared_ptr<ContextManager> m_contextManager;
-
-    /// @c MockStateProviders and @c MockContextRequesters
-    std::shared_ptr<MockStateProvider> m_speechSynthesizer;
-    std::shared_ptr<MockStateProvider> m_audioPlayer;
-    std::shared_ptr<MockStateProvider> m_alerts;
-    std::shared_ptr<MockContextRequester> m_contextRequester;
-    std::shared_ptr<MockContextRequester> m_contextRequester2;
+    std::shared_ptr<ContextManagerInterface> m_contextManager;
 };
 
 void ContextManagerTest::SetUp() {
-    m_contextManager = ContextManager::create();
-    m_speechSynthesizer = MockStateProvider::create(
-        m_contextManager,
-        SPEECH_SYNTHESIZER,
-        SPEECH_SYNTHESIZER_PAYLOAD_FINISHED,
-        StateRefreshPolicy::NEVER,
-        DEFAULT_SLEEP_TIME);
-    m_audioPlayer = MockStateProvider::create(
-        m_contextManager, AUDIO_PLAYER, AUDIO_PLAYER_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
-    m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, m_speechSynthesizer);
-    m_contextManager->setStateProvider(AUDIO_PLAYER, m_audioPlayer);
-    m_contextRequester = MockContextRequester::create(m_contextManager);
+    auto deviceInfo =
+        avsCommon::utils::DeviceInfo::create("clientId", "productId", "1234", "manufacturer", "my device");
+    ASSERT_NE(deviceInfo, nullptr);
+
+    m_contextManager = ContextManager::create(*deviceInfo);
 }
 
 /**
  * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, test_setStateForRegisteredProvider) {
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
+TEST_F(ContextManagerTest, test_setStateForLegacyRegisteredProvider) {
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    m_contextManager->setStateProvider(capability, provider);
+    std::string payload{R"({"state":"value"})"};
+    ASSERT_EQ(m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS), SetStateResult::SUCCESS);
 }
 
 /**
  * Set the state with a @c StateRefreshPolicy @c NEVER for a @c StateProviderInterface that is not registered with the
  * @c ContextManager. Expect @c SetStateResult @c SUCCESS is returned.
  */
-TEST_F(ContextManagerTest, test_setStateForUnregisteredProvider) {
-    ASSERT_EQ(SetStateResult::SUCCESS, m_contextManager->setState(ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER));
-}
-
-/**
- * Set the state with a @c StateRefreshPolicy @c ALWAYS for a @c StateProviderInterface that is not registered with
- * the @c ContextManager. Expect @c SetStateResult @c STATE_PROVIDER_NOT_REGISTERED is returned.
- */
-TEST_F(ContextManagerTest, test_setStateForUnregisteredProviderWithRefreshPolicyAlways) {
-    m_alerts = MockStateProvider::create(
-        m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, DEFAULT_SLEEP_TIME);
-    ASSERT_EQ(
-        SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
-        m_contextManager->setState(
-            ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
+TEST_F(ContextManagerTest, test_setStateForUnregisteredLegacyProvider) {
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    std::string payload{R"({"state":"value"})"};
+    ASSERT_EQ(m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS), SetStateResult::SUCCESS);
 }
 
 /**
@@ -597,94 +119,73 @@ TEST_F(ContextManagerTest, test_setStateForUnregisteredProviderWithRefreshPolicy
  * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
  * timeout period. Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-TEST_F(ContextManagerTest, test_getContext) {
+TEST_F(ContextManagerTest, test_getContextLegacyProvider) {
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    std::string payload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(capability, provider);
+
+    std::promise<ContextRequestToken> tokenPromise;
+    EXPECT_CALL(*provider, provideState(_, _))
+        .WillOnce(
+            WithArg<1>(Invoke([&tokenPromise](const ContextRequestToken token) { tokenPromise.set_value(token); })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    auto requestToken = m_contextManager->getContext(requester);
+
+    const std::chrono::milliseconds timeout{100};
+    auto expectedTokenFuture = tokenPromise.get_future();
+    ASSERT_EQ(expectedTokenFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(requestToken, expectedTokenFuture.get());
+
     ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,
-            m_audioPlayer->getCurrentstateRequestToken()));
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
+        m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS, requestToken),
+        SetStateResult::SUCCESS);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(statesFuture.get()[capability].valuePayload, payload);
 }
 
 /**
- * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces that are registered with the
- * @c ContextManager. Request for context by calling @c getContext by multiple requesters. Expect that the context is
- * returned to each of the requesters within the timeout period.
+ * Respond to the same state request twice. The first one should succeed while the second one should fail.
  */
-TEST_F(ContextManagerTest, test_multipleGetContextRequests) {
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,
-            m_audioPlayer->getCurrentstateRequestToken()));
-    m_contextRequester2 = MockContextRequester::create(m_contextManager);
-    m_contextManager->getContext(m_contextRequester);
-    m_contextManager->getContext(m_contextRequester2);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
-    ASSERT_TRUE(m_contextRequester2->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester2->getContextString());
-}
+TEST_F(ContextManagerTest, test_setLegacyStateProviderSetStateTwiceShouldFail) {
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    std::string payload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(capability, provider);
 
-/**
- * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces that are registered with the
- * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
- * timeout period. Check the context that is returned by the @c ContextManager. Expect it should match the test value.
- * Register a registered @c StateProviderInterface again with the @c ContextManager. Then set the state for the same
- * @c StateProviderInterface with a @c StateRefreshPolicy @c ALWAYS. Expect @c SetStateResult @c SUCCESS is returned.
- * Request for context by calling @c getContext. Expect that the context is returned within the
- * timeout period. Check the context that is returned by the @c ContextManager matches the test context.
- */
-TEST_F(ContextManagerTest, test_setProviderTwice) {
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*provider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    utils::WaitEvent stateAvailableEvent;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _)).WillOnce((InvokeWithoutArgs([&stateAvailableEvent] {
+        stateAvailableEvent.wakeUp();
+    })));
+
+    auto requestToken = m_contextManager->getContext(requester);
+
+    const std::chrono::milliseconds timeout{100};
+    ASSERT_TRUE(provideStateEvent.wait(timeout));
+
     ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,
-            m_audioPlayer->getCurrentstateRequestToken()));
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
-    // Call setStateProvider for a registered StateProviderInterface.
-    m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, m_speechSynthesizer);
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(CONTEXT_TEST, m_contextRequester->getContextString());
+        m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS, requestToken),
+        SetStateResult::SUCCESS);
+
+    ASSERT_TRUE(stateAvailableEvent.wait(timeout));
+    EXPECT_EQ(
+        m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS, requestToken),
+        SetStateResult::STATE_TOKEN_OUTDATED);
 }
 
 /**
@@ -693,45 +194,26 @@ TEST_F(ContextManagerTest, test_setProviderTwice) {
  * @c getContext. Expect that failure occurs due to timeout.
  */
 TEST_F(ContextManagerTest, test_provideStateTimeout) {
-    m_alerts = MockStateProvider::create(
-        m_contextManager, ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::NEVER, TIMEOUT_SLEEP_TIME);
-    m_contextManager->setStateProvider(ALERTS, m_alerts);
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,
-            m_audioPlayer->getCurrentstateRequestToken()));
-    ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            ALERTS, ALERTS_PAYLOAD, StateRefreshPolicy::ALWAYS, m_alerts->getCurrentstateRequestToken()));
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForFailure(FAILURE_TIMEOUT));
-}
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    std::string payload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(capability, provider);
 
-/**
- * Remove a @c StateProviderInterface that was registered with the @c ContextManager. Set the state with a
- * @c StateRefreshPolicy @c ALWAYS for the @c StateProviderInterface that was unregistered. Expect @c SetStateResult
- * @c STATE_PROVIDER_NOT_REGISTERED is returned.
- */
-TEST_F(ContextManagerTest, test_removeProvider) {
-    m_contextManager->setStateProvider(SPEECH_SYNTHESIZER, nullptr);
-    ASSERT_EQ(
-        SetStateResult::STATE_PROVIDER_NOT_REGISTERED,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*provider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    const std::chrono::milliseconds timeout{100};
+    auto requester = std::make_shared<MockContextRequester>();
+    auto token = m_contextManager->getContext(requester, capability.endpointId, timeout);
+
+    utils::WaitEvent stateFailureEvent;
+    EXPECT_CALL(*requester, onContextFailure(ContextRequestError::STATE_PROVIDER_TIMEDOUT, token))
+        .WillOnce((InvokeWithoutArgs([&stateFailureEvent] { stateFailureEvent.wakeUp(); })));
+
+    ASSERT_TRUE(provideStateEvent.wait(timeout));
+    ASSERT_TRUE(stateFailureEvent.wait(timeout + timeout));
 }
 
 /**
@@ -740,15 +222,24 @@ TEST_F(ContextManagerTest, test_removeProvider) {
  * @c SetStateResult @c STATE_TOKEN_OUTDATED is returned.
  */
 TEST_F(ContextManagerTest, test_incorrectToken) {
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_EQ(
-        SetStateResult::STATE_TOKEN_OUTDATED,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken() + 1));
+    auto provider = std::make_shared<MockLegacyStateProvider>();
+    auto capability = NamespaceAndName("Namespace", "Name");
+    std::string payload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(capability, provider);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*provider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    auto requestToken = m_contextManager->getContext(requester);
+    const std::chrono::milliseconds timeout{100};
+    ASSERT_TRUE(provideStateEvent.wait(timeout));
+
+    EXPECT_EQ(
+        m_contextManager->setState(capability, payload, StateRefreshPolicy::ALWAYS, requestToken + 1),
+        SetStateResult::STATE_TOKEN_OUTDATED);
 }
 
 /**
@@ -761,32 +252,258 @@ TEST_F(ContextManagerTest, test_incorrectToken) {
  *
  * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
  */
-TEST_F(ContextManagerTest, test_emptyProvider) {
-    auto dummyProvider = MockStateProvider::create(
-        m_contextManager, DUMMY_PROVIDER, "", StateRefreshPolicy::SOMETIMES, DEFAULT_SLEEP_TIME);
-    m_contextManager->setStateProvider(DUMMY_PROVIDER, dummyProvider);
+TEST_F(ContextManagerTest, test_sometimesProvider) {
+    auto sometimesProvider = std::make_shared<MockLegacyStateProvider>();
+    auto sometimesCapability = NamespaceAndName("Namespace", "Name");
+    std::string sometimesPayload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(sometimesCapability, sometimesProvider);
 
     ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            SPEECH_SYNTHESIZER,
-            SPEECH_SYNTHESIZER_PAYLOAD_PLAYING,
-            StateRefreshPolicy::ALWAYS,
-            m_speechSynthesizer->getCurrentstateRequestToken()));
+        m_contextManager->setState(sometimesCapability, sometimesPayload, StateRefreshPolicy::SOMETIMES),
+        SetStateResult::SUCCESS);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*sometimesProvider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    auto requestToken = m_contextManager->getContext(requester);
+    const std::chrono::milliseconds timeout{100};
+    provideStateEvent.wait(timeout);
     ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            AUDIO_PLAYER,
-            AUDIO_PLAYER_PAYLOAD,
-            StateRefreshPolicy::ALWAYS,
-            m_audioPlayer->getCurrentstateRequestToken()));
+        m_contextManager->setState(sometimesCapability, "", StateRefreshPolicy::SOMETIMES, requestToken),
+        SetStateResult::SUCCESS);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(statesFuture.get()[sometimesCapability].valuePayload, sometimesPayload);
+}
+
+/**
+ * Test that a provider that sets its policy to NEVER is not queried but that the state is included in the context.
+ */
+TEST_F(ContextManagerTest, test_neverProvider) {
+    auto neverProvider = std::make_shared<StrictMock<MockLegacyStateProvider>>();
+    auto neverCapability = NamespaceAndName("Namespace", "Name");
+    std::string neverPayload{R"({"state":"value"})"};
+    m_contextManager->setStateProvider(neverCapability, neverProvider);
+
     ASSERT_EQ(
-        SetStateResult::SUCCESS,
-        m_contextManager->setState(
-            DUMMY_PROVIDER, "", StateRefreshPolicy::ALWAYS, dummyProvider->getCurrentstateRequestToken()));
-    m_contextManager->getContext(m_contextRequester);
-    ASSERT_TRUE(m_contextRequester->waitForContext(DEFAULT_TIMEOUT));
-    ASSERT_TRUE(m_contextRequester->checkContextString(CONTEXT_TEST, m_contextRequester->getContextString()));
+        m_contextManager->setState(neverCapability, neverPayload, StateRefreshPolicy::NEVER), SetStateResult::SUCCESS);
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    m_contextManager->getContext(requester);
+    const std::chrono::milliseconds timeout{100};
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(statesFuture.get()[neverCapability].valuePayload, neverPayload);
+}
+
+/// Test that only context relevant to the given endpoint is included in the getContext.
+TEST_F(ContextManagerTest, test_getEndpointContextShouldIncludeOnlyRelevantStates) {
+    // Capability that belongs to the target endpoint.
+    auto providerForTargetEndpoint = std::make_shared<MockStateProvider>();
+    auto capabilityForTarget = CapabilityTag("TargetNamespace", "TargetName", "TargetEndpointId");
+    CapabilityState stateForTarget{R"({"state":"target"})"};
+    m_contextManager->setStateProvider(capabilityForTarget, providerForTargetEndpoint);
+
+    // Capability that belongs to another endpoint.
+    auto providerForOtherEndpoint = std::make_shared<StrictMock<MockStateProvider>>();
+    auto capabilityForOther = CapabilityTag("OtherNamespace", "OtherName", "OtherEndpointId");
+    m_contextManager->setStateProvider(capabilityForOther, providerForOtherEndpoint);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*providerForTargetEndpoint, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    // Get context for the target endpoint.
+    auto requestToken = m_contextManager->getContext(requester, capabilityForTarget.endpointId);
+
+    const std::chrono::milliseconds timeout{100};
+    provideStateEvent.wait(timeout);
+    m_contextManager->provideStateResponse(capabilityForTarget, stateForTarget, requestToken);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+
+    auto states = statesFuture.get();
+    EXPECT_EQ(states[capabilityForTarget].valuePayload, stateForTarget.valuePayload);
+    EXPECT_EQ(states.find(capabilityForOther), states.end());
+}
+
+/// Test that requester will get notified of a failure when one provider was not able to provide its state.
+TEST_F(ContextManagerTest, test_getContextWhenStateAndCacheAreUnavailableShouldFail) {
+    auto provider = std::make_shared<MockStateProvider>();
+    auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
+    m_contextManager->setStateProvider(capability, provider);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*provider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    // Get context.
+    auto requester = std::make_shared<MockContextRequester>();
+    auto requestToken = m_contextManager->getContext(requester, capability.endpointId);
+
+    // Expect failure.
+    utils::WaitEvent contextFailureEvent;
+    EXPECT_CALL(*requester, onContextFailure(ContextRequestError::BUILD_CONTEXT_ERROR, requestToken))
+        .WillOnce(InvokeWithoutArgs([&contextFailureEvent] { contextFailureEvent.wakeUp(); }));
+
+    // Respond that state is unavailable after state has been requested.
+    const std::chrono::milliseconds timeout{100};
+    ASSERT_TRUE(provideStateEvent.wait(timeout));
+    m_contextManager->provideStateUnavailableResponse(capability, requestToken, false);
+
+    // Wait for failure.
+    EXPECT_TRUE(contextFailureEvent.wait(timeout));
+}
+
+/// Test that requester will get cached value when provider cannot provide latest state.
+TEST_F(ContextManagerTest, test_getContextWhenStateUnavailableShouldReturnCache) {
+    auto provider = std::make_shared<MockStateProvider>();
+    auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
+    CapabilityState state{R"({"state":"target"})"};
+    m_contextManager->setStateProvider(capability, provider);
+
+    // Set value in the cache.
+    m_contextManager->reportStateChange(capability, state, AlexaStateChangeCauseType::APP_INTERACTION);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*provider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    // Get context.
+    auto requester = std::make_shared<MockContextRequester>();
+    auto requestToken = m_contextManager->getContext(requester, capability.endpointId);
+
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    // Respond that state is unavailable after state has been requested.
+    const std::chrono::milliseconds timeout{100};
+    ASSERT_TRUE(provideStateEvent.wait(timeout));
+    m_contextManager->provideStateUnavailableResponse(capability, requestToken, false);
+
+    // Wait for failure.
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(statesFuture.get()[capability].valuePayload, state.valuePayload);
+}
+
+/// Test that report state change notifies the @c ContextManagerObserverInterface.
+TEST_F(ContextManagerTest, test_reportStateChangeShouldNotifyObserver) {
+    // Add provider.
+    auto provider = std::make_shared<MockStateProvider>();
+    auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
+    CapabilityState state{R"({"state":"target"})"};
+    m_contextManager->setStateProvider(capability, provider);
+
+    // Add observer.
+    auto observer = std::make_shared<MockContextObserver>();
+    m_contextManager->addContextManagerObserver(observer);
+
+    utils::WaitEvent notificationEvent;
+    auto cause = AlexaStateChangeCauseType::APP_INTERACTION;
+    EXPECT_CALL(*observer, onStateChanged(capability, state, cause)).WillOnce(InvokeWithoutArgs([&notificationEvent] {
+        notificationEvent.wakeUp();
+    }));
+
+    // Report change.
+    m_contextManager->reportStateChange(capability, state, cause);
+
+    const std::chrono::milliseconds timeout{100};
+    EXPECT_TRUE(notificationEvent.wait(timeout));
+}
+
+/// Test that getContext can handle multiple getContext at the same time.
+TEST_F(ContextManagerTest, test_getContextInParallelShouldSucceed) {
+    // Capability that belongs to the first endpoint.
+    auto providerForEndpoint1 = std::make_shared<MockStateProvider>();
+    auto capabilityForEndpoint1 = CapabilityTag("Namespace", "Name", "EndpointId1");
+    CapabilityState stateForEndpoint1{R"({"state":1})"};
+    m_contextManager->setStateProvider(capabilityForEndpoint1, providerForEndpoint1);
+
+    // Capability that belongs to the second endpoint.
+    auto providerForEndpoint2 = std::make_shared<MockStateProvider>();
+    auto capabilityForEndpoint2 = CapabilityTag("Namespace", "Name", "EndpointId2");
+    CapabilityState stateForEndpoint2{R"({"state":2})"};
+    m_contextManager->setStateProvider(capabilityForEndpoint2, providerForEndpoint2);
+
+    // Expect both provide state calls
+    utils::WaitEvent provideStateEvent1;
+    EXPECT_CALL(*providerForEndpoint1, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent1] {
+        provideStateEvent1.wakeUp();
+    })));
+    utils::WaitEvent provideStateEvent2;
+    EXPECT_CALL(*providerForEndpoint2, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent2] {
+        provideStateEvent2.wakeUp();
+    })));
+
+    // Expect both context to be available
+    auto requester1 = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise1;
+    EXPECT_CALL(*requester1, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise1](const AVSContext& context) {
+            contextStatesPromise1.set_value(context.getStates());
+        })));
+    auto requester2 = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise2;
+    EXPECT_CALL(*requester2, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise2](const AVSContext& context) {
+            contextStatesPromise2.set_value(context.getStates());
+        })));
+
+    // Get context for both endpoints.
+    auto requestToken1 = m_contextManager->getContext(requester1, capabilityForEndpoint1.endpointId);
+    auto requestToken2 = m_contextManager->getContext(requester2, capabilityForEndpoint2.endpointId);
+
+    const std::chrono::milliseconds timeout{100};
+    ASSERT_TRUE(provideStateEvent1.wait(timeout));
+    ASSERT_TRUE(provideStateEvent2.wait(timeout));
+    m_contextManager->provideStateResponse(capabilityForEndpoint1, stateForEndpoint1, requestToken1);
+    m_contextManager->provideStateResponse(capabilityForEndpoint2, stateForEndpoint2, requestToken2);
+
+    // Validate that context for endpoint 1 only has its own capability state.
+    auto statesFuture1 = contextStatesPromise1.get_future();
+    ASSERT_EQ(statesFuture1.wait_for(timeout), std::future_status::ready);
+    auto statesForEndpoint1 = statesFuture1.get();
+    EXPECT_EQ(statesForEndpoint1[capabilityForEndpoint1].valuePayload, stateForEndpoint1.valuePayload);
+    EXPECT_EQ(statesForEndpoint1.find(capabilityForEndpoint2), statesForEndpoint1.end());
+
+    // Validate that context for endpoint 2 only has its own capability state.
+    auto statesFuture2 = contextStatesPromise2.get_future();
+    ASSERT_EQ(statesFuture2.wait_for(timeout), std::future_status::ready);
+    auto statesForEndpoint2 = statesFuture2.get();
+    EXPECT_EQ(statesForEndpoint2[capabilityForEndpoint2].valuePayload, stateForEndpoint2.valuePayload);
+    EXPECT_EQ(statesForEndpoint2.find(capabilityForEndpoint1), statesForEndpoint2.end());
 }
 
 }  // namespace test

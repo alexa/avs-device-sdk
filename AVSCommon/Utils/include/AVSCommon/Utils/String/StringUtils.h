@@ -99,6 +99,14 @@ std::string stringToUpperCase(const std::string& input);
  */
 std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to);
 
+/**
+ * Trim whitespace from the left.
+ *
+ * @param str the string to trim from the left
+ * @return the trimmed string
+ */
+std::string ltrim(const std::string& str);
+
 }  // namespace string
 }  // namespace utils
 }  // namespace avsCommon

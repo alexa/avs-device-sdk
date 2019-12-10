@@ -16,6 +16,7 @@
 #include <string>
 
 #include <AIP/AudioInputProcessor.h>
+#include <Alerts/AlertsCapabilityAgent.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <Settings/Types/LocaleWakeWordsSetting.h>
@@ -96,6 +97,12 @@ std::unique_ptr<DeviceSettingsManager> DeviceSettingsManagerBuilder::build() {
         return nullptr;
     }
     return manager;
+}
+
+DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withAlarmVolumeRampSetting() {
+    return withSynchronizedSetting<DeviceSettingsIndex::ALARM_VOLUME_RAMP, SharedAVSSettingProtocol>(
+        capabilityAgents::alerts::AlertsCapabilityAgent::getAlarmVolumeRampMetadata(),
+        types::getAlarmVolumeRampDefault());
 }
 
 DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withWakeWordConfirmationSetting() {

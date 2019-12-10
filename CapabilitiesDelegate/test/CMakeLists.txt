@@ -1,4 +1,7 @@
-add_subdirectory("Common")
+set(INCLUDE_PATH
+        "${CapabilitiesDelegate_SOURCE_DIR}/include"
+        "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
 
-set(LIBRARIES CapabilitiesDelegate CapabilitiesDelegateTestLib ${CMAKE_THREAD_LIBS_INIT})
-discover_unit_tests("${CapabilitiesDelegate_SOURCE_DIR}/include" "${LIBRARIES}")
+discover_unit_tests("${INCLUDE_PATH}" CapabilitiesDelegate)
+add_definitions("-DACSDK_LOG_MODULE=capabilitiesDelegateTest")
+

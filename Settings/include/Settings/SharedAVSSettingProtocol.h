@@ -71,7 +71,6 @@ public:
         SettingNotificationFunction notifyObservers) override;
 
     bool restoreValue(ApplyDbChangeFunction applyChange, SettingNotificationFunction notifyObservers) override;
-
     bool clearData() override;
     ///@}
 

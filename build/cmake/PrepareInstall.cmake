@@ -16,6 +16,20 @@ function(asdk_install)
     install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
 endfunction()
 
+# Function to install the implementation of the given target
+function(asdk_install_target_implementation target)
+    SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${target}" CACHE INTERNAL "" FORCE)
+    install(TARGETS "${target}" DESTINATION "${ASDK_LIB_INSTALL_DIR}")
+    install(DIRECTORY "${PROJECT_SOURCE_DIR}/Implementation/include" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
+endfunction()
+
+# Function to install the interface of the given target
+function(asdk_install_target_interface target)
+    SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${target}" CACHE INTERNAL "" FORCE)
+    install(TARGETS "${target}" DESTINATION "${ASDK_LIB_INSTALL_DIR}")
+    install(DIRECTORY "${PROJECT_SOURCE_DIR}/Interface/include" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
+endfunction()
+
 # Function to install the target with list of include paths
 function(asdk_install_multiple path_list)
     SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)

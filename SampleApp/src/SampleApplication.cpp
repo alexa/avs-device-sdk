@@ -15,9 +15,12 @@
 
 #include <ContextManager/ContextManager.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
-#include <ACL/Transport/PostConnectSynchronizer.h>
+#include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
+#include <AVSGatewayManager/AVSGatewayManager.h>
+#include <AVSGatewayManager/Storage/AVSGatewayManagerStorage.h>
+#include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "SampleApp/ConnectionObserver.h"
 #include "SampleApp/KeywordObserver.h"
@@ -73,12 +76,24 @@
 #include <BlueZ/BlueZBluetoothDeviceManager.h>
 #endif
 
+#ifdef TOGGLE_CONTROLLER
+#include <ToggleController/ToggleControllerAttributeBuilder.h>
+#endif
+
+#ifdef RANGE_CONTROLLER
+#include <RangeController/RangeControllerAttributeBuilder.h>
+#endif
+
+#ifdef MODE_CONTROLLER
+#include <ModeController/ModeControllerAttributeBuilder.h>
+#include "SampleApp/ModeControllerHandler.h"
+#endif
+
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpPut.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Logger/LoggerSinkManager.h>
 #include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
@@ -88,7 +103,9 @@
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 #include <CapabilitiesDelegate/CapabilitiesDelegate.h>
+#include <CapabilitiesDelegate/Storage/SQLiteCapabilitiesDelegateStorage.h>
 #include <Notifications/SQLiteNotificationsStorage.h>
+#include <SampleApp/CaptionPresenter.h>
 #include <SampleApp/SampleEqualizerModeController.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 #include <Settings/Storage/SQLiteDeviceSettingStorage.h>
@@ -157,6 +174,62 @@ std::unordered_map<std::string, ExternalMediaPlayer::AdapterCreateFunction> Samp
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SampleApplication");
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+// Note: Discoball is an imaginary endpoint where you can control its power, its light (toggle)
+// its rotation speed (range) and the color of its light (mode).
+
+/// The derived endpoint Id used in endpoint creation.
+static const std::string SAMPLE_ENDPOINT_DERIVED_ENDPOINT_ID("Discoball");
+
+/// The description of the endpoint.
+static const std::string SAMPLE_ENDPOINT_DESCRIPTION("Sample Discoball Description");
+
+/// The friendly name of the Endpoint. This is used in utterance.
+static const std::string SAMPLE_ENDPOINT_FRIENDLYNAME("Discoball");
+
+/// The manufacturer of endpoint.
+static const std::string SAMPLE_ENDPOINT_MANUFACTURER_NAME("Sample Manufacturer");
+
+/// The display category of the endpoint.
+static const std::vector<std::string> SAMPLE_ENDPOINT_DISPLAYCATEGORY({"OTHER"});
+
+/// The instance name for the toggle controller
+static const std::string SAMPLE_ENDPOINT_TOGGLE_CONTROLLER_INSTANCE_NAME("Discoball.Light");
+
+/// The instance name for the range controller.
+static const std::string SAMPLE_ENDPOINT_RANGE_CONTROLLER_INSTANCE_NAME("Discoball.Speed");
+
+/// The instance name for the mode controller.
+static const std::string SAMPLE_ENDPOINT_MODE_CONTROLLER_INSTANCE_NAME("Discoball.Mode");
+
+/// The model of the endpoint.
+static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_MODEL("Model1");
+
+/// Serial number of the endpoint.
+static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_SERIAL_NUMBER("123456789");
+
+/// Firmware version number
+static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_FIRMWARE_VERSION("1.0");
+
+/// Software Version number.
+static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_SOFTWARE_VERSION("1.0");
+
+/// The custom identifier.
+static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_CUSTOM_IDENTIFIER("SampleApp");
+
+/// The range controller preset 'high'.
+static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_HIGH = 10;
+
+/// The range controller preset 'medium'.
+static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_MEDIUM = 5;
+
+/// The range controller preset 'low'.
+static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW = 1;
+
+/// US English locale string.
+static const std::string EN_US("en-US");
+#endif
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -599,10 +672,6 @@ bool SampleApplication::initialize(
      */
     auto deviceSettingsStorage = alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage::create(config);
 
-    // Create HTTP Put handler
-    std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPut> httpPut =
-        avsCommon::utils::libcurlUtils::HttpPut::create();
-
     /*
      * Creating bluetooth storage object to be used for storing uuid to mac mappings for devices.
      */
@@ -627,6 +696,11 @@ bool SampleApplication::initialize(
      * Creating the UI component that observes various components and prints to the console accordingly.
      */
     auto userInterfaceManager = std::make_shared<alexaClientSDK::sampleApp::UIManager>(localeAssetsManager);
+
+    /*
+     * Create the presentation layer for the captions.
+     */
+    auto captionPresenter = std::make_shared<alexaClientSDK::sampleApp::CaptionPresenter>();
 
     /*
      * Creating customerDataManager which will be used by the registrationManager and all classes that extend
@@ -675,8 +749,11 @@ bool SampleApplication::initialize(
      * Creating the CapabilitiesDelegate - This component provides the client with the ability to send messages to the
      * Capabilities API.
      */
+    auto capabilitiesDelegateStorage =
+        alexaClientSDK::capabilitiesDelegate::storage::SQLiteCapabilitiesDelegateStorage::create(config);
+
     m_capabilitiesDelegate = alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate::create(
-        authDelegate, miscStorage, httpPut, customerDataManager, config, deviceInfo);
+        authDelegate, std::move(capabilitiesDelegateStorage), customerDataManager);
 
     if (!m_capabilitiesDelegate) {
         alexaClientSDK::sampleApp::ConsolePrinter::simplePrint("Creation of CapabilitiesDelegate failed!");
@@ -712,24 +789,46 @@ bool SampleApplication::initialize(
      * It is required for each of the capability agents so that they may provide their state just before any event is
      * fired off.
      */
-    auto contextManager = contextManager::ContextManager::create();
+    auto contextManager = contextManager::ContextManager::create(*deviceInfo);
     if (!contextManager) {
         ACSDK_CRITICAL(LX("Creation of ContextManager failed."));
         return false;
     }
 
+    auto avsGatewayManagerStorage = avsGatewayManager::storage::AVSGatewayManagerStorage::create(miscStorage);
+    if (!avsGatewayManagerStorage) {
+        ACSDK_CRITICAL(LX("Creation of AVSGatewayManagerStorage failed"));
+        return false;
+    }
+    auto avsGatewayManager =
+        avsGatewayManager::AVSGatewayManager::create(std::move(avsGatewayManagerStorage), customerDataManager, config);
+    if (!avsGatewayManager) {
+        ACSDK_CRITICAL(LX("Creation of AVSGatewayManager failed"));
+        return false;
+    }
+
+    auto synchronizeStateSenderFactory = synchronizeStateSender::SynchronizeStateSenderFactory::create(contextManager);
+    if (!synchronizeStateSenderFactory) {
+        ACSDK_CRITICAL(LX("Creation of SynchronizeStateSenderFactory failed"));
+        return false;
+    }
+
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>> providers;
+    providers.push_back(synchronizeStateSenderFactory);
+    providers.push_back(avsGatewayManager);
+    providers.push_back(m_capabilitiesDelegate);
+
     /*
      * Create a factory for creating objects that handle tasks that need to be performed right after establishing
      * a connection to AVS.
      */
-    auto postConnectSynchronizerFactory = acl::PostConnectSynchronizerFactory::create(contextManager);
+    auto postConnectSequencerFactory = acl::PostConnectSequencerFactory::create(providers);
 
     /*
      * Create a factory to create objects that establish a connection with AVS.
      */
     auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(
-        std::make_shared<avsCommon::utils::libcurlUtils::LibcurlHTTP2ConnectionFactory>(),
-        postConnectSynchronizerFactory);
+        std::make_shared<avsCommon::utils::libcurlUtils::LibcurlHTTP2ConnectionFactory>(), postConnectSequencerFactory);
 
     /*
      * Creating the buffer (Shared Data Stream) that will hold user audio data. This is the main input into the SDK.
@@ -782,6 +881,7 @@ bool SampleApplication::initialize(
             m_bluetoothMediaPlayer,
             m_ringtoneMediaPlayer,
             m_systemSoundMediaPlayer,
+            nullptr,
             speakSpeaker,
             nullptr,  // added into 'additionalSpeakers
             alertsSpeaker,
@@ -825,7 +925,8 @@ bool SampleApplication::initialize(
             firmwareVersion,
             true,
             nullptr,
-            std::move(bluetoothDeviceManager));
+            std::move(bluetoothDeviceManager),
+            avsGatewayManager);
 
     if (!client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));
@@ -837,6 +938,13 @@ bool SampleApplication::initialize(
     client->addNotificationsObserver(userInterfaceManager);
 
     client->addBluetoothDeviceObserver(userInterfaceManager);
+
+#ifdef ENABLE_CAPTIONS
+    std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> captionableMediaSources = pool;
+    captionableMediaSources.emplace_back(m_speakMediaPlayer);
+    client->addCaptionPresenter(captionPresenter);
+    client->setCaptionMediaPlayers(captionableMediaSources);
+#endif
 
     userInterfaceManager->configureSettingsNotifications(client->getSettingsManager());
 
@@ -900,6 +1008,194 @@ bool SampleApplication::initialize(
         return false;
     }
 
+#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+    auto discoballEndpointBuilder = client->createEndpointBuilder();
+    if (!discoballEndpointBuilder) {
+        ACSDK_CRITICAL(LX("Failed to create Endpoint Builder!"));
+        return false;
+    }
+
+    discoballEndpointBuilder->withDerivedEndpointId(SAMPLE_ENDPOINT_DERIVED_ENDPOINT_ID)
+        .withDescription(SAMPLE_ENDPOINT_DESCRIPTION)
+        .withFriendlyName(SAMPLE_ENDPOINT_FRIENDLYNAME)
+        .withManufacturerName(SAMPLE_ENDPOINT_MANUFACTURER_NAME)
+        .withAdditionalAttributes(
+            SAMPLE_ENDPOINT_MANUFACTURER_NAME,
+            SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_MODEL,
+            SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_SERIAL_NUMBER,
+            SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_FIRMWARE_VERSION,
+            SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_SOFTWARE_VERSION,
+            SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_CUSTOM_IDENTIFIER)
+        .withDisplayCategory(SAMPLE_ENDPOINT_DISPLAYCATEGORY);
+
+#ifdef POWER_CONTROLLER
+    auto discoballPowerHandler = PowerControllerHandler::create();
+    if (!discoballPowerHandler) {
+        ACSDK_CRITICAL(LX("Failed to create power controller handler!"));
+        return false;
+    }
+    discoballEndpointBuilder->withPowerController(discoballPowerHandler, true, true);
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+    auto discoballToggleHandler = ToggleControllerHandler::create();
+    if (!discoballToggleHandler) {
+        ACSDK_CRITICAL(LX("Failed to create toggle controller handler!"));
+        return false;
+    }
+
+    auto toggleControllerAttributeBuilder =
+        capabilityAgents::toggleController::ToggleControllerAttributeBuilder::create();
+    if (!toggleControllerAttributeBuilder) {
+        ACSDK_CRITICAL(LX("Failed to create toggle controller attribute builder!"));
+        return false;
+    }
+
+    auto toggleCapabilityResources = avsCommon::avs::CapabilityResources();
+    if (!toggleCapabilityResources.addFriendlyNameWithText("Light", EN_US)) {
+        ACSDK_CRITICAL(LX("Failed to create Toggle Controller capability resources!"));
+        return false;
+    }
+
+    toggleControllerAttributeBuilder->withCapabilityResources(toggleCapabilityResources);
+    auto toggleControllerAttributes = toggleControllerAttributeBuilder->build();
+    if (!toggleControllerAttributes.hasValue()) {
+        ACSDK_CRITICAL(LX("Failed to create Toggle Controller attributes!"));
+        return false;
+    }
+
+    discoballEndpointBuilder->withToggleController(
+        discoballToggleHandler,
+        SAMPLE_ENDPOINT_TOGGLE_CONTROLLER_INSTANCE_NAME,
+        toggleControllerAttributes.value(),
+        true,
+        true,
+        false);
+#endif
+
+#ifdef RANGE_CONTROLLER
+    auto discoballRangeHandler = RangeControllerHandler::create();
+    if (!discoballRangeHandler) {
+        ACSDK_CRITICAL(LX("Failed to create range controller handler!"));
+        return false;
+    }
+
+    auto rangeControllerAttributeBuilder = capabilityAgents::rangeController::RangeControllerAttributeBuilder::create();
+    if (!rangeControllerAttributeBuilder) {
+        ACSDK_CRITICAL(LX("Failed to create range controller attribute builder!"));
+        return false;
+    }
+
+    auto rangeCapabilityResources = avsCommon::avs::CapabilityResources();
+    if (!rangeCapabilityResources.addFriendlyNameWithText("Speed", EN_US)) {
+        ACSDK_CRITICAL(LX("Failed to create Range Controller capability resources!"));
+        return false;
+    }
+
+    auto highPresetResources = avsCommon::avs::CapabilityResources();
+    if (!highPresetResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_VALUE_MAXIMUM) ||
+        !highPresetResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_VALUE_HIGH)) {
+        ACSDK_CRITICAL(LX("Failed to create Range Controller HIGH preset resources!"));
+        return false;
+    }
+
+    auto mediumPresetResources = avsCommon::avs::CapabilityResources();
+    if (!mediumPresetResources.addFriendlyNameWithText("mid", EN_US) ||
+        !mediumPresetResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_VALUE_MEDIUM)) {
+        ACSDK_CRITICAL(LX("Failed to create Range Controller MEDIUM preset resources!"));
+        return false;
+    }
+
+    auto lowPresetResources = avsCommon::avs::CapabilityResources();
+    if (!lowPresetResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_VALUE_MINIMUM) ||
+        !lowPresetResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_VALUE_LOW)) {
+        ACSDK_CRITICAL(LX("Failed to create Range Controller LOW preset resources!"));
+        return false;
+    }
+
+    rangeControllerAttributeBuilder->withCapabilityResources(rangeCapabilityResources)
+        .addPreset(std::make_pair(SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_HIGH, highPresetResources))
+        .addPreset(std::make_pair(SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_MEDIUM, mediumPresetResources))
+        .addPreset(std::make_pair(SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW, lowPresetResources));
+    auto rangeControllerAttributes = rangeControllerAttributeBuilder->build();
+    if (!rangeControllerAttributes.hasValue()) {
+        ACSDK_CRITICAL(LX("Failed to create Range Controller attributes!"));
+        return false;
+    }
+
+    discoballEndpointBuilder->withRangeController(
+        discoballRangeHandler,
+        SAMPLE_ENDPOINT_RANGE_CONTROLLER_INSTANCE_NAME,
+        rangeControllerAttributes.value(),
+        true,
+        true,
+        false);
+#endif
+
+#ifdef MODE_CONTROLLER
+    auto discoballModeHandler = ModeControllerHandler::create();
+    if (!discoballModeHandler) {
+        ACSDK_CRITICAL(LX("Failed to create mode controller handler!"));
+        return false;
+    }
+    auto modeControllerAttributeBuilder = capabilityAgents::modeController::ModeControllerAttributeBuilder::create();
+    if (!modeControllerAttributeBuilder) {
+        ACSDK_CRITICAL(LX("Failed to create mode controller attribute builder!"));
+        return false;
+    }
+
+    auto modeCapabilityResources = avsCommon::avs::CapabilityResources();
+    if (!modeCapabilityResources.addFriendlyNameWithText("Light", EN_US) ||
+        !modeCapabilityResources.addFriendlyNameWithAssetId(avsCommon::avs::resources::ASSET_ALEXA_SETTING_MODE)) {
+        ACSDK_CRITICAL(LX("Failed to create Mode Controller capability resources!"));
+        return false;
+    }
+
+    auto modeRedResources = avsCommon::avs::CapabilityResources();
+    if (!modeRedResources.addFriendlyNameWithText("Red", EN_US)) {
+        ACSDK_CRITICAL(LX("Failed to create Mode Controller 'Red' mode resources!"));
+        return false;
+    }
+
+    auto modeGreenResources = avsCommon::avs::CapabilityResources();
+    if (!modeGreenResources.addFriendlyNameWithText("Green", EN_US)) {
+        ACSDK_CRITICAL(LX("Failed to create Mode Controller 'Green' mode resources!"));
+        return false;
+    }
+
+    auto modeBlueResources = avsCommon::avs::CapabilityResources();
+    if (!modeBlueResources.addFriendlyNameWithText("Blue", EN_US)) {
+        ACSDK_CRITICAL(LX("Failed to create Mode Controller 'Blue' mode resources!"));
+        return false;
+    }
+
+    modeControllerAttributeBuilder->withCapabilityResources(modeCapabilityResources)
+        .addMode(ModeControllerHandler::MODE_CONTROLLER_MODE_RED, modeRedResources)
+        .addMode(ModeControllerHandler::MODE_CONTROLLER_MODE_GREEN, modeGreenResources)
+        .addMode(ModeControllerHandler::MODE_CONTROLLER_MODE_BLUE, modeBlueResources)
+        .setOrdered(true);
+    auto modeControllerAttributes = modeControllerAttributeBuilder->build();
+    if (!modeControllerAttributes.hasValue()) {
+        ACSDK_CRITICAL(LX("Failed to create Mode Controller attributes!"));
+        return false;
+    }
+
+    discoballEndpointBuilder->withModeController(
+        discoballModeHandler,
+        SAMPLE_ENDPOINT_MODE_CONTROLLER_INSTANCE_NAME,
+        modeControllerAttributes.value(),
+        true,
+        true,
+        false);
+#endif
+
+    auto discoballEndpointId = discoballEndpointBuilder->build();
+    if (!discoballEndpointId.hasValue()) {
+        ACSDK_CRITICAL(LX("Failed to create Smart Home Endpoint!"));
+        return false;
+    }
+#endif
+
 // Creating wake word audio provider, if necessary
 #ifdef KWD
     bool wakeAlwaysReadable = true;
@@ -943,9 +1239,27 @@ bool SampleApplication::initialize(
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
         m_guiRenderer,
-        wakeWordAudioProvider);
+        wakeWordAudioProvider
+#ifdef POWER_CONTROLLER
+        ,
+        discoballPowerHandler
+#endif
+#ifdef TOGGLE_CONTROLLER
+        ,
+        discoballToggleHandler
+#endif
+#ifdef RANGE_CONTROLLER
+        ,
+        discoballRangeHandler
+#endif
+#ifdef MODE_CONTROLLER
+        ,
+        discoballModeHandler
+#endif
+    );
 
 #else
+    // clang-format off
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
     m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
         client,
@@ -960,7 +1274,26 @@ bool SampleApplication::initialize(
 #endif
         holdToTalkAudioProvider,
         tapToTalkAudioProvider,
-        m_guiRenderer);
+        m_guiRenderer,
+        capabilityAgents::aip::AudioProvider::null()
+#ifdef POWER_CONTROLLER
+        ,
+        discoballPowerHandler
+#endif
+#ifdef TOGGLE_CONTROLLER
+        ,
+        discoballToggleHandler
+#endif
+#ifdef RANGE_CONTROLLER
+        ,
+        discoballRangeHandler
+#endif
+#ifdef MODE_CONTROLLER
+        ,
+        discoballModeHandler
+#endif
+    );
+    // clang-format on
 #endif
 
     client->addAlexaDialogStateObserver(m_interactionManager);
@@ -984,13 +1317,8 @@ bool SampleApplication::initialize(
     authDelegate->addAuthObserver(m_userInputManager);
     client->getRegistrationManager()->addObserver(m_userInputManager);
     m_capabilitiesDelegate->addCapabilitiesObserver(m_userInputManager);
-    m_capabilitiesDelegate->addCapabilitiesObserver(client);
 
-    // Connect once configuration is all set.
-    std::string endpoint;
-    sampleAppConfig.getString(ENDPOINT_KEY, &endpoint);
-
-    client->connect(m_capabilitiesDelegate, endpoint);
+    client->connect();
 
     return true;
 }

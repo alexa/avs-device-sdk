@@ -12,24 +12,24 @@
         // The Client ID of the Product from developer.amazon.com
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
         // Product ID from developer.amazon.com
-        "productId":"${SDK_CONFIG_PRODUCT_ID}"
+        "productId":"${SDK_CONFIG_PRODUCT_ID}",
+        // The name of the device manufacturer.
+        "manufacturerName": "${SDK_CONFIG_MANUFACTURER_NAME}",
+        // The description of the device which should contain the manufacturer name or how the device is connected.
+        "description": "${SDK_CONFIG_DEVICE_DESCRIPTION}"
+    },
+    "avsGatewayManager": {
+        // Allows configuring the AVS Gateway the device should connect to.
+        // Important Note: The AVSGatewayManager stores a previously verified gateway in the MiscDB and uses it
+        // to establish a connection with AVS. In order to override the gateway configured here, you may have to
+        // delete the AVSGatewayManager table under the MiscDB.
+        // "avsGateway":"https://alexa.na.gateway.devices.a2z.com"
     },
     "capabilitiesDelegate":{
-        // The endpoint to connect in order to send device capabilities.
-        // This will only be used in DEBUG builds.
-        // e.g. "endpoint": "https://api.amazonalexa.com"
-        // Override the message to be sent out to the Capabilities API.
-        // This will only be used in DEBUG builds.
-        // e.g. "overridenCapabilitiesPublishMessageBody": {
-        //          "envelopeVersion":"20160207",
-        //          "capabilities":[
-        //              {
-        //                "type":"AlexaInterface",
-        //                "interface":"Alerts",
-        //                "version":"1.1"
-        //              }
-        //          ]
-        //      }
+        // Path to misc database file. e.g. /home/ubuntu/Build/capabilitiesDelegate.db
+        // Note: The directory specified must be valid.
+        // The database file (capabilitiesDelegate.db) will be created by SampleApp, do not create it yourself.
+        "databaseFilePath":"${SDK_CAPABILITIES_DELEGATE_DATABASE_FILE_PATH}"
     },
     "miscDatabase":{
         // Path to misc database file. e.g. /home/ubuntu/Build/miscDatabase.db

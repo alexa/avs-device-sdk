@@ -21,6 +21,8 @@
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics.h>
+#include <Captions/CaptionData.h>
+#include <Captions/CaptionFormat.h>
 
 #include "SpeechSynthesizer/SpeechSynthesizer.h"
 
@@ -34,6 +36,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
+using namespace avsCommon::utils::metrics;
 using namespace rapidjson;
 
 /// SpeechSynthesizer capability constants
@@ -42,7 +45,7 @@ static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInt
 /// SpeechSynthesizer interface name
 static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_NAME = "SpeechSynthesizer";
 /// SpeechSynthesizer interface version
-static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_VERSION = "1.2";
+static const std::string SPEECHSYNTHESIZER_CAPABILITY_INTERFACE_VERSION = "1.3";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"SpeechSynthesizer"};
@@ -84,6 +87,15 @@ static const char KEY_TOKEN[] = "token";
 /// The key used to look the "format" property in the directive payload string.
 static const char KEY_FORMAT[] = "format";
 
+/// The key for the "captionData" property in the directive payload.
+static const char KEY_CAPTION[] = "caption";
+
+/// The key under "captionData" containing the caption type
+static const char KEY_CAPTION_TYPE[] = "type";
+
+/// The key under "captionData" containing the caption content
+static const char KEY_CAPTION_CONTENT[] = "content";
+
 /// The key used to look the "playBehavior" property in the directive payload string.
 static const char KEY_PLAY_BEHAVIOR[] = "playBehavior";
 
@@ -111,6 +123,9 @@ static const char PLAYER_STATE_INTERRUPTED[] = "INTERRUPTED";
 /// The duration to wait for a state change in @c onFocusChanged before failing.
 static const std::chrono::seconds STATE_CHANGE_TIMEOUT{5};
 
+/// The component name of power resource
+static const std::string POWER_RESOURCE_COMPONENT_NAME{"SpeechSynthesizer"};
+
 /**
  * Creates the SpeechSynthesizer capability configuration.
  *
@@ -124,7 +139,10 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
-    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator) {
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+    std::shared_ptr<captions::CaptionManagerInterface> captionManager,
+    std::shared_ptr<PowerResourceManagerInterface> powerResourceManager) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "mediaPlayerNullReference"));
         return nullptr;
@@ -145,8 +163,15 @@ std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
         ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "exceptionSenderNullReference"));
         return nullptr;
     }
-    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(
-        new SpeechSynthesizer(mediaPlayer, messageSender, focusManager, contextManager, exceptionSender));
+    auto speechSynthesizer = std::shared_ptr<SpeechSynthesizer>(new SpeechSynthesizer(
+        mediaPlayer,
+        messageSender,
+        focusManager,
+        contextManager,
+        metricRecorder,
+        exceptionSender,
+        captionManager,
+        powerResourceManager));
     speechSynthesizer->init();
 
     dialogUXStateAggregator->addObserver(speechSynthesizer);
@@ -376,20 +401,26 @@ SpeechSynthesizer::SpeechSynthesizer(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
-    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender) :
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<captions::CaptionManagerInterface> captionManager,
+    std::shared_ptr<PowerResourceManagerInterface> powerResourceManager) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"SpeechSynthesizer"},
         m_mediaSourceId{MediaPlayerInterface::ERROR},
         m_offsetInMilliseconds{0},
         m_speechPlayer{mediaPlayer},
+        m_metricRecorder{metricRecorder},
         m_messageSender{messageSender},
         m_focusManager{focusManager},
         m_contextManager{contextManager},
+        m_captionManager{captionManager},
         m_currentState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_desiredState{SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED},
         m_currentFocus{FocusState::NONE},
         m_isShuttingDown{false},
-        m_initialDialogUXStateReceived{false} {
+        m_initialDialogUXStateReceived{false},
+        m_powerResourceManager{powerResourceManager} {
     m_capabilityConfigurations.insert(getSpeechSynthesizerCapabilityConfiguration());
 }
 
@@ -408,6 +439,7 @@ void SpeechSynthesizer::doShutdown() {
         std::lock_guard<std::mutex> lock(m_speakInfoQueueMutex);
         m_isShuttingDown = true;
     }
+    m_contextManager->removeStateProvider(CONTEXT_MANAGER_SPEECH_STATE);
     m_executor.shutdown();  // Wait for any ongoing job and avoid new jobs being enqueued.
     m_speechPlayer->removeObserver(shared_from_this());
     {
@@ -542,6 +574,36 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
         }
     } else {
         speakInfo->playBehavior = PlayBehavior::REPLACE_ALL;
+    }
+
+    if (!m_captionManager) {
+        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captionManagerIsNull"));
+    } else {
+        auto captionIterator = payload.FindMember(KEY_CAPTION);
+        if (payload.MemberEnd() != captionIterator) {
+            rapidjson::Value& captionsPayload = payload[KEY_CAPTION];
+
+            auto captionFormat = captions::CaptionFormat::UNKNOWN;
+            captionIterator = captionsPayload.FindMember(KEY_CAPTION_TYPE);
+            if (payload.MemberEnd() != captionIterator) {
+                captionFormat = captions::avsStringToCaptionFormat(captionIterator->value.GetString());
+            } else {
+                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "type"));
+            }
+
+            std::string captionContent;
+            captionIterator = captionsPayload.FindMember(KEY_CAPTION_CONTENT);
+            if (payload.MemberEnd() != captionIterator) {
+                captionContent = captionIterator->value.GetString();
+            } else {
+                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "content"));
+            }
+
+            ACSDK_DEBUG3(LX("captionPayloadParsed").d("type", captionFormat));
+            speakInfo->captionData = captions::CaptionData(captionFormat, captionContent);
+        } else {
+            ACSDK_DEBUG3(LX("captionsNotParsed").d("reason", "keyNotFoundInPayload"));
+        }
     }
 
     // If everything checks out, add the speakInfo to the map.
@@ -875,7 +937,11 @@ std::string SpeechSynthesizer::buildPayload(std::string& token) {
 
 void SpeechSynthesizer::startPlaying() {
     ACSDK_DEBUG9(LX("startPlaying"));
-    m_mediaSourceId = m_speechPlayer->setSource(std::move(m_currentInfo->attachmentReader));
+    std::shared_ptr<AttachmentReader> attachmentReader = std::move(m_currentInfo->attachmentReader);
+    m_mediaSourceId = m_speechPlayer->setSource(std::move(attachmentReader));
+    if (m_captionManager && m_currentInfo->captionData.isValid()) {
+        m_captionManager->onCaption(m_mediaSourceId, m_currentInfo->captionData);
+    }
     if (MediaPlayerInterface::ERROR == m_mediaSourceId) {
         ACSDK_ERROR(LX("startPlayingFailed").d("reason", "setSourceFailed"));
         executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "playFailed");
@@ -914,6 +980,7 @@ void SpeechSynthesizer::setCurrentStateLocked(SpeechSynthesizerObserverInterface
     }
 
     m_currentState = newState;
+    managePowerResource(m_currentState);
     switch (newState) {
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
@@ -1136,6 +1203,26 @@ void SpeechSynthesizer::executeOnDialogUXStateChanged(
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeechSynthesizer::
     getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+void SpeechSynthesizer::managePowerResource(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState) {
+    if (!m_powerResourceManager) {
+        return;
+    }
+
+    ACSDK_DEBUG5(LX(__func__).d("state", newState));
+    switch (newState) {
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
+            m_powerResourceManager->acquirePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            break;
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
+            m_powerResourceManager->releasePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            break;
+        default:
+            // no-op for focus change
+            break;
+    }
 }
 
 }  // namespace speechSynthesizer

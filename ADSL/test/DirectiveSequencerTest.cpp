@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 
 #include "ADSL/DirectiveSequencer.h"
@@ -152,7 +153,7 @@ public:
 
 void DirectiveSequencerTest::SetUp() {
     DirectiveHandlerConfiguration config;
-    config[{NAMESPACE_TEST, NAME_DONE}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    config[NamespaceAndName{NAMESPACE_TEST, NAME_DONE}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     m_doneHandler = MockDirectiveHandler::create(config, LONG_HANDLING_TIME_MS);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_exceptionEncounteredSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
@@ -225,7 +226,7 @@ TEST_F(DirectiveSequencerTest, test_emptyDialogRequestId) {
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     DirectiveHandlerConfiguration config;
-    config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    config[NamespaceAndName{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler = MockDirectiveHandler::create(config);
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(0);
     EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(1);
@@ -245,7 +246,8 @@ TEST_F(DirectiveSequencerTest, test_handleImmediatelyHandler) {
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
     DirectiveHandlerConfiguration config;
-    config[{NAMESPACE_TEST, NAME_HANDLE_IMMEDIATELY}] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    config[NamespaceAndName{NAMESPACE_TEST, NAME_HANDLE_IMMEDIATELY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     auto handler = MockDirectiveHandler::create(config);
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(directive)).Times(0);
     EXPECT_CALL(*(handler.get()), preHandleDirective(_, _)).Times(1);
@@ -270,15 +272,18 @@ TEST_F(DirectiveSequencerTest, test_removingAndChangingHandlers) {
         UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_TEST, NAME_NON_BLOCKING}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler2Config[NamespaceAndName{NAMESPACE_TEST, NAME_NON_BLOCKING}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler2 = MockDirectiveHandler::create(handler2Config);
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(directive1)).Times(0);
@@ -319,7 +324,8 @@ TEST_F(DirectiveSequencerTest, test_blockingDirective) {
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handlerConfig;
-    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handlerConfig[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
 
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(_)).Times(0);
@@ -349,11 +355,13 @@ TEST_F(DirectiveSequencerTest, test_blockingThenNonDialogDirective) {
         UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_SPEAKER, NAME_SET_VOLUME}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
@@ -392,7 +400,8 @@ TEST_F(DirectiveSequencerTest, test_bargeIn) {
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handlerConfig;
-    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handlerConfig[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler = MockDirectiveHandler::create(handlerConfig, std::chrono::milliseconds(LONG_HANDLING_TIME_MS));
 
     EXPECT_CALL(*(handler.get()), handleDirectiveImmediately(_)).Times(0);
@@ -430,15 +439,18 @@ TEST_F(DirectiveSequencerTest, testTimer_blockingThenNonBockingOnSameDialogId) {
         UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler2Config[NamespaceAndName{NAMESPACE_TEST, NAME_NON_BLOCKING}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler2 = MockDirectiveHandler::create(handler2Config);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -492,15 +504,18 @@ TEST_F(DirectiveSequencerTest, test_thatBargeInDropsSubsequentDirectives) {
         UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_TEST, NAME_BLOCKING}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler2Config[NamespaceAndName{NAMESPACE_TEST, NAME_BLOCKING}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler2 = MockDirectiveHandler::create(handler2Config, LONG_HANDLING_TIME_MS);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -551,11 +566,13 @@ TEST_F(DirectiveSequencerTest, test_preHandleDirectiveError) {
         UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -595,11 +612,13 @@ TEST_F(DirectiveSequencerTest, test_handleDirectiveError) {
         UNPARSED_DIRECTIVE, avsMessageHeader1, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler1Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -650,23 +669,28 @@ TEST_F(DirectiveSequencerTest, test_addDirectiveHandlersWhileHandlingDirectives)
         UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config, LONG_HANDLING_TIME_MS);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler1Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler2Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler2 = MockDirectiveHandler::create(handler2Config);
 
     DirectiveHandlerConfiguration handler3Config;
-    handler3Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler3Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler3 = MockDirectiveHandler::create(handler3Config);
 
     DirectiveHandlerConfiguration handler4Config;
-    handler4Config[{NAMESPACE_TEST, NAME_NON_BLOCKING}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler4Config[NamespaceAndName{NAMESPACE_TEST, NAME_NON_BLOCKING}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler4 = MockDirectiveHandler::create(handler4Config);
 
     auto cancelDirectiveFunction = [this, &handler1, &handler3, &handler4](const std::string& messageId) {
@@ -746,15 +770,18 @@ TEST_F(DirectiveSequencerTest, test_handleBlockingThenImmediatelyThenNonBockingO
         UNPARSED_DIRECTIVE, avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handler0Config[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_TEST, NAME_HANDLE_IMMEDIATELY}] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    handler1Config[NamespaceAndName{NAMESPACE_TEST, NAME_HANDLE_IMMEDIATELY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     auto handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler2Config[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler2 = MockDirectiveHandler::create(handler2Config);
 
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(handler0));
@@ -806,7 +833,8 @@ TEST_F(DirectiveSequencerTest, test_addDirectiveAfterDisabled) {
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handlerConfig;
-    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handlerConfig[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
 
     EXPECT_CALL(*handler, handleDirectiveImmediately(_)).Times(0);
@@ -833,7 +861,8 @@ TEST_F(DirectiveSequencerTest, test_disableCancelsDirective) {
         UNPARSED_DIRECTIVE, avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handlerConfig;
-    handlerConfig[{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    handlerConfig[NamespaceAndName{NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     auto handler = MockDirectiveHandler::create(handlerConfig, LONG_HANDLING_TIME_MS);
 
     EXPECT_CALL(*handler, handleDirectiveImmediately(_)).Times(0);
@@ -873,7 +902,8 @@ TEST_F(DirectiveSequencerTest, test_addDirectiveAfterReEnabled) {
         "anotherIgnored", avsMessageHeader2, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID);
 
     DirectiveHandlerConfiguration handlerConfig;
-    handlerConfig[{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handlerConfig[NamespaceAndName{NAMESPACE_AUDIO_PLAYER, NAME_PLAY}] =
+        BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     auto handler = MockDirectiveHandler::create(handlerConfig);
 
     // No handle calls are expected

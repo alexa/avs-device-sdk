@@ -25,6 +25,11 @@
 #include <AVSCommon/Utils/File/FileUtils.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
+#include <Settings/Setting.h>
+#include <Settings/SettingEventMetadata.h>
+#include <Settings/SettingEventSender.h>
+#include <Settings/SharedAVSSettingProtocol.h>
+#include <Settings/Storage/DeviceSettingStorageInterface.h>
 
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
@@ -47,6 +52,8 @@ using namespace avsCommon::utils::timing;
 using namespace avsCommon::sdkInterfaces;
 using namespace certifiedSender;
 using namespace rapidjson;
+using namespace settings;
+using namespace settings::types;
 
 /// Alerts capability constants
 /// Alerts interface type
@@ -54,7 +61,7 @@ static const std::string ALERTS_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
 /// Alerts interface name
 static const std::string ALERTS_CAPABILITY_INTERFACE_NAME = "Alerts";
 /// Alerts interface version
-static const std::string ALERTS_CAPABILITY_INTERFACE_VERSION = "1.3";
+static const std::string ALERTS_CAPABILITY_INTERFACE_VERSION = "1.4";
 
 /// The value for Type which we need for json parsing.
 static const std::string KEY_TYPE = "type";
@@ -71,6 +78,8 @@ static const std::string DIRECTIVE_NAME_DELETE_ALERTS = "DeleteAlerts";
 static const std::string DIRECTIVE_NAME_SET_VOLUME = "SetVolume";
 /// The value of the AdjustVolume Directive.
 static const std::string DIRECTIVE_NAME_ADJUST_VOLUME = "AdjustVolume";
+/// The value of the SetAlarmVolumeRamp Directive.
+static const std::string DIRECTIVE_NAME_SET_ALARM_VOLUME_RAMP = "SetAlarmVolumeRamp";
 
 // ==== Events ===
 
@@ -96,7 +105,10 @@ static const std::string ALERT_VOLUME_CHANGED_EVENT_NAME = "VolumeChanged";
 static const std::string ALERT_DELETE_ALERTS_SUCCEEDED_EVENT_NAME = "DeleteAlertsSucceeded";
 /// The value of the DeleteAlertsFailed Event name.
 static const std::string ALERT_DELETE_ALERTS_FAILED_EVENT_NAME = "DeleteAlertsFailed";
-
+/// The value of the AlarmVolumeRampChanged Event name.
+static const std::string ALERT_ALARM_VOLUME_RAMP_CHANGED_EVENT_NAME = "AlarmVolumeRampChanged";
+/// The value of the ReportAlarmVolumeRamp Event name.
+static const std::string ALERT_REPORT_ALARM_VOLUME_RAMP_EVENT_NAME = "AlarmVolumeRampReport";
 // ==== Other constants ===
 
 /// The value of the event payload key for a single token.
@@ -109,6 +121,8 @@ static const std::string DIRECTIVE_PAYLOAD_TOKEN_KEY = "token";
 static const std::string DIRECTIVE_PAYLOAD_TOKENS_KEY = "tokens";
 /// The value of volume key in a Directive we may receive.
 static const std::string DIRECTIVE_PAYLOAD_VOLUME = "volume";
+/// The value of alarm volume ramp key in a Directive we may receive.
+static const std::string DIRECTIVE_PAYLOAD_ALARM_VOLUME_RAMP = "alarmVolumeRamp";
 
 static const std::string AVS_CONTEXT_HEADER_NAMESPACE_VALUE_KEY = "Alerts";
 /// The value of the Alerts Context Names.
@@ -126,6 +140,14 @@ static const std::string AVS_CONTEXT_ALERT_SCHEDULED_TIME_KEY = "scheduledTime";
 
 /// The value of the volume state info volume key.
 static const std::string AVS_PAYLOAD_VOLUME_KEY = "volume";
+/// The value of the alarm volume ramp state key for alarm volume ramp events.
+static const std::string AVS_PAYLOAD_ALARM_VOLUME_RAMP_KEY = "alarmVolumeRamp";
+/// The JSON key in the payload of error events.
+static const std::string AVS_PAYLOAD_ERROR_KEY = "error";
+/// The JSON key for the error type in the payload of error events.
+static const std::string AVS_PAYLOAD_ERROR_TYPE_KEY = "type";
+/// The JSON key for the error message in the payload of error events.
+static const std::string AVS_PAYLOAD_ERROR_MESSAGE_KEY = "message";
 
 /// An empty dialogRequestId.
 static const std::string EMPTY_DIALOG_REQUEST_ID = "";
@@ -142,6 +164,8 @@ static const avsCommon::avs::NamespaceAndName DELETE_ALERTS{NAMESPACE, DIRECTIVE
 static const avsCommon::avs::NamespaceAndName SET_VOLUME{NAMESPACE, DIRECTIVE_NAME_SET_VOLUME};
 /// The AdjustVolume directive signature.
 static const avsCommon::avs::NamespaceAndName ADJUST_VOLUME{NAMESPACE, DIRECTIVE_NAME_ADJUST_VOLUME};
+/// The SetAlarmVolumeRamp directive signature.
+static const avsCommon::avs::NamespaceAndName SET_ALARM_VOLUME_RAMP{NAMESPACE, DIRECTIVE_NAME_SET_ALARM_VOLUME_RAMP};
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AlertsCapabilityAgent");
@@ -224,7 +248,13 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
     std::shared_ptr<storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
     std::shared_ptr<renderer::RendererInterface> alertRenderer,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting) {
+    if (!alarmVolumeRampSetting) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullAlarmVolumeRampSetting"));
+        return nullptr;
+    }
+
     auto alertsCA = std::shared_ptr<AlertsCapabilityAgent>(new AlertsCapabilityAgent(
         messageSender,
         certifiedMessageSender,
@@ -235,7 +265,8 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
         alertStorage,
         alertsAudioFactory,
         alertRenderer,
-        dataManager));
+        dataManager,
+        alarmVolumeRampSetting));
 
     if (!alertsCA->initialize()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "Initialization error."));
@@ -259,6 +290,7 @@ avsCommon::avs::DirectiveHandlerConfiguration AlertsCapabilityAgent::getConfigur
     configuration[DELETE_ALERTS] = neitherNonBlockingPolicy;
     configuration[SET_VOLUME] = audioNonBlockingPolicy;
     configuration[ADJUST_VOLUME] = audioNonBlockingPolicy;
+    configuration[SET_ALARM_VOLUME_RAMP] = audioNonBlockingPolicy;
     return configuration;
 }
 
@@ -354,7 +386,8 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
     std::shared_ptr<storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
     std::shared_ptr<renderer::RendererInterface> alertRenderer,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting) :
         CapabilityAgent("Alerts", exceptionEncounteredSender),
         RequiresShutdown("AlertsCapabilityAgent"),
         CustomerDataHandler(dataManager),
@@ -368,7 +401,8 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         m_alertsAudioFactory{alertsAudioFactory},
         m_contentChannelIsActive{false},
         m_commsChannelIsActive{false},
-        m_alertIsSounding{false} {
+        m_alertIsSounding{false},
+        m_alarmVolumeRampSetting{alarmVolumeRampSetting} {
     m_capabilityConfigurations.insert(getAlertsCapabilityConfiguration());
 }
 
@@ -410,6 +444,15 @@ bool AlertsCapabilityAgent::initialize() {
 
 bool AlertsCapabilityAgent::initializeAlerts() {
     return m_alertScheduler.initialize(shared_from_this());
+}
+
+settings::SettingEventMetadata AlertsCapabilityAgent::getAlarmVolumeRampMetadata() {
+    return settings::SettingEventMetadata{
+        NAMESPACE,
+        ALERT_ALARM_VOLUME_RAMP_CHANGED_EVENT_NAME,
+        ALERT_REPORT_ALARM_VOLUME_RAMP_EVENT_NAME,
+        AVS_PAYLOAD_ALARM_VOLUME_RAMP_KEY,
+    };
 }
 
 bool AlertsCapabilityAgent::handleSetAlert(
@@ -455,12 +498,29 @@ bool AlertsCapabilityAgent::handleSetAlert(
     *alertToken = parsedAlert->getToken();
 
     if (m_alertScheduler.isAlertActive(parsedAlert)) {
-        return m_alertScheduler.snoozeAlert(parsedAlert->getToken(), parsedAlert->getScheduledTime_ISO_8601());
+        if (!m_alertScheduler.snoozeAlert(parsedAlert->getToken(), parsedAlert->getScheduledTime_ISO_8601())) {
+            ACSDK_ERROR(LX("handleSetAlertFailed").d("reason", "failed to snooze alert"));
+            return false;
+        }
+
+        // Pass the scheduled time to the observers as the reason for the alert created
+        executeNotifyObservers(
+            parsedAlert->getToken(),
+            parsedAlert->getTypeName(),
+            State::SCHEDULED_FOR_LATER,
+            parsedAlert->getScheduledTime_ISO_8601());
+        return true;
     }
 
     if (!m_alertScheduler.scheduleAlert(parsedAlert)) {
         return false;
     }
+
+    executeNotifyObservers(
+        parsedAlert->getToken(),
+        parsedAlert->getTypeName(),
+        State::SCHEDULED_FOR_LATER,
+        parsedAlert->getScheduledTime_ISO_8601());
 
     updateContextManager();
 
@@ -562,6 +622,29 @@ bool AlertsCapabilityAgent::handleAdjustVolume(
     setNextAlertVolume(volume);
 
     return true;
+}
+
+bool AlertsCapabilityAgent::handleSetAlarmVolumeRamp(
+    const std::shared_ptr<avsCommon::avs::AVSDirective>& directive,
+    const rapidjson::Document& payload) {
+    std::string jsonValue;
+    if (!retrieveValue(payload, DIRECTIVE_PAYLOAD_ALARM_VOLUME_RAMP, &jsonValue)) {
+        std::string errorMessage =
+            DIRECTIVE_PAYLOAD_ALARM_VOLUME_RAMP + " not specified for " + DIRECTIVE_NAME_SET_ALARM_VOLUME_RAMP;
+        ACSDK_ERROR(LX("handleSetAlarmVolumeRampFailed").m(errorMessage));
+        sendProcessingDirectiveException(directive, errorMessage);
+        return false;
+    }
+
+    auto value = getAlarmVolumeRampDefault();
+    std::stringstream ss{jsonValue};
+    ss >> value;
+    if (ss.fail()) {
+        ACSDK_ERROR(LX(__func__).d("error", "invalid").d("value", jsonValue));
+        return false;
+    }
+
+    return m_alarmVolumeRampSetting->setAvsChange(value);
 }
 
 void AlertsCapabilityAgent::sendEvent(const std::string& eventName, const std::string& alertToken, bool isCertified) {
@@ -714,6 +797,8 @@ void AlertsCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<Di
         handleSetVolume(directive, payload);
     } else if (DIRECTIVE_NAME_ADJUST_VOLUME == directiveName) {
         handleAdjustVolume(directive, payload);
+    } else if (DIRECTIVE_NAME_SET_ALARM_VOLUME_RAMP == directiveName) {
+        handleSetAlarmVolumeRamp(directive, payload);
     }
 }
 
@@ -815,7 +900,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             alertIsActive = true;
             sendEvent(ALERT_ENTERED_BACKGROUND_EVENT_NAME, alertToken);
             break;
-
+        case AlertObserverInterface::State::SCHEDULED_FOR_LATER:
         case AlertObserverInterface::State::DELETED:
             break;
     }

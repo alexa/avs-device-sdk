@@ -257,8 +257,8 @@ void ProgressTimer::mainLoop() {
     }
 
     while (State::RUNNING == m_state) {
-        stateLock.unlock();
         m_gotProgress = false;
+        stateLock.unlock();
         m_context->requestProgress();
         stateLock.lock();
 

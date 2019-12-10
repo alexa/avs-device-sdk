@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public:
     MOCK_METHOD2(create, std::shared_ptr<DBusProxy>(const std::string&, const std::string&));
     MOCK_METHOD3(callMethod, ManagedGVariant(const std::string&, GVariant*, GError**));
     MOCK_METHOD4(callMethodWithFDList, ManagedGVariant(const std::string&, GVariant*, GUnixFDList**, GError**));
-    MOCK_METHOD0(getObjectPath, std::string());
+    MOCK_CONST_METHOD0(getObjectPath, std::string());
     MOCK_METHOD0(get, GDBusProxy*());
 };
 

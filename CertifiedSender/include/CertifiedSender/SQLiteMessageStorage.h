@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,8 @@ public:
     void close() override;
 
     bool store(const std::string& message, int* id) override;
+
+    bool store(const std::string& message, const std::string& uriPathExtension, int* id) override;
 
     bool load(std::queue<StoredMessage>* messageContainer) override;
 

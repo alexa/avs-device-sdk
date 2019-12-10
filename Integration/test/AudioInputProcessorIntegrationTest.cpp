@@ -46,6 +46,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include <MediaPlayer/MediaPlayer.h>
 #else
@@ -55,6 +56,7 @@
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -83,6 +85,7 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace alexaClientSDK::avsCommon::avs::attachment;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace capabilityAgents::aip;
+using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::system;
 using namespace sdkInterfaces;
 using namespace avsCommon::utils::sds;
@@ -302,17 +305,21 @@ public:
     }
     ~testStateProvider() {
     }
-    void provideState(const NamespaceAndName& nsname, const unsigned int stateRequestToken) override {
-        std::ostringstream context;
-        context << R"({)"
-                   R"("volume":)"
-                << 50 << R"(,)"
-                << R"("muted":)" << false << R"(})";
 
-        m_contextManager->setState(
-            VOLUME_STATE_PAIR, context.str(), avsCommon::avs::StateRefreshPolicy::ALWAYS, stateRequestToken);
-        m_stateRequested = true;
+    void provideState(const NamespaceAndName& nsname, const unsigned int stateRequestToken) override {
+        m_executor.submit([this, stateRequestToken] {
+            std::ostringstream context;
+            context << R"({)"
+                       R"("volume":)"
+                    << 50 << R"(,)"
+                    << R"("muted":)" << false << R"(})";
+
+            m_contextManager->setState(
+                VOLUME_STATE_PAIR, context.str(), avsCommon::avs::StateRefreshPolicy::ALWAYS, stateRequestToken);
+            m_stateRequested = true;
+        });
     }
+
     bool checkStateRequested() {
         bool savedResult = false;
         if (m_stateRequested) {
@@ -325,11 +332,13 @@ public:
 protected:
     void doShutdown() override {
         m_contextManager.reset();
+        m_executor.shutdown();
     }
 
 private:
     bool m_stateRequested = false;
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 /// A test observer that mocks out the ChannelObserverInterface##onFocusChanged() call.
@@ -476,6 +485,12 @@ protected:
             systemSoundMediaPlayer,
             std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
 
+        m_interactionModelCA =
+            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        ASSERT_NE(nullptr, m_interactionModelCA);
+        ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
+        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
@@ -606,6 +621,7 @@ protected:
     std::shared_ptr<TestClient> m_testClient;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
+    std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<AipStateObserver> m_StateObserver;
     std::shared_ptr<tapToTalkButton> m_tapToTalkButton;
     std::shared_ptr<holdToTalkButton> m_holdToTalkButton;

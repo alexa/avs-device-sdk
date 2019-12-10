@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,15 +14,19 @@
  */
 
 #include <fstream>
+#include <vector>
 
 #include <gtest/gtest.h>
 
 #include <ACL/Transport/HTTP2TransportFactory.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
+#include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
+
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
+#include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "Integration/ACLTestContext.h"
 
@@ -95,6 +99,9 @@ void ACLTestContext::waitForDisconnected() {
         << "Disconnecting timed out";
 }
 
+/// Default @c AVS gateway to connect to.
+static const std::string DEFAULT_AVS_GATEWAY = "https://alexa.na.gateway.devices.a2z.com";
+
 ACLTestContext::ACLTestContext(const std::string& filePath, const std::string& overlay) {
     m_authDelegateTestContext = AuthDelegateTestContext::create(filePath, overlay);
     EXPECT_TRUE(m_authDelegateTestContext);
@@ -102,17 +109,34 @@ ACLTestContext::ACLTestContext(const std::string& filePath, const std::string& o
         return;
     }
 
-    m_contextManager = ContextManager::create();
+    auto config = ConfigurationNode::getRoot();
+    EXPECT_TRUE(config);
+    if (!config) {
+        return;
+    }
+
+    auto deviceInfo = avsCommon::utils::DeviceInfo::create(config);
+    EXPECT_TRUE(deviceInfo);
+    if (!deviceInfo) {
+        return;
+    }
+
+    m_contextManager = ContextManager::create(*deviceInfo);
     EXPECT_TRUE(m_contextManager);
     if (!m_contextManager) {
         return;
     }
 
-    auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(m_contextManager);
+    auto synchronizeStateSenderFactory =
+        synchronizeStateSender::SynchronizeStateSenderFactory::create(m_contextManager);
+    std::vector<std::shared_ptr<PostConnectOperationProviderInterface>> providers;
+    providers.push_back(synchronizeStateSenderFactory);
+    auto postConnectFactory = acl::PostConnectSequencerFactory::create(providers);
     auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
     auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
-    m_messageRouter = std::make_shared<MessageRouter>(getAuthDelegate(), m_attachmentManager, transportFactory);
+    m_messageRouter =
+        std::make_shared<MessageRouter>(getAuthDelegate(), m_attachmentManager, transportFactory, DEFAULT_AVS_GATEWAY);
     m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 }
 

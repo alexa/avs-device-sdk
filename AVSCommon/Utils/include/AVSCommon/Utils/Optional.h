@@ -117,7 +117,33 @@ public:
      */
     bool operator!=(const Optional<ValueT>& rhs) const;
 
+    /**
+     *  @name Comparison operators.
+     *
+     *  Compare the current optional object against a second optional.
+     *
+     *  @param rhs The object to compare against this.
+     *  @return @c true if the comparison holds; @c false otherwise.
+     */
+    /// @{
+    bool operator<(const Optional& rhs) const;
+    bool operator>(const Optional& rhs) const;
+    bool operator<=(const Optional& rhs) const;
+    bool operator>=(const Optional& rhs) const;
+    /// @}
+
 private:
+    /**
+     * Function used to retrieve the value as a reference to ValueT.
+     *
+     * @warning This can only be used if the object has a valid value.
+     * @return The reference to the object being kept inside @c m_value.
+     */
+    /// @{
+    inline ValueT& getReference();
+    inline const ValueT& getReference() const;
+    /// @}
+
     /// Boolean flag indicating whether the value exists or not.
     bool m_hasValue;
 
@@ -141,14 +167,24 @@ Optional<ValueT>::Optional(const ValueT& other) : m_hasValue{true} {
 template <typename ValueT>
 Optional<ValueT>::Optional(const Optional<ValueT>& other) : m_hasValue{other.m_hasValue} {
     if (hasValue()) {
-        new (&m_value) ValueT(*reinterpret_cast<const ValueT*>(&other.m_value));
+        new (&m_value) ValueT(other.getReference());
     }
+}
+
+template <typename ValueT>
+ValueT& Optional<ValueT>::getReference() {
+    return *reinterpret_cast<ValueT*>(&m_value);
+}
+
+template <typename ValueT>
+const ValueT& Optional<ValueT>::getReference() const {
+    return *reinterpret_cast<const ValueT*>(&m_value);
 }
 
 template <typename ValueT>
 void Optional<ValueT>::set(const ValueT& other) {
     if (hasValue()) {
-        *reinterpret_cast<ValueT*>(&m_value) = other;
+        getReference() = other;
     } else {
         m_hasValue = true;
         new (&m_value) ValueT(other);
@@ -159,7 +195,7 @@ template <typename ValueT>
 void Optional<ValueT>::reset() {
     if (hasValue()) {
         m_hasValue = false;
-        reinterpret_cast<ValueT*>(&m_value)->~ValueT();
+        getReference().~ValueT();
     }
 }
 
@@ -171,7 +207,7 @@ bool Optional<ValueT>::hasValue() const {
 template <typename ValueT>
 ValueT Optional<ValueT>::value() const {
     if (hasValue()) {
-        return *reinterpret_cast<const ValueT*>(&m_value);
+        return getReference();
     }
     logger::acsdkError(logger::LogEntry("Optional", "valueFailed").d("reason", "optionalHasNoValue"));
     return ValueT();
@@ -180,7 +216,7 @@ ValueT Optional<ValueT>::value() const {
 template <typename ValueT>
 ValueT Optional<ValueT>::valueOr(const ValueT& other) const {
     if (hasValue()) {
-        return *reinterpret_cast<const ValueT*>(&m_value);
+        return getReference();
     }
     return other;
 }
@@ -188,7 +224,7 @@ ValueT Optional<ValueT>::valueOr(const ValueT& other) const {
 template <typename ValueT>
 Optional<ValueT>::~Optional() {
     if (hasValue()) {
-        reinterpret_cast<ValueT*>(&m_value)->~ValueT();
+        getReference().~ValueT();
     }
 }
 
@@ -196,10 +232,10 @@ template <typename ValueT>
 Optional<ValueT>& Optional<ValueT>::operator=(const Optional<ValueT>& rhs) {
     if (hasValue()) {
         if (rhs.hasValue()) {
-            *reinterpret_cast<ValueT*>(&m_value) = rhs.value();
+            getReference() = rhs.value();
         } else {
             m_hasValue = false;
-            reinterpret_cast<ValueT*>(&m_value)->~ValueT();
+            getReference().~ValueT();
         }
     } else if (rhs.hasValue()) {
         m_hasValue = true;
@@ -219,6 +255,29 @@ bool Optional<ValueT>::operator==(const Optional<ValueT>& rhs) const {
 template <typename ValueT>
 bool Optional<ValueT>::operator!=(const Optional<ValueT>& rhs) const {
     return !(*this == rhs);
+}
+
+template <typename ValueT>
+bool Optional<ValueT>::operator<(const Optional& rhs) const {
+    if (m_hasValue && rhs.m_hasValue) {
+        return getReference() < rhs.getReference();
+    }
+    return m_hasValue < rhs.m_hasValue;
+}
+
+template <typename ValueT>
+bool Optional<ValueT>::operator>(const Optional& rhs) const {
+    return rhs < *this;
+}
+
+template <typename ValueT>
+bool Optional<ValueT>::operator<=(const Optional& rhs) const {
+    return !(rhs < *this);
+}
+
+template <typename ValueT>
+bool Optional<ValueT>::operator>=(const Optional& rhs) const {
+    return !(*this < rhs);
 }
 
 }  // namespace utils

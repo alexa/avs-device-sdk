@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,7 +30,11 @@ namespace test {
  */
 class MockPostConnect : public PostConnectInterface {
 public:
-    MOCK_METHOD1(doPostConnect, bool(std::shared_ptr<HTTP2Transport> transport));
+    MOCK_METHOD2(
+        doPostConnect,
+        bool(
+            std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+            std::shared_ptr<PostConnectObserverInterface> postConnectObserver));
     MOCK_METHOD0(onDisconnect, void());
 };
 

@@ -13,12 +13,11 @@
  * permissions and limitations under the License.
  */
 
+#include <map>
+
 #include "AVSCommon/AVS/EventBuilder.h"
 
-#include <rapidjson/document.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
-
+#include "AVSCommon/Utils/JSON/JSONGenerator.h"
 #include "AVSCommon/Utils/Logger/LogEntry.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/Metrics.h"
@@ -28,7 +27,6 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
-using namespace rapidjson;
 using namespace utils;
 using namespace avs::constants;
 
@@ -42,17 +40,56 @@ static const std::string TAG("EventBuilder");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// The message id key in the header of the event
-static const std::string MESSAGE_ID_KEY_STRING = "messageId";
+/// The context key in the event.
+static const std::string CONTEXT_KEY_STRING = "context";
+
+/// The cookie key.
+static const std::string COOKIE_KEY_STRING = "cookie";
 
 /// The dialog request Id key in the header of the event.
 static const std::string DIALOG_REQUEST_ID_KEY_STRING = "dialogRequestId";
 
-/// The context key in the event.
-static const std::string CONTEXT_KEY_STRING = "context";
+/// The endpoint key.
+static const std::string ENDPOINT_KEY_STRING = "endpoint";
+
+/// The endpointId key.
+static const std::string ENDPOINT_ID_KEY_STRING = "endpointId";
 
 /// The event key.
 static const std::string EVENT_KEY_STRING = "event";
+
+/// The instance key.
+static const std::string INSTANCE_KEY_STRING = "instance";
+
+/// The message key in the event.
+static const std::string MESSAGE_KEY_STRING = "message";
+
+/// The message id key in the header of the event
+static const std::string MESSAGE_ID_KEY_STRING = "messageId";
+
+/// The scope key.
+static const std::string SCOPE_KEY_STRING = "scope";
+
+/// The scope type.
+static const std::string SCOPE_TYPE_KEY_STRING = "type";
+
+/// The scope token.
+static const std::string SCOPE_TOKEN_KEY_STRING = "token";
+
+/// The scope partition.
+static const std::string SCOPE_PARTITION_KEY_STRING = "partition";
+
+/// The scope user id.
+static const std::string SCOPE_USER_ID_KEY_STRING = "userId";
+
+/// The bearer token type.
+static const std::string BEARER_TOKEN_TYPE = "BearerToken";
+
+/// The bearer token with partition type.
+static const std::string BEARER_TOKEN_WITH_PARTITION_TYPE = "BearerTokenWithPartition";
+
+/// The type key in the event.
+static const std::string TYPE_KEY_STRING = "type";
 
 /**
  * Builds a JSON header object. The header includes the namespace, name, message Id and an optional
@@ -62,62 +99,26 @@ static const std::string EVENT_KEY_STRING = "event";
  * @param nameSpace The namespace of the event to be included in the header.
  * @param eventName The name of the event to be included in the header.
  * @param dialogRequestIdValue The value associated with the "dialogRequestId" key.
- * @param allocator The rapidjson allocator to use to build the JSON header.
- * @param messageId Will be populated with the generated messageId of the header.
- * @return A header JSON object if successful else an empty object.
+ * @param jsonGenerator The generator that will be populated with the header json.
+ * @return The generated messageId of the header.
  */
-static Document buildHeader(
+static std::string buildHeader(
     const std::string& nameSpace,
     const std::string& eventName,
     const std::string& dialogRequestIdValue,
-    Document::AllocatorType& allocator,
-    std::string* messageId) {
-    Document header(kObjectType);
+    json::JsonGenerator& jsonGenerator) {
+    jsonGenerator.startObject(HEADER_KEY_STRING);
 
-    if (!messageId) {
-        ACSDK_ERROR(LX("buildHeaderFailed").d("reason", "nullMessageId"));
-        return header;
-    }
-    *messageId = avsCommon::utils::uuidGeneration::generateUUID();
-
-    header.AddMember(StringRef(NAMESPACE_KEY_STRING), nameSpace, allocator);
-    header.AddMember(StringRef(NAME_KEY_STRING), eventName, allocator);
-    header.AddMember(StringRef(MESSAGE_ID_KEY_STRING), *messageId, allocator);
+    auto messageId = avsCommon::utils::uuidGeneration::generateUUID();
+    jsonGenerator.addMember(NAMESPACE_KEY_STRING, nameSpace);
+    jsonGenerator.addMember(NAME_KEY_STRING, eventName);
+    jsonGenerator.addMember(MESSAGE_ID_KEY_STRING, messageId);
 
     if (!dialogRequestIdValue.empty()) {
-        header.AddMember(StringRef(DIALOG_REQUEST_ID_KEY_STRING), dialogRequestIdValue, allocator);
+        jsonGenerator.addMember(DIALOG_REQUEST_ID_KEY_STRING, dialogRequestIdValue);
     }
-    return header;
-}
-
-/**
- * Builds a JSON event object. The event includes the header and the payload.
- *
- * @param header The header value associated with the "header" key.
- * @param jsonPayloadValue The payload value associated with the "payload" key.
- * @param allocator The rapidjson allocator to use to build the JSON header.
- * @return An event JSON object if successful else an empty object.
- */
-static Document buildEvent(Document* header, const std::string& jsonPayloadValue, Document::AllocatorType& allocator) {
-    Document payload(&allocator);
-    Document event(kObjectType);
-
-    if (!header || header->ObjectEmpty()) {
-        ACSDK_ERROR(LX("buildEventFailed").d("reason", "headerIsNullOrEmpty"));
-        return event;
-    }
-    // Parse the payload to convert to a JSON object. In case of an error, return an empty event value.
-    if (!jsonPayloadValue.empty() && payload.Parse(jsonPayloadValue).HasParseError()) {
-        ACSDK_ERROR(LX("buildEventFailed").d("reason", "errorParsingPayload").sensitive("payload", jsonPayloadValue));
-        return event;
-    }
-
-    event.AddMember(StringRef(HEADER_KEY_STRING), *header, allocator);
-    if (!jsonPayloadValue.empty()) {
-        event.AddMember(StringRef(PAYLOAD_KEY_STRING), payload, allocator);
-    }
-
-    return event;
+    jsonGenerator.finishObject();
+    return messageId;
 }
 
 const std::pair<std::string, std::string> buildJsonEventString(
@@ -126,46 +127,85 @@ const std::pair<std::string, std::string> buildJsonEventString(
     const std::string& dialogRequestIdValue,
     const std::string& jsonPayloadValue,
     const std::string& jsonContext) {
-    Document eventAndContext(kObjectType);
-    Document::AllocatorType& allocator = eventAndContext.GetAllocator();
     const std::pair<std::string, std::string> emptyPair;
 
+    json::JsonGenerator jsonGenerator;
     if (!jsonContext.empty()) {
-        Document context(kObjectType);
-        // The context needs to be parsed to convert to a JSON object.
-        if (context.Parse(jsonContext).HasParseError()) {
-            ACSDK_DEBUG(
+        if (!jsonGenerator.addRawJsonMember(CONTEXT_KEY_STRING, jsonContext)) {
+            ACSDK_ERROR(
                 LX("buildJsonEventStringFailed").d("reason", "parseContextFailed").sensitive("context", jsonContext));
             return emptyPair;
         }
-        eventAndContext.CopyFrom(context, allocator);
     }
 
-    std::string messageId;
-    Document header = buildHeader(nameSpace, eventName, dialogRequestIdValue, allocator, &messageId);
-    ACSDK_DEBUG(LX("buildJsonEventString").d("messageId", messageId).d("namespace", nameSpace).d("name", eventName));
-
+    jsonGenerator.startObject(EVENT_KEY_STRING);
+    auto messageId = buildHeader(nameSpace, eventName, dialogRequestIdValue, jsonGenerator);
     if (eventName == "SpeechStarted" || eventName == "SpeechFinished" || eventName == "Recognize") {
         ACSDK_METRIC_IDS(TAG, eventName, messageId, dialogRequestIdValue, Metrics::Location::BUILDING_MESSAGE);
     }
 
-    Document event = buildEvent(&header, jsonPayloadValue, allocator);
+    jsonGenerator.addRawJsonMember(PAYLOAD_KEY_STRING, jsonPayloadValue);
+    jsonGenerator.finishObject();
 
-    if (event.ObjectEmpty()) {
-        ACSDK_ERROR(LX("buildJsonEventStringFailed").d("reason", "buildEventFailed"));
-        return emptyPair;
+    ACSDK_DEBUG(LX("buildJsonEventString").d("messageId", messageId).d("namespace", nameSpace).d("name", eventName));
+
+    auto eventJson = jsonGenerator.toString();
+    ACSDK_DEBUG0(LX(__func__).d("event", eventJson));
+    return std::make_pair(messageId, eventJson);
+}
+
+/**
+ * Add a json object from a map with the given name.
+ * @param name The name of the object.
+ * @param map The key, value pairs to add.
+ * @param jsonGenerator The json generator being used to generate the json object.
+ */
+static void addJsonObjectFromMap(
+    const std::string& name,
+    const std::map<std::string, std::string>& map,
+    json::JsonGenerator& jsonGenerator) {
+    if (!map.empty()) {
+        jsonGenerator.startObject(name);
+        for (const auto& element : map) {
+            jsonGenerator.addMember(element.first, element.second);
+        }
+        jsonGenerator.finishObject();
     }
+}
 
-    eventAndContext.AddMember(StringRef(EVENT_KEY_STRING), event, allocator);
+/**
+ * Adds a json object representing the @c endpoint.
+ *
+ * @param endpoint The endpoint to be encoded as a json object.
+ * @param jsonGenerator The json generator being used to generate the json object.
+ */
+static void addEndpointToJson(const AVSMessageEndpoint& endpoint, json::JsonGenerator& jsonGenerator) {
+    jsonGenerator.startObject(ENDPOINT_KEY_STRING);
+    jsonGenerator.addMember(ENDPOINT_ID_KEY_STRING, endpoint.endpointId);
+    addJsonObjectFromMap(COOKIE_KEY_STRING, endpoint.cookies, jsonGenerator);
+    jsonGenerator.finishObject();
+}
 
-    StringBuffer eventAndContextBuf;
-    Writer<StringBuffer> writer(eventAndContextBuf);
-    if (!eventAndContext.Accept(writer)) {
-        ACSDK_ERROR(LX("buildJsonEventStringFailed").d("reason", "StringBufferAcceptFailed"));
-        return emptyPair;
+std::string buildJsonEventString(
+    const AVSMessageHeader& eventHeader,
+    const Optional<AVSMessageEndpoint>& endpoint,
+    const std::string& jsonPayloadValue,
+    const Optional<AVSContext>& context) {
+    json::JsonGenerator jsonGenerator;
+    jsonGenerator.startObject(EVENT_KEY_STRING);
+    {
+        if (endpoint.hasValue()) {
+            addEndpointToJson(endpoint.value(), jsonGenerator);
+        }
+        jsonGenerator.addRawJsonMember(HEADER_KEY_STRING, eventHeader.toJson());
+        jsonGenerator.addRawJsonMember(PAYLOAD_KEY_STRING, jsonPayloadValue);
     }
+    jsonGenerator.finishObject();
 
-    return std::make_pair(messageId, eventAndContextBuf.GetString());
+    if (context.hasValue()) {
+        jsonGenerator.addRawJsonMember(CONTEXT_KEY_STRING, context.value().toJson());
+    }
+    return jsonGenerator.toString();
 }
 
 }  // namespace avs

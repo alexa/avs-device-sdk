@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,10 +16,13 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AVSMESSAGE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AVSMESSAGE_H_
 
-#include "AVSMessageHeader.h"
-
 #include <memory>
 #include <string>
+
+#include <AVSCommon/Utils/Optional.h>
+
+#include "AVSCommon/AVS/AVSMessageEndpoint.h"
+#include "AVSCommon/AVS/AVSMessageHeader.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -37,8 +40,12 @@ public:
      * @param avsMessageHeader An object that contains the necessary header fields of an AVS message.
      *                         NOTE: This parameter MUST NOT be null.
      * @param payload The payload associated with an AVS message. This is expected to be in the JSON format.
+     * @param endpoint The attributes for the target endpoint if available.
      */
-    AVSMessage(std::shared_ptr<AVSMessageHeader> avsMessageHeader, std::string payload);
+    AVSMessage(
+        std::shared_ptr<AVSMessageHeader> avsMessageHeader,
+        std::string payload,
+        const utils::Optional<AVSMessageEndpoint>& endpoint = utils::Optional<AVSMessageEndpoint>());
 
     /**
      * Destructor.
@@ -67,6 +74,34 @@ public:
     std::string getMessageId() const;
 
     /**
+     * Returns the correlation token of the message.
+     *
+     * @return The correlation token string.
+     */
+    std::string getCorrelationToken() const;
+
+    /**
+     * Returns the event correlation token of the message.
+     *
+     * @return The event correlation token string.
+     */
+    std::string getEventCorrelationToken() const;
+
+    /**
+     * Return the payload version in an AVS message.
+     *
+     * @return The payload version if present or an empty string if this field is not available.
+     */
+    std::string getPayloadVersion() const;
+
+    /**
+     * Return the instance in an AVS message.
+     *
+     * @return The target instance id if present or an empty string if this field is not available.
+     */
+    std::string getInstance() const;
+
+    /**
      * Returns The dialog request ID of the message.
      *
      * @return The dialog request ID, a unique ID for the messages that are part of the same dialog.
@@ -81,17 +116,35 @@ public:
     std::string getPayload() const;
 
     /**
+     * Return a pointer to its header.
+     *
+     * @return A pointer to this @c AVSMessage's header.
+     */
+    std::shared_ptr<const AVSMessageHeader> getHeader() const;
+
+    /**
      * Return a string representation of this @c AVSMessage's header.
      *
      * @return A string representation of this @c AVSMessage's header.
      */
     std::string getHeaderAsString() const;
 
+    /**
+     * Return the endpoint attributes included in this message.
+     *
+     * @return The endpoint attributes if present; otherwise an empty object.
+     */
+    utils::Optional<AVSMessageEndpoint> getEndpoint() const;
+
 private:
     /// The fields that represent the common items in the header of an AVS message.
-    std::shared_ptr<AVSMessageHeader> m_header;
+    const std::shared_ptr<AVSMessageHeader> m_header;
+
     /// The payload of an AVS message.
-    std::string m_payload;
+    const std::string m_payload;
+
+    /// The endpoint attributes of this message.
+    const utils::Optional<AVSMessageEndpoint> m_endpoint;
 };
 
 }  // namespace avs

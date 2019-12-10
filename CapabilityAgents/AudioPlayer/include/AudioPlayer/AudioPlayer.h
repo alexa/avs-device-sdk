@@ -21,11 +21,12 @@
 #include <memory>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/PlayerActivity.h>
-#include <AVSCommon/AVS/CapabilityConfiguration.h>
-#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/MixingBehavior.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -40,6 +41,7 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
+#include <Captions/CaptionManagerInterface.h>
 
 #include "AudioItem.h"
 #include "ClearBehavior.h"
@@ -78,6 +80,7 @@ public:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     static std::shared_ptr<AudioPlayer> create(
@@ -86,7 +89,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr);
 
     /// @name StateProviderInterface Functions
     /// @{
@@ -119,6 +123,7 @@ public:
     void onPlaybackResumed(SourceId id) override;
     void onBufferUnderrun(SourceId id) override;
     void onBufferRefilled(SourceId id) override;
+    void onBufferingComplete(SourceId id) override;
     void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags) override;
     /// @}
 
@@ -164,11 +169,17 @@ private:
         /// MessageId from the @c PLAY directive.
         const std::string messageId;
 
+        /// This is the @c PlayRequestor object from the @c PLAY directive.
+        avsCommon::avs::PlayRequestor playRequestor;
+
         /// This is the @c AudioItem object from the @c PLAY directive.
         AudioItem audioItem;
 
         /// This is the @c PlayBehavior from the @c PLAY directive.
         avsCommon::avs::PlayBehavior playBehavior;
+
+        /// Mixing behavior.
+        avsCommon::sdkInterfaces::audio::MixingBehavior mixingBehavior;
 
         /// The @c SourceId from setSource API call.  If the SourceId is not equal to ERROR_SOURCE_ID, it means that
         /// this audioItem has buffered by the @c MediaPlayer.
@@ -185,6 +196,10 @@ private:
 
         /// When buffering items, cache the error type until play request
         avsCommon::utils::mediaPlayer::ErrorType errorType;
+
+        /// True if buffered.  We don't want to send a 'nearlyFinished' until after 'started',
+        /// so if we get the 'buffer complete' notification before the track is playing, cache the info here
+        bool isBuffered;
 
         /**
          * Constructor.
@@ -204,6 +219,7 @@ private:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The playback router used for switching playback buttons handler to default.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     AudioPlayer(
@@ -212,7 +228,8 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -324,6 +341,13 @@ private:
      * @param id The id of the source to which this executed callback corresponds to.
      */
     void executeOnPlaybackFinished(SourceId id);
+
+    /**
+     * Executes onBufferingComplete callback function
+     *
+     * @param id The id of the source to which this executed callback corresponds to.
+     */
+    void executeOnBufferingComplete(SourceId id);
 
     /// Performs necessary cleanup when playback has finished/stopped.
     void handlePlaybackCompleted();
@@ -541,6 +565,9 @@ private:
 
     /// The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> m_playbackRouter;
+
+    /// The @c CaptionManagerInterface used for handling captions.
+    std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
 
     /**
      * The current state of the @c AudioPlayer.

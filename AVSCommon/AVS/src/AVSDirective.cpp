@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,6 +43,20 @@ static const std::string JSON_MESSAGE_ID_KEY = "messageId";
 static const std::string JSON_MESSAGE_DIALOG_REQUEST_ID_KEY = "dialogRequestId";
 /// JSON key to get the payload object of a message.
 static const std::string JSON_MESSAGE_PAYLOAD_KEY = "payload";
+/// JSON key to get the optional instance object of a message.
+static const std::string JSON_MESSAGE_INSTANCE_KEY = "instance";
+/// JSON key to get the payload version object of a message.
+static const std::string JSON_MESSAGE_PAYLOAD_VERSION_KEY = "payloadVersion";
+/// JSON key to get the correlationToken value of a header.
+static const std::string JSON_CORRELATION_TOKEN_KEY = "correlationToken";
+/// JSON key to get the eventCorrelationToken value of the header.
+static const std::string JSON_EVENT_CORRELATION_TOKEN_KEY = "eventCorrelationToken";
+/// JSON key to get the endpoint object of a message.
+static const std::string JSON_ENDPOINT_KEY = "endpoint";
+/// JSON key to get the endpointId value of the endpoint.
+static const std::string JSON_ENDPOINT_ID_KEY = "endpointId";
+/// JSON key to get the cookie value for the endpoint.
+static const std::string JSON_ENDPOINT_COOKIE_KEY = "cookie";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AvsDirective");
@@ -130,7 +144,35 @@ static std::shared_ptr<AVSMessageHeader> parseHeader(const Document& document, A
         convertToValue(it->value, &avsDialogRequestId);
     }
 
-    return std::make_shared<AVSMessageHeader>(avsNamespace, avsName, avsMessageId, avsDialogRequestId);
+    std::string instance;
+    if (retrieveValue(headerIt->value, JSON_MESSAGE_INSTANCE_KEY, &instance)) {
+        ACSDK_DEBUG5(LX(__func__).d(JSON_MESSAGE_INSTANCE_KEY, instance));
+    }
+
+    std::string payloadVersion;
+    if (retrieveValue(headerIt->value, JSON_MESSAGE_PAYLOAD_VERSION_KEY, &payloadVersion)) {
+        ACSDK_DEBUG5(LX(__func__).d(JSON_MESSAGE_PAYLOAD_VERSION_KEY, payloadVersion));
+    }
+
+    std::string correlationToken;
+    if (retrieveValue(headerIt->value, JSON_CORRELATION_TOKEN_KEY, &correlationToken)) {
+        ACSDK_DEBUG5(LX(__func__).d(JSON_CORRELATION_TOKEN_KEY, correlationToken));
+    }
+
+    std::string eventCorrelationToken;
+    if (retrieveValue(headerIt->value, JSON_EVENT_CORRELATION_TOKEN_KEY, &eventCorrelationToken)) {
+        ACSDK_DEBUG5(LX(__func__).d(JSON_EVENT_CORRELATION_TOKEN_KEY, eventCorrelationToken));
+    }
+
+    return std::make_shared<AVSMessageHeader>(
+        avsNamespace,
+        avsName,
+        avsMessageId,
+        avsDialogRequestId,
+        correlationToken,
+        eventCorrelationToken,
+        payloadVersion,
+        instance);
 }
 
 /**
@@ -162,6 +204,38 @@ static std::string parsePayload(const Document& document, AVSDirective::ParseSta
     return payload;
 }
 
+/**
+ * Utility function to parse the endpoint attributes from a rapidjson document structure.
+ *
+ * @param document The constructed document tree
+ * @return The endpoint attribute content if it is available; otherwise, and empty object.
+ */
+static utils::Optional<AVSMessageEndpoint> parseEndpoint(const Document& document) {
+    Value::ConstMemberIterator directiveIt;
+    if (!findNode(document, JSON_MESSAGE_DIRECTIVE_KEY, &directiveIt)) {
+        ACSDK_ERROR(LX("parseEndpointFailed").d("reason", "noDirectiveKey"));
+        return utils::Optional<AVSMessageEndpoint>();
+    }
+
+    Value::ConstMemberIterator endpointIt;
+    if (!findNode(directiveIt->value, JSON_ENDPOINT_KEY, &endpointIt)) {
+        ACSDK_DEBUG0(LX(__func__).m("noEndpoint"));
+        return utils::Optional<AVSMessageEndpoint>();
+    }
+
+    std::string endpointId;
+    if (!retrieveValue(endpointIt->value, JSON_ENDPOINT_ID_KEY, &endpointId)) {
+        ACSDK_ERROR(LX(__func__).m("noEndpointId"));
+        return utils::Optional<AVSMessageEndpoint>();
+    }
+
+    AVSMessageEndpoint messageEndpoint{endpointId};
+    messageEndpoint.cookies = retrieveStringMap(endpointIt->value, JSON_ENDPOINT_COOKIE_KEY);
+
+    ACSDK_DEBUG5(LX(__func__).sensitive("endpointId", endpointId));
+    return utils::Optional<AVSMessageEndpoint>(messageEndpoint);
+}
+
 std::pair<std::unique_ptr<AVSDirective>, AVSDirective::ParseStatus> AVSDirective::create(
     const std::string& unparsedDirective,
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
@@ -188,8 +262,10 @@ std::pair<std::unique_ptr<AVSDirective>, AVSDirective::ParseStatus> AVSDirective
         return result;
     }
 
+    auto endpoint = parseEndpoint(document);
+
     result.first = std::unique_ptr<AVSDirective>(
-        new AVSDirective(unparsedDirective, header, payload, attachmentManager, attachmentContextId));
+        new AVSDirective(unparsedDirective, header, payload, attachmentManager, attachmentContextId, endpoint));
 
     return result;
 }
@@ -199,7 +275,8 @@ std::unique_ptr<AVSDirective> AVSDirective::create(
     std::shared_ptr<AVSMessageHeader> avsMessageHeader,
     const std::string& payload,
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
-    const std::string& attachmentContextId) {
+    const std::string& attachmentContextId,
+    const utils::Optional<AVSMessageEndpoint>& endpoint) {
     if (!avsMessageHeader) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageHeader"));
         return nullptr;
@@ -208,8 +285,8 @@ std::unique_ptr<AVSDirective> AVSDirective::create(
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAttachmentManager"));
         return nullptr;
     }
-    return std::unique_ptr<AVSDirective>(
-        new AVSDirective(unparsedDirective, avsMessageHeader, payload, attachmentManager, attachmentContextId));
+    return std::unique_ptr<AVSDirective>(new AVSDirective(
+        unparsedDirective, avsMessageHeader, payload, attachmentManager, attachmentContextId, endpoint));
 }
 
 std::unique_ptr<AttachmentReader> AVSDirective::getAttachmentReader(
@@ -224,8 +301,9 @@ AVSDirective::AVSDirective(
     std::shared_ptr<AVSMessageHeader> avsMessageHeader,
     const std::string& payload,
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
-    const std::string& attachmentContextId) :
-        AVSMessage{avsMessageHeader, payload},
+    const std::string& attachmentContextId,
+    const utils::Optional<AVSMessageEndpoint>& endpoint) :
+        AVSMessage{avsMessageHeader, payload, endpoint},
         m_unparsedDirective{unparsedDirective},
         m_attachmentManager{attachmentManager},
         m_attachmentContextId{attachmentContextId} {

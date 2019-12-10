@@ -249,6 +249,12 @@ private:
      */
     bool init();
 
+    /**
+     * Sync the connected state with the device manager upon initialization. This will ensure the state
+     * is consistent with any devices that were connected before the BTCA was initialized.
+     */
+    void syncWithDeviceManager();
+
     // TODO ACSDK-1392: Optimize by updating the context only when there is a delta.
     /// Helper function to update the context.
     void executeUpdateContext();

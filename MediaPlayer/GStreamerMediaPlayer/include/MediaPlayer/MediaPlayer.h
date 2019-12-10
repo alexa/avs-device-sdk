@@ -31,6 +31,7 @@
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
 #include <gst/base/gstbasesink.h>
+#include <gst/controller/gsttimedvaluecontrolsource.h>
 
 #include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
@@ -59,6 +60,7 @@ class MediaPlayer
         , private PipelineInterface
         , public avsCommon::sdkInterfaces::audio::EqualizerInterface
         , public playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface
+        , public playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface
         , public std::enable_shared_from_this<MediaPlayer> {
 public:
     /**
@@ -88,12 +90,21 @@ public:
     /// @{
     SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* format = nullptr) override;
-    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+
     SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
         bool repeat = false) override;
+
+    SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
 
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
@@ -133,6 +144,7 @@ public:
     /// @name Overridden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
     /// @{
     void onError() override;
+    void onWriteComplete() override;
     /// @}
 
     void doShutdown() override;
@@ -171,6 +183,9 @@ private:
         /// The volume element.
         GstElement* volume;
 
+        /// The fade in element.
+        GstElement* fadeIn;
+
         /// The resampler element.
         GstElement* resample;
 
@@ -193,6 +208,10 @@ private:
                 decodedQueue{nullptr},
                 converter{nullptr},
                 volume{nullptr},
+                fadeIn{nullptr},
+                resample{nullptr},
+                caps{nullptr},
+                equalizer{nullptr},
                 audioSink{nullptr},
                 pipeline{nullptr} {};
     };
@@ -212,6 +231,14 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         std::string name,
         bool enableLiveMode);
+
+    /**
+     * Handle source configuration.
+     *
+     * @return @c true if initialization was successful; otherwise, return @c false.
+     */
+    bool configureSource(const avsCommon::utils::mediaPlayer::SourceConfig& config);
+
     /**
      * The worker loop to run the glib mainloop.
      */
@@ -314,12 +341,14 @@ private:
      * Worker thread handler for setting the source of audio to play.
      *
      * @param reader The @c AttachmentReader with which to receive the audio to play.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      * @param audioFormat The audioFormat to be used to interpret raw audio data.
      * @param repeat An optional parameter to indicate whether to play from the source in a loop.
      */
     void handleSetAttachmentReaderSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
         std::promise<SourceId>* promise,
         const avsCommon::utils::AudioFormat* audioFormat = nullptr,
         bool repeat = false);
@@ -329,12 +358,14 @@ private:
      *
      * @param url The url to set as the source.
      * @param offset The offset from which to start streaming from.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      * @param repeat A parameter to indicate whether to play from the url source in a loop.
      */
     void handleSetUrlSource(
         const std::string& url,
         std::chrono::milliseconds offset,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
         std::promise<SourceId>* promise,
         bool repeat);
 
@@ -343,9 +374,14 @@ private:
      *
      * @param stream The source from which to receive the audio to play.
      * @param repeat Whether the audio stream should be played in a loop until stopped.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @ SourceId value once the source has been set.
      */
-    void handleSetIStreamSource(std::shared_ptr<std::istream> stream, bool repeat, std::promise<SourceId>* promise);
+    void handleSetIStreamSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
+        std::promise<SourceId>* promise);
 
     /**
      * Internal method to update the volume according to a gstreamer bug fix
@@ -488,6 +524,11 @@ private:
         const std::string& error);
 
     /**
+     * Sends the buffering complete notification to the observer.
+     */
+    void sendBufferingComplete();
+
+    /**
      * Sends the buffer underrun notification to the observer.
      */
     void sendBufferUnderrun();
@@ -535,6 +576,14 @@ private:
      * @return @c false if there is no error with this callback, else @c true.
      */
     static gboolean onErrorCallback(gpointer pointer);
+
+    /**
+     * The callback to be added to the event loop to process upon onWriteComplete() callback.
+     *
+     * @param pointer The instance to this @c MediaPlayer.
+     * @return @c false if there is no error with this callback, else @c true.
+     */
+    static gboolean onWriteCompleteCallback(gpointer pointer);
 
     /**
      * Get the current offset of the stream.

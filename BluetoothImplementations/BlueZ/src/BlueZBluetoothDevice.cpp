@@ -165,13 +165,19 @@ bool BlueZBluetoothDevice::init() {
     bool isPaired = false;
     if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_PAIRED, &isPaired) && isPaired) {
         ACSDK_DEBUG5(LX(__func__).m("deviceIsPaired"));
-        m_deviceState = BlueZDeviceState::IDLE;
+        transitionToState(BlueZDeviceState::IDLE, true);
     }
 
     // Parse UUIDs and find versions.
     if (!initializeServices(getServiceUuids())) {
         ACSDK_ERROR(LX(__func__).d("reason", "initializeServicesFailed"));
         return false;
+    }
+
+    bool isConnected = executeIsConnectedToRelevantServices();
+
+    if (isConnected) {
+        transitionToState(BlueZDeviceState::CONNECTED, true);
     }
 
     return true;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,15 +46,23 @@ static const std::string CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY = "certifiedSen
 static const std::string CERTIFIED_SENDER_DB_FILE_PATH_KEY = "databaseFilePath";
 
 /// The name of the alerts table.
-static const std::string MESSAGES_TABLE_NAME = "messages";
+static const std::string MESSAGES_TABLE_NAME = "messages_with_uri";
 /// The name of the 'id' field we will use as the primary key in our tables.
 static const std::string DATABASE_COLUMN_ID_NAME = "id";
-/// The name of the 'id' field we will use as the primary key in our tables.
+/// The name of the 'message_text' field we will use as the primary key in our tables.
 static const std::string DATABASE_COLUMN_MESSAGE_TEXT_NAME = "message_text";
+/// The name of the 'uriPathExtension' field corresponding to the uri path extension of the message.
+static const std::string DATABASE_COLUMN_URI = "uri";
+
+// clang-format off
+
 /// The SQL string to create the alerts table.
 static const std::string CREATE_MESSAGES_TABLE_SQL_STRING = std::string("CREATE TABLE ") + MESSAGES_TABLE_NAME + " (" +
                                                             DATABASE_COLUMN_ID_NAME + " INT PRIMARY KEY NOT NULL," +
+                                                            DATABASE_COLUMN_URI + " TEXT NOT NULL," +
                                                             DATABASE_COLUMN_MESSAGE_TEXT_NAME + " TEXT NOT NULL);";
+
+// clang-format on
 
 std::unique_ptr<SQLiteMessageStorage> SQLiteMessageStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
@@ -102,7 +110,18 @@ bool SQLiteMessageStorage::createDatabase() {
 }
 
 bool SQLiteMessageStorage::open() {
-    return m_database.open();
+    if (!m_database.open()) {
+        return false;
+    }
+
+    // We need to check if the opened database contains the correct table.
+    if (!m_database.tableExists(MESSAGES_TABLE_NAME) && !m_database.performQuery(CREATE_MESSAGES_TABLE_SQL_STRING)) {
+        ACSDK_ERROR(LX("openFailed").d("sqlString", CREATE_MESSAGES_TABLE_SQL_STRING));
+        close();
+        return false;
+    }
+
+    return true;
 }
 
 void SQLiteMessageStorage::close() {
@@ -110,13 +129,17 @@ void SQLiteMessageStorage::close() {
 }
 
 bool SQLiteMessageStorage::store(const std::string& message, int* id) {
+    return store(message, "", id);
+}
+
+bool SQLiteMessageStorage::store(const std::string& message, const std::string& uriPathExtension, int* id) {
     if (!id) {
         ACSDK_ERROR(LX("storeFailed").m("id parameter was nullptr."));
         return false;
     }
 
     std::string sqlString = std::string("INSERT INTO " + MESSAGES_TABLE_NAME + " (") + DATABASE_COLUMN_ID_NAME + ", " +
-                            DATABASE_COLUMN_MESSAGE_TEXT_NAME + ") VALUES (" + "?, ?" + ");";
+                            DATABASE_COLUMN_URI + ", " + DATABASE_COLUMN_MESSAGE_TEXT_NAME + ") VALUES (?, ?, ?);";
 
     int nextId = 0;
     if (!getTableMaxIntValue(&m_database, MESSAGES_TABLE_NAME, DATABASE_COLUMN_ID_NAME, &nextId)) {
@@ -138,7 +161,9 @@ bool SQLiteMessageStorage::store(const std::string& message, int* id) {
     }
 
     int boundParam = 1;
-    if (!statement->bindIntParameter(boundParam++, nextId) || !statement->bindStringParameter(boundParam, message)) {
+    if (!statement->bindIntParameter(boundParam++, nextId) ||
+        !statement->bindStringParameter(boundParam++, uriPathExtension) ||
+        !statement->bindStringParameter(boundParam, message)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not bind parameter."));
         return false;
     }
@@ -170,6 +195,7 @@ bool SQLiteMessageStorage::load(std::queue<StoredMessage>* messageContainer) {
 
     // local values which we will use to capture what we read from the database.
     int id = 0;
+    std::string uriPathExtension;
     std::string message;
 
     if (!statement->step()) {
@@ -188,10 +214,12 @@ bool SQLiteMessageStorage::load(std::queue<StoredMessage>* messageContainer) {
                 id = statement->getColumnInt(i);
             } else if (DATABASE_COLUMN_MESSAGE_TEXT_NAME == columnName) {
                 message = statement->getColumnText(i);
+            } else if (DATABASE_COLUMN_URI == columnName) {
+                uriPathExtension = statement->getColumnText(i);
             }
         }
 
-        StoredMessage storedMessage(id, message);
+        StoredMessage storedMessage(id, message, uriPathExtension);
 
         messageContainer->push(storedMessage);
 

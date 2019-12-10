@@ -95,7 +95,7 @@ HTTP2Transport::Configuration::Configuration() : inactivityTimeout{INACTIVITY_TI
 
 std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
-    const std::string& avsEndpoint,
+    const std::string& avsGateway,
     std::shared_ptr<HTTP2ConnectionInterface> http2Connection,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
     std::shared_ptr<AttachmentManager> attachmentManager,
@@ -104,7 +104,7 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
     Configuration configuration) {
     ACSDK_DEBUG5(LX(__func__)
                      .d("authDelegate", authDelegate.get())
-                     .d("avsEndpoint", avsEndpoint)
+                     .d("avsGateway", avsGateway)
                      .d("http2Connection", http2Connection.get())
                      .d("messageConsumer", messageConsumer.get())
                      .d("attachmentManager", attachmentManager.get())
@@ -116,8 +116,8 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
         return nullptr;
     }
 
-    if (avsEndpoint.empty()) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "emptyEndpoint"));
+    if (avsGateway.empty()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "emptyAVSGateway"));
         return nullptr;
     }
 
@@ -143,7 +143,7 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
 
     auto transport = std::shared_ptr<HTTP2Transport>(new HTTP2Transport(
         authDelegate,
-        avsEndpoint,
+        avsGateway,
         http2Connection,
         messageConsumer,
         attachmentManager,
@@ -156,7 +156,7 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
 
 HTTP2Transport::HTTP2Transport(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
-    const std::string& avsEndpoint,
+    const std::string& avsGateway,
     std::shared_ptr<HTTP2ConnectionInterface> http2Connection,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
     std::shared_ptr<AttachmentManager> attachmentManager,
@@ -165,7 +165,7 @@ HTTP2Transport::HTTP2Transport(
     Configuration configuration) :
         m_state{State::INIT},
         m_authDelegate{authDelegate},
-        m_avsEndpoint{avsEndpoint},
+        m_avsGateway{avsGateway},
         m_http2Connection{http2Connection},
         m_messageConsumer{messageConsumer},
         m_attachmentManager{attachmentManager},
@@ -178,7 +178,7 @@ HTTP2Transport::HTTP2Transport(
         m_disconnectReason{ConnectionStatusObserverInterface::ChangedReason::NONE} {
     ACSDK_DEBUG7(LX(__func__)
                      .d("authDelegate", authDelegate.get())
-                     .d("avsEndpoint", avsEndpoint)
+                     .d("avsGateway", avsGateway)
                      .d("http2Connection", http2Connection.get())
                      .d("messageConsumer", messageConsumer.get())
                      .d("attachmentManager", attachmentManager.get())
@@ -265,7 +265,6 @@ void HTTP2Transport::onPostConnected() {
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    m_postConnect.reset();
     switch (m_state) {
         case State::INIT:
         case State::AUTHORIZING:
@@ -280,6 +279,36 @@ void HTTP2Transport::onPostConnected() {
             m_postConnected = true;
             if (!setStateLocked(State::CONNECTED, ConnectionStatusObserverInterface::ChangedReason::SUCCESS)) {
                 ACSDK_ERROR(LX("onPostConnectFailed").d("reason", "setState(CONNECTED)Failed"));
+            }
+            break;
+        case State::SERVER_SIDE_DISCONNECT:
+        case State::DISCONNECTING:
+        case State::SHUTDOWN:
+            break;
+    }
+}
+
+void HTTP2Transport::onUnRecoverablePostConnectFailure() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    switch (m_state) {
+        case State::INIT:
+        case State::AUTHORIZING:
+        case State::CONNECTING:
+        case State::WAITING_TO_RETRY_CONNECTING:
+        case State::POST_CONNECTING:
+            if (!setStateLocked(
+                    State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::UNRECOVERABLE_ERROR)) {
+                ACSDK_ERROR(LX("onUnRecoverablePostConnectFailure").d("reason", "setState(SHUTDOWN)Failed"));
+            }
+            break;
+        case State::CONNECTED:
+            ACSDK_ERROR(LX("onUnRecoverablePostConnectFailure").d("reason", "unexpectedState"));
+            if (!setStateLocked(
+                    State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::UNRECOVERABLE_ERROR)) {
+                ACSDK_ERROR(LX("onUnRecoverablePostConnectFailure").d("reason", "setState(SHUTDOWN)Failed"));
             }
             break;
         case State::SERVER_SIDE_DISCONNECT:
@@ -432,15 +461,15 @@ std::shared_ptr<HTTP2RequestInterface> HTTP2Transport::createAndSendRequest(cons
     return m_http2Connection->createAndSendRequest(cfg);
 }
 
-std::string HTTP2Transport::getEndpoint() {
-    return m_avsEndpoint;
+std::string HTTP2Transport::getAVSGateway() {
+    return m_avsGateway;
 }
 
 void HTTP2Transport::mainLoop() {
     ACSDK_DEBUG7(LX(__func__));
 
     m_postConnect = m_postConnectFactory->createPostConnect();
-    if (!m_postConnect || !m_postConnect->doPostConnect(shared_from_this())) {
+    if (!m_postConnect || !m_postConnect->doPostConnect(shared_from_this(), shared_from_this())) {
         ACSDK_ERROR(LX("mainLoopFailed").d("reason", "createPostConnectFailed"));
         std::lock_guard<std::mutex> lock(m_mutex);
         setStateLocked(State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::INTERNAL_ERROR);
@@ -563,6 +592,9 @@ HTTP2Transport::State HTTP2Transport::handlePostConnecting() {
 
 HTTP2Transport::State HTTP2Transport::handleConnected() {
     ACSDK_DEBUG5(LX(__func__));
+    if (m_postConnect) {
+        m_postConnect.reset();
+    }
     notifyObserversOnConnected();
     return sendMessagesAndPings(State::CONNECTED);
 }

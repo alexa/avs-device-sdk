@@ -20,8 +20,9 @@
 
 #include <gmock/gmock.h>
 
-#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
-#include <AVSCommon/Utils/RequiresShutdown.h>
+#include "AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h"
+#include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
+#include "AVSCommon/Utils/RequiresShutdown.h"
 #include <AVSCommon/Utils/Timing/Stopwatch.h>
 
 namespace alexaClientSDK {
@@ -98,12 +99,17 @@ public:
     /// @{
     SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* audioFormat = nullptr) /*override*/;
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr,
+        const SourceConfig& config = emptySourceConfig()) /*override*/;
     SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const SourceConfig& config = emptySourceConfig(),
         bool repeat = false) /*override*/;
-    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) /*override*/;
+    SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat = false,
+        const SourceConfig& config = emptySourceConfig()) /*override*/;
     void addObserver(std::shared_ptr<observer> playerObserver) /*override*/;
     void removeObserver(std::shared_ptr<observer> playerObserver) /*override*/;
     /// @}
@@ -195,7 +201,8 @@ public:
 
     /**
      * Waits for the next call to @c setSource().
-     * This is only valid when concurrentMediaPlayers are not enabled.
+     * When concurrentMediaPlayers are enabled, this function will wait for the next call to any instance's @c
+     * setSource()
      *
      * @param timeout The maximum time to wait.
      * @return @c true if setSource was called within @c timeout milliseconds else @c false.
@@ -274,6 +281,13 @@ public:
      * @return the SourceId for this MediaPlayer instance
      */
     SourceId getSourceId();
+
+    /**
+     * Get the SourceId for the most recent MediaPlayer.setSource()
+     *
+     * @return the SourceId for the MediaPlayer instance
+     */
+    SourceId getLatestSourceId();
 
     /**
      * Get the list of current observers.

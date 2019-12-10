@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ const char MEDIA_PROVIDER[] = "mediaProvider";
 const char MEDIA_TYPE[] = "mediaType";
 const char DURATIONINMS[] = "durationInMilliseconds";
 const char VALUE[] = "value";
-const char UNCERTAINITYINMS[] = "uncertaintyInMilliseconds";
 
 }  // namespace externalMediaPlayer
 }  // namespace avs

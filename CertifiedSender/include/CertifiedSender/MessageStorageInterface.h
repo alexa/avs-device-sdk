@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,14 +48,20 @@ public:
          *
          * @param id The id which the database implementation associates with the message.
          * @param message The text message which has been stored in the database.
+         * @param uriPathExtension Optional uri path extension of the message.
          */
-        StoredMessage(int id, const std::string& message) : id{id}, message{message} {
+        StoredMessage(int id, const std::string& message, const std::string& uriPathExtension = "") :
+                id{id},
+                message{message},
+                uriPathExtension{uriPathExtension} {
         }
 
         /// The unique id which the database associates with this message.
         int id;
         /// The message being stored.
         std::string message;
+        /// The uri of the message.
+        std::string uriPathExtension;
     };
 
     /**
@@ -95,6 +101,16 @@ public:
      * @return Whether the message was successfully stored.
      */
     virtual bool store(const std::string& message, int* id) = 0;
+
+    /**
+     * Stores a single message and its uri in the database.
+     *
+     * @param The message to store.
+     * @param uriPathExtension path extension which will be appended to the base url of the AVS when sending the event.
+     * @param[out] id The id associated with the stored messsage, if successfully stored.
+     * @return Whether the message was successfully stored.
+     */
+    virtual bool store(const std::string& message, const std::string& uriPathExtension, int* id) = 0;
 
     /**
      * Loads all messages in the database.

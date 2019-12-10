@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,12 +23,13 @@ namespace avsCommon {
 namespace avs {
 
 NamespaceAndName::NamespaceAndName(const std::string& nameSpaceIn, const std::string& nameIn) :
-        nameSpace{nameSpaceIn},
-        name{nameIn} {
+        CapabilityTag{nameSpaceIn, nameIn, ""} {
 }
 
-bool operator==(const NamespaceAndName& lhs, const NamespaceAndName& rhs) {
-    return std::tie(lhs.nameSpace, lhs.name) == std::tie(rhs.nameSpace, rhs.name);
+NamespaceAndName::NamespaceAndName() : CapabilityTag{"", "", ""} {
+}
+
+NamespaceAndName::NamespaceAndName(const CapabilityTag& identifier) : CapabilityTag(identifier) {
 }
 
 }  // namespace avs

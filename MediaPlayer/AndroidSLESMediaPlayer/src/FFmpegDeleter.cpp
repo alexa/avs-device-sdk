@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 
 extern "C" {
 #include <libavcodec/avcodec.h>
+#include <libavfilter/avfilter.h>
 #include <libavformat/avformat.h>
 #include <libavformat/avio.h>
 #include <libavutil/dict.h>
@@ -66,6 +67,17 @@ void FFmpegDeleter<AVFrame>::operator()(AVFrame* frame) {
 template <>
 void FFmpegDeleter<SwrContext>::operator()(SwrContext* context) {
     swr_free(&context);
+}
+
+template <>
+void FFmpegDeleter<AVFilterGraph>::operator()(AVFilterGraph* graph) {
+    avfilter_graph_free(&graph);
+}
+
+// This is a noop deleter, as AVFilterContext objects are owned by the
+// AVFilterGraph object that allocates them, and will be free'd when the graph is
+template <>
+void FFmpegDeleter<AVFilterContext>::operator()(AVFilterContext* context) {
 }
 
 }  // namespace android

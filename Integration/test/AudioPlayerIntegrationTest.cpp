@@ -44,6 +44,7 @@
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <Captions/CaptionManagerInterface.h>
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include <MediaPlayer/MediaPlayer.h>
 #else
@@ -282,7 +283,6 @@ protected:
             dialogChannelConfig, contentChannelConfig, testChannelConfig};
 
         m_focusManager = std::make_shared<FocusManager>(channelConfigurations);
-
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(TEST_CHANNEL_NAME, m_testContentClient, TEST_ACTIVITY_ID));
         bool focusChanged;
@@ -374,7 +374,9 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            m_dialogUXStateAggregator);
+            nullptr,
+            m_dialogUXStateAggregator,
+            m_captionManager);
         ASSERT_NE(nullptr, m_speechSynthesizer);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
         m_speechSynthesizerObserver = std::make_shared<TestSpeechSynthesizerObserver>();
@@ -398,7 +400,8 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            m_playbackRouter);
+            m_playbackRouter,
+            m_captionManager);
         ASSERT_NE(nullptr, m_audioPlayer);
         m_directiveSequencer->addDirectiveHandler(m_audioPlayer);
 
@@ -565,6 +568,7 @@ protected:
     std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
     std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
     std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;
+    std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
 
     FocusState m_focusState;
     std::mutex m_mutex;

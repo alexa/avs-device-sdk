@@ -13,11 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#include "Alerts/Renderer/Renderer.h"
-
-#include "AVSCommon/Utils/Logger/Logger.h"
-
+#include <algorithm>
+#include <chrono>
 #include <fstream>
+
+#include <AVSCommon/Utils/Logger/Logger.h>
+
+#include "Alerts/Renderer/Renderer.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -37,6 +39,9 @@ static const std::string TAG("Renderer");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/// The duration of time for the alarm volume ramp to reach the alert volume sound.
+static const auto ALARM_VOLUME_RAMP_TIME = std::chrono::minutes(1);
+
 /**
  * Local utility function to evaluate if a sourceId returned from the MediaPlayer is ok.
  *
@@ -47,13 +52,20 @@ static bool isSourceIdOk(MediaPlayerInterface::SourceId sourceId) {
     return sourceId != MediaPlayerInterface::ERROR;
 }
 
-std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
+std::shared_ptr<Renderer> Renderer::create(
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").m("mediaPlayer parameter was nullptr."));
         return nullptr;
     }
 
-    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer});
+    if (!settingsManager) {
+        ACSDK_ERROR(LX("createFailed").m("settingsManager parameter was nullptr."));
+        return nullptr;
+    }
+
+    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, settingsManager});
     mediaPlayer->addObserver(renderer);
     return renderer;
 }
@@ -116,7 +128,9 @@ void Renderer::onPlaybackError(
     m_executor.submit([this, sourceId, type, error]() { executeOnPlaybackError(sourceId, type, error); });
 }
 
-Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
+Renderer::Renderer(
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
         m_mediaPlayer{mediaPlayer},
         m_observer{nullptr},
         m_numberOfStreamsRenderedThisLoop{0},
@@ -125,7 +139,9 @@ Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_loopPause{std::chrono::milliseconds{0}},
         m_shouldPauseBeforeRender{false},
         m_isStopping{false},
-        m_isStartPending{false} {
+        m_isStartPending{false},
+        m_alarmVolumeRampEnabled{false},
+        m_settingsManager{settingsManager} {
     resetSourceId();
 }
 
@@ -196,15 +212,37 @@ bool Renderer::pause(std::chrono::milliseconds duration) {
     return !m_waitCondition.wait_for(lock, duration, [this]() { return m_isStopping; });
 }
 
+SourceConfig Renderer::generateMediaConfiguration() {
+    if (!m_alarmVolumeRampEnabled) {
+        return emptySourceConfig();
+    }
+
+    // Calculate the initial volume gain for this next rendering round. We use a linear gain which starts from 0
+    // and max at 100 when the rendering duration has reached @c ALARM_VOLUME_RAMP_RAMP_TIME.
+    auto timeDifference = std::chrono::steady_clock::now().time_since_epoch() - m_renderStartTime.time_since_epoch();
+    auto timePlayedDuration = std::chrono::duration_cast<std::chrono::milliseconds>(timeDifference);
+    auto startVolumeGain = (timePlayedDuration.count() * MAX_GAIN) /
+                           std::chrono::duration_cast<std::chrono::milliseconds>(ALARM_VOLUME_RAMP_TIME).count();
+    if (timePlayedDuration.count() < 0) {
+        ACSDK_ERROR(LX("generateMediaConfigurationFailed").d("reason", "invalidDuration"));
+        return emptySourceConfig();
+    }
+
+    return SourceConfig::createWithFadeIn(startVolumeGain, MAX_GAIN, ALARM_VOLUME_RAMP_TIME);
+}
+
 void Renderer::play() {
-    ACSDK_DEBUG9(LX("play"));
+    auto mediaConfig = generateMediaConfiguration();
+    ACSDK_DEBUG9(
+        LX(__func__).d("fadeEnabled", m_alarmVolumeRampEnabled).d("startGain", mediaConfig.fadeInConfig.startGain));
 
     m_isStartPending = false;
 
     if (shouldPlayDefault()) {
-        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudioFactory(), shouldMediaPlayerRepeat());
+        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudioFactory(), shouldMediaPlayerRepeat(), mediaConfig);
     } else {
-        m_currentSourceId = m_mediaPlayer->setSource(m_urls[m_numberOfStreamsRenderedThisLoop]);
+        m_currentSourceId = m_mediaPlayer->setSource(
+            m_urls[m_numberOfStreamsRenderedThisLoop], std::chrono::milliseconds::zero(), mediaConfig);
     }
     if (!isSourceIdOk(m_currentSourceId)) {
         ACSDK_ERROR(
@@ -251,6 +289,11 @@ void Renderer::executeStart(
     m_shouldPauseBeforeRender = startWithPause;
     m_defaultAudioFactory = audioFactory;
 
+    auto alarmVolumeRampSetting =
+        m_settingsManager
+            ->getValue<settings::DeviceSettingsIndex::ALARM_VOLUME_RAMP>(settings::types::getAlarmVolumeRampDefault())
+            .second;
+    m_alarmVolumeRampEnabled = settings::types::isEnabled(alarmVolumeRampSetting);
     m_numberOfStreamsRenderedThisLoop = 0;
 
     ACSDK_DEBUG9(
@@ -267,6 +310,8 @@ void Renderer::executeStart(
         return;
     }
     lock.unlock();
+
+    m_renderStartTime = std::chrono::steady_clock::now();
 
     play();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ public:
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
     MOCK_METHOD2(store, bool(const std::string& message, int* id));
+    MOCK_METHOD3(store, bool(const std::string& message, const std::string& uriPathExtension, int* id));
     MOCK_METHOD1(load, bool(std::queue<StoredMessage>* messageContainer));
     MOCK_METHOD1(erase, bool(int messageId));
     MOCK_METHOD0(clearDatabase, bool());

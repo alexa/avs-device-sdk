@@ -139,6 +139,7 @@ std::shared_future<bool> SettingEventSender::sendEvent(const std::string& jsonEv
                     break;
 
                 case MessageRequestObserverInterface::Status::SUCCESS:
+                case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
                 case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
                     retPromise.set_value(true);
                     return retPromise.get_future();

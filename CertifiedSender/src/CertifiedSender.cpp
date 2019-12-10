@@ -49,8 +49,11 @@ static const std::vector<int> EXPONENTIAL_BACKOFF_RETRY_TABLE = {
     1250000  // Retry 4:  1250s = 20min 50s
 };
 
-CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(const std::string& jsonContent, int dbId) :
-        MessageRequest{jsonContent},
+CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(
+    const std::string& jsonContent,
+    int dbId,
+    const std::string& uriPathExtension) :
+        MessageRequest{jsonContent, uriPathExtension},
         m_responseReceived{false},
         m_dbId{dbId},
         m_isRequestShuttingDown{false} {
@@ -178,6 +181,7 @@ bool CertifiedSender::init() {
 inline bool shouldRetryTransmission(MessageRequestObserverInterface::Status status) {
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
+        case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
         case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
         case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
         case MessageRequestObserverInterface::Status::CANCELED:
@@ -231,7 +235,9 @@ void CertifiedSender::mainloop() {
             lock.lock();
             m_messagesToSend.pop_front();
             m_messagesToSend.push_front(std::make_shared<CertifiedMessageRequest>(
-                m_currentMessage->getJsonContent(), m_currentMessage->getDbId()));
+                m_currentMessage->getJsonContent(),
+                m_currentMessage->getDbId(),
+                m_currentMessage->getUriPathExtension()));
             lock.unlock();
 
             // Ensures that we do not DDOS the AVS endpoint, just in case we have a valid AVS connection but
@@ -276,11 +282,14 @@ void CertifiedSender::onConnectionStatusChanged(
     m_workerThreadCV.notify_one();
 }
 
-std::future<bool> CertifiedSender::sendJSONMessage(const std::string& jsonMessage) {
-    return m_executor.submit([this, jsonMessage]() { return executeSendJSONMessage(jsonMessage); });
+std::future<bool> CertifiedSender::sendJSONMessage(
+    const std::string& jsonMessage,
+    const std::string& uriPathExtension) {
+    return m_executor.submit(
+        [this, jsonMessage, uriPathExtension]() { return executeSendJSONMessage(jsonMessage, uriPathExtension); });
 }
 
-bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
+bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage, const std::string& uriPathExtension) {
     std::unique_lock<std::mutex> lock(m_mutex);
 
     int queueSize = static_cast<int>(m_messagesToSend.size());
@@ -295,12 +304,12 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
     }
 
     int messageId = 0;
-    if (!m_storage->store(jsonMessage, &messageId)) {
+    if (!m_storage->store(jsonMessage, uriPathExtension, &messageId)) {
         ACSDK_ERROR(LX("executeSendJSONMessage").m("Could not store message."));
         return false;
     }
 
-    m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId));
+    m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId, uriPathExtension));
 
     lock.unlock();
 

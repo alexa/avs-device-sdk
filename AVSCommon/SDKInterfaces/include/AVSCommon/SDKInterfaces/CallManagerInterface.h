@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,6 +49,22 @@ public:
         const std::string& avsNamespace,
         std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
 
+    /// An enum used to define the characters that dtmf tone can be.
+    enum class DTMFTone {
+        DTMF_ZERO,
+        DTMF_ONE,
+        DTMF_TWO,
+        DTMF_THREE,
+        DTMF_FOUR,
+        DTMF_FIVE,
+        DTMF_SIX,
+        DTMF_SEVEN,
+        DTMF_EIGHT,
+        DTMF_NINE,
+        DTMF_STAR,
+        DTMF_POUND
+    };
+
     /**
      * Destructor
      */
@@ -72,6 +88,13 @@ public:
      * Accepts an incoming call.
      */
     virtual void acceptCall() = 0;
+
+    /**
+     * Send dtmf tones during the call.
+     *
+     * @param dtmfTone The signal of the dtmf message.
+     */
+    virtual void sendDtmf(DTMFTone dtmfTone) = 0;
 
     /**
      * Stops the call.

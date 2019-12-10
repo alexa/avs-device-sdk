@@ -87,9 +87,11 @@ public:
      * is persisted, the caller can expect the message to be sent to AVS at some point in the future by this class.
      *
      * @param jsonMessage The message to be sent to AVS.
+     * @param uriPathExtension An optional uri path extension to be appended to the base url of the AVS endpoint. If
+     * not specified, the default AVS path extension will be used.
      * @return A future expressing if the message was successfully persisted.
      */
-    std::future<bool> sendJSONMessage(const std::string& jsonMessage);
+    std::future<bool> sendJSONMessage(const std::string& jsonMessage, const std::string& uriPathExtension = "");
 
     /**
      * Clear all messages that we are currently storing
@@ -107,8 +109,10 @@ private:
          *
          * @param jsonContent The JSON text to be sent to AVS.
          * @param dbId The database id associated with this @c MessageRequest.
+         * @param uriPathExtension An optional URI path extension of the message to be appended to the base url of the
+         * AVS endpoint. If not specified, the default AVS path extension will be used.
          */
-        CertifiedMessageRequest(const std::string& jsonContent, int dbId);
+        CertifiedMessageRequest(const std::string& jsonContent, int dbId, const std::string& uriPathExtension = "");
 
         void exceptionReceived(const std::string& exceptionMessage) override;
 
@@ -182,9 +186,11 @@ private:
      * The actual handling of the sendJSONMessage call by our internal executor.
      *
      * @param jsonMessage The message to be sent to AVS.
+     * @param uriPathExtension The uri path extension to be appended to the base url of the AVS endpoint. If passed as
+     * an empty string, the default AVS path extension will be used.
      * @return Whether the message was successfully persisted.
      */
-    bool executeSendJSONMessage(std::string jsonMessage);
+    bool executeSendJSONMessage(std::string jsonMessage, const std::string& uriPathExtension);
 
     void doShutdown() override;
 

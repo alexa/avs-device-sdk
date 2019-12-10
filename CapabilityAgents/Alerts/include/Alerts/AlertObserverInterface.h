@@ -50,7 +50,9 @@ public:
         /// The alert has encountered an error.
         ERROR,
         /// The alert has been deleted.
-        DELETED
+        DELETED,
+        /// The alert has been scheduled to trigger at a future time.
+        SCHEDULED_FOR_LATER
     };
 
     /**
@@ -103,6 +105,8 @@ inline std::string AlertObserverInterface::stateToString(State state) {
             return "ERROR";
         case State::DELETED:
             return "DELETED";
+        case State::SCHEDULED_FOR_LATER:
+            return "SCHEDULED_FOR_LATER";
     }
     return "unknown State";
 }

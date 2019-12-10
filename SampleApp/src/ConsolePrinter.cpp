@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 /**
  *  When using pretty print, we pad our strings in the beginning and in the end with the margin representation '#'
@@ -53,9 +54,9 @@ void ConsolePrinter::prettyPrint(std::initializer_list<std::string> lines) {
         maxLength = std::max(line.size(), maxLength);
     }
 
-    const std::string line(maxLength + (2 * PADDING_LENGTH), '#');
+    const std::string headingBorder(maxLength + (2 * PADDING_LENGTH), '#');
     std::ostringstream oss;
-    oss << line << std::endl;
+    oss << headingBorder << std::endl;
 
     // Write each line starting and ending with '#'
     auto padBegin = std::string("#");
@@ -66,7 +67,40 @@ void ConsolePrinter::prettyPrint(std::initializer_list<std::string> lines) {
         oss << padBegin << line << padEnd << std::endl;
     }
 
-    oss << line << std::endl;
+    oss << headingBorder << std::endl;
+    simplePrint(oss.str());
+}
+
+void ConsolePrinter::captionsPrint(const std::vector<std::string>& lines) {
+    size_t maxLength = 0;
+    for (auto& line : lines) {
+        maxLength = std::max(line.size(), maxLength);
+    }
+
+    // The line length should be even here to allow for alignment of the header string and '#' boundaries
+    if (maxLength % 2 != 0) {
+        maxLength += 1;
+    }
+
+    const std::string heading(" Alexa Says ");  // keep the number of characters in this string even
+    size_t maxBorderLength = (2 * PADDING_LENGTH) + maxLength;
+    size_t headerLength = std::ceil((maxBorderLength - heading.length()) / 2);
+
+    const std::string headingBorder(headerLength, '#');
+    std::ostringstream oss;
+    oss << headingBorder << heading << headingBorder << std::endl;
+
+    // Write each line starting and ending with '#'
+    auto padBegin = std::string("#");
+    padBegin.append(PADDING_LENGTH - 1, ' ');
+    for (auto& line : lines) {
+        auto padEnd = std::string("#");
+        padEnd.insert(padEnd.begin(), maxLength - line.size() + (PADDING_LENGTH - 1), ' ');
+        oss << padBegin << line << padEnd << std::endl;
+    }
+
+    const std::string footingBorder(maxBorderLength, '#');
+    oss << footingBorder << std::endl;
     simplePrint(oss.str());
 }
 

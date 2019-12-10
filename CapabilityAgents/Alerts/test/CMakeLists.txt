@@ -4,6 +4,7 @@ set(INCLUDE_PATH
         "${Alerts_INCLUDE_DIRS}"
         "${AVSCommon_SOURCE_DIR}/AVS/test"
         "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
-        "${AVSCommon_SOURCE_DIR}/Utils/test")
+        "${AVSCommon_SOURCE_DIR}/Utils/include"
+        "${DeviceSettings_SOURCE_DIR}/test/")
 
 discover_unit_tests("${INCLUDE_PATH}" "Alerts;UtilsCommonTestLib")

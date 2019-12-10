@@ -9,6 +9,7 @@ add_subdirectory("SDKInterfaces")
 add_subdirectory("Utils")
 
 add_library(AVSCommon SHARED
+    AVS/src/AVSContext.cpp
     AVS/src/AVSDirective.cpp
     AVS/src/AVSMessage.cpp
     AVS/src/AVSMessageHeader.cpp
@@ -24,12 +25,16 @@ add_library(AVSCommon SHARED
     AVS/src/Attachment/InProcessAttachmentWriter.cpp
     AVS/src/CapabilityConfiguration.cpp
     AVS/src/CapabilityAgent.cpp
+    AVS/src/CapabilityTag.cpp
     AVS/src/DialogUXStateAggregator.cpp
+    AVS/src/DirectiveRoutingRule.cpp
     AVS/src/EventBuilder.cpp
     AVS/src/ExceptionEncounteredSender.cpp
+    AVS/src/CapabilityResources.cpp
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
+    AVS/src/PostConnectMessageRequest.cpp
     Utils/src/Bluetooth/SDPRecords.cpp
     Utils/src/BluetoothEventBus.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
@@ -67,8 +72,15 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/MacAddressString.cpp
+    Utils/src/Metrics/DataPoint.cpp
+    Utils/src/Metrics/DataPointStringBuilder.cpp
+    Utils/src/Metrics/DataPointCounterBuilder.cpp
+    Utils/src/Metrics/DataPointDurationBuilder.cpp
+    Utils/src/Metrics/MetricEvent.cpp
+    Utils/src/Metrics/MetricEventBuilder.cpp
     Utils/src/MediaPlayer/PooledMediaPlayerFactory.cpp
     Utils/src/Metrics.cpp
+    Utils/src/MultiTimer.cpp
     Utils/src/Network/InternetConnectionMonitor.cpp
     Utils/src/RequiresShutdown.cpp
     Utils/src/RetryTimer.cpp

@@ -13,9 +13,13 @@
  * permissions and limitations under the License.
  */
 
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <unordered_map>
+
+#include <gst/controller/gstinterpolationcontrolsource.h>
+#include <gst/controller/gstdirectcontrolbinding.h>
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
@@ -88,6 +92,9 @@ static const int8_t GST_ADJUST_VOLUME_MIN = -1;
 /// GStreamer Volume Adjust Maximum.
 static const int8_t GST_ADJUST_VOLUME_MAX = 1;
 
+/// GStreamer Timed Volume Control Element factor.
+static const gdouble GST_CONTROL_VOLUME_FACTOR = 1000;
+
 /// Represents the zero volume to avoid the actual 0.0 value. Used as a fix for GStreamer crashing on 0 volume for PCM.
 static const gdouble VOLUME_ZERO = 0.0000001;
 
@@ -118,6 +125,7 @@ static char GSTREAMER_TREBLE_BAND_NAME[] = "band2";
 static void collectOneTag(const GstTagList* tagList, const gchar* tag, gpointer pointerToMutableVectorOfTags) {
     auto vectorOfTags = static_cast<VectorOfTags*>(pointerToMutableVectorOfTags);
     int num = gst_tag_list_get_tag_size(tagList, tag);
+
     for (int index = 0; index < num; ++index) {
         const GValue* val = gst_tag_list_get_value_index(tagList, tag, index);
         MediaPlayerObserverInterface::TagKeyValueType tagKeyValueType;
@@ -190,40 +198,56 @@ MediaPlayer::~MediaPlayer() {
 
 MediaPlayer::SourceId MediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
-    const avsCommon::utils::AudioFormat* audioFormat) {
+    const avsCommon::utils::AudioFormat* audioFormat,
+    const SourceConfig& config) {
     ACSDK_DEBUG9(LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "AttachmentReader"));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &reader, &promise, audioFormat]() {
-        handleSetAttachmentReaderSource(std::move(reader), &promise, audioFormat);
+    std::function<gboolean()> callback = [this, &reader, &promise, &config, audioFormat]() {
+        handleSetAttachmentReaderSource(std::move(reader), config, &promise, audioFormat);
         return false;
     };
     if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
-        return future.get();
+        auto sourceId = future.get();
+        // Assume that the Attachment is fully buffered - not ideal, revisit if needed.  Should be fine for file streams
+        // and resources.
+        sendBufferingComplete();
+        return sourceId;
     }
     return ERROR_SOURCE_ID;
 }
 
-MediaPlayer::SourceId MediaPlayer::setSource(std::shared_ptr<std::istream> stream, bool repeat) {
+MediaPlayer::SourceId MediaPlayer::setSource(
+    std::shared_ptr<std::istream> stream,
+    bool repeat,
+    const SourceConfig& config) {
     ACSDK_DEBUG9(LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "istream"));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &stream, repeat, &promise]() {
-        handleSetIStreamSource(stream, repeat, &promise);
+    std::function<gboolean()> callback = [this, &stream, repeat, &config, &promise]() {
+        handleSetIStreamSource(stream, repeat, config, &promise);
         return false;
     };
     if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
-        return future.get();
+        auto sourceId = future.get();
+        // Assume that the Attachment is fully buffered - not ideal, revisit if needed.  Should be fine for file streams
+        // and resources.
+        sendBufferingComplete();
+        return sourceId;
     }
     return ERROR_SOURCE_ID;
 }
 
-MediaPlayer::SourceId MediaPlayer::setSource(const std::string& url, std::chrono::milliseconds offset, bool repeat) {
-    ACSDK_DEBUG9(LX("setSourceForUrlCalled").d("name", RequiresShutdown::name()).sensitive("url", url));
+MediaPlayer::SourceId MediaPlayer::setSource(
+    const std::string& url,
+    std::chrono::milliseconds offset,
+    const SourceConfig& config,
+    bool repeat) {
+    ACSDK_DEBUG9(LX("setSourceForUrlCalled").sensitive("url", url));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, url, offset, &promise, repeat]() {
-        handleSetUrlSource(url, offset, &promise, repeat);
+    std::function<gboolean()> callback = [this, url, offset, &config, &promise, repeat]() {
+        handleSetUrlSource(url, offset, config, &promise, repeat);
         return false;
     };
     if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
@@ -671,6 +695,12 @@ bool MediaPlayer::setupPipeline() {
         return false;
     }
 
+    m_pipeline.fadeIn = gst_element_factory_make("volume", "fadeIn");
+    if (!m_pipeline.fadeIn) {
+        ACSDK_ERROR(LX("setupPipelineFailed").d("reason", "createFadeInElementFailed"));
+        return false;
+    }
+
     if (m_equalizerEnabled) {
         m_pipeline.equalizer = gst_element_factory_make("equalizer-3bands", "equalizer");
         if (!m_pipeline.equalizer) {
@@ -770,6 +800,7 @@ bool MediaPlayer::setupPipeline() {
     // Link only the queue, converter, volume, and sink here. Src will be linked in respective source files.
     gst_bin_add_many(
         GST_BIN(m_pipeline.pipeline),
+        m_pipeline.fadeIn,
         m_pipeline.decodedQueue,
         m_pipeline.converter,
         m_pipeline.volume,
@@ -804,7 +835,12 @@ bool MediaPlayer::setupPipeline() {
 
     // Complete the pipeline linking
     if (!gst_element_link_many(
-            m_pipeline.decodedQueue, m_pipeline.converter, m_pipeline.volume, pipelineTailElement, nullptr)) {
+            m_pipeline.decodedQueue,
+            m_pipeline.converter,
+            m_pipeline.volume,
+            m_pipeline.fadeIn,
+            pipelineTailElement,
+            nullptr)) {
         ACSDK_ERROR(
             LX("setupPipelineFailed").d("name", RequiresShutdown::name()).d("reason", "Failed to link pipeline."));
         return false;
@@ -844,6 +880,7 @@ void MediaPlayer::resetPipeline() {
     m_pipeline.decodedQueue = nullptr;
     m_pipeline.converter = nullptr;
     m_pipeline.volume = nullptr;
+    m_pipeline.fadeIn = nullptr;
     m_pipeline.resample = nullptr;
     m_pipeline.caps = nullptr;
     m_pipeline.equalizer = nullptr;
@@ -958,6 +995,19 @@ void MediaPlayer::onError() {
      */
     auto source = g_idle_source_new();
     g_source_set_callback(source, reinterpret_cast<GSourceFunc>(&onErrorCallback), this, nullptr);
+    g_source_attach(source, m_workerContext);
+    g_source_unref(source);
+}
+
+void MediaPlayer::onWriteComplete() {
+    ACSDK_DEBUG9(LX("onWriteComplete").d("name", RequiresShutdown::name()));
+    /*
+     * Instead of calling the queueCallback, we are calling g_idle_add here directly here because we want this callback
+     * to be non-blocking.  To do this, we are creating a static callback function with the this pointer passed in as
+     * a parameter.
+     */
+    auto source = g_idle_source_new();
+    g_source_set_callback(source, reinterpret_cast<GSourceFunc>(&onWriteCompleteCallback), this, nullptr);
     g_source_attach(source, m_workerContext);
     g_source_unref(source);
 }
@@ -1227,8 +1277,9 @@ void MediaPlayer::sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> v
 }
 
 void MediaPlayer::handleSetAttachmentReaderSource(
-    std::shared_ptr<AttachmentReader> reader,
-    std::promise<MediaPlayer::SourceId>* promise,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
+    std::promise<SourceId>* promise,
     const avsCommon::utils::AudioFormat* audioFormat,
     bool repeat) {
     ACSDK_DEBUG(LX("handleSetAttachmentReaderSourceCalled").d("name", RequiresShutdown::name()));
@@ -1241,6 +1292,12 @@ void MediaPlayer::handleSetAttachmentReaderSource(
         ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed")
                         .d("name", RequiresShutdown::name())
                         .d("reason", "sourceIsNullptr"));
+        promise->set_value(ERROR_SOURCE_ID);
+        return;
+    }
+
+    if (!configureSource(config)) {
+        ACSDK_ERROR(LX("handleSetAttachmentReaderSourceFailed").d("reason", "failedToSetSourceConfiguration"));
         promise->set_value(ERROR_SOURCE_ID);
         return;
     }
@@ -1267,7 +1324,8 @@ void MediaPlayer::handleSetAttachmentReaderSource(
 void MediaPlayer::handleSetIStreamSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
-    std::promise<MediaPlayer::SourceId>* promise) {
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
+    std::promise<SourceId>* promise) {
     ACSDK_DEBUG(LX("handleSetSourceCalled").d("name", RequiresShutdown::name()));
 
     tearDownTransientPipelineElements(true);
@@ -1277,6 +1335,12 @@ void MediaPlayer::handleSetIStreamSource(
     if (!source) {
         ACSDK_ERROR(
             LX("handleSetIStreamSourceFailed").d("name", RequiresShutdown::name()).d("reason", "sourceIsNullptr"));
+        promise->set_value(ERROR_SOURCE_ID);
+        return;
+    }
+
+    if (!configureSource(config)) {
+        ACSDK_ERROR(LX("handleSetIStreamSourceFailed").d("reason", "failedToSetSourceConfiguration"));
         promise->set_value(ERROR_SOURCE_ID);
         return;
     }
@@ -1302,6 +1366,7 @@ void MediaPlayer::handleSetIStreamSource(
 void MediaPlayer::handleSetUrlSource(
     const std::string& url,
     std::chrono::milliseconds offset,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
     std::promise<SourceId>* promise,
     bool repeat) {
     ACSDK_DEBUG(LX("handleSetSourceForUrlCalled").d("name", RequiresShutdown::name()));
@@ -1309,7 +1374,7 @@ void MediaPlayer::handleSetUrlSource(
     tearDownTransientPipelineElements(true);
 
     m_urlConverter = alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::create(
-        m_contentFetcherFactory, url, shared_from_this(), offset);
+        m_contentFetcherFactory, url, shared_from_this(), offset, shared_from_this());
     if (!m_urlConverter) {
         ACSDK_ERROR(LX("setSourceUrlFailed").d("name", RequiresShutdown::name()).d("reason", "badUrlConverter"));
         promise->set_value(ERROR_SOURCE_ID);
@@ -1329,7 +1394,7 @@ void MediaPlayer::handleSetUrlSource(
         promise->set_value(ERROR_SOURCE_ID);
         return;
     }
-    handleSetAttachmentReaderSource(reader, promise, nullptr, repeat);
+    handleSetAttachmentReaderSource(reader, config, promise, nullptr, repeat);
 }
 
 void MediaPlayer::handlePlay(SourceId id, std::promise<bool>* promise) {
@@ -1798,6 +1863,18 @@ void MediaPlayer::sendBufferRefilled() {
     }
 }
 
+void MediaPlayer::sendBufferingComplete() {
+    std::lock_guard<std::mutex> lock{m_operationMutex};
+    if (isShutdown() || ERROR_SOURCE_ID == m_currentId) {
+        return;
+    }
+
+    ACSDK_DEBUG(LX("callingOnBufferingComplete").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
+    for (const auto& observer : m_playerObservers) {
+        observer->onBufferingComplete(m_currentId);
+    }
+}
+
 bool MediaPlayer::validateSourceAndId(SourceId id) {
     if (!m_source) {
         ACSDK_ERROR(LX("validateSourceAndIdFailed").d("name", RequiresShutdown::name()).d("reason", "sourceNotSet"));
@@ -1815,6 +1892,13 @@ gboolean MediaPlayer::onErrorCallback(gpointer pointer) {
     auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
     ACSDK_DEBUG9(LX("onErrorCallback").d("name", mediaPlayer->name()));
     mediaPlayer->sendPlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "streamingError");
+    return false;
+}
+
+gboolean MediaPlayer::onWriteCompleteCallback(gpointer pointer) {
+    auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
+    ACSDK_DEBUG9(LX("onWriteCompleteCallback").d("name", mediaPlayer->name()));
+    mediaPlayer->sendBufferingComplete();
     return false;
 }
 
@@ -1877,6 +1961,47 @@ int MediaPlayer::getMinimumBandLevel() {
 
 int MediaPlayer::getMaximumBandLevel() {
     return MAX_EQUALIZER_LEVEL;
+}
+
+static inline short gainInsideLimit(short gain) {
+    return std::max(std::min(MAX_GAIN, gain), MIN_GAIN);
+}
+
+bool MediaPlayer::configureSource(const SourceConfig& config) {
+    ACSDK_DEBUG5(LX(__func__).d("fadeIn", config));
+    auto binding = gst_object_get_control_binding(GST_OBJECT_CAST(m_pipeline.fadeIn), "volume");
+    if (binding) {
+        if (!gst_object_remove_control_binding(GST_OBJECT_CAST(m_pipeline.fadeIn), binding)) {
+            ACSDK_ERROR(LX("configureSourceFailed").d("reason", "removeBindingFailed"));
+            return false;
+        }
+    }
+
+    if (config.fadeInConfig.enabled) {
+        auto controlSource = std::shared_ptr<GstControlSource>(
+            gst_interpolation_control_source_new(), [](GstControlSource* ptr) { gst_object_unref(ptr); });
+        binding = gst_direct_control_binding_new(GST_OBJECT_CAST(m_pipeline.fadeIn), "volume", controlSource.get());
+        if (!gst_object_add_control_binding(GST_OBJECT_CAST(m_pipeline.fadeIn), binding)) {
+            ACSDK_ERROR(LX("configureSourceFailed").d("binding", reinterpret_cast<void*>(binding)));
+            return false;
+        }
+
+        g_object_set(G_OBJECT(controlSource.get()), "mode", GST_INTERPOLATION_MODE_LINEAR, NULL);
+        auto volumeControl = reinterpret_cast<GstTimedValueControlSource*>(controlSource.get());
+
+        double startGain = gainInsideLimit(config.fadeInConfig.startGain);
+        double endGain = gainInsideLimit(config.fadeInConfig.endGain);
+        gdouble startVolume = startGain / GST_CONTROL_VOLUME_FACTOR;
+        gdouble endVolume = endGain / GST_CONTROL_VOLUME_FACTOR;
+        if (!gst_timed_value_control_source_set(volumeControl, 0, startVolume) ||
+            !gst_timed_value_control_source_set(
+                volumeControl, config.fadeInConfig.duration.count() * GST_MSECOND, endVolume)) {
+            ACSDK_ERROR(LX("configureSourceFailed").d("reason", "setControlFailed"));
+            return false;
+        }
+    }
+
+    return true;
 }
 
 }  // namespace mediaPlayer

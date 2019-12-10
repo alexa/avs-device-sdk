@@ -143,7 +143,6 @@ bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::Al
     document->AddMember(REPEAT, REPEAT_STATUS_STRING(false), allocator);
     document->AddMember(FAVORITE, RatingToString(Favorites::NOT_RATED), allocator);
     document->AddMember(POSITIONINMS, 0, allocator);
-    document->AddMember(UNCERTAINITYINMS, 0, allocator);
 
     return true;
 }

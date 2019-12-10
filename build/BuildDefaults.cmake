@@ -72,6 +72,15 @@ include (A4B)
 # Setup speech encoder variables.
 include (SpeechEncoder)
 
+# Setup Metrics variables.
+include (Metrics)
+
+# Setup Captions variables.
+include (Captions)
+
 if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     include (ExternalMediaPlayerAdapters)
 endif()
+
+# Setup Endpoint Controller capabilities
+include (EndpointControllers)

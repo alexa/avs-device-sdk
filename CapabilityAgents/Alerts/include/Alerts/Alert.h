@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -458,9 +458,14 @@ private:
     std::string getScheduledTime_ISO_8601Locked() const;
 
     /**
-     * Utility function to begin the alert's renderer.
+     * Utility function to begin the alert's renderer in an unlocked context
      */
     void startRenderer();
+
+    /**
+     * Utility function to begin the alert's renderer in a locked context
+     */
+    void startRendererLocked();
 
     /**
      * A utility function to be invoked when the maximum time for an alert has expired.

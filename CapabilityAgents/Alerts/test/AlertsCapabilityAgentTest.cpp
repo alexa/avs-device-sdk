@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <mutex>
 #include <thread>
 
 #include <gtest/gtest.h>
@@ -31,6 +32,10 @@
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/WaitEvent.h>
+#include <Settings/DeviceSettingsManager.h>
+#include <Settings/MockSetting.h>
+#include <Settings/Types/AlarmVolumeRampTypes.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -48,32 +53,43 @@ using namespace certifiedSender;
 using namespace registrationManager;
 using namespace renderer;
 using namespace storage;
+using namespace settings;
+using namespace settings::test;
 using namespace testing;
 
 /// Maximum time to wait for operaiton result.
 constexpr int MAX_WAIT_TIME_MS = 200;
 
-/// Alerts.SetVolume Directive name
+/// Alerts.SetVolume Directive name.
 constexpr char SET_VOLUME_DIRECTIVE_NAME[] = "SetVolume";
 
-/// Alerts.SetVolume Namespace name
+/// Alerts.SetAlarmVolumeRamp Directive name.
+static constexpr char SET_ALARM_VOLUME_RAMP_DIRECTIVE_NAME[] = "SetAlarmVolumeRamp";
+
+/// Alerts namespace.
+static constexpr char ALERTS_NAMESPACE[] = "Alerts";
+
+/// Alerts.SetVolume Namespace name.
 constexpr char SET_VOLUME_NAMESPACE_NAME[] = "Alerts";
 
-/// Crafted message ID
+/// Crafted message ID.
 constexpr char MESSAGE_ID[] = "1";
 
-/// General test value for alerts volume
+/// General test value for alerts volume.
 constexpr int TEST_VOLUME_VALUE = 33;
 
-/// Higher test volume value
+/// Higher test volume value.
 constexpr int HIGHER_VOLUME_VALUE = 100;
 
-/// Lower test volume value
+/// Lower test volume value.
 constexpr int LOWER_VOLUME_VALUE = 50;
+
+/// The timeout used throughout the tests.
+static const auto TEST_TIMEOUT = std::chrono::seconds(5);
 
 // clang-format off
 
-/// General test directive payload
+/// General test directive payload.
 static const std::string VOLUME_PAYLOAD =
         "{"
         R"("volume":)" +
@@ -81,7 +97,7 @@ static const std::string VOLUME_PAYLOAD =
         ""
         "}";
 
-/// Test directive payload with volume too high
+/// Test directive payload with volume too high.
 static const std::string VOLUME_PAYLOAD_ABOVE_MAX =
         "{"
         R"("volume":)" +
@@ -89,13 +105,25 @@ static const std::string VOLUME_PAYLOAD_ABOVE_MAX =
         ""
         "}";
 
-/// Test directive payload with volume too low
+/// Test directive payload with volume too low.
 static const std::string VOLUME_PAYLOAD_BELOW_MIN =
         "{"
         R"("volume":)" +
         std::to_string(AVS_SET_VOLUME_MIN - 1) +
         ""
         "}";
+
+/// Test directive payload for alarm volume ramp true.
+static const std::string ALARM_VOLUME_RAMP_PAYLOAD_ENABLED = R"({"alarmVolumeRamp":"ASCENDING"})";
+
+/// Test directive payload for alarm volume ramp with an invalid setting name.
+static const std::string ALARM_VOLUME_RAMP_PAYLOAD_INVALID = R"({"ascendingAlarm":"ASCENDING"})";
+
+/// Expected header for alarm volume ramp report.
+static const std::string ALARM_VOLUME_RAMP_JSON_NAME = R"("name":"AlarmVolumeRampReport")";
+
+/// The json string expected for TONE value.
+static const std::string ALARM_VOLUME_RAMP_JSON_VALUE = R"("ASCENDING")";
 
 // clang-format on
 
@@ -141,8 +169,21 @@ public:
 };
 
 /**
- * Test @c RendererInterface implementation to provide a valid instance for the initialization of other components.
+ * Mock of @c AlertStorageInterface.
  */
+class MockAlertStorage : public AlertStorageInterface {
+public:
+    MOCK_METHOD0(createDatabase, bool());
+    MOCK_METHOD0(open, bool());
+    MOCK_METHOD0(close, void());
+    MOCK_METHOD1(store, bool(std::shared_ptr<Alert> alert));
+    MOCK_METHOD1(load, bool(std::vector<std::shared_ptr<Alert>>* alertContainer));
+    MOCK_METHOD1(modify, bool(std::shared_ptr<Alert> alert));
+    MOCK_METHOD1(erase, bool(std::shared_ptr<Alert> alert));
+    MOCK_METHOD1(bulkErase, bool(const std::list<std::shared_ptr<Alert>>& alertList));
+    MOCK_METHOD0(clearDatabase, bool());
+};
+
 class StubRenderer : public RendererInterface {
     void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
@@ -152,9 +193,23 @@ class StubRenderer : public RendererInterface {
         std::chrono::milliseconds loopPause,
         bool startWithPause) override {
     }
+};
 
-    void stop() override {
-    }
+/**
+ * Mock of @c RendererInterface.
+ */
+class MockRenderer : public RendererInterface {
+public:
+    MOCK_METHOD6(
+        start,
+        void(
+            std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> ovserver,
+            std::function<std::unique_ptr<std::istream>()>,
+            const std::vector<std::string>&,
+            int loopcount,
+            std::chrono::milliseconds,
+            bool startWithPause));
+    MOCK_METHOD0(stop, void());
 };
 
 /**
@@ -178,6 +233,10 @@ public:
         return true;
     }
 
+    bool store(const std::string& message, const std::string& uriPathExtension, int* id) override {
+        return true;
+    }
+
     bool load(std::queue<StoredMessage>* messageContainer) override {
         return true;
     }
@@ -197,10 +256,13 @@ public:
 class TestMessageSender : public MessageSenderInterface {
 public:
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override {
+        std::unique_lock<std::mutex> lock(m_mutex);
         if (m_nextMessagePromise) {
             m_nextMessagePromise->set_value(request);
             m_nextMessagePromise.reset();
         }
+        lock.unlock();
+
         request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS);
     }
 
@@ -209,12 +271,18 @@ public:
      * @return The last message sent using this object.
      */
     std::future<std::shared_ptr<avsCommon::avs::MessageRequest>> getNextMessage() {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
         m_nextMessagePromise = std::make_shared<std::promise<std::shared_ptr<avsCommon::avs::MessageRequest>>>();
         return m_nextMessagePromise->get_future();
     }
 
 private:
+    /// Promise fulfilled when @c sendMessage is called.
     std::shared_ptr<std::promise<std::shared_ptr<avsCommon::avs::MessageRequest>>> m_nextMessagePromise;
+
+    /// The mutex synchronizing access to @c m_nextMessagePromise
+    std::mutex m_mutex;
 };
 
 class AlertsCapabilityAgentTest : public ::testing::Test {
@@ -238,9 +306,10 @@ protected:
     std::shared_ptr<MockSpeakerManager> m_speakerManager;
     std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender;
     std::shared_ptr<MockContextManager> m_contextManager;
-    std::shared_ptr<StubAlertStorage> m_alertStorage;
+    std::shared_ptr<MockAlertStorage> m_alertStorage;
     std::shared_ptr<MockAlertsAudioFactory> m_alertsAudioFactory;
-    std::shared_ptr<StubRenderer> m_renderer;
+    std::shared_ptr<MockRenderer> m_renderer;
+    std::shared_ptr<MockSetting<AlarmVolumeRampSetting::ValueType>> m_mockAlarmVolumeRampSetting;
     std::shared_ptr<CustomerDataManager> m_customerDataManager;
     std::unique_ptr<StrictMock<MockDirectiveHandlerResult>> m_mockDirectiveHandlerResult;
 
@@ -254,12 +323,14 @@ void AlertsCapabilityAgentTest::SetUp() {
     m_speakerManager = std::make_shared<NiceMock<MockSpeakerManager>>();
     m_exceptionSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
     m_contextManager = std::make_shared<NiceMock<MockContextManager>>();
-    m_alertStorage = std::make_shared<StubAlertStorage>();
+    m_alertStorage = std::make_shared<NiceMock<MockAlertStorage>>();
     m_alertsAudioFactory = std::make_shared<NiceMock<MockAlertsAudioFactory>>();
-    m_renderer = std::make_shared<StubRenderer>();
+    m_renderer = std::make_shared<NiceMock<MockRenderer>>();
     m_customerDataManager = std::make_shared<CustomerDataManager>();
     m_messageStorage = std::make_shared<StubMessageStorage>();
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
+    m_mockAlarmVolumeRampSetting =
+        std::make_shared<MockSetting<AlarmVolumeRampSetting::ValueType>>(types::AlarmVolumeRampTypes::NONE);
 
     ON_CALL(*(m_speakerManager.get()), getSpeakerSettings(_, _))
         .WillByDefault(Invoke([](SpeakerInterface::Type, SpeakerInterface::SpeakerSettings*) {
@@ -275,6 +346,15 @@ void AlertsCapabilityAgentTest::SetUp() {
             return promise.get_future();
         }));
 
+    ON_CALL(*(m_alertStorage), createDatabase()).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), open()).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), store(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), load(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), modify(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), erase(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), bulkErase(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), clearDatabase()).WillByDefault(Return(true));
+
     m_certifiedSender = CertifiedSender::create(
         m_mockMessageSender, m_mockAVSConnectionManager, m_messageStorage, m_customerDataManager);
 
@@ -289,7 +369,8 @@ void AlertsCapabilityAgentTest::SetUp() {
         m_alertStorage,
         m_alertsAudioFactory,
         m_renderer,
-        m_customerDataManager);
+        m_customerDataManager,
+        m_mockAlarmVolumeRampSetting);
 
     std::static_pointer_cast<ConnectionStatusObserverInterface>(m_certifiedSender)
         ->onConnectionStatusChanged(
@@ -578,6 +659,58 @@ TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMin) {
 
     std::unique_lock<std::mutex> ulock(m_mutex);
     waitCV.wait_for(ulock, std::chrono::milliseconds(MAX_WAIT_TIME_MS));
+}
+
+/**
+ * Test that alerts CA can correctly parse and apply alarm volume ramp value correctly.
+ */
+TEST_F(AlertsCapabilityAgentTest, test_SetAlarmVolumeRampDirective) {
+    // Create Directive.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(ALERTS_NAMESPACE, SET_ALARM_VOLUME_RAMP_DIRECTIVE_NAME, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, ALARM_VOLUME_RAMP_PAYLOAD_ENABLED, attachmentManager, "");
+
+    // Set expectations.
+    avsCommon::utils::WaitEvent waitEvent;
+    EXPECT_CALL(*m_mockAlarmVolumeRampSetting, setAvsChange(types::AlarmVolumeRampTypes::ASCENDING))
+        .WillOnce(InvokeWithoutArgs([&waitEvent] {
+            waitEvent.wakeUp();
+            return true;
+        }));
+
+    auto alertsCA = std::static_pointer_cast<CapabilityAgent>(m_alertsCA);
+    alertsCA->preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    alertsCA->handleDirective(MESSAGE_ID);
+
+    /// Wait till last expectation is met.
+    ASSERT_TRUE(waitEvent.wait(TEST_TIMEOUT));
+}
+
+/**
+ * Test that alerts CA will send exception for invalid SetAlarmVolumeRamp.
+ */
+TEST_F(AlertsCapabilityAgentTest, test_SetAlarmVolumeRampDirectiveInvalid) {
+    // Create Directive.
+    auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(ALERTS_NAMESPACE, SET_ALARM_VOLUME_RAMP_DIRECTIVE_NAME, MESSAGE_ID);
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, ALARM_VOLUME_RAMP_PAYLOAD_INVALID, attachmentManager, "");
+
+    // Expect exception to be sent.
+    avsCommon::utils::WaitEvent waitEvent;
+    EXPECT_CALL(*m_exceptionSender, sendExceptionEncountered(_, _, _)).WillOnce(InvokeWithoutArgs([&waitEvent] {
+        waitEvent.wakeUp();
+    }));
+
+    // Verify certified sender sends and exception.
+    auto alertsCA = std::static_pointer_cast<CapabilityAgent>(m_alertsCA);
+    alertsCA->preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    alertsCA->handleDirective(MESSAGE_ID);
+
+    EXPECT_TRUE(waitEvent.wait(TEST_TIMEOUT));
 }
 
 }  // namespace test

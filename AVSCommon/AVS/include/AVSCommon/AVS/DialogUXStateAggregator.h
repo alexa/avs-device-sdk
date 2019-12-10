@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include "AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h"
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include "AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h"
+#include "AVSCommon/SDKInterfaces/InteractionModelRequestProcessingObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h"
 
@@ -41,15 +42,20 @@ class DialogUXStateAggregator
         : public sdkInterfaces::AudioInputProcessorObserverInterface
         , public sdkInterfaces::SpeechSynthesizerObserverInterface
         , public sdkInterfaces::MessageObserverInterface
-        , public sdkInterfaces::ConnectionStatusObserverInterface {
+        , public sdkInterfaces::ConnectionStatusObserverInterface
+        , public sdkInterfaces::InteractionModelRequestProcessingObserverInterface {
 public:
     /**
      * Constructor.
      *
      * @param timeoutForThinkingToIdle This timeout will be used to time out from the THINKING state in case no messages
      * arrive from AVS.
+     * @param timeoutForListeningToIdle This timeout will be used to time out from the LISTENING state in case the
+     * Request Processing Started (RPS) directive is not received from AVS.
      */
-    DialogUXStateAggregator(std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{5});
+    DialogUXStateAggregator(
+        std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{8},
+        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8});
 
     /**
      * Adds an observer to be notified of UX state changes.
@@ -80,6 +86,12 @@ public:
 
     void receive(const std::string& contextId, const std::string& message) override;
 
+    /// @name InteractionModelRequestProcessingObserverInterface Functions
+    /// @{
+    void onRequestProcessingStarted() override;
+    void onRequestProcessingCompleted() override;
+    /// @}
+
 private:
     /**
      * Notifies all observers of the current state. This should only be used within the internal executor.
@@ -102,6 +114,11 @@ private:
      * Transitions the internal state from THINKING to IDLE.
      */
     void transitionFromThinkingTimedOut();
+
+    /**
+     * Transitions the internal state from LISTENING to IDLE if RPS (Request Processing Started) is not received.
+     */
+    void transitionFromListeningTimedOut();
 
     /**
      * Timer callback that makes sure that the state is IDLE if both @c AudioInputProcessor and @c SpeechSynthesizer
@@ -140,6 +157,15 @@ private:
 
     /// A timer to transition out of the SPEAKING state for multiturn situations.
     avsCommon::utils::timing::Timer m_multiturnSpeakingToListeningTimer;
+
+    /// The timeout to be used for transitioning away form the LISTENING state in case RPS (Request Processing Started)
+    /// directive is not received.
+    const std::chrono::microseconds m_timeoutForListeningToIdle;
+
+    /// A timer to transition out of the LISTENING state to IDLE state in case RPS (Request Processing Started)
+    /// directive is not received.
+    avsCommon::utils::timing::Timer m_listeningTimeoutTimer;
+
     /// @}
 
     /**

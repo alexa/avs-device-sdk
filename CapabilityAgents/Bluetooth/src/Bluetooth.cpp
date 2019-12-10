@@ -457,17 +457,42 @@ bool Bluetooth::init() {
         }
     }
 
+    m_mediaPlayer->addObserver(shared_from_this());
+
+    syncWithDeviceManager();
+    // Calling outside executor context since init() is implicitly thread-safe.
+    executeUpdateContext();
+
+    // Start receiving events after manually syncing BTCA state with adapter state.
     m_eventBus->addListener(
         {avsCommon::utils::bluetooth::BluetoothEventType::DEVICE_DISCOVERED,
          avsCommon::utils::bluetooth::BluetoothEventType::DEVICE_STATE_CHANGED,
          avsCommon::utils::bluetooth::BluetoothEventType::STREAMING_STATE_CHANGED},
         shared_from_this());
 
-    m_mediaPlayer->addObserver(shared_from_this());
-
-    executeUpdateContext();
-
     return true;
+}
+
+void Bluetooth::syncWithDeviceManager() {
+    std::vector<std::shared_ptr<BluetoothDeviceInterface>> extraConnectedDevices;
+    for (auto& device : m_deviceManager->getDiscoveredDevices()) {
+        if (!device->isConnected()) {
+            ACSDK_DEBUG9(LX(__func__).d("reason", "deviceNotConnected").m("Excluding"));
+            continue;
+        }
+
+        if (!m_activeDevice && supportsAvsProfile(device, AVS_A2DP)) {
+            executeOnDeviceConnect(device);
+        } else {
+            executeFunctionOnDevice(device, &BluetoothDeviceInterface::disconnect);
+        }
+    }
+
+    if (m_activeDevice && m_activeDevice->getA2DPSource()) {
+        if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), ACTIVITY_ID)) {
+            ACSDK_ERROR(LX(__func__).d("reason", "acquireChannelFailed"));
+        }
+    }
 }
 
 Bluetooth::Bluetooth(

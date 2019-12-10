@@ -22,7 +22,10 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <Settings/DeviceSettingsManager.h>
 
+#include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <string>
@@ -44,10 +47,12 @@ public:
      * Creates a @c Renderer.
      *
      * @param mediaPlayer the @c MediaPlayerInterface that the @c Renderer object will interact with.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      * @return The @c Renderer object.
      */
     static std::shared_ptr<Renderer> create(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     void start(
         std::shared_ptr<RendererObserverInterface> observer,
@@ -76,8 +81,11 @@ private:
      * Constructor.
      *
      * @param mediaPlayer The @c MediaPlayerInterface, which will render audio for an alert.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      */
-    Renderer(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+    Renderer(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
      * @name Executor Thread Functions
@@ -219,6 +227,13 @@ private:
     void play();
 
     /**
+     * Generate the media player configuration for the current alarm rendering including volume gain.
+     *
+     * @return The media player configuration for the current alarm rendering.
+     */
+    avsCommon::utils::mediaPlayer::SourceConfig generateMediaConfiguration();
+
+    /**
      * Utility function to handle the rendering of the next audio asset, with respect to @c m_remainingLoopCount and @c
      * m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render, this
      * function will also perform a sleep for the @c m_loopPause duration.
@@ -296,6 +311,12 @@ private:
     /// The id associated with the media that our MediaPlayer is currently handling.
     SourceId m_currentSourceId;
 
+    /// Whether the alarm volume ramp property was enabled when the alarm started playing.
+    bool m_alarmVolumeRampEnabled;
+
+    /// The settings manager used to retrieve the value of alarm volume ramp setting.
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
+
     /// @}
 
     /**
@@ -305,6 +326,9 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// The time that the alert started rendering.
+    std::chrono::steady_clock::time_point m_renderStartTime;
 };
 
 }  // namespace renderer

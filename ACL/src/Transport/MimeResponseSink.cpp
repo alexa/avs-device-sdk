@@ -224,7 +224,7 @@ HTTP2ReceiveDataStatus MimeResponseSink::onReceiveNonMimeData(const char* bytes,
         ACSDK_ERROR(LX("nonMimeBodyTruncated").d("total", total).d("maxSize", NON_MIME_BODY_MAX_SIZE));
     }
 
-    return HTTP2ReceiveDataStatus(size);
+    return HTTP2ReceiveDataStatus::SUCCESS;
 }
 
 void MimeResponseSink::onResponseFinished(HTTP2ResponseFinishedStatus status) {

@@ -39,14 +39,16 @@ TestMediaPlayer::~TestMediaPlayer() {
 
 avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-    const avsCommon::utils::AudioFormat* audioFormat) {
+    const avsCommon::utils::AudioFormat* audioFormat,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
     m_attachmentReader = std::move(attachmentReader);
     return ++g_sourceId;
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
-    bool repeat) {
+    bool repeat,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
     m_istream = stream;
     return ++g_sourceId;
 }
@@ -54,6 +56,7 @@ avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::s
 avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
     bool repeat) {
     return ++g_sourceId;
 }

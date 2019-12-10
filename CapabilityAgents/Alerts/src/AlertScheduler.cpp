@@ -391,8 +391,17 @@ void AlertScheduler::executeOnAlertStateChange(
 
         case State::STOPPED:
             notifyObserver(alertToken, alertType, state, reason);
-            eraseAlert(m_activeAlert);
-            m_activeAlert.reset();
+
+            if (m_activeAlert && m_activeAlert->getToken() == alertToken) {
+                eraseAlert(m_activeAlert);
+                m_activeAlert.reset();
+            } else {
+                auto alert = getAlertLocked(alertToken);
+                if (alert) {
+                    ACSDK_DEBUG((LX("erasing a stopped Alert that is no longer active").d("alertToken", alertToken)));
+                    eraseAlert(alert);
+                }
+            }
             setTimerForNextAlertLocked();
 
             break;
@@ -430,6 +439,11 @@ void AlertScheduler::executeOnAlertStateChange(
             // Instead, this class generates it to inform higher level observers.
             break;
 
+        case State::SCHEDULED_FOR_LATER:
+            // An alert should never send this state.
+            // Instead, this class generates it to inform higher level observers.
+            break;
+
         case State::DELETED:
             // An alert should never send this state.
             // Instead, this class generates it to inform higher level observers.
@@ -438,7 +452,6 @@ void AlertScheduler::executeOnAlertStateChange(
         case State::ERROR:
 
             // clear out the alert that had the error, to avoid degenerate repeated alert behavior.
-
             if (m_activeAlert && m_activeAlert->getToken() == alertToken) {
                 eraseAlert(m_activeAlert);
                 m_activeAlert.reset();
@@ -446,6 +459,8 @@ void AlertScheduler::executeOnAlertStateChange(
             } else {
                 auto alert = getAlertLocked(alertToken);
                 if (alert) {
+                    ACSDK_DEBUG(
+                        (LX("erasing Alert with an error that is no longer active").d("alertToken", alertToken)));
                     eraseAlert(alert);
                     m_scheduledAlerts.erase(alert);
                     setTimerForNextAlertLocked();

@@ -61,18 +61,23 @@ MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"} {
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-    const avsCommon::utils::AudioFormat* audioFormat) {
+    const avsCommon::utils::AudioFormat* audioFormat,
+    const SourceConfig& config) {
     return attachmentSetSource(attachmentReader, audioFormat);
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
+    const SourceConfig& config,
     bool repeat) {
     return urlSetSource(url);
 }
 
-MediaPlayerInterface::SourceId MockMediaPlayer::setSource(std::shared_ptr<std::istream> stream, bool repeat) {
+MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
+    std::shared_ptr<std::istream> stream,
+    bool repeat,
+    const SourceConfig& config) {
     return streamSetSource(stream, repeat);
 }
 
@@ -226,10 +231,22 @@ void MockMediaPlayer::resetWaitTimer() {
 
 bool MockMediaPlayer::waitUntilNextSetSource(const std::chrono::milliseconds timeout) {
     auto originalSourceId = getCurrentSourceId();
+    if (m_isConcurrentEnabled) {
+        std::lock_guard<std::mutex> lock(m_globalMutex);
+        originalSourceId = m_sources.size();
+    }
+
     auto timeLimit = std::chrono::steady_clock::now() + timeout;
     while (std::chrono::steady_clock::now() < timeLimit) {
-        if (getCurrentSourceId() != originalSourceId) {
-            return true;
+        if (m_isConcurrentEnabled) {
+            std::lock_guard<std::mutex> lock(m_globalMutex);
+            if (m_sources.size() != originalSourceId) {
+                return true;
+            }
+        } else {
+            if (getCurrentSourceId() != originalSourceId) {
+                return true;
+            }
         }
         std::this_thread::sleep_for(WAIT_LOOP_INTERVAL);
     }
@@ -278,6 +295,11 @@ MediaPlayerInterface::SourceId MockMediaPlayer::getSourceId() {
     }
 
     return MediaPlayerInterface::ERROR;
+}
+
+MediaPlayerInterface::SourceId MockMediaPlayer::getLatestSourceId() {
+    std::unique_lock<std::mutex> lock(m_globalMutex);
+    return m_sources.size() == 0 ? MediaPlayerInterface::ERROR : m_sources.size() - 1;
 }
 
 MockMediaPlayer::SourceState::SourceState(

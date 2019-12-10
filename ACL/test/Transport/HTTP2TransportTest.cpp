@@ -54,8 +54,8 @@ using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::http2::test;
 using namespace ::testing;
 
-/// Test endpoint.
-static const std::string TEST_AVS_ENDPOINT_STRING = "http://avs-alexa-na.amazon.com";
+/// Test AVS Gateway.
+static const std::string TEST_AVS_GATEWAY_STRING = "http://avs-alexa-na.amazon.com";
 
 /// Expected Downchannel URL sent on requests.
 static const std::string AVS_DOWNCHANNEL_URL_PATH_EXTENSION = "/v20160207/directives";
@@ -64,10 +64,10 @@ static const std::string AVS_DOWNCHANNEL_URL_PATH_EXTENSION = "/v20160207/direct
 static const std::string AVS_PING_URL_PATH_EXTENSION = "/ping";
 
 /// Expected Full Downchannel URL sent on requests.
-static const std::string FULL_DOWNCHANNEL_URL = TEST_AVS_ENDPOINT_STRING + AVS_DOWNCHANNEL_URL_PATH_EXTENSION;
+static const std::string FULL_DOWNCHANNEL_URL = TEST_AVS_GATEWAY_STRING + AVS_DOWNCHANNEL_URL_PATH_EXTENSION;
 
 /// Expected Full ping URL sent on requests.
-static const std::string FULL_PING_URL = TEST_AVS_ENDPOINT_STRING + AVS_PING_URL_PATH_EXTENSION;
+static const std::string FULL_PING_URL = TEST_AVS_GATEWAY_STRING + AVS_PING_URL_PATH_EXTENSION;
 
 /// A 100 millisecond delay used in tests.
 static const auto ONE_HUNDRED_MILLISECOND_DELAY = std::chrono::milliseconds(100);
@@ -209,7 +209,9 @@ protected:
     PromiseFuturePair<void> m_createPostConnectCalled;
 
     /// A promise that @c PostConnectInterface:doPostConnect() will be called).
-    PromiseFuturePair<std::shared_ptr<HTTP2Transport>> m_doPostConnected;
+    PromiseFuturePair<
+        std::pair<std::shared_ptr<PostConnectSendMessageInterface>, std::shared_ptr<PostConnectObserverInterface>>>
+        m_doPostConnected;
 
     /// A promise that the @c TransportObserver.onConnected() will be called.
     PromiseFuturePair<void> m_transportConnected;
@@ -254,7 +256,7 @@ void HTTP2TransportTest::SetUp() {
     m_mockAuthDelegate->setAuthToken(CBL_AUTHORIZATION_TOKEN);
     m_http2Transport = HTTP2Transport::create(
         m_mockAuthDelegate,
-        TEST_AVS_ENDPOINT_STRING,
+        TEST_AVS_GATEWAY_STRING,
         m_mockHttp2Connection,
         m_mockMessageConsumer,
         m_attachmentManager,
@@ -292,17 +294,17 @@ void HTTP2TransportTest::setupHandlers(bool sendOnPostConnected, bool expectConn
         }));
 
         // Handle PostConnectInterface::doPostConnect() when called.
-        EXPECT_CALL(*m_mockPostConnect, doPostConnect(_))
+        EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
             .InSequence(s2)
-            .WillOnce(Invoke([this, sendOnPostConnected](std::shared_ptr<HTTP2Transport> transport) {
-                m_doPostConnected.setValue(transport);
+            .WillOnce(Invoke([this, sendOnPostConnected](
+                                 std::shared_ptr<PostConnectSendMessageInterface> postConnectSender,
+                                 std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
+                m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
                 if (sendOnPostConnected) {
-                    transport->onPostConnected();
+                    postConnectObserver->onPostConnected();
                 }
                 return true;
-            })
-
-            );
+            }));
     }
 
     if (expectConnected) {
@@ -970,7 +972,7 @@ TEST_F(HTTP2TransportTest, testTimer_networkInactivityPingRequest) {
     cfg.inactivityTimeout = testInactivityTimeout;
     m_http2Transport = HTTP2Transport::create(
         m_mockAuthDelegate,
-        TEST_AVS_ENDPOINT_STRING,
+        TEST_AVS_GATEWAY_STRING,
         m_mockHttp2Connection,
         m_mockMessageConsumer,
         m_attachmentManager,
@@ -1015,7 +1017,7 @@ TEST_F(HTTP2TransportTest, testSlow_tearDownPingTimeout) {
     cfg.inactivityTimeout = testInactivityTimeout;
     m_http2Transport = HTTP2Transport::create(
         m_mockAuthDelegate,
-        TEST_AVS_ENDPOINT_STRING,
+        TEST_AVS_GATEWAY_STRING,
         m_mockHttp2Connection,
         m_mockMessageConsumer,
         m_attachmentManager,
@@ -1057,7 +1059,7 @@ TEST_F(HTTP2TransportTest, testSlow_tearDownPingFailure) {
     cfg.inactivityTimeout = testInactivityTimeout;
     m_http2Transport = HTTP2Transport::create(
         m_mockAuthDelegate,
-        TEST_AVS_ENDPOINT_STRING,
+        TEST_AVS_GATEWAY_STRING,
         m_mockHttp2Connection,
         m_mockMessageConsumer,
         m_attachmentManager,
@@ -1134,6 +1136,46 @@ TEST_F(HTTP2TransportTest, testSlow_avsStreamsLimit) {
 
     // Check that the maximum number of enqueued messages at any time has been limited.
     ASSERT_EQ(m_mockHttp2Connection->getMaxPostRequestsEnqueud(), MAX_POST_STREAMS);
+}
+
+/**
+ * Test if the HTTP2Transport receives the onPostConnectFailure() event, it notifies observers with onDisconnected() and
+ * ChangeReason as UNRECOVERABLE_ERROR
+ */
+TEST_F(HTTP2TransportTest, test_onPostConnectFailureInitiatesShutdownAndNotifiesObservers) {
+    InSequence dummy;
+
+    // Handle PostConnectFactoryInterface::createPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this] {
+        m_createPostConnectCalled.setValue();
+        return m_mockPostConnect;
+    }));
+
+    // Handle PostConnectInterface::doPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
+        .WillOnce(Invoke([this](
+                             std::shared_ptr<PostConnectSendMessageInterface> postConnectSender,
+                             std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
+            m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
+            postConnectObserver->onUnRecoverablePostConnectFailure();
+            return true;
+        }));
+
+    PromiseFuturePair<void> gotOnDisconnected;
+    // Handle TransportObserverInterface::onDisconnected() when called.
+    EXPECT_CALL(*m_mockTransportObserver, onDisconnected(_, _))
+        .WillOnce(Invoke([this, &gotOnDisconnected](
+                             std::shared_ptr<TransportInterface> transport,
+                             ConnectionStatusObserverInterface::ChangedReason reason) {
+            gotOnDisconnected.setValue();
+            ASSERT_EQ(transport, m_http2Transport);
+            ASSERT_EQ(reason, ConnectionStatusObserverInterface::ChangedReason::UNRECOVERABLE_ERROR);
+        }));
+
+    m_http2Transport->connect();
+
+    ASSERT_TRUE(m_doPostConnected.waitFor(RESPONSE_TIMEOUT));
+    ASSERT_TRUE(gotOnDisconnected.waitFor(RESPONSE_TIMEOUT));
 }
 
 }  // namespace test

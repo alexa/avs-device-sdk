@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
+#include <AVSCommon/AVS/AVSContext.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
@@ -46,9 +47,6 @@ static const std::string NAMESPACE = "System";
 /// JSON value for a ExceptionEncountered event's name.
 static const std::string EXCEPTION_ENCOUNTERED_EVENT_NAME = "ExceptionEncountered";
 
-/// The context key in the ExceptionEncountered event.
-static const char CONTEXT_KEY_STRING[] = "context";
-
 /// JSON key for the unparsedDirective field of the ExceptionEncountered event.
 static const char UNPARSED_DIRECTIVE_KEY_STRING[] = "unparsedDirective";
 
@@ -74,14 +72,8 @@ void ExceptionEncounteredSender::sendExceptionEncountered(
     const std::string& unparsedDirective,
     avs::ExceptionErrorType error,
     const std::string& errorDescription) {
-    // Constructing Json for Context
-    rapidjson::Document contextDocument(rapidjson::kObjectType);
-    rapidjson::Value contextArray(rapidjson::kArrayType);
-    contextDocument.AddMember(CONTEXT_KEY_STRING, contextArray, contextDocument.GetAllocator());
-    rapidjson::StringBuffer contextBuffer;
-    rapidjson::Writer<rapidjson::StringBuffer> contextWriter(contextBuffer);
-    contextDocument.Accept(contextWriter);
-    std::string contextJson = contextBuffer.GetString();
+    // TODO(ACSDK-3354): Retrieve context from ContextManager.
+    std::string contextJson = AVSContext().toJson();
 
     // Constructing Json for Payload
     rapidjson::Document payloadDataDocument(rapidjson::kObjectType);

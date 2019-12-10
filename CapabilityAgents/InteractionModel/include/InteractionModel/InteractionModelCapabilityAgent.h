@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,13 +17,14 @@
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_INTERACTIONMODEL_INCLUDE_INTERACTIONMODEL_INTERACTIONMODELCAPABILITYAGENT_H_
 
 #include <memory>
+#include <set>
 #include <string>
-#include <unordered_set>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/SDKInterfaces/InteractionModelRequestProcessingObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -52,6 +53,23 @@ public:
     static std::shared_ptr<InteractionModelCapabilityAgent> create(
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+
+    /**
+     * Adds an observer to be notified when either the RequestProcessingStarted or the RequestProcessingCompleted
+     * directives are received.
+     *
+     * @param observer A new observer to be added to the list of observers.
+     */
+    void addObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface> observer);
+
+    /**
+     * Removes an observer.
+     *
+     * @param observer The observer to be removed from the list of observers.
+     */
+    void removeObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface> observer);
 
     /**
      * Destructor.
@@ -101,6 +119,12 @@ private:
 
     /// Pointer to the Directive Sequencer responsible for processing AVS directives
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
+
+    /// Mutex used to ensure adding, removing and notifying observers never happen in parallel.
+    std::mutex m_observerMutex;
+
+    /// Observers to notify when either the RequestProcessingStarted or RequestProcessingCompleted directives arrive
+    std::set<std::shared_ptr<avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface>> m_observers;
 };
 }  // namespace interactionModel
 }  // namespace capabilityAgents

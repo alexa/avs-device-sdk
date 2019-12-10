@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -84,11 +84,11 @@ public:
     void reconnect();
 
     /**
-     * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
-     * current active connection to be closed, and a new one opened to the new endpoint.
-     * @param avsEndpoint The URL for the new AVS endpoint.
+     * Set the gateway URL for the AVS connection.  Calling this function with a new value will cause the
+     * current active connection to be closed, and a new one opened to the new gateway.
+     * @param avsGateway The URL for the new AVS gateway.
      */
-    void setAVSEndpoint(const std::string& avsEndpoint);
+    void setAVSGateway(const std::string& avsGateway);
 
     void addConnectionStatusObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer);

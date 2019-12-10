@@ -18,7 +18,6 @@
 
 #include "ACL/Transport/HTTP2TransportFactory.h"
 #include "ACL/Transport/HTTP2Transport.h"
-#include "ACL/Transport/PostConnectSynchronizer.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -27,17 +26,10 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
 
-/// Key for the root node value containing configuration values for ACL.
-static const std::string ACL_CONFIG_KEY = "acl";
-/// Key for the 'endpoint' value under the @c ACL_CONFIG_KEY configuration node.
-static const std::string ENDPOINT_KEY = "endpoint";
-/// Default @c AVS endpoint to connect to.
-static const std::string DEFAULT_AVS_ENDPOINT = "https://alexa.na.gateway.devices.a2z.com";
-
 std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
     std::shared_ptr<AttachmentManager> attachmentManager,
-    const std::string& avsEndpoint,
+    const std::string& avsGateway,
     std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
     std::shared_ptr<TransportObserverInterface> transportObserverInterface) {
     auto connection = m_connectionFactory->createHTTP2Connection();
@@ -45,14 +37,9 @@ std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
         return nullptr;
     }
 
-    std::string configuredEndpoint = avsEndpoint;
-    if (configuredEndpoint.empty()) {
-        alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode::getRoot()[ACL_CONFIG_KEY].getString(
-            ENDPOINT_KEY, &configuredEndpoint, DEFAULT_AVS_ENDPOINT);
-    }
     return HTTP2Transport::create(
         authDelegate,
-        configuredEndpoint,
+        avsGateway,
         connection,
         messageConsumerInterface,
         attachmentManager,

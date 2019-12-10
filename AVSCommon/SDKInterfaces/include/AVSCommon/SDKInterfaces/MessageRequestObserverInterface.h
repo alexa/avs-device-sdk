@@ -37,6 +37,9 @@ public:
         /// The message was successfully sent.
         SUCCESS,
 
+        /// The message was accepted by the server.
+        SUCCESS_ACCEPTED,
+
         /// The message was successfully sent but the HTTPReponse had no content.
         SUCCESS_NO_CONTENT,
 
@@ -106,6 +109,8 @@ inline std::ostream& operator<<(std::ostream& stream, MessageRequestObserverInte
             return stream << "PENDING";
         case MessageRequestObserverInterface::Status::SUCCESS:
             return stream << "SUCCESS";
+        case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
+            return stream << "SUCCESS_ACCEPTED";
         case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
             return stream << "SUCCESS_NO_CONTENT";
         case MessageRequestObserverInterface::Status::NOT_CONNECTED:

@@ -22,6 +22,7 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <AVSCommon/SDKInterfaces/ContextRequestToken.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
@@ -80,6 +81,9 @@ static const std::string TEST_EXCEPTION_TEXT = "Exception test";
 
 /// A short period of time to wait for the m_contextTrigger or m_messageTrigger.
 static const std::chrono::milliseconds TEST_RESULT_WAIT_PERIOD{100};
+
+// The context request token returned by context manager.
+static const ContextRequestToken CONTEXT_REQUEST_TOKEN{1};
 
 /// A mock context returned by MockContextManager.
 // clang-format off
@@ -269,10 +273,12 @@ void PlaybackControllerTest::verifyButtonPressed(
     const std::string& expectedMessagePayloadName = "") {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     func();
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
@@ -291,10 +297,12 @@ void PlaybackControllerTest::verifyTogglePressed(
     const std::string& expectedMessagePayloadAction = "") {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     func();
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
@@ -486,10 +494,12 @@ TEST_F(PlaybackControllerTest, test_thumbsDownTogglePressed) {
 TEST_F(PlaybackControllerTest, test_getContextFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     // queue two button presses
     m_playbackController->onButtonPressed(PlaybackButton::PLAY);
     m_playbackController->onButtonPressed(PlaybackButton::PAUSE);
@@ -500,10 +510,12 @@ TEST_F(PlaybackControllerTest, test_getContextFailure) {
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(0);
 
     // expect a call to getContext again when onContextFailure is received
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     m_playbackController->onContextFailure(avsCommon::sdkInterfaces::ContextRequestError::BUILD_CONTEXT_ERROR);
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
 
@@ -524,10 +536,12 @@ TEST_F(PlaybackControllerTest, test_sendMessageFailure) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     m_playbackController->onButtonPressed(PlaybackButton::NEXT);
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
@@ -547,10 +561,12 @@ TEST_F(PlaybackControllerTest, test_sendMessageException) {
     std::unique_lock<std::mutex> exitLock(m_mutex);
 
     m_messageStatus = avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::INTERNAL_ERROR;
-    EXPECT_CALL(*m_mockContextManager, getContext(_))
-        .WillOnce(Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) {
-            checkGetContextAndReleaseTrigger(contextRequester);
-        }));
+    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        .WillOnce(WithArg<0>(
+            Invoke([this](std::shared_ptr<ContextRequesterInterface> contextRequester) -> ContextRequestToken {
+                checkGetContextAndReleaseTrigger(contextRequester);
+                return CONTEXT_REQUEST_TOKEN;
+            })));
     m_playbackController->onButtonPressed(PlaybackButton::NEXT);
     m_contextTrigger.wait_for(exitLock, TEST_RESULT_WAIT_PERIOD);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,6 +49,12 @@ static const std::string NAMESPACE = "InteractionModel";
 /// The NewDialogRequest directive signature.
 static const NamespaceAndName NEW_DIALOG_REQUEST{NAMESPACE, "NewDialogRequest"};
 
+/// The RequestProcessingStarted (RPS) directive signature.
+static const NamespaceAndName REQUEST_PROCESS_STARTED{NAMESPACE, "RequestProcessingStarted"};
+
+/// The RequestProcessingCompleted (RPC) directive signature.
+static const NamespaceAndName REQUEST_PROCESS_COMPLETED{NAMESPACE, "RequestProcessingCompleted"};
+
 /// Interaction Model capability constants
 /// Interaction Model interface type
 static const std::string INTERACTION_MODEL_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
@@ -57,7 +63,7 @@ static const std::string INTERACTION_MODEL_CAPABILITY_INTERFACE_TYPE = "AlexaInt
 static const std::string INTERACTION_MODEL_CAPABILITY_INTERFACE_NAME = "InteractionModel";
 
 /// Interaction Model interface version.
-static const std::string INTERACTION_MODEL_CAPABILITY_INTERFACE_VERSION = "1.0";
+static const std::string INTERACTION_MODEL_CAPABILITY_INTERFACE_VERSION = "1.2";
 
 /// NewDialogRequestID payload key.
 static const std::string PAYLOAD_KEY_DIALOG_REQUEST_ID = "dialogRequestId";
@@ -91,6 +97,28 @@ std::shared_ptr<InteractionModelCapabilityAgent> InteractionModelCapabilityAgent
         new InteractionModelCapabilityAgent(directiveSequencer, exceptionEncounteredSender));
 }
 
+void InteractionModelCapabilityAgent::addObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observerMutex};
+    m_observers.insert(observer);
+}
+
+void InteractionModelCapabilityAgent::removeObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observerMutex};
+    m_observers.erase(observer);
+}
+
 InteractionModelCapabilityAgent::InteractionModelCapabilityAgent(
     std::shared_ptr<DirectiveSequencerInterface> directiveSequencer,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
@@ -108,6 +136,8 @@ DirectiveHandlerConfiguration InteractionModelCapabilityAgent::getConfiguration(
     DirectiveHandlerConfiguration configuration;
     // TODO: ARC-227 Verify default values.
     configuration[NEW_DIALOG_REQUEST] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[REQUEST_PROCESS_STARTED] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[REQUEST_PROCESS_COMPLETED] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     return configuration;
 }
 void InteractionModelCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
@@ -170,6 +200,28 @@ bool InteractionModelCapabilityAgent::handleDirectiveHelper(
             *type = ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED;
             return false;
         }
+    } else if (REQUEST_PROCESS_STARTED.name == directiveName) {
+        std::unique_lock<std::mutex> lock{m_observerMutex};
+        auto observers = m_observers;
+        lock.unlock();
+
+        for (auto observer : observers) {
+            if (observer) {
+                observer->onRequestProcessingStarted();
+            }
+        }
+        return true;
+    } else if (REQUEST_PROCESS_COMPLETED.name == directiveName) {
+        std::unique_lock<std::mutex> lock{m_observerMutex};
+        auto observers = m_observers;
+        lock.unlock();
+
+        for (auto observer : observers) {
+            if (observer) {
+                observer->onRequestProcessingCompleted();
+            }
+        }
+        return true;
     } else {
         *errMessage = directiveName + " not supported";
         *type = ExceptionErrorType::UNSUPPORTED_OPERATION;

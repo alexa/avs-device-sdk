@@ -54,14 +54,15 @@ public:
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
      * @param transportFactory Factory used to create new transport objects.
-     * @param avsEndpoint The endpoint to connect to AVS.  If empty the "endpoint" value of the "acl" configuration
-     * will be used.  If there no such configuration value a default value will be used instead.
+     * @param avsGateway The gateway to connect to AVS. The value will be set by the @c AVSGatewayManager based on
+     * either the previously verified gateway or a value from the config file. If both are not present, a default value
+     * is used.
      */
     MessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> transportFactory,
-        const std::string& avsEndpoint = "");
+        const std::string& avsGateway = "");
 
     void enable() override;
 
@@ -71,9 +72,9 @@ public:
 
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
-    void setAVSEndpoint(const std::string& avsEndpoint) override;
+    void setAVSGateway(const std::string& avsGateway) override;
 
-    std::string getAVSEndpoint() override;
+    std::string getAVSGateway() override;
 
     void setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) override;
 
@@ -168,8 +169,8 @@ private:
     /// The observer object. Access serialized with @c m_connectionMutex.
     std::shared_ptr<MessageRouterObserverInterface> m_observer;
 
-    /// The current AVS endpoint. Access serialized with @c m_connectionMutex.
-    std::string m_avsEndpoint;
+    /// The current AVS gateway. Access serialized with @c m_connectionMutex.
+    std::string m_avsGateway;
 
     /// The AuthDelegateInterface which provides a valid access token.
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;

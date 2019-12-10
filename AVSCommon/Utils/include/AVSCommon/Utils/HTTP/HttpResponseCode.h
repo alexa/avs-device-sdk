@@ -32,6 +32,8 @@ enum HTTPResponseCode {
 
     /// HTTP Success with response payload.
     SUCCESS_OK = 200,
+    // HTTP Success Accepted with no response payload.
+    SUCCESS_ACCEPTED = 202,
     /// HTTP Success with no response payload.
     SUCCESS_NO_CONTENT = 204,
 
@@ -104,6 +106,8 @@ inline HTTPResponseCode intToHTTPResponseCode(int code) {
     switch (code) {
         case 200:
             return HTTPResponseCode::SUCCESS_OK;
+        case 202:
+            return HTTPResponseCode::SUCCESS_ACCEPTED;
         case 204:
             return HTTPResponseCode::SUCCESS_NO_CONTENT;
         case 300:
@@ -152,6 +156,8 @@ inline std::string responseCodeToString(HTTPResponseCode responseCode) {
             return "HTTP_RESPONSE_CODE_UNDEFINED";
         case HTTPResponseCode::SUCCESS_OK:
             return "SUCCESS_OK";
+        case HTTPResponseCode::SUCCESS_ACCEPTED:
+            return "SUCCESS_ACCEPTED";
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
             return "SUCCESS_NO_CONTENT";
         case HTTPResponseCode::SUCCESS_END_CODE:

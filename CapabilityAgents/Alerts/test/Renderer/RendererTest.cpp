@@ -17,6 +17,10 @@
 #include <gmock/gmock.h>
 
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
+#include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/DeviceSettingsManager.h>
+#include <Settings/MockSetting.h>
 
 #include "Alerts/Renderer/Renderer.h"
 
@@ -27,6 +31,8 @@ namespace renderer {
 namespace test {
 
 using namespace avsCommon::utils::mediaPlayer::test;
+using namespace settings::types;
+using namespace settings::test;
 
 /// Amount of time that the renderer observer should wait for a task to finish.
 static const std::chrono::milliseconds TEST_TIMEOUT{100};
@@ -100,11 +106,28 @@ public:
     SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
         bool repeat = false) override {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_sourceConfig = config;
+        m_sourceChanged.notify_one();
         return m_sourceIdRetVal;
     }
 
-    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override {
+    SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config) override {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_sourceConfig = config;
+        m_sourceChanged.notify_one();
+        return m_sourceIdRetVal;
+    }
+
+    SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        const avsCommon::utils::AudioFormat* audioFormat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config) override {
         return m_sourceIdRetVal;
     }
 
@@ -120,10 +143,33 @@ public:
         m_stopRetVal = stopRetVal;
     }
 
+    /*
+     * Wait for sourceConfig value to be set.
+     */
+    std::pair<bool, avsCommon::utils::mediaPlayer::SourceConfig> waitForSourceConfig(
+        std::chrono::milliseconds timeout) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+
+        if (m_sourceChanged.wait_for(lock, timeout) != std::cv_status::timeout) {
+            return std::make_pair(true, m_sourceConfig);
+        } else {
+            return std::make_pair(false, avsCommon::utils::mediaPlayer::emptySourceConfig());
+        }
+    }
+
 private:
     SourceId m_sourceIdRetVal;
     bool m_playRetVal;
     bool m_stopRetVal;
+
+    /// A lock to guard against source changes.
+    std::mutex m_mutex;
+
+    /// A condition variable to wait for source changes.
+    std::condition_variable m_sourceChanged;
+
+    /// The latest source config.
+    avsCommon::utils::mediaPlayer::SourceConfig m_sourceConfig;
 };
 
 class RendererTest : public ::testing::Test {
@@ -136,6 +182,7 @@ public:
 protected:
     std::shared_ptr<MockRendererObserver> m_observer;
     std::shared_ptr<TestMediaPlayer> m_mediaPlayer;
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
     std::shared_ptr<Renderer> m_renderer;
 
     static std::unique_ptr<std::istream> audioFactoryFunc() {
@@ -146,11 +193,12 @@ protected:
 RendererTest::RendererTest() :
         m_observer{std::make_shared<MockRendererObserver>()},
         m_mediaPlayer{TestMediaPlayer::create()},
-        m_renderer{Renderer::create(m_mediaPlayer)} {
+        m_settingsManager{std::make_shared<settings::DeviceSettingsManager>(
+            std::make_shared<registrationManager::CustomerDataManager>())},
+        m_renderer{Renderer::create(m_mediaPlayer, m_settingsManager)} {
 }
 
 RendererTest::~RendererTest() {
-    m_mediaPlayer->removeObserver(m_renderer);
     m_mediaPlayer.reset();
 }
 
@@ -174,7 +222,10 @@ TEST_F(RendererTest, test_create) {
     ASSERT_NE(m_renderer, nullptr);
 
     /// confirm we return a nullptr if a nullptr was passed in
-    ASSERT_EQ(Renderer::create(nullptr), nullptr);
+    ASSERT_EQ(Renderer::create(nullptr, m_settingsManager), nullptr);
+
+    /// confirm we return a nullptr if a nullptr was passed in
+    ASSERT_EQ(Renderer::create(m_mediaPlayer, nullptr), nullptr);
 }
 
 /**
@@ -184,6 +235,8 @@ TEST_F(RendererTest, test_start) {
     SetUpTest();
 
     ASSERT_TRUE(m_observer->waitFor(RendererObserverInterface::State::UNSET));
+
+    m_mediaPlayer->shutdown();
 }
 
 /**
@@ -319,6 +372,49 @@ TEST_F(RendererTest, testTimer_emptyURLNonZeroLoopPause) {
 
     // check the elapsed time is ~TEST_BACKGROUND_LOOP_PAUSE
     ASSERT_TRUE((elapsed >= TEST_BACKGROUND_LOOP_PAUSE) && (elapsed < TEST_BACKGROUND_TIMEOUT));
+}
+
+/**
+ * Test alarmVolumeRampRendering.
+ */
+TEST_F(RendererTest, test_alarmVolumeRampRendering) {
+    std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
+    std::vector<std::string> urls;
+
+    // Pause interval for this test.
+    const auto loopPause = std::chrono::seconds(1);
+
+    // Create a mock setting for alarm volume ramp with enabled value.
+    auto setting = std::make_shared<MockSetting<AlarmVolumeRampTypes>>(toAlarmRamp(true));
+    m_settingsManager->addSetting<settings::DeviceSettingsIndex::ALARM_VOLUME_RAMP>(setting);
+
+    // Create a thread that will observe the FadeIn config that is set to the MediaPlayer;
+    std::thread sourceConfigObserver([this, loopPause]() {
+        avsCommon::utils::mediaPlayer::SourceConfig config;
+        bool ok;
+
+        // Check that the initial gain is 0.
+        std::tie(ok, config) = m_mediaPlayer->waitForSourceConfig(6 * loopPause);
+        ASSERT_TRUE(ok);
+        ASSERT_EQ(config.fadeInConfig.startGain, 0);
+        m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);
+        m_renderer->onPlaybackFinished(TEST_SOURCE_ID_GOOD);
+
+        // Check that the gain increases at each repetition.
+        std::tie(ok, config) = m_mediaPlayer->waitForSourceConfig(6 * loopPause);
+        ASSERT_TRUE(ok);
+        ASSERT_GT(config.fadeInConfig.startGain, 0);
+        m_renderer->onPlaybackStarted(TEST_SOURCE_ID_GOOD);
+        m_renderer->onPlaybackFinished(TEST_SOURCE_ID_GOOD);
+    });
+
+    // pass empty URLS with 1s pause
+    // this simulates playing a default alarm audio on background
+    // it is expected to renderer to play the alert sound continuously at loop pause intervals
+    constexpr int testLoopCount = 2;
+    m_renderer->start(m_observer, audioFactory, urls, testLoopCount, loopPause);
+
+    sourceConfigObserver.join();
 }
 
 }  // namespace test

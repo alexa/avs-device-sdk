@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,10 +61,10 @@ private:
     std::function<void()> m_function;
 };
 
-FinallyGuard::FinallyGuard(const std::function<void()>& finallyFunction) : m_function{finallyFunction} {
+inline FinallyGuard::FinallyGuard(const std::function<void()>& finallyFunction) : m_function{finallyFunction} {
 }
 
-FinallyGuard::~FinallyGuard() {
+inline FinallyGuard::~FinallyGuard() {
     if (m_function) {
         m_function();
     }

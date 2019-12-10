@@ -35,10 +35,14 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <Captions/CaptionData.h>
+#include <Captions/CaptionManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -67,8 +71,11 @@ public:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the @c SpeechSynthesizer.
+     * @param metricRecorder The instance of the @c MetricRecorderInterface used to record metrics
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param powerResourceManager Power Resource Manager.
      *
      * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
      */
@@ -78,7 +85,10 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     void onDialogUXStateChanged(DialogUXState newState) override;
 
@@ -180,6 +190,9 @@ private:
 
         /// The play behavior of this directive.
         avsCommon::avs::PlayBehavior playBehavior;
+
+        /// The caption content that goes with the speech.
+        captions::CaptionData captionData;
     };
 
     /**
@@ -190,15 +203,21 @@ private:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the SpeechSynthesizer.
+     * @param metricRecorder The instance of the @c MetricRecorderInterface used to record metrics
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param powerResourceManager Power Resource Manager.
      */
     SpeechSynthesizer(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     void doShutdown() override;
 
@@ -478,6 +497,12 @@ private:
     void clearPendingDirectivesLocked();
 
     /**
+     * Acquire power resource when speaking and release power resource when finished speaking.
+     * @param newState The new state of SpeechSynthesizer.
+     */
+    void managePowerResource(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
+
+    /**
      * Id to identify the specific source when making calls to MediaPlayerInterface.
      * If this is modified or retrieved from methods that are not protected by the executor
      * then additional locking will be needed.
@@ -490,6 +515,9 @@ private:
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;
 
+    /// MetricRecorder instance to record metrics with
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// Object used to send events.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
@@ -498,6 +526,9 @@ private:
 
     /// The @c ContextManager that needs to be updated of the state.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// The @c CaptionManagerInterface used for handling captions.
+    std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
 
     /// The set of @c SpeechSynthesizerObserverInterface instances to notify of state changes.
     std::unordered_set<std::shared_ptr<SpeechSynthesizerObserverInterface>> m_observers;
@@ -552,6 +583,9 @@ private:
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
+    /// The power resource manager
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> m_powerResourceManager;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

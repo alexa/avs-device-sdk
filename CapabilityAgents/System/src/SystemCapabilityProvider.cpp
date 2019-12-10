@@ -44,7 +44,7 @@ static const std::string SYSTEM_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
 /// System interface name
 static const std::string SYSTEM_CAPABILITY_INTERFACE_NAME = "System";
 /// System interface version
-static const std::string SYSTEM_CAPABILITY_INTERFACE_VERSION = "1.4";
+static const std::string SYSTEM_CAPABILITY_INTERFACE_VERSION = "2.0";
 
 /// LOCALES_CONFIGURATION_KEY
 static const std::string LOCALES_CONFIGURATION_KEY = "locales";

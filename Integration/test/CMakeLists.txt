@@ -9,6 +9,7 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${AIP_SOURCE_DIR}/include"
      "${SpeechSynthesizer_SOURCE_DIR}/include"
+     "${InteractionModel_SOURCE_DIR}/include"
      "${Alerts_SOURCE_DIR}/include"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
@@ -20,7 +21,8 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${PlaybackController_SOURCE_DIR}/include"
      "${ContextManager_SOURCE_DIR}/include"
-     "${DeviceSettings_SOURCE_DIR}/test")
+     "${DeviceSettings_SOURCE_DIR}/test"
+     "${MetricRecorder_INCLUDE_DIRS}")
 
 set(LINK_PATH ACL
         ADSL
@@ -37,6 +39,7 @@ set(LINK_PATH ACL
         KWD
         PlaybackController
         SpeechSynthesizer
+        InteractionModel
         UtilsCommonTestLib)
 
 if(KITTAI_KEY_WORD_DETECTOR)
@@ -48,6 +51,9 @@ endif()
 if(GSTREAMER_MEDIA_PLAYER)
     SET(LINK_PATH ${LINK_PATH} MediaPlayer)
     add_definitions(-DGSTREAMER_MEDIA_PLAYER)
+endif()
+if(METRICS)
+    SET(LINK_PATH ${LINK_PATH} MetricRecorder)
 endif()
 
 # Define a variable for the audio inputs.

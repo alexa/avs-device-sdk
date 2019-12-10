@@ -13,624 +13,406 @@
  * permissions and limitations under the License.
  */
 
-#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
+#include <memory>
 
 #include <gtest/gtest.h>
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
+#include <gmock/gmock.h>
 
-#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
-#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
-#include "Common/TestableAuthDelegate.h"
-#include "Common/TestableCapabilityProvider.h"
-#include "Common/TestableHttpPut.h"
-#include "Common/TestableMiscStorage.h"
+#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
+#include <CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h>
+#include <CapabilitiesDelegate/Storage/CapabilitiesDelegateStorageInterface.h>
+#include <CapabilitiesDelegate/Utils/DiscoveryUtils.h>
+
+#include "MockAuthDelegate.h"
+#include "MockCapabilitiesObserver.h"
+#include "MockCapabilitiesStorage.h"
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 namespace test {
 
-using namespace avsCommon::avs;
-using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
-using namespace avsCommon::utils;
-using namespace avsCommon::utils::http;
-using namespace avsCommon::utils::configuration;
-using namespace avsCommon::utils::libcurlUtils;
+using namespace avsCommon::sdkInterfaces::endpoints;
+using namespace avsCommon::avs;
+using namespace ::testing;
 
-/// Auth token
-static const std::string AUTH_TOKEN = "testAuthToken";
-/// Client Id
-static const std::string CLIENT_ID = "testClientId";
-/// Client Id 2
-static const std::string CLIENT_ID_TWO = "testClientId2";
-/// Product Id
-static const std::string PRODUCT_ID = "testProductId";
-/// Product Id 2
-static const std::string PRODUCT_ID_TWO = "testProductId2";
-/// DSN
-static const std::string DSN = "testDSN";
-/// DSN 2
-static const std::string DSN_TWO = "testDSN2";
-/// Separator between the components that make up a capability key
-static const std::string CAPABILITY_KEY_SEPARATOR = ".";
-/// Capabilities key in message body
-static const std::string CAPABILITIES_KEY = "capabilities";
-/// Envelope version key in message body
-static const std::string ENVELOPE_VERSION_KEY = "envelopeVersion";
-/// Envelope version value in message body
-static const std::string ENVELOPE_VERSION_VALUE = "20160207";
-/// Envelope version value 2
-static const std::string ENVELOPE_VERSION_VALUE_TWO = "201602072";
-/// Interface type
-static const std::string INTERFACE_TYPE = "testInterfaceType";
-/// Interface version
-static const std::string INTERFACE_VERSION = "testInterfaceVersion";
-// clang-format off
-/// Interface configuration
-static const std::string INTERFACE_CONFIG = 
-        "{"
-            "\"first\":\"firstValue\","
-            "\"second\":{"
-                            "\"secondA\":\"secondAValue\","
-                            "\"secondB\":12"
-                        "},"
-            "\"third\":["
-                            "{"
-                                "\"thirdA\":\"thirdAValue\""
-                            "},"
-                            "{"
-                                "\"thirdB\":\"thirdBValue\""
-                            "}"
-                       "]"
-       "}";
-// clang-format on
-/// Bad interface configuration
-static const std::string INTERFACE_CONFIG_BAD = "thisIsNotJson";
-/// Interface name one
-static const std::string INTERFACE_NAME_ONE = "testInterfaceNameOne";
-/// Interface name two
-static const std::string INTERFACE_NAME_TWO = "testInterfaceNameTwo";
-/// Interface name three
-static const std::string INTERFACE_NAME_THREE = "testInterfaceNameThree";
+/**
+ * Mock discovery event sender class.
+ */
+class MockDiscoveryEventSender : public DiscoveryEventSenderInterface {
+public:
+    MOCK_METHOD1(addDiscoveryStatusObserver, void(const std::shared_ptr<DiscoveryStatusObserverInterface>&));
+    MOCK_METHOD1(removeDiscoveryStatusObserver, void(const std::shared_ptr<DiscoveryStatusObserverInterface>&));
+    MOCK_METHOD1(onAlexaEventProcessedReceived, void(const std::string&));
+};
 
-/// Constants for the Capabilities API message json
-/// Content type header key
-static const std::string CONTENT_TYPE_HEADER_KEY = "Content-Type";
-/// Content type header value
-static const std::string CONTENT_TYPE_HEADER_VALUE = "application/json";
-/// Content length header key
-static const std::string CONTENT_LENGTH_HEADER_KEY = "Content-Length";
-/// Auth token header key
-static const std::string AUTHORIZATION_HEADER_KEY = "x-amz-access-token";
-/// Separator between header key and value
-static const std::string HEADER_KEY_VALUE_SEPARATOR = ":";
+/**
+ * Create a test @c AVSDiscoveryEndpointAttributes.
+ * @return a @c AVSDiscoveryEndpointAttributes structure.
+ */
+AVSDiscoveryEndpointAttributes createEndpointAttributes() {
+    AVSDiscoveryEndpointAttributes attributes;
 
-/// Constituents of the CAPABILITIES API URL
-/// Capabilities API endpoint
-static const std::string CAPABILITIES_API_ENDPOINT = "https://api.amazonalexa.com";
-/// Suffix before the device's place in the URL
-static const std::string CAPABILITIES_API_URL_PRE_DEVICE_SUFFIX = "/v1/devices/";
-/// Suffix after the device's place in the URL
-static const std::string CAPABILITIES_API_URL_POST_DEVICE_SUFFIX = "/capabilities";
-/// Device ID for the device that will show up in the URL
-static const std::string SELF_DEVICE = "@self";
+    attributes.endpointId = "TEST_ENDPOINT_ID";
+    attributes.description = "TEST_DESCRIPTION";
+    attributes.manufacturerName = "TEST_MANUFACTURER_NAME";
+    attributes.displayCategories = {"TEST_DISPLAY_CATEGORY"};
 
-/// Constants for prefixes for DB storage
-/// Endpoint key
-static const std::string DB_KEY_ENDPOINT = "endpoint:";
-/// Client id key
-static const std::string DB_KEY_CLIENT_ID = "clientId:";
-/// Product id key
-static const std::string DB_KEY_PRODUCT_ID = "productId:";
-/// Envelope version key
-static const std::string DB_KEY_ENVELOPE_VERSION = "envelopeVersion:";
-/// DSN key
-static const std::string DB_KEY_DSN = "deviceSerialNumber:";
-/// Message key
-static const std::string DB_KEY_PUBLISH_MSG = "publishMsg:";
-/// Separator between keys
-static const std::string DB_KEY_SEPARATOR = ",";
-/// Component key
-static const std::string DB_KEY_COMPONENT = "component:";
-/// Table key
-static const std::string DB_KEY_TABLE = "table:";
-/// Component name needed for Misc DB
-static const std::string COMPONENT_NAME = "capabilitiesDelegate";
-/// Capabilities API message table
-static const std::string CAPABILITIES_PUBLISH_TABLE = "capabilitiesPublishMessage";
+    return attributes;
+}
 
-// clang-format off
-static const std::string CAPABILITIES_CONFIG_JSON =
-    "{"
-      "\"capabilitiesDelegate\":{"
-        "\"randomKey\":\"randomValue\""
-        "}"
-    "}";
-// clang-format on
+/**
+ * Creates a test @c CapabilityConfiguration.
+ * @return a @c CapabilityConfiguration structure.
+ */
+CapabilityConfiguration createCapabilityConfiguration() {
+    return CapabilityConfiguration("TEST_TYPE", "TEST_INTERFACE", "TEST_VERSION");
+}
 
 /**
  * Test harness for @c CapabilitiesDelegate class.
  */
-class CapabilitiesDelegateTest : public ::testing::Test {
+class CapabilitiesDelegateTest : public Test {
 public:
-    /**
-     * Constructor.
-     */
-    CapabilitiesDelegateTest();
-
-    /**
-     * Destructor.
-     */
-    ~CapabilitiesDelegateTest();
-
     /**
      * Set up the test harness for running a test.
      */
     void SetUp() override;
 
     /**
-     * Tear down the test harness for running a test.
+     * Tear down the test harness after running a test.
      */
     void TearDown() override;
 
-    /**
-     * Returns a capability's unique key.
-     *
-     * @param capabilityMap The capability map.
-     * @return A key that uniquely represents a capability.
-     */
-    std::string getCapabilityKey(const std::unordered_map<std::string, std::string>& capabilityMap);
-
-    /**
-     * Returns a capability's unique key.
-     *
-     * @param interfaceType The interface type of the capability.
-     * @param interfaceName The interface name of the capability.
-     * @return A key that uniquely represents a capability.
-     */
-    std::string getCapabilityKey(const std::string& interfaceType, const std::string& interfaceName);
-
-    /**
-     * Returns the URL to which the Capabilities API message is sent.
-     *
-     * @param deviceId The device Id.
-     * @return The URL to which the Capabilities API message is sent.
-     */
-    std::string getCapabilitiesApiUrl(const std::string& deviceId);
-
-    /**
-     * Returns the published envelope version given the published Capabilities API message.
-     *
-     * @param publishedMsgStr The published message.
-     * @return The published envelope version.
-     */
-    std::string getPublishedEnvelopeVersion(const std::string& publishedMsgStr);
-
-    /**
-     * Returns the published capabilities given the published Capabilities API message.
-     *
-     * @param publishedMsgStr The published message.
-     * @return A map of the capability key and the capability configuration.
-     */
-    std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> getPublishedConfigs(
-        const std::string& publishedMsgStr);
-
 protected:
-    /// Auth delegate instance
-    std::shared_ptr<TestAuthDelegate> m_authDelegate;
-    /// Misc storage instance
-    std::shared_ptr<TestMiscStorage> m_miscStorage;
-    /// HTTP put handler
-    std::shared_ptr<TestHttpPut> m_httpPut;
-    /// Device Info instance
-    std::shared_ptr<DeviceInfo> m_deviceInfo;
-    /// Config instance
-    ConfigurationNode m_configRoot;
-    /// The CapabilitiesDelegate instance
-    std::shared_ptr<CapabilitiesDelegate> m_capabilitiesDelegate;
+    /// The mock Auth Delegate instance.
+    std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
+
+    /// The mock Capabilities Storage instance.
+    std::shared_ptr<MockCapabilitiesDelegateStorage> m_mockCapabilitiesStorage;
+
+    /// The mock Capabilities observer instance.
+    std::shared_ptr<MockCapabilitiesObserver> m_mockCapabilitiesObserver;
+
     /// The data manager required to build the base object
     std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
+
+    /// The instance of the capabilitiesDelegate used in the tests.
+    std::shared_ptr<CapabilitiesDelegate> m_capabilitiesDelegate;
 };
 
-CapabilitiesDelegateTest::CapabilitiesDelegateTest() :
-        m_authDelegate{std::make_shared<TestAuthDelegate>()},
-        m_miscStorage{std::make_shared<TestMiscStorage>()},
-        m_httpPut{std::make_shared<TestHttpPut>()},
-        m_deviceInfo{DeviceInfo::create(CLIENT_ID, PRODUCT_ID, DSN)},
-        m_dataManager{std::make_shared<registrationManager::CustomerDataManager>()} {
-    auto inString = std::shared_ptr<std::istringstream>(new std::istringstream(CAPABILITIES_CONFIG_JSON));
-    AlexaClientSDKInit::initialize({inString});
-    m_configRoot = ConfigurationNode::getRoot();
-
-    m_authDelegate->setAuthToken(AUTH_TOKEN);
-}
-
-CapabilitiesDelegateTest::~CapabilitiesDelegateTest() {
-    AlexaClientSDKInit::uninitialize();
-}
-
 void CapabilitiesDelegateTest::SetUp() {
-    m_capabilitiesDelegate = CapabilitiesDelegate::create(
-        m_authDelegate, m_miscStorage, m_httpPut, m_dataManager, m_configRoot, m_deviceInfo);
+    m_mockCapabilitiesStorage = std::make_shared<StrictMock<MockCapabilitiesDelegateStorage>>();
+    m_mockAuthDelegate = std::make_shared<StrictMock<MockAuthDelegate>>();
+    m_mockCapabilitiesObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
+    m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
+
+    /// Expect calls to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
+    m_capabilitiesDelegate = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     ASSERT_NE(m_capabilitiesDelegate, nullptr);
-    m_capabilitiesDelegate->onAuthStateChange(
-        AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS);
+
+    /// Add a new observer and it receives notifications of the current capabilities state.
+    m_mockCapabilitiesObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            }));
+
+    m_capabilitiesDelegate->addCapabilitiesObserver(m_mockCapabilitiesObserver);
 }
 
 void CapabilitiesDelegateTest::TearDown() {
     m_capabilitiesDelegate->shutdown();
 }
 
-std::string CapabilitiesDelegateTest::getCapabilitiesApiUrl(const std::string& deviceId) {
-    return CAPABILITIES_API_ENDPOINT + CAPABILITIES_API_URL_PRE_DEVICE_SUFFIX + deviceId +
-           CAPABILITIES_API_URL_POST_DEVICE_SUFFIX;
+/**
+ * Tests the create method with various configurations.
+ */
+TEST_F(CapabilitiesDelegateTest, test_createMethodWithInvalidParameters) {
+    auto instance = CapabilitiesDelegate::create(nullptr, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_EQ(instance, nullptr);
+
+    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, nullptr, m_dataManager);
+    ASSERT_EQ(instance, nullptr);
+
+    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, nullptr);
+    ASSERT_EQ(instance, nullptr);
+
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
+    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_NE(instance, nullptr);
+    instance->shutdown();
 }
 
-std::string CapabilitiesDelegateTest::getCapabilityKey(
-    const std::unordered_map<std::string, std::string>& capabilityMap) {
-    auto interfaceTypeIterator = capabilityMap.find(CAPABILITY_INTERFACE_TYPE_KEY);
-    if (interfaceTypeIterator == capabilityMap.end()) {
-        return "";
-    }
-    auto interfaceType = interfaceTypeIterator->second;
+/**
+ * Tests the init method and if the open(), createDatabase() and load() methods get called on storage.
+ */
+TEST_F(CapabilitiesDelegateTest, test_init) {
+    /// Test if creteDatabase fails create method return nullptr.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(false));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).Times(1).WillOnce(Return(false));
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_EQ(instance, nullptr);
 
-    auto interfaceNameIterator = capabilityMap.find(CAPABILITY_INTERFACE_NAME_KEY);
-    if (interfaceNameIterator == capabilityMap.end()) {
-        return "";
-    }
-    auto interfaceName = interfaceNameIterator->second;
+    /// Test if load fails create method returns nullptr.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(false));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(false));
+    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_EQ(instance, nullptr);
 
-    return getCapabilityKey(interfaceType, interfaceName);
+    /// Happy path.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(false));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
+
+    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_NE(instance, nullptr);
+    instance->shutdown();
 }
 
-std::string CapabilitiesDelegateTest::getCapabilityKey(
-    const std::string& interfaceType,
-    const std::string& interfaceName) {
-    return interfaceType + CAPABILITY_KEY_SEPARATOR + interfaceName;
+/**
+ * Tests if the invalidateCapabilities method triggers a database cleanup.
+ */
+TEST_F(CapabilitiesDelegateTest, test_invalidateCapabilities) {
+    EXPECT_CALL(*m_mockCapabilitiesStorage, clearDatabase()).WillOnce(Return(true));
+    m_capabilitiesDelegate->invalidateCapabilities();
 }
 
-std::string CapabilitiesDelegateTest::getPublishedEnvelopeVersion(const std::string& publishedMsgStr) {
-    rapidjson::Document publishedMsgJson;
-    publishedMsgJson.Parse(publishedMsgStr);
-
-    return publishedMsgJson[ENVELOPE_VERSION_KEY].GetString();
-}
-
-std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> CapabilitiesDelegateTest::getPublishedConfigs(
-    const std::string& publishedMsgStr) {
-    std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> publishedConfigs;
-
-    rapidjson::Document publishedMsgJson;
-    publishedMsgJson.Parse(publishedMsgStr);
-
-    for (rapidjson::SizeType capabilityIndx = 0; capabilityIndx < publishedMsgJson[CAPABILITIES_KEY].Size();
-         capabilityIndx++) {
-        const rapidjson::Value& capabilityJson = publishedMsgJson[CAPABILITIES_KEY][capabilityIndx];
-        std::unordered_map<std::string, std::string> capabilityMap;
-
-        std::string capabilityType = (capabilityJson.FindMember(CAPABILITY_INTERFACE_TYPE_KEY))->value.GetString();
-        capabilityMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, capabilityType});
-
-        std::string capabilityName = (capabilityJson.FindMember(CAPABILITY_INTERFACE_NAME_KEY))->value.GetString();
-        capabilityMap.insert({CAPABILITY_INTERFACE_NAME_KEY, capabilityName});
-
-        std::string capabilityVersion =
-            (capabilityJson.FindMember(CAPABILITY_INTERFACE_VERSION_KEY))->value.GetString();
-        capabilityMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, capabilityVersion});
-
-        if (capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
-            const rapidjson::Value& capabilityConfigsJson = capabilityJson[CAPABILITY_INTERFACE_CONFIGURATIONS_KEY];
-            rapidjson::StringBuffer buffer;
-            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-            if (capabilityConfigsJson.Accept(writer)) {
-                const char* bufferData = buffer.GetString();
-                if (bufferData) {
-                    capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, std::string(bufferData)});
-                }
-            }
-        }
-
-        std::string capabilityKey = getCapabilityKey(capabilityMap);
-        publishedConfigs.insert({capabilityKey, std::make_shared<CapabilityConfiguration>(capabilityMap)});
-    }
-
-    return publishedConfigs;
-}
-
-/// Test publishing no capabilities
-TEST_F(CapabilitiesDelegateTest, test_noCapability) {
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(),
-        CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR);
-    ASSERT_TRUE(m_httpPut->getRequestData().empty());
-    ASSERT_FALSE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-}
-
-/// Test publishing capabilities with no errors
-TEST_F(CapabilitiesDelegateTest, test_withCapabilitiesHappyCase) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProviderOne = std::make_shared<TestCapabilityProvider>();
-    capabilityProviderOne->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
-    capabilityProviderOne->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_THREE, INTERFACE_VERSION);
-
-    std::shared_ptr<TestCapabilityProvider> capabilityProviderTwo = std::make_shared<TestCapabilityProvider>();
-    capabilityProviderTwo->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_TWO, INTERFACE_VERSION, INTERFACE_CONFIG);
-
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProviderOne));
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProviderTwo));
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_TRUE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-
-    /// Check URL
-    ASSERT_EQ(m_httpPut->getRequestUrl(), getCapabilitiesApiUrl(SELF_DEVICE));
-
-    /// Check the body of the HTTP request
-    const std::string publishedMsg = m_httpPut->getRequestData();
-    std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> publishedConfigs =
-        getPublishedConfigs(publishedMsg);
-    std::string publishedEnvelopeVersion = getPublishedEnvelopeVersion(publishedMsg);
-
-    /// Check envelope version
-    ASSERT_EQ(publishedEnvelopeVersion, ENVELOPE_VERSION_VALUE);
-
-    /// Check capabilities
-    /// Total of 3 capabilities = 2 capabilties from capabilityProviderOne and 1 from capabilityProviderTwo
-    size_t numOfCapabilties = 3;
-    ASSERT_EQ(publishedConfigs.size(), numOfCapabilties);
-
-    /// Check if all capabilities in the publish message are what we sent out
-    /// First capability
-    std::string capabilityKey = getCapabilityKey(INTERFACE_TYPE, INTERFACE_NAME_ONE);
-    auto capabilityIterator = publishedConfigs.find(capabilityKey);
-    ASSERT_NE(capabilityIterator, publishedConfigs.end());
-    std::unordered_map<std::string, std::string> capabilityConfigMap =
-        (capabilityIterator->second)->capabilityConfiguration;
-    auto capabilityConfigIterator = capabilityConfigMap.find(CAPABILITY_INTERFACE_VERSION_KEY);
-    ASSERT_NE(capabilityConfigIterator, capabilityConfigMap.end());
-    ASSERT_EQ(capabilityConfigIterator->second, INTERFACE_VERSION);
-
-    /// Second capability
-    capabilityKey = getCapabilityKey(INTERFACE_TYPE, INTERFACE_NAME_TWO);
-    capabilityIterator = publishedConfigs.find(capabilityKey);
-    ASSERT_NE(capabilityIterator, publishedConfigs.end());
-    capabilityConfigMap = (capabilityIterator->second)->capabilityConfiguration;
-    capabilityConfigIterator = capabilityConfigMap.find(CAPABILITY_INTERFACE_VERSION_KEY);
-    ASSERT_NE(capabilityConfigIterator, capabilityConfigMap.end());
-    ASSERT_EQ(capabilityConfigIterator->second, INTERFACE_VERSION);
-    capabilityConfigIterator = capabilityConfigMap.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
-    ASSERT_NE(capabilityConfigIterator, capabilityConfigMap.end());
-    ASSERT_EQ(capabilityConfigIterator->second, INTERFACE_CONFIG);
-
-    /// Third capability
-    capabilityKey = getCapabilityKey(INTERFACE_TYPE, INTERFACE_NAME_THREE);
-    capabilityIterator = publishedConfigs.find(capabilityKey);
-    ASSERT_NE(capabilityIterator, publishedConfigs.end());
-    capabilityConfigMap = (capabilityIterator->second)->capabilityConfiguration;
-    capabilityConfigIterator = capabilityConfigMap.find(CAPABILITY_INTERFACE_VERSION_KEY);
-    ASSERT_NE(capabilityConfigIterator, capabilityConfigMap.end());
-    ASSERT_EQ(capabilityConfigIterator->second, INTERFACE_VERSION);
-
-    /// Check the HTTP headers
-    std::vector<std::string> headers = m_httpPut->getRequestHeaders();
-    std::unordered_set<std::string> headersSet(headers.begin(), headers.end());
-    std::string headerToCheck = CONTENT_TYPE_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + CONTENT_TYPE_HEADER_VALUE;
-    ASSERT_NE(headersSet.find(headerToCheck), headersSet.end());
-    headerToCheck = CONTENT_LENGTH_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + std::to_string(publishedMsg.size());
-    ASSERT_NE(headersSet.find(headerToCheck), headersSet.end());
-    headerToCheck = AUTHORIZATION_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + AUTH_TOKEN;
-    ASSERT_NE(headersSet.find(headerToCheck), headersSet.end());
-}
-
-/// Test publishing capabilities that returns a fatal error
-TEST_F(CapabilitiesDelegateTest, test_publishFatalError) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
-
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-    m_httpPut->setResponseCode(HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST);  /// Fatal error
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(),
-        CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-    ASSERT_FALSE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-}
-
-/// Test publishing capabilities that returns a retriable error
-TEST_F(CapabilitiesDelegateTest, test_publishRetriableError) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
-
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-    m_httpPut->setResponseCode(HTTPResponseCode::SERVER_ERROR_INTERNAL);  /// Retriable error
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(),
-        CapabilitiesDelegate::CapabilitiesPublishReturnCode::RETRIABLE_ERROR);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-    ASSERT_FALSE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-}
-
-/// Test republishing capabilities
-TEST_F(CapabilitiesDelegateTest, test_republish) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
-    capabilityProvider->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION, INTERFACE_CONFIG);
-
-    /// Publish succeeds the first time
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-    ASSERT_TRUE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-
-    /// Republish with same data will not send again
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_TRUE(m_httpPut->getRequestData().empty());
-
-    const std::string dbKeysPrefix = DB_KEY_ENDPOINT + CAPABILITIES_API_ENDPOINT + DB_KEY_SEPARATOR;
-    /// Change client id to republish
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    std::string dbKey = dbKeysPrefix + DB_KEY_CLIENT_ID;
-    m_miscStorage->update(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKey, CLIENT_ID_TWO);
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-
-    /// Change product id to republish
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    dbKey = dbKeysPrefix + DB_KEY_PRODUCT_ID;
-    m_miscStorage->update(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKey, PRODUCT_ID_TWO);
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-
-    /// Change DSN to republish
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    dbKey = dbKeysPrefix + DB_KEY_DSN;
-    m_miscStorage->update(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKey, DSN_TWO);
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-
-    /// Change envelope version to republish
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    dbKey = dbKeysPrefix + DB_KEY_ENVELOPE_VERSION;
-    m_miscStorage->update(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKey, ENVELOPE_VERSION_VALUE_TWO);
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-
-    /// Change capabilities to republish
-    m_httpPut->reset();
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    std::shared_ptr<TestCapabilityProvider> capabilityProviderTwo = std::make_shared<TestCapabilityProvider>();
-    capabilityProviderTwo->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_TWO, INTERFACE_VERSION, INTERFACE_CONFIG);
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProviderTwo));
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-}
-
-/// Tests with registering capabilities
-TEST_F(CapabilitiesDelegateTest, test_registerTests) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
-    std::unordered_map<std::string, std::string> capabilityConfigurationMap;
-
-    /// nullptr register
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(nullptr));
-
-    /// No capability in config
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Empty interface type
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration("", INTERFACE_NAME_ONE, INTERFACE_VERSION);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Empty interface name
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, "", INTERFACE_VERSION);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Empty interface version
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, "");
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Bad interface config
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION, INTERFACE_CONFIG_BAD);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Null interface type
-    capabilityConfigurationMap.clear();
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_NAME_KEY, INTERFACE_NAME_ONE});
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, INTERFACE_VERSION});
-    auto capabilityConfiguration = std::make_shared<CapabilityConfiguration>(capabilityConfigurationMap);
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(capabilityConfiguration);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Null interface name
-    capabilityConfigurationMap.clear();
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, INTERFACE_TYPE});
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, INTERFACE_VERSION});
-    capabilityConfiguration = std::make_shared<CapabilityConfiguration>(capabilityConfigurationMap);
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(capabilityConfiguration);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Null interface version
-    capabilityConfigurationMap.clear();
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, INTERFACE_TYPE});
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_NAME_KEY, INTERFACE_NAME_ONE});
-    capabilityConfiguration = std::make_shared<CapabilityConfiguration>(capabilityConfigurationMap);
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(capabilityConfiguration);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Some random entry in otherwise ok map
-    capabilityConfigurationMap.clear();
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, INTERFACE_TYPE});
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_NAME_KEY, INTERFACE_NAME_ONE});
-    capabilityConfigurationMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, INTERFACE_VERSION});
-    capabilityConfigurationMap.insert({"randomKey", "randomValue"});
-    capabilityConfiguration = std::make_shared<CapabilityConfiguration>(capabilityConfigurationMap);
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(capabilityConfiguration);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Successful entries
-    capabilityProvider->clearCapabilityConfigurations();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
-    capabilityProvider->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_TWO, INTERFACE_VERSION, INTERFACE_CONFIG);
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-
-    /// Can't register same capability again
-    std::shared_ptr<TestCapabilityProvider> capabilityProviderTwo = std::make_shared<TestCapabilityProvider>();
-    capabilityProvider->addCapabilityConfiguration(INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION);
-    ASSERT_FALSE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-}
-
-/// Test after clearData() is called, that the databse is deleted.
+/**
+ * Tests if the clearData method triggers a database cleanup.
+ */
 TEST_F(CapabilitiesDelegateTest, test_clearData) {
-    std::shared_ptr<TestCapabilityProvider> capabilityProvider = std::make_shared<TestCapabilityProvider>();
-    capabilityProvider->addCapabilityConfiguration(
-        INTERFACE_TYPE, INTERFACE_NAME_ONE, INTERFACE_VERSION, INTERFACE_CONFIG);
-
-    /// Publish succeeds the first time
-    ASSERT_TRUE(m_capabilitiesDelegate->registerCapability(capabilityProvider));
-    m_httpPut->setResponseCode(HTTPResponseCode::SUCCESS_NO_CONTENT);  /// Success
-    ASSERT_EQ(
-        m_capabilitiesDelegate->publishCapabilities(), CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS);
-    ASSERT_FALSE(m_httpPut->getRequestData().empty());
-    ASSERT_TRUE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
-
-    // Now test that db is deleted after clearData()
+    EXPECT_CALL(*m_mockCapabilitiesStorage, clearDatabase()).WillOnce(Return(true));
     m_capabilitiesDelegate->clearData();
-    ASSERT_FALSE(m_miscStorage->dataExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE));
+}
+
+/**
+ * Tests if the addDiscoveryObserver method gets triggered when the addDiscoveryEventSender method is called.
+ * Test if the removeDisoveryObserver method gets triggered when the shutdown method is called.
+ */
+TEST_F(CapabilitiesDelegateTest, test_shutdownTriggeresRemoveDiscoveryObserver) {
+    auto discoveryEventSender = std::make_shared<StrictMock<MockDiscoveryEventSender>>();
+    EXPECT_CALL(*discoveryEventSender, addDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    m_capabilitiesDelegate->addDiscoveryEventSender(discoveryEventSender);
+
+    EXPECT_CALL(*discoveryEventSender, removeDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    m_capabilitiesDelegate->shutdown();
+}
+
+/**
+ * Tests the addCapabilitiesObserver() method.
+ */
+TEST_F(CapabilitiesDelegateTest, test_addCapabilitiesObserver) {
+    /// Adding null observer doesn't fail.
+    m_capabilitiesDelegate->addCapabilitiesObserver(nullptr);
+
+    /// Add a new observer and it receives notifications of the current capabilities state.
+    auto mockObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
+
+    EXPECT_CALL(*mockObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            }));
+    m_capabilitiesDelegate->addCapabilitiesObserver(mockObserver);
+
+    /// Add existing observer and it does not get any notifications (strict mock would catch any extra notifications)
+    m_capabilitiesDelegate->addCapabilitiesObserver(mockObserver);
+}
+
+/**
+ * Tests for onDiscoveryCompleted() method.
+ */
+TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompleted) {
+    std::unordered_map<std::string, std::string> addOrUpdateReportEndpoints = {{"add_1", "1"}, {"update_1", "2"}};
+    std::unordered_map<std::string, std::string> deleteReportEndpoints = {{"delete_1", "1"}};
+
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase(deleteReportEndpoints)).WillOnce(Return(true));
+
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::SUCCESS);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::SUCCESS);
+            }));
+
+    /// Check if store and erase is triggered and if observer gets notified.
+    m_capabilitiesDelegate->onDiscoveryCompleted(addOrUpdateReportEndpoints, deleteReportEndpoints);
+
+    /// Check removing observer does not send notifications to the observer.
+    m_capabilitiesDelegate->removeCapabilitiesObserver(m_mockCapabilitiesObserver);
+
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase(deleteReportEndpoints)).WillOnce(Return(true));
+
+    /// Only store and erase is triggered, observer does not get notified (should fail as we use strict mock for
+    /// observer).
+    m_capabilitiesDelegate->onDiscoveryCompleted(addOrUpdateReportEndpoints, deleteReportEndpoints);
+}
+
+/**
+ * Check onDiscoveryCompleted() but storage to device fails.
+ */
+TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompletedButStorageFails) {
+    std::unordered_map<std::string, std::string> addOrUpdateReportEndpoints = {{"add_1", "1"}, {"update_1", "2"}};
+    std::unordered_map<std::string, std::string> deleteReportEndpoints = {{"delete_1", "1"}};
+
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(false));
+
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
+            }));
+
+    /// Check if store and erase is triggered and if observer gets notified.
+    m_capabilitiesDelegate->onDiscoveryCompleted(addOrUpdateReportEndpoints, deleteReportEndpoints);
+}
+
+/**
+ * Check notifications when onDiscoveryFailure() method is called.
+ */
+TEST_F(CapabilitiesDelegateTest, test_onDicoveryFailure) {
+    /// validate retriable error response
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::RETRIABLE_ERROR);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR);
+            }));
+
+    m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
+
+    /// validate invalid auth error response
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::FORBIDDEN);
+            }));
+
+    m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::INVALID_AUTH);
+
+    /// validate bad request error response
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::BAD_REQUEST);
+            }));
+
+    m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::BAD_REQUEST);
+
+    /// other responses
+    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _))
+        .WillOnce(
+            Invoke([](CapabilitiesObserverInterface::State newState, CapabilitiesObserverInterface::Error newError) {
+                EXPECT_EQ(newState, CapabilitiesObserverInterface::State::RETRIABLE_ERROR);
+                EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
+            }));
+
+    m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::THROTTLED);
+}
+
+/**
+ * Tests if the registerEndpoint returns true for new endpoints, and false for invalid input or existing endpoint.
+ */
+TEST_F(CapabilitiesDelegateTest, test_registerEndpoint) {
+    /// Invalid AVSDiscoveryEndpointAttributes.
+
+    auto attributes = createEndpointAttributes();
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    /// Empty Capabilities.
+    ASSERT_FALSE(m_capabilitiesDelegate->registerEndpoint(attributes, std::vector<CapabilityConfiguration>()));
+
+    /// Invalid CapabilityConfiguration.
+    capabilityConfig.version = "";
+    ASSERT_FALSE(m_capabilitiesDelegate->registerEndpoint(attributes, {capabilityConfig}));
+
+    /// Registering with same endpointAttributes fails.
+    ASSERT_TRUE(m_capabilitiesDelegate->registerEndpoint(attributes, {createCapabilityConfiguration()}));
+    ASSERT_FALSE(m_capabilitiesDelegate->registerEndpoint(attributes, {createCapabilityConfiguration()}));
+
+    /// EndpointAttributes does not have endpointID which is required.
+    attributes.endpointId = "";
+    ASSERT_FALSE(m_capabilitiesDelegate->registerEndpoint(attributes, {capabilityConfig}));
+}
+
+/***
+ * Tests if the createPostConnectOperation() creates the @c PostConnectCapabilitiesPublisher when registered endpoint
+ * configurations are different from the ones in storage.
+ */
+TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithDifferentEndpointConfigs) {
+    auto endpointAttributes = createEndpointAttributes();
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    std::string endpointConfig = "TEST_CONFIG";
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_))
+        .Times(1)
+        .WillOnce(
+            Invoke([endpointAttributes, endpointConfig](std::unordered_map<std::string, std::string>* storedEndpoints) {
+                storedEndpoints->insert({endpointAttributes.endpointId, endpointConfig});
+                return true;
+            }));
+
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    instance->registerEndpoint(endpointAttributes, {capabilityConfig});
+
+    /// Endpoint config is different from the endpoint config created with the test endpoint attributes so a
+    /// post connect operation is created.
+    auto publisher = instance->createPostConnectOperation();
+    instance->shutdown();
+
+    ASSERT_NE(publisher, nullptr);
+}
+
+/**
+ * Tests if the createPostConnectOperation() does not create a new @c PostConnectCapabilitiesPublisher when registered
+ * endpoint configurations are same as the ones in storage.
+ */
+TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithSameEndpointConfigs) {
+    auto endpointAttributes = createEndpointAttributes();
+    auto capabilityConfig = createCapabilityConfiguration();
+    std::vector<CapabilityConfiguration> capabilityConfigs = {capabilityConfig};
+
+    std::string endpointConfig = utils::getEndpointConfigJson(endpointAttributes, capabilityConfigs);
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_))
+        .Times(1)
+        .WillOnce(
+            Invoke([endpointAttributes, endpointConfig](std::unordered_map<std::string, std::string>* storedEndpoints) {
+                storedEndpoints->insert({endpointAttributes.endpointId, endpointConfig});
+                return true;
+            }));
+
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    instance->registerEndpoint(endpointAttributes, capabilityConfigs);
+
+    /// Endpoint config is same as the endpoint config created with the test endpoint attributes so a
+    /// post connect operation is not created.
+    auto publisher = instance->createPostConnectOperation();
+
+    ASSERT_EQ(publisher, nullptr);
 }
 
 }  // namespace test
 }  // namespace capabilitiesDelegate
 }  // namespace alexaClientSDK
-
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

@@ -48,12 +48,13 @@ std::shared_ptr<UrlContentToAttachmentConverter> UrlContentToAttachmentConverter
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
-    std::chrono::milliseconds startTime) {
+    std::chrono::milliseconds startTime,
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver) {
     if (!contentFetcherFactory) {
         return nullptr;
     }
     auto thisSharedPointer = std::shared_ptr<UrlContentToAttachmentConverter>(
-        new UrlContentToAttachmentConverter(contentFetcherFactory, url, observer, startTime));
+        new UrlContentToAttachmentConverter(contentFetcherFactory, url, observer, startTime, writeCompleteObserver));
     auto retVal = thisSharedPointer->m_playlistParser->parsePlaylist(url, thisSharedPointer);
     if (0 == retVal) {
         thisSharedPointer->shutdown();
@@ -70,11 +71,13 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
-    std::chrono::milliseconds startTime) :
+    std::chrono::milliseconds startTime,
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver) :
         RequiresShutdown{"UrlContentToAttachmentConverter"},
         m_desiredStreamPoint{startTime},
         m_contentFetcherFactory{contentFetcherFactory},
         m_observer{observer},
+        m_writeCompleteObserver{writeCompleteObserver},
         m_shuttingDown{false},
         m_runningTotal{0},
         m_startedStreaming{false},
@@ -165,6 +168,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                 }
                 ACSDK_DEBUG9(LX("closingWriter"));
                 closeStreamWriter();
+                notifyWriteComplete();
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
@@ -194,6 +198,15 @@ void UrlContentToAttachmentConverter::notifyError() {
     lock.unlock();
     if (observer) {
         observer->onError();
+    }
+}
+
+void UrlContentToAttachmentConverter::notifyWriteComplete() {
+    std::unique_lock<std::mutex> lock{m_mutex};
+    auto observer = m_writeCompleteObserver;
+    lock.unlock();
+    if (observer) {
+        observer->onWriteComplete();
     }
 }
 
@@ -322,7 +335,7 @@ bool UrlContentToAttachmentConverter::download(
 
         localContentFetcher = m_contentFetcherFactory->create(url);
 
-        localContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+        localContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY, nullptr, headers);
 
         HTTPContentFetcherInterface::Header header = localContentFetcher->getHeader(&m_shuttingDown);
 
@@ -349,6 +362,7 @@ void UrlContentToAttachmentConverter::doShutdown() {
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         m_observer.reset();
+        m_writeCompleteObserver.reset();
     }
     m_shuttingDown = true;
     m_contentDecrypter->shutdown();

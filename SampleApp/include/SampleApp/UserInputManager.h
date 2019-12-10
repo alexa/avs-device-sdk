@@ -82,6 +82,15 @@ private:
      */
     bool readConsoleInput(char* input);
 
+#ifdef ENABLE_COMMS
+    /**
+     * Send dtmf tones if input from console are valid dtmf tones.
+     * @param dtmfTones dtmf tones from user input.
+     * @return @c true if dtmf tones are sent; otherwise, return @c false.
+     */
+    bool sendDtmf(const std::string& dtmfTones);
+#endif
+
     /**
      * Implement speaker control options.
      */
@@ -112,6 +121,11 @@ private:
      * Settings menu.
      */
     void settingsMenu();
+
+    /**
+     * Endpoint Controller menu.
+     */
+    void endpointControllerMenu();
 
     /**
      * Prompt the user to confirm before initiating re-authorization of the device.

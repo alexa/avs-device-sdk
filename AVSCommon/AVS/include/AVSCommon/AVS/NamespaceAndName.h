@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,19 +18,23 @@
 
 #include <string>
 
+#include "AVSCommon/AVS/CapabilityTag.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
 /**
  * Conjoined @c namespace and @c name values (intended for identifying sub-types of @c AVSDirective).
+ *
+ * @deprecated This structure is being deprecated. From now on, use @c CapabilityTag instead.
  */
-class NamespaceAndName {
+class NamespaceAndName : public CapabilityTag {
 public:
     /**
      * Constructor to initialize with default values.
      */
-    NamespaceAndName() = default;
+    NamespaceAndName();
 
     /**
      * Constructor to initialize wih specific values.
@@ -40,21 +44,13 @@ public:
      */
     NamespaceAndName(const std::string& nameSpaceIn, const std::string& nameIn);
 
-    /// The @c namespace value of this instance.
-    const std::string nameSpace;
-
-    /// The @c name value of this instance.
-    const std::string name;
+    /**
+     * Constructor used to covert @c CapabilityMessageIdentifier into a @c NamespaceAndName object.
+     *
+     * @param identifier The @c CapabilityMessageIdentifier to copy.
+     */
+    NamespaceAndName(const CapabilityTag& identifier);
 };
-
-/**
- * Operator == to allow @c namespaceAndName ot be used as a key in @cstd::unordered_map.
- *
- * @param rhs The left hand side of the == operation.
- * @param rhs The right hand side of the == operation.
- * @return Whether or not this instance and @c rhs are equivalent.
- */
-bool operator==(const NamespaceAndName& lhs, const NamespaceAndName& rhs);
 
 }  // namespace avs
 }  // namespace avsCommon

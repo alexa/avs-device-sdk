@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,6 +75,10 @@ bool JsonGenerator::addMember(const std::string& key, const char* value) {
     return value && checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.String(value);
 }
 
+bool JsonGenerator::addMember(const std::string& key, double value) {
+    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Double(value);
+}
+
 bool JsonGenerator::addRawJsonMember(const std::string& key, const std::string& json, bool validate) {
     // Validate the provided json.
     if (validate) {
@@ -86,6 +90,21 @@ bool JsonGenerator::addRawJsonMember(const std::string& key, const std::string& 
     }
     return checkWriter() && m_writer.Key(key.c_str(), key.length()) &&
            m_writer.RawValue(json.c_str(), json.length(), rapidjson::kStringType);
+}
+
+bool JsonGenerator::startArray(const std::string& key) {
+    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.StartArray();
+}
+
+bool JsonGenerator::finishArray() {
+    return checkWriter() && m_writer.EndArray();
+}
+
+bool JsonGenerator::startArrayElement() {
+    return checkWriter() && m_writer.StartObject();
+}
+bool JsonGenerator::finishArrayElement() {
+    return finishObject();
 }
 
 bool JsonGenerator::finalize() {

@@ -123,9 +123,10 @@ SLDataFormat_PCM convertFormat(const PlaybackConfiguration& playbackConfiguratio
 
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-    const avsCommon::utils::AudioFormat* format) {
+    const avsCommon::utils::AudioFormat* format,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
     auto input = FFmpegAttachmentInputController::create(attachmentReader, format);
-    auto newId = configureNewRequest(std::move(input));
+    auto newId = configureNewRequest(std::move(input), config);
     if (ERROR == newId) {
         ACSDK_ERROR(
             LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "attachment").d("format", format));
@@ -136,11 +137,12 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
     bool repeat) {
     std::shared_ptr<playlistParser::IterativePlaylistParser> playlistParser =
         playlistParser::IterativePlaylistParser::create(m_contentFetcherFactory);
     auto input = FFmpegUrlInputController::create(playlistParser, url, offset, repeat);
-    auto newId = configureNewRequest(std::move(input), playlistParser, offset);
+    auto newId = configureNewRequest(std::move(input), config, playlistParser, offset);
     if (ERROR == newId) {
         ACSDK_ERROR(LX("setSourceFailed")
                         .d("name", RequiresShutdown::name())
@@ -152,9 +154,12 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     return newId;
 }
 
-AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(std::shared_ptr<std::istream> stream, bool repeat) {
+AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
+    std::shared_ptr<std::istream> stream,
+    bool repeat,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
     auto input = FFmpegStreamInputController::create(stream, repeat);
-    auto newId = configureNewRequest(std::move(input));
+    auto newId = configureNewRequest(std::move(input), config);
     if (ERROR == newId) {
         ACSDK_ERROR(LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "istream").d("repeat", repeat));
     }
@@ -403,6 +408,7 @@ AndroidSLESMediaPlayer::~AndroidSLESMediaPlayer() {
 
 MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
     std::unique_ptr<FFmpegInputControllerInterface> inputController,
+    const SourceConfig& config,
     std::shared_ptr<avsCommon::utils::playlistParser::IterativePlaylistParserInterface> playlistParser,
     std::chrono::milliseconds offset) {
     std::lock_guard<std::mutex> requestLock{m_requestMutex};
@@ -433,7 +439,7 @@ MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
 
     m_mediaQueue.reset();  // Delete old queue before configuring new one.
 
-    auto decoder = FFmpegDecoder::create(std::move(inputController), m_config);
+    auto decoder = FFmpegDecoder::create(std::move(inputController), m_config, config);
     m_mediaQueue = AndroidSLESMediaQueue::create(m_playerObject, std::move(decoder), callback, m_config);
     if (!m_mediaQueue) {
         ACSDK_ERROR(LX("configureNewRequestFailed")
@@ -610,6 +616,10 @@ void AndroidSLESMediaPlayer::onQueueEvent(
             }
             case AndroidSLESMediaQueue::QueueEvent::FINISHED_READING: {
                 m_almostDone = true;
+                auto observers = m_observers;
+                for (const auto& observer : observers) {
+                    observer->onBufferingComplete(m_sourceId);
+                }
                 break;
             }
         }

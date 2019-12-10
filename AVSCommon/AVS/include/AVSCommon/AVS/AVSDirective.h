@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -84,6 +84,7 @@ public:
      * @param payload The payload of the Directive.
      * @param attachmentManager The attachment manager.
      * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
+     * @param endpoint Optional parameter used to identify the target endpoint for the given directive.
      * @return The created AVSDirective object or @c nullptr if creation failed.
      */
     static std::unique_ptr<AVSDirective> create(
@@ -91,7 +92,8 @@ public:
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-        const std::string& attachmentContextId);
+        const std::string& attachmentContextId,
+        const utils::Optional<AVSMessageEndpoint>& endpoint = utils::Optional<AVSMessageEndpoint>());
 
     /**
      * Returns a reader for the attachment associated with this directive.
@@ -118,13 +120,15 @@ private:
      * @param payload The payload of an AVS message.
      * @param attachmentManager The attachment manager object.
      * @param attachmentContextId The contextId required to get attachments from the AttachmentManager.
+     * @param endpoint Optional parameter used to identify the target endpoint for the given directive.
      */
     AVSDirective(
         const std::string& unparsedDirective,
         std::shared_ptr<AVSMessageHeader> avsMessageHeader,
         const std::string& payload,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
-        const std::string& attachmentContextId);
+        const std::string& attachmentContextId,
+        const utils::Optional<AVSMessageEndpoint>& endpoint);
 
     /// The unparsed directive JSON string from AVS.
     const std::string m_unparsedDirective;

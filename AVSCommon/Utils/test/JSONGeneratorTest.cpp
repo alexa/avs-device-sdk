@@ -16,6 +16,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <cmath>
 
 #include <gtest/gtest.h>
 
@@ -91,6 +92,19 @@ TEST_F(JsonGeneratorTest, test_jsonBool) {
     EXPECT_TRUE(m_generator.addMember("member", value));
 
     auto expected = R"({"member":true})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator double creation.
+TEST_F(JsonGeneratorTest, test_jsonDouble) {
+    double value = 1234.456;
+    EXPECT_TRUE(m_generator.addMember("member", value));
+
+    std::stringstream expectedString;
+    expectedString.precision(3);
+    expectedString << std::fixed << value;
+
+    auto expected = R"({"member":)" + expectedString.str() + R"(})";
     EXPECT_EQ(m_generator.toString(), expected);
 }
 

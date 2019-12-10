@@ -101,9 +101,9 @@ public:
         const avsCommon::utils::http2::HTTP2RequestConfig& cfg) = 0;
 
     /**
-     * Get AVS endpoint to send request to.
+     * Get AVS gateway to send request to.
      */
-    virtual std::string getEndpoint() = 0;
+    virtual std::string getAVSGateway() = 0;
 };
 
 }  // namespace acl

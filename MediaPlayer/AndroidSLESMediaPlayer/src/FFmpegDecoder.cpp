@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,10 +16,15 @@
 #include <atomic>
 #include <fstream>
 #include <thread>
+#include <bitset>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
+#include <libavfilter/avfilter.h>
+#include <libavfilter/buffersink.h>
+#include <libavfilter/buffersrc.h>
 #include <libavformat/avformat.h>
+#include <libavutil/opt.h>
 #include <libswresample/swresample.h>
 }
 
@@ -94,7 +99,8 @@ static LayoutMask convertLayout(PlaybackConfiguration::ChannelLayout layout) {
 
 std::unique_ptr<FFmpegDecoder> FFmpegDecoder::create(
     std::unique_ptr<FFmpegInputControllerInterface> inputController,
-    const PlaybackConfiguration& outputConfig) {
+    const PlaybackConfiguration& outputConfig,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
     if (!inputController) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullInputController"));
         return nullptr;
@@ -104,20 +110,23 @@ std::unique_ptr<FFmpegDecoder> FFmpegDecoder::create(
     auto layout = convertLayout(outputConfig.channelLayout());
     int sampleRate = outputConfig.sampleRate();
 
-    return std::unique_ptr<FFmpegDecoder>(new FFmpegDecoder(std::move(inputController), format, layout, sampleRate));
+    return std::unique_ptr<FFmpegDecoder>(
+        new FFmpegDecoder(std::move(inputController), format, layout, sampleRate, config));
 }
 
 FFmpegDecoder::FFmpegDecoder(
     std::unique_ptr<FFmpegInputControllerInterface> input,
     AVSampleFormat format,
     LayoutMask layout,
-    int sampleRate) :
+    int sampleRate,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) :
         m_state{DecodingState::INITIALIZING},
         m_inputController{std::move(input)},
         m_outputFormat{format},
         m_outputLayout{layout},
         m_outputRate{sampleRate},
-        m_unreadData{format, layout, sampleRate} {
+        m_unreadData{format, layout, sampleRate},
+        m_sourceConfig{config} {
 }
 
 std::pair<FFmpegDecoder::Status, size_t> FFmpegDecoder::read(Byte* buffer, size_t size) {
@@ -277,7 +286,130 @@ void FFmpegDecoder::initialize() {
         return;
     }
 
+    if (!initializeFilters()) {
+        return;
+    }
+
     setState(DecodingState::DECODING);
+}
+
+bool FFmpegDecoder::initializeFilters() {
+    if (m_sourceConfig.fadeInConfig.enabled) {
+        m_filterGraph = std::shared_ptr<AVFilterGraph>(avfilter_graph_alloc(), AVFilterGraphDeleter());
+        if (!m_filterGraph) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate filter graph"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // First allocated and initialize the abuffer filter which is used to buffer input to the graph.
+        const AVFilter* abufferFilter = avfilter_get_by_name("abuffer");
+        if (!abufferFilter) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to find abuffer filter"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        m_filterInput = std::shared_ptr<AVFilterContext>(
+            avfilter_graph_alloc_filter(m_filterGraph.get(), abufferFilter, "abufferFilter"), AVFilterContextDeleter());
+        if (!m_filterInput) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate abuffer context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        std::bitset<64> channelBits(m_codecContext->channel_layout);
+        int64_t channelCount = channelBits.count();
+        av_opt_set_int(m_filterInput.get(), "channels", channelCount, AV_OPT_SEARCH_CHILDREN);
+        char layoutBuffer[64];
+        av_get_channel_layout_string(layoutBuffer, sizeof(layoutBuffer), channelCount, m_codecContext->channel_layout);
+        av_opt_set(m_filterInput.get(), "channel_layout", layoutBuffer, AV_OPT_SEARCH_CHILDREN);
+        av_opt_set_sample_fmt(m_filterInput.get(), "sample_fmt", m_codecContext->sample_fmt, AV_OPT_SEARCH_CHILDREN);
+        av_opt_set_int(m_filterInput.get(), "sample_rate", m_codecContext->sample_rate, AV_OPT_SEARCH_CHILDREN);
+
+        if (avfilter_init_str(m_filterInput.get(), nullptr) < 0) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to initialize abuffer context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // Next, allocate and initialize the afade filter which performs the fade.
+        const AVFilter* volumeFilter = avfilter_get_by_name("volume");
+        if (!volumeFilter) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to find afade filter"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        AVFilterContext* volumeContext = avfilter_graph_alloc_filter(m_filterGraph.get(), volumeFilter, "volumeFilter");
+        if (!volumeContext) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate afade filter context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // We have to adjust the time argument ('t') to the fade linear interpolation.
+        // This filter may operate on an audio clip that has less duration than the duration of the
+        // alarm volume ramp. In that case, we need to know how much audio we have already faded,
+        // so we adjust 't' by m_decodedSampleTime
+
+        // Create the AVExpr in the volume filter parameters to configure the volume ramp.
+        char expressionBuffer[128];
+        std::snprintf(
+            expressionBuffer,
+            sizeof(expressionBuffer),
+            "volume='min(1,((t+%llu)/%llu)+%.2f)':eval=frame",
+            m_decodedSampleTime,
+            m_sourceConfig.fadeInConfig.duration.count(),
+            m_sourceConfig.fadeInConfig.startGain / 100.0);
+
+        if (avfilter_init_str(volumeContext, expressionBuffer) < 0) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to initialize afade filter context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // Next allocate the buffer sink filter
+        const AVFilter* abuffersinkFilter = avfilter_get_by_name("abuffersink");
+        if (!abuffersinkFilter) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to find abuffersink filter"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        m_filterOutput = std::shared_ptr<AVFilterContext>(
+            avfilter_graph_alloc_filter(m_filterGraph.get(), abuffersinkFilter, "abuffersinkFilter"),
+            AVFilterContextDeleter());
+        if (!m_filterOutput.get()) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate abuffersink context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        if (avfilter_init_str(m_filterOutput.get(), nullptr) < 0) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to initialize abuffersink context"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // Connect all filters in the graph.
+        if (avfilter_link(m_filterInput.get(), 0, volumeContext, 0) < 0 ||
+            avfilter_link(volumeContext, 0, m_filterOutput.get(), 0) < 0) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to link filter graph"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+
+        // Configure (initialize) the entire graph.
+        // Now frames can be written into the m_filterInput source and received
+        // from the m_filterOutput.get() sink.
+        if (avfilter_graph_config(m_filterGraph.get(), NULL) < 0) {
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to configure filter graph"));
+            setState(DecodingState::INVALID);
+            return false;
+        }
+    }
+    return true;
 }
 
 size_t FFmpegDecoder::readData(Byte* buffer, size_t size, size_t bytesRead) {
@@ -307,6 +439,25 @@ size_t FFmpegDecoder::readData(Byte* buffer, size_t size, size_t bytesRead) {
 }
 
 void FFmpegDecoder::resample(std::shared_ptr<AVFrame> inputFrame) {
+    // Filter the frame for alarm volume ramp.
+    if (m_sourceConfig.fadeInConfig.enabled) {
+        auto frame = inputFrame.get();
+        auto error = av_buffersrc_add_frame_flags(m_filterInput.get(), frame, AV_BUFFERSRC_FLAG_PUSH);
+        if (!transitionStateUsingStatus(error, DecodingState::INVALID, __func__)) {
+            return;
+        }
+        error = av_buffersink_get_frame(m_filterOutput.get(), frame);
+        if (!transitionStateUsingStatus(error, DecodingState::INVALID, __func__)) {
+            return;
+        }
+    }
+
+    // Increase the measurement of total audio decoded time by the amount of audio present
+    // in the frame.
+    double secondsPerSample = 1.0 / inputFrame->sample_rate;
+    double frameTimeSeconds = secondsPerSample * inputFrame->nb_samples;
+    m_decodedSampleTime += (frameTimeSeconds * 1000);  // convert to milliseconds
+
     int outSamples = av_rescale_rnd(
         swr_get_delay(m_swrContext.get(), m_codecContext->sample_rate) + inputFrame->nb_samples,
         m_outputRate,

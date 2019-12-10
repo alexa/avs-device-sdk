@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -115,8 +115,11 @@ public:
     virtual void onDeregistered() = 0;
 
     /**
-     * Returns the configuration of the directive handler regarding which namespace and name pairs it should handle and
-     * the appropriate policy for each pair.
+     * Returns the configuration of the directive handler.
+     *
+     * The configuration consists of multiple directive routing rules and their respective blocking policy. The
+     * directives will be matched from the most specific rule (with all fields defined) to the least specific rule
+     * (which only matches the directive endpointId).
      *
      * @return The @c avs::DirectiveHandlerConfiguration of the handler.
      */

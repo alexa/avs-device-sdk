@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,16 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTREQUESTERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONTEXTREQUESTERINTERFACE_H_
 
+#include <cstdint>
 #include <string>
 #include <ostream>
+
+#include <AVSCommon/AVS/AVSContext.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+
+#include "AVSCommon/SDKInterfaces/ContextRequestToken.h"
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,7 +42,10 @@ enum class ContextRequestError {
     STATE_PROVIDER_TIMEDOUT,
 
     /// @c getContext request failed due to an error building the context.
-    BUILD_CONTEXT_ERROR
+    BUILD_CONTEXT_ERROR,
+
+    /// @c getContext request failed due to an error while trying to reach out to the endpoint.
+    ENDPOINT_UNREACHABLE
 };
 
 /**
@@ -50,22 +61,55 @@ public:
     /**
      * This is called by the ContextManager once the context is ready and available.
      *
+     * @deprecated This method is being deprecated since it cannot specify the source endpoint.
+     *
      * @note The @c ContextRequester should perform minimum processing and return quickly. Otherwise it will block
      * the processing of updating the of other @c ContextProviders.
      *
      * @param jsonContext Context information.Context provided is of the format {"context"[{...}, {...}]}
      */
-    virtual void onContextAvailable(const std::string& jsonContext) = 0;
+    virtual void onContextAvailable(const std::string& jsonContext);
+
+    /**
+     * This is called by the ContextManager once the context is ready and available.
+     *
+     * @note The @c ContextRequester should perform minimum processing and return quickly. Otherwise it will block
+     * the processing of updating the of other @c ContextProviders.
+     *
+     * @note In future versions, this method will be made pure virtual.
+     *
+     * @param endpointId The ID used to identify the endpoint to which this context belong.
+     * @param endpointContext The state of all capabilities related to the given endpoint.
+     * @param requestToken Token used to identify a specific context request.
+     */
+    virtual void onContextAvailable(
+        const endpoints::EndpointIdentifier& endpointId,
+        const avs::AVSContext& endpointContext,
+        ContextRequestToken requestToken);
 
     /**
      * The contextManager calls this if it is unable to process a @c getContext request successfully.
+     *
+     * @deprecated This method is being deprecated since it cannot specify the optional token.
      *
      * @note The @c ContextRequester should perform minimum processing and return quickly. Otherwise it will block
      * the processing of updating the of other @c ContextProviders.
      *
      * @param error The reason why the getContext request failed.
      */
-    virtual void onContextFailure(const ContextRequestError error) = 0;
+    virtual void onContextFailure(const ContextRequestError error);
+
+    /**
+     * The contextManager calls this if it is unable to process a @c getContext request successfully.
+     *
+     * @note The @c ContextRequester should perform minimum processing and return quickly. Otherwise it will block
+     * the processing of updating the of other @c ContextProviders.
+     * @note In future versions, this method will be made pure virtual.
+     *
+     * @param error The reason why the getContext request failed.
+     * @param requestToken Token used to identify a specific context request.
+     */
+    virtual void onContextFailure(const ContextRequestError error, ContextRequestToken token);
 };
 
 /**
@@ -83,8 +127,32 @@ inline std::ostream& operator<<(std::ostream& stream, const ContextRequestError&
         case ContextRequestError::BUILD_CONTEXT_ERROR:
             stream << "BUILD_CONTEXT_ERROR";
             break;
+        case ContextRequestError::ENDPOINT_UNREACHABLE:
+            stream << "ENDPOINT_UNREACHABLE";
+            break;
     }
     return stream;
+}
+
+inline void ContextRequesterInterface::onContextAvailable(const std::string& jsonContext) {
+    utils::logger::acsdkError(
+        utils::logger::LogEntry("ContextRequesterInterface", __func__).d("reason", "methodDeprecated"));
+}
+
+inline void ContextRequesterInterface::onContextAvailable(
+    const endpoints::EndpointIdentifier& endpointId,
+    const avs::AVSContext& endpointContext,
+    ContextRequestToken requestToken) {
+    onContextAvailable(endpointContext.toJson());
+}
+
+inline void ContextRequesterInterface::onContextFailure(const ContextRequestError error) {
+    utils::logger::acsdkError(
+        utils::logger::LogEntry("ContextRequesterInterface", __func__).d("reason", "methodDeprecated"));
+}
+
+inline void ContextRequesterInterface::onContextFailure(const ContextRequestError error, ContextRequestToken token) {
+    onContextFailure(error);
 }
 
 }  // namespace sdkInterfaces

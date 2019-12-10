@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <string>
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
+#include <Captions/CaptionData.h>
 
 #include "StreamFormat.h"
 
@@ -91,6 +92,9 @@ struct AudioItem {
         /// An opaque token that represents the expected previous stream.
         std::string expectedPreviousToken;
     } stream;
+
+    /// The caption content that goes with the audio.
+    captions::CaptionData captionData;
 };
 
 }  // namespace audioPlayer

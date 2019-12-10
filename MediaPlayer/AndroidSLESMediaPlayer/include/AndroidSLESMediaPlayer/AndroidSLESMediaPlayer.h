@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
 #include <AVSCommon/Utils/PlaylistParser/IterativePlaylistParserInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <EqualizerImplementations/EqualizerBandMapperInterface.h>
@@ -80,9 +81,19 @@ public:
     ///@{
     SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* format) override;
-    SourceId setSource(const std::string& url, std::chrono::milliseconds offset, bool repeat) override;
-    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+    SourceId setSource(
+        const std::string& url,
+        std::chrono::milliseconds offset,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        bool repeat = false) override;
+    SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
     bool pause(SourceId id) override;
@@ -176,6 +187,7 @@ private:
      */
     SourceId configureNewRequest(
         std::unique_ptr<FFmpegInputControllerInterface> inputController,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
         std::shared_ptr<avsCommon::utils::playlistParser::IterativePlaylistParserInterface> playlistParser = nullptr,
         std::chrono::milliseconds offset = std::chrono::milliseconds(0));
 
