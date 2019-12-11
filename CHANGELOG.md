@@ -53,7 +53,6 @@
 - Fixed [data type issue](https://github.com/alexa/avs-device-sdk/issues/1519) that incorrectly used `finalResponseCode` instead of [`FinalResponseCodeId`](https://github.com/alexa/avs-device-sdk/blob/master/AVSCommon/Utils/src/LibcurlUtils/LibCurlHttpContentFetcher.cpp#L370).
 - Fixed [`UrlContentToAttachmentConverter`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html) issue that used the incorrect range parameter.
 - Fixed `FinallyGuard` [linking issue](https://github.com/alexa/avs-device-sdk/issues/1517) that caused problems compiling the SDK on iOS.
-- Fixed a [Bluetooth Capability Agent](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html) bug that prevented devices from initializing.
 - Fixed [issue](https://github.com/alexa/avs-device-sdk/issues/1566) that caused a listening state after speaking the Wake Word "Alexa" twice rapidly.
 
 **Known Issues**
