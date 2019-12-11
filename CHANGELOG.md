@@ -74,7 +74,7 @@
 * A reminder TTS message doesn't play if the sample app restarts and loses a network connection. Instead, the default alarm tone plays twice.
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
-* On some devices, Alexa gets stuck in a permanent listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
+* On some devices, Alexa gets stuck in a listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
 * Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
 * AudioInputProcessor unit tests don't build on Windows when -DCMAKE_BUILD_TYPE=DEBUG.
 
