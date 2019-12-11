@@ -17,7 +17,7 @@ Feature enhancements, updates, and resolved issues from all releases are availab
 ### Get Started
 
 You can set up the SDK on the following platforms:
-* [Ubuntu Linux](https://developer.amazon.com/docs/alexa/avs-device-sdk/wiki/ubuntu.html)
+* [Ubuntu Linux](https://developer.amazon.com/docs/alexa/avs-device-sdk/ubuntu.html)
 * [Raspberry Pi](https://developer.amazon.com/docs/alexa/avs-device-sdk/raspberry-pi.html)
 * [macOS](https://developer.amazon.com/docs/alexa/avs-device-sdk/mac-os.html)
 * [Windows 64-bit](https://developer.amazon.com/docs/alexa/avs-device-sdk/windows-64.html)
