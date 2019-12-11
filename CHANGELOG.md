@@ -112,7 +112,7 @@
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
 * Bluetooth initialization must complete before connecting devices, otherwise devices are ignored.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
-* On some devices, Alexa gets stuck in a permanent listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
+* On some devices, Alexa gets stuck in an listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
 * Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
 
 ### v1.15.0 released 09/25/2019:
