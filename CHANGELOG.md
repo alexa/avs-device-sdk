@@ -4,10 +4,10 @@
 
 **Enhancements**
 
-- Added support for [captions for TTS](https://developer.amazon.com/docs/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.
-- Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
-- Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/docs/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
-- Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa-voice-service/interactionmodel-interface.html).
+- Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.
+- Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
+- Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/alexa/docs/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
+- Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html).
 - Added support for [System 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html).
 - Added support for Alarms 1.4
 - Added support for Alarm Volume Ramp (Ascending Alarms in the Companion App). This feature lets you fade in alarms for a more pleasant experience. You enable Alarm Volume Ramp in the Sample App through the settings menu.
@@ -17,10 +17,10 @@
   - **Helper Classes** - `DataPointStringBuilder`, `DataPointCounterBuilder`, `DataPointDurationBuilder`, `MetricEventBuilder`.
 
 - Added support for the following AVS [endpoint](https://developer.amazon.com/docs/alexa/avs-device-sdk/endpoints.html)  controller capabilities:
-  - [Alexa.ModeController](https://developer.amazon.com/docs/alexa-voice-service/alexa-modecontroller.html)
-  - [Alexa.RangeController](https://developer.amazon.com/docs/alexa-voice-service/alexa-rangecontroller.html)
-  - [Alexa.PowerController](https://developer.amazon.com/docs/alexa-voice-service/alexa-powercontroller.html)
-  - [Alexa.ToggleController](https://developer.amazon.com/docs/alexa-voice-service/alexa-togglecontroller.html)
+  - [Alexa.ModeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html)
+  - [Alexa.RangeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-rangecontroller.html)
+  - [Alexa.PowerController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-powercontroller.html)
+  - [Alexa.ToggleController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html)
 
 - Added `PowerResourceManagerInterface`. This interface allows the SDK to control power resource levels for components such as the `AudioInputProcessor` and `SpeechSynthesizer`.
 - Added `AlexaInterfaceCapabilityAgent`. This Capability Agent handles common directives and endpoint controller capabilities support by [`Alexa.AlexaInterface`](../alexa-voice-service/alexa.html).
@@ -31,21 +31,21 @@
 **New build options**
 
 - CAPTIONS
-  - **ADDED** [`CAPTIONS`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#captions)
-  - **ADDED** [`LIBWEBVTT_LIB_PATH`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#captions)
-  - **ADDED** [`LIBWEBVTT_INCLUDE_DIR`](https://developer.amazon.com/docs//avs-device-sdk/cmake-parameters.html#captions)
+  - **ADDED** [`CAPTIONS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
+  - **ADDED** [`LIBWEBVTT_LIB_PATH`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
+  - **ADDED** [`LIBWEBVTT_INCLUDE_DIR`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
 - METRICS
-  - **ADDED** [`METRICS`](https://developer.amazon.com/docs//avs-device-sdk/cmake-parameters.html#metrics)
+  - **ADDED** [`METRICS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#metrics)
 - ENDPONTS
-  - **ADDED** [`ENABLE_ALL_ENDPOINT_CONTROLLERS`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_POWER_CONTROLLER`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_TOGGLE_CONTROLLER`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_RANGE_CONTROLLER`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_MODE_CONTROLLER`](https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints)
+  - **ADDED** [`ENABLE_ALL_ENDPOINT_CONTROLLERS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  - **ADDED** [`ENABLE_POWER_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  - **ADDED** [`ENABLE_TOGGLE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  - **ADDED** [`ENABLE_RANGE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  - **ADDED** [`ENABLE_MODE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
 
 **New dependencies**
 
-- To use captions, you must install a [new dependency](https://developer.amazon.com/docs/avs-device-sdk/dependencies.html) &ndash; the [libwebvtt parsing library](https://github.com/alexa/webvtt). Webvtt is a C/C++ library for interpreting and authoring conformant WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.
+- To use captions, you must install a [new dependency](https://developer.amazon.com/docs/alexa/avs-device-sdk/dependencies.html) &ndash; the [libwebvtt parsing library](https://github.com/alexa/webvtt). Webvtt is a C/C++ library for interpreting and authoring conformant WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.
 
 **Bug fixes**
 
@@ -54,7 +54,7 @@
 - Fixed [`UrlContentToAttachmentConverter`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html) issue that used the incorrect range parameter.
 - Fixed `FinallyGuard` [linking issue](https://github.com/alexa/avs-device-sdk/issues/1517) that caused problems compiling the SDK on iOS.
 - Fixed a [Bluetooth Capability Agent](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html) bug that prevented devices from initializing.
-- Fixed [issue](https://github.com/alexa/avs-device-sdk/issues/1566) that caused a permanent listening state after speaking the Wake Word "Alexa" twice rapidly.
+- Fixed [issue](https://github.com/alexa/avs-device-sdk/issues/1566) that caused a listening state after speaking the Wake Word "Alexa" twice rapidly.
 
 **Known Issues**
 
