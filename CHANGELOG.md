@@ -58,6 +58,7 @@
 **Known Issues**
 
 * The WebVTT dependency required for `captions` isn't supported for Windows/Android.
+* AudioInputProcessor unit tests don't build on Windows when -DCMAKE_BUILD_TYPE=DEBUG.
 * Music playback history isn't displayed in the Alexa app for certain account and device types.
 * When using Gnu Compiler Collection 8+ (GCC 8+), `-Wclass-memaccess` triggers warnings. You can ignore these, they don't cause the build to fail.
 * Android error `libDefaultClient.so not found` might occur. Resolve this by upgrading to ADB version 1.0.40.
@@ -75,7 +76,7 @@
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
 * On some devices, Alexa gets stuck in a listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
 * Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
-* AudioInputProcessor unit tests don't build on Windows when -DCMAKE_BUILD_TYPE=DEBUG.
+
 
 ### Version 1.16.0 - October 25 2019
 
