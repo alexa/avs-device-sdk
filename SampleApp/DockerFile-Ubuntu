@@ -1,0 +1,100 @@
+## Chris McNamee 13/12/2019
+## this docker file downloads, builds the avs-device-sdk and required dependencies
+## to allow the container to access host microphone use docker run argument "--device /dev/snd:/dev/snd" or similar
+## you can change the docker CMD line below to the virtual micro but you will not be able to use the mic
+##
+## build command: docker build -t alexa-sample-app -f DockerFile-Ubuntu .
+## run command: docker run -i -t --device /dev/snd:/dev/snd alexa-sample-app
+##
+## Notes: requires config.json in the same directory as Dockerfile for docker build command to work, follow Alexa guide to get this file from alexa developer console
+
+FROM ubuntu:16.04
+RUN apt-get update
+RUN apt-get install -y wget \
+                       curl \
+					   git \
+					   gcc \
+					   cmake \
+					   openssl \
+					   clang-format \
+					   libgstreamer1.0-dev \
+					   libgstreamer-plugins-base1.0-dev \
+					   gstreamer1.0-plugins-good \
+					   libgstreamer-plugins-good1.0-dev \
+					   libgstreamer-plugins-bad1.0-dev \
+					   gstreamer1.0-libav \
+					   pulseaudio doxygen \
+					   libsqlite3-dev \
+					   repo \
+					   libasound2-dev 
+					   
+
+RUN apt-get install -y g++ make binutils autoconf automake autotools-dev libtool pkg-config \
+                         zlib1g-dev libcunit1-dev libssl-dev libxml2-dev libev-dev libevent-dev libjansson-dev \
+                         libjemalloc-dev cython python3-dev python-setuptools
+					   
+WORKDIR /root
+RUN mkdir my_project
+
+WORKDIR /root/my_project
+RUN mkdir build source third-party application-necessities
+
+WORKDIR /root/my_project/source
+RUN git clone https://github.com/alexa/avs-device-sdk.git
+
+WORKDIR /root/my_project/third-party
+RUN git clone https://github.com/tatsuhiro-t/nghttp2.git
+WORKDIR /root/my_project/third-party/nghttp2
+RUN autoreconf -i
+RUN automake
+RUN autoconf
+RUN ./configure
+RUN make
+RUN make install
+
+
+
+WORKDIR /root/my_project/third-party
+RUN wget http://curl.haxx.se/download/curl-7.54.0.tar.bz2
+RUN tar -xvjf curl-7.54.0.tar.bz2
+WORKDIR /root/my_project/third-party/curl-7.54.0
+RUN ./configure --with-nghttp2=/usr/local --with-ssl
+RUN make
+RUN make install
+RUN ldconfig
+
+WORKDIR /root/my_project/third-party
+RUN wget -c http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+RUN tar xf pa_stable_v190600_20161030.tgz
+WORKDIR /root/my_project/third-party/portaudio
+RUN ./configure --without-jack && make
+
+
+WORKDIR /root/my_project/build
+RUN cmake /root/my_project/source/avs-device-sdk \ 
+ -DGSTREAMER_MEDIA_PLAYER=ON \ 
+ -DPORTAUDIO=ON \ 
+ -DPORTAUDIO_LIB_PATH=/root/my_project/third-party/portaudio/lib/.libs/libportaudio.a \
+ -DPORTAUDIO_INCLUDE_DIR=/root/my_project/third-party/portaudio/include \
+ -DCMAKE_BUILD_TYPE=DEBUG
+RUN make SampleApp -j2
+
+
+COPY config.json /root/my_project/source/avs-device-sdk/tools/Install
+RUN mkdir /root/my_project/build/Integration/database
+
+WORKDIR /root/my_project/source/avs-device-sdk/tools/Install
+RUN bash genConfig.sh config.json device_serial_number \
+ /root/my_project/build/Integration/database \
+ /root/my_project/source/avs-device-sdk \
+ /root/my_project/build/Integration/AlexaClientSDKConfig.json \
+ -DSDK_CONFIG_MANUFACTURER_NAME="Manufacturer" \
+ -DSDK_CONFIG_DEVICE_DESCRIPTION="Description"
+ 
+WORKDIR /root/my_project/build
+
+## Use virtual mic, this wouldnt be of much use
+##CMD pulseaudio -D --disable-shm=yes --exit-idle-time=-1 && pulseaudio -D --disable-shm=yes --exit-idle-time=-1 --system && ./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
+
+
+CMD ./SampleApp/src/SampleApp ./Integration/AlexaClientSDKConfig.json
