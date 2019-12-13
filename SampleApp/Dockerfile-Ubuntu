@@ -3,7 +3,7 @@
 ## to allow the container to access host microphone use docker run argument "--device /dev/snd:/dev/snd" or similar
 ## you can change the docker CMD line below to the virtual micro but you will not be able to use the mic
 ##
-## build command: docker build -t alexa-sample-app -f DockerFile-Ubuntu .
+## build command: docker build -t alexa-sample-app -f Dockerfile-Ubuntu .
 ## run command: docker run -i -t --device /dev/snd:/dev/snd alexa-sample-app
 ##
 ## Notes: requires config.json in the same directory as Dockerfile for docker build command to work, follow Alexa guide to get this file from alexa developer console
