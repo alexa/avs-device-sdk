@@ -6,7 +6,7 @@
 
 - Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.
 - Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
-- Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/alexa/docs/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
+- Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
 - Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html).
 - Added support for [System 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html).
 - Added support for Alarms 1.4
@@ -122,22 +122,22 @@
 * Added `SystemSoundPlayer` to [ApplicationUtilities](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1application_utilities.html). `SystemSoundPlayer` is a new class that plays pre-defined sounds. Sounds currently supported include the wake word notification and the end of speech tone. This change is internal and you don't need to update your code.
 * Removed [Echo Spatial Perception (ESP)](https://developer.amazon.com/blogs/alexa/post/042be85c-5a62-4c55-a18d-d7a82cf394df/esp-moves-to-the-cloud-for-alexa-enabled-devices) functionality from the Alexa Voice Service (AVS) device SDK. Make sure you download and test your devices using the new AVS SDK sample app. If you're using an older version of the sample app, manually remove any references to ESP or errors occur during compile.
 * Added `onNotificationReceived` to `NotificationsObserverInterface`. `onNotificationReceived` broadcasts when `NotificationsObserverInterface` receives a new notification, instead of only sending the indicator state. This is important if you support a feature that requires a distinct signal for each notification received. See [NotificationsObserverInterface](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html) for more details.
-* Added support for [Multilingual Mode](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations). With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:
+* Added support for [Multilingual Mode](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#localecombinations). With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:
  - `[ "en-US", "es-US" ]`
  - `[ "es-US", "en-US" ]`
  - `[ "en-IN", "hi-IN" ]`
  - `[ "hi-IN", "en-IN" ]`
  - `[ "en-CA", "fr-CA" ]`
  - `[ "fr-CA", "en-CA" ]`
-<br/> **IMPORTANT**: Specify the locales your device supports in the [localeCombinations](https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations) field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.
-* Added two new system settings, [Timezone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) and [Locale](https://developer.amazon.com/docs/alexa-voice-service/system.html#locales).
-  - Timezone: For example, you can set the `defaultTimezone` to `America/Vancouver`. If you don't set a value, `GMT` is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class `SystemTimeZoneInterface`. See [System Interface > SetTimeZone](https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone) for more information.
+<br/> **IMPORTANT**: Specify the locales your device supports in the [localeCombinations](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#localecombinations) field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.
+* Added two new system settings, [Timezone](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#settimezone) and [Locale](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#locales).
+  - Timezone: For example, you can set the `defaultTimezone` to `America/Vancouver`. If you don't set a value, `GMT` is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class `SystemTimeZoneInterface`. See [System Interface > SetTimeZone](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#settimezone) for more information.
   - Locale: For example, you can set `defaultLocale` to `en-GB`, instead of the default `en-US`.
-* The [SpeechRecognizer](https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html) interface now supports the following functionalities.
+* The [SpeechRecognizer](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechrecognizer.html) interface now supports the following functionalities.
  - Change wake word (`Alexa` supported for now).
  - Toggle start of request tone on/off.
  - Toggle End of request tone on/off.
-* Deprecated the [CapabilityAgents](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html) `Settings{…}` library. `Settings {…}` now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read [Settings Interface](https://developer.amazon.com/docs/alexa-voice-service/per-interface-settings.html) for more details.
+* Deprecated the [CapabilityAgents](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html) `Settings{…}` library. `Settings {…}` now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read [Settings Interface](https://developer.amazon.com/docs/alexa/alexa-voice-service/per-interface-settings.html) for more details.
 * Added support for three new locals: Spanish - United States (ES_US), Hindi - India (HI_IN), and Brazilian - Portuguese (PT_BR).
 * Linked the atomic library to the sample app to prevent build errors on Raspberry Pi.
 
@@ -216,7 +216,7 @@
 * Added an exponential wait time for retrying transmitting a message via CertifiedSender.
 * When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.
 * Deprecated HttpResponseCodes.h, which is now present only to ensure backward compatibility.
-* The [default base URLs](https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints) for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.
+* The [default base URLs](https://developer.amazon.com/docs/alexa/alexa-voice-service/api-overview.html#endpoints) for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.
 
 **Bug Fixes**
 
@@ -322,7 +322,7 @@
 
 **Enhancements**
 
-* Added support for the new Alexa [DoNotDisturb](https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html) interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.
+* Added support for the new Alexa [DoNotDisturb](https://developer.amazon.com/docs/alexa/alexa-voice-service/donotdisturb.html) interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.
 * The SDK now supports [Opus](https://opus-codec.org/license/) encoding, which is optional. To enable Opus, you must [set the CMake flag to `-DOPUS=ON`](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#Opus-encoding), and include the [libopus library](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies) dependency in your build.
 * The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.
  * AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.
@@ -407,7 +407,7 @@
 **Enhancements**
 
 * Added Android SDK support, which includes new implementations of the MediaPlayer, audio recorder, and logger.
-* Added the [InteractionModel](https://developer.amazon.com/docs/alexa-voice-service/interaction-model.html) interface, which enables Alexa Routines.
+* Added the [InteractionModel](https://developer.amazon.com/docs/alexa/alexa-voice-service/interaction-model.html) interface, which enables Alexa Routines.
 * Optional configuration changes have been introduced. Now a [network interface can be specified](https://github.com/alexa/avs-device-sdk/blob/v1.9/Integration/AlexaClientSDKConfig.json#L129) to connect to the SDK via curl.
 * [Build options can be configured](https://github.com/alexa/avs-device-sdk/wiki/Build-Options#build-for-Android) to support Android.
 * Added GUI 1.1 support. The `PlaybackController` has been extended to support new control functionality, and the `System` interface has been updated to support `SoftwareInfo`.
