@@ -71,10 +71,10 @@ $(function() {
 <div class="textblock"><h2>Version 1.17.0 - December 10 2019</h2>
 <p><b>Enhancements</b></p>
 <ul>
-<li>Added support for <a href="https://developer.amazon.com/docs/avs-device-sdk/features.html#captions">captions for TTS</a>. This enhancement allows you to print on-screen captions for Alexa voice responses.</li>
-<li>Added support for <a href="https://developer.amazon.com/docs/alexa-voice-service/speechsynthesizer.html">SpeechSynthesizer Interface 1.3</a>. This interface supports the new <code>captions</code> parameter.</li>
-<li>Added support for <a href="https://developer.amazon.com/docs/alexa-voice-service/audioplayer.html">AudioPlayer Interface 1.3</a>. This interface supports the new <code>captions</code> parameter.</li>
-<li>Added support for <a href="https://developer.amazon.com/docs/alexa-voice-service/interactionmodel-interface.html">Interaction Model 1.2</a>.</li>
+<li>Added support for <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions">captions for TTS</a>. This enhancement allows you to print on-screen captions for Alexa voice responses.</li>
+<li>Added support for <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html">SpeechSynthesizer Interface 1.3</a>. This interface supports the new <code>captions</code> parameter.</li>
+<li>Added support for <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html">AudioPlayer Interface 1.3</a>. This interface supports the new <code>captions</code> parameter.</li>
+<li>Added support for <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html">Interaction Model 1.2</a>.</li>
 <li>Added support for <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html">System 2.0</a>.</li>
 <li>Added support for Alarms 1.4</li>
 <li>Added support for Alarm Volume Ramp (Ascending Alarms in the Companion App). This feature lets you fade in alarms for a more pleasant experience. You enable Alarm Volume Ramp in the Sample App through the settings menu.</li>
@@ -85,10 +85,10 @@ $(function() {
 </ul>
 </li>
 <li>Added support for the following AVS <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/endpoints.html">endpoint</a> controller capabilities:<ul>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/alexa-modecontroller.html">Alexa.ModeController</a></li>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/alexa-rangecontroller.html">Alexa.RangeController</a></li>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/alexa-powercontroller.html">Alexa.PowerController</a></li>
-<li><a href="https://developer.amazon.com/docs/alexa-voice-service/alexa-togglecontroller.html">Alexa.ToggleController</a></li>
+<li><a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html">Alexa.ModeController</a></li>
+<li><a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-rangecontroller.html">Alexa.RangeController</a></li>
+<li><a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-powercontroller.html">Alexa.PowerController</a></li>
+<li><a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html">Alexa.ToggleController</a></li>
 </ul>
 </li>
 <li>Added <code>PowerResourceManagerInterface</code>. This interface allows the SDK to control power resource levels for components such as the <code>AudioInputProcessor</code> and <code>SpeechSynthesizer</code>.</li>
@@ -100,27 +100,27 @@ $(function() {
 <p><b>New build options</b></p>
 <ul>
 <li>CAPTIONS<ul>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#captions"><code>CAPTIONS</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#captions"><code>LIBWEBVTT_LIB_PATH</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs//avs-device-sdk/cmake-parameters.html#captions"><code>LIBWEBVTT_INCLUDE_DIR</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions"><code>CAPTIONS</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions"><code>LIBWEBVTT_LIB_PATH</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions"><code>LIBWEBVTT_INCLUDE_DIR</code></a></li>
 </ul>
 </li>
 <li>METRICS<ul>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs//avs-device-sdk/cmake-parameters.html#metrics"><code>METRICS</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#metrics"><code>METRICS</code></a></li>
 </ul>
 </li>
 <li>ENDPONTS<ul>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_ALL_ENDPOINT_CONTROLLERS</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_POWER_CONTROLLER</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_TOGGLE_CONTROLLER</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_RANGE_CONTROLLER</code></a></li>
-<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_MODE_CONTROLLER</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_ALL_ENDPOINT_CONTROLLERS</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_POWER_CONTROLLER</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_TOGGLE_CONTROLLER</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_RANGE_CONTROLLER</code></a></li>
+<li><b>ADDED</b> <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints"><code>ENABLE_MODE_CONTROLLER</code></a></li>
 </ul>
 </li>
 </ul>
 <p><b>New dependencies</b></p>
 <ul>
-<li>To use captions, you must install a <a href="https://developer.amazon.com/docs/avs-device-sdk/dependencies.html">new dependency</a> &ndash; the <a href="https://github.com/alexa/webvtt">libwebvtt parsing library</a>. Webvtt is a C/C++ library for interpreting and authoring conformant WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.</li>
+<li>To use captions, you must install a <a href="https://developer.amazon.com/docs/alexa/avs-device-sdk/dependencies.html">new dependency</a> &ndash; the <a href="https://github.com/alexa/webvtt">libwebvtt parsing library</a>. Webvtt is a C/C++ library for interpreting and authoring conformant WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.</li>
 </ul>
 <p><b>Bug fixes</b></p>
 <ul>
@@ -129,7 +129,7 @@ $(function() {
 <li>Fixed <a href="https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html"><code>UrlContentToAttachmentConverter</code></a> issue that used the incorrect range parameter.</li>
 <li>Fixed <code>FinallyGuard</code> <a href="https://github.com/alexa/avs-device-sdk/issues/1517">linking issue</a> that caused problems compiling the SDK on iOS.</li>
 <li>Fixed a <a href="https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html">Bluetooth Capability Agent</a> bug that prevented devices from initializing.</li>
-<li>Fixed <a href="https://github.com/alexa/avs-device-sdk/issues/1566">issue</a> that caused a permanent listening state after speaking the Wake Word "Alexa" twice rapidly.</li>
+<li>Fixed <a href="https://github.com/alexa/avs-device-sdk/issues/1566">issue</a> that causes a listening state after speaking the Wake Word "Alexa" twice rapidly.</li>
 </ul>
 <p><b>Known Issues</b></p>
 <ul>
@@ -196,28 +196,28 @@ $(function() {
 <li>Added <code>SystemSoundPlayer</code> to <a href="https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1application_utilities.html">ApplicationUtilities</a>. <code>SystemSoundPlayer</code> is a new class that plays pre-defined sounds. Sounds currently supported include the wake word notification and the end of speech tone. This change is internal and you don't need to update your code.</li>
 <li>Removed <a href="https://developer.amazon.com/blogs/alexa/post/042be85c-5a62-4c55-a18d-d7a82cf394df/esp-moves-to-the-cloud-for-alexa-enabled-devices">Echo Spatial Perception (ESP)</a> functionality from the Alexa Voice Service (AVS) device SDK. Make sure you download and test your devices using the new AVS SDK sample app. If you're using an older version of the sample app, manually remove any references to ESP or errors occur during compile.</li>
 <li>Added <code>onNotificationReceived</code> to <code>NotificationsObserverInterface</code>. <code>onNotificationReceived</code> broadcasts when <code>NotificationsObserverInterface</code> receives a new notification, instead of only sending the indicator state. This is important if you support a feature that requires a distinct signal for each notification received. See <a href="https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html">NotificationsObserverInterface</a> for more details.</li>
-<li>Added support for <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations">Multilingual Mode</a>. With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:<ul>
+<li>Added support for <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#localecombinations">Multilingual Mode</a>. With this enabled, Alexa automatically detects what language a user speaks by analyzing the spoken wake word and proceeding utterances. Once Alexa identifies the language, all corresponding responses are in the same language. The current supported language pairs are:<ul>
 <li><code>[ "en-US", "es-US" ]</code></li>
 <li><code>[ "es-US", "en-US" ]</code></li>
 <li><code>[ "en-IN", "hi-IN" ]</code></li>
 <li><code>[ "hi-IN", "en-IN" ]</code></li>
 <li><code>[ "en-CA", "fr-CA" ]</code></li>
 <li><code>[ "fr-CA", "en-CA" ]</code> <br  />
- <b>IMPORTANT</b>: Specify the locales your device supports in the <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#localecombinations">localeCombinations</a> field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.</li>
+ <b>IMPORTANT</b>: Specify the locales your device supports in the <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#localecombinations">localeCombinations</a> field in AlexaClientSDKConfig.json. This field can't be empty. If you don't set these values, the sample app fails to run.</li>
 </ul>
 </li>
-<li>Added two new system settings, <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone">Timezone</a> and <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#locales">Locale</a>.<ul>
-<li>Timezone: For example, you can set the <code>defaultTimezone</code> to <code>America/Vancouver</code>. If you don't set a value, <code>GMT</code> is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class <code>SystemTimeZoneInterface</code>. See <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#settimezone">System Interface &gt; SetTimeZone</a> for more information.</li>
+<li>Added two new system settings, <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#settimezone">Timezone</a> and <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#locales">Locale</a>.<ul>
+<li>Timezone: For example, you can set the <code>defaultTimezone</code> to <code>America/Vancouver</code>. If you don't set a value, <code>GMT</code> is set as the default value. If you set a new timezone, make sure that your AVS system settings and default timezone stay in sync. To handle this, use the new class <code>SystemTimeZoneInterface</code>. See <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#settimezone">System Interface &gt; SetTimeZone</a> for more information.</li>
 <li>Locale: For example, you can set <code>defaultLocale</code> to <code>en-GB</code>, instead of the default <code>en-US</code>.</li>
 </ul>
 </li>
-<li>The <a href="https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html">SpeechRecognizer</a> interface now supports the following functionalities.<ul>
+<li>The <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/speechrecognizer.html">SpeechRecognizer</a> interface now supports the following functionalities.<ul>
 <li>Change wake word (<code>Alexa</code> supported for now).</li>
 <li>Toggle start of request tone on/off.</li>
 <li>Toggle End of request tone on/off.</li>
 </ul>
 </li>
-<li>Deprecated the <a href="https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html">CapabilityAgents</a> <code>Settings{…}</code> library. <code>Settings {…}</code> now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read <a href="https://developer.amazon.com/docs/alexa-voice-service/per-interface-settings.html">Settings Interface</a> for more details.</li>
+<li>Deprecated the <a href="https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html">CapabilityAgents</a> <code>Settings{…}</code> library. <code>Settings {…}</code> now maps to an interface that's no longer supported. You might need to update your code to handle these changes. Read <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/per-interface-settings.html">Settings Interface</a> for more details.</li>
 <li>Added support for three new locals: Spanish - United States (ES_US), Hindi - India (HI_IN), and Brazilian - Portuguese (PT_BR).</li>
 <li>Linked the atomic library to the sample app to prevent build errors on Raspberry Pi.</li>
 </ul>
@@ -294,7 +294,7 @@ $(function() {
 <li>Added an exponential wait time for retrying transmitting a message via CertifiedSender.</li>
 <li>When Volume is set to 0 and device is unmuted, volume is bumped up to a non-zero value. When Volume is set to 0 and Alexa talks back to you, volume is bumped up to a non-zero value.</li>
 <li>Deprecated <a class="el" href="_http_response_codes_8h.html">HttpResponseCodes.h</a>, which is now present only to ensure backward compatibility.</li>
-<li>The <a href="https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints">default base URLs</a> for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.</li>
+<li>The <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/api-overview.html#endpoints">default base URLs</a> for AVS have changed. These new URLs are supported by SDK v1.13 and later versions. Amazon recommends that all new and existing implementations update to v1.13 or later and use the new base URLs accordingly; however, Amazon will continue to support the legacy base URLs.</li>
 </ul>
 <p><b>Bug Fixes</b></p>
 <ul>
@@ -397,7 +397,7 @@ $(function() {
 <h2>v1.11.0 released 12/19/2018:</h2>
 <p><b>Enhancements</b></p>
 <ul>
-<li>Added support for the new Alexa <a href="https://developer.amazon.com/docs/alexa-voice-service/donotdisturb.html">DoNotDisturb</a> interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.</li>
+<li>Added support for the new Alexa <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/donotdisturb.html">DoNotDisturb</a> interface, which enables users to toggle the do not disturb (DND) function on their Alexa built-in products.</li>
 <li>The SDK now supports <a href="https://opus-codec.org/license/">Opus</a> encoding, which is optional. To enable Opus, you must <a href="https://github.com/alexa/avs-device-sdk/wiki/Build-Options#Opus-encoding">set the CMake flag to <code>-DOPUS=ON</code></a>, and include the <a href="https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies">libopus library</a> dependency in your build.</li>
 <li>The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.<ul>
 <li>AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.</li>
@@ -442,7 +442,7 @@ $(function() {
 <li>New optional configuration for the <a href="https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L144">TemplateRuntime display card value</a>.</li>
 <li>A configuration file generator script, <code>genConfig.sh</code> is now included with the SDK in the <b>tools/Install</b> directory. <code>genConfig.sh</code> and it's associated arguments populate <code>AlexaClientSDKConfig.json</code> with the data required to authorize with LWA.</li>
 <li>Added Bluetooth A2DP source and AVRCP target support for Linux.</li>
-<li>Added Alexa for Business (A4B) support, which includes support for handling the new <a href="https://developer.amazon.com/docs/alexa-voice-service/system.html#revokeauth">RevokeAuthorization</a> directive in the Settings interface. A new CMake option has been added to enable A4B within the SDK, <code>-DA4B</code>.</li>
+<li>Added Alexa for Business (A4B) support, which includes support for handling the new <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#revokeauth">RevokeAuthorization</a> directive in the Settings interface. A new CMake option has been added to enable A4B within the SDK, <code>-DA4B</code>.</li>
 <li>Added locale support for IT and ES.</li>
 <li>The Alexa Communication Library (ACL), <code>CBLAUthDelegate</code>, and sample app have been enhanced to detect de-authorization using the new <code>z</code> command.</li>
 <li>Added <code>ExternalMediaPlayerObserver</code>, which receives notification of player state, track, and username changes.</li>
@@ -482,7 +482,7 @@ $(function() {
 <p><b>Enhancements</b></p>
 <ul>
 <li>Added Android SDK support, which includes new implementations of the MediaPlayer, audio recorder, and logger.</li>
-<li>Added the <a href="https://developer.amazon.com/docs/alexa-voice-service/interaction-model.html">InteractionModel</a> interface, which enables Alexa Routines.</li>
+<li>Added the <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/interaction-model.html">InteractionModel</a> interface, which enables Alexa Routines.</li>
 <li>Optional configuration changes have been introduced. Now a <a href="https://github.com/alexa/avs-device-sdk/blob/v1.9/Integration/AlexaClientSDKConfig.json#L129">network interface can be specified</a> to connect to the SDK via curl.</li>
 <li><a href="https://github.com/alexa/avs-device-sdk/wiki/Build-Options#build-for-Android">Build options can be configured</a> to support Android.</li>
 <li>Added GUI 1.1 support. The <code>PlaybackController</code> has been extended to support new control functionality, and the <code>System</code> interface has been updated to support <code>SoftwareInfo</code>.</li>
