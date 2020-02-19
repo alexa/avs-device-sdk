@@ -10,8 +10,7 @@ add_library(DeviceSettings SHARED
         SharedAVSSettingProtocol.cpp
         Storage/SQLiteDeviceSettingStorage.cpp
         Types/LocaleWakeWordsSetting.cpp
-        )
-
+        Types/NetworkInfo.cpp)
 
 target_include_directories(DeviceSettings PUBLIC
     "${AVSCommon_SOURCE_DIR}/include"

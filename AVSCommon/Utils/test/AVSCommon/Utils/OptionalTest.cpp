@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -108,10 +108,10 @@ TEST(OptionalTest, test_createOptionalWithValue) {
 }
 
 TEST(OptionalTest, test_getValueOfOptionalWithValue) {
-    Optional<Dummy> dummy{Dummy{.m_name = "EXPECTED_NAME"}};
+    Optional<Dummy> dummy{Dummy{"EXPECTED_NAME"}};
     ASSERT_TRUE(dummy.hasValue());
 
-    auto name = dummy.valueOr(Dummy{.m_name = "OTHER_NAME"}).m_name;
+    auto name = dummy.valueOr(Dummy{"OTHER_NAME"}).m_name;
     EXPECT_EQ(name, "EXPECTED_NAME");
 
     name = dummy.value().m_name;
@@ -122,7 +122,7 @@ TEST(OptionalTest, test_getValueOfEmptyOptional) {
     Optional<Dummy> dummy;
     ASSERT_FALSE(dummy.hasValue());
 
-    auto name = dummy.valueOr(Dummy{.m_name = "OTHER_NAME"}).m_name;
+    auto name = dummy.valueOr(Dummy{"OTHER_NAME"}).m_name;
     EXPECT_EQ(name, "OTHER_NAME");
 
     name = dummy.value().m_name;
@@ -136,14 +136,14 @@ TEST(OptionalTest, test_functionWithEmptyOptionalReturn) {
 }
 
 TEST(OptionalTest, test_functionWithNonEmptyOptionalReturn) {
-    auto function = []() -> Optional<Dummy> { return Optional<Dummy>{Dummy{.m_name = "EXPECTED_NAME"}}; };
+    auto function = []() -> Optional<Dummy> { return Optional<Dummy>{Dummy{"EXPECTED_NAME"}}; };
     auto dummy = function();
     ASSERT_TRUE(dummy.hasValue());
     ASSERT_EQ(dummy.value().m_name, "EXPECTED_NAME");
 }
 
 TEST(OptionalTest, test_copyOptionalWithValue) {
-    Optional<Dummy> dummy1{Dummy{.m_name = "EXPECTED_NAME"}};
+    Optional<Dummy> dummy1{Dummy{"EXPECTED_NAME"}};
     ASSERT_TRUE(dummy1.hasValue());
 
     Optional<Dummy> dummy2{dummy1};
@@ -160,7 +160,7 @@ TEST(OptionalTest, test_copyEmptyOptional) {
 }
 
 TEST(OptionalTest, test_setNewValueForEmptyOptional) {
-    Dummy dummy{.m_name = "EXPECTED_NAME"};
+    Dummy dummy{"EXPECTED_NAME"};
     Optional<Dummy> optionalDummy;
     optionalDummy.set(dummy);
 
@@ -169,10 +169,10 @@ TEST(OptionalTest, test_setNewValueForEmptyOptional) {
 }
 
 TEST(OptionalTest, test_setNewValueForNonEmptyOptional) {
-    Optional<Dummy> optionalDummy{Dummy{.m_name = "OLD_NAME"}};
+    Optional<Dummy> optionalDummy{Dummy{"OLD_NAME"}};
     ASSERT_TRUE(optionalDummy.hasValue());
 
-    optionalDummy.set(Dummy{.m_name = "EXPECTED_NAME"});
+    optionalDummy.set(Dummy{"EXPECTED_NAME"});
 
     EXPECT_TRUE(optionalDummy.hasValue());
     EXPECT_EQ(optionalDummy.value().m_name, "EXPECTED_NAME");
@@ -187,7 +187,7 @@ TEST(OptionalTest, test_resetEmptyOptional) {
 }
 
 TEST(OptionalTest, test_resetNonEmptyOptional) {
-    Optional<Dummy> optionalDummy{Dummy{.m_name = "OLD_NAME"}};
+    Optional<Dummy> optionalDummy{Dummy{"OLD_NAME"}};
     ASSERT_TRUE(optionalDummy.hasValue());
 
     optionalDummy.reset();

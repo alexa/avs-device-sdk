@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 #include <cstring>
 
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/PlatformDefinitions.h"
 #include "SharedDataStream.h"
 #include "ReaderPolicy.h"
 
@@ -409,6 +410,7 @@ bool SharedDataStream<T>::Reader::seek(Index offset, Reference reference) {
     *m_readerCursor = absolute;
 
     if (backward) {
+        header->oldestUnconsumedCursor = 0;
         m_bufferLayout->updateOldestUnconsumedCursorLocked();
         lock.unlock();
     } else {

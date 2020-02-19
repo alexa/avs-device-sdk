@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -204,7 +204,8 @@ TEST_F(MIMEParserTest, test_encodingSanity) {
 
     /// characters array to store the output, size chosen to be more than
     /// the size calculated above
-    char buf[encodedPayload.size() * 2];
+    std::vector<char> bufferVec(encodedPayload.size() * 2);
+    char* buf = bufferVec.data();
     size_t index{0};
     size_t lastSize{bufferSize};
     HTTP2SendDataResult result{0};

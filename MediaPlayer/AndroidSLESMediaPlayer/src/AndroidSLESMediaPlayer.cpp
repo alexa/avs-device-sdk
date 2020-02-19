@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -55,6 +55,7 @@ using namespace applicationUtilities::androidUtilities;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::sdkInterfaces::audio;
 using namespace equalizer;
+using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// The playback audio sample rate in HZ.
 static constexpr size_t SAMPLE_RATE_HZ = 48000;
@@ -194,7 +195,7 @@ bool AndroidSLESMediaPlayer::play(SourceId id) {
             }
             auto observers = m_observers;
             for (const auto& observer : observers) {
-                observer->onPlaybackStarted(id);
+                observer->onPlaybackStarted(id, createMediaPlayerState(id));
             }
             return true;
         }
@@ -252,7 +253,7 @@ bool AndroidSLESMediaPlayer::stopLocked() {
         }
         auto observers = m_observers;
         for (const auto& observer : observers) {
-            observer->onPlaybackStopped(m_sourceId);
+            observer->onPlaybackStopped(m_sourceId, createMediaPlayerState(m_sourceId));
         }
     }
     return true;
@@ -285,7 +286,7 @@ bool AndroidSLESMediaPlayer::pause(SourceId id) {
             }
             auto observers = m_observers;
             for (const auto& observer : observers) {
-                observer->onPlaybackPaused(id);
+                observer->onPlaybackPaused(id, createMediaPlayerState(id));
             }
             return true;
         }
@@ -331,7 +332,7 @@ bool AndroidSLESMediaPlayer::resume(SourceId id) {
             }
             auto observers = m_observers;
             for (const auto& observer : observers) {
-                observer->onPlaybackResumed(id);
+                observer->onPlaybackResumed(id, createMediaPlayerState(id));
             }
             return true;
         }
@@ -352,12 +353,36 @@ bool AndroidSLESMediaPlayer::resume(SourceId id) {
 
 std::chrono::milliseconds AndroidSLESMediaPlayer::getOffset(SourceId id) {
     std::lock_guard<std::mutex> lock{m_requestMutex};
+    return getOffsetLocked(id);
+}
+
+std::chrono::milliseconds AndroidSLESMediaPlayer::getOffsetLocked(SourceId id) {
+    if (!m_mediaQueue) {
+        ACSDK_ERROR(LX("getOffsetLockedFailed").d("reason", "nullMediaQueue"));
+        return MEDIA_PLAYER_INVALID_OFFSET;
+    }
     return m_initialOffset + computeDuration(m_mediaQueue->getNumBytesPlayed());
+}
+
+MediaPlayerState AndroidSLESMediaPlayer::createMediaPlayerState(SourceId id) {
+    MediaPlayerState state = {getOffset(id)};
+    return state;
 }
 
 uint64_t AndroidSLESMediaPlayer::getNumBytesBuffered() {
     std::lock_guard<std::mutex> lock{m_requestMutex};
     return m_mediaQueue->getNumBytesBuffered();
+}
+
+avsCommon::utils::Optional<MediaPlayerState> AndroidSLESMediaPlayer::getMediaPlayerState(SourceId id) {
+    std::lock_guard<std::mutex> lock{m_requestMutex};
+    auto offset = getOffsetLocked(id);
+    if (offset == MEDIA_PLAYER_INVALID_OFFSET) {
+        ACSDK_ERROR(LX("getMediaPlayerStateFailed").d("reason", "invalidOffset"));
+        return avsCommon::utils::Optional<MediaPlayerState>();
+    }
+    auto state = MediaPlayerState(offset);
+    return avsCommon::utils::Optional<MediaPlayerState>(state);
 }
 
 void AndroidSLESMediaPlayer::addObserver(std::shared_ptr<MediaPlayerObserverInterface> playerObserver) {
@@ -594,7 +619,11 @@ void AndroidSLESMediaPlayer::onQueueEvent(
                     }
                     auto observers = m_observers;
                     for (const auto& observer : observers) {
-                        observer->onPlaybackError(m_sourceId, ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, reason);
+                        observer->onPlaybackError(
+                            m_sourceId,
+                            ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+                            reason,
+                            createMediaPlayerState(m_sourceId));
                     }
                 }
                 break;
@@ -610,7 +639,7 @@ void AndroidSLESMediaPlayer::onQueueEvent(
                 }
                 auto observers = m_observers;
                 for (const auto& observer : observers) {
-                    observer->onPlaybackFinished(m_sourceId);
+                    observer->onPlaybackFinished(m_sourceId, createMediaPlayerState(m_sourceId));
                 }
                 break;
             }
@@ -618,7 +647,7 @@ void AndroidSLESMediaPlayer::onQueueEvent(
                 m_almostDone = true;
                 auto observers = m_observers;
                 for (const auto& observer : observers) {
-                    observer->onBufferingComplete(m_sourceId);
+                    observer->onBufferingComplete(m_sourceId, createMediaPlayerState(m_sourceId));
                 }
                 break;
             }
@@ -648,13 +677,13 @@ void AndroidSLESMediaPlayer::onPrefetchStatusChange(SLuint32 event) {
             if (!m_almostDone) {
                 auto observers = m_observers;
                 for (const auto& observer : observers) {
-                    observer->onBufferUnderrun(m_sourceId);
+                    observer->onBufferUnderrun(m_sourceId, createMediaPlayerState(m_sourceId));
                 }
             }
         } else if (SL_PREFETCHSTATUS_SUFFICIENTDATA == status) {
             auto observers = m_observers;
             for (const auto& observer : observers) {
-                observer->onBufferRefilled(m_sourceId);
+                observer->onBufferRefilled(m_sourceId, createMediaPlayerState(m_sourceId));
             }
         }
     }

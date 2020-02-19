@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -162,6 +162,42 @@ void InteractionManager::speechConfirmation() {
 
 void InteractionManager::timeZone() {
     m_executor.submit([this]() { m_userInterface->printTimeZoneScreen(); });
+}
+
+void InteractionManager::networkInfo() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoScreen(); });
+}
+
+void InteractionManager::networkInfoConnectionTypePrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoConnectionTypePrompt(); });
+}
+
+void InteractionManager::networkInfoESSIDPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoESSIDPrompt(); });
+}
+
+void InteractionManager::networkInfoBSSIDPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoBSSIDPrompt(); });
+}
+
+void InteractionManager::networkInfoIpPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoIpPrompt(); });
+}
+
+void InteractionManager::networkInfoSubnetPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoSubnetPrompt(); });
+}
+
+void InteractionManager::networkInfoMacPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoMacPrompt(); });
+}
+
+void InteractionManager::networkInfoDHCPPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoDHCPPrompt(); });
+}
+
+void InteractionManager::networkInfoStaticIpPrompt() {
+    m_executor.submit([this]() { m_userInterface->printNetworkInfoStaticIpPrompt(); });
 }
 
 void InteractionManager::doNotDisturb() {
@@ -373,6 +409,18 @@ void InteractionManager::stopCall() {
     });
 }
 
+void InteractionManager::muteCallToggle() {
+    m_executor.submit([this]() {
+        if (m_client->isCommsCallMuted()) {
+            m_client->unmuteCommsCall();
+            m_userInterface->printUnmuteCallScreen();
+        } else {
+            m_client->muteCommsCall();
+            m_userInterface->printMuteCallScreen();
+        }
+    });
+}
+
 void InteractionManager::sendDtmf(avsCommon::sdkInterfaces::CallManagerInterface::DTMFTone dtmfTone) {
     m_executor.submit([this, dtmfTone]() {
         if (m_client->isCommsEnabled()) {
@@ -443,6 +491,15 @@ void InteractionManager::setTimeZone(const std::string& value) {
 
 void InteractionManager::setLocale(const settings::DeviceLocales& value) {
     m_client->getSettingsManager()->setValue<settings::LOCALE>(value);
+}
+
+settings::types::NetworkInfo InteractionManager::getNetworkInfo() {
+    auto netSettings = m_client->getSettingsManager()->getValue<settings::NETWORK_INFO>();
+    return netSettings.second;
+}
+
+void InteractionManager::setNetworkInfo(const settings::types::NetworkInfo& value) {
+    m_client->getSettingsManager()->setValue<settings::NETWORK_INFO>(value);
 }
 
 void InteractionManager::setAlarmVolumeRamp(bool enable) {

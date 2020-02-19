@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_MEDIAPLAYER_GSTREAMERMEDIAPLAYER_INCLUDE_MEDIAPLAYER_BASESTREAMSOURCE_H_
 
 #include <memory>
+#include <mutex>
+#include <unordered_set>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -40,9 +42,14 @@ public:
 
     ~BaseStreamSource() override;
 
+    /// @name SourceInterface Functions
+    /// @{
     bool hasAdditionalData() override;
     bool handleEndOfStream() override;
     void preprocess() override;
+    void addObserver(std::shared_ptr<SourceObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<SourceObserverInterface> observer) override;
+    /// @}
 
 protected:
     /**
@@ -115,6 +122,11 @@ protected:
      */
     void clearOnReadDataHandler();
 
+    /**
+     * A utility function to notify the observers of this object when data has been read.
+     */
+    void notifyObserversOnReadData();
+
 private:
     /**
      * The callback for pushing data into the appsrc element.
@@ -163,6 +175,9 @@ private:
     /// The sourceId used to identify the installation of the @c onReadData() handler.
     guint m_sourceId;
 
+    /// A boolean to capture if this stream source has read any data.
+    bool m_hasReadData;
+
     /// Number of times reading data has been attempted since data was last successfully read.
     guint m_sourceRetryCount;
 
@@ -189,6 +204,12 @@ private:
 
     /// ID of idle callback to handle enough data.
     guint m_enoughDataCallbackId;
+
+    /// Mutex to serialize access to the observers.
+    std::mutex m_observersMutex;
+
+    /// Our observers.
+    std::unordered_set<std::shared_ptr<SourceObserverInterface>> m_observers;
 };
 
 }  // namespace mediaPlayer

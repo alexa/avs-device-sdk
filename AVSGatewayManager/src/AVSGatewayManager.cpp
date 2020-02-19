@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -133,11 +133,20 @@ bool AVSGatewayManager::setGatewayURL(const std::string& avsGatewayURL) {
     };
 
     if (avsGatewayURL != m_currentState.avsGatewayURL) {
+        std::unordered_set<std::shared_ptr<AVSGatewayObserverInterface>> observersCopy;
         {
             std::lock_guard<std::mutex> lock{m_mutex};
             m_currentState = GatewayVerifyState{avsGatewayURL, false};
             saveStateLocked();
+            observersCopy = m_observers;
         }
+
+        if (!observersCopy.empty()) {
+            for (auto& observer : observersCopy) {
+                observer->onAVSGatewayChanged(avsGatewayURL);
+            }
+        }
+
         if (m_avsGatewayAssigner) {
             m_avsGatewayAssigner->setAVSGateway(avsGatewayURL);
         } else {
@@ -168,6 +177,38 @@ bool AVSGatewayManager::saveStateLocked() {
         return false;
     }
     return true;
+}
+
+void AVSGatewayManager::addObserver(std::shared_ptr<AVSGatewayObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    {
+        std::lock_guard<std::mutex> lock{m_mutex};
+        if (!m_observers.insert(observer).second) {
+            ACSDK_ERROR(LX("addObserverFailed").d("reason", "observer already added!"));
+            return;
+        }
+    }
+}
+
+void AVSGatewayManager::removeObserver(std::shared_ptr<AVSGatewayObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    {
+        std::lock_guard<std::mutex> lock{m_mutex};
+        if (!m_observers.erase(observer)) {
+            ACSDK_ERROR(LX("removeObserverFailed").d("reason", "observer not found"));
+            return;
+        }
+    }
 }
 
 void AVSGatewayManager::clearData() {

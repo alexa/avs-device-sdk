@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,10 @@
 #include <gmock/gmock.h>
 
 #include "AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h"
+#include "AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h"
 #include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
 #include "AVSCommon/Utils/RequiresShutdown.h"
-#include <AVSCommon/Utils/Timing/Stopwatch.h>
+#include "AVSCommon/Utils/Timing/Stopwatch.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -73,6 +74,7 @@ class MockMediaPlayer
         , public RequiresShutdown {
 public:
     using observer = avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface;
+    using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
     /**
      * Creates an instance of the @c MockMediaPlayer.
@@ -120,6 +122,9 @@ public:
     MOCK_METHOD1(stop, bool(SourceId));
     MOCK_METHOD1(getOffset, std::chrono::milliseconds(SourceId));
     MOCK_METHOD0(getNumBytesBuffered, uint64_t());
+    MOCK_METHOD1(
+        getMediaPlayerState,
+        avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>(SourceId));
 
     /// @name RequiresShutdown overrides
     /// @{
@@ -192,6 +197,11 @@ public:
      * This is a mock method which validates the id in a @c getOffset() call.
      */
     std::chrono::milliseconds mockGetOffset(SourceId id);
+
+    /**
+     * This is a mock method which gives the @c sourceId and the offset through @c getOffset()
+     */
+    avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> mockGetState(SourceId id);
 
     /**
      * Reset the timer used in the following waitXXX methods.
@@ -315,7 +325,7 @@ private:
         SourceState(
             Source* source,
             const std::string& name,
-            std::function<void(std::shared_ptr<observer>, SourceId)> notifyFunction);
+            std::function<void(std::shared_ptr<observer>, SourceId, const MediaPlayerState&)> notifyFunction);
 
         /**
          * Destructor.  If necessary, wakes and joins m_thread (cancelling any non-started notification)
@@ -361,7 +371,7 @@ private:
         std::string m_name;
 
         /// The function to use to deliver this notification.
-        std::function<void(std::shared_ptr<observer>, SourceId)> m_notifyFunction;
+        std::function<void(std::shared_ptr<observer>, SourceId, const MediaPlayerState&)> m_notifyFunction;
 
         /// Used to serialize access to some data members.
         std::mutex m_mutex;

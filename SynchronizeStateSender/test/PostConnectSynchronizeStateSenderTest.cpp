@@ -263,7 +263,6 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_testPerfromOperationRetriesOn
                     localThread.join();
                 }
             }
-
         });
     };
     EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));

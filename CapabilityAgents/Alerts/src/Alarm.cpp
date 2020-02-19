@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,17 +19,15 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace alerts {
 
-/// Definition for static class data member.
-const std::string Alarm::TYPE_NAME = "ALARM";
-
 Alarm::Alarm(
     std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-    std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
-        Alert(defaultAudioFactory, shortAudioFactory) {
+    std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
+        Alert(defaultAudioFactory, shortAudioFactory, settingsManager) {
 }
 
 std::string Alarm::getTypeName() const {
-    return TYPE_NAME;
+    return Alarm::getTypeNameStatic();
 }
 
 }  // namespace alerts

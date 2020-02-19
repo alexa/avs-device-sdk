@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,7 +31,8 @@ std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
     std::shared_ptr<AttachmentManager> attachmentManager,
     const std::string& avsGateway,
     std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
-    std::shared_ptr<TransportObserverInterface> transportObserverInterface) {
+    std::shared_ptr<TransportObserverInterface> transportObserverInterface,
+    std::shared_ptr<SynchronizedMessageRequestQueue> sharedMessageRequestQueue) {
     auto connection = m_connectionFactory->createHTTP2Connection();
     if (!connection) {
         return nullptr;
@@ -44,14 +45,19 @@ std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
         messageConsumerInterface,
         attachmentManager,
         transportObserverInterface,
-        m_postConnectFactory);
+        m_postConnectFactory,
+        sharedMessageRequestQueue,
+        HTTP2Transport::Configuration(),
+        m_metricRecorder);
 }
 
 HTTP2TransportFactory::HTTP2TransportFactory(
     std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
-    std::shared_ptr<PostConnectFactoryInterface> postConnectFactory) :
-        m_connectionFactory{connectionFactory},
-        m_postConnectFactory{postConnectFactory} {
+    std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
+        m_connectionFactory{std::move(connectionFactory)},
+        m_postConnectFactory{std::move(postConnectFactory)},
+        m_metricRecorder{std::move(metricRecorder)} {
 }
 
 }  // namespace acl

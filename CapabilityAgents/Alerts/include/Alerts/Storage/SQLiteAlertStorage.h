@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,7 +61,9 @@ public:
 
     bool store(std::shared_ptr<Alert> alert) override;
 
-    bool load(std::vector<std::shared_ptr<Alert>>* alertContainer) override;
+    bool load(
+        std::vector<std::shared_ptr<Alert>>* alertContainer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager) override;
 
     bool modify(std::shared_ptr<Alert> alert) override;
 
@@ -118,9 +120,13 @@ private:
      *
      * @param dbVersion The version of the database we wish to load from.
      * @param[out] alertContainer The container where alerts should be stored.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      * @return Whether the alerts were loaded ok.
      */
-    bool loadHelper(int dbVersion, std::vector<std::shared_ptr<Alert>>* alertContainer);
+    bool loadHelper(
+        int dbVersion,
+        std::vector<std::shared_ptr<Alert>>* alertContainer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
      * Query whether an alert is currently stored with the given token.

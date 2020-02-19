@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <memory>
 
 #include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
 
 namespace alexaClientSDK {
@@ -53,6 +54,20 @@ public:
      * @return True if successful, else false.
      */
     virtual bool setGatewayURL(const std::string& avsGatewayURL) = 0;
+
+    /**
+     * Adds an observer.
+     *
+     * @param observer The @c AVSGatewayObserver
+     */
+    virtual void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) = 0;
+
+    /**
+     * Removes an observer.
+     *
+     * @param observer The @c AVSGatewayObserver.
+     */
+    virtual void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) = 0;
 };
 
 }  // namespace sdkInterfaces

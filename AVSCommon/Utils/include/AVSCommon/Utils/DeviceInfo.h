@@ -47,14 +47,19 @@ public:
      * @param deviceSerialNumber DSN.
      * @param manufacturerName The manufacturer name.
      * @param description The description of the device.
+     * @param friendlyName AVS friendly name for device
+     * @param deviceType The device type.
      * @return If successful, returns a new DeviceInfo, otherwise @c nullptr.
      */
     static std::unique_ptr<DeviceInfo> create(
         const std::string& clientId,
         const std::string& productId,
         const std::string& deviceSerialNumber,
-        const std::string& manufacturerName = "",
-        const std::string& description = "");
+        const std::string& manufacturerName,
+        const std::string& description,
+        const std::string& friendlyName = "",
+        const std::string& deviceType = "",
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId = "");
 
     /**
      * Gets the client Id.
@@ -92,6 +97,20 @@ public:
     std::string getDeviceDescription() const;
 
     /**
+     * Gets the device's AVS friendly name.
+     *
+     * @return AVS friendly name.
+     */
+    std::string getFriendlyName() const;
+
+    /**
+     * Gets the deviceType.
+     *
+     * @return device Type.
+     */
+    std::string getDeviceType() const;
+
+    /**
      * Gets the device default endpoint id.
      *
      * @return A string representing the default endpoint identifier.
@@ -123,13 +142,17 @@ private:
      * @param deviceSerialNumber DSN.
      * @param manufacturerName The manufacturer name.
      * @param description The description of the device.
+     * @param endpointId The device endpoint id.
      */
     DeviceInfo(
         const std::string& clientId,
         const std::string& productId,
         const std::string& deviceSerialNumber,
         const std::string& manufacturerName,
-        const std::string& description);
+        const std::string& description,
+        const std::string& friendlyName,
+        const std::string& deviceType,
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId);
 
     /// Client ID
     std::string m_clientId;
@@ -145,6 +168,15 @@ private:
 
     /// The device description.
     std::string m_deviceDescription;
+
+    /// AVS Friendly name for the device
+    std::string m_friendlyName;
+
+    /// Device Type
+    std::string m_deviceType;
+
+    /// Device default endpoint id.
+    sdkInterfaces::endpoints::EndpointIdentifier m_defaultEndpointId;
 };
 
 inline std::string DeviceInfo::getManufacturerName() const {
@@ -153,6 +185,10 @@ inline std::string DeviceInfo::getManufacturerName() const {
 
 inline std::string DeviceInfo::getDeviceDescription() const {
     return m_deviceDescription;
+}
+
+inline sdkInterfaces::endpoints::EndpointIdentifier DeviceInfo::getDefaultEndpointId() const {
+    return m_defaultEndpointId;
 }
 
 }  // namespace utils

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -84,8 +84,8 @@ protected:
 };
 
 void ContextManagerTest::SetUp() {
-    auto deviceInfo =
-        avsCommon::utils::DeviceInfo::create("clientId", "productId", "1234", "manufacturer", "my device");
+    auto deviceInfo = avsCommon::utils::DeviceInfo::create(
+        "clientId", "productId", "1234", "manufacturer", "my device", "friendlyName", "deviceType");
     ASSERT_NE(deviceInfo, nullptr);
 
     m_contextManager = ContextManager::create(*deviceInfo);
@@ -243,24 +243,49 @@ TEST_F(ContextManagerTest, test_incorrectToken) {
 }
 
 /**
- * Set the states with a @c StateRefreshPolicy @c ALWAYS for @c StateProviderInterfaces that are registered with the
- * @c ContextManager. Request for context by calling @c getContext. Expect that the context is returned within the
- * timeout period.
- *
- * There's a dummyProvider with StateRefreshPolicy @c SOMETIMES that returns an empty context.  Check ContextManager is
- * okay with it and would include the context provided by the dummyProvider.
- *
- * Check the context that is returned by the @c ContextManager. Expect it should match the test value.
+ * Test that a @c StateProvider that has a refreshPolicy @c SOMETIMES is queried on call to @c getContext().
+ * If the stateProvider provides a valid (non-empty) state, test that it is reflected in the corresponding context that
+ * is generated.
  */
-TEST_F(ContextManagerTest, test_sometimesProvider) {
+TEST_F(ContextManagerTest, test_sometimesProviderWithValidState) {
     auto sometimesProvider = std::make_shared<MockLegacyStateProvider>();
     auto sometimesCapability = NamespaceAndName("Namespace", "Name");
     std::string sometimesPayload{R"({"state":"value"})"};
     m_contextManager->setStateProvider(sometimesCapability, sometimesProvider);
 
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*sometimesProvider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
+        provideStateEvent.wakeUp();
+    })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    auto requestToken = m_contextManager->getContext(requester);
+    const std::chrono::milliseconds timeout{100};
+    provideStateEvent.wait(timeout);
     ASSERT_EQ(
-        m_contextManager->setState(sometimesCapability, sometimesPayload, StateRefreshPolicy::SOMETIMES),
+        m_contextManager->setState(sometimesCapability, sometimesPayload, StateRefreshPolicy::SOMETIMES, requestToken),
         SetStateResult::SUCCESS);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+    EXPECT_EQ(statesFuture.get()[sometimesCapability].valuePayload, sometimesPayload);
+}
+
+/**
+ * Test that a @c StateProvider that has a refreshPolicy @c SOMETIMES is queried on call to @c getContext().
+ * If the stateProvider provides an empty state, test that it is NOT reflected in the corresponding context that is
+ * generated.
+ */
+TEST_F(ContextManagerTest, test_sometimesProviderWithEmptyState) {
+    auto sometimesProvider = std::make_shared<MockLegacyStateProvider>();
+    auto sometimesCapability = NamespaceAndName("Namespace", "Name");
+    m_contextManager->setStateProvider(sometimesCapability, sometimesProvider);
 
     utils::WaitEvent provideStateEvent;
     EXPECT_CALL(*sometimesProvider, provideState(_, _)).WillOnce((InvokeWithoutArgs([&provideStateEvent] {
@@ -283,7 +308,8 @@ TEST_F(ContextManagerTest, test_sometimesProvider) {
 
     auto statesFuture = contextStatesPromise.get_future();
     ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
-    EXPECT_EQ(statesFuture.get()[sometimesCapability].valuePayload, sometimesPayload);
+    auto states = statesFuture.get();
+    EXPECT_EQ(states.find(sometimesCapability), states.end());
 }
 
 /**

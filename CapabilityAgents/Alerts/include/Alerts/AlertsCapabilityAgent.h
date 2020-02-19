@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,10 +33,13 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <CertifiedSender/CertifiedSender.h>
+#include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/DeviceSettingsManager.h>
 #include <Settings/Setting.h>
 #include <Settings/SettingEventMetadata.h>
 
@@ -80,6 +83,8 @@ public:
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @param alarmVolumeRampSetting The alarm volume ramp setting.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
+     * @param metricRecorder The metric recorder.
      * @return A pointer to an object of this type, or nullptr if there were problems during construction.
      */
     static std::shared_ptr<AlertsCapabilityAgent> create(
@@ -94,7 +99,9 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
-        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting);
+        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -112,7 +119,7 @@ public:
 
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
 
-    void onFocusChanged(avsCommon::avs::FocusState focusState) override;
+    void onFocusChanged(avsCommon::avs::FocusState focusState, avsCommon::avs::MixingBehavior behavior) override;
 
     void onAlertStateChange(
         const std::string& token,
@@ -193,6 +200,8 @@ private:
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
      * @param alarmVolumeRampSetting The alarm volume ramp setting.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
+     * @param metricRecorder The metric recorder.
      */
     AlertsCapabilityAgent(
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -205,7 +214,9 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
-        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting);
+        std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     void doShutdown() override;
 
@@ -325,8 +336,6 @@ private:
      * A handler function which will be called by our internal executor to handle a local stop.
      */
     void executeOnLocalStop();
-
-    /// @}
 
     /**
      * A helper function to handle the SetAlert directive.
@@ -494,6 +503,8 @@ private:
      */
     /// @{
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     /// The regular MessageSender object.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
     /// The CertifiedSender object.
@@ -546,6 +557,9 @@ private:
      * The alarm volume ramp setting.
      */
     std::shared_ptr<settings::AlarmVolumeRampSetting> m_alarmVolumeRampSetting;
+
+    /// The settings manager used to retrieve the value of alarm volume ramp setting.
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
 };
 
 }  // namespace alerts

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -76,6 +76,15 @@ public:
     virtual bool getUuid(const std::string& mac, std::string* uuid) = 0;
 
     /**
+     * Retrieve the category associated with a UUID.
+     *
+     * @param uuid The UUID in which the associated category will be retrieved.
+     * @param[out] category The category of the associated UUID.
+     * @return A bool indicating success.
+     */
+    virtual bool getCategory(const std::string& uuid, std::string* category) = 0;
+
+    /**
      * Retrieve a map of MAC to UUID.
      *
      * @param[out] macToUuid A map of MAC to UUID mappings.
@@ -84,12 +93,28 @@ public:
     virtual bool getMacToUuid(std::unordered_map<std::string, std::string>* macToUuid) = 0;
 
     /**
+     * Retrieve a map of MAC to Category.
+     *
+     * @param[out] macToCategory A map of MAC to Category mappings.
+     * @return A bool indicating success.
+     */
+    virtual bool getMacToCategory(std::unordered_map<std::string, std::string>* macToCategory) = 0;
+
+    /**
      * Retrieve a map of UUID to MAC.
      *
      * @param[out] uuidToMac A map of UUID to MAC mappings.
      * @return A bool indicating success.
      */
     virtual bool getUuidToMac(std::unordered_map<std::string, std::string>* uuidToMac) = 0;
+
+    /**
+     * Retrieve a map of UUID to Category.
+     *
+     * @param[out] uuidToCategory A map of UUID to Category mappings.
+     * @return A bool indicating success.
+     */
+    virtual bool getUuidToCategory(std::unordered_map<std::string, std::string>* uuidToCategory) = 0;
 
     /**
      * Gets a list of MAC Addresses ordered by their insertion order into
@@ -111,6 +136,16 @@ public:
      * @return A bool indicating success.
      */
     virtual bool insertByMac(const std::string& mac, const std::string& uuid, bool overwrite) = 0;
+
+    /**
+     * Update an existing entry with category given a UUID. If there is no existing entry,
+     * the operation should fail.
+     *
+     * @param uuid The UUID.
+     * @param category The category.
+     * @return A bool indicating success.
+     */
+    virtual bool updateByCategory(const std::string& uuid, const std::string& category) = 0;
 
     /**
      * Remove the entry by the MAC address. The operation is considered successful if the entry

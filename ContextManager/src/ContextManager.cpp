@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 
 #include <AVSCommon/Utils/Error/FinallyGuard.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include "AVSCommon/Utils/Metrics/MetricEventBuilder.h"
+#include "AVSCommon/Utils/Metrics/DataPointCounterBuilder.h"
 
 #include "ContextManager/ContextManager.h"
 
@@ -28,6 +30,7 @@ using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::metrics;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("ContextManager");
@@ -42,15 +45,19 @@ static const std::string TAG("ContextManager");
 /// An empty token to identify @c setState that is a proactive setter.
 static const ContextRequestToken EMPTY_TOKEN = 0;
 
+static const std::string STATE_PROVIDER_TIMEOUT_METRIC_PREFIX = "ERROR.StateProviderTimeout.";
+
 std::shared_ptr<ContextManager> ContextManager::create(
     const DeviceInfo& deviceInfo,
-    std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer) {
+    std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
     if (!multiTimer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMultiTimer"));
         return nullptr;
     }
 
-    std::shared_ptr<ContextManager> contextManager(new ContextManager(deviceInfo.getDefaultEndpointId(), multiTimer));
+    std::shared_ptr<ContextManager> contextManager(
+        new ContextManager(deviceInfo.getDefaultEndpointId(), multiTimer, metricRecorder));
     return contextManager;
 }
 
@@ -150,7 +157,9 @@ SetStateResult ContextManager::setState(
 
 ContextManager::ContextManager(
     const std::string& defaultEndpointId,
-    std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer) :
+    std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+        m_metricRecorder{std::move(metricRecorder)},
         m_requestCounter{0},
         m_shutdown{false},
         m_defaultEndpointId{defaultEndpointId},
@@ -320,6 +329,15 @@ void ContextManager::sendContextRequestFailedLocked(unsigned int requestToken, C
         ACSDK_DEBUG0(LX(__func__).d("result", "nullRequester").d("token", requestToken));
         return;
     }
+    for (auto& pendingState : m_pendingStateRequest[requestToken]) {
+        auto metricName = STATE_PROVIDER_TIMEOUT_METRIC_PREFIX + pendingState.nameSpace;
+        recordMetric(
+            m_metricRecorder,
+            MetricEventBuilder{}
+                .setActivityName("CONTEXT_MANAGER-" + metricName)
+                .addDataPoint(DataPointCounterBuilder{}.setName(metricName).increment(1).build())
+                .build());
+    }
     request.contextRequester->onContextFailure(error, requestToken);
 }
 
@@ -352,8 +370,11 @@ void ContextManager::sendContextIfReadyLocked(unsigned int requestToken, const E
     for (auto& capability : m_endpointsState[requestEndpointId]) {
         if (capability.second.legacyCapability ||
             (capability.second.stateProvider && capability.second.stateProvider->canStateBeRetrieved())) {
-            // Ignore if the state is not available (used for legacy SOMETIMES refresh policy).
-            if (capability.second.capabilityState.hasValue()) {
+            // Ignore if the state is not available for legacy SOMETIMES refresh policy.
+            if (capability.second.refreshPolicy == StateRefreshPolicy::SOMETIMES &&
+                !capability.second.capabilityState.hasValue()) {
+                ACSDK_DEBUG5(LX(__func__).d("skipping state for capabilityIdentifier", capability.first));
+            } else {
                 ACSDK_DEBUG5(LX(__func__).sensitive("addState", capability.first));
                 context.addState(capability.first, capability.second.capabilityState.value());
             }
@@ -372,7 +393,7 @@ void ContextManager::updateCapabilityState(
     capabilitiesState[capabilityIdentifier] = StateInfo(stateProvider, capabilityState);
 }
 
-bool ContextManager::updateCapabilityState(
+void ContextManager::updateCapabilityState(
     const avsCommon::avs::CapabilityTag& capabilityIdentifier,
     const std::string& jsonState,
     const avsCommon::avs::StateRefreshPolicy& refreshPolicy) {
@@ -380,23 +401,7 @@ bool ContextManager::updateCapabilityState(
     auto& endpointId = capabilityIdentifier.endpointId.empty() ? m_defaultEndpointId : capabilityIdentifier.endpointId;
     auto& capabilityInfo = m_endpointsState[endpointId];
     auto& stateProvider = capabilityInfo[capabilityIdentifier].stateProvider;
-    if (jsonState.empty()) {
-        auto& capabilityState = capabilityInfo[capabilityIdentifier].capabilityState;
-        if (!capabilityState.hasValue()) {
-            if (StateRefreshPolicy::ALWAYS == refreshPolicy) {
-                ACSDK_ERROR(LX("updateCapabilityStateFailed")
-                                .d("reason", "emptyValue")
-                                .d("capability", capabilityIdentifier.nameSpace + "::" + capabilityIdentifier.name));
-                return false;
-            }
-        } else {
-            capabilityInfo[capabilityIdentifier] =
-                StateInfo(stateProvider, capabilityState.value().valuePayload, refreshPolicy);
-        }
-    } else {
-        capabilityInfo[capabilityIdentifier] = StateInfo(stateProvider, jsonState, refreshPolicy);
-    }
-    return true;
+    capabilityInfo[capabilityIdentifier] = StateInfo(stateProvider, jsonState, refreshPolicy);
 }
 
 ContextManager::StateInfo::StateInfo(

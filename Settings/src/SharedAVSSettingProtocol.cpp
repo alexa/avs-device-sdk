@@ -46,7 +46,8 @@ std::unique_ptr<SharedAVSSettingProtocol> SharedAVSSettingProtocol::create(
     const SettingEventMetadata& metadata,
     std::shared_ptr<SettingEventSenderInterface> eventSender,
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager) {
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+    bool isDefaultCloudAuthoritative) {
     ACSDK_DEBUG5(LX(__func__).d("settingName", metadata.settingName));
 
     if (!eventSender) {
@@ -66,8 +67,8 @@ std::unique_ptr<SharedAVSSettingProtocol> SharedAVSSettingProtocol::create(
 
     std::string settingKey = metadata.eventNamespace + "::" + metadata.settingName;
 
-    return std::unique_ptr<SharedAVSSettingProtocol>(
-        new SharedAVSSettingProtocol(settingKey, eventSender, settingStorage, connectionManager));
+    return std::unique_ptr<SharedAVSSettingProtocol>(new SharedAVSSettingProtocol(
+        settingKey, eventSender, settingStorage, connectionManager, isDefaultCloudAuthoritative));
 }
 
 SharedAVSSettingProtocol::~SharedAVSSettingProtocol() {
@@ -215,7 +216,12 @@ bool SharedAVSSettingProtocol::restoreValue(
     auto revertChange = [applyChange] { return applyChange(INVALID_VALUE).second; };
     switch (status) {
         case SettingStatus::NOT_AVAILABLE:
-        // Fall-through
+            if (m_isDefaultCloudAuthoritative) {
+                return avsChange(applyStrChange, revertChange, notifyObservers);
+            } else {
+                return localChange(applyStrChange, revertChange, notifyObservers) == SetSettingResult::ENQUEUED;
+            }
+            break;
         case SettingStatus::LOCAL_CHANGE_IN_PROGRESS:
             return localChange(applyStrChange, revertChange, notifyObservers) == SetSettingResult::ENQUEUED;
         case SettingStatus::AVS_CHANGE_IN_PROGRESS:
@@ -237,8 +243,10 @@ SharedAVSSettingProtocol::SharedAVSSettingProtocol(
     const std::string& key,
     std::shared_ptr<SettingEventSenderInterface> eventSender,
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager) :
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+    bool isDefaultCloudAuthoritative) :
         m_key{key},
+        m_isDefaultCloudAuthoritative{isDefaultCloudAuthoritative},
         m_eventSender{eventSender},
         m_storage{settingStorage} {
     m_connectionManager = connectionManager;

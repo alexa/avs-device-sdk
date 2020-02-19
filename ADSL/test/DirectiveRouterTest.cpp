@@ -22,7 +22,6 @@
 #include <gmock/gmock.h>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
-#include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 
 #include "ADSL/DirectiveRouter.h"

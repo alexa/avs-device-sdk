@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,8 @@ public:
     std::shared_ptr<avsCommon::utils::http2::HTTP2RequestInterface> createAndSendRequest(
         const http2::HTTP2RequestConfig& config) override;
     void disconnect() override;
+    void addObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer) override;
     /// @}
 
 protected:
@@ -146,6 +148,11 @@ private:
      */
     void processNextRequest();
 
+    /**
+     * Notify observers that a GOAWAY frame has been received.
+     */
+    void notifyObserversOfGoawayReceived();
+
     /// Main thread for this class.
     std::thread m_networkThread;
 
@@ -165,6 +172,12 @@ private:
 
     /// Queue of requests send. Serialized by @c m_mutex.
     std::deque<std::shared_ptr<LibcurlHTTP2Request>> m_requestQueue;
+
+    /// Mutex for observers.
+    std::mutex m_observersMutex;
+
+    /// Observers
+    std::unordered_set<std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface>> m_observers;
 
     /// Set to true when we want to exit the network loop.
     bool m_isStopping;

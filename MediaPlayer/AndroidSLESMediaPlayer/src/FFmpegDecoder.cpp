@@ -333,17 +333,17 @@ bool FFmpegDecoder::initializeFilters() {
             return false;
         }
 
-        // Next, allocate and initialize the afade filter which performs the fade.
+        // Next, allocate and initialize the volume filter which performs the fade.
         const AVFilter* volumeFilter = avfilter_get_by_name("volume");
         if (!volumeFilter) {
-            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to find afade filter"));
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to find volume filter"));
             setState(DecodingState::INVALID);
             return false;
         }
 
         AVFilterContext* volumeContext = avfilter_graph_alloc_filter(m_filterGraph.get(), volumeFilter, "volumeFilter");
         if (!volumeContext) {
-            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate afade filter context"));
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to allocate volume filter context"));
             setState(DecodingState::INVALID);
             return false;
         }
@@ -364,7 +364,7 @@ bool FFmpegDecoder::initializeFilters() {
             m_sourceConfig.fadeInConfig.startGain / 100.0);
 
         if (avfilter_init_str(volumeContext, expressionBuffer) < 0) {
-            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to initialize afade filter context"));
+            ACSDK_ERROR(LX("initializeFailed").d("reason", "unable to initialize volume filter context"));
             setState(DecodingState::INVALID);
             return false;
         }

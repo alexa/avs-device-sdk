@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace avs {
 
 /**
  * An enum class indicating possible response from the endpoint on a controller API call.
- * Response are derived from @see https://developer.amazon.com/docs/device-apis/alexa-errorresponse.html
+ * Response are derived from @see https://developer.amazon.com/docs/alexa/device-apis/alexa-errorresponse.html
  */
 enum class AlexaResponseType {
     /// Success

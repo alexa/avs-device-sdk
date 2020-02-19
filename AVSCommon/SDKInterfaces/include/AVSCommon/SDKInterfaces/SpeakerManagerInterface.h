@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -81,6 +81,20 @@ public:
         bool mute,
         bool forceNoNotifications = false,
         SpeakerManagerObserverInterface::Source source = SpeakerManagerObserverInterface::Source::LOCAL_API) = 0;
+
+#ifdef ENABLE_MAXVOLUME_SETTING
+    /**
+     * Sets maximum volume limit. This function should be called to handle @c setMaximumVolumeLimit
+     * directive from AVS.
+     *
+     * @param maximumVolumeLimit The maximum volume level speakers in this system can reach.
+     * @note Upon success, previous volume exceeding the new limit will be decreased to be complied with the new limit.
+     * @return A future to be set with the operation's result. The future must be checked for validity
+     * before attempting to obtain the shared state. An invalid future indicates an internal error,
+     * and the caller should not assume the operation was successful.
+     */
+    virtual std::future<bool> setMaximumVolumeLimit(const int8_t maximumVolumeLimit) = 0;
+#endif
 
     /**
      * Gets the speaker settings.

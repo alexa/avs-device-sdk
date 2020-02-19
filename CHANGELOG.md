@@ -1,105 +1,108 @@
 ## ChangeLog
 
-### Version 1.17.0 - December 10 2019
+### Version 1.18.0 - February 19 2020
 
-**Enhancements**
+**Enhancements** 
 
-- Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.
-- Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
-- Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
-- Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html).
-- Added support for [System 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html).
-- Added support for Alarms 1.4
-- Added support for Alarm Volume Ramp (Ascending Alarms in the Companion App). This feature lets you fade in alarms for a more pleasant experience. You enable Alarm Volume Ramp in the Sample App through the settings menu.
-- Added support for URI path extensions to CertifiedSender. This change allows you to specify the URI path extension when sending messages with [`CertifiedSender::sendJSONMessage`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html#a4c0706d79717b226ba77d1a9c3280fe6).
-- Added new [`Metrics`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html) interfaces and helper classes. These additions help you create and consume [`Metrics`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html) events.
-  - **Interfaces** - `MetricRecorderInterface`, `MetricSinkInterface`.
-  - **Helper Classes** - `DataPointStringBuilder`, `DataPointCounterBuilder`, `DataPointDurationBuilder`, `MetricEventBuilder`.
-
-- Added support for the following AVS [endpoint](https://developer.amazon.com/docs/alexa/avs-device-sdk/endpoints.html)  controller capabilities:
-  - [Alexa.ModeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html)
-  - [Alexa.RangeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-rangecontroller.html)
-  - [Alexa.PowerController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-powercontroller.html)
-  - [Alexa.ToggleController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html)
-
-- Added `PowerResourceManagerInterface`. This interface allows the SDK to control power resource levels for components such as the `AudioInputProcessor` and `SpeechSynthesizer`.
-- Added `AlexaInterfaceCapabilityAgent`. This Capability Agent handles common directives and endpoint controller capabilities support by [`Alexa.AlexaInterface`](../alexa-voice-service/alexa.html).
-- Added `AlexaInterfaceMessageSenderInterface`. This interface is required to send common events defined by the `Alexa.AlexaInterface` interface.
-- Added `BufferingComplete` to [`MediaPlayerObserverInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html). This method helps improve performance in poor networking conditions by making sure `MediaPlayer` pre-buffers correctly.
-- Added `SendDTMF` to `CallManagerInterface`. This method allows you to send DTMF tones during calls.
-
-**New build options**
-
-- CAPTIONS
-  - **ADDED** [`CAPTIONS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
-  - **ADDED** [`LIBWEBVTT_LIB_PATH`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
-  - **ADDED** [`LIBWEBVTT_INCLUDE_DIR`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
-- METRICS
-  - **ADDED** [`METRICS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#metrics)
-- ENDPONTS
-  - **ADDED** [`ENABLE_ALL_ENDPOINT_CONTROLLERS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_POWER_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_TOGGLE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_RANGE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
-  - **ADDED** [`ENABLE_MODE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
-
-**New dependencies**
-
-- To use captions, you must install a [new dependency](https://developer.amazon.com/docs/alexa/avs-device-sdk/dependencies.html) &ndash; the [libwebvtt parsing library](https://github.com/alexa/webvtt). Webvtt is a C/C++ library for interpreting and authoring conformant WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.
+* Added support for [Bluetooth Interface 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/bluetooth.html). This interface adds support for multiple simultaneous connections to Bluetooth peripherals.
+* Added support for [Audio Focus Manager Library (AFML) Multi Activity](https://developer.amazon.com/docs/alexa/avs-device-sdk/sdk-interaction-model.html). This interface enhances the behavior of a device so it can handle more than one Activity per Channel.
+* Added the `obfuscatePrivateData` logging method to help remove certain data from logs.
+* Updated `MediaPlayerObserverInterface` to include metadata about playback states. 
+* Added SDK extension point. You can integrate CMake projects into the SDK without cloning those projects into a subdirectory.
 
 **Bug fixes**
 
-- Fixed [`MimeResponseSink::onReceiveNonMimeData`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html) [data issue](https://github.com/alexa/avs-device-sdk/issues/1519) that returned invalid data.
-- Fixed [data type issue](https://github.com/alexa/avs-device-sdk/issues/1519) that incorrectly used `finalResponseCode` instead of [`FinalResponseCodeId`](https://github.com/alexa/avs-device-sdk/blob/master/AVSCommon/Utils/src/LibcurlUtils/LibCurlHttpContentFetcher.cpp#L370).
-- Fixed [`UrlContentToAttachmentConverter`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html) issue that used the incorrect range parameter.
-- Fixed `FinallyGuard` [linking issue](https://github.com/alexa/avs-device-sdk/issues/1517) that caused problems compiling the SDK on iOS.
-- Fixed [issue](https://github.com/alexa/avs-device-sdk/issues/1566) that caused a listening state after speaking the Wake Word "Alexa" twice rapidly.
-
+* Fixed Mac/OSX issue that caused an unresponsive Sample App when not connected to the internet.
+* Fixed issue that prevented sample app from exiting various states.
+* Fixed `UIManager` issue that caused an error in the logs when the device with built without the wake word enabled.
+* Fixed volume issue that caused timers to ascend in volume when setting up ascending alarms.
+* Fixed alert volume issue that caused any changes to the alert volume to notify observers. 
+* Fixed EQ issue where changes to the EQ band levels didn't notify observers. 
+* Fixed Bluetooth bug that caused short notification sounds from a connected phone to stop audio playback on the device.
+ 
 **Known Issues**
 
+* Build errors can occur on the Raspberry Pi due to incorrect linking of the atomic library. A suggested workaround is to add the following `set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")` to the top most CMake file.
 * The WebVTT dependency required for `captions` isn't supported for Windows/Android.
-* AudioInputProcessor unit tests don't build on Windows when -DCMAKE_BUILD_TYPE=DEBUG.
+* Exiting from the setting option takes you back to the Options Menu directly. It doesn't provide a message to indicate that you're back in the main menu.
+* Failing Unit Tests and AIP Unit tests are disabled on Windows
+* `AudioInputProcessor` unit tests don't build on Windows when with the `-DCMAKE_BUILD_TYPE=DEBUG` cmake parameter.
 * Music playback history isn't displayed in the Alexa app for certain account and device types.
 * When using Gnu Compiler Collection 8+ (GCC 8+), `-Wclass-memaccess` triggers warnings. You can ignore these, they don't cause the build to fail.
 * Android error `libDefaultClient.so not found` might occur. Resolve this by upgrading to ADB version 1.0.40.
-* If a device loses a network connection, the lost connection status isn't returned via local TTS.
+* If a device loses a network connection, the lost connection status isn't returned though local TTS.
 * ACL encounters issues if it receives audio attachments but doesn't consume them.
-* `SpeechSynthesizerState` uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate states.
-* Media steamed through Bluetooth might abruptly stop. To restart playback, resume the media in the source application or toggle next/previous.
+* Media streamed through Bluetooth might abruptly stop. To restart playback, resume the media in the source application or toggle next/previous.
 * If a connected Bluetooth device is inactive, the Alexa app might indicates that audio is playing.
 * The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation isn't yet supported.
 * When using some products, interrupted Bluetooth playback might not resume if other content is locally streamed.
 * `make integration` isn't available for Android. To run Android integration tests, manually upload the test binary and input file and run ADB.
-* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS) user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
+* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS)  user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
 * A reminder TTS message doesn't play if the sample app restarts and loses a network connection. Instead, the default alarm tone plays twice.
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
-* On some devices, Alexa gets stuck in a listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
-* Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
 
-
-### Version 1.16.0 - October 25 2019
+### Version 1.17.0 - December 10 2019 
 
 **Enhancements** 
 
-- Added support for [SpeechSynthesizer version 1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2) which includes the new `playBehaviour` directive.  
-- Added support for pre-buffering in the [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html) Capability Agent. You can optionally choose the number of instances [`MediaPlayer`](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html) uses in the [AlexaClientSDKconfig.json](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json). **Important:** the contract for [`MediaPlayerInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html)has changed. You must now make sure that the `SourceId` value returned by `setSource()` is unique across all instances.
-- The [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html) Capability Agent is now licensed under the Amazon Software License instead of the Apache Software License.
+* Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.  
+* Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
+* Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
+* Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html).
+* Added support for [System 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html).
+* Added support for Alerts Interface 1.4.
+ Added support for Alarm Volume Ramp (Ascending Alarms in the Companion App). This feature lets the user enable alarm fade in. You enable this feature in the sample app through the settings menu.
+* Added support to use certified senders for URI path extensions. This change allows you to specify the URI path extension when sending messages with [`CertifiedSender::sendJSONMessage`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html#a4c0706d79717b226ba77d1a9c3280fe6)
+* Added new [`Metrics`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html) interfaces and helper classes. These additions help you create and consume [`Metrics`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html) events.
+  * **Interfaces** - `MetricRecorderInterface`, `MetricSinkInterface`.
+  * **Helper Classes** - `DataPointStringBuilder`, `DataPointCounterBuilder`, `DataPointDurationBuilder`, `MetricEventBuilder`.
+* Added support for the following AVS [endpoint](https://developer.amazon.com/docs/alexa/avs-device-sdk/endpoints.html) controller capabilities:
+  * [Alexa.ModeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html)
+  * [Alexa.RangeController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-rangecontroller.html)
+  * [Alexa.PowerController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-powercontroller.html)
+  * [Alexa.ToggleController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html)
+* Added `PowerResourceManagerInterface`. This interface allows the SDK to control power resource levels for components such as the `AudioInputProcessor` and `SpeechSynthesizer`.
+* Added `AlexaInterfaceCapabilityAgent`. This Capability Agent handles common directives and endpoint controller capabilities support by [`Alexa.AlexaInterface`](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa.html).
+* Added `AlexaInterfaceMessageSenderInterface`. Use this interface to send common events defined by the `Alexa.AlexaInterface` interface.   
+* Added `BufferingComplete` to [`MediaPlayerObserverInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html). This method helps improve performance in poor networking conditions by making sure `MediaPlayer` pre-buffers correctly.
+* Added `SendDTMF` to `CallManagerInterface`. This method allows you to send DTMF tones during calls.
 
-**Bug Fixes**
+**New build options**
 
-- Fixed Android issue that caused the build script to ignore `PKG_CONFIG_PATH`. This  sometimes caused the build to use a preinstalled dependency instead of the specific version downloaded by the Android script. For example openssl).
-- Fixed Android issue that prevented the Sample app from running at the same time as other applications using the microphone. Android doesn't inherently allow two applications to use the microphone. Pressing the mute button now temporarily stops Alexa from accessing the microphone.
-- Added 'quit' (– q) to the settings sub menu.
-- Fixed outdated dependencies issue in the Windows install script.
-- Fixed reminders issue that caused Notification LEDs to stay on, even after dismissing the alert.
+* CAPTIONS
+  * **ADDED** [`CAPTIONS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
+  * **ADDED** [`LIBWEBVTT_LIB_PATH`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
+  * **ADDED** [`LIBWEBVTT_INCLUDE_DIR`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#captions)
+* METRICS
+  * **ADDED** [`METRICS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#metrics)
+* ENDPONTS
+  * **ADDED** [`ENABLE_ALL_ENDPOINT_CONTROLLERS`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  * **ADDED** [`ENABLE_POWER_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  * **ADDED** [`ENABLE_TOGGLE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  * **ADDED** [`ENABLE_RANGE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+  * **ADDED** [`ENABLE_MODE_CONTROLLER`](https://developer.amazon.com/docs/alexa/avs-device-sdk/cmake-parameters.html#endpoints)
+
+**New dependencies**
+
+* To use captions, you must install a [new dependency](https://developer.amazon.com/docs/alexa/avs-device-sdk/dependencies.html) &ndash; the [libwebvtt parsing library](https://github.com/alexa/webvtt). WebVTT is a C/C++ library for interpreting and authoring WebVTT content. WebVTT is a caption and subtitle format designed for use with HTML5 audio and video elements.
+
+**Bug fixes**
+
+* Fixed [`MimeResponseSink::onReceiveNonMimeData`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html) [data issue](https://github.com/alexa/avs-device-sdk/issues/1519)  that returned invalid data.
+* Fixed [data type issue](https://github.com/alexa/avs-device-sdk/issues/1519) that incorrectly used `finalResponseCode` instead of [`FinalResponseCodeId`](https://github.com/alexa/avs-device-sdk/blob/master/AVSCommon/Utils/src/LibcurlUtils/LibCurlHttpContentFetcher.cpp#L370)
+* Fixed [`UrlContentToAttachmentConverter`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter.html) issue that used the incorrect range parameter.
+* Fixed `FinallyGuard` [linking issue](https://github.com/alexa/avs-device-sdk/issues/1517) that caused problems compiling the SDK on iOS.
+* Fixed bug when you spoke the Wake Word "Alexa" twice rapidly.
 
 **Known Issues**
 
+* The WebVTT dependency required for `captions` isn't supported for Windows/Android.
+* `AudioInputProcessor` unit tests don't build on Windows when with the `-DCMAKE_BUILD_TYPE=DEBUG` cmake parameter.
 * Music playback history isn't displayed in the Alexa app for certain account and device types.
 * When using Gnu Compiler Collection 8+ (GCC 8+), `-Wclass-memaccess` triggers warnings. You can ignore these, they don't cause the build to fail.
 * Android error `libDefaultClient.so not found` might occur. Resolve this by upgrading to ADB version 1.0.40.
-* If a device loses a network connection, the lost connection status isn't returned via local TTS.
+* If a device loses a network connection, the lost connection status isn't returned through local TTS.
 * ACL encounters issues if it receives audio attachments but doesn't consume them.
 * `SpeechSynthesizerState` uses `GAINING_FOCUS` and `LOSING_FOCUS` as a workaround for handling intermediate states.
 * Media streamed through Bluetooth might abruptly stop. To restart playback, resume the media in the source application or toggle next/previous.
@@ -107,13 +110,28 @@
 * The Bluetooth agent assumes that the Bluetooth adapter is always connected to a power source. Disconnecting from a power source during operation isn't yet supported.
 * When using some products, interrupted Bluetooth playback might not resume if other content is locally streamed.
 * `make integration` isn't available for Android. To run Android integration tests, manually upload the test binary and input file and run ADB.
-* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS) user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
+* Alexa might truncate the beginning of speech when responding to text-to-speech (TTS)  user events. This only impacts Raspberry Pi devices running Android Things with HDMI output audio.
 * A reminder TTS message doesn't play if the sample app restarts and loses a network connection. Instead, the default alarm tone plays twice.
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
-* Bluetooth initialization must complete before connecting devices, otherwise devices are ignored.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
-* On some devices, Alexa gets stuck in an listening state. Pressing `t` and `h` in the Sample App doesn't exit the listening state.
+* On some devices, Pressing `t` and `h` in the Sample App doesn't exit the assigned state.
 * Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
+
+### Version 1.16.0 - October 25 2019 
+
+**Enhancements** 
+
+- Added support for [SpeechSynthesizer version 1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2)  which includes the new `playBehaviour` directive.  
+- Added support for pre-buffering in the [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html)  Capability Agent. You can optionally choose the number of instances [`MediaPlayer`](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html) uses in the [AlexaClientSDKconfig.json](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json). **Important:** the contract for [`MediaPlayerInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html)  has changed. You must now make sure that the `SourceId` value returned by `setSource()` is unique across all instances.
+- The [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html)  Capability Agent is now licensed under the Amazon Software License instead of the Apache Software License.
+
+**Bug Fixes**
+
+- Fixed Android issue that caused the build script to ignore `PKG_CONFIG_PATH`. This sometimes caused the build to use a preinstalled dependency instead of the specific version downloaded by the Android script. For example openssl).
+- Fixed Android issue that prevented the Sample app from running at the same time as other applications using the microphone. Android doesn't inherently allow two applications to use the microphone. Pressing the mute button now temporarily stops Alexa from accessing the microphone.
+- Added 'quit' (– q) to the settings sub menu.
+- Fixed outdated dependencies issue in the Windows install script.
+- Fixed reminders issue that caused Notification LEDs to stay on, even after dismissing the alert.
 
 ### v1.15.0 released 09/25/2019:
 
@@ -377,7 +395,7 @@
 * Fixed a bug in which `ExternalMediaPlayer` adapter playback wasn't being recognized by AVS.
 * [Issue 973](https://github.com/alexa/avs-device-sdk/issues/973) - Fixed issues related to `AudioPlayer` where progress reports were being sent out of order or with incorrect offsets.
 * An `EXPECTING`, state has been added to `DialogUXState` in order to handle `EXPECT_SPEECH` state for hold-to-talk devices.
-* [Issue 948](https://github.com/alexa/avs-device-sdk/issues/948) - Fixed a bug in which the sample app was stuck in a listening state.
+* [Issue 948](https://github.com/alexa/avs-device-sdk/issues/948) - Fixed a bug in which the sample app gets stuck various states.
 * Fixed a bug where there was a delay between receiving a `DeleteAlert` directive, and deleting the alert.
 * [Issue 839](https://github.com/alexa/avs-device-sdk/issues/839) - Fixed an issue where speech was being truncated due to the `DialogUXStateAggregator` transitioning between a `THINKING` and `IDLE` state.
 * Fixed a bug in which the `AudioPlayer` attempted to play when it wasn't in the `FOREGROUND` focus.
@@ -738,7 +756,7 @@
  * Implemented PlaylistParser.
 
 * **Bug fixes**:
- * AIP getting stuck in `LISTENING` or `THINKING` and refusing user input on network outage.
+ * AIP getting stuck in various states and refusing user input on network outage.
  * SampleApp crashing if running for 5 minutes after network disconnect.
  * Issue where on repeated user barge-ins, `AudioPlayer` would not pause. Specifically, the third attempt to “Play iHeartRadio” would not result in currently-playing music pausing.
  * Utterances being ignored after particularly long TTS.
@@ -760,7 +778,7 @@
 * Alexa's responses are cut off by about half a second when asking "What's up" or barging into an active alarm to ask the time.
 * Switching from Kindle to Amazon Music after pausing and resuming Kindle doesn't work.
 * Pause/resume on Amazon Music causes entire song to start over.
-* Stuck in listening state if `ExpectSpeech` comes in when the microphone has been turned off.
+* Stuck in various states if `ExpectSpeech` comes in when the microphone has been turned off.
 * Pausing and resuming Pandora causes stuttering, looped audio.
 * Audible features are not fully supported.
 * `Recognize` event after regaining network connection and during an alarm going off can cause client to get stuck in `Recognizing` state.
@@ -794,7 +812,7 @@
 * Fixed an issue with `AudioPlayer` barge-in which was preventing subsequent audio from playing.
 * Changed `Mediaplayer` buffering to reduce stuttering.
 * Known Issues:
- * Connection loss during listening keeps the app in that state even after connection is regained. Pressing ‘s’ unsticks the state.
+ * Connection loss during various states keeps the app in that state even after connection is regained. Pressing ‘s’ unsticks the state.
  * Play/Pause media restarts it from the beginning.
  * `SpeechSynthesizer` shows wrong UX state during a burst of Speaks.
  * Quitting the sample app while `AudioPlayer` is playing something causes a segmentation fault.
@@ -826,7 +844,7 @@
  * `AlertsCapabilityAgent`
   * Satisfies the [AVS specification](https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/timers-and-alarms-conceptual-overview) except for sending retrospective Events. For example, sending `AlertStarted` Event for an Alert which rendered when there was no internet connection.
  * `Sample App`:
-   * Any connection loss during the `Listening` state keeps the app stuck in that state, unless the ongoing interaction is manually stopped by the user.
+   * Any connection loss during various states keeps the app stuck in that state, unless the ongoing interaction is manually stopped by the user.
    * The user must wait several seconds after starting up the sample app before the sample app is properly usable.
  * `Tests`:
   * `SpeechSynthesizer` unit tests hang on some older versions of GCC due to a tear down issue in the test suite
@@ -855,7 +873,7 @@
     * Alerts do not play in the background when Alexa is speaking, but will continue playing after Alexa stops speaking.
   * `Sample App`:
    * Without the refresh token being filled out in the JSON file, the sample app crashes on start up.
-   * Any connection loss during the `Listening` state keeps the app stuck in that state, unless the ongoing interaction is manually stopped by the user.
+   * Any connection loss during various states keeps the app stuck in that state, unless the ongoing interaction is manually stopped by the user.
    * At the end of a shopping list with more than 5 items, the interaction in which Alexa asks the user if he/she would like to hear more does not finish properly.
  * `Tests`:
   * `SpeechSynthesizer` unit tests hang on some older versions of GCC due to a tear down issue in the test suite
@@ -962,4 +980,3 @@
 ### [0.1.0] - 2017-02-10
 
 * Initial release of the `Alexa Communications Library` (ACL), a component which manages network connectivity with AVS, and `AuthDelegate`, a component which handles user authorization with AVS.
-

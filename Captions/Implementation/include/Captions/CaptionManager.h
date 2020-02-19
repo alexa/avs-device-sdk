@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -91,15 +91,29 @@ public:
 
     /// @name MediaPlayerObserverInterface methods
     /// @{
-    void onPlaybackStarted(CaptionFrame::MediaPlayerSourceId id) override;
-    void onPlaybackFinished(CaptionFrame::MediaPlayerSourceId id) override;
+    void onPlaybackStarted(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackFinished(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
     void onPlaybackError(
         CaptionFrame::MediaPlayerSourceId id,
         const avsCommon::utils::mediaPlayer::ErrorType& type,
-        std::string error) override;
-    void onPlaybackPaused(CaptionFrame::MediaPlayerSourceId id) override;
-    void onPlaybackResumed(CaptionFrame::MediaPlayerSourceId id) override;
-    void onPlaybackStopped(CaptionFrame::MediaPlayerSourceId id) override;
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackPaused(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackResumed(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStopped(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onFirstByteRead(
+        CaptionFrame::MediaPlayerSourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override{};
     ///@}
 
 private:

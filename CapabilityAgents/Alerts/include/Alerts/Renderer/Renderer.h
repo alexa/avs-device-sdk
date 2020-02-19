@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@
 #include "Alerts/Renderer/RendererInterface.h"
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
+#include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
-#include <Settings/DeviceSettingsManager.h>
 
 #include <chrono>
 #include <condition_variable>
@@ -47,16 +47,15 @@ public:
      * Creates a @c Renderer.
      *
      * @param mediaPlayer the @c MediaPlayerInterface that the @c Renderer object will interact with.
-     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      * @return The @c Renderer object.
      */
     static std::shared_ptr<Renderer> create(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
 
     void start(
         std::shared_ptr<RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
+        bool volumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
         std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},
@@ -64,14 +63,19 @@ public:
 
     void stop() override;
 
-    void onPlaybackStarted(SourceId sourceId) override;
+    void onFirstByteRead(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackStopped(SourceId sourceId) override;
+    void onPlaybackStarted(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackFinished(SourceId sourceId) override;
+    void onPlaybackStopped(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error)
-        override;
+    void onPlaybackFinished(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+
+    void onPlaybackError(
+        SourceId sourceId,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
 private:
     /// A type that identifies which source is currently being operated on.
@@ -81,11 +85,8 @@ private:
      * Constructor.
      *
      * @param mediaPlayer The @c MediaPlayerInterface, which will render audio for an alert.
-     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      */
-    Renderer(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
+    Renderer(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
 
     /**
      * @name Executor Thread Functions
@@ -102,6 +103,7 @@ private:
      * @param observer The observer that will receive renderer events.
      * @param audioFactory A function that produces a stream of audio that is used for the default if nothing
      * else is available.
+     * @param volumeRampEnabled whether this media should ramp
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
      * @param loopPause The duration which must expire between the beginning of rendering of any loop of audio.
@@ -114,6 +116,7 @@ private:
     void executeStart(
         std::shared_ptr<RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
+        bool volumeRampEnabled,
         const std::vector<std::string>& urls,
         int loopCount,
         std::chrono::milliseconds loopPause,
@@ -227,9 +230,9 @@ private:
     void play();
 
     /**
-     * Generate the media player configuration for the current alarm rendering including volume gain.
+     * Generate the media player configuration for the current media rendering including volume gain.
      *
-     * @return The media player configuration for the current alarm rendering.
+     * @return The media player configuration for the current media rendering.
      */
     avsCommon::utils::mediaPlayer::SourceConfig generateMediaConfiguration();
 
@@ -311,11 +314,8 @@ private:
     /// The id associated with the media that our MediaPlayer is currently handling.
     SourceId m_currentSourceId;
 
-    /// Whether the alarm volume ramp property was enabled when the alarm started playing.
-    bool m_alarmVolumeRampEnabled;
-
-    /// The settings manager used to retrieve the value of alarm volume ramp setting.
-    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
+    /// Whether the volume ramp property was enabled when the media started playing.
+    bool m_volumeRampEnabled;
 
     /// @}
 

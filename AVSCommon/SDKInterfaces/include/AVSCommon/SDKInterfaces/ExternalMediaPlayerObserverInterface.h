@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,8 +34,9 @@ struct ObservableSessionProperties {
 
     /**
      * Constructor
-     * @param pLoggedIn
-     * @param pUserName
+     *
+     * @param loggedIn Flag that identifies if a users is logged in or not.
+     * @param userName The user name of the currently logged in user.
      */
     ObservableSessionProperties(bool loggedIn, const std::string& userName);
 
@@ -72,8 +73,9 @@ struct ObservablePlaybackStateProperties {
 
     /**
      * Constructor
-     * @param pState
-     * @param pTrackName
+     *
+     * @param state The state of the player.  State values are "IDLE", "PLAYING", "PAUSED", "STOPPED", "FINISHED".
+     * @param trackName The display name for the playing track.
      */
     ObservablePlaybackStateProperties(const std::string& state, const std::string& trackName);
 

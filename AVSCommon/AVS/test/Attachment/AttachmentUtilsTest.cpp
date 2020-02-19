@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  */
 
 #include <cstring>
+#include <vector>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
@@ -51,8 +52,9 @@ void AttachmentUtilsTest::SetUp() {
  * Test read until end of buffer
  */
 TEST_F(AttachmentUtilsTest, test_readCompleteBuffer) {
-    char dstBuffer[sampleBuffer.length() + 10];
-    memset(dstBuffer, 0, sampleBuffer.length() + 10);
+    std::vector<char> dstBufferVec(sampleBuffer.length() + 10);
+    std::fill(dstBufferVec.begin(), dstBufferVec.end(), 0);
+    char* dstBuffer = dstBufferVec.data();
 
     AttachmentReader::ReadStatus status;
     size_t bytesRead = m_attachmentReader->read(dstBuffer, sampleBuffer.length(), &status);

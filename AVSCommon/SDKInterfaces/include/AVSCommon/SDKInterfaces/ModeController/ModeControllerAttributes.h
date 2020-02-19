@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ using ModeResources = avsCommon::avs::CapabilityResources;
  * Struct to hold the Mode Controller attributes required for
  * Capability Agent discovery.
  *
- * @see https://developer.amazon.com/docs/alexa-voice-service/alexa-modecontroller.html#capability-assertion
+ * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html#capability-assertion
  */
 struct ModeControllerAttributes {
     /**
@@ -64,7 +64,11 @@ struct ModeControllerAttributes {
     const bool ordered;
 };
 
-inline ModeControllerAttributes::ModeControllerAttributes() : ordered{false} {
+inline ModeControllerAttributes::ModeControllerAttributes() :
+        ModeControllerAttributes(
+            avsCommon::avs::CapabilityResources(),
+            std::unordered_map<std::string, ModeResources>(),
+            false) {
 }
 
 inline ModeControllerAttributes::ModeControllerAttributes(

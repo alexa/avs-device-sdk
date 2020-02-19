@@ -265,6 +265,36 @@ TEST_F(SharedAVSSettingProtocolTest, test_restoreValueNotAvailable) {
     settingsUpdatedEvent.wait(TEST_TIMEOUT);
 }
 
+/// Test restore when value is not available in the database for a setting that use cloud authoritative default value.
+TEST_F(SharedAVSSettingProtocolTest, test_restoreValueNotAvailableCloudAuthoritative) {
+    WaitEvent settingsUpdatedEvent;
+
+    EXPECT_CALL(*m_storageMock, loadSetting(key)).WillOnce(Return(std::make_pair(SettingStatus::NOT_AVAILABLE, "")));
+    EXPECT_CALL(*m_storageMock, storeSetting(_, _, _)).WillOnce(Return(true));
+    EXPECT_CALL(*m_storageMock, updateSettingStatus(_, _)).WillOnce(InvokeWithoutArgs([&settingsUpdatedEvent] {
+        settingsUpdatedEvent.wakeUp();
+        return true;
+    }));
+
+    EXPECT_CALL(m_callbacksMock, applyDbChange(INVALID_VALUE)).WillOnce(Return(std::make_pair(true, DEFAULT_VALUE)));
+    EXPECT_CALL(m_callbacksMock, notifyObservers(SettingNotifications::AVS_CHANGE_IN_PROGRESS));
+    EXPECT_CALL(m_callbacksMock, notifyObservers(SettingNotifications::AVS_CHANGE));
+    EXPECT_CALL(*m_senderMock, sendReportEvent(_)).WillOnce(InvokeWithoutArgs([&]() {
+        std::promise<bool> retPromise;
+        retPromise.set_value(true);
+        return retPromise.get_future();
+    }));
+
+    auto protocol =
+        SharedAVSSettingProtocol::create(METADATA, m_senderMock, m_storageMock, m_mockConnectionManager, true);
+
+    protocol->restoreValue(
+        std::bind(&MockCallbacks::applyDbChange, &m_callbacksMock, std::placeholders::_1),
+        std::bind(&MockCallbacks::notifyObservers, &m_callbacksMock, std::placeholders::_1));
+
+    settingsUpdatedEvent.wait(TEST_TIMEOUT);
+}
+
 /// Test restore when the value is available and synchronized.
 TEST_F(SharedAVSSettingProtocolTest, test_restoreSynchronized) {
     EXPECT_CALL(*m_storageMock, loadSetting(key))

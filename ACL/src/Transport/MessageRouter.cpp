@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,7 +52,8 @@ MessageRouter::MessageRouter(
         m_connectionReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
         m_isEnabled{false},
         m_attachmentManager{attachmentManager},
-        m_transportFactory{transportFactory} {
+        m_transportFactory{transportFactory},
+        m_requestQueue{std::make_shared<SynchronizedMessageRequestQueue>()} {
 }
 
 MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
@@ -82,6 +83,20 @@ void MessageRouter::enable() {
 
 void MessageRouter::doShutdown() {
     disable();
+
+    // The above call will release all the transports. If m_requestQueue is non-empty once all of the transports
+    // have been released, any outstanding MessageRequest instances must receive an onCompleted(NOT_CONNECTED)
+    // notification.
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
+    if (!m_requestQueue->empty()) {
+        auto request = m_requestQueue->dequeueRequest();
+        if (request != nullptr) {
+            request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
+        }
+        m_requestQueue->clear();
+    }
+    lock.unlock();
+
     m_executor.shutdown();
 }
 
@@ -98,7 +113,8 @@ void MessageRouter::sendMessage(std::shared_ptr<MessageRequest> request) {
     }
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_activeTransport) {
-        m_activeTransport->send(request);
+        m_requestQueue->enqueueRequest(request);
+        m_activeTransport->onRequestEnqueued();
     } else {
         ACSDK_ERROR(LX("sendFailed").d("reason", "noActiveTransport"));
         request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
@@ -240,7 +256,7 @@ void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const 
 
 void MessageRouter::createActiveTransportLocked() {
     auto transport = m_transportFactory->createTransport(
-        m_authDelegate, m_attachmentManager, m_avsGateway, shared_from_this(), shared_from_this());
+        m_authDelegate, m_attachmentManager, m_avsGateway, shared_from_this(), shared_from_this(), m_requestQueue);
     if (transport && transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;

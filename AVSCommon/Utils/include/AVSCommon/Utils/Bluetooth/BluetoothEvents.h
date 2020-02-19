@@ -20,6 +20,7 @@
 #include "AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h"
 #include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h"
 #include "AVSCommon/Utils/Bluetooth/A2DPRole.h"
+#include "AVSCommon/Utils/Bluetooth/MediaStreamingState.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,11 +41,17 @@ enum class BluetoothEventType {
     /// Represents when the A2DP streaming state changes.
     STREAMING_STATE_CHANGED,
 
-    /// Represents when an AVRCP command has been received.
-    AVRCP_COMMAND_RECEIVED,
+    /// Represents when a media command has been received.
+    MEDIA_COMMAND_RECEIVED,
 
     /// When the BluetoothDeviceManager has initialized.
-    BLUETOOTH_DEVICE_MANAGER_INITIALIZED
+    BLUETOOTH_DEVICE_MANAGER_INITIALIZED,
+
+    /// When the scanning state of the host has changed.
+    SCANNING_STATE_CHANGED,
+
+    /// Request to connect/disconnect a certain profile
+    TOGGLE_A2DP_PROFILE_STATE_CHANGED
 };
 
 /// Helper struct to allow enum class to be a key in collections
@@ -53,16 +60,6 @@ struct BluetoothEventTypeHash {
     std::size_t operator()(T t) const {
         return static_cast<std::size_t>(t);
     }
-};
-
-/// An Enum representing the current state of the stream.
-enum class MediaStreamingState {
-    /// Currently not streaming.
-    IDLE,
-    /// Currently acquiring the stream.
-    PENDING,
-    /// Currently streaming.
-    ACTIVE
 };
 
 /// Base class for a @c BluetoothEvent.
@@ -104,10 +101,24 @@ public:
     std::shared_ptr<A2DPRole> getA2DPRole() const;
 
     /**
-     * Get @c AVRCPCommand associated with the event
-     * @return @c AVRCPCommand associated with the event or null if not applicable
+     * Get @c MediaCommand associated with the event
+     * @return @c MediaCommand associated with the event or null if not applicable
      */
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> getAVRCPCommand() const;
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> getMediaCommand() const;
+
+    /**
+     * Get the current scanning state of the host device.
+     *
+     * @return Whether the device is currently scanning for other devices.
+     */
+    bool isScanning() const;
+
+    /**
+     * Get the current enable/disable state of the A2DP profiles.
+     *
+     * @return Whether the event requires to enable the A2DP profiles.
+     */
+    bool isA2DPEnabled() const;
 
 protected:
     /**
@@ -117,7 +128,7 @@ protected:
      * @param deviceState @c DeviceState associated with the event
      * @param mediaStreamingState @c MediaStreamingState associated with the event
      * @param role The A2DP role the AVS device is acting as
-     * @param avrcpCommand The received AVRCPCommand if applicable
+     * @param mediaCommand The received MediaCommand if applicable
      */
     BluetoothEvent(
         BluetoothEventType type,
@@ -126,7 +137,9 @@ protected:
             avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
         MediaStreamingState mediaStreamingState = MediaStreamingState::IDLE,
         std::shared_ptr<A2DPRole> role = nullptr,
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> avrcpCommand = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> mediaCommand = nullptr,
+        bool scanningState = false,
+        bool a2dpEnable = false);
 
 private:
     /// Event type
@@ -144,8 +157,14 @@ private:
     /// @c A2DPRole associated with the event
     std::shared_ptr<A2DPRole> m_a2dpRole;
 
-    /// @C AVRCPCommand that is received
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> m_avrcpCommand;
+    /// @C MediaCommand that is received
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> m_mediaCommand;
+
+    /// The scanning state of the host device
+    bool m_scanningState;
+
+    /// The enable state of the A2DP profiles
+    bool m_a2dpEnable;
 };
 
 inline BluetoothEvent::BluetoothEvent(
@@ -154,13 +173,17 @@ inline BluetoothEvent::BluetoothEvent(
     avsCommon::sdkInterfaces::bluetooth::DeviceState deviceState,
     MediaStreamingState mediaStreamingState,
     std::shared_ptr<A2DPRole> a2dpRole,
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> avrcpCommand) :
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> mediaCommand,
+    bool scanningState,
+    bool a2dpEnable) :
         m_type{type},
         m_device{device},
         m_deviceState{deviceState},
         m_mediaStreamingState{mediaStreamingState},
         m_a2dpRole{a2dpRole},
-        m_avrcpCommand{avrcpCommand} {
+        m_mediaCommand{mediaCommand},
+        m_scanningState{scanningState},
+        m_a2dpEnable{a2dpEnable} {
 }
 
 inline BluetoothEventType BluetoothEvent::getType() const {
@@ -184,9 +207,17 @@ inline std::shared_ptr<A2DPRole> BluetoothEvent::getA2DPRole() const {
     return m_a2dpRole;
 }
 
-inline std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> BluetoothEvent::getAVRCPCommand()
+inline std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> BluetoothEvent::getMediaCommand()
     const {
-    return m_avrcpCommand;
+    return m_mediaCommand;
+}
+
+inline bool BluetoothEvent::isScanning() const {
+    return m_scanningState;
+}
+
+inline bool BluetoothEvent::isA2DPEnabled() const {
+    return m_a2dpEnable;
 }
 
 /**
@@ -291,20 +322,20 @@ inline MediaStreamingStateChangedEvent::MediaStreamingStateChangedEvent(
 /**
  * Event indicating that an AVRCP command was received.
  */
-class AVRCPCommandReceivedEvent : public BluetoothEvent {
+class MediaCommandReceivedEvent : public BluetoothEvent {
 public:
-    explicit AVRCPCommandReceivedEvent(avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand command);
+    explicit MediaCommandReceivedEvent(avsCommon::sdkInterfaces::bluetooth::services::MediaCommand command);
 };
 
-inline AVRCPCommandReceivedEvent::AVRCPCommandReceivedEvent(
-    avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand command) :
+inline MediaCommandReceivedEvent::MediaCommandReceivedEvent(
+    avsCommon::sdkInterfaces::bluetooth::services::MediaCommand command) :
         BluetoothEvent(
-            BluetoothEventType::AVRCP_COMMAND_RECEIVED,
+            BluetoothEventType::MEDIA_COMMAND_RECEIVED,
             nullptr,
             avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
             MediaStreamingState::IDLE,
             nullptr,
-            std::make_shared<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand>(command)) {
+            std::make_shared<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand>(command)) {
 }
 
 /**
@@ -317,6 +348,45 @@ public:
 
 inline BluetoothDeviceManagerInitializedEvent::BluetoothDeviceManagerInitializedEvent() :
         BluetoothEvent(BluetoothEventType::BLUETOOTH_DEVICE_MANAGER_INITIALIZED) {
+}
+
+/**
+ * Event indicating that the scanning state on the host device has changed.
+ */
+class ScanningStateChangedEvent : public BluetoothEvent {
+public:
+    explicit ScanningStateChangedEvent(bool isScanning);
+};
+
+inline ScanningStateChangedEvent::ScanningStateChangedEvent(bool isScanning) :
+        BluetoothEvent(
+            BluetoothEventType::SCANNING_STATE_CHANGED,
+            nullptr,
+            avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
+            MediaStreamingState::IDLE,
+            nullptr,
+            nullptr,
+            isScanning) {
+}
+
+/**
+ * Event indicating that the request to disconnect/connect certain profiles on devices
+ */
+class ToggleA2DPProfileStateChangedEvent : public BluetoothEvent {
+public:
+    explicit ToggleA2DPProfileStateChangedEvent(bool a2dpEnable);
+};
+
+inline ToggleA2DPProfileStateChangedEvent::ToggleA2DPProfileStateChangedEvent(bool a2dpEnable) :
+        BluetoothEvent(
+            BluetoothEventType::TOGGLE_A2DP_PROFILE_STATE_CHANGED,
+            nullptr,
+            avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE,
+            MediaStreamingState::IDLE,
+            nullptr,
+            nullptr,
+            false,
+            a2dpEnable) {
 }
 
 }  // namespace bluetooth

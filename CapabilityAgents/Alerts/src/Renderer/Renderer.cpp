@@ -17,6 +17,7 @@
 #include <chrono>
 #include <fstream>
 
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "Alerts/Renderer/Renderer.h"
@@ -26,6 +27,7 @@ namespace capabilityAgents {
 namespace alerts {
 namespace renderer {
 
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::mediaPlayer;
 
@@ -52,20 +54,13 @@ static bool isSourceIdOk(MediaPlayerInterface::SourceId sourceId) {
     return sourceId != MediaPlayerInterface::ERROR;
 }
 
-std::shared_ptr<Renderer> Renderer::create(
-    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
+std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").m("mediaPlayer parameter was nullptr."));
         return nullptr;
     }
 
-    if (!settingsManager) {
-        ACSDK_ERROR(LX("createFailed").m("settingsManager parameter was nullptr."));
-        return nullptr;
-    }
-
-    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, settingsManager});
+    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer});
     mediaPlayer->addObserver(renderer);
     return renderer;
 }
@@ -73,6 +68,7 @@ std::shared_ptr<Renderer> Renderer::create(
 void Renderer::start(
     std::shared_ptr<RendererObserverInterface> observer,
     std::function<std::unique_ptr<std::istream>()> audioFactory,
+    bool volumeRampEnabled,
     const std::vector<std::string>& urls,
     int loopCount,
     std::chrono::milliseconds loopPause,
@@ -95,8 +91,8 @@ void Renderer::start(
         loopPause = std::chrono::milliseconds{0};
     }
 
-    m_executor.submit([this, observer, audioFactory, urls, loopCount, loopPause, startWithPause]() {
-        executeStart(observer, audioFactory, urls, loopCount, loopPause, startWithPause);
+    m_executor.submit([this, observer, audioFactory, volumeRampEnabled, urls, loopCount, loopPause, startWithPause]() {
+        executeStart(observer, audioFactory, volumeRampEnabled, urls, loopCount, loopPause, startWithPause);
     });
 }
 
@@ -109,28 +105,31 @@ void Renderer::stop() {
     m_executor.submit([this]() { executeStop(); });
 }
 
-void Renderer::onPlaybackStarted(SourceId sourceId) {
+void Renderer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
+    ACSDK_DEBUG(LX(__func__).d("id", id));
+}
+
+void Renderer::onPlaybackStarted(SourceId sourceId, const MediaPlayerState&) {
     m_executor.submit([this, sourceId]() { executeOnPlaybackStarted(sourceId); });
 }
 
-void Renderer::onPlaybackStopped(SourceId sourceId) {
+void Renderer::onPlaybackStopped(SourceId sourceId, const MediaPlayerState&) {
     m_executor.submit([this, sourceId]() { executeOnPlaybackStopped(sourceId); });
 }
 
-void Renderer::onPlaybackFinished(SourceId sourceId) {
+void Renderer::onPlaybackFinished(SourceId sourceId, const MediaPlayerState&) {
     m_executor.submit([this, sourceId]() { executeOnPlaybackFinished(sourceId); });
 }
 
 void Renderer::onPlaybackError(
     SourceId sourceId,
     const avsCommon::utils::mediaPlayer::ErrorType& type,
-    std::string error) {
+    std::string error,
+    const MediaPlayerState&) {
     m_executor.submit([this, sourceId, type, error]() { executeOnPlaybackError(sourceId, type, error); });
 }
 
-Renderer::Renderer(
-    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
+Renderer::Renderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
         m_mediaPlayer{mediaPlayer},
         m_observer{nullptr},
         m_numberOfStreamsRenderedThisLoop{0},
@@ -140,8 +139,7 @@ Renderer::Renderer(
         m_shouldPauseBeforeRender{false},
         m_isStopping{false},
         m_isStartPending{false},
-        m_alarmVolumeRampEnabled{false},
-        m_settingsManager{settingsManager} {
+        m_volumeRampEnabled{false} {
     resetSourceId();
 }
 
@@ -213,7 +211,7 @@ bool Renderer::pause(std::chrono::milliseconds duration) {
 }
 
 SourceConfig Renderer::generateMediaConfiguration() {
-    if (!m_alarmVolumeRampEnabled) {
+    if (!m_volumeRampEnabled) {
         return emptySourceConfig();
     }
 
@@ -233,8 +231,7 @@ SourceConfig Renderer::generateMediaConfiguration() {
 
 void Renderer::play() {
     auto mediaConfig = generateMediaConfiguration();
-    ACSDK_DEBUG9(
-        LX(__func__).d("fadeEnabled", m_alarmVolumeRampEnabled).d("startGain", mediaConfig.fadeInConfig.startGain));
+    ACSDK_DEBUG9(LX(__func__).d("fadeEnabled", m_volumeRampEnabled).d("startGain", mediaConfig.fadeInConfig.startGain));
 
     m_isStartPending = false;
 
@@ -270,11 +267,13 @@ void Renderer::play() {
 void Renderer::executeStart(
     std::shared_ptr<RendererObserverInterface> observer,
     std::function<std::unique_ptr<std::istream>()> audioFactory,
+    bool volumeRampEnabled,
     const std::vector<std::string>& urls,
     int loopCount,
     std::chrono::milliseconds loopPause,
     bool startWithPause) {
     ACSDK_DEBUG1(LX(__func__)
+                     .d("rampEnabled", volumeRampEnabled)
                      .d("urls.size", urls.size())
                      .d("loopCount", loopCount)
                      .d("loopPause (ms)", std::chrono::duration_cast<std::chrono::milliseconds>(loopPause).count())
@@ -288,12 +287,7 @@ void Renderer::executeStart(
     m_loopPause = loopPause;
     m_shouldPauseBeforeRender = startWithPause;
     m_defaultAudioFactory = audioFactory;
-
-    auto alarmVolumeRampSetting =
-        m_settingsManager
-            ->getValue<settings::DeviceSettingsIndex::ALARM_VOLUME_RAMP>(settings::types::getAlarmVolumeRampDefault())
-            .second;
-    m_alarmVolumeRampEnabled = settings::types::isEnabled(alarmVolumeRampSetting);
+    m_volumeRampEnabled = volumeRampEnabled;
     m_numberOfStreamsRenderedThisLoop = 0;
 
     ACSDK_DEBUG9(

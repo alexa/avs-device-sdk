@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -272,9 +272,9 @@ std::pair<std::unique_ptr<AVSDirective>, AVSDirective::ParseStatus> AVSDirective
 
 std::unique_ptr<AVSDirective> AVSDirective::create(
     const std::string& unparsedDirective,
-    std::shared_ptr<AVSMessageHeader> avsMessageHeader,
+    const std::shared_ptr<AVSMessageHeader> avsMessageHeader,
     const std::string& payload,
-    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+    const std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     const std::string& attachmentContextId,
     const utils::Optional<AVSMessageEndpoint>& endpoint) {
     if (!avsMessageHeader) {
@@ -311,6 +311,10 @@ AVSDirective::AVSDirective(
 
 std::string AVSDirective::getUnparsedDirective() const {
     return m_unparsedDirective;
+}
+
+std::string AVSDirective::getAttachmentContextId() const {
+    return m_attachmentContextId;
 }
 
 }  // namespace avs

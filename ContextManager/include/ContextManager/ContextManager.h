@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/StateProviderInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/MultiTimer.h>
@@ -49,12 +50,14 @@ public:
      *
      * @param deviceInfo Structure used to retrieve the default endpoint id.
      * @param multiTimer Object used to schedule request timeout.
+     * @param metricRecorder The metric recorder.
      * @return Returns a new @c ContextManager.
      */
     static std::shared_ptr<ContextManager> create(
         const avsCommon::utils::DeviceInfo& deviceInfo,
         std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer =
-            std::make_shared<avsCommon::utils::timing::MultiTimer>());
+            std::make_shared<avsCommon::utils::timing::MultiTimer>(),
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// Destructor.
     ~ContextManager() override;
@@ -174,10 +177,13 @@ private:  // Private method declarations.
      *
      * @param defaultEndpointId The default endpoint used for legacy methods where no endpoint id is provided.
      * @param multiTimer Object used to schedule request timeout.
+     * @param metricRecorder The metric recorder.
      */
     ContextManager(
         const std::string& defaultEndpointId,
-        std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer);
+        std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+    ///
 
     /**
      * Updates the state of a capability.
@@ -187,7 +193,7 @@ private:  // Private method declarations.
      * @param refreshPolicy The refresh policy for the state.
      * @deprecated @c StateRefreshPolicy has been deprecated.
      */
-    bool updateCapabilityState(
+    void updateCapabilityState(
         const avsCommon::avs::CapabilityTag& capabilityIdentifier,
         const std::string& jsonState,
         const avsCommon::avs::StateRefreshPolicy& refreshPolicy);
@@ -240,6 +246,9 @@ private:  // Member variable declarations
 
     /// Mutex used to guard the pending state requests. This is only needed because of @c setState.
     std::mutex m_requestsMutex;
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The request token counter.
     unsigned int m_requestCounter;

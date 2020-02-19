@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ namespace avs {
  * The structure representing the endpoint attributes used for discovery.
  *
  * This structure mirrors the AVS definition which is documented here:
- * https://developer.amazon.com/docs/alexa-voice-service/alexa-discovery.html
+ * https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-discovery.html
  *
  * @note The following attributes will differ from the default endpoint, used to describe this Alexa client, to any
  * other endpoint controlled by this client. The differences are:
@@ -85,7 +85,7 @@ struct AVSDiscoveryEndpointAttributes {
 
     /// Maximum length of each endpoint attribute:
     /// See format specification here:
-    /// https://developer.amazon.com/docs/alexa-voice-service/alexa-discovery.html#addorupdatereport
+    /// https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-discovery.html#addorupdatereport
     /// @{
     static constexpr size_t MAX_ENDPOINT_IDENTIFIER_LENGTH = 256;
     static constexpr size_t MAX_FRIENDLY_NAME_LENGTH = 128;
@@ -112,7 +112,7 @@ struct AVSDiscoveryEndpointAttributes {
     std::string manufacturerName;
 
     /// The display categories the device belongs to. This field should contain at least one category. See categories
-    /// in this document: https://developer.amazon.com/docs/device-apis/alexa-discovery.html#display-categories
+    /// in this document: https://developer.amazon.com/docs/alexa/device-apis/alexa-discovery.html#display-categories
     /// @note: This value should only include ALEXA_VOICE_ENABLED for the default endpoint.
     std::vector<std::string> displayCategories;
 
@@ -124,7 +124,7 @@ struct AVSDiscoveryEndpointAttributes {
 
     /// The optional connections list describing how the endpoint is connected to the internet or smart home hub.
     /// You can find the values available here:
-    /// https://developer.amazon.com/docs/alexa-voice-service/alexa-discovery.html#addorupdatereport
+    /// https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-discovery.html#addorupdatereport
     std::vector<std::map<std::string, std::string>> connections;
 
     /// The optional custom key value pair used to store about the device. In the AVS documentation, this field name is

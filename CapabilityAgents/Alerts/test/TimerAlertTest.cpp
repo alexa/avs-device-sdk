@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public:
     std::shared_ptr<Timer> m_timer;
 };
 
-TimerAlertTest::TimerAlertTest() : m_timer{std::make_shared<Timer>(timerDefaultFactory, timerShortFactory)} {
+TimerAlertTest::TimerAlertTest() : m_timer{std::make_shared<Timer>(timerDefaultFactory, timerShortFactory, nullptr)} {
 }
 
 TEST_F(TimerAlertTest, test_defaultAudio) {
@@ -58,7 +58,7 @@ TEST_F(TimerAlertTest, test_shortAudio) {
 }
 
 TEST_F(TimerAlertTest, test_getTypeName) {
-    ASSERT_EQ(m_timer->getTypeName(), Timer::TYPE_NAME);
+    ASSERT_EQ(m_timer->getTypeName(), Timer::getTypeNameStatic());
 }
 }  // namespace test
 }  // namespace alerts

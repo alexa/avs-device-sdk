@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,6 +70,16 @@ public:
      */
     ~Timer();
 
+    /// Static member function to get FOREVER.
+    static size_t getForever() {
+        return FOREVER;
+    }
+
+    /// Static member function to get TAG.
+    static std::string getTag() {
+        return "Timer";
+    }
+
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to be
      * executed after an initial delay, and then called repeatedly on a fixed time schedule.  A @c Timer instance
@@ -86,7 +96,7 @@ public:
      * @param period The non-negative time to wait between subsequent task calls.  Negative values will cause this
      *    function to return false.
      * @param periodType The type of period to use when making subsequent task calls.
-     * @param maxCount The desired number of times to call task.  @c Timer::FOREVER means to call forever until
+     * @param maxCount The desired number of times to call task.  @c Timer::getForever() means to call forever until
      *     @c stop() is called.  Note that fewer than @c maxCount calls may occur if @c periodType is
      *     @c PeriodType::ABSOLUTE and the task runtime exceeds @c period.
      * @param task A callable type representing a task.
@@ -116,7 +126,7 @@ public:
      * @param period The non-negative time to wait before each @c task call.  Negative values will cause this
      *    function to return false.
      * @param periodType The type of period to use when making subsequent task calls.
-     * @param maxCount The desired number of times to call task.  @c Timer::FOREVER means to call forever until
+     * @param maxCount The desired number of times to call task.  @c Timer::getForever() means to call forever until
      *     @c stop() is called.  Note that fewer than @c maxCount calls may occur if @c periodType is
      *     @c PeriodType::ABSOLUTE and the task runtime exceeds @c period.
      * @param task A callable type representing a task.
@@ -189,7 +199,7 @@ private:
      * @param delay The non-negative time to wait before making the first @c task call.
      * @param period The non-negative time to wait between subsequent @c task calls.
      * @param periodType The type of period to use when making subsequent task calls.
-     * @param maxCount The desired number of times to call task.  @c Timer::FOREVER means to call forever until
+     * @param maxCount The desired number of times to call task.  @c Timer::getForever() means to call forever until
      *     @c stop() is called.  Note that fewer than @c maxCount calls may occur if @c periodType is
      *     @c PeriodType::ABSOLUTE and the task runtime exceeds @c period.
      * @param task A callable type representing a task.
@@ -201,11 +211,6 @@ private:
         PeriodType periodType,
         size_t maxCount,
         std::function<void()> task);
-
-    /**
-     * The tag associated with log entries from this class.
-     */
-    static const std::string TAG;
 
     /// The condition variable used to wait for @c stop() or period timeouts.
     std::condition_variable m_waitCondition;
@@ -235,17 +240,17 @@ bool Timer::start(
     Task task,
     Args&&... args) {
     if (delay < std::chrono::duration<Rep, Period>::zero()) {
-        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativeDelay"));
+        logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "negativeDelay"));
         return false;
     }
     if (period < std::chrono::duration<Rep, Period>::zero()) {
-        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "negativePeriod"));
+        logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "negativePeriod"));
         return false;
     }
 
     // Can't start if already running.
     if (!activate()) {
-        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "timerAlreadyActive"));
+        logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "timerAlreadyActive"));
         return false;
     }
 
@@ -283,7 +288,7 @@ auto Timer::start(const std::chrono::duration<Rep, Period>& delay, Task task, Ar
     -> std::future<decltype(task(args...))> {
     // Can't start if already running.
     if (!activate()) {
-        logger::acsdkError(logger::LogEntry(TAG, "startFailed").d("reason", "timerAlreadyActive"));
+        logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "timerAlreadyActive"));
         using FutureType = decltype(task(args...));
         return std::future<FutureType>();
     }

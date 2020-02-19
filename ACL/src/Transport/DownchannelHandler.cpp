@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -119,6 +119,7 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
         case HTTPResponseCode::REDIRECTION_PERMANENT_REDIRECT:
         case HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST:
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
+        case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
             break;
         case HTTPResponseCode::SUCCESS_OK:
             m_context->onDownchannelConnected();

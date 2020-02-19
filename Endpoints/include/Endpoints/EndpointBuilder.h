@@ -166,6 +166,14 @@ public:
      */
     bool finishDefaultEndpointConfiguration();
 
+    /**
+     * Builds the default endpoint.
+     *
+     * This will ensure that only the owner of this builder can actually build the default endpoint.
+     * @return Whether the build succeeded or not.
+     */
+    bool buildDefaultEndpoint();
+
 private:
     /// Defines a function that can be used to build a capability.
     using CapabilityBuilder =
@@ -186,6 +194,13 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender);
+
+    /**
+     * Implements the build logic used by @c buildDefaultEndpoint() and @c build().
+     *
+     * @return A unique endpointId if the build succeeds; otherwise, an empty endpointId object.
+     */
+    avsCommon::utils::Optional<EndpointIdentifier> buildImplementation();
 
     /// Flag used to identify the default endpoint builder.
     /// We use this flag to restrict the amount of customization available for the default endpoint.

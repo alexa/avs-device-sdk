@@ -196,7 +196,7 @@ DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     return configuration;
 }
 
-void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus) {
+void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus, MixingBehavior) {
     m_executor.submit([this, newFocus]() { executeOnFocusChangedEvent(newFocus); });
 }
 

@@ -144,7 +144,7 @@ std::pair<bool, std::string> Setting<ValueT>::handleSetValue(const ValueType& va
     std::string valueStr;
     std::tie(ok, valueStr) = toSettingString<ValueT>(value);
     if (ok && (!this->m_applyFunction || this->m_applyFunction(value))) {
-        avsCommon::utils::logger::acsdkInfo(LogEntry("Setting", __func__).d("value", valueStr));
+        avsCommon::utils::logger::acsdkInfo(LogEntry("Setting", __func__).obfuscatePrivateData("value", valueStr));
         m_oldValue = this->m_value;
         this->m_value = value;
         return {true, valueStr};

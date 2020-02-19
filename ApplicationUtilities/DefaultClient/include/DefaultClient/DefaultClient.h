@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
 #include <AVSCommon/SDKInterfaces/CallManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
@@ -59,7 +60,7 @@
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
-#include <AVSCommon/Utils/Metrics/MetricSinkInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <Bluetooth/Bluetooth.h>
 #include <Bluetooth/BluetoothStorageInterface.h>
 #include <Captions/CaptionPresenterInterface.h>
@@ -142,7 +143,6 @@ public:
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
      * @param ringtoneMediaPlayer The media player to play Comms ringtones.
      * @param systemSoundMediaPlayer The media player to play system sounds.
-     * @param metricSinkInterface The metric sink interface to be moved into MetricRecorder
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
@@ -174,13 +174,16 @@ public:
      * @param contextManager The @c ContextManager which will provide the context for various components.
      * @param transportFactory The object passed in here will be used whenever a new transport object
      * for AVS communication is needed.
+     * @param avsGatewayManager The @c AVSGatewayManager instance used to create the ApiGateway CA.
      * @param localeAssetsManager The device locale assets manager.
+     * @param enabledConnectionRules The set of @c BluetoothDeviceConnectionRuleInterface instances used to
+     * create the Bluetooth CA.
      * @param systemTimezone Optional object used to set the system timezone.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
      * @param bluetoothDeviceManager The @c BluetoothDeviceManager instance used to create the Bluetooth CA.
-     * @param avsGatewayManager The @c AVSGatewayManager instance used to create the ApiGateway CA.
+     * @param metricRecorder The metric recorder object used to capture metrics.
      * @param powerResourceManager Object to manage power resource.
      * @return A @c std::unique_ptr to a DefaultClient if all went well or @c nullptr otherwise.
      *
@@ -201,7 +204,6 @@ public:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
-        std::unique_ptr<avsCommon::utils::metrics::MetricSinkInterface> metricSinkInterface,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
@@ -242,7 +244,11 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+            enabledConnectionRules = std::unordered_set<
+                std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>(),
         std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone = nullptr,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion =
             avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION,
@@ -251,7 +257,7 @@ public:
             nullptr,
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager =
             nullptr,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager = nullptr,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     /**
@@ -492,6 +498,20 @@ public:
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> getSpeakerManager();
 
     /**
+     * Adds a SpeechSynthesizerObserver to be alerted on SpeechSynthesizer state changes
+     * @param observer  The observer to be notified upon the state change
+     */
+    void addSpeechSynthesizerObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface> observer);
+
+    /**
+     * Removes a SpeechSynthesizerObserver from being alerted on SpeechSynthesizer state changes
+     * @param observer  The observer to be removed
+     */
+    void removeSpeechSynthesizerObserver(
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface> observer);
+
+    /**
      * Get a shared_ptr to the RegistrationManager.
      *
      * @return shared_ptr to the RegistrationManager.
@@ -623,6 +643,23 @@ public:
     void stopCommsCall();
 
     /**
+     * Check if the Comms call is muted.
+     *
+     * @return Whether the comms call is muted.
+     */
+    bool isCommsCallMuted();
+
+    /**
+     * Mute comms Call.
+     */
+    void muteCommsCall();
+
+    /**
+     * Unmute Comms call.
+     */
+    void unmuteCommsCall();
+
+    /**
      * Destructor.
      */
     ~DefaultClient();
@@ -653,7 +690,6 @@ private:
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
      * @param ringtoneMediaPlayer The media player to play Comms ringtones.
      * @param systemSoundPlayer The media player to play system sounds.
-     * @param metricSinkInterface The metric sink interface to be moved into MetricRecorder
      * @param speakSpeaker The speaker to control volume of Alexa speech.
      * @param audioSpeaker The speaker to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
@@ -680,13 +716,16 @@ private:
      * @param contextManager The @c ContextManager which will provide the context for various components.
      * @param transportFactory The object passed in here will be used whenever a new transport object
      * for AVS communication is needed.
+     * @param avsGatewayManager The @c AVSGatewayManager instance used to create the ApiGateway CA.
      * @param localeAssetsManager The device locale assets manager.
+     * @param enabledConnectionRules The set of @c BluetoothDeviceConnectionRuleInterface instances used to
+     * create the Bluetooth CA.
      * @param systemTimezone Optional object used to set the system timezone.
      * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
      * @param bluetoothDeviceManager The @c BluetoothDeviceManager instance used to create the Bluetooth CA.
-     * @param avsGatewayManager The @c AVSGatewayManager instance used to create the ApiGateway CA.
+     * @param metricRecorder The optional metric recorder object used to capture metrics.
      * @param powerResourceManager Object to manage power resource.
      * @return Whether the SDK was initialized properly.
      */
@@ -704,7 +743,6 @@ private:
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
-        std::unique_ptr<avsCommon::utils::metrics::MetricSinkInterface> metricSinkInterface,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> audioSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
@@ -745,13 +783,16 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+            enabledConnectionRules,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone,
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoOnConnected,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager);
 
     /// The directive sequencer.

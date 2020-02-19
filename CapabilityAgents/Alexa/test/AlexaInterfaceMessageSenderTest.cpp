@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ using namespace avsCommon::utils::timing;
 using namespace rapidjson;
 
 /// Amount of time for the test to wait for event to be sent.
-static const std::chrono::seconds WAIT_TIMEOUT(2);
+static const std::chrono::seconds MY_WAIT_TIMEOUT(2);
 
 /// Name for PowerController.
 static const std::string NAME_POWER_CONTROLLER("PowerController");
@@ -528,11 +528,11 @@ bool AlexaInterfaceMessageSenderTest::expectEventSent(
 
     triggerOperation();
 
-    EXPECT_TRUE(contextPromise.get_future().wait_for(WAIT_TIMEOUT) == std::future_status::ready);
+    EXPECT_TRUE(contextPromise.get_future().wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready);
 
     auto sendFuture = eventPromise.get_future();
     bool isSendFutureReady = false;
-    isSendFutureReady = sendFuture.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    isSendFutureReady = sendFuture.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
 
     // Workaround GTEST issue where expectations can hold a reference to a shared_ptr even after we wait for the future.
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(m_messageSender.get()));
@@ -577,11 +577,11 @@ bool AlexaInterfaceMessageSenderTest::expectEventSentOnInvalidContext(
 
     triggerOperation();
 
-    EXPECT_TRUE(contextPromise.get_future().wait_for(WAIT_TIMEOUT) == std::future_status::ready);
+    EXPECT_TRUE(contextPromise.get_future().wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready);
 
     auto sendFuture = eventPromise.get_future();
     bool isSendFutureReady = false;
-    isSendFutureReady = sendFuture.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    isSendFutureReady = sendFuture.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
 
     // Workaround GTEST issue where expectations can hold a reference to a shared_ptr even after we wait for the future.
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(m_messageSender.get()));
@@ -620,7 +620,7 @@ bool AlexaInterfaceMessageSenderTest::expectEventSentWithoutContext(
 
     auto sendFuture = eventPromise.get_future();
     bool isSendFutureReady = false;
-    isSendFutureReady = sendFuture.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    isSendFutureReady = sendFuture.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
 
     // Workaround GTEST issue where expectations can hold a reference to a shared_ptr even after we wait for the future.
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(m_messageSender.get()));
@@ -652,11 +652,11 @@ bool AlexaInterfaceMessageSenderTest::expectEventNotSentOnInvalidContext(
 
     triggerOperation();
 
-    EXPECT_TRUE(contextPromise.get_future().wait_for(WAIT_TIMEOUT) == std::future_status::ready);
+    EXPECT_TRUE(contextPromise.get_future().wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready);
 
     auto sendFuture = eventPromise.get_future();
     bool isSendFutureReady = false;
-    isSendFutureReady = sendFuture.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    isSendFutureReady = sendFuture.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
 
     // Workaround GTEST issue where expectations can hold a reference to a shared_ptr even after we wait for the future.
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(m_messageSender.get()));

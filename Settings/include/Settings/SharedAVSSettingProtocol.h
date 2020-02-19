@@ -50,13 +50,18 @@ public:
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param isDefaultCloudAuthoritative Indicates if the default value for the setting should be cloud
+     * authoritative or not.  If it is, for the first time when the setting is created, the default value of the
+     * setting will be sent to AVS using a report event.  If it is not cloud authoritative, then the default value of
+     * the setting will be sent to AVS using a changed event.
      * @return A pointer to the new @c SharedAVSSettingProtocol object if it succeeds; @c nullptr otherwise.
      */
     static std::unique_ptr<SharedAVSSettingProtocol> create(
         const SettingEventMetadata& metadata,
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        bool isDefaultCloudAuthoritative = false);
 
     /// @name SettingProtocolInterface methods.
     /// @{
@@ -116,12 +121,17 @@ private:
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param isDefaultCloudAuthoritative Indicates if the default value for the setting should be cloud
+     * authoritative or not.  If it is, for the first time when the setting is created, the default value of the
+     * setting will be sent to AVS using a report event.  If it is not cloud authoritative, then the default value of
+     * the setting will be sent to AVS using a changed event.
      */
     SharedAVSSettingProtocol(
         const std::string& settingKey,
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        bool isDefaultCloudAuthoritative);
 
     /**
      * Sends AVS events for non-synchronized settings.
@@ -130,6 +140,9 @@ private:
 
     /// The setting key used to access the setting storage.
     const std::string m_key;
+
+    /// A flag to indicate if the default value for this setting is cloud-authoritative or device-authoritative.
+    const bool m_isDefaultCloudAuthoritative;
 
     /// Object used to send events to avs in order to report changes to the device.
     std::shared_ptr<SettingEventSenderInterface> m_eventSender;

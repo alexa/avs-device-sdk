@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -100,6 +100,8 @@ public:
     bool resume(SourceId id) override;
     std::chrono::milliseconds getOffset(SourceId id) override;
     uint64_t getNumBytesBuffered() override;
+    avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> getMediaPlayerState(
+        SourceId id) override;
     void addObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
     void removeObserver(
@@ -206,6 +208,14 @@ private:
     bool initializeEqualizer();
 
     /**
+     * Implements the getOffset logic. This method should only be called after acquiring @c m_mutex.
+     *
+     * @param @c SourceId of which to get the offset
+     * @return Offset in milliseconds for the given @c SourceId
+     */
+    std::chrono::milliseconds getOffsetLocked(SourceId id);
+
+    /**
      * Convert the buffer size to media playback duration based on the raw audio settings.
      *
      * This method is used to estimate playback position according to the last buffer read. This is used as a
@@ -219,6 +229,14 @@ private:
      * @return The media playback length represented by the given size.
      */
     static std::chrono::milliseconds computeDuration(size_t sizeBytes);
+
+    /**
+     * Create a media player state for the given SourceId
+     *
+     * @param id Source id
+     * @return Media player state metadata
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerState createMediaPlayerState(SourceId id);
 
     /// Mutex used to synchronize @c request creation.
     std::mutex m_requestMutex;

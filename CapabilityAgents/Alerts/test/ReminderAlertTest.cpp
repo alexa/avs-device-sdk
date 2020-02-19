@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ public:
 };
 
 ReminderAlertTest::ReminderAlertTest() :
-        m_reminder{std::make_shared<Reminder>(reminderDefaultFactory, reminderShortFactory)} {
+        m_reminder{std::make_shared<Reminder>(reminderDefaultFactory, reminderShortFactory, nullptr)} {
 }
 
 TEST_F(ReminderAlertTest, test_defaultAudio) {
@@ -58,7 +58,7 @@ TEST_F(ReminderAlertTest, test_shortAudio) {
 }
 
 TEST_F(ReminderAlertTest, test_getTypeName) {
-    ASSERT_EQ(m_reminder->getTypeName(), Reminder::TYPE_NAME);
+    ASSERT_EQ(m_reminder->getTypeName(), Reminder::getTypeNameStatic());
 }
 
 }  // namespace test

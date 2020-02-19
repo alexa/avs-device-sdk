@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ using namespace rapidjson;
 static const unsigned int PROVIDE_STATE_TOKEN_TEST{1};
 
 /// Plenty of time for a test to complete.
-static std::chrono::milliseconds WAIT_TIMEOUT(1000);
+static std::chrono::milliseconds MY_WAIT_TIMEOUT(1000);
 
 // The namespaces used in the context.
 static const std::string EXTERNALMEDIAPLAYER_STATE_NAMESPACE = "ExternalMediaPlayer";
@@ -645,7 +645,6 @@ void ExternalMediaPlayerTest::SetUp() {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter);
-
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
     ASSERT_TRUE(m_externalMediaPlayer);
 }
@@ -854,7 +853,7 @@ TEST_F(ExternalMediaPlayerTest, test_callingProvideSessionState) {
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState());
 
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -877,7 +876,7 @@ TEST_F(ExternalMediaPlayerTest, test_callingProvidePlaybackState) {
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState());
 
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -1040,7 +1039,7 @@ TEST_F(ExternalMediaPlayerTest, test_loginStateChangeObserverIsNotified) {
     EXPECT_CALL(*(observer), onLoginStateProvided(PLAYER_ID, observableSessionProperties)).Times(1);
 
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -1064,7 +1063,7 @@ TEST_F(ExternalMediaPlayerTest, test_playbackStateChangeObserverIsNotified) {
     EXPECT_CALL(*(observer), onPlaybackStateProvided(PLAYER_ID, observablePlaybackStateProperties)).Times(1);
 
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -1084,14 +1083,14 @@ TEST_F(ExternalMediaPlayerTest, test_loginStateChangeObserverRemoval) {
         .WillRepeatedly(Return(createAdapterState()));
     EXPECT_CALL(*(observer), onLoginStateProvided(_, _)).Times(1);
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
     this->resetWakeOnSetState();
 
     m_externalMediaPlayer->removeObserver(observer);
 
     EXPECT_CALL(*(observer), onLoginStateProvided(_, _)).Times(0);
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -1112,14 +1111,14 @@ TEST_F(ExternalMediaPlayerTest, test_playbackStateChangeObserverRemoval) {
         .WillRepeatedly(Return(createAdapterState()));
     EXPECT_CALL(*(observer), onPlaybackStateProvided(_, _)).Times(1);
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
     this->resetWakeOnSetState();
 
     m_externalMediaPlayer->removeObserver(observer);
 
     EXPECT_CALL(*(observer), onPlaybackStateProvided(_, _)).Times(0);
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /**

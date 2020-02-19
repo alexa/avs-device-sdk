@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,11 +34,15 @@ std::unique_ptr<InProcessSDS> createSDS(int desiredSize) {
 }
 
 std::vector<uint8_t> createTestPattern(int patternSize) {
-    std::vector<uint8_t> vec(patternSize);
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t> engine;
-    std::generate(begin(vec), end(vec), std::ref(engine));
+    std::vector<uint8_t> ret(patternSize);
+    std::vector<uint16_t> vec(patternSize);
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t> engine;
 
-    return vec;
+    std::generate(begin(vec), end(vec), std::ref(engine));
+    for (size_t i = 0; i < vec.size(); i++) {
+        ret[i] = static_cast<uint8_t>(vec[i]);
+    }
+    return ret;
 }
 
 }  // namespace test

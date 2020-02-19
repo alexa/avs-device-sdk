@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,11 @@ namespace sdkInterfaces {
 namespace bluetooth {
 namespace services {
 
-/// Interface representing a BluetoothService.
+/**
+ * Interface representing a Bluetooth Service.
+ * More Bluetooth Service information(e.g, UUID, NAME) could be found at
+ * https://www.bluetooth.com/specifications/assigned-numbers/service-discovery/
+ */
 class BluetoothServiceInterface {
 public:
     /**

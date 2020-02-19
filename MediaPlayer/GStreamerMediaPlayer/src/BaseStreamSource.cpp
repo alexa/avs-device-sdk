@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -87,6 +87,7 @@ BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline, const std::strin
         SourceInterface(className),
         m_pipeline{pipeline},
         m_sourceId{0},
+        m_hasReadData{false},
         m_sourceRetryCount{0},
         m_handleNeedDataFunction{[this]() { return handleNeedData(); }},
         m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }},
@@ -359,6 +360,38 @@ bool BaseStreamSource::hasAdditionalData() {
 }
 
 void BaseStreamSource::preprocess() {
+}
+
+void BaseStreamSource::addObserver(std::shared_ptr<SourceObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.insert(observer);
+}
+
+void BaseStreamSource::removeObserver(std::shared_ptr<SourceObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.erase(observer);
+}
+
+void BaseStreamSource::notifyObserversOnReadData() {
+    // Notify observers when the first data has been read.
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (!m_hasReadData) {
+        for (const auto& observer : m_observers) {
+            observer->onFirstByteRead();
+        }
+    }
+
+    m_hasReadData = true;
 }
 
 }  // namespace mediaPlayer

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace sdkInterfaces {
  * (e.g. SpeechStarted).
  *
  * This interface should also send the System.UserInactivityReport Event as defined here:
- * https://developer.amazon.com/docs/alexa-voice-service/system.html#userinactivityreport
+ * https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#userinactivityreport
  * and notify its observers when this occurs.
  */
 class UserInactivityMonitorInterface {

@@ -49,6 +49,12 @@ static const std::string SETTINGS_CONFIGURATION_ROOT_KEY = "deviceSettings";
 /// The key to find the default timezone configuration.
 static const std::string DEFAULT_TIMEZONE_CONFIGURATION_KEY = "defaultTimezone";
 
+/// Network info setting events metadata.
+static const SettingEventMetadata NETWORK_INFO_METADATA = {"System",
+                                                           "NetworkInfoChanged",
+                                                           "NetworkInfoReport",
+                                                           "networkInfo"};
+
 template <typename PointerT>
 static inline bool checkPointer(const std::shared_ptr<PointerT>& pointer, const std::string& variableName) {
     if (!pointer) {
@@ -180,6 +186,11 @@ DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withLocaleAndWakeWor
 
     m_connectionManager->addConnectionStatusObserver(setting);
     return *this;
+}
+
+DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withNetworkInfoSetting() {
+    return withSynchronizedSetting<DeviceSettingsIndex::NETWORK_INFO, DeviceControlledSettingProtocol>(
+        NETWORK_INFO_METADATA, types::NetworkInfo());
 }
 
 DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withDoNotDisturbSetting(

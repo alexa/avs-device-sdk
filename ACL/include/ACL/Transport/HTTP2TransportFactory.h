@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/PostConnectFactoryInterface.h"
@@ -41,10 +42,12 @@ public:
      *
      * @param connectionFactory Object used to create instances of HTTP2ConnectionInterface.
      * @param postConnectFactory Object used to create instances of the PostConnectInterface.
+     * @param metricRecorder The metric recorder.
      */
     HTTP2TransportFactory(
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
-        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory);
+        std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name TransportFactoryInterface methods.
     /// @{
@@ -53,7 +56,8 @@ public:
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
-        std::shared_ptr<TransportObserverInterface> transportObserverInterface) override;
+        std::shared_ptr<TransportObserverInterface> transportObserverInterface,
+        std::shared_ptr<SynchronizedMessageRequestQueue> sharedMessageRequestQueue) override;
     /// @}
 
     /**
@@ -67,6 +71,9 @@ private:
 
     /// Save a pointer to the object used to create instances of the PostConnectInterface.
     std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 };
 
 }  // namespace acl

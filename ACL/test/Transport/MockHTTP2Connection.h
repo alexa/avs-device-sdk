@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <unordered_set>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -57,6 +58,8 @@ public:
     /// @{
     std::shared_ptr<HTTP2RequestInterface> createAndSendRequest(const HTTP2RequestConfig& config);
     MOCK_METHOD0(disconnect, void());
+    void addObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer);
+    void removeObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer);
     /// @}
 
     /**
@@ -236,6 +239,12 @@ private:
 
     /// Queue of Ping requests. Serialized by @c m_pingRequestMutex.
     std::deque<std::shared_ptr<MockHTTP2Request>> m_pingRequestQueue;
+
+    /// Mutex for observers.
+    std::mutex m_observersMutex;
+
+    /// Observers
+    std::unordered_set<std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface>> m_observers;
 
     /// Serializes access to receiving Ping requests.
     std::mutex m_pingRequestMutex;

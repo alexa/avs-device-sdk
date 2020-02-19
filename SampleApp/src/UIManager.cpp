@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -177,7 +177,8 @@ static const std::string SETTINGS_MESSAGE =
     "|  Press '3' followed by Enter to see wake word confirmation options.        |\n"
     "|  Press '4' followed by Enter to see speech confirmation options.           |\n"
     "|  Press '5' followed by Enter to see time zone options.                     |\n"
-    "|  Press '6' followed by Enter to see the Alarm Volume Ramp options.         |\n"
+    "|  Press '6' followed by Enter to see the network options.                   |\n"
+    "|  Press '7' followed by Enter to see the Alarm Volume Ramp options.         |\n"
     "|  Press 'q' followed by Enter to exit Settings Options.                     |\n"
     "+----------------------------------------------------------------------------+\n";
 
@@ -407,6 +408,56 @@ static const std::string TIMEZONE_SETTING_MENU =
     "| Press 'q' followed by Enter to quit this configuration menu.               |\n"
     "+----------------------------------------------------------------------------+\n";
 
+static const std::string NETWORK_INFO_SETTING_MENU =
+    "+----------------------------------------------------------------------------+\n"
+    "|                      Network Info Configuration:                           |\n"
+    "|                                                                            |\n"
+    "| Press '1' followed by Enter to see the current network info                |\n"
+    "| Press '2' followed by Enter to set the connection type                     |\n"
+    "| Press '3' followed by Enter to set the network name (ESSID)                |\n"
+    "| Press '4' followed by Enter to set the physical access point name (BSSID)  |\n"
+    "| Press '5' followed by Enter to set the ip address                          |\n"
+    "| Press '6' followed by Enter to set the subnet mask                         |\n"
+    "| Press '7' followed by Enter to set the mac address                         |\n"
+    "| Press '8' followed by Enter to set the dhcp server address                 |\n"
+    "| Press '9' followed by Enter to set the static ip settings                  |\n"
+    "| Press 'q' followed by Enter to quit this configuration menu.               |\n"
+    "+----------------------------------------------------------------------------+\n";
+
+static const std::initializer_list<std::string> NETWORK_INFO_CONNECTION_TYPE_PROMPT = {
+    "Press '1' followed by Enter to set connection type to Ethernet",
+    "Press '2' followed by Enter to set connection type to Wifi",
+    "Press '3' followed by Enter to reset the connection type."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_ESSID_PROMPT = {
+    "Type in the name of the network (ESSID) and press enter.",
+    "Leave empty to reset the ESSID."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_BSSID_PROMPT = {
+    "Type in the name of the physical access point (BSSID)",
+    "and press Enter. Leave empty to reset the BSSID."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_IP_PROMPT = {
+    "Type in the ip address (eg. 192.168.0.1) and press Enter.",
+    "Leave empty to reset the ip address."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_SUBNET_MASK_PROMPT = {
+    "Type in the subnet mask and press Enter.",
+    "Leave empty to reset the subnet mask."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_MAC_ADDRESS_PROMPT = {
+    "Type in the device mac address and press Enter.",
+    "Leave empty to reset the mac address."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_DHCP_ADDRESS_PROMPT = {
+    "Type in the dhcp server address and press Enter.",
+    "Leave empty to reset the dhcp server address."};
+
+static const std::initializer_list<std::string> NETWORK_INFO_STATIC_IP_PROMPT = {
+    "Press '1' followed by Enter to set the ip type to static",
+    "Press '2' followed by Enter to set the ip type to dynamic",
+    "Press '3' followed by Enter to reset the ip type."};
+
 static const std::string RESET_WARNING =
     "Device was reset! Please don't forget to deregister it. For more details "
     "visit https://www.amazon.com/gp/help/customer/display.html?nodeId=201357520";
@@ -434,6 +485,9 @@ static const std::string WAKE_WORDS_NAME = "WakeWords";
 /// The name of the do not disturb confirmation setting.
 static const std::string DO_NOT_DISTURB_NAME = "DoNotDisturb";
 
+/// The name of the network info setting.
+static const std::string NETWORK_INFO_NAME = "NetworkInfo";
+
 /// The index of the first option in displaying a list of options.
 static const unsigned int OPTION_ENUM_START = 1;
 
@@ -454,6 +508,7 @@ static const std::string COMMS_MESSAGE =
     "| Press 'a' followed by Enter to accept an incoming call.                    |\n"
     "| Press 's' followed by Enter to stop an ongoing call.                       |\n"
     "| Press 'd' followed by Enter to input dtmf tones.                           |\n"
+    "| Press 'm' followed by Enter to mute/unmte self during an active call.      |\n"
     "| Press 'q' to exit Comms Control Mode.                                      |\n"
     "+----------------------------------------------------------------------------+\n";
 
@@ -722,6 +777,14 @@ void UIManager::printDtmfScreen() {
 void UIManager::printDtmfErrorScreen() {
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Invalid Dtmf Tones"); });
 }
+
+void UIManager::printMuteCallScreen() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint("Mute the call"); });
+}
+
+void UIManager::printUnmuteCallScreen() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint("Unmute the call"); });
+}
 #endif
 
 void UIManager::printErrorScreen() {
@@ -774,6 +837,42 @@ void UIManager::printSpeechConfirmationScreen() {
 
 void UIManager::printTimeZoneScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(TIMEZONE_SETTING_MENU); });
+}
+
+void UIManager::printNetworkInfoScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(NETWORK_INFO_SETTING_MENU); });
+}
+
+void UIManager::printNetworkInfoConnectionTypePrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_CONNECTION_TYPE_PROMPT); });
+}
+
+void UIManager::printNetworkInfoESSIDPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_ESSID_PROMPT); });
+}
+
+void UIManager::printNetworkInfoBSSIDPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_BSSID_PROMPT); });
+}
+
+void UIManager::printNetworkInfoIpPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_IP_PROMPT); });
+}
+
+void UIManager::printNetworkInfoSubnetPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_SUBNET_MASK_PROMPT); });
+}
+
+void UIManager::printNetworkInfoMacPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_MAC_ADDRESS_PROMPT); });
+}
+
+void UIManager::printNetworkInfoDHCPPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_DHCP_ADDRESS_PROMPT); });
+}
+
+void UIManager::printNetworkInfoStaticIpPrompt() {
+    m_executor.submit([]() { ConsolePrinter::prettyPrint(NETWORK_INFO_STATIC_IP_PROMPT); });
 }
 
 void UIManager::microphoneOn() {
@@ -883,10 +982,12 @@ bool UIManager::configureSettingsNotifications(std::shared_ptr<settings::DeviceS
         [this](const settings::DeviceLocales& value, SettingNotifications notifications) {
             onSettingNotification(LOCALE_NAME, value, notifications);
         });
+#ifdef KWD
     ok &= m_callbacks->add<DeviceSettingsIndex::WAKE_WORDS>(
         [this](const settings::WakeWords& wakeWords, SettingNotifications notifications) {
             onSettingNotification(WAKE_WORDS_NAME, wakeWords, notifications);
         });
+#endif
     return ok;
 }
 

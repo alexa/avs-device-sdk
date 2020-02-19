@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <RegistrationManager/CustomerDataManager.h>
 
 #include "Notifications/NotificationsCapabilityAgent.h"
@@ -52,7 +53,7 @@ using namespace avsCommon::sdkInterfaces::test;
 using namespace ::testing;
 
 /// Plenty of time for a test to complete.
-static std::chrono::milliseconds WAIT_TIMEOUT(1000);
+static std::chrono::milliseconds MY_WAIT_TIMEOUT(1000);
 
 /// Time to simulate a notification rendering.
 static std::chrono::milliseconds RENDER_TIME(10);
@@ -223,7 +224,7 @@ public:
      * @param size The size to wait for.
      * @param timeout How much time to wait before failing.
      */
-    bool waitForQueueSizeToBe(size_t size, std::chrono::milliseconds timeout = WAIT_TIMEOUT);
+    bool waitForQueueSizeToBe(size_t size, std::chrono::milliseconds timeout = MY_WAIT_TIMEOUT);
 
 private:
     /// The underlying NotificationIndicator queue.
@@ -372,12 +373,12 @@ public:
     /**
      * Waits for the fulfillment of m_renderStartedPromise, then resets any needed variables.
      */
-    bool waitUntilRenderingStarted(std::chrono::milliseconds timeout = WAIT_TIMEOUT);
+    bool waitUntilRenderingStarted(std::chrono::milliseconds timeout = MY_WAIT_TIMEOUT);
 
     /**
      * Waits for the fulfillment of m_renderFinishedPromise, then resets any needed variables.
      */
-    bool waitUntilRenderingFinished(std::chrono::milliseconds timeout = WAIT_TIMEOUT);
+    bool waitUntilRenderingFinished(std::chrono::milliseconds timeout = MY_WAIT_TIMEOUT);
 
 private:
     /// The current renderer observer.
@@ -483,14 +484,14 @@ bool MockNotificationRenderer::mockCancel() {
 
 bool MockNotificationRenderer::waitForRenderCall() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_renderTrigger.wait_for(lock, WAIT_TIMEOUT, [this]() { return m_startedRendering; });
+    m_renderTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this]() { return m_startedRendering; });
     m_renderStartedPromise.set_value();
     return true;
 }
 
 bool MockNotificationRenderer::waitForRenderCallDone() {
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_renderTrigger.wait_for(lock, WAIT_TIMEOUT, [this]() { return m_cancelling || m_finishedRendering; });
+    m_renderTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this]() { return m_cancelling || m_finishedRendering; });
     m_renderFinishedPromise.set_value();
     return true;
 }
@@ -545,6 +546,9 @@ public:
         const std::string& assetId = ASSET_ID1,
         const std::string& assetUrl = ASSET_URL1);
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// @c A test observer to wait for @c AudioPlayer state changes
     std::shared_ptr<TestNotificationsObserver> m_testNotificationsObserver;
 
@@ -589,7 +593,8 @@ void NotificationsCapabilityAgentTest::initializeCapabilityAgent() {
         m_mockContextManager,
         m_mockExceptionSender,
         m_testNotificationsAudioFactory,
-        m_dataManager);
+        m_dataManager,
+        m_metricRecorder);
     ASSERT_TRUE(m_notificationsCapabilityAgent);
     m_notificationsCapabilityAgent->addObserver(m_testNotificationsObserver);
     m_renderer->addObserver(m_notificationsCapabilityAgent);
@@ -598,7 +603,7 @@ void NotificationsCapabilityAgentTest::initializeCapabilityAgent() {
 void NotificationsCapabilityAgentTest::SetUp() {
     auto inString = std::shared_ptr<std::istringstream>(new std::istringstream(NOTIFICATIONS_CONFIG_JSON));
     ASSERT_TRUE(AlexaClientSDKInit::initialize({inString}));
-
+    m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
     m_notificationsStorage = std::make_shared<TestNotificationsStorage>();
     m_renderer = MockNotificationRenderer::create();
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
@@ -691,7 +696,8 @@ TEST_F(NotificationsCapabilityAgentTest, test_create) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_testNotificationsAudioFactory,
-        m_dataManager);
+        m_dataManager,
+        m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
@@ -700,7 +706,8 @@ TEST_F(NotificationsCapabilityAgentTest, test_create) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_testNotificationsAudioFactory,
-        m_dataManager);
+        m_dataManager,
+        m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
@@ -709,7 +716,8 @@ TEST_F(NotificationsCapabilityAgentTest, test_create) {
         nullptr,
         m_mockExceptionSender,
         m_testNotificationsAudioFactory,
-        m_dataManager);
+        m_dataManager,
+        m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
@@ -718,11 +726,18 @@ TEST_F(NotificationsCapabilityAgentTest, test_create) {
         m_mockContextManager,
         nullptr,
         m_testNotificationsAudioFactory,
-        m_dataManager);
+        m_dataManager,
+        m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
     testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
-        m_notificationsStorage, m_renderer, m_mockContextManager, m_mockExceptionSender, nullptr, m_dataManager);
+        m_notificationsStorage,
+        m_renderer,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        nullptr,
+        m_dataManager,
+        m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 }
 
@@ -748,10 +763,10 @@ TEST_F(NotificationsCapabilityAgentTest, test_nonEmptyStartupQueue) {
 TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicator) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, _)).Times(0);
     initializeCapabilityAgent();
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 
     sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 
     // check that the NotificationIndicator was dequeued as expected
     ASSERT_TRUE(m_notificationsStorage->waitForQueueSizeToBe(0));
@@ -764,17 +779,17 @@ TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicator) {
  */
 TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorIncreasesCount) {
     initializeCapabilityAgent();
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(0, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(0, MY_WAIT_TIMEOUT));
 
     sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, MY_WAIT_TIMEOUT));
 
     // A duplicate indication should trigger an increase in indicator count
     sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(2, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(2, MY_WAIT_TIMEOUT));
 
     sendSetIndicatorDirective(generatePayload(true, true), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(3, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(3, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -784,13 +799,13 @@ TEST_F(NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreservedInc
     initializeCapabilityAgent();
 
     sendSetIndicatorDirective(generatePayload(true, false, ASSET_ID1), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, MY_WAIT_TIMEOUT));
 
     m_notificationsCapabilityAgent->shutdown();
 
     // reboot and check that the indicator count value is preserved
     initializeCapabilityAgent();
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(1, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -803,7 +818,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorWithAudio) {
     initializeCapabilityAgent();
 
     sendSetIndicatorDirective(generatePayload(false, true, ASSET_ID1, ASSET_URL1), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 
     ASSERT_TRUE(m_renderer->waitUntilRenderingFinished());
 }
@@ -817,7 +832,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorWithVisualIndicato
     initializeCapabilityAgent();
 
     sendSetIndicatorDirective(generatePayload(true, false), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -831,7 +846,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_sameAssetId) {
             unsigned int expectedNumSetIndicators = 2;
 
             std::unique_lock<std::mutex> lock(m_mutex);
-            if (!m_setIndicatorTrigger.wait_for(lock, WAIT_TIMEOUT, [this, expectedNumSetIndicators]() {
+            if (!m_setIndicatorTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this, expectedNumSetIndicators]() {
                     return m_numSetIndicatorsProcessed == expectedNumSetIndicators;
                 })) {
                 return false;
@@ -848,7 +863,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_sameAssetId) {
     sendSetIndicatorDirective(generatePayload(false, true, ASSET_ID1), MESSAGE_ID_TEST2);
 
     // the IndicatorState should not have changed since the second directive should have been ignored.
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -859,22 +874,22 @@ TEST_F(NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreserved) {
 
     // set IndicatorState to ON
     sendSetIndicatorDirective(generatePayload(true, false, ASSET_ID1), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 
     m_notificationsCapabilityAgent->shutdown();
 
     // reboot and check that the persistVisualIndicator value has been preserved
     initializeCapabilityAgent();
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 
     // same test but with IndicatorState set to OFF
     sendSetIndicatorDirective(generatePayload(false, false, ASSET_ID1), MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 
     m_notificationsCapabilityAgent->shutdown();
 
     initializeCapabilityAgent();
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -883,7 +898,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreserved) {
 TEST_F(NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueue) {
     initializeCapabilityAgent();
     sendClearIndicatorDirective(MESSAGE_ID_TEST);
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -898,11 +913,11 @@ TEST_F(NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueueAndInd
 
     ASSERT_TRUE(m_renderer->waitUntilRenderingFinished());
 
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::ON, MY_WAIT_TIMEOUT));
 
     sendClearIndicatorDirective(MESSAGE_ID_TEST2);
 
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 }
 
 /**
@@ -973,7 +988,7 @@ TEST_F(NotificationsCapabilityAgentTest, test_clearData) {
     m_notificationsStorage->getIndicatorState(&state);
     ASSERT_EQ(state, IndicatorState::OFF);
 
-    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 }
 
 }  // namespace test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -91,10 +91,10 @@ void setSalt(const std::string& newSalt) {
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHexWithReplacement(
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t>& ibe,
     unsigned int numDigits,
     uint8_t replacementBits,
-    unsigned short numReplacementBits) {
+    uint16_t numReplacementBits) {
     if (numReplacementBits > MAX_NUM_REPLACEMENT_BITS) {
         ACSDK_ERROR(LX("generateHexWithReplacementFailed")
                         .d("reason", "replacingMoreBitsThanProvided")
@@ -111,10 +111,17 @@ static const std::string generateHexWithReplacement(
         return "";
     }
 
-    // Makes assumption that 1 digit = 4 bits.
-    std::vector<uint8_t> bytes(ceil(numDigits / 2.0));
-    std::generate(bytes.begin(), bytes.end(), std::ref(ibe));
+    const size_t arrayLen = (numDigits + 1) / 2;
 
+    std::vector<uint16_t> shorts(arrayLen);
+    std::generate(shorts.begin(), shorts.end(), std::ref(ibe));
+
+    // Makes assumption that 1 digit = 4 bits.
+    std::vector<uint8_t> bytes(arrayLen);
+
+    for (size_t i = 0; i < arrayLen; i++) {
+        bytes[i] = static_cast<uint8_t>(shorts[i]);
+    }
     // Replace the specified number of bits from the first byte.
     bytes.at(0) &= (0xff >> numReplacementBits);
     replacementBits &= (0xff << (MAX_NUM_REPLACEMENT_BITS - numReplacementBits));
@@ -141,13 +148,13 @@ static const std::string generateHexWithReplacement(
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHex(
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t>& ibe,
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t>& ibe,
     unsigned int numDigits) {
     return generateHexWithReplacement(ibe, numDigits, 0, 0);
 }
 
 const std::string generateUUID() {
-    static std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t> ibe;
+    static std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t> ibe;
     std::unique_lock<std::mutex> lock(g_mutex);
 
     static int consistentEntropyReports = 0;

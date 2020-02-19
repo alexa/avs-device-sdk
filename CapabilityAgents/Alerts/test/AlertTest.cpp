@@ -57,7 +57,7 @@ static const std::string SHORT_AUDIO{"short audio"};
 
 class MockAlert : public Alert {
 public:
-    MockAlert() : Alert(defaultAudioFactory, shortAudioFactory) {
+    MockAlert() : Alert(defaultAudioFactory, shortAudioFactory, nullptr) {
     }
 
     std::string getTypeName() const override;
@@ -80,6 +80,7 @@ public:
     void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
+        bool alarmVolumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
         std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},

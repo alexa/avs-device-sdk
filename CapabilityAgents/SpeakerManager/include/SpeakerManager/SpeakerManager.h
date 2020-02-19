@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,11 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/RetryTimer.h>
+#include <AVSCommon/Utils/WaitEvent.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -67,6 +70,7 @@ public:
      * by it. SpeakerInterfaces will be grouped by @c SpeakerInterface::Type.
      *
      * @param speakers The @c Speakers to register.
+     * @param metricRecorder The metric recorder.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
@@ -74,6 +78,7 @@ public:
      */
     static std::shared_ptr<SpeakerManager> create(
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakers,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
@@ -112,6 +117,9 @@ public:
         bool forceNoNotifications = false,
         avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
             avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
+#ifdef ENABLE_MAXVOLUME_SETTING
+    std::future<bool> setMaximumVolumeLimit(const int8_t maximumVolumeLimit) override;
+#endif
     std::future<bool> getSpeakerSettings(
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
@@ -132,6 +140,7 @@ private:
      * Constructor. Called after validation has occurred on parameters.
      *
      * @param speakers The @c Speakers to register.
+     * @param metricRecorder The metric recorder.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send.
@@ -140,6 +149,7 @@ private:
      */
     SpeakerManager(
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakerInterfaces,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
@@ -264,6 +274,16 @@ private:
         avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
             avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API);
 
+#ifdef ENABLE_MAXVOLUME_SETTING
+    /**
+     * Function to set a limit on the maximum volume. This runs on a worker thread.
+     *
+     * @param type The type of speaker to modify mute for.
+     * @return A bool indicating success.
+     */
+    bool executeSetMaximumVolumeLimit(const int8_t maximumVolumeLimit);
+#endif
+
     /**
      * Function to get the speaker settings for a specific @c Type.
      * This runs on a worker thread.
@@ -314,6 +334,27 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
+    /**
+     * Get the maximum volume limit.
+     *
+     * @return The maximum volume limit.
+     */
+    int8_t getMaximumVolumeLimit();
+
+    /**
+     * Applies Settings to All Speakers
+     * Attempts to synchronize by backing off using a retry timeout table
+     * @tparam Task The type of task to execute.
+     * @tparam Args The argument types for the task to execute.
+     * @param task A callable type representing a task.
+     * @param args The arguments to call the task with.
+     */
+    template <typename Task, typename... Args>
+    void retryAndApplySettings(Task task, Args&&... args);
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// The @c ContextManager used to generate system context for events.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
 
@@ -335,8 +376,20 @@ private:
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
+    /// Object used to wait for event transmission cancellation.
+    avsCommon::utils::WaitEvent m_waitCancelEvent;
+
+    /// Retry Timer object.
+    avsCommon::utils::RetryTimer m_retryTimer;
+
+    /// The number of retries that will be done on an event in case of setting synchronization failure.
+    const std::size_t m_maxRetries;
+
     /// An executor to perform operations on a worker thread.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// maximumVolumeLimit The maximum volume level speakers in this system can reach.
+    int8_t m_maximumVolumeLimit;
 };
 
 }  // namespace speakerManager

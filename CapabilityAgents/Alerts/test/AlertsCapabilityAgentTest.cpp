@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/MockSetting.h>
@@ -57,7 +58,7 @@ using namespace settings;
 using namespace settings::test;
 using namespace testing;
 
-/// Maximum time to wait for operaiton result.
+/// Maximum time to wait for operation result.
 constexpr int MAX_WAIT_TIME_MS = 200;
 
 /// Alerts.SetVolume Directive name.
@@ -143,19 +144,19 @@ public:
     void close() override {
     }
 
-    bool store(std::shared_ptr<Alert> alert) override {
+    bool store(std::shared_ptr<Alert>) override {
         return true;
     }
 
-    bool load(std::vector<std::shared_ptr<Alert>>* alertContainer) override {
+    bool load(std::vector<std::shared_ptr<Alert>>*, std::shared_ptr<settings::DeviceSettingsManager>) override {
         return true;
     }
 
-    bool modify(std::shared_ptr<Alert> alert) override {
+    bool modify(std::shared_ptr<Alert>) override {
         return true;
     }
 
-    bool erase(std::shared_ptr<Alert> alert) override {
+    bool erase(std::shared_ptr<Alert>) override {
         return true;
     }
 
@@ -163,7 +164,7 @@ public:
         return true;
     }
 
-    bool bulkErase(const std::list<std::shared_ptr<Alert>>& alertList) override {
+    bool bulkErase(const std::list<std::shared_ptr<Alert>>&) override {
         return true;
     }
 };
@@ -176,11 +177,11 @@ public:
     MOCK_METHOD0(createDatabase, bool());
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
-    MOCK_METHOD1(store, bool(std::shared_ptr<Alert> alert));
-    MOCK_METHOD1(load, bool(std::vector<std::shared_ptr<Alert>>* alertContainer));
-    MOCK_METHOD1(modify, bool(std::shared_ptr<Alert> alert));
-    MOCK_METHOD1(erase, bool(std::shared_ptr<Alert> alert));
-    MOCK_METHOD1(bulkErase, bool(const std::list<std::shared_ptr<Alert>>& alertList));
+    MOCK_METHOD1(store, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD2(load, bool(std::vector<std::shared_ptr<Alert>>*, std::shared_ptr<settings::DeviceSettingsManager>));
+    MOCK_METHOD1(modify, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD1(erase, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD1(bulkErase, bool(const std::list<std::shared_ptr<Alert>>&));
     MOCK_METHOD0(clearDatabase, bool());
 };
 
@@ -188,6 +189,7 @@ class StubRenderer : public RendererInterface {
     void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
+        bool alarmVolumeRampEnabled,
         const std::vector<std::string>& urls,
         int loopCount,
         std::chrono::milliseconds loopPause,
@@ -200,15 +202,16 @@ class StubRenderer : public RendererInterface {
  */
 class MockRenderer : public RendererInterface {
 public:
-    MOCK_METHOD6(
+    MOCK_METHOD7(
         start,
         void(
-            std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> ovserver,
+            std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
             std::function<std::unique_ptr<std::istream>()>,
+            bool,
             const std::vector<std::string>&,
-            int loopcount,
+            int,
             std::chrono::milliseconds,
-            bool startWithPause));
+            bool));
     MOCK_METHOD0(stop, void());
 };
 
@@ -312,11 +315,14 @@ protected:
     std::shared_ptr<MockSetting<AlarmVolumeRampSetting::ValueType>> m_mockAlarmVolumeRampSetting;
     std::shared_ptr<CustomerDataManager> m_customerDataManager;
     std::unique_ptr<StrictMock<MockDirectiveHandlerResult>> m_mockDirectiveHandlerResult;
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     std::mutex m_mutex;
 };
 
 void AlertsCapabilityAgentTest::SetUp() {
+    m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
     m_mockMessageSender = std::make_shared<TestMessageSender>();
     m_mockAVSConnectionManager = std::make_shared<NiceMock<MockAVSConnectionManager>>();
     m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
@@ -329,8 +335,11 @@ void AlertsCapabilityAgentTest::SetUp() {
     m_customerDataManager = std::make_shared<CustomerDataManager>();
     m_messageStorage = std::make_shared<StubMessageStorage>();
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
+    m_settingsManager =
+        std::make_shared<settings::DeviceSettingsManager>(std::make_shared<registrationManager::CustomerDataManager>());
     m_mockAlarmVolumeRampSetting =
-        std::make_shared<MockSetting<AlarmVolumeRampSetting::ValueType>>(types::AlarmVolumeRampTypes::NONE);
+        std::make_shared<MockSetting<AlarmVolumeRampSetting::ValueType>>(settings::types::getAlarmVolumeRampDefault());
+    ASSERT_TRUE(m_settingsManager->addSetting<DeviceSettingsIndex::ALARM_VOLUME_RAMP>(m_mockAlarmVolumeRampSetting));
 
     ON_CALL(*(m_speakerManager.get()), getSpeakerSettings(_, _))
         .WillByDefault(Invoke([](SpeakerInterface::Type, SpeakerInterface::SpeakerSettings*) {
@@ -349,7 +358,7 @@ void AlertsCapabilityAgentTest::SetUp() {
     ON_CALL(*(m_alertStorage), createDatabase()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), open()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), store(_)).WillByDefault(Return(true));
-    ON_CALL(*(m_alertStorage), load(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), load(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), modify(_)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), erase(_)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), bulkErase(_)).WillByDefault(Return(true));
@@ -370,7 +379,9 @@ void AlertsCapabilityAgentTest::SetUp() {
         m_alertsAudioFactory,
         m_renderer,
         m_customerDataManager,
-        m_mockAlarmVolumeRampSetting);
+        m_mockAlarmVolumeRampSetting,
+        m_settingsManager,
+        m_metricRecorder);
 
     std::static_pointer_cast<ConnectionStatusObserverInterface>(m_certifiedSender)
         ->onConnectionStatusChanged(

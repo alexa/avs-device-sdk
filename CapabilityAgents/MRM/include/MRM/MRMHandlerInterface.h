@@ -21,8 +21,8 @@
 #include <string>
 
 #include <AVSCommon/AVS/AVSDirective.h>
-#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
@@ -41,12 +41,12 @@ public:
     /**
      * Constructor.
      */
-    MRMHandlerInterface(const std::string& shutdownName);
+    explicit MRMHandlerInterface(const std::string& shutdownName);
 
     /**
      * Destructor.
      */
-    virtual ~MRMHandlerInterface() = default;
+    virtual ~MRMHandlerInterface() override = default;
 
     /**
      * Returns the string representation of the version of this MRM implementation.

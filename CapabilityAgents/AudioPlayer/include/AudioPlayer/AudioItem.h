@@ -21,6 +21,7 @@
 #include <string>
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <Captions/CaptionData.h>
 
 #include "StreamFormat.h"
@@ -95,6 +96,12 @@ struct AudioItem {
 
     /// The caption content that goes with the audio.
     captions::CaptionData captionData;
+
+    /// Metadata cache for duplicate removal
+    alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::VectorOfTags cachedMetadata;
+
+    /// Time of last Metadata event (used to rate limit metadata events)
+    std::chrono::time_point<std::chrono::steady_clock> lastMetadataEvent;
 };
 
 }  // namespace audioPlayer

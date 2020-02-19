@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ namespace bluetooth {
 namespace services {
 
 // TODO: Move to own enum file.
-/// An Enum representing AVRCP commands.
-enum class AVRCPCommand {
+/// An Enum representing Media commands.
+enum class MediaCommand {
     /// A Play command.
     PLAY,
 
@@ -40,38 +40,43 @@ enum class AVRCPCommand {
     NEXT,
 
     /// A Previous command. If issued at the beginning of a song, the previous track will be selected.
-    PREVIOUS
+    PREVIOUS,
+
+    /// A Play/Pause command.
+    PLAY_PAUSE
 };
 
 /**
- * Converts the @c AVRCPCommand enum to a string.
+ * Converts the @c MediaCommand enum to a string.
  *
- * @param cmd The @c AVRCPCommand to convert.
- * @return A string representation of the @c AVRCPCommand.
+ * @param cmd The @c MediaCommand to convert.
+ * @return A string representation of the @c MediaCommand.
  */
-inline std::string commandToString(AVRCPCommand cmd) {
+inline std::string commandToString(MediaCommand cmd) {
     switch (cmd) {
-        case AVRCPCommand::PLAY:
+        case MediaCommand::PLAY:
             return "PLAY";
-        case AVRCPCommand::PAUSE:
+        case MediaCommand::PAUSE:
             return "PAUSE";
-        case AVRCPCommand::NEXT:
+        case MediaCommand::NEXT:
             return "NEXT";
-        case AVRCPCommand::PREVIOUS:
+        case MediaCommand::PREVIOUS:
             return "PREVIOUS";
+        case MediaCommand::PLAY_PAUSE:
+            return "PLAY_PAUSE";
     }
 
     return "UNKNOWN";
 }
 
 /**
- * Overload for the @c AVRCPCommand enum. This will write the @c AVRCPCommand as a string to the provided stream.
+ * Overload for the @c MediaCommand enum. This will write the @c MediaCommand as a string to the provided stream.
  *
  * @param stream An ostream to send the DeviceState as a string.
- * @param cmd The @c AVRCPCommand to convert.
+ * @param cmd The @c MediaCommand to convert.
  * @return The stream.
  */
-inline std::ostream& operator<<(std::ostream& stream, const AVRCPCommand cmd) {
+inline std::ostream& operator<<(std::ostream& stream, const MediaCommand cmd) {
     return stream << commandToString(cmd);
 }
 

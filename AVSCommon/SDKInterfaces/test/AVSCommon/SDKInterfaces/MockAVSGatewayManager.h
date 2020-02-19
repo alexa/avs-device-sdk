@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ public:
     MOCK_METHOD1(
         setPostConnectMesasgeSender,
         bool(std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectMessageSender));
+    MOCK_METHOD1(addObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer));
+    MOCK_METHOD1(removeObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer));
 };
 
 }  // namespace test

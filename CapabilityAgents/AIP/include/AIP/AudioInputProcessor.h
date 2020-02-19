@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
@@ -107,6 +108,7 @@ public:
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
      *     defaults to an invalid @c avsCommon::AudioProvider.
      * @param powerResourceManager Power Resource Manager.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c AudioInputProcessor instance.
      */
     static std::shared_ptr<AudioInputProcessor> create(
@@ -124,7 +126,8 @@ public:
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting = nullptr,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null(),
-        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Adds an observer to be notified of AudioInputProcessor state changes.
@@ -186,6 +189,7 @@ public:
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
      * @param KWDMetadata Wake word engine metadata.
+     * @param initiatorToken An optional opaque string associated with the interaction.
      * @return A future which is @c true if the Recognize Event was started successfully, else @c false.
      */
     std::future<bool> recognize(
@@ -195,7 +199,8 @@ public:
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
         avsCommon::avs::AudioInputStream::Index keywordEnd = INVALID_INDEX,
         std::string keyword = "",
-        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr,
+        const std::string& initiatorToken = "");
 
     /**
      * This function asks the @c AudioInputProcessor to stop streaming audio and end an ongoing Recognize Event, which
@@ -239,7 +244,7 @@ public:
 
     /// @name ChannelObserverInterface Functions
     /// @{
-    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
     /// @}
 
     /// @name DialogUXStateObserverInterface Functions
@@ -296,6 +301,7 @@ private:
      * device supports wake words.
      * @param capabilitiesConfiguration The SpeechRecognizer capabilities configuration.
      * @param powerResourceManager Power Resource Manager.
+     * @param metricRecorder The metric recorder.
      *
      * @note This constructor is private so that users are forced to use the @c create() factory function.  The primary
      *     reason for this is to ensure that a @c std::shared_ptr to the instance exists, which is a requirement for
@@ -315,7 +321,8 @@ private:
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
         std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
-        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -353,6 +360,18 @@ private:
     void handleSetEndOfSpeechOffsetDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
+     * Performs operations to handle the failure of processing a directive.
+     *
+     * @param errorMessage A string containing the error message.
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     * @param errorType The type of exception encountered.
+     */
+    void handleDirectiveFailure(
+        const std::string& errorMessage,
+        std::shared_ptr<DirectiveInfo> info,
+        avsCommon::avs::ExceptionErrorType errorType);
+
+    /**
      * @name Executor Thread Functions
      *
      * These functions (and only these functions) are called by @c m_executor on a single worker thread.  All other
@@ -377,6 +396,7 @@ private:
      * @param keywordEnd The @c Index in @c audioProvider.stream where the wakeword ends.
      * @param keyword The text of the keyword which was recognized.
      * @param KWDMetadata Wake word engine metadata.
+     * @param initiatorToken An optional opaque string associated with the interaction.
      * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
@@ -386,7 +406,8 @@ private:
         avsCommon::avs::AudioInputStream::Index begin,
         avsCommon::avs::AudioInputStream::Index keywordEnd,
         const std::string& keyword,
-        std::shared_ptr<const std::vector<char>> KWDMetadata);
+        std::shared_ptr<const std::vector<char>> KWDMetadata,
+        const std::string& initiatorToken);
 
     /**
      * This function builds and sends a @c Recognize event.  This version of the function expects a pre-built string
@@ -404,11 +425,14 @@ private:
      *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
      *     and @c keywordEnd are specified, streaming will begin between 0 and 500ms prior to the @c Index specified by
      *     this parameter to attempt false wakeword validation.
+     * @param end The @c Index in @c audioProvider.stream where the wakeword ends.
      * @param keyword The text of the keyword which was recognized.  This parameter is optional, and defaults to an
      *     empty string.  This parameter is ignored if initiator is not @c WAKEWORD.  The only value currently
      *     accepted by AVS for keyword is "ALEXA".  See
      *     https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/context#recognizerstate
      * @param KWDMetadata Wake word engine metadata.
+     * @param initiatedByWakeword Whether the Initiator was Wakeword; false by default.
+     * @param falseWakewordDetection Whether false Wakeword detection was enabled; false by default.
      * @return @c true if the Recognize Event was started successfully, else @c false.
      */
     bool executeRecognize(
@@ -416,8 +440,11 @@ private:
         const std::string& initiatorJson,
         std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now(),
         avsCommon::avs::AudioInputStream::Index begin = INVALID_INDEX,
+        avsCommon::avs::AudioInputStream::Index end = INVALID_INDEX,
         const std::string& keyword = "",
-        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr);
+        std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr,
+        bool initiatedByWakeword = false,
+        bool falseWakewordDetection = false);
 
     /**
      * This function receives the full system context from @c ContextManager.  Context requests are initiated by
@@ -553,6 +580,9 @@ private:
      */
     void managePowerResource(ObserverInterface::State newState);
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// The Directive Sequencer to register with for receiving directives.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 
@@ -602,7 +632,7 @@ private:
      * valid during the @c RECOGNIZING state, and is retained by @c AudioInputProcessor so that it can close the
      * stream from @c executeStopCapture().
      */
-    std::shared_ptr<avsCommon::avs::attachment::InProcessAttachmentReader> m_reader;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
 
     /**
      * The attachment reader used for the wake word engine metadata. It's is populated by a call to @c
@@ -656,6 +686,12 @@ private:
      */
     bool m_localStopCapturePerformed;
 
+    /**
+     * This flag indicates if a new dialogRequestId should be generated (e.g. the Recognize event is not part of a
+     * multi-turn interaction).
+     */
+    bool m_shouldGenerateDialogRequestId;
+
     /// The system sound player.
     std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;
 
@@ -685,6 +721,9 @@ private:
 
     /// The power resource manager
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> m_powerResourceManager;
+
+    /// StopCapture received time
+    std::chrono::steady_clock::time_point m_stopCaptureReceivedTime;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

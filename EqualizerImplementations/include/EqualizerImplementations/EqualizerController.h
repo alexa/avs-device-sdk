@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -187,29 +187,21 @@ private:
 
     /**
      * Performs the actual equalizer state change. Applies changes to all equalizer implementations, then notifies
-     * all listeners of the changes applied if any. Method assumes that m_stateMutex is locked.
+     * all listeners of the changes applied if any.
      */
-    void updateStateLocked();
+    void updateState();
 
     /**
      * Applies transformation operation over the current equalizer state's band levels.
-     * Method assumes m_stateMutex to be locked.
      *
      * @param changesDataMap @c EqualizerBandLevelMap containing changes data for required bands.
      * @param operation Modification operation to perform on current state's band value and a change. Operation accepts
      * original band level and data for the change to be applied and returns modified value.
      */
 
-    void applyChangesToCurrentStateLocked(
+    void applyChangesToCurrentState(
         const avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap& changesDataMap,
         std::function<int(int, int)> operation);
-
-    /**
-     * Internal method to start equalizer band changes. Method assumes m_stateMutex to be locked.
-     *
-     * @param bandLevelMap New levels for the equalizer bands.
-     */
-    void setBandLevelsLocked(const avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap& bandLevelMap);
 
     /**
      * Loads equalizer state from persistent storage.
@@ -225,6 +217,13 @@ private:
      * @return Truncated level.
      */
     int truncateBandLevel(int level);
+
+    /**
+     * Notify all listeners for equalizer state changes.
+     *
+     * @param changed band level changed or not.
+     */
+    void notifyListenersOnStateChanged(bool changed);
 
     /// Interface to handle equalizer mode changes.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerModeControllerInterface> m_modeController;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
 #include "MediaPlayer/OffsetManager.h"
 #include "MediaPlayer/PipelineInterface.h"
 #include "MediaPlayer/SourceInterface.h"
+#include "MediaPlayer/SourceObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
@@ -61,6 +62,7 @@ class MediaPlayer
         , public avsCommon::sdkInterfaces::audio::EqualizerInterface
         , public playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface
         , public playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface
+        , public SourceObserverInterface
         , public std::enable_shared_from_this<MediaPlayer> {
 public:
     /**
@@ -116,6 +118,8 @@ public:
     bool resume(SourceId id) override;
     uint64_t getNumBytesBuffered() override;
     std::chrono::milliseconds getOffset(SourceId id) override;
+    avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> getMediaPlayerState(
+        SourceId id) override;
     void addObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
@@ -145,6 +149,11 @@ public:
     /// @{
     void onError() override;
     void onWriteComplete() override;
+    /// @}
+
+    /// @name Overridden SourceObserverInterface methods.
+    /// @{
+    void onFirstByteRead() override;
     /// @}
 
     void doShutdown() override;
@@ -467,6 +476,21 @@ private:
      * @param promise A promise to fulfill with the offset once the value has been determined.
      */
     void handleGetOffset(SourceId id, std::promise<std::chrono::milliseconds>* promise);
+
+    /**
+     * Handler for getting the current playback position immediately
+     *
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     */
+    std::chrono::milliseconds handleGetOffsetImmediately(SourceId id);
+
+    /**
+     * Get the current media player state given the source id
+     *
+     * @param id SourceId of media player
+     * @return Media player state metadata
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerState getMediaPlayerStateInternal(SourceId id);
 
     /**
      * Worker thread handler for adding the observer.

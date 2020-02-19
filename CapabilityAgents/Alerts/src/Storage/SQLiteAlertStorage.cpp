@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -419,7 +419,7 @@ bool SQLiteAlertStorage::migrateAlertsDbFromV1ToV2() {
     // the migration is fine.
     if (m_db.tableExists(ALERTS_TABLE_NAME)) {
         std::vector<std::shared_ptr<Alert>> alertContainer;
-        if (!loadHelper(ALERTS_DATABASE_VERSION_ONE, &alertContainer)) {
+        if (!loadHelper(ALERTS_DATABASE_VERSION_ONE, &alertContainer, nullptr)) {
             ACSDK_ERROR(LX("migrateAlertsDbFromV1ToV2Failed").m("Could not load V1 alert records."));
             return false;
         }
@@ -675,7 +675,7 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     staticData.dbId = id;
 
     if (!alert->setAlertData(&staticData, nullptr)) {
-        ACSDK_ERROR(LX("loadHelperFailed").m("Could not set alert data."));
+        ACSDK_ERROR(LX("storeFailed").m("Could not set alert data."));
         return false;
     }
 
@@ -792,7 +792,10 @@ static bool loadAlertAssetPlayOrderItems(
     return true;
 }
 
-bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<Alert>>* alertContainer) {
+bool SQLiteAlertStorage::loadHelper(
+    int dbVersion,
+    std::vector<std::shared_ptr<Alert>>* alertContainer,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
     if (!alertContainer) {
         ACSDK_ERROR(LX("loadHelperFailed").m("Alert container parameter is nullptr."));
         return false;
@@ -874,12 +877,14 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
 
         std::shared_ptr<Alert> alert;
         if (ALERT_EVENT_TYPE_ALARM == type) {
-            alert = std::make_shared<Alarm>(m_alertsAudioFactory->alarmDefault(), m_alertsAudioFactory->alarmShort());
+            alert = std::make_shared<Alarm>(
+                m_alertsAudioFactory->alarmDefault(), m_alertsAudioFactory->alarmShort(), settingsManager);
         } else if (ALERT_EVENT_TYPE_TIMER == type) {
-            alert = std::make_shared<Timer>(m_alertsAudioFactory->timerDefault(), m_alertsAudioFactory->timerShort());
+            alert = std::make_shared<Timer>(
+                m_alertsAudioFactory->timerDefault(), m_alertsAudioFactory->timerShort(), settingsManager);
         } else if (ALERT_EVENT_TYPE_REMINDER == type) {
             alert = std::make_shared<Reminder>(
-                m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort());
+                m_alertsAudioFactory->reminderDefault(), m_alertsAudioFactory->reminderShort(), settingsManager);
         } else {
             ACSDK_ERROR(
                 LX("loadHelperFailed").m("Could not instantiate an alert object.").d("type read from database", type));
@@ -931,8 +936,10 @@ bool SQLiteAlertStorage::loadHelper(int dbVersion, std::vector<std::shared_ptr<A
     return true;
 }
 
-bool SQLiteAlertStorage::load(std::vector<std::shared_ptr<Alert>>* alertContainer) {
-    return loadHelper(ALERTS_DATABASE_VERSION_TWO, alertContainer);
+bool SQLiteAlertStorage::load(
+    std::vector<std::shared_ptr<Alert>>* alertContainer,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
+    return loadHelper(ALERTS_DATABASE_VERSION_TWO, alertContainer, settingsManager);
 }
 
 bool SQLiteAlertStorage::modify(std::shared_ptr<Alert> alert) {
@@ -1199,7 +1206,7 @@ static void printAlertsSummary(
 
 void SQLiteAlertStorage::printStats(StatLevel level) {
     std::vector<std::shared_ptr<Alert>> alerts;
-    load(&alerts);
+    load(&alerts, nullptr);
     switch (level) {
         case StatLevel::ONE_LINE:
             printOneLineSummary(&m_db);

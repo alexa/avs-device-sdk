@@ -121,6 +121,8 @@ gboolean AttachmentReaderSource::handleReadData() {
             }
         // Fall through if some data was read.
         case AttachmentReader::ReadStatus::OK:
+            notifyObserversOnReadData();
+            // FALL-THROUGH
         case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
         // Fall through to retry reading later.
         case AttachmentReader::ReadStatus::OK_TIMEDOUT:

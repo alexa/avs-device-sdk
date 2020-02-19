@@ -15,6 +15,9 @@
 
 #include "MRM/MRMCapabilityAgent.h"
 
+#include <rapidjson/document.h>
+
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 /// String to identify log entries originating from this file.
@@ -34,23 +37,106 @@ namespace mrm {
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::json;
 
 /// The namespace for this capability agent.
-static const std::string NAMESPACE_STR = "MRM";
+static const std::string CAPABILITY_AGENT_NAMESPACE_STR = "MRM";
+
+/// Directive namespaces that this capability agent accepts
+static const std::string DIRECTIVE_NAMESPACE_STR = "WholeHomeAudio";
+/// Directives under this namespace are for controlling output device skews(bluetooth)
+static const std::string SKEW_DIRECTIVE_NAMESPACE_STR = "WholeHomeAudio.Skew";
 
 /// The wildcard namespace signature so the DirectiveSequencer will send us all
 /// Directives under the namespace.
-static const avsCommon::avs::NamespaceAndName WHA_NAMESPACE_WILDCARD{NAMESPACE_STR, "*"};
+static const avsCommon::avs::NamespaceAndName WHA_NAMESPACE_WILDCARD{DIRECTIVE_NAMESPACE_STR, "*"};
+static const avsCommon::avs::NamespaceAndName WHA_SKEW_NAMESPACE_WILDCARD{SKEW_DIRECTIVE_NAMESPACE_STR, "*"};
 
-/**
- * Creates the MRM capability configuration, needed to register with Device
- * Capability Framework.
- *
- * @return The MRM capability configuration.
- */
-static std::shared_ptr<CapabilityConfiguration> getMRMCapabilityConfiguration() {
-    static const std::unordered_map<std::string, std::string> configMap;
-    return std::make_shared<CapabilityConfiguration>(configMap);
+/// The key in our config file to find the root of MRM for this database.
+static const std::string MRM_CONFIGURATION_ROOT_KEY = "mrm";
+/// The key in our config file to find the MRM capabilities.
+static const std::string MRM_CAPABILITIES_KEY = "capabilities";
+
+static std::unordered_set<std::shared_ptr<CapabilityConfiguration>> readCapabilities() {
+    std::unordered_set<std::shared_ptr<CapabilityConfiguration>> capabilitiesSet;
+    auto configRoot = configuration::ConfigurationNode::getRoot();
+    if (!configRoot) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "configurationRootNotFound"));
+        return capabilitiesSet;
+    }
+
+    auto mrmConfig = configRoot[MRM_CONFIGURATION_ROOT_KEY];
+    if (!mrmConfig) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "configurationKeyNotFound")
+                        .d("configurationKey", MRM_CONFIGURATION_ROOT_KEY));
+        return capabilitiesSet;
+    }
+
+    auto capabilitiesConfig = mrmConfig[MRM_CAPABILITIES_KEY];
+    if (!capabilitiesConfig) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "capabilitiesKeyNotFound").d("key", MRM_CAPABILITIES_KEY));
+        return capabilitiesSet;
+    }
+
+    std::string capabilitiesString = capabilitiesConfig.serialize();
+    rapidjson::Document capabilities;
+    if (!jsonUtils::parseJSON(capabilitiesString, &capabilities)) {
+        ACSDK_ERROR(LX("initializeFailed")
+                        .d("reason", "failedToParseCapabilitiesString")
+                        .d("capabilitiesString", capabilitiesString));
+        return capabilitiesSet;
+    }
+    for (auto itr = capabilities.MemberBegin(); itr != capabilities.MemberEnd(); ++itr) {
+        std::string interfaceType;
+        if (!jsonUtils::retrieveValue(itr->value, CAPABILITY_INTERFACE_TYPE_KEY, &interfaceType)) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "failedToFindCapabilityInterfaceTypeKey")
+                            .d("key", CAPABILITY_INTERFACE_TYPE_KEY));
+            return capabilitiesSet;
+        }
+
+        std::string interfaceName;
+        if (!jsonUtils::retrieveValue(itr->value, CAPABILITY_INTERFACE_NAME_KEY, &interfaceName)) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "failedToFindCapabilityInterfaceNameKey")
+                            .d("key", CAPABILITY_INTERFACE_NAME_KEY));
+            return capabilitiesSet;
+        }
+
+        std::string interfaceVersion;
+        if (!jsonUtils::retrieveValue(itr->value, CAPABILITY_INTERFACE_VERSION_KEY, &interfaceVersion)) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "failedToFindCapabilityInterfaceVersionKey")
+                            .d("key", CAPABILITY_INTERFACE_VERSION_KEY));
+            return capabilitiesSet;
+        }
+
+        // Configurations is an optional field.
+        std::string configurationsString;
+        rapidjson::Value::ConstMemberIterator configurations;
+        if (jsonUtils::findNode(itr->value, CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, &configurations)) {
+            if (!jsonUtils::convertToValue(configurations->value, &configurationsString)) {
+                ACSDK_ERROR(LX("initializeFailed").d("reason", "failedToConvertConfigurations"));
+                return capabilitiesSet;
+            }
+        }
+
+        std::unordered_map<std::string, std::string> capabilityMap = {
+            {CAPABILITY_INTERFACE_TYPE_KEY, interfaceType},
+            {CAPABILITY_INTERFACE_NAME_KEY, interfaceName},
+            {CAPABILITY_INTERFACE_VERSION_KEY, interfaceVersion}};
+        if (!configurationsString.empty()) {
+            capabilityMap[CAPABILITY_INTERFACE_CONFIGURATIONS_KEY] = configurationsString;
+        }
+        capabilitiesSet.insert(std::make_shared<CapabilityConfiguration>(capabilityMap));
+    }
+
+    if (capabilitiesSet.empty()) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "missingCapabilityConfigurations"));
+    }
+
+    return capabilitiesSet;
 }
 
 std::shared_ptr<MRMCapabilityAgent> MRMCapabilityAgent::create(
@@ -91,11 +177,12 @@ MRMCapabilityAgent::MRMCapabilityAgent(
     std::shared_ptr<SpeakerManagerInterface> speakerManager,
     std::shared_ptr<UserInactivityMonitorInterface> userInactivityMonitor,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
-        CapabilityAgent(NAMESPACE_STR, exceptionEncounteredSender),
+        CapabilityAgent(CAPABILITY_AGENT_NAMESPACE_STR, exceptionEncounteredSender),
         RequiresShutdown("MRMCapabilityAgent"),
         m_mrmHandler{handler},
         m_speakerManager{speakerManager},
-        m_userInactivityMonitor{userInactivityMonitor} {
+        m_userInactivityMonitor{userInactivityMonitor},
+        m_wasPreviouslyActive{false} {
     ACSDK_DEBUG5(LX(__func__));
 };
 
@@ -135,8 +222,8 @@ void MRMCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon::a
 DirectiveHandlerConfiguration MRMCapabilityAgent::getConfiguration() const {
     ACSDK_DEBUG5(LX(__func__));
     DirectiveHandlerConfiguration configuration;
-    // TODO: ARC-227 verify default values
-    configuration[WHA_NAMESPACE_WILDCARD] = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
+    configuration[WHA_NAMESPACE_WILDCARD] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    configuration[WHA_SKEW_NAMESPACE_WILDCARD] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     return configuration;
 }
 
@@ -161,6 +248,17 @@ void MRMCapabilityAgent::onCallStateChange(avsCommon::sdkInterfaces::CallStateOb
 std::string MRMCapabilityAgent::getVersionString() const {
     ACSDK_DEBUG5(LX(__func__));
     return m_mrmHandler->getVersionString();
+}
+
+void MRMCapabilityAgent::setObserver(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
+    if (!observer) {
+        ACSDK_ERROR(LX("setObserverFailed").m("Observer is null."));
+        return;
+    }
+
+    ACSDK_DEBUG5(LX(__func__));
+    m_executor.submit([this, observer]() { executeSetObserver(observer); });
 }
 
 void MRMCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<DirectiveInfo> info) {
@@ -199,33 +297,28 @@ void MRMCapabilityAgent::executeOnUserInactivityReportSent() {
     m_mrmHandler->onUserInactivityReportSent();
 }
 
+void MRMCapabilityAgent::executeOnCallStateChange(
+    const avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) {
+    ACSDK_DEBUG5(LX(__func__));
+    bool isCurrentlyActive = CallStateObserverInterface::isStateActive(callState);
+
+    // Only send down the CallStateChange event if the active call state changed
+    if (m_wasPreviouslyActive != isCurrentlyActive) {
+        m_mrmHandler->onCallStateChange(isCurrentlyActive);
+        m_wasPreviouslyActive = isCurrentlyActive;
+    } else {
+        ACSDK_WARN(LX(__func__).m("call active state didn't actually change"));
+    }
+}
+
 void MRMCapabilityAgent::executeSetObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
     ACSDK_DEBUG5(LX(__func__));
     m_mrmHandler->setObserver(observer);
 }
 
-void MRMCapabilityAgent::executeOnCallStateChange(
-    const avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) {
-    ACSDK_DEBUG5(LX(__func__));
-    bool active =
-        (CallStateObserverInterface::CallState::CONNECTING == callState ||
-         CallStateObserverInterface::CallState::INBOUND_RINGING == callState ||
-         CallStateObserverInterface::CallState::CALL_CONNECTED == callState);
-
-    m_mrmHandler->onCallStateChange(active);
-}
-
 std::unordered_set<std::shared_ptr<CapabilityConfiguration>> MRMCapabilityAgent::getCapabilityConfigurations() {
-    std::unordered_set<std::shared_ptr<CapabilityConfiguration>> configs;
-    configs.insert(getMRMCapabilityConfiguration());
-    return configs;
-}
-
-void MRMCapabilityAgent::setObserver(
-    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) {
-    ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, observer]() { executeSetObserver(observer); });
+    return readCapabilities();
 }
 
 void MRMCapabilityAgent::doShutdown() {

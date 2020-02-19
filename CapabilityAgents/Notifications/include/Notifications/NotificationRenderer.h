@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,11 +62,15 @@ public:
 
     /// @name MediaPlayerObserverInterface methods
     /// @{
-    void onPlaybackStarted(SourceId sourceId) override;
-    void onPlaybackStopped(SourceId sourceId) override;
-    void onPlaybackFinished(SourceId sourceId) override;
-    void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error)
-        override;
+    void onFirstByteRead(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStarted(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStopped(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackFinished(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackError(
+        SourceId sourceId,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
     /// @}
 
     /// @name RequiresShutdown methods

@@ -33,6 +33,7 @@
 #include "ACL/Transport/TransportFactoryInterface.h"
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
+#include "ACL/Transport/SynchronizedMessageRequestQueue.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -201,6 +202,9 @@ private:
 
     /// The transport factory.
     std::shared_ptr<TransportFactoryInterface> m_transportFactory;
+
+    /// The synchonized queue of messages to send that is shared between transports.
+    std::shared_ptr<SynchronizedMessageRequestQueue> m_requestQueue;
 
 protected:
     /**

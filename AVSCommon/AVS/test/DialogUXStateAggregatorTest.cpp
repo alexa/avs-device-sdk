@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace test {
 
-using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 /// Long time out for observers to wait for the state change callback (we should not reach this).
 static const auto DEFAULT_TIMEOUT = std::chrono::seconds(5);
@@ -35,6 +35,9 @@ static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);
 /// Time out for testing if transitionFromThinking or transitionFromListneing timeouts have occurred.
 // This needs to be longer than the values passed into the DialogUXStateAggregator.
 static const auto TRANSITION_TIMEOUT = std::chrono::milliseconds(300);
+
+/// Dummy value for a media player source id
+static const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TEST_SOURCE_ID = -1;
 
 /// A test observer that mocks out the DialogUXStateObserverInterface##onDialogUXStateChanged() call.
 class TestObserver : public DialogUXStateObserverInterface {
@@ -144,6 +147,9 @@ protected:
 
     /// Another test observer
     std::shared_ptr<TestObserver> m_anotherTestObserver;
+
+    /// A MediaPlayerState object passed to onStateChange by SpeechSynthesizer
+    avsCommon::utils::mediaPlayer::MediaPlayerState m_testMediaPlayerState;
 
     virtual void SetUp() {
         m_aggregator = std::make_shared<DialogUXStateAggregator>();
@@ -298,7 +304,8 @@ TEST_F(DialogUXAggregatorTest, test_listeningThenReceiveThenSpeakGoesToSpeakButN
 
     m_aggregator->receive("", "");
 
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
@@ -316,12 +323,14 @@ TEST_F(DialogUXAggregatorTest, test_speakingAndRecognizingFinishedGoesToIdle) {
 
     m_aggregator->receive("", "");
 
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::IDLE);
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
@@ -332,20 +341,24 @@ TEST_F(DialogUXAggregatorTest, test_nonIdleObservantsPreventsIdle) {
 
     // AIP is active, SS is not. Expected: non idle
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     // Both AIP and SS are inactive. Expected: idle
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::IDLE);
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     // AIP is inactive, SS is active. Expected: non-idle
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
     // AIP is inactive, SS is inactive: Expected: idle
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
 
@@ -360,11 +373,13 @@ TEST_F(DialogUXAggregatorTest, test_speakingFinishedDoesNotGoesToIdleImmediately
 
     m_aggregator->receive("", "");
 
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertNoStateChange(m_testObserver);
 }
@@ -377,7 +392,8 @@ TEST_F(DialogUXAggregatorTest, test_simpleReceiveDoesNothing) {
 
     assertNoStateChange(m_testObserver);
 
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
@@ -399,7 +415,9 @@ TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveRemainsInThinkingIfSpeech
     m_aggregator->receive("", "");
 
     m_aggregator->onStateChanged(
-        sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS);
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS,
+        TEST_SOURCE_ID,
+        m_testMediaPlayerState);
 
     // Make sure after SpeechSynthesizer reports GAINING_FOCUS, that it would stay in THINKING state
     m_aggregator->receive("", "");
@@ -422,14 +440,16 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
 
     m_aggregator->receive("", "");
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
     m_aggregator->onRequestProcessingStarted();
     assertNoStateChange(m_testObserver);
 
     // Reset to IDLE
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::IDLE);
-    m_aggregator->onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+    m_aggregator->onStateChanged(
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED, TEST_SOURCE_ID, m_testMediaPlayerState);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::EXPECTING);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 
 #include <AVSCommon/Utils/Logger/LogStringFormatter.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+
+#include <string>
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
@@ -38,6 +40,17 @@ public:
      * @param level The lowest severity level of logs to be emitted by this Logger.
      */
     AndroidLogger(alexaClientSDK::avsCommon::utils::logger::Level level);
+
+    /**
+     * Constructor.
+     *
+     * @param tag to be includes as a prefix for every log message.
+     * @param level The lowest severity level of logs to be emitted by this Logger.
+     */
+    AndroidLogger(const std::string& tag, alexaClientSDK::avsCommon::utils::logger::Level level);
+
+private:
+    std::string m_tag;
 };
 
 }  // namespace androidUtilities

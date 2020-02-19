@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public:
 private:
     /// The constructor will only be called with a legal macAddress input.  We don't check here because this function is
     /// private and is only called from the public create(...) factory method.
-    MacAddressString(const std::string& macAddress);
+    explicit MacAddressString(const std::string& macAddress);
 
     /// a well formed MAC address string
     const std::string m_macAddress;

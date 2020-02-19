@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -325,22 +325,23 @@ public:
      */
     ~MockPlayerObserver(){};
 
-    // void onPlaybackStarted() override;
-    void onPlaybackStarted(SourceId id) override;
+    void onPlaybackStarted(SourceId id, const MediaPlayerState& state) override;
 
-    void onPlaybackFinished(SourceId id) override;
+    void onPlaybackFinished(SourceId id, const MediaPlayerState& state) override;
 
-    void onPlaybackError(SourceId id, const ErrorType& type, std::string error) override;
+    void onPlaybackError(SourceId id, const ErrorType& type, std::string error, const MediaPlayerState& state) override;
 
-    void onPlaybackPaused(SourceId id) override;
+    void onPlaybackPaused(SourceId id, const MediaPlayerState& state) override;
 
-    void onPlaybackResumed(SourceId id) override;
+    void onPlaybackResumed(SourceId id, const MediaPlayerState& state) override;
 
-    void onPlaybackStopped(SourceId id) override;
+    void onPlaybackStopped(SourceId id, const MediaPlayerState& state) override;
 
-    void onBufferingComplete(SourceId id) override;
+    void onBufferingComplete(SourceId id, const MediaPlayerState& state) override;
 
-    void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags) override;
+    void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags, const MediaPlayerState& state) override;
+
+    void onFirstByteRead(SourceId id, const MediaPlayerState& state) override;
 
     /**
      * Wait for a message to be received.
@@ -497,7 +498,7 @@ private:
     SourceId m_lastBufId = 0;
 };
 
-void MockPlayerObserver::onPlaybackStarted(SourceId id) {
+void MockPlayerObserver::onPlaybackStarted(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_playbackStarted = true;
@@ -508,7 +509,7 @@ void MockPlayerObserver::onPlaybackStarted(SourceId id) {
     m_onPlaybackStartedCallCount++;
 }
 
-void MockPlayerObserver::onPlaybackFinished(SourceId id) {
+void MockPlayerObserver::onPlaybackFinished(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_playbackFinished = true;
@@ -517,20 +518,24 @@ void MockPlayerObserver::onPlaybackFinished(SourceId id) {
     m_onPlaybackFinishedCallCount++;
 }
 
-void MockPlayerObserver::onPlaybackError(SourceId id, const ErrorType& type, std::string error) {
+void MockPlayerObserver::onPlaybackError(
+    SourceId id,
+    const ErrorType& type,
+    std::string error,
+    const MediaPlayerState&) {
     m_lastId = id;
     m_playbackError = true;
     m_wakePlaybackError.notify_all();
 };
 
-void MockPlayerObserver::onPlaybackPaused(SourceId id) {
+void MockPlayerObserver::onPlaybackPaused(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_playbackPaused = true;
     m_wakePlaybackPaused.notify_all();
 };
 
-void MockPlayerObserver::onPlaybackResumed(SourceId id) {
+void MockPlayerObserver::onPlaybackResumed(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_playbackResumed = true;
@@ -538,7 +543,7 @@ void MockPlayerObserver::onPlaybackResumed(SourceId id) {
     m_wakePlaybackResumed.notify_all();
 };
 
-void MockPlayerObserver::onPlaybackStopped(SourceId id) {
+void MockPlayerObserver::onPlaybackStopped(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_playbackStopped = true;
@@ -546,7 +551,11 @@ void MockPlayerObserver::onPlaybackStopped(SourceId id) {
     m_wakePlaybackStopped.notify_all();
 };
 
-void MockPlayerObserver::onBufferingComplete(SourceId id) {
+void MockPlayerObserver::onFirstByteRead(SourceId id, const MediaPlayerState&) {
+    // do nothing useful
+}
+
+void MockPlayerObserver::onBufferingComplete(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastBufId = id;
     m_bufferingComplete = true;
@@ -623,7 +632,10 @@ int MockPlayerObserver::getOnTagsCallCount() {
     return m_onTagsCallCount;
 }
 
-void MockPlayerObserver::onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags) {
+void MockPlayerObserver::onTags(
+    SourceId id,
+    std::unique_ptr<const VectorOfTags> vectorOfTags,
+    const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_lastId = id;
     m_tags = true;
@@ -987,12 +999,13 @@ TEST_P(MediaPlayerTest, testSlow_playingTwoAttachments) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStopped(sourceId));
 }
 
+// Disabling test according to ACSDK-3414
 /**
  * Check playback of an attachment that is received sporadically. Playback started notification should be received
  * when the playback starts. Wait for playback to finish and expect the playback finished notification is received.
  * To a human ear the playback of this test is expected to sound reasonably smooth.
  */
-TEST_P(MediaPlayerTest, testSlow_unsteadyReads) {
+TEST_P(MediaPlayerTest, DISABLED_testSlow_unsteadyReads) {
     // clang-format off
     MediaPlayer::SourceId sourceId;
     setAttachmentReaderSource(&sourceId,
@@ -1018,13 +1031,14 @@ TEST_P(MediaPlayerTest, testSlow_unsteadyReads) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId, std::chrono::milliseconds(15000)));
 }
 
+// Disabling test according to ACSDK-3414
 /**
  * Check playback of an attachment whose receipt is interrupted for about 3 seconds.  Playback started notification
  * should be received when the playback starts. Wait for playback to finish and expect the playback finished
  * notification is received. To a human ear the playback of this test is expected to sound reasonably smooth
  * initially, then be interrupted for a few seconds, and then continue fairly smoothly.
  */
-TEST_P(MediaPlayerTest, testSlow_recoveryFromPausedReads) {
+TEST_P(MediaPlayerTest, DISABLED_testSlow_recoveryFromPausedReads) {
     MediaPlayer::SourceId sourceId;
     // clang-format off
     setAttachmentReaderSource(&sourceId,

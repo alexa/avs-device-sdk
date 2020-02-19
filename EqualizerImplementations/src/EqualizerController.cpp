@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -140,13 +140,15 @@ int EqualizerController::truncateBandLevel(int level) {
 }
 
 void EqualizerController::setBandLevel(EqualizerBand band, int level) {
-    std::lock_guard<std::mutex> guard(m_stateMutex);
+    std::unique_lock<std::mutex> lock(m_stateMutex);
 
     level = truncateBandLevel(level);
 
     auto iter = m_currentState.bandLevels.find(band);
     if (m_currentState.bandLevels.end() != iter) {
         if (iter->second == level) {
+            lock.unlock();
+            notifyListenersOnStateChanged(false);
             return;
         }
         iter->second = level;
@@ -154,19 +156,18 @@ void EqualizerController::setBandLevel(EqualizerBand band, int level) {
         ACSDK_ERROR(LX("setBandLevelFailed").d("reason", "Invalid band requested"));
         return;
     }
-
-    updateStateLocked();
+    lock.unlock();
+    updateState();
 }
 
 void EqualizerController::setBandLevels(const EqualizerBandLevelMap& bandLevelMap) {
-    std::lock_guard<std::mutex> guard(m_stateMutex);
-
-    setBandLevelsLocked(bandLevelMap);
+    applyChangesToCurrentState(bandLevelMap, [](int originalValue, int changeValue) { return changeValue; });
 }
 
-void EqualizerController::applyChangesToCurrentStateLocked(
+void EqualizerController::applyChangesToCurrentState(
     const EqualizerBandLevelMap& changesDataMap,
     std::function<int(int, int)> operation) {
+    std::unique_lock<std::mutex> lock(m_stateMutex);
     bool hasChanges = false;
     bool hasInvalidBands = false;
 
@@ -185,30 +186,25 @@ void EqualizerController::applyChangesToCurrentStateLocked(
             hasInvalidBands = true;
         }
     }
+    lock.unlock();
 
     if (hasChanges) {
-        updateStateLocked();
-    }
-
-    if (hasInvalidBands) {
+        updateState();
+    } else if (hasInvalidBands) {
         ACSDK_WARN(LX(__func__).m("Invalid bands requested"));
+    } else {
+        notifyListenersOnStateChanged(false);
     }
-}
-
-void EqualizerController::setBandLevelsLocked(const EqualizerBandLevelMap& bandLevelMap) {
-    applyChangesToCurrentStateLocked(bandLevelMap, [](int originalValue, int changeValue) { return changeValue; });
 }
 
 void EqualizerController::adjustBandLevels(const EqualizerBandLevelMap& bandAdjustmentMap) {
-    std::lock_guard<std::mutex> guard(m_stateMutex);
-
-    applyChangesToCurrentStateLocked(bandAdjustmentMap, [this](int originalValue, int changeValue) {
+    applyChangesToCurrentState(bandAdjustmentMap, [this](int originalValue, int changeValue) {
         return truncateBandLevel(originalValue + changeValue);
     });
 }
 
 void EqualizerController::resetBands(const std::set<EqualizerBand>& bands) {
-    std::lock_guard<std::mutex> guard(m_stateMutex);
+    std::unique_lock<std::mutex> lock(m_stateMutex);
 
     bool hasChanges = false;
     bool hasInvalidBands = false;
@@ -228,13 +224,14 @@ void EqualizerController::resetBands(const std::set<EqualizerBand>& bands) {
             hasInvalidBands = true;
         }
     }
+    lock.unlock();
 
     if (hasChanges) {
-        updateStateLocked();
-    }
-
-    if (hasInvalidBands) {
+        updateState();
+    } else if (hasInvalidBands) {
         ACSDK_WARN(LX(__func__).m("Invalid bands requested"));
+    } else {
+        notifyListenersOnStateChanged(false);
     }
 }
 
@@ -270,9 +267,10 @@ void EqualizerController::setCurrentMode(EqualizerMode mode) {
     }
 
     {
-        std::lock_guard<std::mutex> stateGuard(m_stateMutex);
+        std::unique_lock<std::mutex> lock(m_stateMutex);
         m_currentState.mode = mode;
-        updateStateLocked();
+        lock.unlock();
+        updateState();
     }
 }
 
@@ -345,7 +343,8 @@ std::shared_ptr<EqualizerConfigurationInterface> EqualizerController::getConfigu
     return m_configuration;
 }
 
-void EqualizerController::updateStateLocked() {
+void EqualizerController::updateState() {
+    std::unique_lock<std::mutex> lock(m_stateMutex);
     std::string stateString = "mode=" + equalizerModeToString(m_currentState.mode);
     for (auto& bandIt : m_currentState.bandLevels) {
         EqualizerBand band = bandIt.first;
@@ -373,8 +372,21 @@ void EqualizerController::updateStateLocked() {
         }
     }
 
-    for (auto listener : m_listeners) {
-        listener->onEqualizerStateChanged(m_currentState);
+    lock.unlock();
+    notifyListenersOnStateChanged(true);
+}
+
+void EqualizerController::notifyListenersOnStateChanged(bool changed) {
+    std::unique_lock<std::mutex> lock(m_stateMutex);
+    auto listenersCopy = m_listeners;
+    auto currentStateCopy = m_currentState;
+    lock.unlock();
+    for (const auto& listener : listenersCopy) {
+        if (changed) {
+            listener->onEqualizerStateChanged(currentStateCopy);
+        } else {
+            listener->onEqualizerSameStateChanged(currentStateCopy);
+        }
     }
 }
 

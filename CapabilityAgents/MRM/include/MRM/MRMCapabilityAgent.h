@@ -76,7 +76,7 @@ public:
     /**
      * Destructor.
      */
-    ~MRMCapabilityAgent();
+    ~MRMCapabilityAgent() override;
 
     /// @name Overridden CapabilityAgent methods.
     /// @{
@@ -205,6 +205,8 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
     /// The User Inactivity Monitor.
     std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> m_userInactivityMonitor;
+    /// Boolean to store whether or not the last processed CallState was "active" or not.
+    bool m_wasPreviouslyActive;
     /// The @c Executor which queues up operations from asynchronous API calls.
     avsCommon::utils::threading::Executor m_executor;
 };

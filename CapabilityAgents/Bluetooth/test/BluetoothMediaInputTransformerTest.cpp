@@ -18,7 +18,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Bluetooth/BluetoothAVRCPTransformer.h"
+#include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
+
+#include "Bluetooth/BluetoothMediaInputTransformer.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -28,6 +30,7 @@ namespace test {
 using namespace ::testing;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::sdkInterfaces::bluetooth::services;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::bluetooth;
@@ -40,70 +43,78 @@ public:
     MOCK_METHOD0(switchToDefaultHandler, void());
 };
 
-class BluetoothAVRCPTransformerTest : public ::testing::Test {
+class BluetoothMediaInputTransformerTest : public ::testing::Test {
 public:
     /// SetUp before each test case.
     void SetUp();
 
 protected:
-    /// The eventbus in which the @c BluetoothAVRCPTransformer will received AVRCP events on.
+    /// The eventbus in which the @c BluetoothMediaInputTransformer will received Media events on.
     std::shared_ptr<BluetoothEventBus> m_eventBus;
 
     /// A mock @PlaybackRouterInterface object.
     std::shared_ptr<MockPlaybackRouter> m_mockRouter;
 
-    /// The @c BluetoothAVRCPTransformer instance under test.
-    std::shared_ptr<BluetoothAVRCPTransformer> m_avrcp;
+    /// The @c BluetoothMediaInputTransformer instance under test.
+    std::shared_ptr<BluetoothMediaInputTransformer> m_mediaInputTransformer;
 };
 
-void BluetoothAVRCPTransformerTest::SetUp() {
+void BluetoothMediaInputTransformerTest::SetUp() {
     m_eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
     m_mockRouter = std::make_shared<MockPlaybackRouter>();
-    m_avrcp = BluetoothAVRCPTransformer::create(m_eventBus, m_mockRouter);
+    m_mediaInputTransformer = BluetoothMediaInputTransformer::create(m_eventBus, m_mockRouter);
 }
 
 /// Test that create() returns a nullptr if called with invalid arguments.
-TEST_F(BluetoothAVRCPTransformerTest, test_createWithNullParams) {
-    ASSERT_THAT(BluetoothAVRCPTransformer::create(m_eventBus, nullptr), IsNull());
-    ASSERT_THAT(BluetoothAVRCPTransformer::create(nullptr, m_mockRouter), IsNull());
+TEST_F(BluetoothMediaInputTransformerTest, test_createWithNullParams) {
+    ASSERT_THAT(BluetoothMediaInputTransformer::create(m_eventBus, nullptr), IsNull());
+    ASSERT_THAT(BluetoothMediaInputTransformer::create(nullptr, m_mockRouter), IsNull());
 }
 
 /// Test that a Play AVRCP command is transformed to playButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, test_handlePlayCommand) {
+TEST_F(BluetoothMediaInputTransformerTest, test_handlePlayCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PLAY)).Times(1);
 
-    AVRCPCommandReceivedEvent event(AVRCPCommand::PLAY);
+    MediaCommandReceivedEvent event(MediaCommand::PLAY);
     m_eventBus->sendEvent(event);
 }
 
 /// Test that a Pause AVRCP command is transformed to pauseButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, test_handlePauseCommand) {
+TEST_F(BluetoothMediaInputTransformerTest, test_handlePauseCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PAUSE)).Times(1);
 
-    AVRCPCommandReceivedEvent event(AVRCPCommand::PAUSE);
+    MediaCommandReceivedEvent event(MediaCommand::PAUSE);
     m_eventBus->sendEvent(event);
 }
 
 /// Test that a Next AVRCP command is transformed to nextButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, test_handleNextCommand) {
+TEST_F(BluetoothMediaInputTransformerTest, test_handleNextCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::NEXT)).Times(1);
 
-    AVRCPCommandReceivedEvent event(AVRCPCommand::NEXT);
+    MediaCommandReceivedEvent event(MediaCommand::NEXT);
     m_eventBus->sendEvent(event);
 }
 
 /// Test that a Previous AVRCP command is transformed to previousButtonPressed().
-TEST_F(BluetoothAVRCPTransformerTest, test_handlePreviousCommand) {
+TEST_F(BluetoothMediaInputTransformerTest, test_handlePreviousCommand) {
     EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PREVIOUS)).Times(1);
 
-    AVRCPCommandReceivedEvent event(AVRCPCommand::PREVIOUS);
+    MediaCommandReceivedEvent event(MediaCommand::PREVIOUS);
+    m_eventBus->sendEvent(event);
+}
+
+/// Test that a Play/Pause Media command is transformed to playButtonPressed().
+TEST_F(BluetoothMediaInputTransformerTest, handlePlayPauseCommand) {
+    EXPECT_CALL(*m_mockRouter, buttonPressed(PlaybackButton::PLAY)).Times(1);
+
+    MediaCommandReceivedEvent event(MediaCommand::PLAY_PAUSE);
     m_eventBus->sendEvent(event);
 }
 
 /// Test that an unrelated event does not trigger any calls to the PlaybackRouter.
-TEST_F(BluetoothAVRCPTransformerTest, test_unrelatedEvent) {
-    auto strictPlaybackRouter = std::shared_ptr<PlaybackRouterInterface>(new StrictMock<MockPlaybackRouter>());
-    auto avrcpTransformer = BluetoothAVRCPTransformer::create(m_eventBus, strictPlaybackRouter);
+TEST_F(BluetoothMediaInputTransformerTest, test_unrelatedEvent) {
+    auto strictPlaybackRouter = std::make_shared<StrictMock<MockPlaybackRouter>>();
+    auto mediaInputTransformer = BluetoothMediaInputTransformer::create(m_eventBus, strictPlaybackRouter);
 
     DeviceDiscoveredEvent event(nullptr);
     m_eventBus->sendEvent(event);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "ACL/Transport/ExchangeHandler.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -51,6 +52,7 @@ public:
      * @param messageRequest The MessageRequest to send.
      * @param messageConsumer Where to send messages.
      * @param attachmentManager Where to get attachments to write to.
+     * @param metricRecorder The metric recorder.
      * @return A new MessageRequestHandler or nullptr if the operation fails.
      */
     static std::shared_ptr<MessageRequestHandler> create(
@@ -58,7 +60,8 @@ public:
         const std::string& authToken,
         std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
 private:
     /**
@@ -67,11 +70,13 @@ private:
      * @param context The ExchangeContext in which this MessageRequest handler will operate.
      * @param authToken The token to use to authorize the request.
      * @param messageRequest The MessageRequest to send.
+     * @param metricRecorder The metric recorder.
      */
     MessageRequestHandler(
         std::shared_ptr<ExchangeHandlerContextInterface> context,
         const std::string& authToken,
-        std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest);
+        std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Notify the associated HTTP2Transport instance that the message request failed or was acknowledged by AVS.
@@ -116,13 +121,16 @@ private:
     /// Reader for current attachment (if any).
     std::shared_ptr<avsCommon::avs::MessageRequest::NamedReader> m_namedReader;
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// Whether acknowledge of the @c MessageRequest was reported.
     bool m_wasMessageRequestAcknowledgeReported;
 
     /// Whether finish of the @c MessageRequest was reported.
     bool m_wasMessageRequestFinishedReported;
 
-    /// Response code received through @c onReciveResponseCode (or zero).
+    /// Response code received through @c onReceiveResponseCode (or zero).
     long m_responseCode;
 };
 

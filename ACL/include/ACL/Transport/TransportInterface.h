@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -58,11 +58,9 @@ public:
     virtual bool isConnected() = 0;
 
     /**
-     * Sends an message request. This call blocks until the message can be sent.
-     *
-     * @param request The requested message.
+     * A message request has been added to the shared synchronized queue and is ready to be read.
      */
-    virtual void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) = 0;
+    virtual void onRequestEnqueued() = 0;
 
     /**
      * Deleted copy constructor

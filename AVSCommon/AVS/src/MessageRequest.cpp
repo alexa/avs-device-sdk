@@ -116,8 +116,6 @@ void MessageRequest::removeObserver(
     m_observers.erase(observer);
 }
 
-using namespace avsCommon::sdkInterfaces;
-
 }  // namespace avs
 }  // namespace avsCommon
 }  // namespace alexaClientSDK

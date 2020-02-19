@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -98,6 +98,11 @@ public:
     void onDiscoveryFailure(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) override;
     /// @}
 
+    /// @name AVSGatewayManagerInterface methods
+    /// @{
+    void onAVSGatewayChanged(const std::string& avsGateway) override;
+    /// @}
+
     /// @name CustomerDataHandler Functions
     /// @{
     void clearData() override;
@@ -189,9 +194,6 @@ private:
 
     /// A map from endpoint ID to endpoint configuration.
     std::unordered_map<std::string, std::string> m_endpointIdToConfigMap;
-
-    /// A map from endpoint ID to endpoint configuration of previously published capabilities.
-    std::unordered_map<std::string, std::string> m_previousEndpointIdToConfigMap;
 
     /// The mutex to synchronize access to the current @c DiscoveryEventSender
     std::mutex m_discoveryEventSenderMutex;

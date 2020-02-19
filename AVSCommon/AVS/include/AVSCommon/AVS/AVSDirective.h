@@ -111,6 +111,11 @@ public:
      */
     std::string getUnparsedDirective() const;
 
+    /**
+     * Returns the attachmentContextId.
+     */
+    std::string getAttachmentContextId() const;
+
 private:
     /**
      * Constructor.

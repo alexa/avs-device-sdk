@@ -188,6 +188,8 @@ bool SQLiteDeviceSettingStorage::storeSettings(
                             + DEVICE_SETTINGS_VALUE_COLUMN_NAME + ", "
                             + DEVICE_SETTINGS_STATUS_COLUMN_NAME
                             + ") VALUES ";
+    // clang-format on
+    ACSDK_DEBUG5(LX(__func__).sensitive("query", sqlString));
 
     std::string valueString;
     std::string separator = "";
@@ -197,7 +199,6 @@ bool SQLiteDeviceSettingStorage::storeSettings(
         separator = ", ";
     }
 
-    // clang-format on
     sqlString += valueString + ";";
     ACSDK_DEBUG5(LX(__func__).sensitive("query", sqlString));
 

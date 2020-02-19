@@ -24,6 +24,7 @@
 
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "ADSL/DirectiveProcessor.h"
 #include "ADSL/DirectiveRouter.h"
@@ -41,10 +42,12 @@ public:
      *
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
+     * @param metricRecorder The metric recorder.
      * @return Returns a new DirectiveSequencer, or nullptr if the operation failed.
      */
     static std::unique_ptr<DirectiveSequencerInterface> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
@@ -63,11 +66,13 @@ public:
 private:
     /**
      * Constructor.
-     *
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
+     * @param metricRecorder The metric recorder.
      */
-    DirectiveSequencer(std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+    DirectiveSequencer(
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     void doShutdown() override;
 

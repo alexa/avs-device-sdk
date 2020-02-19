@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,10 @@ namespace avs {
 /**
  * An enum class used to specify the refresh policy for the state information provided by a @c stateProviderInterface.
  * The @c stateProviderInterface must specify the refresh policy when it updates its state via @c setState.
+ *
+ * Note: When a @c stateProviderInterface provides an empty state, the behavior is as follows:
+ * - For @c StateRefreshPolicy @c ALWAYS and @c NEVER, the empty state is included in the context.
+ * - For @c StateRefreshPolicy @c SOMETIMES, the empty state is NOT included in the context.
  */
 enum class StateRefreshPolicy {
     /**

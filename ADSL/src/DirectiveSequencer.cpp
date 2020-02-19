@@ -42,12 +42,13 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 
 std::unique_ptr<DirectiveSequencerInterface> DirectiveSequencer::create(
-    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<metrics::MetricRecorderInterface> metricRecorder) {
     if (!exceptionSender) {
         ACSDK_INFO(LX("createFailed").d("reason", "nullptrExceptionSender"));
         return nullptr;
     }
-    return std::unique_ptr<DirectiveSequencerInterface>(new DirectiveSequencer(exceptionSender));
+    return std::unique_ptr<DirectiveSequencerInterface>(new DirectiveSequencer(exceptionSender, metricRecorder));
 }
 
 bool DirectiveSequencer::addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) {
@@ -86,12 +87,14 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
 }
 
 DirectiveSequencer::DirectiveSequencer(
-    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<metrics::MetricRecorderInterface> metricRecorder) :
         DirectiveSequencerInterface{"DirectiveSequencer"},
         m_mutex{},
         m_exceptionSender{exceptionSender},
         m_isShuttingDown{false},
-        m_isEnabled{true} {
+        m_isEnabled{true},
+        m_directiveRouter{metricRecorder} {
     m_directiveProcessor = std::make_shared<DirectiveProcessor>(&m_directiveRouter);
     m_receivingThread = std::thread(&DirectiveSequencer::receivingLoop, this);
 }

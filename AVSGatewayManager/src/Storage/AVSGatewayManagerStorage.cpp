@@ -17,7 +17,7 @@
 
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include <Utils/include/AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace avsGatewayManager {

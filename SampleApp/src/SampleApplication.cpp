@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@
 #endif
 
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
@@ -99,6 +100,7 @@
 #include <AVSCommon/Utils/Network/InternetConnectionMonitor.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
 #include <Audio/AudioFactory.h>
+#include <Bluetooth/BasicDeviceConnectionRule.h>
 #include <Bluetooth/SQLiteBluetoothStorage.h>
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
@@ -114,6 +116,8 @@
 #include <EqualizerImplementations/InMemoryEqualizerConfiguration.h>
 #include <EqualizerImplementations/MiscDBEqualizerStorage.h>
 #include <EqualizerImplementations/SDKConfigEqualizerConfiguration.h>
+
+#include <InterruptModelConfiguration.h>
 
 #include <algorithm>
 #include <cctype>
@@ -463,6 +467,9 @@ bool SampleApplication::initialize(
         configJsonStreams.push_back(configInFile);
     }
 
+    // add the InterruptModel Configuration
+    configJsonStreams.push_back(alexaClientSDK::afml::interruptModel::InterruptModelConfiguration::getConfig(false));
+
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::initialize(configJsonStreams)) {
         ACSDK_CRITICAL(LX("Failed to initialize SDK!"));
         return false;
@@ -542,8 +549,8 @@ bool SampleApplication::initialize(
 
     std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> pool(
         m_audioMediaPlayerPool.begin(), m_audioMediaPlayerPool.end());
-    m_audioMediaPlayerFactory = mediaPlayer::PooledMediaPlayerFactory::create(pool);
-    if (!m_audioMediaPlayerFactory) {
+    auto audioMediaPlayerFactory = mediaPlayer::PooledMediaPlayerFactory::create(pool);
+    if (!audioMediaPlayerFactory) {
         ACSDK_CRITICAL(LX("Failed to create media player factory for content!"));
         return false;
     }
@@ -849,6 +856,14 @@ bool SampleApplication::initialize(
      */
     std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager;
 
+    /*
+     * Create the connectionRules to communicate with the Bluetooth stack.
+     */
+    std::unordered_set<
+        std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+        enabledConnectionRules;
+    enabledConnectionRules.insert(alexaClientSDK::capabilityAgents::bluetooth::BasicDeviceConnectionRule::create());
+
 #ifdef BLUETOOTH_BLUEZ
     auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
 
@@ -875,13 +890,12 @@ bool SampleApplication::initialize(
             m_externalMusicProviderSpeakersMap,
             m_adapterToCreateFuncMap,
             m_speakMediaPlayer,
-            std::move(m_audioMediaPlayerFactory),
+            std::move(audioMediaPlayerFactory),
             m_alertsMediaPlayer,
             m_notificationsMediaPlayer,
             m_bluetoothMediaPlayer,
             m_ringtoneMediaPlayer,
             m_systemSoundMediaPlayer,
-            nullptr,
             speakSpeaker,
             nullptr,  // added into 'additionalSpeakers
             alertsSpeaker,
@@ -920,13 +934,14 @@ bool SampleApplication::initialize(
             m_capabilitiesDelegate,
             contextManager,
             transportFactory,
+            avsGatewayManager,
             localeAssetsManager,
+            enabledConnectionRules,
             /* systemTimezone*/ nullptr,
             firmwareVersion,
             true,
             nullptr,
-            std::move(bluetoothDeviceManager),
-            avsGatewayManager);
+            std::move(bluetoothDeviceManager));
 
     if (!client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));

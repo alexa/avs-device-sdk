@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -125,6 +125,9 @@ gboolean IStreamSource::handleReadData() {
         if (size < info.size) {
             gst_buffer_resize(buffer, 0, size);
         }
+
+        notifyObserversOnReadData();
+
         installOnReadDataHandler();
         auto flowRet = gst_app_src_push_buffer(getAppSrc(), buffer);
         if (flowRet != GST_FLOW_OK) {

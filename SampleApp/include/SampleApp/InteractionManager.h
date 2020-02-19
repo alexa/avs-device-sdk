@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@
 #include <DefaultClient/DefaultClient.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/Types/NetworkInfo.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
 
 #include "KeywordObserver.h"
-#include "UIManager.h"
-
 #include "GuiRenderer.h"
+#include "UIManager.h"
 
 #ifdef ENABLE_PCC
 #include "PhoneCaller.h"
@@ -263,6 +263,24 @@ public:
     void timeZone();
 
     /**
+     * Should be called whenever a user requests 'NETWORK_INFO' change.
+     */
+    void networkInfo();
+
+    /// @name Network Info Prompt Functions
+    /// Should be called whenever a user requests a specific 'NETWORK_INFO' change.
+    /// @{
+    void networkInfoConnectionTypePrompt();
+    void networkInfoESSIDPrompt();
+    void networkInfoBSSIDPrompt();
+    void networkInfoIpPrompt();
+    void networkInfoSubnetPrompt();
+    void networkInfoMacPrompt();
+    void networkInfoDHCPPrompt();
+    void networkInfoStaticIpPrompt();
+    /// @}
+
+    /**
      * Should be called whenever a user requests 'DO_NOT_DISTURB' change.
      */
     void doNotDisturb();
@@ -351,6 +369,11 @@ public:
      * Should be called when the user wants to stop a call.
      */
     void stopCall();
+
+    /**
+     * Should be called when the user wants to mute/unmute a call.
+     */
+    void muteCallToggle();
 #endif
 
     /**
@@ -453,6 +476,18 @@ public:
      * Sets the locale of the device.
      */
     void setLocale(const settings::DeviceLocales& value);
+
+    /**
+     * Gets the network info of the device.
+     * @return The network info.
+     */
+    settings::types::NetworkInfo getNetworkInfo();
+
+    /**
+     * Sets the network info of the device.
+     * @param value The network info being set.
+     */
+    void setNetworkInfo(const settings::types::NetworkInfo& value);
 
 #ifdef POWER_CONTROLLER
     /**

@@ -8,7 +8,10 @@ add_library(BluetoothImplementationsBlueZ SHARED
     BlueZBluetoothDevice.cpp
     BlueZBluetoothDeviceManager.cpp
     BlueZDeviceManager.cpp
+    BlueZHFP.cpp
+    BlueZHID.cpp
     BlueZHostController.cpp
+    BlueZSPP.cpp
     DBusConnection.cpp
     DBusObjectBase.cpp
     DBusPropertiesProxy.cpp

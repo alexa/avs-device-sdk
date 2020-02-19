@@ -146,8 +146,8 @@ TEST_F(CaptionManagerTest, test_sourceIdDoesNotChange) {
     auto mockTimingAdapter = m_timingFactory->getMockTimingAdapter();
     int sourceID1 = 1;
 
-    auto expectedCaptionFrame = new CaptionFrame(sourceID1);
-    EXPECT_CALL(*mockTimingAdapter.get(), queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+    auto expectedCaptionFrame = CaptionFrame(sourceID1);
+    EXPECT_CALL(*mockTimingAdapter.get(), queueForDisplay(expectedCaptionFrame, _)).Times(1);
 
     caption_manager->onParsed(CaptionFrame(sourceID1));
 }
@@ -161,15 +161,15 @@ TEST_F(CaptionManagerTest, test_singleMediaPlayerPause) {
     CaptionLine expectedLine1 = CaptionLine("The time is 2:17 PM.", {TextStyle()});
     expectedLines.emplace_back(expectedLine1);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
-    EXPECT_CALL(*mockTimingAdapter.get(), queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+    EXPECT_CALL(*mockTimingAdapter.get(), queueForDisplay(expectedCaptionFrame, _)).Times(1);
     EXPECT_CALL(*m_presenter, getWrapIndex(_)).Times(1).WillOnce(Return(std::pair<bool, uint32_t>(false, 0)));
 
     std::vector<CaptionLine> lines;
     CaptionLine line = CaptionLine("The time is 2:17 PM.", {});
     lines.emplace_back(line);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 /**
@@ -181,15 +181,15 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameWhitespaceOnly) {
     CaptionLine expectedLine1 = CaptionLine("     ", {TextStyle()});
     expectedLines.emplace_back(expectedLine1);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
-    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(expectedCaptionFrame, _)).Times(1);
     EXPECT_CALL(*m_presenter, getWrapIndex(_)).Times(1).WillOnce(Return(std::pair<bool, uint32_t>(false, 0)));
 
     std::vector<CaptionLine> lines;
     CaptionLine line = CaptionLine("     ", {});
     lines.emplace_back(line);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 /**
@@ -201,8 +201,8 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameWhitespaceAfterLineWrap) {
     CaptionLine expectedLine1 = CaptionLine("The time is 2:17 PM.", {TextStyle()});
     expectedLines.emplace_back(expectedLine1);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
-    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(expectedCaptionFrame, _)).Times(1);
     EXPECT_CALL(*m_presenter, getWrapIndex(_))
         .Times(2)
         .WillOnce(Return(std::pair<bool, uint32_t>(true, 20)))
@@ -210,8 +210,8 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameWhitespaceAfterLineWrap) {
     std::vector<CaptionLine> lines;
     CaptionLine line = CaptionLine("The time is 2:17 PM.     ", {});
     lines.emplace_back(line);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 /**
@@ -227,8 +227,8 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameNoWhitespaceBeforeWrapIndex) {
     expectedLines.emplace_back(expectedLine2);
     expectedLines.emplace_back(expectedLine3);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
-    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(expectedCaptionFrame, _)).Times(1);
     EXPECT_CALL(*m_presenter, getWrapIndex(_))
         .Times(3)
         .WillOnce(Return(std::pair<bool, uint32_t>(true, 9)))
@@ -237,8 +237,8 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameNoWhitespaceBeforeWrapIndex) {
     std::vector<CaptionLine> lines;
     CaptionLine line = CaptionLine("Thiscaptionhasnospaces", {});
     lines.emplace_back(line);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 /**
@@ -250,15 +250,15 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameFalseWillNotSplitLine) {
     CaptionLine expectedLine1 = CaptionLine("The time is 2:17 PM.", {TextStyle()});
     expectedLines.emplace_back(expectedLine1);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
-    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(expectedCaptionFrame, _)).Times(1);
     EXPECT_CALL(*m_presenter, getWrapIndex(_)).Times(1).WillOnce(Return(std::pair<bool, uint32_t>(false, 0)));
 
     std::vector<CaptionLine> lines;
     CaptionLine line = CaptionLine("The time is 2:17 PM.", {});
     lines.emplace_back(line);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 /**
@@ -273,18 +273,18 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameAtSpaceIndex) {
     expectedLines.emplace_back(expectedLine1);
     expectedLines.emplace_back(expectedLine2);
     auto expectedCaptionFrame =
-        new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
+        CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), expectedLines);
     EXPECT_CALL(*m_presenter, getWrapIndex(_))
         .Times(2)
         .WillOnce(Return(std::pair<bool, uint32_t>(true, 12)))
         .WillOnce(Return(std::pair<bool, uint32_t>(false, 0)));
-    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(*expectedCaptionFrame, _)).Times(1);
+    EXPECT_CALL(*mockTimingAdapter, queueForDisplay(expectedCaptionFrame, _)).Times(1);
 
     std::vector<CaptionLine> lines;
     CaptionLine line1 = CaptionLine("The time is 2:17 PM.", {});
     lines.emplace_back(line1);
-    auto captionFrame = new CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
-    caption_manager->onParsed(*captionFrame);
+    auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
+    caption_manager->onParsed(captionFrame);
 }
 
 }  // namespace test

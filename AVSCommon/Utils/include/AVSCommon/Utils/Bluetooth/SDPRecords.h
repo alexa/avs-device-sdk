@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -107,6 +107,39 @@ public:
      * @param version The version of the service.
      */
     AVRCPControllerRecord(const std::string& version);
+};
+
+/// A SDP record representing HFP.
+class HFPRecord : public SDPRecord {
+public:
+    /**
+     * Constructor
+     *
+     * @param version The version of the service.
+     */
+    HFPRecord(const std::string& version);
+};
+
+/// A SDP record representing HID.
+class HIDRecord : public SDPRecord {
+public:
+    /**
+     * Constructor
+     *
+     * @param version The version of the service.
+     */
+    HIDRecord(const std::string& version);
+};
+
+/// A SDP record representing SPP.
+class SPPRecord : public SDPRecord {
+public:
+    /**
+     * Constructor
+     *
+     * @param version The version of the service.
+     */
+    SPPRecord(const std::string& version);
 };
 
 }  // namespace bluetooth

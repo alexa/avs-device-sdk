@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -160,7 +160,8 @@ TEST_F(EndpointRegistrationManagerTest, test_registerNullEndpointFailsImmediatel
     EXPECT_EQ(result.get(), RegistrationResult::CONFIGURATION_ERROR);
 }
 
-TEST_F(EndpointRegistrationManagerTest, test_registerDuplicatedEndpointIdFails) {
+// Disabling unit test according to ACSDK-3414
+TEST_F(EndpointRegistrationManagerTest, DISABLED_test_registerDuplicatedEndpointIdFails) {
     // Configure endpoint object expectations.
     auto endpoint = std::make_shared<MockEndpoint>();
     AVSDiscoveryEndpointAttributes attributes;

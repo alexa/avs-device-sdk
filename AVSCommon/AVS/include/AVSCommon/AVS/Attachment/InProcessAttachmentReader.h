@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public:
     /**
      * Destructor.
      */
-    ~InProcessAttachmentReader();
+    ~InProcessAttachmentReader() = default;
 
     std::size_t read(
         void* buf,
@@ -78,20 +78,14 @@ public:
 
 private:
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param policy The @c ReaderPolicy of this object.
-     * @param sds The underlying @c SharedDataStream which this object will use.
-     * @param resetOnOverrun If overrun is detected on @c read, whether to close the attachment (default behavior) or
-     *     to reset the read position to where current write position is (and skip all the bytes in between).
+     * @param delegate The reader implementation to use for in process attachment reader.
      */
-    InProcessAttachmentReader(SDSTypeReader::Policy policy, std::shared_ptr<SDSType> sds, bool resetOnOverrun);
+    explicit InProcessAttachmentReader(std::unique_ptr<AttachmentReader> delegate);
 
-    /// The underlying @c SharedDataStream reader.
-    std::shared_ptr<SDSTypeReader> m_reader;
-
-    // On @c read overrun, Whether to close the attachment, or reset it to catch up with the write
-    bool m_resetOnOverrun;
+    // Delegate reader
+    std::unique_ptr<AttachmentReader> m_delegate;
 };
 
 }  // namespace attachment

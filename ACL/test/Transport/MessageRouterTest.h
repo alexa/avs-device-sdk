@@ -80,7 +80,8 @@ private:
         std::shared_ptr<AttachmentManager> attachmentManager,
         const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
-        std::shared_ptr<TransportObserverInterface> transportObserverInterface) override {
+        std::shared_ptr<TransportObserverInterface> transportObserverInterface,
+        std::shared_ptr<SynchronizedMessageRequestQueue> sharedMessageRequestQueue) override {
         return m_mockTransport;
     }
 

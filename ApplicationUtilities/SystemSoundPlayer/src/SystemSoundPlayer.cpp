@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ namespace applicationUtilities {
 namespace systemSoundPlayer {
 
 using namespace avsCommon::utils::logger;
+using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SystemSoundPlayer");
@@ -90,11 +91,11 @@ std::shared_future<bool> SystemSoundPlayer::playTone(Tone tone) {
     return m_sharedFuture;
 }
 
-void SystemSoundPlayer::onPlaybackStarted(SourceId id) {
+void SystemSoundPlayer::onPlaybackStarted(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX(__func__).d("SourceId", id));
 }
 
-void SystemSoundPlayer::onPlaybackFinished(SourceId id) {
+void SystemSoundPlayer::onPlaybackFinished(SourceId id, const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     ACSDK_DEBUG5(LX(__func__).d("SourceId", id));
@@ -108,7 +109,8 @@ void SystemSoundPlayer::onPlaybackFinished(SourceId id) {
 void SystemSoundPlayer::onPlaybackError(
     SourceId id,
     const avsCommon::utils::mediaPlayer::ErrorType& type,
-    std::string error) {
+    std::string error,
+    const MediaPlayerState&) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     ACSDK_ERROR(LX(__func__).d("SourceId", id).d("error", error));
@@ -119,6 +121,10 @@ void SystemSoundPlayer::onPlaybackError(
     }
 
     finishPlayTone(false);
+}
+
+void SystemSoundPlayer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
+    // TODO : add metrics
 }
 
 void SystemSoundPlayer::finishPlayTone(bool result) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_METRICS_METRICSINKINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_METRICS_METRICSINKINTERFACE_H_
 
@@ -30,14 +31,14 @@ namespace metrics {
 class MetricSinkInterface {
 public:
     /**
-     * Destructor
+     * Destructor.
      */
     virtual ~MetricSinkInterface() = default;
 
     /**
      * This function allows consumption of a MetricEvent.
      *
-     * @param metricEvent is the metricEvent to be consumed
+     * @param metricEvent is the metricEvent object to be consumed
      * @return true if metric sink consumes metric event successfully
      *         false otherwise
      */

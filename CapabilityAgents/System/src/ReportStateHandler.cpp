@@ -137,7 +137,7 @@ std::unique_ptr<ReportStateHandler> ReportStateHandler::create(
         return nullptr;
     }
 
-    auto eventSender = settings::SettingEventSender::create(REPORT_STATE_METADATA, messageSender);
+    auto eventSender = settings::SettingEventSender::create(REPORT_STATE_METADATA, std::move(messageSender));
 
     bool pendingReport = false;
     if (!storage->tableEntryExists(
@@ -146,14 +146,18 @@ std::unique_ptr<ReportStateHandler> ReportStateHandler::create(
         return nullptr;
     }
 
-    return std::unique_ptr<ReportStateHandler>(new ReportStateHandler(
-        dataManager,
-        exceptionEncounteredSender,
-        connectionManager,
-        storage,
+    auto handler = std::unique_ptr<ReportStateHandler>(new ReportStateHandler(
+        std::move(dataManager),
+        std::move(exceptionEncounteredSender),
+        std::move(connectionManager),
+        std::move(storage),
         std::move(eventSender),
         generators,
         pendingReport));
+
+    handler->initialize();
+
+    return handler;
 }
 
 DirectiveHandlerConfiguration ReportStateHandler::getConfiguration() const {
@@ -223,15 +227,20 @@ ReportStateHandler::ReportStateHandler(
     std::unique_ptr<SettingEventSenderInterface> eventSender,
     const std::vector<StateReportGenerator>& generators,
     bool pendingReport) :
-        CapabilityAgent{REPORT_STATE_NAMESPACE, exceptionEncounteredSender},
-        registrationManager::CustomerDataHandler{dataManager},
-        m_connectionManager{connectionManager},
-        m_storage{storage},
+        CapabilityAgent{REPORT_STATE_NAMESPACE, std::move(exceptionEncounteredSender)},
+        registrationManager::CustomerDataHandler{std::move(dataManager)},
+        m_connectionManager{std::move(connectionManager)},
+        m_storage{std::move(storage)},
         m_generators{generators},
         m_eventSender{std::move(eventSender)},
         m_pendingReport{pendingReport} {
+}
+
+void ReportStateHandler::initialize() {
+    std::lock_guard<std::mutex> lock(m_stateMutex);
     m_connectionObserver = SettingConnectionObserver::create([this](bool isConnected) {
         if (isConnected) {
+            std::lock_guard<std::mutex> lock(m_stateMutex);
             m_executor.submit([this] { sendReportState(); });
         }
     });
@@ -239,10 +248,12 @@ ReportStateHandler::ReportStateHandler(
 }
 
 ReportStateHandler::~ReportStateHandler() {
+    m_executor.shutdown();
     m_connectionManager->removeConnectionStatusObserver(m_connectionObserver);
 }
 
 void ReportStateHandler::sendReportState() {
+    std::lock_guard<std::mutex> lock(m_stateMutex);
     ACSDK_DEBUG5(LX(__func__).d("pendingReport", m_pendingReport));
     if (m_pendingReport) {
         json::JsonGenerator jsonGenerator;
@@ -268,6 +279,7 @@ void ReportStateHandler::sendReportState() {
 }
 
 void system::ReportStateHandler::clearData() {
+    std::lock_guard<std::mutex> lock(m_stateMutex);
     m_storage->clearTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
     m_storage->deleteTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
 }

@@ -159,7 +159,11 @@ bool NotificationRenderer::cancelNotificationRendering() {
     return true;
 }
 
-void NotificationRenderer::onPlaybackStarted(SourceId sourceId) {
+void NotificationRenderer::onFirstByteRead(SourceId sourceId, const MediaPlayerState&) {
+    ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId));
+}
+
+void NotificationRenderer::onPlaybackStarted(SourceId sourceId, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX("onPlaybackStarted").d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackStartedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
@@ -170,7 +174,7 @@ void NotificationRenderer::onPlaybackStarted(SourceId sourceId) {
     }
 }
 
-void NotificationRenderer::onPlaybackStopped(SourceId sourceId) {
+void NotificationRenderer::onPlaybackStopped(SourceId sourceId, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX("onPlaybackStopped").d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackStoppedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
@@ -179,7 +183,7 @@ void NotificationRenderer::onPlaybackStopped(SourceId sourceId) {
     onRenderingFinished(sourceId);
 }
 
-void NotificationRenderer::onPlaybackFinished(SourceId sourceId) {
+void NotificationRenderer::onPlaybackFinished(SourceId sourceId, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX("onPlaybackFinished").d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackFinishedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
@@ -188,7 +192,11 @@ void NotificationRenderer::onPlaybackFinished(SourceId sourceId) {
     onRenderingFinished(sourceId);
 }
 
-void NotificationRenderer::onPlaybackError(SourceId sourceId, const ErrorType& type, std::string error) {
+void NotificationRenderer::onPlaybackError(
+    SourceId sourceId,
+    const ErrorType& type,
+    std::string error,
+    const MediaPlayerState&) {
     ACSDK_DEBUG5(LX("onPlaybackError").d("sourceId", sourceId).d("type", type).d("error", error));
 
     if (sourceId != m_sourceId) {

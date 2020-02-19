@@ -53,16 +53,6 @@ public:
     /// @}
 
     /**
-     * Notify power state change to the observers of @c PowerControllerObserverInterface.
-     *
-     * @param powerState The changed power state to be notified to the observer.
-     * @param cause The change cause represented using @c AlexaStateChangeCauseType.
-     */
-    void executeNotifyObservers(
-        const avsCommon::sdkInterfaces::powerController::PowerControllerInterface::PowerState& powerState,
-        avsCommon::sdkInterfaces::AlexaStateChangeCauseType cause);
-
-    /**
      * Set the power state of the controller.
      *
      * @param powerState The power state of the controller. @c true indicates ON and @c false as OFF.
@@ -75,19 +65,14 @@ private:
      */
     PowerControllerHandler();
 
-    /// Mutex to serialize access to variables.
-    std::mutex m_mutex;
-
     /// Current power state of the endpoint.
     bool m_currentPowerState;
 
+    /// Mutex to serialize access to variables.
+    std::mutex m_mutex;
+
     /// The list of @c PowerControllerObserverInterface observers that will get notified.
     std::list<std::shared_ptr<avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface>> m_observers;
-
-    /**
-     * Executor to notify the observers.
-     */
-    avsCommon::utils::threading::Executor m_executor;
 };
 
 }  // namespace sampleApp

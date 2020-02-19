@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@ namespace threading {
 namespace test {
 
 /// Timeout used while waiting for synchronization events.
-/// We picked 2s to avoid failure in slower systems (e.g.: valgrind and emulators).
-const std::chrono::milliseconds WAIT_TIMEOUT{100};
+const std::chrono::milliseconds MY_WAIT_TIMEOUT{100};
 
 using namespace logger;
 
@@ -96,7 +95,7 @@ TEST(TaskThreadTest, test_startNewJob) {
     TaskThread taskThread;
     EXPECT_TRUE(taskThread.start(increment));
 
-    ASSERT_TRUE(waitEvent.wait(WAIT_TIMEOUT));
+    ASSERT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     EXPECT_TRUE(taskThread.start(decrement));
 }
 
@@ -104,8 +103,8 @@ TEST(TaskThreadTest, test_startNewJob) {
 TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
     WaitEvent waitEnqueue, waitStart;
     auto simpleJob = [&waitEnqueue, &waitStart] {
-        waitStart.wakeUp();              // Job has started.
-        waitEnqueue.wait(WAIT_TIMEOUT);  // Wait till job should finish.
+        waitStart.wakeUp();                 // Job has started.
+        waitEnqueue.wait(MY_WAIT_TIMEOUT);  // Wait till job should finish.
         return false;
     };
 
@@ -113,7 +112,7 @@ TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
     EXPECT_TRUE(taskThread.start(simpleJob));
 
     // Wait until first job has started.
-    waitStart.wait(WAIT_TIMEOUT);
+    waitStart.wait(MY_WAIT_TIMEOUT);
     EXPECT_TRUE(taskThread.start([] { return false; }));
 
     // This should fail since the task thread is starting.
@@ -140,10 +139,10 @@ TEST(TaskThreadTest, DISABLED_test_moniker) {
 
     TaskThread taskThread;
     EXPECT_TRUE(taskThread.start(getMoniker));
-    waitGetMoniker.wait(WAIT_TIMEOUT);
+    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
 
     EXPECT_TRUE(taskThread.start(validateMoniker));
-    waitValidateMoniker.wait(WAIT_TIMEOUT);
+    waitValidateMoniker.wait(MY_WAIT_TIMEOUT);
 }
 
 /// Test that threads from different @c TaskThreads will have different monikers.
@@ -164,11 +163,11 @@ TEST(TaskThreadTest, test_monikerDifferentObjects) {
 
     TaskThread taskThread1;
     EXPECT_TRUE(taskThread1.start(getMoniker));
-    waitGetMoniker.wait(WAIT_TIMEOUT);
+    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
 
     TaskThread taskThread2;
     EXPECT_TRUE(taskThread2.start(validateMoniker));
-    waitValidateMoniker.wait(WAIT_TIMEOUT);
+    waitValidateMoniker.wait(MY_WAIT_TIMEOUT);
 }
 
 }  // namespace test

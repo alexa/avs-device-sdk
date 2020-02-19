@@ -63,7 +63,9 @@ void AlertScheduler::onAlertStateChange(
     });
 }
 
-bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer) {
+bool AlertScheduler::initialize(
+    std::shared_ptr<AlertObserverInterface> observer,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
     if (!observer) {
         ACSDK_ERROR(LX("initializeFailed").m("observer was nullptr."));
         return false;
@@ -88,7 +90,7 @@ bool AlertScheduler::initialize(std::shared_ptr<AlertObserverInterface> observer
     std::vector<std::shared_ptr<Alert>> alerts;
 
     std::unique_lock<std::mutex> lock(m_mutex);
-    m_alertStorage->load(&alerts);
+    m_alertStorage->load(&alerts, settingsManager);
 
     for (auto& alert : alerts) {
         if (alert->isPastDue(unixEpochNow, m_alertPastDueTimeLimit)) {

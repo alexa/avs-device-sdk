@@ -37,28 +37,61 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::powerController;
 
+/**
+ * Helper function to notify power state change to the observers of @c PowerControllerObserverInterface.
+ *
+ * @param powerState The changed power state to be notified to the observer.
+ * @param cause The change cause represented using @c AlexaStateChangeCauseType.
+ * @param observers The list of observer to be notified.
+ */
+static void notifyObservers(
+    const avsCommon::sdkInterfaces::powerController::PowerControllerInterface::PowerState& powerState,
+    avsCommon::sdkInterfaces::AlexaStateChangeCauseType cause,
+    const std::list<std::shared_ptr<avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface>>&
+        observers) {
+    ACSDK_DEBUG5(LX(__func__));
+    for (auto& observer : observers) {
+        observer->onPowerStateChanged(powerState, cause);
+    }
+}
+
 std::shared_ptr<PowerControllerHandler> PowerControllerHandler::create() {
     auto powerControllerHandler = std::shared_ptr<PowerControllerHandler>(new PowerControllerHandler());
     return powerControllerHandler;
 }
 
+PowerControllerHandler::PowerControllerHandler() : m_currentPowerState{false} {
+}
+
 std::pair<AlexaResponseType, std::string> PowerControllerHandler::setPowerState(
     bool state,
     AlexaStateChangeCauseType cause) {
-    std::lock_guard<std::mutex> lock{m_mutex};
+    std::list<std::shared_ptr<PowerControllerObserverInterface>> copyOfObservers;
+    bool notifyObserver = false;
+
+    std::unique_lock<std::mutex> lock(m_mutex);
     if (m_currentPowerState != state) {
         if (state) {
-            ConsolePrinter::prettyPrint("POWER CONTROLLER : TURN-ON");
+            ConsolePrinter::prettyPrint("POWER STATE : ON");
         } else {
-            ConsolePrinter::prettyPrint("POWER CONTROLLER : TURN-OFF");
+            ConsolePrinter::prettyPrint("POWER STATE : OFF");
         }
 
         m_currentPowerState = state;
-
-        auto powerState = PowerControllerInterface::PowerState{
-            m_currentPowerState, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)};
-        m_executor.submit([this, powerState, cause]() { executeNotifyObservers(powerState, cause); });
+        copyOfObservers = m_observers;
+        notifyObserver = true;
     }
+
+    lock.unlock();
+
+    if (notifyObserver) {
+        notifyObservers(
+            PowerControllerInterface::PowerState{
+                m_currentPowerState, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
+            cause,
+            copyOfObservers);
+    }
+
     return std::make_pair(AlexaResponseType::SUCCESS, "");
 }
 
@@ -80,19 +113,6 @@ bool PowerControllerHandler::addObserver(std::shared_ptr<PowerControllerObserver
 void PowerControllerHandler::removeObserver(const std::shared_ptr<PowerControllerObserverInterface>& observer) {
     std::lock_guard<std::mutex> lock{m_mutex};
     m_observers.remove(observer);
-}
-
-PowerControllerHandler::PowerControllerHandler() : m_currentPowerState{false} {
-}
-
-void PowerControllerHandler::executeNotifyObservers(
-    const PowerControllerInterface::PowerState& powerState,
-    AlexaStateChangeCauseType cause) {
-    ACSDK_DEBUG5(LX(__func__));
-    std::lock_guard<std::mutex> lock{m_mutex};
-    for (auto& observer : m_observers) {
-        observer->onPowerStateChanged(powerState, cause);
-    }
 }
 
 void PowerControllerHandler::setPowerState(bool powerState) {

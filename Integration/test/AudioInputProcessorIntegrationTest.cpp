@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include <MediaPlayer/MediaPlayer.h>
@@ -90,6 +91,7 @@ using namespace capabilityAgents::system;
 using namespace sdkInterfaces;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
+using namespace avsCommon::utils::metrics::test;
 using namespace afml;
 using namespace contextManager;
 using namespace settings;
@@ -354,8 +356,9 @@ public:
      * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
      *
      * @param focusState The new focus state of the Channel observer.
+     * @param behavior The new MixingBehavior of the Channel observer.
      */
-    void onFocusChanged(FocusState focusState) override {
+    void onFocusChanged(FocusState focusState, MixingBehavior behavior) override {
         std::unique_lock<std::mutex> lock(m_mutex);
         m_queue.push_back(focusState);
         m_focusState = focusState;
@@ -401,6 +404,7 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
+        m_metricRecorder = std::make_shared<testing::NiceMock<MockMetricRecorder>>();
 
         DirectiveHandlerConfiguration handlerConfig;
         handlerConfig[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
@@ -502,7 +506,12 @@ protected:
             m_systemSoundPlayer,
             std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
             m_wakeWordConfirmation,
-            m_speechConfirmation);
+            m_speechConfirmation,
+            nullptr,
+            nullptr,
+            AudioProvider::null(),
+            nullptr,
+            m_metricRecorder);
         ASSERT_NE(nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
@@ -614,6 +623,7 @@ protected:
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<afml::FocusManager> m_focusManager;

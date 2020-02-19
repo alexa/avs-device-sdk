@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 #include <curl/multi.h>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -276,6 +275,33 @@ void LibcurlHTTP2Connection::disconnect() {
     setIsStopping();
     if (m_networkThread.joinable()) {
         m_networkThread.join();
+    }
+}
+
+void LibcurlHTTP2Connection::addObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer != nullptr) {
+        m_observers.insert(observer);
+    }
+}
+void LibcurlHTTP2Connection::removeObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer != nullptr) {
+        m_observers.erase(observer);
+    }
+}
+
+void LibcurlHTTP2Connection::notifyObserversOfGoawayReceived() {
+    std::vector<std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface>> observers;
+    {
+        std::lock_guard<std::mutex> lock{m_observersMutex};
+        for (auto& observer : m_observers) {
+            observers.push_back(observer);
+        }
+    }
+
+    for (auto& observer : observers) {
+        observer->onGoawayReceived();
     }
 }
 

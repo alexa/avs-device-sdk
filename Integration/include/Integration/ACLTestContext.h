@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@
 #include <RegistrationManager/CustomerDataManager.h>
 
 #include "Integration/AuthDelegateTestContext.h"
-#include "Integration/SDKTestContext.h"
 #include "Integration/ConnectionStatusObserver.h"
+#include "Integration/SDKTestContext.h"
 
 namespace alexaClientSDK {
 namespace integration {

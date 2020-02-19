@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,10 +68,23 @@ struct SourceConfig {
         const std::chrono::milliseconds& duration);
 };
 
+/**
+ * Builds a Source Config object with fade in disabled.
+ * @return a Source Config object without fade in
+ */
 inline SourceConfig emptySourceConfig() {
     return SourceConfig{{100, 100, std::chrono::milliseconds::zero(), false}};
 }
 
+/**
+ * Builds a Source Config object with fade in enabled and with the provided valid values.
+ *
+ * @param startGain The starting percentage volume when the media starts playing (range 0-100) Will become valid.
+ * @param endGain The ending percentage volume when the media played to the fade-in duration (range 0-100). Will become
+ * valid.
+ * @param duration The fade-in duration time.
+ * @return a Source Config object with fade in set for the given valid values
+ */
 inline SourceConfig SourceConfig::createWithFadeIn(
     short startGain,
     short endGain,

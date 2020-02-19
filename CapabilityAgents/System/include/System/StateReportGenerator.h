@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/Utils/PlatformDefinitions.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <Settings/SettingEventMetadata.h>
 #include <Settings/SettingStringConversion.h>
@@ -67,14 +68,15 @@ public:
      */
     StateReportGenerator() = default;
 
-private:
+protected:
     /**
-     * Constructor.
+     * Constructor (protected for unit tests).
      *
      * @param reportFunctions The collection of report functions used to generate the entire report.
      */
-    StateReportGenerator(const std::vector<std::function<std::string()>>& reportFunctions);
+    explicit StateReportGenerator(const std::vector<std::function<std::string()>>& reportFunctions);
 
+private:
     /**
      * Utility structure used to wrap each setting into a report generation function.
      *

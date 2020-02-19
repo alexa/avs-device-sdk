@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -249,6 +249,15 @@ std::shared_ptr<MockHTTP2Request> MockHTTP2Connection::dequePingRequest() {
 
 std::size_t MockHTTP2Connection::getMaxPostRequestsEnqueud() {
     return m_maxPostRequestsEnqueued;
+}
+
+void MockHTTP2Connection::addObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.insert(observer);
+}
+void MockHTTP2Connection::removeObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    m_observers.erase(observer);
 }
 
 }  // namespace test

@@ -74,7 +74,7 @@ public:
 
     void onDeregistered() override;
 
-    void onFocusChanged(FocusState newFocus) override;
+    void onFocusChanged(FocusState newFocus, MixingBehavior behavior) override;
 
 protected:
     /**

@@ -48,6 +48,7 @@ AVS DEVICE SDK COMPONENTS
 The following AVS Device SDK component is licensed under the Amazon Software License:
 
 - AudioPlayer Capability Agent
+- InterruptModel
 
 You may not use this file except in compliance with the Amazon Software License. A copy
 of the Amazon Software License is located at:

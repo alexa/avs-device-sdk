@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,10 @@
 
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 
 namespace alexaClientSDK {
@@ -34,7 +35,9 @@ namespace sdkInterfaces {
  * CapabilitiesDelegateInterface is an interface with methods that provide clients a way to register endpoints and their
  * capabilities and publish them so that Alexa is aware of the device's capabilities.
  */
-class CapabilitiesDelegateInterface : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface {
+class CapabilitiesDelegateInterface
+        : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface
+        , public avsCommon::sdkInterfaces::AVSGatewayObserverInterface {
 public:
     /**
      * Destructor

@@ -24,6 +24,8 @@
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/HandlerAndPolicy.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -34,7 +36,8 @@ namespace adsl {
 class DirectiveRouter : public avsCommon::utils::RequiresShutdown {
 public:
     /// Constructor.
-    DirectiveRouter();
+    /// @param metricRecorder The metric recorder.
+    DirectiveRouter(std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Add mappings from handler's directives to @c BlockingPolicy values, gotten through the
@@ -194,6 +197,9 @@ private:
      */
     bool removeDirectiveHandlerLocked(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// A mutex used to serialize access to @c m_configuration and @c m_handlerReferenceCounts.
     std::mutex m_mutex;
 
@@ -211,6 +217,16 @@ private:
      */
     std::unordered_map<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>, int>
         m_handlerReferenceCounts;
+
+    /**
+     * Submit metrics related to the given directive.
+     *
+     * @param metricEventBuilder The metric event builder to be used.
+     * @param directive The given directive.
+     */
+    void submitMetric(
+        avsCommon::utils::metrics::MetricEventBuilder& metricEventBuilder,
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
 };
 
 }  // namespace adsl

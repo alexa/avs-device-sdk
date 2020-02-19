@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,9 +47,16 @@ public:
 
     /// @name MediaPlayerObserverInterface methods
     /// @{
-    MOCK_METHOD1(onPlaybackStarted, void(SourceId));
-    MOCK_METHOD1(onPlaybackFinished, void(SourceId));
-    MOCK_METHOD3(onPlaybackError, void(SourceId, const avsCommon::utils::mediaPlayer::ErrorType&, std::string));
+    MOCK_METHOD2(onPlaybackStarted, void(SourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState&));
+    MOCK_METHOD2(onPlaybackFinished, void(SourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState&));
+    MOCK_METHOD4(
+        onPlaybackError,
+        void(
+            SourceId,
+            const avsCommon::utils::mediaPlayer::ErrorType&,
+            std::string,
+            const avsCommon::utils::mediaPlayer::MediaPlayerState&));
+    MOCK_METHOD2(onFirstByteRead, void(SourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState&));
     /// @}
 };
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This is used to create a header file that contains binary data from a file that can be used in this library.  The
-# files are downloaded from https://developer.amazon.com/docs/alexa-voice-service/ux-design-overview.html#sounds.
+# files are downloaded from https://developer.amazon.com/docs/alexa/alexa-voice-service/ux-design-overview.html#sounds.
 
 if [ "$#" -ne 2 ] || ! [ -f "${1}" ] || [ -f "${2}" ]; then
   echo "Usage: $0 <file> <output_header_file>" >&2

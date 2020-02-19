@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -121,7 +122,10 @@ public:
 
     void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
 
-    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    /// @name Overridden ChannelObserverInterface methods.
+    /// @{
+    void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
+    /// @}
 
     void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
         override;
@@ -130,13 +134,19 @@ public:
 
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
 
-    void onPlaybackStarted(SourceId id) override;
-
-    void onPlaybackFinished(SourceId id) override;
-
-    void onPlaybackError(SourceId id, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) override;
-
-    void onPlaybackStopped(SourceId id) override;
+    /// @name Overridden MediaPlayerObserverInterface methods.
+    /// @{
+    void onFirstByteRead(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStarted(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackFinished(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackError(
+        SourceId id,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStopped(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onBufferUnderrun(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    /// @}
 
     /// @name CapabilityConfigurationInterface Functions
     /// @{
@@ -318,6 +328,12 @@ private:
      * @param error Text describing the nature of the error.
      */
     void executePlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
+
+    /**
+     * Submits a metric built using MetricEventBuilder
+     * @param metricEventBuilder The @c MetricEventBuilder to build the metric activity name and datapoint.
+     */
+    void submitMetric(avsCommon::utils::metrics::MetricEventBuilder& metricEventBuilder);
 
     /**
      * This function is called whenever the AVS UX dialog state of the system changes. This function will block

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_STORAGE_ALERTSTORAGEINTERFACE_H_
 
 #include "Alerts/Alert.h"
+
+#include <Settings/DeviceSettingsManager.h>
 
 #include <list>
 #include <memory>
@@ -75,9 +77,12 @@ public:
      * Loads all alerts in the database.
      *
      * @param[out] alertContainer The container where alerts should be stored.
+     * @param settingsManager A settingsManager object that manages alarm volume ramp setting.
      * @return Whether the @c Alerts were successfully loaded.
      */
-    virtual bool load(std::vector<std::shared_ptr<Alert>>* alertContainer) = 0;
+    virtual bool load(
+        std::vector<std::shared_ptr<Alert>>* alertContainer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager) = 0;
 
     /**
      * Updates a database record of the @c Alert parameter.

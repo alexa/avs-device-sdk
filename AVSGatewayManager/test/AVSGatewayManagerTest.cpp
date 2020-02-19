@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include <AVSGatewayManager/AVSGatewayManager.h>
 #include <AVSCommon/SDKInterfaces/MockAVSGatewayAssigner.h>
+#include <AVSCommon/SDKInterfaces/MockAVSGatewayObserver.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <RegistrationManager/CustomerDataManager.h>
 
@@ -99,7 +100,10 @@ protected:
     std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
 
     /// The mock @c AVSGatewayAssigner.
-    std::shared_ptr<MockAVSGatewayAssigner> m_mockAvsGatewayAssigner;
+    std::shared_ptr<MockAVSGatewayAssigner> m_mockAVSGatewayAssigner;
+
+    /// The mock @c AVSGatewayObserver.
+    std::shared_ptr<MockAVSGatewayObserver> m_mockAVSGatewayObserver;
 
     /// The mock @c AVSGatewayManagerStorageInterface.
     std::shared_ptr<MockAVSGatewayManagerStorage> m_mockAVSGatewayManagerStorage;
@@ -110,7 +114,8 @@ protected:
 
 void AVSGatewayManagerTest::SetUp() {
     m_mockAVSGatewayManagerStorage = std::make_shared<NiceMock<MockAVSGatewayManagerStorage>>();
-    m_mockAvsGatewayAssigner = std::make_shared<NiceMock<MockAVSGatewayAssigner>>();
+    m_mockAVSGatewayAssigner = std::make_shared<NiceMock<MockAVSGatewayAssigner>>();
+    m_mockAVSGatewayObserver = std::make_shared<NiceMock<MockAVSGatewayObserver>>();
     m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
 }
 
@@ -150,10 +155,10 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFile) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
     createAVSGatewayManager();
 
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, TEST_AVS_GATEWAY);
     }));
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
 }
 
 /**
@@ -163,10 +168,10 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithNoGateway)
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON_NO_GATEWAY);
     createAVSGatewayManager();
 
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, DEFAULT_AVS_GATEWAY);
     }));
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
 }
 
 /**
@@ -176,10 +181,10 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithEmptyGatew
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON_EMPTY_GATEWAY);
     createAVSGatewayManager();
 
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, DEFAULT_AVS_GATEWAY);
     }));
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
 }
 
 /**
@@ -199,38 +204,91 @@ TEST_F(AVSGatewayManagerTest, test_avsGatewayFromStorage) {
 
     ASSERT_NE(m_avsGatewayManager, nullptr);
 
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, STORED_AVS_GATEWAY);
     }));
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
 }
 
 /**
- * Test if a call to setGatewayURL() with a new URL calls the setAVSGateway() method on @c AVSGatewayAssigner and calls
- * storeState() on @c AVSGatewayManagerStorage.
+ * Test if a call to setGatewayURL() with a new URL calls
+ *  - calls the setAVSGateway() method on @c AVSGatewayAssigner
+ *  - calls the storeState() method on @c AVSGatewayManagerStorage
+ *  - calls the onGatewayChanged() method on @c AVSGatewayObserver.
  */
 TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithNewURL) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
     createAVSGatewayManager();
 
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).Times(2);
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).Times(2);
     EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).Times(1);
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(1);
 
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
     m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY);
 }
 
 /**
- * Test if a call to setGatewayURL with the same URL does not trigger calls to @c AVSGatewayAssigner and @c
- * AVSGatewayManagerStorage.
+ * Test if a call to setGatewayURL with the same URL does not trigger calls to @c AVSGatewayAssigner,
+ * @c AVSGatewayObserver and @c AVSGatewayManagerStorage.
  */
 TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithSameURL) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
     createAVSGatewayManager();
-    EXPECT_CALL(*m_mockAvsGatewayAssigner, setAVSGateway(_)).Times(1);
+    EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).Times(1);
     EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).Times(0);
-    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAvsGatewayAssigner);
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(0);
+    m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
     m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY);
+}
+
+/**
+ * Test if AVSGatewayManager gracefully handles adding a nullObserver.
+ */
+TEST_F(AVSGatewayManagerTest, test_addNullObserver) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    createAVSGatewayManager();
+    m_avsGatewayManager->addObserver(nullptr);
+}
+
+/**
+ * Test if AVSGatewayManager gracefully handles removing a nullObserver.
+ */
+TEST_F(AVSGatewayManagerTest, test_removeNullObserver) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    createAVSGatewayManager();
+    m_avsGatewayManager->removeObserver(nullptr);
+}
+
+/**
+ * Test removing a previously added observer.
+ */
+TEST_F(AVSGatewayManagerTest, test_removeAddedObserver) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    createAVSGatewayManager();
+
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(1);
+    m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
+    m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY);
+
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(0);
+    m_avsGatewayManager->removeObserver(m_mockAVSGatewayObserver);
+    m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY);
+}
+
+/**
+ * Test removing an observer that is not previously added is handled gracefully.
+ */
+TEST_F(AVSGatewayManagerTest, test_removeObserverNotAddedPreviously) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    createAVSGatewayManager();
+
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(0);
+    m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY);
+
+    m_avsGatewayManager->removeObserver(m_mockAVSGatewayObserver);
 }
 
 /**

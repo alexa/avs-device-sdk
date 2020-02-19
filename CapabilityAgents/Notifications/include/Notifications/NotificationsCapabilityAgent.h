@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
@@ -42,7 +43,7 @@ namespace notifications {
 /**
  * This class implements the @c Notifications capability agent.
  *
- * @see https://developer.amazon.com/docs/alexa-voice-service/notifications.html
+ * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/notifications.html
  *
  * @note For instances of this class to be cleaned up correctly, @c shutdown() must be called.
  * @note This class makes use of a global configuration to a database file, meaning that it is best used
@@ -67,6 +68,7 @@ public:
      * @param notificationsAudioFactory The audio factory object to produce the default notification sound.
      * @param observers The set of observers that will be notified of IndicatorState changes.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c NotificationsCapabilityAgent instance.
      */
     static std::shared_ptr<NotificationsCapabilityAgent> create(
@@ -75,7 +77,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Adds a NotificationsObserver to the set of observers. This observer will be notified when a SetIndicator
@@ -137,6 +140,7 @@ private:
      * @param notificationsAudioFactory The audio factory object to produce the default notification sound.
      * @param observers The set of observers that will be notified of IndicatorState changes.
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param metricRecorder The metric recorder.
      */
     NotificationsCapabilityAgent(
         std::shared_ptr<NotificationsStorageInterface> notificationsStorage,
@@ -144,7 +148,8 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Utility to set some member variables and setup the database.
@@ -308,6 +313,9 @@ private:
 
     /// @}
     /// @}
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Stores notification indicators in the order they are received and the visual indicator state.
     std::shared_ptr<NotificationsStorageInterface> m_notificationsStorage;

@@ -21,7 +21,7 @@
 
 #include <AVSCommon/SDKInterfaces/MockPostConnectSendMessage.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include <AVS/include/AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSGatewayManager/PostConnectVerifyGatewaySender.h>
 
 namespace alexaClientSDK {

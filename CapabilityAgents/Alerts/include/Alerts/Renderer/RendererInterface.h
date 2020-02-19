@@ -55,6 +55,7 @@ public:
      * @param observer The observer that will receive renderer events.
      * @param audioFactory A function that produces a unique stream of audio that is used for the default if nothing
      * else is available.
+     * @param volumeRampEnabled whether this media should ramp
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
      * @param loopPause The duration which must expire between the beginning of rendering of any loop of audio.
@@ -67,6 +68,7 @@ public:
     virtual void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
         std::function<std::unique_ptr<std::istream>()> audioFactory,
+        bool volumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
         std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},

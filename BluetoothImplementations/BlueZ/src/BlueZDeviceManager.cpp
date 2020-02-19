@@ -18,6 +18,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -290,7 +291,7 @@ void BlueZDeviceManager::onMediaStreamPropertyChanged(const std::string& path, c
     }
 
     if (A2DPSourceInterface::UUID == uuid) {
-        auto sink = device->getA2DPSink();
+        auto sink = device->getService(A2DPSinkInterface::UUID);
         if (!sink) {
             ACSDK_ERROR(LX(__func__).d("reason", "nullSink"));
             return;
@@ -344,6 +345,10 @@ void BlueZDeviceManager::onAdapterPropertyChanged(const std::string& path, const
 
 std::string BlueZDeviceManager::getAdapterPath() const {
     return m_adapterPath;
+}
+
+avsCommon::utils::bluetooth::MediaStreamingState BlueZDeviceManager::getMediaStreamingState() {
+    return m_streamingState;
 }
 
 void BlueZDeviceManager::interfacesAddedCallback(

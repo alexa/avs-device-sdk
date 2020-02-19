@@ -100,6 +100,23 @@ public:
      * Stops the call.
      */
     virtual void stopCall() = 0;
+
+    /**
+     * Mute self during the call.
+     */
+    virtual void muteSelf() = 0;
+
+    /**
+     * Unmute self during the call.
+     */
+    virtual void unmuteSelf() = 0;
+
+    /**
+     * Check if the call is muted.
+     *
+     * @return Whether the call is muted.
+     */
+    virtual bool isSelfMuted() const = 0;
 };
 
 inline CallManagerInterface::CallManagerInterface(

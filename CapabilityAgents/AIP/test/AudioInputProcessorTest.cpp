@@ -43,6 +43,7 @@
 #include <AVSCommon/SDKInterfaces/MockPowerResourceManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/MockDeviceSettingStorage.h>
@@ -801,9 +802,10 @@ protected:
      * Function to call @c onFocusChanged() and verify that @c AudioInputProcessor responds correctly.
      *
      * @param state The focus state to test with.
+     * @param behavior The MixingBehavior to test with.
      * @return @c true if the @c AudioInputProcessor responds as expected, else @c false.
      */
-    bool testFocusChange(avsCommon::avs::FocusState state);
+    bool testFocusChange(avsCommon::avs::FocusState state, avsCommon::avs::MixingBehavior behavior);
 
     /**
      * Performs a test to check the AIP correctly transitions to a state after getting notified that the recognize event
@@ -820,6 +822,9 @@ protected:
         StopCaptureDirectiveSchedule stopCaptureSchedule,
         AudioInputProcessorObserverInterface::State expectedAIPFinalState,
         bool expectFocusReleased);
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The mock @c DirectiveSequencerInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockDirectiveSequencer> m_mockDirectiveSequencer;
@@ -885,6 +890,7 @@ protected:
 };
 
 void AudioInputProcessorTest::SetUp() {
+    m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
     m_mockDirectiveSequencer = std::make_shared<avsCommon::sdkInterfaces::test::MockDirectiveSequencer>();
     m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
     m_mockContextManager = std::make_shared<avsCommon::sdkInterfaces::test::MockContextManager>();
@@ -916,7 +922,9 @@ void AudioInputProcessorTest::SetUp() {
                                             avsCommon::utils::AudioFormat::Endianness::LITTLE,
                                             SAMPLE_RATE_HZ,
                                             SAMPLE_SIZE_IN_BITS,
-                                            NUM_CHANNELS};
+                                            NUM_CHANNELS,
+                                            false,
+                                            avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED};
     m_audioProvider = avsCommon::utils::memory::make_unique<AudioProvider>(
         std::move(stream), format, ASRProfile::NEAR_FIELD, ALWAYS_READABLE, CAN_OVERRIDE, CAN_BE_OVERRIDDEN);
 
@@ -944,7 +952,8 @@ void AudioInputProcessorTest::SetUp() {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     ASSERT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
     // Note: StrictMock here so that we fail on unexpected AIP state changes
@@ -1036,15 +1045,14 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     if (!bargeIn) {
         EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _, NAMESPACE))
-            .WillOnce(InvokeWithoutArgs([this, stopPoint] {
-                m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
-                if (RecognizeStopPoint::AFTER_FOCUS == stopPoint) {
-                    EXPECT_TRUE(m_audioInputProcessor->stopCapture().valid());
-                    m_dialogUXStateAggregator->onRequestProcessingStarted();
-                }
-                return true;
-            }));
+        EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _)).WillOnce(InvokeWithoutArgs([this, stopPoint] {
+            m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, MixingBehavior::PRIMARY);
+            if (RecognizeStopPoint::AFTER_FOCUS == stopPoint) {
+                EXPECT_TRUE(m_audioInputProcessor->stopCapture().valid());
+                m_dialogUXStateAggregator->onRequestProcessingStarted();
+            }
+            return true;
+        }));
         EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
             .Times(AtLeast(1));
     }
@@ -1381,7 +1389,7 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     directiveHandler->preHandleDirective(avsDirective, std::move(result));
     EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
     EXPECT_EQ(std::string(""), m_mockDirectiveSequencer->getDialogRequestId());
-    m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
+    m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, MixingBehavior::PRIMARY);
     m_audioInputProcessor->onContextAvailable(contextJson);
 
     std::unique_lock<std::mutex> lock(mutex);
@@ -1487,7 +1495,8 @@ void AudioInputProcessorTest::removeDefaultAudioProvider() {
         m_mockWakeWordSetting,
         nullptr,
         AudioProvider::null(),
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
@@ -1511,13 +1520,16 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_NE(m_audioInputProcessor, nullptr);
     m_audioInputProcessor->addObserver(m_mockObserver);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
 }
 
-bool AudioInputProcessorTest::testFocusChange(avsCommon::avs::FocusState state) {
+bool AudioInputProcessorTest::testFocusChange(
+    avsCommon::avs::FocusState state,
+    avsCommon::avs::MixingBehavior behavior) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
     bool done = false;
@@ -1536,7 +1548,7 @@ bool AudioInputProcessorTest::testFocusChange(avsCommon::avs::FocusState state) 
             done = true;
             conditionVariable.notify_one();
         }));
-    m_audioInputProcessor->onFocusChanged(state);
+    m_audioInputProcessor->onFocusChanged(state, behavior);
 
     std::unique_lock<std::mutex> lock(mutex);
     return conditionVariable.wait_for(lock, TEST_TIMEOUT, [&done] { return done; });
@@ -1591,7 +1603,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutDirectiveSequencer) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1613,7 +1626,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutMessageSender) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1635,7 +1649,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutContextManager) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1657,7 +1672,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutFocusManager) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1679,7 +1695,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutStateAggregator) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1704,7 +1721,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutExceptionSender) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1729,7 +1747,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutUserInactivityMonitor) {
         m_mockWakeWordSetting,
         nullptr,
         *m_audioProvider,
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_EQ(m_audioInputProcessor, nullptr);
 }
 
@@ -1751,7 +1770,8 @@ TEST_F(AudioInputProcessorTest, test_createWithoutAudioProvider) {
         m_mockWakeWordSetting,
         nullptr,
         AudioProvider::null(),
-        m_mockPowerResourceManager);
+        m_mockPowerResourceManager,
+        m_metricRecorder);
     EXPECT_NE(m_audioInputProcessor, nullptr);
 }
 
@@ -1773,6 +1793,30 @@ TEST_F(AudioInputProcessorTest, test_createWithoutPowerResourceManager) {
         m_mockWakeWordSetting,
         nullptr,
         AudioProvider::null(),
+        nullptr,
+        m_metricRecorder);
+    EXPECT_NE(m_audioInputProcessor, nullptr);
+}
+
+/// Function to verify that @c AudioInputProcessor::create() succeeds with a null @c MetricRecorderInterface.
+TEST_F(AudioInputProcessorTest, test_createWithoutMetricRecorder) {
+    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
+    m_audioInputProcessor = AudioInputProcessor::create(
+        m_mockDirectiveSequencer,
+        m_mockMessageSender,
+        m_mockContextManager,
+        m_mockFocusManager,
+        m_dialogUXStateAggregator,
+        m_mockExceptionEncounteredSender,
+        m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
+        nullptr,
+        AudioProvider::null(),
+        m_mockPowerResourceManager,
         nullptr);
     EXPECT_NE(m_audioInputProcessor, nullptr);
 }
@@ -2251,13 +2295,13 @@ TEST_F(AudioInputProcessorTest, test_expectSpeechWithInitiatorTimedOut) {
 /// This function verifies that a focus change to @c FocusState::BACKGROUND causes the @c AudioInputProcessor to
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, test_focusChangedBackground) {
-    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::BACKGROUND));
+    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MUST_PAUSE));
 }
 
 /// This function verifies that a focus change to @c FocusState::NONE causes the @c AudioInputProcessor to
 /// release the channel and go back to @c State::IDLE.
 TEST_F(AudioInputProcessorTest, test_focusChangedNone) {
-    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::NONE));
+    ASSERT_TRUE(testFocusChange(avsCommon::avs::FocusState::NONE, avsCommon::avs::MixingBehavior::MUST_STOP));
 }
 
 /// Test that the @c AudioInputProcessor correctly transitions to @c State::IDLE

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ public:
      *
      * @note The order here means how the modes are organized in the mode controller.
      * By setting this to @c true, you enable the Alexa to send the @c adjustMode directive.
-     * @see https://developer.amazon.com/docs/alexa-voice-service/alexa-modecontroller.html#capability-assertion
+     * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html#capability-assertion
      *
      * @note Calling this again will overrite the previous provided value.
      *

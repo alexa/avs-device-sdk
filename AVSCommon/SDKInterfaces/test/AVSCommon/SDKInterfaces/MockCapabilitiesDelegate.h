@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,8 +16,9 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKCAPABILITIESDELEGATE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKCAPABILITIESDELEGATE_H_
 
-#include "AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h"
 #include <gmock/gmock.h>
+
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,6 +41,7 @@ public:
         void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer));
     MOCK_METHOD0(invalidateCapabilities, void());
     MOCK_METHOD1(onAlexaEventProcessedReceived, void(const std::string& eventCorrelationToken));
+    MOCK_METHOD1(onAVSGatewayChanged, void(const std::string& avsGateway));
 };
 
 }  // namespace test

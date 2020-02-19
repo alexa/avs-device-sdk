@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHAVRCPTRANSFORMER_H_
-#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHAVRCPTRANSFORMER_H_
+#ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHMEDIAINPUTTRANSFORMER_H_
+#define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHMEDIAINPUTTRANSFORMER_H_
 
 #include <memory>
 #include <mutex>
@@ -28,21 +28,21 @@ namespace capabilityAgents {
 namespace bluetooth {
 
 /**
- * A class which will convert AVRCP commands to the related @c PlaybackRouterInterface commands.
+ * A class which will convert Media commands to the related @c PlaybackRouterInterface commands.
  */
-class BluetoothAVRCPTransformer
-        : public std::enable_shared_from_this<BluetoothAVRCPTransformer>
+class BluetoothMediaInputTransformer
+        : public std::enable_shared_from_this<BluetoothMediaInputTransformer>
         , public avsCommon::utils::bluetooth::BluetoothEventListenerInterface {
 public:
     /**
-     * Creates an instance of the BluetoothAVRCPTransformer.
+     * Creates an instance of the BluetoothMediaInputTransformer.
      *
-     * @param eventBus The @c BluetoothEventBus in which @c AVRCPCommandReceivedEvent events will appear.
-     * @param playbackRouter The @c PlaybackRouterInterface in which AVRCP commands will be transformed to.
+     * @param eventBus The @c BluetoothEventBus in which @c MediaCommandReceivedEvent events will appear.
+     * @param playbackRouter The @c PlaybackRouterInterface in which Media commands will be transformed to.
      *
      * @return An instance if successful else a nullptr.
      */
-    static std::shared_ptr<BluetoothAVRCPTransformer> create(
+    static std::shared_ptr<BluetoothMediaInputTransformer> create(
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
 
@@ -56,10 +56,10 @@ private:
     /**
      * Constructor.
      *
-     * @param eventBus The @c BluetoothEventBus in which @c AVRCPCommandReceivedEvent events will appear.
-     * @param playbackRouter The @c PlaybackRouterInterface in which AVRCP commands will be transformed to.
+     * @param eventBus The @c BluetoothEventBus in which @c MediaCommandReceivedEvent events will appear.
+     * @param playbackRouter The @c PlaybackRouterInterface in which Media commands will be transformed to.
      */
-    BluetoothAVRCPTransformer(
+    BluetoothMediaInputTransformer(
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
 
@@ -70,7 +70,7 @@ private:
      */
     bool init();
 
-    /// The eventbus on which to listen for @c AVRCPCommandReceivedEvents.
+    /// The eventbus on which to listen for @c MediaCommandReceivedEvents.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
 
     /// Componenet responsible for executing the playback commands.
@@ -81,4 +81,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHAVRCPTRANSFORMER_H_
+#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_BLUETOOTH_INCLUDE_BLUETOOTH_BLUETOOTHMEDIAINPUTTRANSFORMER_H_

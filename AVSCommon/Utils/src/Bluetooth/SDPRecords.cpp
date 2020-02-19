@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 #include "AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h"
 #include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h"
 #include "AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/HIDInterface.h"
+#include "AVSCommon/SDKInterfaces/Bluetooth/Services/SPPInterface.h"
 
 #include "AVSCommon/Utils/Bluetooth/SDPRecords.h"
 
@@ -58,6 +61,15 @@ AVRCPTargetRecord::AVRCPTargetRecord(const std::string& version) :
 
 AVRCPControllerRecord::AVRCPControllerRecord(const std::string& version) :
         SDPRecord{AVRCPControllerInterface::NAME, AVRCPControllerInterface::UUID, version} {
+}
+
+HFPRecord::HFPRecord(const std::string& version) : SDPRecord{HFPInterface::NAME, HFPInterface::UUID, version} {
+}
+
+HIDRecord::HIDRecord(const std::string& version) : SDPRecord(HIDInterface::NAME, HIDInterface::UUID, version) {
+}
+
+SPPRecord::SPPRecord(const std::string& version) : SDPRecord(SPPInterface::NAME, SPPInterface::UUID, version) {
 }
 
 }  // namespace bluetooth

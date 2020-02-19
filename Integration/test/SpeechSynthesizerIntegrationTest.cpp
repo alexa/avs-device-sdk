@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <ADSL/DirectiveSequencer.h>
@@ -37,6 +38,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 
@@ -73,6 +75,7 @@ using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace contextManager;
 using namespace sdkInterfaces;
+using namespace testing;
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
@@ -260,8 +263,9 @@ public:
      * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
      *
      * @param focusState The new focus state of the Channel observer.
+     * @param behavior The new MixingBehavior of the Channel observer.
      */
-    void onFocusChanged(FocusState focusState) override {
+    void onFocusChanged(FocusState focusState, MixingBehavior behavior) override {
         std::unique_lock<std::mutex> lock(m_mutex);
         m_queue.push_back(focusState);
         m_focusState = focusState;
@@ -311,6 +315,7 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
+        m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         DirectiveHandlerConfiguration config;
@@ -517,6 +522,7 @@ protected:
 
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;

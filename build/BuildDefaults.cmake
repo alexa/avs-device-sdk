@@ -78,6 +78,9 @@ include (Metrics)
 # Setup Captions variables.
 include (Captions)
 
+# Setup Customized SDS traits variables.
+include(CustomSDSTraits)
+
 if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
     include (ExternalMediaPlayerAdapters)
 endif()

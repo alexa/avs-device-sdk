@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ using namespace settings::storage::test;
 using namespace settings;
 
 /// Amount of time for the test to wait for event to be sent.
-static const std::chrono::seconds WAIT_TIMEOUT(2);
+static const std::chrono::seconds MY_WAIT_TIMEOUT(2);
 
 /// A sample Directive JSON string for the purposes of creating an AVSDirective object.
 static const std::string SETDNDMODE_DIRECTIVE_VALID_JSON_STRING = R"delim(
@@ -130,7 +130,7 @@ bool DoNotDisturbCapabilityAgentTest::expectEventSend(
     triggerOperation();
 
     auto future = eventPromise.get_future();
-    bool isFutureReady = future.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    bool isFutureReady = future.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
     EXPECT_TRUE(isFutureReady);
 
     if (!isFutureReady) {
@@ -246,7 +246,7 @@ TEST_F(DoNotDisturbCapabilityAgentTest, test_whileSendingChangedEvent_sendChange
     m_dndCA->sendChangedEvent("true");
 
     auto future = eventPromise.get_future();
-    bool isFutureReady = future.wait_for(WAIT_TIMEOUT) == std::future_status::ready;
+    bool isFutureReady = future.wait_for(MY_WAIT_TIMEOUT) == std::future_status::ready;
     EXPECT_TRUE(isFutureReady);
     // Check the order and existence of the events: Changed first, Report second, both happened.
     EXPECT_EQ(eventMask, 2);

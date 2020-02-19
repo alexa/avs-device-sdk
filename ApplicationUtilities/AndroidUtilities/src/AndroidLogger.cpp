@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,7 +60,10 @@ static android_LogPriority convertToAndroidLevel(Level level) {
     }
 }
 
-AndroidLogger::AndroidLogger(Level level) : Logger{level} {
+AndroidLogger::AndroidLogger(Level level) : Logger{level}, m_tag{TAG} {
+}
+
+AndroidLogger::AndroidLogger(const std::string& tag, Level level) : Logger{level}, m_tag{tag} {
 }
 
 void AndroidLogger::emit(
@@ -69,7 +72,7 @@ void AndroidLogger::emit(
     const char* threadMoniker,
     const char* text) {
     __android_log_print(
-        convertToAndroidLevel(level), TAG, "[%s] %c %s", threadMoniker, convertLevelToChar(level), text);
+        convertToAndroidLevel(level), m_tag.c_str(), "[%s] %c %s", threadMoniker, convertLevelToChar(level), text);
 }
 
 }  // namespace androidUtilities

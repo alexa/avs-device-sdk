@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -82,13 +82,22 @@ private:
      */
     HttpPost() = default;
 
+    HTTPResponse doPostInternal(
+        CurlEasyHandleWrapper& curl,
+        const std::string& url,
+        const std::vector<std::string> headerLines,
+        const std::string& data,
+        std::chrono::seconds timeout);
+
     /**
      * Build POST data from a vector of key value pairs.
      *
+     * @param curl Curl handle with which to make the request.
      * @param data Vector of key, value pairs from which to build the POST data.
-     * @return
+     * @return The generated POST data.
      */
-    std::string buildPostData(const std::vector<std::pair<std::string, std::string>>& data) const;
+    std::string buildPostData(CurlEasyHandleWrapper& curl, const std::vector<std::pair<std::string, std::string>>& data)
+        const;
 
     /**
      * Callback function used to accumulate the body of the HTTP Post response
@@ -101,12 +110,6 @@ private:
      * @return The number of bytes processed (size*nmemb upon success).
      */
     static size_t staticWriteCallbackLocked(char* ptr, size_t size, size_t nmemb, void* userdata);
-
-    /// Mutex to serialize access to @c m_curl and @c m_response.
-    std::mutex m_mutex;
-
-    /// CURL handle with which to make requests
-    CurlEasyHandleWrapper m_curl;
 
     /// String used to accumulate the response body.
     std::string m_bodyAccumulator;

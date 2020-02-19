@@ -24,6 +24,7 @@
 #include "Settings/SettingsManager.h"
 #include "Settings/SpeechConfirmationSettingType.h"
 #include "Settings/Types/AlarmVolumeRampTypes.h"
+#include "Settings/Types/NetworkInfo.h"
 #include "Settings/WakeWordConfirmationSettingType.h"
 
 namespace alexaClientSDK {
@@ -62,6 +63,9 @@ using WakeWordsSetting = SettingInterface<WakeWords>;
 /// Type for locale.
 using LocalesSetting = SettingInterface<DeviceLocales>;
 
+/// Type for network info.
+using NetworkInfoSetting = SettingInterface<types::NetworkInfo>;
+
 /**
  * Enumerates the settings that are kept inside DeviceSettingsManager.
  *
@@ -74,7 +78,8 @@ enum DeviceSettingsIndex {
     SPEECH_CONFIRMATION,
     TIMEZONE,
     WAKE_WORDS,
-    LOCALE
+    LOCALE,
+    NETWORK_INFO
 };
 
 /// The DeviceSettingsManager will manage all common settings to alexa devices.
@@ -85,7 +90,8 @@ using DeviceSettingsManager = SettingsManager<
     SpeechConfirmationSetting,
     TimeZoneSetting,
     WakeWordsSetting,
-    LocalesSetting>;
+    LocalesSetting,
+    NetworkInfoSetting>;
 
 }  // namespace settings
 }  // namespace alexaClientSDK

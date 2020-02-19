@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,6 +71,15 @@ TEST_F(MacAddressStringTest, test_createWithValidMacAddress) {
     ASSERT_NE(macAddressString, nullptr);
     ASSERT_EQ(macAddressString->getString(), macAddress);
     ASSERT_EQ(macAddressString->getTruncatedString(), truncatedMacAddress);
+}
+
+/**
+ * Test @c MacAddressString create method with truncated Mac address is invalid.
+ */
+TEST_F(MacAddressStringTest, test_createWithTruncatedMacAddress) {
+    ASSERT_EQ(MacAddressString::create("XX:XX:XX:XX:cd:ef"), nullptr);
+    ASSERT_EQ(MacAddressString::create("XX:23:45:ab:cd:ef"), nullptr);
+    ASSERT_EQ(MacAddressString::create("01:23:45:ab:cd:XX"), nullptr);
 }
 
 }  // namespace test

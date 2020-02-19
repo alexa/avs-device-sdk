@@ -92,7 +92,7 @@
         // Note: The firmware version should be a positive 32-bit integer in the range [1-2147483647].
         // e.g. "firmwareVersion": 123
         // The default endpoint to connect to.
-        // See https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints for regions and values
+        // See https://developer.amazon.com/docs/alexa/alexa-voice-service/api-overview.html#endpoints for regions and values
         // e.g. "endpoint": "https://alexa.na.gateway.devices.a2z.com"
 
         // Example of specifying suggested latency in seconds when openning PortAudio stream. By default,

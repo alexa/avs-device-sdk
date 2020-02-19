@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,11 @@ public:
 
     /// Retry Timer Object for transport.
     static avsCommon::utils::RetryTimer RETRY_TIMER;
+
+    /// Static function member to get RETRY_TIMER
+    static avsCommon::utils::RetryTimer getRetryTimer() {
+        return RETRY_TIMER;
+    }
 };
 
 }  // namespace acl

@@ -35,7 +35,8 @@ std::unique_ptr<CloudControlledSettingProtocol> CloudControlledSettingProtocol::
     std::shared_ptr<SettingEventSenderInterface> eventSender,
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager) {
-    auto sharedProtocol = SharedAVSSettingProtocol::create(metadata, eventSender, settingStorage, connectionManager);
+    auto sharedProtocol =
+        SharedAVSSettingProtocol::create(metadata, eventSender, settingStorage, connectionManager, true);
     if (!sharedProtocol) {
         ACSDK_ERROR(LX("createFailed").d("reason", "cannot create shared Protocol"));
         return nullptr;

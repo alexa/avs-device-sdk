@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #include "AVSCommon/SDKInterfaces/InteractionModelRequestProcessingObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h"
-
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 
@@ -52,10 +52,12 @@ public:
      * arrive from AVS.
      * @param timeoutForListeningToIdle This timeout will be used to time out from the LISTENING state in case the
      * Request Processing Started (RPS) directive is not received from AVS.
+     * @param metricRecorder The metric recorder.
      */
     DialogUXStateAggregator(
         std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{8},
-        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8});
+        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8},
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Adds an observer to be notified of UX state changes.
@@ -82,7 +84,10 @@ public:
 
     void onStateChanged(sdkInterfaces::AudioInputProcessorObserverInterface::State state) override;
 
-    void onStateChanged(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) override;
+    void onStateChanged(
+        sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
+        const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) override;
 
     void receive(const std::string& contextId, const std::string& message) override;
 
@@ -142,6 +147,9 @@ private:
      * synchronization.
      */
     /// @{
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The @c UXObserverInterface to notify any time the Alexa Voice Service UX state needs to change.
     std::unordered_set<std::shared_ptr<sdkInterfaces::DialogUXStateObserverInterface>> m_observers;

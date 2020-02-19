@@ -23,8 +23,8 @@ add_library(AVSCommon SHARED
     AVS/src/Attachment/InProcessAttachment.cpp
     AVS/src/Attachment/InProcessAttachmentReader.cpp
     AVS/src/Attachment/InProcessAttachmentWriter.cpp
-    AVS/src/CapabilityConfiguration.cpp
     AVS/src/CapabilityAgent.cpp
+    AVS/src/CapabilityConfiguration.cpp
     AVS/src/CapabilityTag.cpp
     AVS/src/DialogUXStateAggregator.cpp
     AVS/src/DirectiveRoutingRule.cpp
@@ -72,14 +72,14 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ModuleLogger.cpp
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/MacAddressString.cpp
-    Utils/src/Metrics/DataPoint.cpp
-    Utils/src/Metrics/DataPointStringBuilder.cpp
-    Utils/src/Metrics/DataPointCounterBuilder.cpp
-    Utils/src/Metrics/DataPointDurationBuilder.cpp
-    Utils/src/Metrics/MetricEvent.cpp
-    Utils/src/Metrics/MetricEventBuilder.cpp
     Utils/src/MediaPlayer/PooledMediaPlayerFactory.cpp
     Utils/src/Metrics.cpp
+    Utils/src/Metrics/DataPoint.cpp
+    Utils/src/Metrics/DataPointCounterBuilder.cpp
+    Utils/src/Metrics/DataPointDurationBuilder.cpp
+    Utils/src/Metrics/DataPointStringBuilder.cpp
+    Utils/src/Metrics/MetricEvent.cpp
+    Utils/src/Metrics/MetricEventBuilder.cpp
     Utils/src/MultiTimer.cpp
     Utils/src/Network/InternetConnectionMonitor.cpp
     Utils/src/RequiresShutdown.cpp
@@ -103,6 +103,13 @@ target_include_directories(AVSCommon PUBLIC
     "${RAPIDJSON_INCLUDE_DIR}"
     "${MultipartParser_SOURCE_DIR}"
     ${CURL_INCLUDE_DIRS})
+
+if (CUSTOM_AUDIO_INPUT_STREAM_TRAITS)
+target_include_directories(AVSCommon PUBLIC
+    ${CUSTOMSDSTRAITS_LIB_DIR}/include)
+
+target_link_libraries(AVSCommon ${CUSTOMSDSTRAITS_LIB_NAME})
+endif ()
 
 target_link_libraries(AVSCommon
     ${CURL_LIBRARIES})

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace avs {
 
 /**
  * This class represents the resources used by a Capability, communicated as friendly names to AVS.
- * @see https://developer.amazon.com/docs/device-apis/resources-and-assets.html#capability-resources
+ * @see https://developer.amazon.com/docs/alexa/device-apis/resources-and-assets.html#capability-resources
  */
 class CapabilityResources {
 public:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <unordered_set>
 
 #include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
@@ -47,11 +48,6 @@ class AVSGatewayManager
         , public registrationManager::CustomerDataHandler {
 public:
     /**
-     * Creates an instance of the @c AVSGatewayManager
-     * @return
-     */
-
-    /**
      * Creates an instance of the @c AVSGatewayManager.
      *
      * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
@@ -69,6 +65,8 @@ public:
     bool setAVSGatewayAssigner(
         std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> avsGatewayAssigner) override;
     bool setGatewayURL(const std::string& avsGatewayURL) override;
+    void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) override;
     /// @}
 
     /// @name PostConnectOperationProviderInterface Functions
@@ -123,7 +121,7 @@ private:
     /// The AVS Gateway Assigner.
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> m_avsGatewayAssigner;
 
-    /// The mutex to synchronize access to @c PostConnectVerifyGatewaySender.
+    /// The mutex to synchronize access to members.
     std::mutex m_mutex;
 
     /// The current @c PostConnectVerifyGateway sender used to send the verify gateway event.
@@ -131,6 +129,9 @@ private:
 
     /// The current AVS Gateway Verification state.
     GatewayVerifyState m_currentState;
+
+    /// The set of @c AVSGatewayObservers. Access is synchronized using m_mutex.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface>> m_observers;
 };
 
 }  // namespace avsGatewayManager

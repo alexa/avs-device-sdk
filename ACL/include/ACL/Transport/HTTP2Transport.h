@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,16 +27,18 @@
 #include <unordered_set>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
-#include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
+#include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
+#include <AVSCommon/Utils/HTTP2/HTTP2ConnectionObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/PingHandler.h"
 #include "ACL/Transport/PostConnectFactoryInterface.h"
 #include "ACL/Transport/PostConnectObserverInterface.h"
-#include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
+#include "ACL/Transport/SynchronizedMessageRequestQueue.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -50,6 +52,7 @@ class HTTP2Transport
         , public PostConnectObserverInterface
         , public avsCommon::sdkInterfaces::PostConnectSendMessageInterface
         , public avsCommon::sdkInterfaces::AuthObserverInterface
+        , public avsCommon::utils::http2::HTTP2ConnectionObserverInterface
         , public ExchangeHandlerContextInterface {
 public:
     /*
@@ -75,7 +78,9 @@ public:
      * @param attachmentManager The attachment manager that manages the attachments.
      * @param transportObserver The observer of the new instance of TransportInterface.
      * @param postConnectFactory The object used to create @c PostConnectInterface instances.
+     * @param sharedRequestQueue Request queue shared by all instances of HTTPTransportInterface.
      * @param configuration An optional configuration to specify HTTP2/2 connection settings.
+     * @param metricRecorder The metric recorder.
      * @return A shared pointer to a HTTP2Transport object.
      */
     static std::shared_ptr<HTTP2Transport> create(
@@ -86,7 +91,9 @@ public:
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         std::shared_ptr<TransportObserverInterface> transportObserver,
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
-        Configuration configuration = Configuration());
+        std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
+        Configuration configuration = Configuration(),
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Method to add a TransportObserverInterface instance.
@@ -114,7 +121,7 @@ public:
     bool connect() override;
     void disconnect() override;
     bool isConnected() override;
-    void send(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    void onRequestEnqueued() override;
     /// @}
 
     /// @name PostConnectSendMessageInterface methods.
@@ -157,6 +164,10 @@ public:
     std::string getAVSGateway() override;
     /// @}
 
+    /// @name HTTP2ConnectionObserverInterface methods.
+    void onGoawayReceived() override;
+    /// @}
+
 private:
     /**
      * Enum to track the (internal) state of the HTTP2Transport
@@ -196,7 +207,9 @@ private:
      * @param attachmentManager The attachment manager that manages the attachments.
      * @param transportObserver The observer of the new instance of TransportInterface.
      * @param postConnect The object used to create PostConnectInterface instances.
+     * @param sharedRequestQueue Request queue shared by all instances of HTTPTransportInterface.
      * @param configuration The HTTP2/2 connection settings.
+     * @param metricRecorder The metric recorder.
      */
     HTTP2Transport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -206,7 +219,9 @@ private:
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
         std::shared_ptr<TransportObserverInterface> transportObserver,
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
-        Configuration configuration);
+        std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
+        Configuration configuration,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Main loop for servicing the various states.
@@ -277,12 +292,17 @@ private:
     State handleShutdown();
 
     /**
-     * Enqueue a MessageRequest for sending.
+     * Monitor the shared message queue while waiting for a state change.  If messages have been sitting in the
+     * queue for too long (e.g. during prolonged internet connectivity outtage), complete them as TIMEDOUT.
      *
-     * @param request The MessageRequest to enqueue.
-     * @param beforeConnected Whether or not to only allow enqueuing of messages before connected.
+     * @param whileState The @c State to keep waiting in.
+     * @param wakeTime The max time point to wait for.
+     * @return The new state.
      */
-    void enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> request, bool beforeConnected);
+    State monitorSharedQueueWhileWaiting(
+        State whileState,
+        std::chrono::time_point<std::chrono::steady_clock> maxWakeTime =
+            std::chrono::time_point<std::chrono::steady_clock>::max());
 
     /**
      * Handle sending @c MessageRequests and pings while in @c State::POST_CONNECTING or @c State::CONNECTED.
@@ -290,7 +310,7 @@ private:
      * @param whileState Continue sending @c MessageRequests and pings while in this state.
      * @return The current value of @c m_state.
      */
-    State sendMessagesAndPings(State whileState);
+    State sendMessagesAndPings(State whileState, MessageRequestQueueInterface& requestQueue);
 
     /**
      * Set the state to a new state.
@@ -342,6 +362,9 @@ private:
      */
     State getState();
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// Mutex for accessing @c m_state and @c m_messageQueue
     std::mutex m_mutex;
 
@@ -369,6 +392,9 @@ private:
     /// Factory for creating @c PostConnectInterface instances.
     std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
 
+    /// Queue of @c MessageRequest instances to send that are shared between instances of @c HTTP2Transport.
+    std::shared_ptr<SynchronizedMessageRequestQueue> m_sharedRequestQueue;
+
     /// Mutex to protect access to the m_observers variable.
     std::mutex m_observerMutex;
 
@@ -381,14 +407,11 @@ private:
     /// PostConnect object is used to perform activities required once a connection is established.
     std::shared_ptr<PostConnectInterface> m_postConnect;
 
-    /// Queue of @c MessageRequest instances to send. Serialized by @c m_mutex.
-    std::deque<std::shared_ptr<avsCommon::avs::MessageRequest>> m_requestQueue;
+    /// Queue of @c MessageRequest instances to send during the POST_CONNECTING state. Serialized by @c m_mutex.
+    MessageRequestQueue m_requestQueue;
 
     /// Number of times connecting has been retried.
     int m_connectRetryCount;
-
-    /// Is a message handler awaiting a response?
-    bool m_isMessageHandlerAwaitingResponse;
 
     /// The number of message handlers that are not finished with their request.
     int m_countOfUnfinishedMessageHandlers;

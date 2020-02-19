@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ using IntegralByteType = typename std::enable_if<isIntegralByteType<ValueT>(), V
  * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
  * string.
  */
-template <typename ValueT>
+template <typename ValueT, typename = IntegralByteType<ValueT>>
 std::pair<bool, std::string> toSettingString(const IntegralByteType<ValueT>& value) {
     std::stringstream stream;
     int valueInt = value;
@@ -76,7 +76,7 @@ std::pair<bool, std::string> toSettingString(const IntegralByteType<ValueT>& val
  * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
  * value.
  */
-template <typename ValueT>
+template <typename ValueT, typename = IntegralByteType<ValueT>>
 std::pair<bool, ValueT> fromSettingString(const std::string& str, const IntegralByteType<ValueT>& defaultValue) {
     int16_t value = defaultValue;
     std::stringstream stream;
@@ -116,8 +116,8 @@ using EnumOrString = typename std::enable_if<isEnumOrString<ValueT>(), ValueT>::
  * @note For enums, we assume the operator<< is defined and the failbit should be set in case of failure to convert to
  * string.
  */
-template <typename ValueT>
-std::pair<bool, std::string> toSettingString(const EnumOrString<ValueT>& value) {
+template <typename ValueT, typename = EnumOrString<ValueT>>
+std::pair<bool, std::string> toSettingString(const ValueT& value) {
     std::stringstream stream;
     stream << QUOTE << value << QUOTE;
     return {!stream.fail(), stream.str()};
@@ -134,8 +134,8 @@ std::pair<bool, std::string> toSettingString(const EnumOrString<ValueT>& value) 
  * @note For enums, we assume the operator>> is defined and the failbit should be set in case of failure to convert
  * from string.
  */
-template <typename ValueT>
-std::pair<bool, ValueT> fromSettingString(const std::string& str, const EnumOrString<ValueT>& defaultValue) {
+template <typename ValueT, typename = EnumOrString<ValueT>>
+std::pair<bool, ValueT> fromSettingString(const std::string& str, const ValueT& defaultValue) {
     if (str.length() < 2 || str[0] != QUOTE || str[str.length() - 1] != QUOTE) {
         return {false, defaultValue};
     }
@@ -177,7 +177,7 @@ using StringCollection = typename std::enable_if<isStringCollection<ValueT>(), V
  * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
  * string.
  */
-template <typename ValueT>
+template <typename ValueT, StringCollection<ValueT>* = nullptr>
 std::pair<bool, std::string> toSettingString(const StringCollection<ValueT>& value) {
     std::vector<std::string> values{value.begin(), value.end()};
     auto retValue = avsCommon::utils::json::jsonUtils::convertToJsonString(values);
@@ -195,7 +195,7 @@ static const std::string EMPTY_JSON_LIST = "[]";
  * @return A pair where first represents whether the conversion succeeded or not, and the second is the converted
  * value.
  */
-template <typename ValueT>
+template <typename ValueT, StringCollection<ValueT>* = nullptr>
 std::pair<bool, ValueT> fromSettingString(const std::string& str, const StringCollection<ValueT>& defaultValue) {
     auto values = avsCommon::utils::json::jsonUtils::retrieveStringArray<ValueT>(str);
     if (values.empty() && str != EMPTY_JSON_LIST) {

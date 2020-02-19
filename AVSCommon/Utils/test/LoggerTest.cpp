@@ -600,6 +600,36 @@ TEST_F(LoggerTest, test_sensitiveDataSuppressed) {
 #endif
 }
 
+TEST_F(LoggerTest, test_obfuscatedDataIsMangled) {
+    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(3);
+
+    // generic, not private labels should still show up in logs
+    ACSDK_INFO(LX("testing metadata obfuscation").obfuscatePrivateData(METADATA_KEY, TEST_MESSAGE_STRING));
+    auto presentInOriginalForm = g_log->m_lastText.find(TEST_MESSAGE_STRING) != std::string::npos;
+    ASSERT_TRUE(presentInOriginalForm);
+
+    // a private value should not appear, the blacklist word itself should
+    ACSDK_INFO(LX("testing metadata obfuscation")
+                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
+    auto lastLineAfterPrivateSubmission = g_log->m_lastText;
+    auto privateDataWasHidden =
+        lastLineAfterPrivateSubmission.find("I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER") == std::string::npos;
+    ASSERT_TRUE(privateDataWasHidden);
+    auto privateLabelWasPresent = lastLineAfterPrivateSubmission.find("ESSID") != std::string::npos;
+    ASSERT_TRUE(privateLabelWasPresent);
+
+    // key itself should be present
+    auto keyIsPresent = g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR) != std::string::npos;
+    ASSERT_TRUE(keyIsPresent);
+
+    // two of the same input should result in same output
+    ACSDK_INFO(LX("testing metadata obfuscation")
+                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
+    auto lastLineAfterSecondSubmission = g_log->m_lastText;
+    ASSERT_EQ(lastLineAfterSecondSubmission, lastLineAfterPrivateSubmission);
+}
+
 /**
  * Test observer mechanism in the MockModuleLogger.  Expects that when the logLevel changes for the sink, the
  * callback of the MockModuleLogger is triggered.  Also make sure any changes to sink's logLevel is ignored

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ static const std::string INVALID_VALUE = "INVALID";
 
 /// Constant representing the timeout for test events.
 /// @note Use a large enough value that should not fail even in slower systems.
-static const std::chrono::seconds WAIT_TIMEOUT{5};
+static const std::chrono::seconds MY_WAIT_TIMEOUT{5};
 
 /// Set of combinations of supported wake words.
 static const MockLocaleAssetsManager::LocaleAssetsManagerInterface::WakeWordsSets SUPPORTED_WAKE_WORDS_COMBINATION{
@@ -203,7 +203,7 @@ void LocaleWakeWordsSettingTest::initializeSetting(
     localeSetting.addObserver(m_localeObserver);
     wakeWordsSetting.addObserver(m_wakeWordsObserver);
 
-    e.wait(WAIT_TIMEOUT);
+    e.wait(MY_WAIT_TIMEOUT);
 }
 
 /// Test create with null event senders.
@@ -260,7 +260,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeWakeWordsRequest) {
     }
 
     m_setting->setAvsChange(newWakeWords);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<WakeWordsSetting>>(m_setting)->get(), newWakeWords);
 }
 
@@ -293,7 +293,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeWakeWordsRequestSetFailed) {
     }
 
     m_setting->setAvsChange(newWakeWords);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<WakeWordsSetting>>(m_setting)->get(), initialWakeWords);
 }
 
@@ -322,7 +322,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeWakeWordsRequestSendEventFailed
     }));
 
     m_setting->setAvsChange(newWakeWords);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<WakeWordsSetting>>(m_setting)->get(), newWakeWords);
 }
 
@@ -361,7 +361,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeLocaleRequest) {
     }
 
     m_setting->setAvsChange(newLocale);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<LocalesSetting>>(m_setting)->get(), newLocale);
 }
 
@@ -396,7 +396,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeLocaleRequestSetFailed) {
     }
 
     m_setting->setAvsChange(newLocale);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(
         static_cast<std::shared_ptr<LocalesSetting>>(m_setting)->get(),
         LocalesSetting::ValueType{ENGLISH_CANADA_VALUE});
@@ -429,7 +429,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeLocaleRequestSendEventFailed) {
     }));
 
     m_setting->setAvsChange(newLocale);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<LocalesSetting>>(m_setting)->get(), newLocale);
 }
 
@@ -489,7 +489,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_restoreValueNotAvailable) {
     ASSERT_THAT(m_setting, NotNull());
 
     std::unique_lock<std::mutex> statusLock{statusMutex};
-    EXPECT_TRUE(updatedCV.wait_for(statusLock, WAIT_TIMEOUT, [&wakeWordStateUpdated, &localeStateUpdated] {
+    EXPECT_TRUE(updatedCV.wait_for(statusLock, MY_WAIT_TIMEOUT, [&wakeWordStateUpdated, &localeStateUpdated] {
         return wakeWordStateUpdated && localeStateUpdated;
     }));
 
@@ -523,7 +523,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_localChangeWakeWordsRequest) {
         }));
 
     m_setting->setLocalChange(newWakeWords);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<WakeWordsSetting>>(m_setting)->get(), newWakeWords);
 }
 
@@ -543,7 +543,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_localChangeWakeWordsRequestSetFailed) {
     EXPECT_CALL(*m_storageMock, updateSettingStatus(WAKE_WORDS_KEY, SettingStatus::SYNCHRONIZED)).Times(0);
 
     m_setting->setLocalChange(newWakeWords);
-    EXPECT_TRUE(event.wait(WAIT_TIMEOUT));
+    EXPECT_TRUE(event.wait(MY_WAIT_TIMEOUT));
     EXPECT_EQ(static_cast<std::shared_ptr<WakeWordsSetting>>(m_setting)->get(), initialWakeWords);
 }
 
@@ -607,7 +607,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_reconnectAfterOfflineChange) {
 
     // Trigger offline change.
     m_setting->setAvsChange(newLocale);
-    ASSERT_TRUE(event.wait(WAIT_TIMEOUT));
+    ASSERT_TRUE(event.wait(MY_WAIT_TIMEOUT));
 
     // Set reconnect expectations.
     event.reset();
@@ -625,7 +625,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_reconnectAfterOfflineChange) {
     m_setting->onConnectionStatusChanged(
         ConnectionStatusObserverInterface::Status::CONNECTED,
         ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
-    ASSERT_TRUE(event.wait(WAIT_TIMEOUT));
+    ASSERT_TRUE(event.wait(MY_WAIT_TIMEOUT));
 }
 
 }  // namespace test

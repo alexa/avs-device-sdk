@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 #define ALEXA_CLIENT_SDK_INTEGRATION_INCLUDE_INTEGRATION_TESTSPEECHSYNTHESIZEROBSERVER_H_
 
 #include <chrono>
+#include <condition_variable>
 #include <deque>
 #include <mutex>
-#include <condition_variable>
 
 #include <AVSCommon/SDKInterfaces/SpeechSynthesizerObserverInterface.h>
 
@@ -37,7 +37,9 @@ public:
     ~TestSpeechSynthesizerObserver() = default;
 
     void onStateChanged(
-        avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) override;
+        avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
+        const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) override;
 
     bool checkState(
         const avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState expectedState,

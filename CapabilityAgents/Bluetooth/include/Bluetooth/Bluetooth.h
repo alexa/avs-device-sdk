@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
 
 #include <deque>
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <queue>
-#include <unordered_map>
 #include <unordered_set>
 
 #include <AVSCommon/AVS/Attachment/InProcessAttachment.h>
@@ -31,6 +31,7 @@
 #include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/AVS/FocusState.h>
 #include <AVSCommon/AVS/Requester.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
@@ -42,15 +43,19 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
+#include <AVSCommon/Utils/Bluetooth/DeviceCategory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
-#include "Bluetooth/BluetoothAVRCPTransformer.h"
-#include "Bluetooth/BluetoothStorageInterface.h"
 #include <RegistrationManager/CustomerDataHandler.h>
 #include <RegistrationManager/CustomerDataManager.h>
+
+#include "Bluetooth/BluetoothEventState.h"
+#include "Bluetooth/BluetoothMediaInputTransformer.h"
+#include "Bluetooth/BluetoothStorageInterface.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -62,11 +67,14 @@ namespace bluetooth {
  *
  * -# The connectivity of devices. This includes scanning, pairing and connecting.
  * -# The management of profiles. This includes:
- * media control (AVRCP, Audio/Video Remote Control Profile) and
- * media playback (A2DP, Advanced Audio Distribution Profile).
+ * media control (AVRCP, Audio/Video Remote Control Profile)
+ * media playback (A2DP, Advanced Audio Distribution Profile)
+ * Human Interface Device Profile
+ * Serial Port Profile and
+ * Hands-Free Profile.
  *
  * The Bluetooth agent will handle directives from AVS and requests from peer devices. Examples include
- * pairing and connection requests, as we as media playback requests. Some examples of this are:
+ * pairing and connection requests, as well as media playback requests. Some examples of this are:
  *
  * - "Alexa, connect".
  * - Enabling discovery through the companion app.
@@ -74,14 +82,11 @@ namespace bluetooth {
  * - "Alexa next".
  *
  * Connectivity is defined as when two devices have paired and established connections of all applicable
- * services (A2DP, AVRCP, etc). Alexa does not support multiple connected multimedia devices. If a device is
- * currently connected, attempting to connect a second device should force a disconnect on the
- * currently connected device.
- *
- * At this time, the agent does not enforce the disconnect of the currently connected device.
- * It is theoretically possible to connect two devices simultaneously, but the behavior is undefined.
- * It is advised to disconnect a currently connected device before connecting a new one.
- * Enforcement of this will be available in an upcoming release.
+ * services (A2DP, AVRCP, etc). Alexa supports multiple connected multimedia devices but doesn't support multiple A2DP
+ * connected devices. The agent enforces the connected devices to follow some Bluetooth device connection rules based on
+ * DeviceCategory. For example, If a A2DP device is currently connected, attempting to connect a second A2DP device
+ * should force a disconnect on the currently connected device. However, if a A2DP device is currently connected,
+ * attempting to connected a SPP/HID device should not cause a disconnect on the currently connected device.
  *
  * Interfaces in AVSCommon/SDKInterfaces/Bluetooth can be implemented for customers
  * who wish to use their own Bluetooth stack. The Bluetooth agent operates based on events.
@@ -94,6 +99,9 @@ namespace bluetooth {
  *
  * -# AVRCP (Controller, Target)
  * -# A2DP (Sink, Source)
+ * -# HFP
+ * -# HID
+ * -# SPP
  */
 class Bluetooth
         : public std::enable_shared_from_this<Bluetooth>
@@ -128,6 +136,59 @@ public:
     };
 
     /**
+     * An enum that represents how the Bluetooth class expects to lose focus.
+     */
+    enum class FocusTransitionState {
+        /// Focus in Bluetooth class is lost because it explicitly released focus.
+        INTERNAL,
+
+        /**
+         * Focus in Bluetooth class that will be lost because it explicitly released focus.
+         * This state prevents foreground or background focus changes from setting the state to EXTERNAL before the
+         * none focus change has had the chance to set the state to INTERNAL.
+         */
+        PENDING_INTERNAL,
+
+        /// Focus in Bluetooth class is lost because another class has taken focus.
+        EXTERNAL
+    };
+
+    /**
+     * An enum that is used to represent the Bluetooth scanning state and if a state change should result in a scan
+     * report being sent to the Alexa service.
+     */
+    enum class ScanningTransitionState {
+        /**
+         * The device is currently scanning.
+         *
+         * Any state change should result in sending a scan report.
+         *
+         * This state is set when a SCAN_DEVICES directive is sent from the Alexa service.
+         */
+        ACTIVE,
+
+        /**
+         * The device is not scanning.
+         *
+         * A state change to inactive should not result in sending a scan report.
+         *
+         * This state is set when a EXIT_DISCOVERABLE_MODE directive is sent or scan mode is disabled as part of the
+         * PAIR_DEVICES directive.
+         */
+        PENDING_INACTIVE,
+
+        /**
+         * The device is not scanning.
+         *
+         * A state change to inactive should not result in sending a scan report.
+         *
+         * This state is set when a state change to inactive is recieved and the previous state was
+         * PENDING_INACTIVE.
+         */
+        INACTIVE
+    };
+
+    /**
      * Creates an instance of the Bluetooth capability agent.
      *
      * @param contextManager Responsible for managing the context.
@@ -139,7 +200,9 @@ public:
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
      * @param customerDataManager Object that will track the CustomerDataHandler.
-     * @param avrcpTransformer Transforms incoming AVRCP commands if supported.
+     * @param enabledConnectionRules The set of devices connection rules enabled by the Bluetooth stack from
+     * customers.
+     * @param mediaInputTransformer Transforms incoming Media commands if supported.
      */
     static std::shared_ptr<Bluetooth> create(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -151,7 +214,9 @@ public:
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
-        std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer = nullptr);
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+            enabledConnectionRules,
+        std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer = nullptr);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -160,7 +225,7 @@ public:
     void preHandleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void handleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
-    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
     /// @}
 
     /// @name CapabilityConfigurationInterface Functions
@@ -181,13 +246,23 @@ public:
 
     /// @name MediaPlayerObserverInterface Functions
     /// @{
-    void onPlaybackStarted(avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id) override;
-    void onPlaybackStopped(avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id) override;
-    void onPlaybackFinished(avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id) override;
+    void onFirstByteRead(
+        avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStarted(
+        avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStopped(
+        avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackFinished(
+        avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
     void onPlaybackError(
         avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId id,
         const avsCommon::utils::mediaPlayer::ErrorType& type,
-        std::string error) override;
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
     /// @}
 
     /// @name CustomerDataHandler Functions
@@ -228,7 +303,9 @@ private:
      * @param eventBus A bus to abstract Bluetooth stack specific messages.
      * @param mediaPlayer The Media Player which will handle playback.
      * @param customerDataManager Object that will track the CustomerDataHandler.
-     * @param avrcpTransformer Transforms incoming AVRCP commands.
+     * @param enabledConnectionRules The set of devices connection rules enabled by the Bluetooth stack from
+     * customers.
+     * @param mediaInputTransformer Transforms incoming Media commands.
      */
     Bluetooth(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -240,7 +317,9 @@ private:
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
-        std::shared_ptr<BluetoothAVRCPTransformer> avrcpTransformer);
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+            enabledConnectionRules,
+        std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer);
 
     /**
      * Initializes the agent.
@@ -258,6 +337,20 @@ private:
     // TODO ACSDK-1392: Optimize by updating the context only when there is a delta.
     /// Helper function to update the context.
     void executeUpdateContext();
+
+    /**
+     * Helper function to extract AVS compliant profiles. This returns a rapidjson node
+     * containing an array of supported profiles.
+     *
+     * @param device The device.
+     * @param allocator The allocator which will be used to create @c supportedProfiles.
+     * @param[out] supportedProfiles A rapidjson node containing the supported profiles.
+     * @return A bool indicating success.
+     */
+    bool extractAvsProfiles(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+        rapidjson::Document::AllocatorType& allocator,
+        rapidjson::Value* supportedProfiles);
 
     /**
      * Marks the directive as completed.
@@ -289,7 +382,7 @@ private:
     void executeEnterForeground();
 
     /// A state transition function for entering the background.
-    void executeEnterBackground();
+    void executeEnterBackground(avsCommon::avs::MixingBehavior behavior);
 
     /// A state transition function for entering the none state.
     void executeEnterNone();
@@ -306,33 +399,43 @@ private:
      * Puts the device into the desired scan mode.
      *
      * @param scanning A bool indicating whether it should be scanning.
+     * @param shouldReport A bool that indicates if the scan report should be reported to the Alexa service.
      * @return A bool indicating success.
      */
-    bool executeSetScanMode(bool scanning);
+    bool executeSetScanMode(bool scanning, bool shouldReport = true);
 
     /**
-     * Pair with the device matching the given uuid.
+     * Pair with the devices matching the given uuids.
      *
-     * @param uuid The uuid associated with the device.
-     * @return A bool indicating success.
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating that all devices have been paired.
      */
-    bool executePairDevice(const std::string& uuid);
+    bool executePairDevices(const std::unordered_set<std::string>& uuids);
 
     /**
-     * Unpair with the device matching the given uuid.
+     * Unpair with the devices matching the given uuids.
      *
-     * @param uuid The uuid associated with the device.
-     * @return A bool indicating success.
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating that all devices have been unpaired.
      */
-    bool executeUnpairDevice(const std::string& uuid);
+    bool executeUnpairDevices(const std::unordered_set<std::string>& uuids);
 
     /**
-     * Connect with the device matching the given uuid. This will connect all available services between
+     * Set Device Category with the device matching the given uuid.
+     *
+     * @param uuidCategoryMap Map of <UUID, Category> of the devices.
+     * @return Map of <UUID, Category> of devices that failed to update.
+     */
+    std::map<std::string, std::string> executeSetDeviceCategories(
+        const std::map<std::string, std::string>& uuidCategoryMap);
+
+    /**
+     * Connect with the devices matching the given uuids. This will connect all available services between
      * the two devices.
      *
-     * @param uuid The uuid associated with the device.
+     * @param uuids The uuids associated with the devices.
      */
-    void executeConnectByDeviceId(const std::string& uuid);
+    void executeConnectByDeviceIds(const std::unordered_set<std::string>& uuids);
 
     /**
      * Connect with the most recently connected device that supports the given profile.
@@ -345,26 +448,32 @@ private:
     void executeConnectByProfile(const std::string& profileName, const std::string& profileVersion);
 
     /**
-     * Disconnect with the device matching the given uuid. This will disconnect all available services between
+     * Disconnect with the devices matching the given uuids. This will disconnect all available services between
      * the two devices.
      *
-     * @param uuid The uuid associated with the device.
+     * @param uuids The uuids associated with the devices.
      */
-    void executeDisconnectDevice(const std::string& uuid);
+    void executeDisconnectDevices(const std::unordered_set<std::string>& uuids);
 
     /**
      * Helper function that encapsulates disconnect logic.
      *
+     * @param device The disconnected device.
      * @param requester The @c Requester who initiated the disconnect.
      */
-    void executeOnDeviceDisconnect(avsCommon::avs::Requester requester);
+    void executeOnDeviceDisconnect(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+        avsCommon::avs::Requester requester);
 
     /**
      * Helper function that encapsulates connect logic.
      *
-     * @param requester The @c Requester who initiated the disconnect.
+     * @param device The connected device.
+     * @param shouldNotifyConnection A bool that indicates if observers should be notified the device connection.
      */
-    void executeOnDeviceConnect(std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+    void executeOnDeviceConnect(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+        bool shouldNotifyConnection = true);
 
     /**
      * Helper function to abstract shared logic in pairing/unpairing/connecting/disconnecting operations.
@@ -377,20 +486,36 @@ private:
         std::function<std::future<bool>(
             std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>&)> function);
 
-    /// Send a play command to the activeDevice.
-    void executePlay();
-
-    /// Send a stop command to the activeDevice.
-    void executeStop();
-
-    /// Send a next command to the activeDevice.
-    void executeNext();
-
-    /// Send a previous command to the activeDevice.
-    void executePrevious();
+    /**
+     * Send a play command to the device.
+     *
+     * @param device The device to play.
+     */
+    void executePlay(std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
     /**
-     * Drain the command queue of @c AVRCPCommands. We use a queue so we can process the commands
+     * Send a stop command to the device.
+     *
+     * @param device The device to stop.
+     */
+    void executeStop(std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Send a next command to the device.
+     *
+     * @param device The device to play next.
+     */
+    void executeNext(std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Send a previous command to the device.
+     *
+     * @param device The device to play previous.
+     */
+    void executePrevious(std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Drain the command queue of @c MediaCommands. We use a queue so we can process the commands
      * after the Bluetooth agent has entered the foreground.
      */
     void executeDrainQueue();
@@ -442,6 +567,23 @@ private:
         const std::string& uuid);
 
     /**
+     * Retrieve the @DeviceCategory by its UUID.
+     *
+     * @param uuid The generated UUID associated with a device.
+     * @param category The device category associated with a device.
+     * @return whether a @c DeviceCategory is successfully obtained by retrieval.
+     */
+    bool retrieveDeviceCategoryByUuid(const std::string& uuid, DeviceCategory* category);
+
+    /**
+     * Retrieve the @BluetoothDeviceConnectionRuleInterface by the device uuid.
+     * @param uuid the UUID of the device.
+     * @return The @BluetoothDeviceConnectionRuleInterface if found, otherwise a nullptr.
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>
+    retrieveConnectionRuleByUuid(const std::string& uuid);
+
+    /**
      * Retrieve the UUID by its MAC address. If no UUID is found, then one will be generated and inserted.
      *
      * @param mac The MAC address of the associated UUID.
@@ -451,8 +593,24 @@ private:
      */
     bool retrieveUuid(const std::string& mac, std::string* uuid);
 
+    /**
+     * Retrieve a set of UUIDs from the payload.
+     *
+     * @param payload The payload sent down.
+     * @return A set of UUIDs in the payload.
+     */
+    std::unordered_set<std::string> retrieveUuidsFromConnectionPayload(const rapidjson::Document& payload);
+
     /// Clears the databse of mac,uuid that are not known by the @BluetoothDeviceManager.
     void clearUnusedUuids();
+
+    /**
+     * Event immediately submitted to the executor and is sent.
+     *
+     * @param eventName The name of the event.
+     * @param eventPayload The payload of the event.
+     */
+    void executeSendEvent(const std::string& eventName, const std::string& eventPayload);
 
     /**
      * Most events require the context, this method queues the event and requests the context.
@@ -469,7 +627,7 @@ private:
      * @param devices A list of devices.
      * @param hasMore A bool indicating if we're still looking for more devices.
      */
-    void executeSendScanDevicesUpdated(
+    void executeSendScanDevicesReport(
         const std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>& devices,
         bool hasMore);
 
@@ -483,45 +641,78 @@ private:
     void executeSendEnterDiscoverableModeFailed();
 
     /**
-     * Sends an event to indicate that pairing with a device succeeded.
+     * Sends an event to indicate that pairing with devices succeeded.
      *
-     * @param device The paired device.
+     * @param devices The paired devices.
      */
-    void executeSendPairDeviceSucceeded(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
-
-    /// Sends an event to indicate that a device pairing attempt failed.
-    void executeSendPairDeviceFailed();
+    void executeSendPairDevicesSucceeded(
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>&
+            devices);
 
     /**
-     * Sends an event to indicate that unpairing with a device succeeded.
+     * Sends a failed pair event.
      *
-     * @param device The unpaired device.
+     * @param eventName The pair event name.
+     * @param uuids The uuids of devices.
      */
-    void executeSendUnpairDeviceSucceeded(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
-
-    /// Sends an event to indicate that unpairing with a device failed.
-    void executeSendUnpairDeviceFailed();
+    void executeSendPairFailedEvent(const std::string& eventName, const std::unordered_set<std::string>& uuids);
 
     /**
-     * Sends an event to indicate that connecting with a device by uuid succeeded.
+     * Sends an event to indicate that devices pairing attempt failed.
      *
-     * @param device The device.
+     * @param uuids The uuids of devices.
+     */
+    void executeSendPairDevicesFailed(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Sends an event to indicate that unpairing with devices succeeded.
+     *
+     * @param devices The unpaired devices.
+     */
+    void executeSendUnpairDevicesSucceeded(
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>&
+            devices);
+
+    /**
+     * Sends an event to indicate that unpairing with devices failed.
+     *
+     * @param uuids The uuids of devices.
+     */
+    void executeSendUnpairDevicesFailed(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Sends an event to indicate that setting device category for each device succeeded.
+     *
+     * @param uuidCategoryMap Map of <UUID, Category> of the devices.
+     */
+    void executeSetDeviceCategoriesSucceeded(const std::map<std::string, std::string>& uuidCategoryMap);
+
+    /**
+     * Sends an event to indicate that setting device category for each device failed.
+     *
+     * @param uuidCategoryMap Map of <UUID, Category> of the devices.
+     */
+    void executeSetDeviceCategoriesFailed(const std::map<std::string, std::string>& uuidCategoryMap);
+
+    /**
+     * Sends an event to indicate that connecting with devices by uuids succeeded.
+     *
+     * @param devices The devices.
      * @param requester The @c Requester who initiated the operation.
      */
-    void executeSendConnectByDeviceIdSucceeded(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+    void executeSendConnectByDeviceIdsSucceeded(
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>&
+            devices,
         avsCommon::avs::Requester requester);
 
     /**
-     * Sends an event to indicate that connecting with a device by uuid failed.
+     * Sends an event to indicate that connecting with devices by uuids failed.
      *
-     * @param device The device.
+     * @param uuids The uuids of devices.
      * @param requester The @c Requester who initiated the operation.
      */
-    void executeSendConnectByDeviceIdFailed(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+    void executeSendConnectByDeviceIdsFailed(
+        const std::unordered_set<std::string>& uuids,
         avsCommon::avs::Requester requester);
 
     /**
@@ -546,48 +737,121 @@ private:
     void executeSendConnectByProfileFailed(const std::string& profileName, avsCommon::avs::Requester requester);
 
     /**
-     * Sends an event to indicate that disconnecting with a device succeeded.
+     * Sends an event to indicate that disconnecting with devices succeeded.
      *
-     * @param device The device.
+     * @param devices The devices.
      * @param requester Whether this was initiated by the CLOUD or DEVICE.
      */
-    void executeSendDisconnectDeviceSucceeded(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+    void executeSendDisconnectDevicesSucceeded(
+        const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>&
+            devices,
         avsCommon::avs::Requester requester);
 
     /**
-     * Sends an event to indicate that disconnecting with a device failed.
+     * Sends a connection failed event.
      *
-     * @param device The device.
+     * @param eventName The event name.
+     * @param uuids The uuids of devices.
      * @param requester Whether this was initiated by the CLOUD or DEVICE.
      */
-    void executeSendDisconnectDeviceFailed(
-        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+    void executeSendConnectFailedEvent(
+        const std::string& eventName,
+        const std::unordered_set<std::string>& uuids,
         avsCommon::avs::Requester requester);
 
-    /// Sends an event to indicate we successfully sent an AVRCP play to the target.
-    void executeSendMediaControlPlaySucceeded();
+    /**
+     * Sends an event to indicate that disconnecting with devices failed.
+     *
+     * @param uuids The uuids of devices.
+     * @param requester Whether this was initiated by the CLOUD or DEVICE.
+     */
+    void executeSendDisconnectDevicesFailed(
+        const std::unordered_set<std::string>& uuids,
+        avsCommon::avs::Requester requester);
 
-    /// Sends an event to indicate we failed to send an AVRCP play to the target.
-    void executeSendMediaControlPlayFailed();
+    /**
+     * Sends an AVRCP event.
+     *
+     * @param eventName The AVRCP media event name.
+     * @param device The device.
+     */
+    void executeSendMediaControlEvent(
+        const std::string& eventName,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we successfully sent an AVRCP pause to the target.
-    void executeSendMediaControlStopSucceeded();
+    /**
+     * Sends an event to indicate we successfully sent an AVRCP play to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlPlaySucceeded(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we failed to send an AVRCP pause to the target.
-    void executeSendMediaControlStopFailed();
+    /**
+     * Sends an event to indicate we failed to send an AVRCP play to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlPlayFailed(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we successfully sent an AVRCP next to the target.
-    void executeSendMediaControlNextSucceeded();
+    /**
+     * Sends an event to indicate we successfully sent an AVRCP pause to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlStopSucceeded(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we failed to send an AVRCP next to the target.
-    void executeSendMediaControlNextFailed();
+    /**
+     * Sends an event to indicate we failed to send an AVRCP pause to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlStopFailed(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we successfully sent an AVRCP previous to the target.
-    void executeSendMediaControlPreviousSucceeded();
+    /**
+     * Sends an event to indicate we successfully sent an AVRCP next to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlNextSucceeded(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
-    /// Sends an event to indicate we failed to send an AVRCP previous to the target.
-    void executeSendMediaControlPreviousFailed();
+    /**
+     * Sends an event to indicate we failed to send an AVRCP next to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlNextFailed(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Sends an event to indicate we successfully sent an AVRCP previous to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlPreviousSucceeded(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Sends an event to indicate we failed to send an AVRCP previous to the target.
+     *
+     * @param device The device.
+     */
+    void executeSendMediaControlPreviousFailed(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Sends a media streaming event.
+     *
+     * @param eventName The streaming event name.
+     * @param device The device.
+     */
+    void executeSendStreamingEvent(
+        const std::string& eventName,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
     /**
      * Sends an event that we have started streaming.
@@ -611,6 +875,67 @@ private:
     ObserverInterface::DeviceAttributes generateDeviceAttributes(
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
 
+    /**
+     * Helper function to get a service from a device.
+     *
+     * @tparam ServiceType The type of the @c BluetoothServiceInterface.
+     * @param device the activeDevice.
+     * @return The instance of the service if successful, else nullptr.
+     */
+    template <typename ServiceType>
+    std::shared_ptr<ServiceType> getService(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device);
+
+    /**
+     * Insert the @c BluetoothEventState into m_bluetoothEventStates to keep track of a bunch of succeeded events needed
+     * to send to cloud.
+     * @param device The device.
+     * @param state The @c DeviceState of the @c BluetoothEventState.
+     * @param requester The @c Requester of the @c BluetoothEventState.
+     * @param profile The profile name of the @c BluetoothEventState.
+     */
+    void executeInsertBluetoothEventState(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+        avsCommon::sdkInterfaces::bluetooth::DeviceState state,
+        avsCommon::utils::Optional<avsCommon::avs::Requester> requester,
+        avsCommon::utils::Optional<std::string> profileName);
+
+    /**
+     * Remove the @c BluetoothEventState from m_bluetoothEventStates to keep track of a bunch of succeeded events needed
+     * to send to cloud.
+     * @param device The device.
+     * @param state  The @c DeviceState of the @c BluetoothEventState.
+     * @return The @c BluetoothEventState removed from m_bluetoothEvenetStates.
+     */
+    std::shared_ptr<BluetoothEventState> executeRemoveBluetoothEventState(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
+        avsCommon::sdkInterfaces::bluetooth::DeviceState state);
+
+    /**
+     * This method is used to restrict A2DP profiles of all paired devices.
+     */
+    void executeRestrictA2DPDevices();
+
+    /**
+     * This method is used to unrestrict all previously A2DP restricted devices, and reconnect to previous
+     * active device.
+     */
+    void executeUnrestrictA2DPDevices();
+
+    /**
+     * Acquires focus from the focus manager for the Bluetooth CA.
+     *
+     * @param the name of the calling method for logging.
+     */
+    void executeAcquireFocus(const std::string& callingMethodName = "");
+
+    /**
+     * Releases focus from the focus manager for the Bluetooth CA.
+     *
+     * @param the name of the calling method for logging.
+     */
+    void executeReleaseFocus(const std::string& callingMethodName = "");
+
     /// Set of capability configurations that will get published using DCF
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
@@ -630,6 +955,16 @@ private:
      */
     StreamingState m_streamingState;
 
+    /**
+     * The current state transition that the Bluetooth CA expects to experience when losing focus.
+     */
+    FocusTransitionState m_focusTransitionState;
+
+    /**
+     * The current scanning transition state. This should only be accessed from a method running on the executor.
+     */
+    ScanningTransitionState m_scanningTransitionState;
+
     /// The current @c FocusState of the device.
     avsCommon::avs::FocusState m_focusState;
 
@@ -639,17 +974,20 @@ private:
     /// The @c BluetoothDeviceManagerInterface instance responsible for device management.
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> m_deviceManager;
 
-    /// A queue to store AVRCP commands.
-    std::deque<avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand> m_cmdQueue;
+    /// A queue to store Media commands.
+    std::deque<avsCommon::sdkInterfaces::bluetooth::services::MediaCommand> m_cmdQueue;
 
     /// An event queue used to store events which need to be sent. The pair is <eventName, eventPayload>.
     std::queue<std::pair<std::string, std::string>> m_eventQueue;
 
-    /// Keeps track of last paired device to prevent sending duplicate events.
-    std::string m_lastPairMac;
+    /// The current activeA2DPDevice. This is the one that is connected and sending media via A2DP.
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> m_activeA2DPDevice;
 
-    /// The current activeDevice. This is the one that is connected and sending media via A2DP.
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> m_activeDevice;
+    /// The cached activeDevice. This is used to help to reconnect to previous connected A2DP device.
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> m_disabledA2DPDevice;
+
+    /// The cached restricted device list. This is used to help to unrestricted previous paired A2DP devices.
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>> m_restrictedDevices;
 
     /// The MediaPlayer responsible for media playback.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;
@@ -660,8 +998,8 @@ private:
     /// An eventbus used to abstract Bluetooth stack specific messages.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
 
-    /// Transforms incoming AVRCP commands.
-    std::shared_ptr<BluetoothAVRCPTransformer> m_avrcpTransformer;
+    /// Transforms incoming Media commands.
+    std::shared_ptr<BluetoothMediaInputTransformer> m_mediaInputTransformer;
 
     /// The A2DP media stream.
     std::shared_ptr<avsCommon::utils::bluetooth::FormattedAudioStreamAdapter> m_mediaStream;
@@ -672,11 +1010,27 @@ private:
     /// A writer to write the A2DP stream buffers into the InProcessAttachment.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> m_mediaAttachmentWriter;
 
-    /// An executor used for serializing requests on the Bluetooth agent's own thread of execution.
-    avsCommon::utils::threading::Executor m_executor;
+    /// A reader that reads the InProcessAttachment.
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_mediaAttachmentReader;
 
     /// Set of bluetooth device observers that will get notified on connects or disconnects.
     std::unordered_set<std::shared_ptr<ObserverInterface>> m_observers;
+
+    /// Map of <DeviceCategory, BluetoothDeviceConnectionRuleInterface> device connection rules
+    std::map<
+        DeviceCategory,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+        m_enabledConnectionRules;
+
+    /// Map of <DeviceCategory, Set<BluetoothDeviceInterface>> connected Bluetooth devices.
+    std::map<DeviceCategory, std::set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>>
+        m_connectedDevices;
+
+    /// Map of <mac, Set<BluetoothEventState>> used to keep track of Bluetooth event state needed to send to cloud.
+    std::map<std::string, std::unordered_set<std::shared_ptr<BluetoothEventState>>> m_bluetoothEventStates;
+
+    /// An executor used for serializing requests on the Bluetooth agent's own thread of execution.
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 /**
@@ -700,6 +1054,79 @@ inline std::string streamingStateToString(Bluetooth::StreamingState state) {
     }
 
     return "UNKNOWN";
+}
+
+/**
+ * Overload for the @c StreamingState enum. This will write the @c StreamingState as a string to the provided stream.
+ *
+ * @param stream An ostream to send the @c StreamingState as a string.
+ * @param state The @c StreamingState to convert.
+ * @return The stream.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Bluetooth::StreamingState state) {
+    return stream << streamingStateToString(state);
+}
+
+/**
+ * Converts an enum @c FocusTransitionState to a string.
+ *
+ * @param state The @c FocusTransitionState.
+ * @return The string form of the enum.
+ */
+inline std::string focusTransitionStateToString(Bluetooth::FocusTransitionState state) {
+    switch (state) {
+        case Bluetooth::FocusTransitionState::INTERNAL:
+            return "INTERNAL";
+        case Bluetooth::FocusTransitionState::PENDING_INTERNAL:
+            return "PENDING_INTERNAL";
+        case Bluetooth::FocusTransitionState::EXTERNAL:
+            return "EXTERNAL";
+    }
+
+    return "UNKNOWN";
+}
+
+/**
+ * Overload for the @c FocusTransitionState enum. This will write the @c FocusTransitionState as a string to
+ * the provided stream.
+ *
+ * @param stream An ostream to send the @c FocusTransitionState as a string.
+ * @param state The @c FocusTransitionState to convert.
+ * @return The stream.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Bluetooth::FocusTransitionState state) {
+    return stream << focusTransitionStateToString(state);
+}
+
+/**
+ * Converts an enum @c ScanningTransitionState to a string.
+ *
+ * @param state The @c ScanningTransitionState.
+ * @return The string form of the enum.
+ */
+inline std::string scanningStateToString(Bluetooth::ScanningTransitionState state) {
+    switch (state) {
+        case Bluetooth::ScanningTransitionState::ACTIVE:
+            return "ACTIVE";
+        case Bluetooth::ScanningTransitionState::PENDING_INACTIVE:
+            return "PENDING_ACTIVE";
+        case Bluetooth::ScanningTransitionState::INACTIVE:
+            return "INACTIVE";
+    }
+
+    return "UNKNWON";
+}
+
+/**
+ * Overload for the @c ScanningTransitionState enum. This will write the @c ScanningTransitionState as a string to
+ * the provided stream.
+ *
+ * @param stream An ostream to send the @c ScanningTransitionState as a string.
+ * @param state The @c ScanningTransitionState to convert.
+ * @return The stream.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Bluetooth::ScanningTransitionState state) {
+    return stream << scanningStateToString(state);
 }
 
 }  // namespace bluetooth

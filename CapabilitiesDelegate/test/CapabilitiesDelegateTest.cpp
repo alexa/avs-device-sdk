@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -110,7 +110,6 @@ void CapabilitiesDelegateTest::SetUp() {
 
     /// Expect calls to storage.
     EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
-    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
     m_capabilitiesDelegate = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     ASSERT_NE(m_capabilitiesDelegate, nullptr);
 
@@ -144,7 +143,6 @@ TEST_F(CapabilitiesDelegateTest, test_createMethodWithInvalidParameters) {
     ASSERT_EQ(instance, nullptr);
 
     EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
-    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
     instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     ASSERT_NE(instance, nullptr);
     instance->shutdown();
@@ -160,17 +158,9 @@ TEST_F(CapabilitiesDelegateTest, test_init) {
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     ASSERT_EQ(instance, nullptr);
 
-    /// Test if load fails create method returns nullptr.
-    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(false));
-    EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).WillOnce(Return(true));
-    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(false));
-    instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    ASSERT_EQ(instance, nullptr);
-
     /// Happy path.
     EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(false));
     EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).WillOnce(Return(true));
-    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_)).WillOnce(Return(true));
 
     instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     ASSERT_NE(instance, nullptr);
@@ -411,6 +401,14 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithSameEndpoint
     auto publisher = instance->createPostConnectOperation();
 
     ASSERT_EQ(publisher, nullptr);
+}
+
+/**
+ * Test if the CapabilitiesDelegate calls the clearDatabase() method when the onAVSGatewayChanged() method is called.
+ */
+TEST_F(CapabilitiesDelegateTest, test_onAVSGatewayChangedNotification) {
+    EXPECT_CALL(*m_mockCapabilitiesStorage, clearDatabase()).WillOnce(Return(true));
+    m_capabilitiesDelegate->onAVSGatewayChanged("TEST_GATEWAY");
 }
 
 }  // namespace test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -190,9 +190,6 @@ private:
 
     /// The @c MediaPlayer used by @c SpeechSynthesizer.
     std::shared_ptr<ApplicationMediaPlayer> m_speakMediaPlayer;
-
-    /// The @c MediaPlayerFactory used by @c AudioPlayer.
-    std::unique_ptr<alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory> m_audioMediaPlayerFactory;
 
     /// The Pool of @c MediaPlayers used by @c AudioPlayer (via @c PooledMediaPlayerFactory)
     std::vector<std::shared_ptr<ApplicationMediaPlayer>> m_audioMediaPlayerPool;

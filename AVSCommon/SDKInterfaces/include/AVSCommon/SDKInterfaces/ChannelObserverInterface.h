@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CHANNELOBSERVERINTERFACE_H_
 
 #include "AVSCommon/AVS/FocusState.h"
+#include "AVSCommon/AVS/MixingBehavior.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -42,8 +43,11 @@ public:
      * Channel.
      *
      * @param newFocus The new Focus of the channel.
+     * @param behavior The mixingBehavior for the ChannelObserver to take as per the interrupt model
+     * @note when newFocus is FocusState::FOREGROUND, the MixingBehavior shall be guaranteed to be PRIMARY
+     *       when newFocus is FocusState::NONE, the MixingBehavior shall be guaranteed to be MUST_STOP
      */
-    virtual void onFocusChanged(avs::FocusState newFocus) = 0;
+    virtual void onFocusChanged(avs::FocusState newFocus, avs::MixingBehavior behavior) = 0;
 };
 
 }  // namespace sdkInterfaces

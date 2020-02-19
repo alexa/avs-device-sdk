@@ -24,6 +24,8 @@
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/Utils/Timing/TimePoint.h>
 
+#include <Settings/DeviceSettingsManager.h>
+
 #include <map>
 #include <memory>
 #include <mutex>
@@ -248,7 +250,8 @@ public:
      */
     Alert(
         std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-        std::function<std::unique_ptr<std::istream>()> shortAudioFactory);
+        std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
      * Returns a string to identify the type of the class.  Required for persistent storage.
@@ -494,6 +497,8 @@ private:
     const std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
     /// This is the factory that provides a short audio stream.
     const std::function<std::unique_ptr<std::istream>()> m_shortAudioFactory;
+    /// The settings manager used to retrieve the value of alarm volume ramp setting.
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
 };
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ struct MinimalTraits2 {
 };
 
 /// An @c AtomicIndex type with the minimum functionality required by SDS.
-class MinimalTraits::AtomicIndex : private InProcessSDS::AtomicIndex {
+class MinimalTraits::AtomicIndex : public InProcessSDS::AtomicIndex {
 public:
     /// Conversion to @c Index.
     operator InProcessSDS::Index() {
@@ -98,7 +98,7 @@ public:
 };
 
 /// An @c AtomicBool type with the minimum functionality required by SDS.
-class MinimalTraits::AtomicBool : private InProcessSDS::AtomicBool {
+class MinimalTraits::AtomicBool : public InProcessSDS::AtomicBool {
 public:
     /// Conversion to bool.
     operator bool() {
@@ -213,7 +213,7 @@ std::future<size_t> Source::run(
     bool started = m_timer.start(
         period,
         timing::Timer::PeriodType::RELATIVE,
-        timing::Timer::FOREVER,
+        timing::Timer::getForever(),
         [this, writer, blockSizeWords, maxWords, wordSize] {
             std::vector<uint8_t> block(blockSizeWords * writer->getWordSize());
             size_t wordsToWrite = 0;
@@ -294,7 +294,7 @@ std::future<size_t> Sink::run(
     bool started = m_timer.start(
         period,
         timing::Timer::PeriodType::RELATIVE,
-        timing::Timer::FOREVER,
+        timing::Timer::getForever(),
         [this, reader, blockSizeWords, maxWords, wordSize] {
             std::vector<uint8_t> block(blockSizeWords * wordSize);
             ssize_t nWords = reader->read(block.data(), block.size() / wordSize);
@@ -614,8 +614,9 @@ TEST_F(SharedDataStreamTest, test_createReaderWhileWriting) {
     writerThread.join();
 }
 
+// Disabled due to ACSDK-3414
 /// This tests @c SharedDataStream::Reader::read().
-TEST_F(SharedDataStreamTest, test_readerRead) {
+TEST_F(SharedDataStreamTest, DISABLED_test_readerRead) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 2;
     static const size_t MAXREADERS = 2;
@@ -1131,8 +1132,9 @@ TEST_F(SharedDataStreamTest, test_writerGetWordSize) {
     }
 }
 
+// Disabled test due to ACSDK-3414
 /// This tests a nonblockable, slow @c Writer streaming concurrently to two fast @c Readers (one of each type).
-TEST_F(SharedDataStreamTest, testTimer_concurrencyNonblockableWriterDualReader) {
+TEST_F(SharedDataStreamTest, DISABLED_testTimer_concurrencyNonblockableWriterDualReader) {
     static const size_t WORDSIZE = 2;
     static const size_t WRITE_FREQUENCY_HZ = 1000;
     static const size_t READ_FREQUENCY_HZ = 0;

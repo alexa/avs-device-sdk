@@ -18,6 +18,7 @@
 
 #include <memory>
 #include <string>
+#include <thread>
 
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
@@ -111,6 +112,15 @@ private:
      * Function that sends the report state.
      */
     void sendReportState();
+
+    /**
+     * Initialization after construction.
+     */
+    void initialize();
+
+private:
+    /// Synchronize access since we use members from multiple threads
+    std::mutex m_stateMutex;
 
     /// The @c Executor which queues up operations from asynchronous API calls.
     avsCommon::utils::threading::Executor m_executor;

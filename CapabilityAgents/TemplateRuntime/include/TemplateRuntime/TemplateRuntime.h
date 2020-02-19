@@ -90,7 +90,7 @@ public:
 
     /// @name ChannelObserverInterface Functions
     /// @{
-    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
     /// @}
 
     /// @name RenderPlayerInfoCardsObserverInterface Functions

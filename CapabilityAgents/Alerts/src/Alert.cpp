@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include "Alerts/Alarm.h"
 #include "Alerts/Alert.h"
 
 #include <AVSCommon/AVS/FocusState.h>
@@ -76,13 +77,15 @@ static const std::string TAG("Alert");
 
 Alert::Alert(
     std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-    std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
+    std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
         m_stopReason{StopReason::UNSET},
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_hasTimerExpired{false},
         m_observer{nullptr},
         m_defaultAudioFactory{defaultAudioFactory},
-        m_shortAudioFactory{shortAudioFactory} {
+        m_shortAudioFactory{shortAudioFactory},
+        m_settingsManager{settingsManager} {
 }
 
 /**
@@ -592,7 +595,19 @@ void Alert::startRendererLocked() {
         }
     }
 
-    m_renderer->start(shared_from_this(), audioFactory, urls, loopCount, loopPause, startWithPause);
+    auto alarmVolumeRampEnabled = false;
+    if (m_settingsManager) {
+        // When Alert starts, check the current volume ramp setting so the alert renders with the most current setting
+        auto alarmVolumeRampSetting = m_settingsManager
+                                          ->getValue<settings::DeviceSettingsIndex::ALARM_VOLUME_RAMP>(
+                                              settings::types::getAlarmVolumeRampDefault())
+                                          .second;
+        alarmVolumeRampEnabled =
+            settings::types::isEnabled(alarmVolumeRampSetting) && (getTypeName() == Alarm::getTypeNameStatic());
+    }
+
+    m_renderer->start(
+        shared_from_this(), audioFactory, alarmVolumeRampEnabled, urls, loopCount, loopPause, startWithPause);
 }
 
 void Alert::onMaxTimerExpiration() {

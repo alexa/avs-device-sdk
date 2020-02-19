@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <Captions/CaptionData.h>
 #include <Captions/CaptionFormat.h>
 
@@ -37,7 +39,9 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::metrics;
+using namespace avsCommon::sdkInterfaces;
 using namespace rapidjson;
+using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// SpeechSynthesizer capability constants
 /// SpeechSynthesizer interface type
@@ -125,6 +129,18 @@ static const std::chrono::seconds STATE_CHANGE_TIMEOUT{5};
 
 /// The component name of power resource
 static const std::string POWER_RESOURCE_COMPONENT_NAME{"SpeechSynthesizer"};
+
+/// Metric prefix for SpeechSynthesizer metric source
+static const std::string SPEECH_SYNTHESIZER_METRIC_PREFIX = "SPEECH_SYNTHESIZER-";
+
+/// Metric to emit when received first audio bytes
+static const std::string FIRST_BYTES_AUDIO = "FIRST_BYTES_AUDIO";
+
+/// Metric to emit at the start of TTS
+static const std::string TTS_STARTED = "TTS_STARTED";
+
+/// Metric to emit on TTS buffer underrrun
+static const std::string BUFFER_UNDERRUN = "ERROR.TTS_BUFFER_UNDERRUN";
 
 /**
  * Creates the SpeechSynthesizer capability configuration.
@@ -234,7 +250,7 @@ void SpeechSynthesizer::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     m_executor.submit([this, info]() { executeCancel(info); });
 }
 
-void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
+void SpeechSynthesizer::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_currentFocus = newFocus;
     if (m_currentState == m_desiredState) {
@@ -243,7 +259,7 @@ void SpeechSynthesizer::onFocusChanged(FocusState newFocus) {
     }
 
     // Set intermediate state to avoid being considered idle
-    ACSDK_DEBUG(LX("onFocusChanged").d("newFocus", newFocus));
+    ACSDK_DEBUG(LX("onFocusChanged").d("newFocus", newFocus).d("MixingBehavior", behavior));
     auto desiredState = m_desiredState;
     switch (newFocus) {
         case FocusState::FOREGROUND:
@@ -315,7 +331,14 @@ void SpeechSynthesizer::onContextFailure(const ContextRequestError error) {
     // default no-op
 }
 
-void SpeechSynthesizer::onPlaybackStarted(SourceId id) {
+void SpeechSynthesizer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
+    ACSDK_DEBUG(LX(__func__).d("id", id));
+    submitMetric(MetricEventBuilder{}
+                     .setActivityName(SPEECH_SYNTHESIZER_METRIC_PREFIX + FIRST_BYTES_AUDIO)
+                     .addDataPoint(DataPointCounterBuilder{}.setName(FIRST_BYTES_AUDIO).increment(1).build()));
+}
+
+void SpeechSynthesizer::onPlaybackStarted(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackStarted").d("callbackSourceId", id));
     ACSDK_METRIC_IDS(TAG, "SpeechStarted", "", "", Metrics::Location::SPEECH_SYNTHESIZER_RECEIVE);
     m_executor.submit([this, id] {
@@ -326,12 +349,15 @@ void SpeechSynthesizer::onPlaybackStarted(SourceId id) {
                             .d("sourceId", m_mediaSourceId));
             executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "executePlaybackStartedFailed");
         } else {
+            submitMetric(MetricEventBuilder{}
+                             .setActivityName(SPEECH_SYNTHESIZER_METRIC_PREFIX + TTS_STARTED)
+                             .addDataPoint(DataPointCounterBuilder{}.setName(TTS_STARTED).increment(1).build()));
             executePlaybackStarted();
         }
     });
 }
 
-void SpeechSynthesizer::onPlaybackFinished(SourceId id) {
+void SpeechSynthesizer::onPlaybackFinished(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackFinished").d("callbackSourceId", id));
     ACSDK_METRIC_IDS(TAG, "SpeechFinished", "", "", Metrics::Location::SPEECH_SYNTHESIZER_RECEIVE);
 
@@ -351,12 +377,13 @@ void SpeechSynthesizer::onPlaybackFinished(SourceId id) {
 void SpeechSynthesizer::onPlaybackError(
     SourceId id,
     const avsCommon::utils::mediaPlayer::ErrorType& type,
-    std::string error) {
+    std::string error,
+    const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackError").d("callbackSourceId", id));
     m_executor.submit([this, type, error]() { executePlaybackError(type, error); });
 }
 
-void SpeechSynthesizer::onPlaybackStopped(SourceId id) {
+void SpeechSynthesizer::onPlaybackStopped(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackStopped").d("callbackSourceId", id));
 
     // MediaPlayer is for some reason stopping the playback of the speech.  Call setFailed if isSetFailedCalled flag is
@@ -373,6 +400,13 @@ void SpeechSynthesizer::onPlaybackStopped(SourceId id) {
             executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "UnexpectedId");
         }
     });
+}
+
+void SpeechSynthesizer::onBufferUnderrun(SourceId id, const MediaPlayerState&) {
+    ACSDK_WARN(LX("onBufferUnderrun").d("callbackSourceId", id));
+    submitMetric(MetricEventBuilder{}
+                     .setActivityName(SPEECH_SYNTHESIZER_METRIC_PREFIX + BUFFER_UNDERRUN)
+                     .addDataPoint(DataPointCounterBuilder{}.setName(BUFFER_UNDERRUN).increment(1).build()));
 }
 
 SpeechSynthesizer::SpeakDirectiveInfo::SpeakDirectiveInfo(std::shared_ptr<DirectiveInfo> directiveInfo) :
@@ -630,7 +664,7 @@ void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirect
             (speakInfo->directive->getMessageId() != m_speakInfoQueue.front()->directive->getMessageId())) {
             ACSDK_ERROR(LX("executeHandleFailed")
                             .d("reason", "unexpectedDirective")
-                            .d("messageId", m_currentInfo->directive->getMessageId())
+                            .d("messageId", speakInfo->directive->getMessageId())
                             .d("expected",
                                m_speakInfoQueue.empty() ? std::string{"empty"}
                                                         : m_speakInfoQueue.front()->directive->getMessageId()));
@@ -645,7 +679,10 @@ void SpeechSynthesizer::executeHandleAfterValidation(std::shared_ptr<SpeakDirect
 
     m_currentInfo = speakInfo;
     setDesiredState(SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
-    if (!m_focusManager->acquireChannel(CHANNEL_NAME, shared_from_this(), NAMESPACE)) {
+
+    auto activity = FocusManagerInterface::Activity::create(
+        NAMESPACE, shared_from_this(), std::chrono::milliseconds::zero(), avsCommon::avs::ContentType::MIXABLE);
+    if (!m_focusManager->acquireChannel(CHANNEL_NAME, activity)) {
         static const std::string message = std::string("Could not acquire ") + CHANNEL_NAME + " for " + NAMESPACE;
         ACSDK_ERROR(LX("executeHandleFailed")
                         .d("reason", "CouldNotAcquireChannel")
@@ -992,7 +1029,7 @@ void SpeechSynthesizer::setCurrentStateLocked(SpeechSynthesizerObserverInterface
             break;
     }
     for (auto observer : m_observers) {
-        observer->onStateChanged(m_currentState);
+        observer->onStateChanged(m_currentState, m_mediaSourceId, m_speechPlayer->getMediaPlayerState(m_mediaSourceId));
     }
 }
 
@@ -1177,20 +1214,18 @@ void SpeechSynthesizer::resetMediaSourceId() {
     m_mediaSourceId = MediaPlayerInterface::ERROR;
 }
 
-void SpeechSynthesizer::onDialogUXStateChanged(
-    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
+void SpeechSynthesizer::onDialogUXStateChanged(DialogUXStateObserverInterface::DialogUXState newState) {
     m_executor.submit([this, newState]() { executeOnDialogUXStateChanged(newState); });
 }
 
-void SpeechSynthesizer::executeOnDialogUXStateChanged(
-    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
+void SpeechSynthesizer::executeOnDialogUXStateChanged(DialogUXStateObserverInterface::DialogUXState newState) {
     if (!m_initialDialogUXStateReceived) {
         // The initial dialog UX state change call comes from simply registering as an observer; it is not a deliberate
         // change to the dialog state which should interrupt a recognize event.
         m_initialDialogUXStateReceived = true;
         return;
     }
-    if (newState != avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE) {
+    if (newState != DialogUXStateObserverInterface::DialogUXState::IDLE) {
         return;
     }
     if (m_currentFocus != avsCommon::avs::FocusState::NONE &&
@@ -1203,6 +1238,31 @@ void SpeechSynthesizer::executeOnDialogUXStateChanged(
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeechSynthesizer::
     getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+void SpeechSynthesizer::submitMetric(MetricEventBuilder& metricEventBuilder) {
+    if (!m_metricRecorder) {
+        return;
+    }
+
+    if (m_currentInfo) {
+        auto metricEvent = metricEventBuilder
+                               .addDataPoint(DataPointStringBuilder{}
+                                                 .setName("HTTP2_STREAM")
+                                                 .setValue(m_currentInfo->directive->getAttachmentContextId())
+                                                 .build())
+                               .addDataPoint(DataPointStringBuilder{}
+                                                 .setName("DIRECTIVE_MESSAGE_ID")
+                                                 .setValue(m_currentInfo->directive->getMessageId())
+                                                 .build())
+                               .build();
+
+        if (metricEvent == nullptr) {
+            ACSDK_ERROR(LX("Error creating metric."));
+            return;
+        }
+        recordMetric(m_metricRecorder, metricEvent);
+    }
 }
 
 void SpeechSynthesizer::managePowerResource(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState) {

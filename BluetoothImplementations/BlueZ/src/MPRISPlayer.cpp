@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -153,10 +153,10 @@ MPRISPlayer::MPRISPlayer(
             INTROSPECT_XML,
             playerPath,
             {
-                {NEXT, &MPRISPlayer::toAVRCPCommand},
-                {PREVIOUS, &MPRISPlayer::toAVRCPCommand},
-                {PAUSE, &MPRISPlayer::toAVRCPCommand},
-                {PLAY, &MPRISPlayer::toAVRCPCommand},
+                {NEXT, &MPRISPlayer::toMediaCommand},
+                {PREVIOUS, &MPRISPlayer::toMediaCommand},
+                {PAUSE, &MPRISPlayer::toMediaCommand},
+                {PLAY, &MPRISPlayer::toMediaCommand},
                 {PLAY_PAUSE, &MPRISPlayer::unsupportedMethod},
                 {STOP, &MPRISPlayer::unsupportedMethod},
                 {SEEK, &MPRISPlayer::unsupportedMethod},
@@ -188,19 +188,19 @@ void MPRISPlayer::unsupportedMethod(GVariant* arguments, GDBusMethodInvocation* 
     g_dbus_method_invocation_return_value(invocation, nullptr);
 }
 
-void MPRISPlayer::toAVRCPCommand(GVariant* arguments, GDBusMethodInvocation* invocation) {
+void MPRISPlayer::toMediaCommand(GVariant* arguments, GDBusMethodInvocation* invocation) {
     const char* method = g_dbus_method_invocation_get_method_name(invocation);
 
     ACSDK_DEBUG5(LX(__func__).d("method", method));
 
     if (PLAY == method) {
-        sendEvent(AVRCPCommand::PLAY);
+        sendEvent(MediaCommand::PLAY);
     } else if (PAUSE == method) {
-        sendEvent(AVRCPCommand::PAUSE);
+        sendEvent(MediaCommand::PAUSE);
     } else if (NEXT == method) {
-        sendEvent(AVRCPCommand::NEXT);
+        sendEvent(MediaCommand::NEXT);
     } else if (PREVIOUS == method) {
-        sendEvent(AVRCPCommand::PREVIOUS);
+        sendEvent(MediaCommand::PREVIOUS);
     } else {
         ACSDK_ERROR(LX(__func__).d("reason", "unsupported").d("method", method));
     }
@@ -208,10 +208,10 @@ void MPRISPlayer::toAVRCPCommand(GVariant* arguments, GDBusMethodInvocation* inv
     g_dbus_method_invocation_return_value(invocation, nullptr);
 }
 
-void MPRISPlayer::sendEvent(const AVRCPCommand& command) {
+void MPRISPlayer::sendEvent(const MediaCommand& command) {
     ACSDK_DEBUG5(LX(__func__).d("command", command));
 
-    AVRCPCommandReceivedEvent event(command);
+    MediaCommandReceivedEvent event(command);
     m_eventBus->sendEvent(event);
 }
 
@@ -222,7 +222,7 @@ bool MPRISPlayer::registerPlayer() {
     GVariantBuilder builder;
     g_variant_builder_init(&builder, G_VARIANT_TYPE("a{sv}"));
 
-    // Subset of properties used for AVRCP Commands.
+    // Subset of properties used for Media Commands.
     g_variant_builder_add(&builder, "{sv}", CAN_GO_NEXT.c_str(), g_variant_new("b", TRUE));
     g_variant_builder_add(&builder, "{sv}", CAN_GO_PREVIOUS.c_str(), g_variant_new("b", TRUE));
     g_variant_builder_add(&builder, "{sv}", CAN_PLAY.c_str(), g_variant_new("b", TRUE));

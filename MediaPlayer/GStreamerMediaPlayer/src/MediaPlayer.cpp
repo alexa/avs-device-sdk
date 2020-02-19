@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::configuration;
+using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
@@ -243,7 +244,7 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     std::chrono::milliseconds offset,
     const SourceConfig& config,
     bool repeat) {
-    ACSDK_DEBUG9(LX("setSourceForUrlCalled").sensitive("url", url));
+    ACSDK_DEBUG9(LX("setSourceForUrlCalled").d("name", RequiresShutdown::name()).sensitive("url", url));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
     std::function<gboolean()> callback = [this, url, offset, &config, &promise, repeat]() {
@@ -347,6 +348,11 @@ std::chrono::milliseconds MediaPlayer::getOffset(MediaPlayer::SourceId id) {
         return future.get();
     }
     return MEDIA_PLAYER_INVALID_OFFSET;
+}
+
+Optional<MediaPlayerState> MediaPlayer::getMediaPlayerState(MediaPlayer::SourceId id) {
+    auto state = getMediaPlayerStateInternal(id);
+    return Optional<MediaPlayerState>(state);
 }
 
 void MediaPlayer::addObserver(std::shared_ptr<MediaPlayerObserverInterface> observer) {
@@ -1271,8 +1277,9 @@ void MediaPlayer::sendStreamTagsToObserver(std::unique_ptr<const VectorOfTags> v
     }
 
     ACSDK_DEBUG(LX("callingOnTags").d("name", RequiresShutdown::name()));
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onTags(m_currentId, std::move(vectorOfTags));
+        observer->onTags(m_currentId, std::move(vectorOfTags), state);
     }
 }
 
@@ -1302,6 +1309,8 @@ void MediaPlayer::handleSetAttachmentReaderSource(
         return;
     }
 
+    source->addObserver(shared_from_this());
+
     /*
      * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
      * to the callback which performs the linking of the decoder source pad to decodedQueue sink pad.
@@ -1325,7 +1334,7 @@ void MediaPlayer::handleSetIStreamSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
     const avsCommon::utils::mediaPlayer::SourceConfig& config,
-    std::promise<SourceId>* promise) {
+    std::promise<MediaPlayer::SourceId>* promise) {
     ACSDK_DEBUG(LX("handleSetSourceCalled").d("name", RequiresShutdown::name()));
 
     tearDownTransientPipelineElements(true);
@@ -1344,6 +1353,8 @@ void MediaPlayer::handleSetIStreamSource(
         promise->set_value(ERROR_SOURCE_ID);
         return;
     }
+
+    source->addObserver(shared_from_this());
 
     /*
      * Once the source pad for the decoder has been added, the decoder emits the pad-added signal. Connect the signal
@@ -1662,6 +1673,19 @@ void MediaPlayer::handleGetOffset(SourceId id, std::promise<std::chrono::millise
     promise->set_value(getCurrentStreamOffset());
 }
 
+std::chrono::milliseconds MediaPlayer::handleGetOffsetImmediately(SourceId id) {
+    std::promise<std::chrono::milliseconds> promise;
+    auto future = promise.get_future();
+    handleGetOffset(id, &promise);
+    return future.get();
+}
+
+MediaPlayerState MediaPlayer::getMediaPlayerStateInternal(SourceId id) {
+    const std::chrono::milliseconds offset = handleGetOffsetImmediately(id);
+    MediaPlayerState state = MediaPlayerState(offset);
+    return state;
+}
+
 std::chrono::milliseconds MediaPlayer::getCurrentStreamOffset() {
     ACSDK_DEBUG9(LX("getCurrentStreamOffsetCalled").d("name", RequiresShutdown::name()));
 
@@ -1738,8 +1762,9 @@ void MediaPlayer::sendPlaybackStarted() {
         ACSDK_DEBUG(LX("callingOnPlaybackStarted").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
         m_playbackStartedSent = true;
         m_playPending = false;
+        const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
         for (const auto& observer : m_playerObservers) {
-            observer->onPlaybackStarted(m_currentId);
+            observer->onPlaybackStarted(m_currentId, state);
         }
     }
 }
@@ -1755,8 +1780,9 @@ void MediaPlayer::sendPlaybackFinished() {
     if (!m_playbackFinishedSent) {
         m_playbackFinishedSent = true;
         ACSDK_DEBUG(LX("callingOnPlaybackFinished").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
+        const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
         for (const auto& observer : m_playerObservers) {
-            observer->onPlaybackFinished(m_currentId);
+            observer->onPlaybackFinished(m_currentId, state);
         }
     }
 
@@ -1776,8 +1802,9 @@ void MediaPlayer::sendPlaybackPaused() {
     ACSDK_DEBUG(LX("callingOnPlaybackPaused").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
     m_pausePending = false;
     m_isPaused = true;
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onPlaybackPaused(m_currentId);
+        observer->onPlaybackPaused(m_currentId, state);
     }
 }
 
@@ -1790,8 +1817,9 @@ void MediaPlayer::sendPlaybackResumed() {
     ACSDK_DEBUG(LX("callingOnPlaybackResumed").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
     m_resumePending = false;
     m_isPaused = false;
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onPlaybackResumed(m_currentId);
+        observer->onPlaybackResumed(m_currentId, state);
     }
 }
 
@@ -1802,8 +1830,9 @@ void MediaPlayer::sendPlaybackStopped() {
     }
     ACSDK_DEBUG(LX("callingOnPlaybackStopped").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
     if (ERROR_SOURCE_ID != m_currentId) {
+        const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
         for (const auto& observer : m_playerObservers) {
-            observer->onPlaybackStopped(m_currentId);
+            observer->onPlaybackStopped(m_currentId, state);
         }
     }
 
@@ -1829,8 +1858,9 @@ void MediaPlayer::sendPlaybackError(const ErrorType& type, const std::string& er
     m_pausePending = false;
     m_resumePending = false;
     m_pauseImmediately = false;
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onPlaybackError(m_currentId, type, error);
+        observer->onPlaybackError(m_currentId, type, error, state);
     }
     tearDownTransientPipelineElements(false);
     if (m_urlConverter) {
@@ -1846,8 +1876,9 @@ void MediaPlayer::sendBufferUnderrun() {
     }
 
     ACSDK_DEBUG(LX("callingOnBufferUnderrun").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onBufferUnderrun(m_currentId);
+        observer->onBufferUnderrun(m_currentId, state);
     }
 }
 
@@ -1858,8 +1889,9 @@ void MediaPlayer::sendBufferRefilled() {
     }
 
     ACSDK_DEBUG(LX("callingOnBufferRefilled").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onBufferRefilled(m_currentId);
+        observer->onBufferRefilled(m_currentId, state);
     }
 }
 
@@ -1870,8 +1902,9 @@ void MediaPlayer::sendBufferingComplete() {
     }
 
     ACSDK_DEBUG(LX("callingOnBufferingComplete").d("name", RequiresShutdown::name()).d("currentId", m_currentId));
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
     for (const auto& observer : m_playerObservers) {
-        observer->onBufferingComplete(m_currentId);
+        observer->onBufferingComplete(m_currentId, state);
     }
 }
 
@@ -1961,6 +1994,13 @@ int MediaPlayer::getMinimumBandLevel() {
 
 int MediaPlayer::getMaximumBandLevel() {
     return MAX_EQUALIZER_LEVEL;
+}
+
+void MediaPlayer::onFirstByteRead() {
+    const MediaPlayerState state = getMediaPlayerStateInternal(m_currentId);
+    for (const auto& observer : m_playerObservers) {
+        observer->onFirstByteRead(m_currentId, state);
+    }
 }
 
 static inline short gainInsideLimit(short gain) {

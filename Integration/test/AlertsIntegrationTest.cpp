@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,9 +36,6 @@
 #include <Alerts/AlertObserverInterface.h>
 #include <Alerts/AlertsCapabilityAgent.h>
 #include <Alerts/Storage/SQLiteAlertStorage.h>
-#include <Settings/MockSetting.h>
-#include <Settings/SpeechConfirmationSettingType.h>
-#include <Settings/WakeWordConfirmationSettingType.h>
 #include <Audio/AlertsAudioFactory.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
@@ -51,6 +48,7 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <Settings/MockSetting.h>
@@ -98,6 +96,7 @@ using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
 using namespace settings;
 using namespace settings::test;
+using namespace testing;
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
 #endif
@@ -208,8 +207,9 @@ public:
      * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
      *
      * @param focusState The new focus state of the Channel observer.
+     * @param behavior The new MixingBehavior of the Channel observer.
      */
-    void onFocusChanged(FocusState focusState) override {
+    void onFocusChanged(FocusState focusState, MixingBehavior behavior) override {
         std::unique_lock<std::mutex> lock(m_mutex);
         m_focusState = focusState;
         m_focusChangeOccurred = true;
@@ -268,6 +268,7 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
+        m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
@@ -406,7 +407,7 @@ protected:
 #else
         m_rendererMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
-        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer, m_deviceSettingsManager);
+        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer);
 
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
@@ -436,7 +437,9 @@ protected:
             alertsAudioFactory,
             m_alertRenderer,
             m_customerDataManager,
-            m_mockAlarmVolumeRampSetting);
+            m_mockAlarmVolumeRampSetting,
+            m_deviceSettingsManager,
+            m_metricRecorder);
         ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->addObserver(m_alertObserver);
         m_alertsAgent->onLocalStop();
@@ -589,6 +592,7 @@ protected:
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<CertifiedSender> m_certifiedSender;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;

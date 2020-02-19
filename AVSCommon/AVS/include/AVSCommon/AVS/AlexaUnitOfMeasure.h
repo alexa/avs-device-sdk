@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ using AlexaUnitOfMeasure = std::string;
 
 /**
  * String constants for the unit of measure.
- * @see https://developer.amazon.com/docs/device-apis/alexa-property-schemas.html#units-of-measure
+ * @see https://developer.amazon.com/docs/alexa/device-apis/alexa-property-schemas.html#units-of-measure
  */
 
 /// The Alexa unit of measure as angle degrees.

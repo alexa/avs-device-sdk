@@ -101,13 +101,13 @@ MPRISPlayerTest::MPRISPlayerTest() {
     m_mockMedia = std::make_shared<NiceMock<MockDBusProxy>>();
     m_mockListener = std::shared_ptr<MockListener>(new MockListener());
     m_eventBus = std::make_shared<BluetoothEventBus>();
-    m_eventBus->addListener({avsCommon::utils::bluetooth::BluetoothEventType::AVRCP_COMMAND_RECEIVED}, m_mockListener);
+    m_eventBus->addListener({avsCommon::utils::bluetooth::BluetoothEventType::MEDIA_COMMAND_RECEIVED}, m_mockListener);
 }
 
 MPRISPlayerTest::~MPRISPlayerTest() {
     m_player.reset();
     m_eventBus->removeListener(
-        {avsCommon::utils::bluetooth::BluetoothEventType::AVRCP_COMMAND_RECEIVED}, m_mockListener);
+        {avsCommon::utils::bluetooth::BluetoothEventType::MEDIA_COMMAND_RECEIVED}, m_mockListener);
     m_eventBus.reset();
 }
 
@@ -161,43 +161,43 @@ TEST_F(MPRISPlayerTest, test_playerRegistration) {
  * The following tests are for the org.mpris.MediaPlayer2.Player methods that the SDK MPRIS player supports.
  */
 
-/// Parameterized test fixture for supported org.mpris.MediaPlayer2.Player DBus AVRCP Methods.
-class MPRISPlayerSupportedAVRCPTest
+/// Parameterized test fixture for supported org.mpris.MediaPlayer2.Player DBus Media Methods.
+class MPRISPlayerSupportedMediaTest
         : public MPRISPlayerTest
-        , public ::testing::WithParamInterface<std::pair<std::string, AVRCPCommand>> {};
+        , public ::testing::WithParamInterface<std::pair<std::string, MediaCommand>> {};
 
 INSTANTIATE_TEST_CASE_P(
     Parameterized,
-    MPRISPlayerSupportedAVRCPTest,
+    MPRISPlayerSupportedMediaTest,
     ::testing::Values(
-        std::make_pair<std::string, AVRCPCommand>("Play", AVRCPCommand::PLAY),
-        std::make_pair<std::string, AVRCPCommand>("Pause", AVRCPCommand::PAUSE),
-        std::make_pair<std::string, AVRCPCommand>("Next", AVRCPCommand::NEXT),
-        std::make_pair<std::string, AVRCPCommand>("Previous", AVRCPCommand::PREVIOUS)),
+        std::make_pair<std::string, MediaCommand>("Play", MediaCommand::PLAY),
+        std::make_pair<std::string, MediaCommand>("Pause", MediaCommand::PAUSE),
+        std::make_pair<std::string, MediaCommand>("Next", MediaCommand::NEXT),
+        std::make_pair<std::string, MediaCommand>("Previous", MediaCommand::PREVIOUS)),
     // Append method name to the test case name.
-    [](testing::TestParamInfo<std::pair<std::string, AVRCPCommand>> info) { return info.param.first; });
+    [](testing::TestParamInfo<std::pair<std::string, MediaCommand>> info) { return info.param.first; });
 
 /**
- * Custom matcher for AVRCPCommand expectations. This matcher is only used for @c BluetoothEvent objects.
+ * Custom matcher for MediaCommand expectations. This matcher is only used for @c BluetoothEvent objects.
  *
- * Returns true if the event is of type @c AVRCP_COMMAND_RECEIVED and contains the expected @c AVRCPCommand.
+ * Returns true if the event is of type @c MEDIA_COMMAND_RECEIVED and contains the expected @c MediaCommand.
  */
-MATCHER_P(ContainsAVRCPCommand, /* AVRCPCommand */ cmd, "") {
+MATCHER_P(ContainsMediaCommand, /* MediaCommand */ cmd, "") {
     // Throw obvious compile error if not a BluetoothEvent.
     const BluetoothEvent* event = &arg;
 
-    return BluetoothEventType::AVRCP_COMMAND_RECEIVED == event->getType() && nullptr != event->getAVRCPCommand() &&
-           cmd == *(event->getAVRCPCommand());
+    return BluetoothEventType::MEDIA_COMMAND_RECEIVED == event->getType() && nullptr != event->getMediaCommand() &&
+           cmd == *(event->getMediaCommand());
 }
 
-/// Test that a supported DBus method sends the correct corresponding AVRCPCommand.
-TEST_P(MPRISPlayerSupportedAVRCPTest, test_avrcpCommand) {
+/// Test that a supported DBus method sends the correct corresponding MediaCommand.
+TEST_P(MPRISPlayerSupportedMediaTest, test_mediaCommand) {
     std::string dbusMethodName;
-    AVRCPCommand command;
+    MediaCommand command;
 
     std::tie(dbusMethodName, command) = GetParam();
 
-    EXPECT_CALL(*m_mockListener, onEventFired(ContainsAVRCPCommand(command))).Times(1);
+    EXPECT_CALL(*m_mockListener, onEventFired(ContainsMediaCommand(command))).Times(1);
     auto eventThread = std::thread(&MPRISPlayerTest::gMainLoop, this);
     ASSERT_NE(m_nameAcquiredPromise.get_future().wait_for(std::chrono::seconds(1)), std::future_status::timeout);
 
@@ -222,7 +222,7 @@ TEST_P(MPRISPlayerSupportedAVRCPTest, test_avrcpCommand) {
  * The following tests are for the org.mpris.MediaPlayer2.Player methods that the SDK MPRIS player does not support.
  */
 
-/// Parameterized test fixture for unsupported DBus AVRCP Methods.
+/// Parameterized test fixture for unsupported DBus Media Methods.
 class MPRISPlayerUnsupportedTest
         : public MPRISPlayerTest
         , public ::testing::WithParamInterface<std::string> {};

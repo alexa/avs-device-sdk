@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -206,8 +206,10 @@ TEST_F(EqualizerControllerTest, test_providedBandLevelChanges_addRemoveListener_
     controller->setBandLevel(EqualizerBand::TREBLE, NON_DEFAULT_TREBLE);
     EXPECT_EQ(reportedState.bandLevels[EqualizerBand::TREBLE], NON_DEFAULT_TREBLE);
 
-    // Call again with the same value. Must not report changes
+    // Call again with the same value. Must not report changes by onEqualizerStateChanged()
     EXPECT_CALL(*(listener.get()), onEqualizerStateChanged(_)).Times(0);
+    // Call again with the same value. Must report changes by onEqualizerSameStateChanged() once
+    EXPECT_CALL(*(listener.get()), onEqualizerSameStateChanged(_)).Times(AtLeast(1));
     controller->setBandLevel(EqualizerBand::TREBLE, NON_DEFAULT_TREBLE);
 
     // Reset level to default and try to adjust.

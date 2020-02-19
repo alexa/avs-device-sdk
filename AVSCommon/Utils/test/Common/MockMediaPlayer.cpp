@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
     ON_CALL(*result.get(), pause(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPause));
     ON_CALL(*result.get(), resume(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockResume));
     ON_CALL(*result.get(), getOffset(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockGetOffset));
+    ON_CALL(*result.get(), getMediaPlayerState(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockGetState));
     return result;
 }
 
@@ -220,6 +221,16 @@ std::chrono::milliseconds MockMediaPlayer::mockGetOffset(SourceId sourceId) {
     return source->stopwatch.getElapsed() + source->offset;
 }
 
+Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> MockMediaPlayer::mockGetState(SourceId sourceId) {
+    auto offset = mockGetOffset(sourceId);
+    if (offset == MEDIA_PLAYER_INVALID_OFFSET) {
+        return Optional<MediaPlayerState>();
+    }
+    auto state = MediaPlayerState();
+    state.offset = offset;
+    return Optional<MediaPlayerState>(state);
+}
+
 void MockMediaPlayer::resetWaitTimer() {
     auto source = getCurrentSource(getCurrentSourceId());
     if (!source) {
@@ -305,7 +316,7 @@ MediaPlayerInterface::SourceId MockMediaPlayer::getLatestSourceId() {
 MockMediaPlayer::SourceState::SourceState(
     Source* source,
     const std::string& name,
-    std::function<void(std::shared_ptr<observer>, SourceId)> notifyFunction) :
+    std::function<void(std::shared_ptr<observer>, SourceId, const MediaPlayerState&)> notifyFunction) :
         m_source{source},
         m_name{name},
         m_notifyFunction{notifyFunction},
@@ -341,14 +352,15 @@ void MockMediaPlayer::SourceState::notify(
     std::unique_lock<std::mutex> lock(m_mutex);
     auto timedOut = !m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); });
     lock.unlock();
+    const MediaPlayerState state = {timeout};
     for (const auto& observer : observers) {
         if (timedOut) {
             observer->onPlaybackError(
-                m_source->sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, m_name + ": wait to notify timed out");
+                m_source->sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, m_name + ": wait to notify timed out", state);
 
             return;
         }
-        m_notifyFunction(observer, m_source->sourceId);
+        m_notifyFunction(observer, m_source->sourceId, state);
     }
 }
 
@@ -370,38 +382,44 @@ void MockMediaPlayer::SourceState::resetStateReached() {
 
 static void notifyPlaybackStarted(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackStarted(sourceId);
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackStarted(sourceId, state);
 }
 
 static void notifyPlaybackPaused(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackPaused(sourceId);
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackPaused(sourceId, state);
 }
 
 static void notifyPlaybackResumed(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackResumed(sourceId);
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackResumed(sourceId, state);
 }
 
 static void notifyPlaybackStopped(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackStopped(sourceId);
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackStopped(sourceId, state);
 }
 
 static void notifyPlaybackFinished(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackFinished(sourceId);
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackFinished(sourceId, state);
 }
 
 static void notifyPlaybackError(
     std::shared_ptr<MediaPlayerObserverInterface> observer,
-    MediaPlayerInterface::SourceId sourceId) {
-    observer->onPlaybackError(sourceId, ErrorType::MEDIA_ERROR_INTERNAL_SERVER_ERROR, "mock error");
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onPlaybackError(sourceId, ErrorType::MEDIA_ERROR_INTERNAL_SERVER_ERROR, "mock error", state);
 }
 
 MockMediaPlayer::Source::Source(MockMediaPlayer* player, SourceId id) :

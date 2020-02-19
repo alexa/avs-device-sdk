@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 
 #include "AVSCommon/AVS/DialogUXStateAggregator.h"
 
@@ -20,6 +22,7 @@ namespace avsCommon {
 namespace avs {
 
 using namespace sdkInterfaces;
+using namespace avsCommon::utils::metrics;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("DialogUXStateAggregator");
@@ -36,9 +39,42 @@ static const std::string TAG("DialogUXStateAggregator");
  */
 static const std::chrono::milliseconds SHORT_TIMEOUT{200};
 
+/// Custom Metrics prefix used by DialogUXStateAggregator.
+static const std::string CUSTOM_METRIC_PREFIX = "CUSTOM-";
+
+/// error metric for Listening timeout expires
+static const std::string LISTENING_TIMEOUT_EXPIRES = "LISTENING_TIMEOUT_EXPIRES";
+
+/// error metric for Thinking timeout expires
+static const std::string THINKING_TIMEOUT_EXPIRES = "THINKING_TIMEOUT_EXPIRES";
+
+/**
+ * Submits a metric of given event name
+ * @param metricRecorder The @c MetricRecorderInterface which records Metric events
+ * @param eventName The name of the metric event
+ */
+static void submitMetric(const std::shared_ptr<MetricRecorderInterface>& metricRecorder, const std::string& eventName) {
+    if (!metricRecorder) {
+        return;
+    }
+
+    auto metricEvent = MetricEventBuilder{}
+                           .setActivityName(CUSTOM_METRIC_PREFIX + eventName)
+                           .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(1).build())
+                           .build();
+
+    if (metricEvent == nullptr) {
+        ACSDK_ERROR(LX("Error creating metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metricEvent);
+}
+
 DialogUXStateAggregator::DialogUXStateAggregator(
     std::chrono::milliseconds timeoutForThinkingToIdle,
-    std::chrono::milliseconds timeoutForListeningToIdle) :
+    std::chrono::milliseconds timeoutForListeningToIdle,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+        m_metricRecorder{metricRecorder},
         m_currentState{DialogUXStateObserverInterface::DialogUXState::IDLE},
         m_timeoutForThinkingToIdle{timeoutForThinkingToIdle},
         m_timeoutForListeningToIdle{timeoutForListeningToIdle},
@@ -96,7 +132,10 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
     });
 }
 
-void DialogUXStateAggregator::onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) {
+void DialogUXStateAggregator::onStateChanged(
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
+    const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
+    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) {
     m_speechSynthesizerState = state;
 
     m_executor.submit([this, state]() {
@@ -139,7 +178,7 @@ void DialogUXStateAggregator::receive(const std::string& contextId, const std::s
 void DialogUXStateAggregator::onConnectionStatusChanged(
     const ConnectionStatusObserverInterface::Status status,
     const ConnectionStatusObserverInterface::ChangedReason reason) {
-    m_executor.submit([this, &status]() {
+    m_executor.submit([this, status]() {
         if (status != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
             setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
@@ -201,6 +240,8 @@ void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
         if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromThinkingTimedOut"));
             setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+            submitMetric(m_metricRecorder, THINKING_TIMEOUT_EXPIRES);
         }
     });
 }
@@ -210,6 +251,8 @@ void DialogUXStateAggregator::transitionFromListeningTimedOut() {
         if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromListeningTimedOut"));
             setState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+            submitMetric(m_metricRecorder, LISTENING_TIMEOUT_EXPIRES);
         }
     });
 }

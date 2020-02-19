@@ -92,6 +92,12 @@ public:
      */
     std::string getAdapterPath() const;
 
+    /**
+     * Get the current media streaming state.
+     * @return @c MediaStreamingState
+     */
+    avsCommon::utils::bluetooth::MediaStreamingState getMediaStreamingState();
+
 private:
     /**
      * A constructor

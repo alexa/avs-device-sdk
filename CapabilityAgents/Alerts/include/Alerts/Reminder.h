@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,14 +35,17 @@ namespace alerts {
  */
 class Reminder : public Alert {
 public:
-    /// String representation of this type.
-    static const std::string TYPE_NAME;
-
     Reminder(
         std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-        std::function<std::unique_ptr<std::istream>()> shortAudioFactory);
+        std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     std::string getTypeName() const override;
+
+    /// Static member function to get the string representation of this type.
+    static std::string getTypeNameStatic() {
+        return "REMINDER";
+    }
 };
 
 }  // namespace alerts

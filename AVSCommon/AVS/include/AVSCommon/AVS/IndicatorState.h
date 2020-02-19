@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ inline int indicatorStateToInt(IndicatorState state) {
  * @param stateNum The int to convert.
  * @return The IndicatorState representation of stateNum or nullptr if stateNum is invalid.
  */
-inline const IndicatorState intToIndicatorState(int stateNum) {
+inline IndicatorState intToIndicatorState(int stateNum) {
     if (stateNum < 0 || stateNum >= static_cast<int>(IndicatorState::UNDEFINED)) {
         return IndicatorState::UNDEFINED;
     }

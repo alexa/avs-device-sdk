@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -225,16 +225,16 @@ static std::unordered_map<PlaybackToggle, std::pair<RequestType, RequestType>> g
  * Generate a @c CapabilityConfiguration object.
  *
  * @param type The Capability interface type.
- * @param interface The Capability interface name.
+ * @param interfaceName The Capability interface name.
  * @param version The Capability interface verison.
  */
 static std::shared_ptr<CapabilityConfiguration> generateCapabilityConfiguration(
     const std::string& type,
-    const std::string& interface,
+    const std::string& interfaceName,
     const std::string& version) {
     std::unordered_map<std::string, std::string> configMap;
     configMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, type});
-    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, interface});
+    configMap.insert({CAPABILITY_INTERFACE_NAME_KEY, interfaceName});
     configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, version});
 
     return std::make_shared<CapabilityConfiguration>(configMap);

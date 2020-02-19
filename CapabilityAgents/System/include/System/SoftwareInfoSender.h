@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,8 +38,8 @@ class SoftwareInfoSendRequest;
  * @c SoftwareInfoSender is a @c CapabilityAgent that handles the @c System.ReportSoftwareInfo directive and
  * the sending of @c System.SoftwareInfo events to AVS.
  *
- * @see https://developer.amazon.com/docs/alexa-voice-service/system.html#reportsoftwareinfo-directive
- * @see https://developer.amazon.com/docs/alexa-voice-service/system.html#softwareinfo-event
+ * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#reportsoftwareinfo-directive
+ * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/system.html#softwareinfo-event
  */
 class SoftwareInfoSender
         : public avsCommon::avs::CapabilityAgent

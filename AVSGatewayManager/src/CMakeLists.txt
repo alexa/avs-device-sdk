@@ -5,8 +5,12 @@ add_library(AVSGatewayManager SHARED
     PostConnectVerifyGatewaySender.cpp)
 
 target_include_directories(AVSGatewayManager PUBLIC
-    "${AVSCommon_SOURCE_DIR}"
-    "${AVSGatewayManager_SOURCE_DIR}/include")
+        "$<BUILD_INTERFACE:${AVSGatewayManager_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${AVSCommon_SOURCE_DIR}/SDKInterfaces/include>"
+        "$<BUILD_INTERFACE:${AVSCommon_SOURCE_DIR}/Utils/include>"
+        "$<BUILD_INTERFACE:${AVSCommon_SOURCE_DIR}/AVS/include>"
+        "$<BUILD_INTERFACE:${RegistrationManager_SOURCE_DIR}/AVS/include>"
+        "$<INSTALL_INTERFACE:include>")
 
 target_link_libraries(AVSGatewayManager AVSCommon RegistrationManager)
 

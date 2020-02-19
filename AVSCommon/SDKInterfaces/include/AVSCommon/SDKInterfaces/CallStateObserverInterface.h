@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,6 +52,17 @@ public:
      * @param state The new CallState.
      */
     virtual void onCallStateChange(CallState state) = 0;
+
+    /**
+     * Checks the state of the provided call state to determine if a call is in an "active" state
+     * Active states are: CONNECTING
+     *                    INBOUND_RINGING
+     *                    CALL_CONNETED
+     *
+     * @param state The new CallState.
+     * @return True on states that are considered "active", false otherwise.
+     */
+    static bool isStateActive(const CallStateObserverInterface::CallState& state);
 };
 
 /**
@@ -80,6 +91,19 @@ inline std::ostream& operator<<(std::ostream& stream, const CallStateObserverInt
             return stream;
     }
     return stream << "UNKNOWN STATE";
+}
+
+inline bool CallStateObserverInterface::isStateActive(const CallStateObserverInterface::CallState& state) {
+    switch (state) {
+        case CallStateObserverInterface::CallState::CONNECTING:
+        case CallStateObserverInterface::CallState::INBOUND_RINGING:
+        case CallStateObserverInterface::CallState::CALL_CONNECTED:
+            return true;
+        case CallStateObserverInterface::CallState::CALL_DISCONNECTED:
+        case CallStateObserverInterface::CallState::NONE:
+            return false;
+    }
+    return false;
 }
 
 }  // namespace sdkInterfaces

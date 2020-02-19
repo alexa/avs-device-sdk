@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ static const std::string VALUE_KEY_STRING = "value";
 static const std::string TIME_OF_SAMPLE_KEY_STRING = "timeOfSample";
 
 /// Key used to identify an the uncertainty in milliseconds related to the time of sample. For more information:
-/// https://developer.amazon.com/docs/alexa-voice-service/reportable-state-properties.html#property-object
+/// https://developer.amazon.com/docs/alexa/alexa-voice-service/reportable-state-properties.html#property-object
 static const std::string UNCERTAINTY_KEY_STRING = "uncertaintyInMilliseconds";
 
 /// String to identify log entries originating from this file.

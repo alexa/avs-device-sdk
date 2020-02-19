@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -105,15 +105,6 @@ bool CapabilitiesDelegate::init() {
         }
     }
 
-    {
-        std::lock_guard<std::mutex> lock{m_endpointMapMutex};
-        if (!m_capabilitiesDelegateStorage->load(&m_previousEndpointIdToConfigMap)) {
-            ACSDK_ERROR(LX("initFailed").m("Could not load from database."));
-            return false;
-        }
-        ACSDK_DEBUG5(LX(__func__).d("num endpoints stored", m_previousEndpointIdToConfigMap.size()));
-    }
-
     return true;
 }
 
@@ -167,6 +158,7 @@ void CapabilitiesDelegate::setCapabilitiesState(
 }
 
 void CapabilitiesDelegate::invalidateCapabilities() {
+    ACSDK_DEBUG5(LX(__func__));
     if (!m_capabilitiesDelegateStorage->clearDatabase()) {
         ACSDK_ERROR(LX("invalidateCapabilitiesFailed").d("reason", "unable to clear database"));
     }
@@ -227,27 +219,38 @@ std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostC
     std::unordered_map<std::string, std::string> deletedEndpointIdToConfigPairs;
     ACSDK_DEBUG5(LX(__func__).d("num of endpoints registered", m_endpointIdToConfigMap.size()));
 
+    std::unordered_map<std::string, std::string> storedEndpointConfig;
+    if (!m_capabilitiesDelegateStorage->load(&storedEndpointConfig)) {
+        ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not load previous config from database."));
+        return nullptr;
+    }
+    ACSDK_DEBUG5(LX(__func__).d("num endpoints stored", storedEndpointConfig.size()));
+
     {
         std::lock_guard<std::mutex> lock{m_endpointMapMutex};
-        std::unordered_map<std::string, std::string> storedEndpointConfigCopy = m_previousEndpointIdToConfigMap;
 
         /// Find the endpoints whose configuration has changed.
         for (auto& endpointIdToConfigPair : m_endpointIdToConfigMap) {
-            auto storedEndpointConfigIt = storedEndpointConfigCopy.find(endpointIdToConfigPair.first);
-            if (storedEndpointConfigIt != storedEndpointConfigCopy.end()) {
+            auto storedEndpointConfigIt = storedEndpointConfig.find(endpointIdToConfigPair.first);
+            if (storedEndpointConfigIt != storedEndpointConfig.end()) {
                 if (endpointIdToConfigPair.second != storedEndpointConfigIt->second) {
                     /// Endpoint configuration has been updated.
+                    ACSDK_DEBUG5(LX(__func__)
+                                     .d("step", "endpointUpdated")
+                                     .sensitive("configuration", endpointIdToConfigPair.second));
                     addOrUpdateEndpointIdToConfigPairs.insert(endpointIdToConfigPair);
                 }
                 /// Remove this endpoint from the stored endpoint list.
-                storedEndpointConfigCopy.erase(endpointIdToConfigPair.first);
+                storedEndpointConfig.erase(endpointIdToConfigPair.first);
             } else {
                 /// Endpoint has been freshly added.
+                ACSDK_DEBUG5(
+                    LX(__func__).d("step", "newEndpoint").sensitive("configuration", endpointIdToConfigPair.second));
                 addOrUpdateEndpointIdToConfigPairs.insert(endpointIdToConfigPair);
             }
         }
         /// The remaining items in the stored list are the endpoints that need to be deleted.
-        for (auto& it : storedEndpointConfigCopy) {
+        for (auto& it : storedEndpointConfig) {
             deletedEndpointIdToConfigPairs.insert({it.first, getDeleteReportEndpointConfigJson(it.first)});
         }
     }
@@ -354,6 +357,11 @@ void CapabilitiesDelegate::resetDiscoveryEventSender() {
         m_currentDiscoveryEventSender->removeDiscoveryStatusObserver(shared_from_this());
     }
     m_currentDiscoveryEventSender.reset();
+}
+
+void CapabilitiesDelegate::onAVSGatewayChanged(const std::string& avsGateway) {
+    ACSDK_DEBUG5(LX(__func__));
+    invalidateCapabilities();
 }
 
 }  // namespace capabilitiesDelegate

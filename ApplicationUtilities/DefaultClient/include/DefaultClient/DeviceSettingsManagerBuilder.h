@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 #ifndef ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEVICESETTINGSMANAGERBUILDER_H_
 #define ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEVICESETTINGSMANAGERBUILDER_H_
 
@@ -117,6 +118,13 @@ public:
      */
     DeviceSettingsManagerBuilder& withLocaleAndWakeWordsSettings(
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
+
+    /**
+     * Configures network info setting.
+     *
+     * @return This builder to allow nested calls.
+     */
+    DeviceSettingsManagerBuilder& withNetworkInfoSetting();
 
     /**
      * Gets the setting for the given @c index.

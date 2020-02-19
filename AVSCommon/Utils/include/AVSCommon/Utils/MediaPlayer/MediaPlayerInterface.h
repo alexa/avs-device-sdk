@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,12 @@
 
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include "AVSCommon/Utils/AudioFormat.h"
+#include "AVSCommon/Utils/Optional.h"
+#include "AVSCommon/Utils/MediaPlayer/MediaPlayerState.h"
+#include "AVSCommon/Utils/MediaPlayer/PlaybackAttributes.h"
+#include "AVSCommon/Utils/MediaPlayer/PlaybackReport.h"
 #include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
+#include "AVSCommon/Utils/Optional.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -53,7 +58,7 @@ class MediaPlayerObserverInterface;
  * set if the previous source was in a non-stopped state.
  *
  * @c note A @c MediaPlayerInterface implementation must be able to support the various audio formats listed at:
- * https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html.
+ * https://developer.amazon.com/docs/alexa/alexa-voice-service/recommended-media-support.html.
  */
 class MediaPlayerInterface {
 public:
@@ -226,6 +231,8 @@ public:
      *
      * @return If the specified source is playing, the offset in milliseconds that the source has been playing
      *      will be returned. If the specified source is not playing, the last offset it played will be returned.
+     *
+     * @deprecated Use @c getMediaPlayerState instead, which contains the offset
      */
     virtual std::chrono::milliseconds getOffset(SourceId id) = 0;
 
@@ -235,6 +242,17 @@ public:
      * @return The number of bytes currently queued in this MediaPlayer's buffer.
      */
     virtual uint64_t getNumBytesBuffered() = 0;
+
+    /**
+     * Returns the current state of the media player source, including
+     * the id and offset.
+     *
+     * @param id The unique id of the source for the desired state.
+     *
+     * @return Optional state including the offset. A blank Optional is returned
+     *         if retrieving this information fails.
+     */
+    virtual utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> getMediaPlayerState(SourceId id) = 0;
 
     /**
      * Adds an observer to be notified when playback state changes.
@@ -251,7 +269,33 @@ public:
      */
     virtual void removeObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) = 0;
+
+    /**
+     * Get @c PlaybackAttributes for the current stream being played.
+     * This method only needs to be implemented if your mediaplayer supports Premium Audio.
+     *
+     * @return playbackAttributes The playback attributes for the current stream if premium audio is supported
+     *      and it has an active source; otherwise, an empty object.
+     */
+    virtual utils::Optional<PlaybackAttributes> getPlaybackAttributes();
+
+    /**
+     * Get list of @c PlaybackReports for current track.
+     * This method only needs to be implemented if your mediaplayer supports Premium Audio.
+     *
+     * @return The list of @c PlaybackReport for current track if premium audio is supported and it has an
+     *      active source; otherwise, an empty list.
+     */
+    virtual std::vector<PlaybackReport> getPlaybackReports();
 };
+
+inline utils::Optional<PlaybackAttributes> MediaPlayerInterface::getPlaybackAttributes() {
+    return utils::Optional<PlaybackAttributes>();
+}
+
+inline std::vector<PlaybackReport> MediaPlayerInterface::getPlaybackReports() {
+    return {};
+}
 
 }  // namespace mediaPlayer
 }  // namespace utils

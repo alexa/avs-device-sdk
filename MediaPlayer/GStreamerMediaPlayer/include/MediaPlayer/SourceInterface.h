@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_MEDIAPLAYER_GSTREAMERMEDIAPLAYER_INCLUDE_MEDIAPLAYER_SOURCEINTERFACE_H_
 
 #include "MediaPlayer/PipelineInterface.h"
+#include "MediaPlayer/SourceObserverInterface.h"
 
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
@@ -70,6 +71,20 @@ public:
      * @return A boolean indicating whether the source is from a remote or local source
      */
     virtual bool isPlaybackRemote() const = 0;
+
+    /**
+     * Adds an observer to be notified of particular events which occur on this source.
+     *
+     * @param observer The observer to add.
+     */
+    virtual void addObserver(std::shared_ptr<SourceObserverInterface> observer) = 0;
+
+    /**
+     * Removes an observer from being notified of particular events which occur on this source.
+     *
+     * @param observer The observer to remove.
+     */
+    virtual void removeObserver(std::shared_ptr<SourceObserverInterface> observer) = 0;
 };
 
 }  // namespace mediaPlayer

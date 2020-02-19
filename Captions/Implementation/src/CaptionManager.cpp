@@ -235,7 +235,7 @@ void CaptionManager::onParsed(const CaptionFrame& captionFrame) {
     ACSDK_DEBUG5(LX("finishedOnParsed"));
 }
 
-void CaptionManager::onPlaybackStarted(CaptionFrame::MediaPlayerSourceId id) {
+void CaptionManager::onPlaybackStarted(CaptionFrame::MediaPlayerSourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -247,7 +247,7 @@ void CaptionManager::onPlaybackStarted(CaptionFrame::MediaPlayerSourceId id) {
     }
 }
 
-void CaptionManager::onPlaybackFinished(CaptionFrame::MediaPlayerSourceId id) {
+void CaptionManager::onPlaybackFinished(CaptionFrame::MediaPlayerSourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -262,7 +262,11 @@ void CaptionManager::onPlaybackFinished(CaptionFrame::MediaPlayerSourceId id) {
     m_parser->releaseResourcesFor(id);
 }
 
-void CaptionManager::onPlaybackError(CaptionFrame::MediaPlayerSourceId id, const ErrorType& type, std::string error) {
+void CaptionManager::onPlaybackError(
+    CaptionFrame::MediaPlayerSourceId id,
+    const ErrorType& type,
+    std::string error,
+    const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("type", type).d("error", error).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -276,7 +280,7 @@ void CaptionManager::onPlaybackError(CaptionFrame::MediaPlayerSourceId id, const
     m_parser->releaseResourcesFor(id);
 }
 
-void CaptionManager::onPlaybackPaused(CaptionFrame::MediaPlayerSourceId id) {
+void CaptionManager::onPlaybackPaused(CaptionFrame::MediaPlayerSourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -288,7 +292,7 @@ void CaptionManager::onPlaybackPaused(CaptionFrame::MediaPlayerSourceId id) {
     }
 }
 
-void CaptionManager::onPlaybackResumed(CaptionFrame::MediaPlayerSourceId id) {
+void CaptionManager::onPlaybackResumed(CaptionFrame::MediaPlayerSourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -300,7 +304,7 @@ void CaptionManager::onPlaybackResumed(CaptionFrame::MediaPlayerSourceId id) {
     }
 }
 
-void CaptionManager::onPlaybackStopped(CaptionFrame::MediaPlayerSourceId id) {
+void CaptionManager::onPlaybackStopped(CaptionFrame::MediaPlayerSourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG3(LX(__func__).d("id", id));
 
     std::lock_guard<std::mutex> lock(m_mutex);

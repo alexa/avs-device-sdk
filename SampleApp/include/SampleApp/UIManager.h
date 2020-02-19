@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -103,7 +103,7 @@ public:
     /// }
 
     /// @name BluetoothDeviceObserverInterface Methods
-    // @{
+    /// @{
     void onActiveDeviceConnected(const DeviceAttributes& deviceAttributes) override;
     void onActiveDeviceDisconnected(const DeviceAttributes& deviceAttributes) override;
     /// }
@@ -222,6 +222,16 @@ public:
      * Prints the Error Message for Invalid dtmf input.
      */
     void printDtmfErrorScreen();
+
+    /**
+     * Notifies the user that the call is muted.
+     */
+    void printMuteCallScreen();
+
+    /**
+     * Notifies the user that the call is unmuted.
+     */
+    void printUnmuteCallScreen();
 #endif
 
     /**
@@ -286,6 +296,23 @@ public:
      * Prints menu for device time zone.
      */
     void printTimeZoneScreen();
+
+    /**
+     * Prints menu for device network info.
+     */
+    void printNetworkInfoScreen();
+
+    /// @name Print network info menu options
+    /// @{
+    void printNetworkInfoConnectionTypePrompt();
+    void printNetworkInfoESSIDPrompt();
+    void printNetworkInfoBSSIDPrompt();
+    void printNetworkInfoIpPrompt();
+    void printNetworkInfoSubnetPrompt();
+    void printNetworkInfoMacPrompt();
+    void printNetworkInfoDHCPPrompt();
+    void printNetworkInfoStaticIpPrompt();
+    /// @}
 
     /**
      * Prints menu for do not disturb mode.

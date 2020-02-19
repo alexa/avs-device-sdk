@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,19 +13,16 @@
  * permissions and limitations under the License.
  */
 
-#include <fstream>
 #include <vector>
 
 #include <gtest/gtest.h>
 
 #include <ACL/Transport/HTTP2TransportFactory.h>
 #include <ACL/Transport/PostConnectSequencerFactory.h>
-#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
-#include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "Integration/ACLTestContext.h"
@@ -36,7 +33,6 @@ namespace test {
 
 using namespace acl;
 using namespace avsCommon::avs::attachment;
-using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::libcurlUtils;

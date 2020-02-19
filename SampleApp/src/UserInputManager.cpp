@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -79,7 +79,8 @@ enum class SettingsValues : char {
     WAKEWORD_CONFIRMATION = '3',
     SPEECH_CONFIRMATION = '4',
     TIME_ZONE = '5',
-    ALARM_VOLUME_RAMP = '6',
+    NETWORK_INFO = '6',
+    ALARM_VOLUME_RAMP = '7',
     QUIT = 'q'
 };
 
@@ -117,7 +118,6 @@ enum class EndpointControllerMenuChoice : char {
 #ifdef RANGE_CONTROLLER
     RANGE_CONTROLLER_OPTION = '4',
 #endif
-
     QUIT = 'q'
 };
 
@@ -354,13 +354,17 @@ SampleAppReturnCode UserInputManager::run() {
                             m_interactionManager->errorDtmf();
                         }
                         break;
+                    case 'm':
+                    case 'M':
+                        m_interactionManager->muteCallToggle();
+                        break;
                     case 'q':
                         m_interactionManager->help();
                         continueWhileLoop = false;
                         break;
                     default:
                         m_interactionManager->errorValue();
-                        continueWhileLoop = false;
+                        m_interactionManager->commsControl();
                         break;
                 }
             }
@@ -680,6 +684,126 @@ void UserInputManager::settingsMenu() {
             } else {
                 m_interactionManager->errorValue();
             }
+            return;
+        }
+        case (char)SettingsValues::NETWORK_INFO: {
+            bool inNetworkMenu = true;
+            do {
+                m_interactionManager->networkInfo();
+                using settings::types::NetworkInfo;
+                auto setOrReset = [](std::function<void()> reset, std::function<void(const std::string&)> set) {
+                    std::string input;
+                    std::cin.ignore();
+                    std::getline(std::cin, input);
+                    if (input.empty()) {
+                        reset();
+                    } else {
+                        set(input);
+                    }
+                };
+                char input = 0;
+                std::cin >> input;
+                const auto constNetInfo = m_interactionManager->getNetworkInfo();
+                auto netInfo = constNetInfo;
+                switch (input) {
+                    case '1': {
+                        std::cout << constNetInfo << std::endl;
+                        break;
+                    }
+                    case '2': {
+                        m_interactionManager->networkInfoConnectionTypePrompt();
+                        char connectionType = 0;
+                        std::cin >> connectionType;
+                        switch (connectionType) {
+                            case '1':
+                                netInfo.setConnectionType(NetworkInfo::ConnectionType::ETHERNET);
+                                break;
+                            case '2':
+                                netInfo.setConnectionType(NetworkInfo::ConnectionType::WIFI);
+                                break;
+                            case '3':
+                                netInfo.resetConnectionType();
+                                break;
+                            default:
+                                m_interactionManager->errorValue();
+                        }
+                        break;
+                    }
+                    case '3': {
+                        m_interactionManager->networkInfoESSIDPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetEssid, &netInfo),
+                            std::bind(&NetworkInfo::setEssid, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '4': {
+                        m_interactionManager->networkInfoBSSIDPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetBssid, &netInfo),
+                            std::bind(&NetworkInfo::setBssid, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '5': {
+                        m_interactionManager->networkInfoIpPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetIpAddress, &netInfo),
+                            std::bind(&NetworkInfo::setIpAddress, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '6': {
+                        m_interactionManager->networkInfoSubnetPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetSubnetMask, &netInfo),
+                            std::bind(&NetworkInfo::setSubnetMask, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '7': {
+                        m_interactionManager->networkInfoMacPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetMacAddress, &netInfo),
+                            std::bind(&NetworkInfo::setMacAddress, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '8': {
+                        m_interactionManager->networkInfoDHCPPrompt();
+                        setOrReset(
+                            std::bind(&NetworkInfo::resetDhcpServerAddress, &netInfo),
+                            std::bind(&NetworkInfo::setDhcpServerAddress, &netInfo, std::placeholders::_1));
+                        break;
+                    }
+                    case '9': {
+                        m_interactionManager->networkInfoStaticIpPrompt();
+                        char ipType = 0;
+                        std::cin >> ipType;
+                        switch (ipType) {
+                            case '1':
+                                netInfo.setIsStaticIP(true);
+                                break;
+                            case '2':
+                                netInfo.setIsStaticIP(false);
+                                break;
+                            case '3':
+                                netInfo.resetIsStaticIP();
+                                break;
+                            default:
+                                m_interactionManager->errorValue();
+                        }
+                        break;
+                    }
+                    case QUIT: {
+                        inNetworkMenu = false;
+                        break;
+                    }
+                    default: {
+                        m_interactionManager->errorValue();
+                        inNetworkMenu = false;
+                        break;
+                    }
+                }
+                if (netInfo != constNetInfo) {
+                    m_interactionManager->setNetworkInfo(netInfo);
+                }
+            } while (inNetworkMenu);
             return;
         }
         case (char)SettingsValues::ALARM_VOLUME_RAMP: {

@@ -33,19 +33,20 @@ target_link_libraries(DefaultClient
     Bluetooth
     Captions
     ContextManager
+    DeviceSettings
     DoNotDisturbCA
     Endpoints
     Equalizer
     ExternalMediaPlayer
     InteractionModel
+    InterruptModel
     Notifications
     PlaybackController
     RegistrationManager
     SpeakerManager
     SpeechSynthesizer
-    DeviceSettings
-    TemplateRuntime
     SystemSoundPlayer
+    TemplateRuntime
     )
 
 if (COMMS)
