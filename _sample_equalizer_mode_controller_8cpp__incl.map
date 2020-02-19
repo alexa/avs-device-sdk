@@ -1,40 +1,41 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleEqualizerModeController.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="766,5,1011,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="1158,625,1227,651"/>
-<area shape="rect" id="node3" title=" " alt="" coords="2216,459,2284,484"/>
-<area shape="rect" id="node4" href="$_sample_equalizer_mode_controller_8h.html" title=" " alt="" coords="457,265,651,304"/>
-<area shape="rect" id="node18" href="$_console_printer_8h.html" title=" " alt="" coords="992,105,1185,131"/>
-<area shape="rect" id="node5" title=" " alt="" coords="328,365,367,391"/>
-<area shape="rect" id="node6" title=" " alt="" coords="923,459,980,484"/>
-<area shape="rect" id="node7" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="391,352,600,404"/>
-<area shape="rect" id="node8" href="$_equalizer_types_8h.html" title=" " alt="" coords="350,459,473,484"/>
-<area shape="rect" id="node9" title=" " alt="" coords="194,545,245,571"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1116,545,1170,571"/>
-<area shape="rect" id="node11" title=" " alt="" coords="270,545,385,571"/>
-<area shape="rect" id="node12" href="$hash_8h.html" title=" " alt="" coords="409,539,600,577"/>
-<area shape="rect" id="node16" href="$_success_result_8h.html" title=" " alt="" coords="5,539,169,577"/>
-<area shape="rect" id="node13" title=" " alt="" coords="475,625,534,651"/>
-<area shape="rect" id="node14" title=" " alt="" coords="558,625,617,651"/>
-<area shape="rect" id="node15" title=" " alt="" coords="372,625,451,651"/>
-<area shape="rect" id="node17" href="$_result_8h.html" title=" " alt="" coords="52,625,122,651"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="1407,265,1583,304"/>
-<area shape="rect" id="node36" href="$_log_string_formatter_8h.html" title=" " alt="" coords="1126,179,1302,217"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1500,365,1560,391"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1255,459,1317,484"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1925,625,1983,651"/>
-<area shape="rect" id="node23" href="$_configuration_node_8h.html" title=" " alt="" coords="1584,359,1798,397"/>
-<area shape="rect" id="node28" href="$_level_8h.html" title=" " alt="" coords="1055,452,1231,491"/>
-<area shape="rect" id="node29" href="$_log_entry_8h.html" title=" " alt="" coords="2007,359,2183,397"/>
-<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1228,359,1425,397"/>
-<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1541,539,1717,577"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1565,459,1629,484"/>
-<area shape="rect" id="node25" title=" " alt="" coords="1652,459,1725,484"/>
-<area shape="rect" id="node26" title=" " alt="" coords="1749,459,1788,484"/>
-<area shape="rect" id="node27" title=" " alt="" coords="1392,459,1540,484"/>
-<area shape="rect" id="node30" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2015,452,2191,491"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2069,545,2138,571"/>
-<area shape="rect" id="node32" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1741,539,1917,577"/>
-<area shape="rect" id="node33" title=" " alt="" coords="1788,625,1869,651"/>
-<area shape="rect" id="node37" href="$_safe_c_time_access_8h.html" title=" " alt="" coords="726,359,900,397"/>
-<area shape="rect" id="node38" title=" " alt="" coords="786,459,839,484"/>
+<area shape="rect" id="node1" title=" " alt="" coords="917,5,1162,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="977,625,1047,651"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1267,459,1335,484"/>
+<area shape="rect" id="node4" href="$_sample_equalizer_mode_controller_8h.html" title=" " alt="" coords="518,265,713,304"/>
+<area shape="rect" id="node18" href="$_console_printer_8h.html" title=" " alt="" coords="1354,105,1547,131"/>
+<area shape="rect" id="node5" title=" " alt="" coords="663,365,702,391"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1010,459,1067,484"/>
+<area shape="rect" id="node7" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="374,352,583,404"/>
+<area shape="rect" id="node8" href="$_equalizer_types_8h.html" title=" " alt="" coords="387,459,511,484"/>
+<area shape="rect" id="node9" title=" " alt="" coords="409,545,460,571"/>
+<area shape="rect" id="node10" title=" " alt="" coords="2033,545,2087,571"/>
+<area shape="rect" id="node11" title=" " alt="" coords="485,545,600,571"/>
+<area shape="rect" id="node12" href="$hash_8h.html" title=" " alt="" coords="5,539,197,577"/>
+<area shape="rect" id="node16" href="$_success_result_8h.html" title=" " alt="" coords="220,539,384,577"/>
+<area shape="rect" id="node13" title=" " alt="" coords="113,625,172,651"/>
+<area shape="rect" id="node14" title=" " alt="" coords="31,625,89,651"/>
+<area shape="rect" id="node15" title=" " alt="" coords="519,625,598,651"/>
+<area shape="rect" id="node17" href="$_result_8h.html" title=" " alt="" coords="267,625,338,651"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="1476,265,1652,304"/>
+<area shape="rect" id="node37" href="$_log_string_formatter_8h.html" title=" " alt="" coords="1354,179,1530,217"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1529,365,1590,391"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1359,459,1421,484"/>
+<area shape="rect" id="node22" title=" " alt="" coords="2288,625,2346,651"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title=" " alt="" coords="1614,359,1828,397"/>
+<area shape="rect" id="node28" href="$_level_8h.html" title=" " alt="" coords="1972,452,2148,491"/>
+<area shape="rect" id="node29" href="$_log_entry_8h.html" title=" " alt="" coords="2136,359,2312,397"/>
+<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1852,359,2049,397"/>
+<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1126,359,1302,397"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1546,459,1611,484"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1774,545,1847,571"/>
+<area shape="rect" id="node26" title=" " alt="" coords="1686,459,1725,484"/>
+<area shape="rect" id="node27" title=" " alt="" coords="1748,459,1897,484"/>
+<area shape="rect" id="node30" title=" " alt="" coords="2274,459,2350,484"/>
+<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2425,452,2601,491"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2478,545,2548,571"/>
+<area shape="rect" id="node33" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="2276,539,2452,577"/>
+<area shape="rect" id="node34" title=" " alt="" coords="2370,625,2451,651"/>
+<area shape="rect" id="node38" href="$_safe_c_time_access_8h.html" title=" " alt="" coords="777,359,951,397"/>
+<area shape="rect" id="node39" title=" " alt="" coords="901,459,954,484"/>
 </map>

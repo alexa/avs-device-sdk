@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -92,6 +92,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_promise_future_pair_8h_source.html">AVSCommon/Utils/PromiseFuturePair.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_http_response_code_8h_source.html">AVSCommon/Utils/HTTP/HttpResponseCode.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_h_t_t_p2_request_config_8h_source.html">AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_metric_recorder_8h_source.html">AVSCommon/Utils/Metrics/MockMetricRecorder.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_a_c_l_2test_2_transport_2_mock_auth_delegate_8h_source.html">MockAuthDelegate.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mock_h_t_t_p2_connection_8h_source.html">MockHTTP2Connection.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mock_h_t_t_p2_request_8h_source.html">MockHTTP2Request.h</a>&quot;</code><br />
@@ -99,61 +100,62 @@ $(function() {
 <code>#include &quot;<a class="el" href="_mock_post_connect_8h_source.html">MockPostConnect.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mock_post_connect_factory_8h_source.html">MockPostConnectFactory.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mock_transport_observer_8h_source.html">MockTransportObserver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_synchronized_message_request_queue_8h_source.html">ACL/Transport/SynchronizedMessageRequestQueue.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for HTTP2TransportTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_h_t_t_p2_transport_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_transport_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_transport_test_8cpp" id="_2workplace_2avs-device-sdk_2_a_c_l_2test_2_transport_2_h_t_t_p2_transport_test_8cpp">
-<area shape="rect" title=" " alt="" coords="2805,5,2978,57"/>
-<area shape="rect" title=" " alt="" coords="180,272,235,297"/>
-<area shape="rect" title=" " alt="" coords="45,105,108,131"/>
-<area shape="rect" title=" " alt="" coords="2513,359,2582,384"/>
-<area shape="rect" title=" " alt="" coords="197,105,266,131"/>
-<area shape="rect" title=" " alt="" coords="3303,439,3357,464"/>
-<area shape="rect" title=" " alt="" coords="341,105,391,131"/>
-<area shape="rect" title=" " alt="" coords="380,439,438,464"/>
-<area shape="rect" title=" " alt="" coords="3779,272,3894,297"/>
-<area shape="rect" title=" " alt="" coords="4178,272,4272,297"/>
-<area shape="rect" href="_h_t_t_p2_transport_8h.html" title=" " alt="" coords="1802,105,2023,131"/>
-<area shape="rect" href="_attachment_manager_8h.html" title=" " alt="" coords="619,179,820,217"/>
-<area shape="rect" href="_h_t_t_p2_request_config_8h.html" title=" " alt="" coords="1636,265,1813,304"/>
-<area shape="rect" href="_attachment_utils_8h.html" title=" " alt="" coords="497,265,699,304"/>
-<area shape="rect" href="_promise_future_pair_8h.html" title=" " alt="" coords="170,179,392,217"/>
-<area shape="rect" href="_http_response_code_8h.html" title=" " alt="" coords="3153,179,3323,217"/>
-<area shape="rect" href="_a_c_l_2test_2_transport_2_mock_auth_delegate_8h.html" title=" " alt="" coords="3347,185,3492,211"/>
-<area shape="rect" href="_mock_h_t_t_p2_connection_8h.html" title=" " alt="" coords="2706,105,2880,131"/>
-<area shape="rect" href="_mock_h_t_t_p2_request_8h.html" title=" " alt="" coords="3567,185,3723,211"/>
-<area shape="rect" href="_mock_message_consumer_8h.html" title=" " alt="" coords="3626,105,3805,131"/>
-<area shape="rect" href="_mock_post_connect_8h.html" title=" " alt="" coords="4209,185,4350,211"/>
-<area shape="rect" href="_mock_post_connect_factory_8h.html" title=" " alt="" coords="3950,185,4134,211"/>
-<area shape="rect" href="_mock_transport_observer_8h.html" title=" " alt="" coords="2904,105,3079,131"/>
-<area shape="rect" title=" " alt="" coords="1030,359,1091,384"/>
-<area shape="rect" title=" " alt="" coords="1152,439,1214,464"/>
-<area shape="rect" title=" " alt="" coords="2202,185,2330,211"/>
-<area shape="rect" title=" " alt="" coords="2120,185,2178,211"/>
-<area shape="rect" title=" " alt="" coords="1336,272,1394,297"/>
-<area shape="rect" title=" " alt="" coords="895,185,954,211"/>
-<area shape="rect" title=" " alt="" coords="978,185,1085,211"/>
-<area shape="rect" href="_h_t_t_p2_connection_interface_8h.html" title=" " alt="" coords="1746,179,1944,217"/>
-<area shape="rect" href="_auth_delegate_interface_8h.html" title=" " alt="" coords="3184,265,3375,304"/>
-<area shape="rect" href="_post_connect_send_message_interface_8h.html" title=" " alt="" coords="1109,179,1359,217"/>
-<area shape="rect" href="_message_consumer_interface_8h.html" title=" " alt="" coords="2751,179,2978,217"/>
-<area shape="rect" href="_ping_handler_8h.html" title=" " alt="" coords="1418,272,1613,297"/>
-<area shape="rect" href="_post_connect_factory_interface_8h.html" title=" " alt="" coords="2610,265,2797,304"/>
-<area shape="rect" href="_post_connect_observer_interface_8h.html" title=" " alt="" coords="1434,179,1621,217"/>
-<area shape="rect" href="_transport_interface_8h.html" title=" " alt="" coords="2253,272,2484,297"/>
-<area shape="rect" href="_transport_observer_interface_8h.html" title=" " alt="" coords="2404,179,2627,217"/>
-<area shape="rect" title=" " alt="" coords="824,272,940,297"/>
-<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="963,265,1171,304"/>
-<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="497,352,699,391"/>
-<area shape="rect" title=" " alt="" coords="815,439,880,464"/>
-<area shape="rect" href="_h_t_t_p2_request_type_8h.html" title=" " alt="" coords="1796,359,1949,384"/>
-<area shape="rect" title=" " alt="" coords="1431,439,1491,464"/>
-<area shape="rect" href="_h_t_t_p2_request_source_interface_8h.html" title=" " alt="" coords="1351,359,1570,384"/>
-<area shape="rect" href="_h_t_t_p2_response_sink_interface_8h.html" title=" " alt="" coords="1114,359,1327,384"/>
-<area shape="rect" href="_auth_observer_interface_8h.html" title=" " alt="" coords="3235,352,3425,391"/>
-<area shape="rect" title=" " alt="" coords="3037,272,3109,297"/>
-<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="2746,352,2922,391"/>
+<area shape="rect" title=" " alt="" coords="1547,5,1720,57"/>
+<area shape="rect" title=" " alt="" coords="135,285,190,311"/>
+<area shape="rect" title=" " alt="" coords="4743,112,4806,137"/>
+<area shape="rect" title=" " alt="" coords="2573,372,2643,397"/>
+<area shape="rect" title=" " alt="" coords="4830,112,4898,137"/>
+<area shape="rect" title=" " alt="" coords="1305,452,1359,477"/>
+<area shape="rect" title=" " alt="" coords="4923,112,4973,137"/>
+<area shape="rect" title=" " alt="" coords="4538,452,4595,477"/>
+<area shape="rect" title=" " alt="" coords="1020,285,1135,311"/>
+<area shape="rect" title=" " alt="" coords="765,285,859,311"/>
+<area shape="rect" href="_h_t_t_p2_transport_8h.html" title=" " alt="" coords="2800,112,3021,137"/>
+<area shape="rect" href="_attachment_manager_8h.html" title=" " alt="" coords="3946,192,4147,231"/>
+<area shape="rect" href="_h_t_t_p2_request_config_8h.html" title=" " alt="" coords="1344,279,1520,317"/>
+<area shape="rect" href="_synchronized_message_request_queue_8h.html" title=" " alt="" coords="4172,192,4364,231"/>
+<area shape="rect" href="_attachment_utils_8h.html" title=" " alt="" coords="4466,279,4667,317"/>
+<area shape="rect" href="_promise_future_pair_8h.html" title=" " alt="" coords="144,192,366,231"/>
+<area shape="rect" href="_http_response_code_8h.html" title=" " alt="" coords="390,192,559,231"/>
+<area shape="rect" href="_mock_metric_recorder_8h.html" title=" " alt="" coords="4235,105,4413,144"/>
+<area shape="rect" href="_a_c_l_2test_2_transport_2_mock_auth_delegate_8h.html" title=" " alt="" coords="1390,199,1535,224"/>
+<area shape="rect" href="_mock_h_t_t_p2_connection_8h.html" title=" " alt="" coords="1609,112,1783,137"/>
+<area shape="rect" href="_mock_h_t_t_p2_request_8h.html" title=" " alt="" coords="1210,199,1366,224"/>
+<area shape="rect" href="_mock_message_consumer_8h.html" title=" " alt="" coords="872,112,1051,137"/>
+<area shape="rect" href="_mock_post_connect_8h.html" title=" " alt="" coords="583,199,724,224"/>
+<area shape="rect" href="_mock_post_connect_factory_8h.html" title=" " alt="" coords="951,199,1135,224"/>
+<area shape="rect" href="_mock_transport_observer_8h.html" title=" " alt="" coords="3695,199,3870,224"/>
+<area shape="rect" title=" " alt="" coords="2398,372,2458,397"/>
+<area shape="rect" title=" " alt="" coords="2986,452,3048,477"/>
+<area shape="rect" title=" " alt="" coords="2466,199,2595,224"/>
+<area shape="rect" title=" " alt="" coords="3460,285,3519,311"/>
+<area shape="rect" title=" " alt="" coords="3378,285,3435,311"/>
+<area shape="rect" title=" " alt="" coords="3185,199,3244,224"/>
+<area shape="rect" title=" " alt="" coords="2334,199,2442,224"/>
+<area shape="rect" href="_auth_delegate_interface_8h.html" title=" " alt="" coords="1646,279,1837,317"/>
+<area shape="rect" href="_post_connect_send_message_interface_8h.html" title=" " alt="" coords="3269,192,3518,231"/>
+<area shape="rect" href="_h_t_t_p2_connection_interface_8h.html" title=" " alt="" coords="2012,192,2210,231"/>
+<area shape="rect" href="_h_t_t_p2_connection_observer_interface_8h.html" title=" " alt="" coords="2326,279,2578,317"/>
+<area shape="rect" href="_metric_recorder_interface_8h.html" title=" " alt="" coords="4388,192,4567,231"/>
+<area shape="rect" href="_message_consumer_interface_8h.html" title=" " alt="" coords="1711,192,1937,231"/>
+<area shape="rect" href="_ping_handler_8h.html" title=" " alt="" coords="2602,285,2798,311"/>
+<area shape="rect" href="_post_connect_factory_interface_8h.html" title=" " alt="" coords="2114,279,2302,317"/>
+<area shape="rect" href="_post_connect_observer_interface_8h.html" title=" " alt="" coords="2973,192,3160,231"/>
+<area shape="rect" href="_transport_observer_interface_8h.html" title=" " alt="" coords="3542,279,3765,317"/>
+<area shape="rect" title=" " alt="" coords="4121,285,4236,311"/>
+<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="3889,279,4097,317"/>
+<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="3941,365,4142,404"/>
+<area shape="rect" href="_h_t_t_p2_request_type_8h.html" title=" " alt="" coords="1695,372,1849,397"/>
+<area shape="rect" title=" " alt="" coords="1790,452,1850,477"/>
+<area shape="rect" href="_h_t_t_p2_request_source_interface_8h.html" title=" " alt="" coords="1923,372,2141,397"/>
+<area shape="rect" title=" " alt="" coords="512,285,584,311"/>
+<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="1395,365,1571,404"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -199,6 +201,8 @@ Functions</h2></td></tr>
 <tr class="separator:a62c710c177277120835fe79eb3b4af29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafa362dfbc7f8dc34cf95f6374bb6e9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#aafa362dfbc7f8dc34cf95f6374bb6e9c">alexaClientSDK::acl::transport::test::TEST_F</a> (HTTP2TransportTest, testSlow_messageRequestsQueuing)</td></tr>
 <tr class="separator:aafa362dfbc7f8dc34cf95f6374bb6e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92238e51398d2c7835e29fcc32a1fcc2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#a92238e51398d2c7835e29fcc32a1fcc2">alexaClientSDK::acl::transport::test::TEST_F</a> (HTTP2TransportTest, messageRequests_SequentialSend)</td></tr>
+<tr class="separator:a92238e51398d2c7835e29fcc32a1fcc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c6f3cb8b1a2b38161555c64a9985d61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#a1c6f3cb8b1a2b38161555c64a9985d61">alexaClientSDK::acl::transport::test::TEST_F</a> (HTTP2TransportTest, test_onSendCompletedNotification)</td></tr>
 <tr class="separator:a1c6f3cb8b1a2b38161555c64a9985d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9bd248dd050db0557bea7278295f235"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#aa9bd248dd050db0557bea7278295f235">alexaClientSDK::acl::transport::test::TEST_F</a> (HTTP2TransportTest, test_onExceptionReceivedNon200Content)</td></tr>
@@ -296,7 +300,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

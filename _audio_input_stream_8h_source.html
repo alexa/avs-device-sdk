@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_audio_input_stream_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -90,28 +90,38 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AUDIOINPUTSTREAM_H_</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AUDIOINPUTSTREAM_H_</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_in_process_s_d_s_8h.html">AVSCommon/Utils/SDS/InProcessSDS.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_shared_data_stream_8h.html">AVSCommon/Utils/SDS/SharedDataStream.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>avsCommon {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>avs {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">   26</a></span>&#160;<span class="keyword">using</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">AudioInputStream</a> = <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a269866d267e8991328744c2e662931d2">utils::sds::InProcessSDS</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}  <span class="comment">// namespace avs</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AUDIOINPUTSTREAM_H_</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifdef CUSTOM_SDS_TRAITS_HEADER</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include CUSTOM_SDS_TRAITS_HEADER</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_in_process_s_d_s_8h.html">AVSCommon/Utils/SDS/InProcessSDS.h</a>&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span>avsCommon {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span>avs {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifdef CUSTOM_SDS_TRAITS_CLASS</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">using</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">AudioInputStream</a> = utils::sds::SharedDataStream&lt;CUSTOM_SDS_TRAITS_CLASS&gt;;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">   35</a></span>&#160;<span class="keyword">using</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">AudioInputStream</a> = utils::sds::SharedDataStream&lt;utils::sds::InProcessSDSTraits&gt;;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}  <span class="comment">// namespace avs</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_AUDIOINPUTSTREAM_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1avs_html_a0e5ba82a4fcf54f83464cb9a9d944e91"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">alexaClientSDK::avsCommon::avs::AudioInputStream</a></div><div class="ttdeci">utils::sds::InProcessSDS AudioInputStream</div><div class="ttdoc">The type used store and stream binary data.</div><div class="ttdef"><b>Definition:</b> AudioInputStream.h:26</div></div>
+<div class="ttc" id="a_shared_data_stream_8h_html"><div class="ttname"><a href="_shared_data_stream_8h.html">SharedDataStream.h</a></div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="a_in_process_s_d_s_8h_html"><div class="ttname"><a href="_in_process_s_d_s_8h.html">InProcessSDS.h</a></div></div>
-<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_html_a269866d267e8991328744c2e662931d2"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a269866d267e8991328744c2e662931d2">alexaClientSDK::avsCommon::utils::sds::InProcessSDS</a></div><div class="ttdeci">SharedDataStream&lt; InProcessSDSTraits &gt; InProcessSDS</div><div class="ttdoc">Type alias for a SharedDataStream which works between threads in a single process.</div><div class="ttdef"><b>Definition:</b> InProcessSDS.h:54</div></div>
+<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1avs_html_ab50c23baa96f369ea6478b78dac6ff7d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">alexaClientSDK::avsCommon::avs::AudioInputStream</a></div><div class="ttdeci">utils::sds::SharedDataStream&lt; utils::sds::InProcessSDSTraits &gt; AudioInputStream</div><div class="ttdoc">The type used store and stream binary data.</div><div class="ttdef"><b>Definition:</b> AudioInputStream.h:35</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

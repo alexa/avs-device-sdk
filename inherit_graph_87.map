@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_interface.html" title=" " alt="" coords="5,40,215,92"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1test_1_1_mock_power_controller_interface.html" title=" " alt="" coords="263,5,500,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_power_controller_handler.html" title=" " alt="" coords="287,81,476,120"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html" title=" " alt="" coords="5,116,247,168"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html" title=" " alt="" coords="314,5,511,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html" title="Mocks the content fetcher factory." alt="" coords="295,81,529,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers." alt="" coords="299,157,525,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers." alt="" coords="302,220,522,272"/>
 </map>

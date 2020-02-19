@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -103,8 +103,14 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_device_manager.html">BlueZDeviceManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_h_f_p.html">BlueZHFP</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_h_i_d.html">BlueZHID</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html">BlueZHostController</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An implementation of the <code>BluetoothHostControllerInterface</code> using BlueZ.  <a href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_s_p_p.html">BlueZSPP</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_connection.html">DBusConnection</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,12 +210,21 @@ Variables</h2></td></tr>
 <tr class="memitem:ab86564879fa131e74ea00a2354d0bea3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ab86564879fa131e74ea00a2354d0bea3">BLUEZ_DEVICE_METHOD_DISCONNECT</a> = &quot;Disconnect&quot;</td></tr>
 <tr class="memdesc:ab86564879fa131e74ea00a2354d0bea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 method to disconnect.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ab86564879fa131e74ea00a2354d0bea3">More...</a><br /></td></tr>
 <tr class="separator:ab86564879fa131e74ea00a2354d0bea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c371926bc859f925a9c397c59aed18a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a6c371926bc859f925a9c397c59aed18a">BLUZ_DEVICE_METHOD_CONNECT_PROFILE</a> = &quot;ConnectProfile&quot;</td></tr>
+<tr class="memdesc:a6c371926bc859f925a9c397c59aed18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 method to connect profile.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a6c371926bc859f925a9c397c59aed18a">More...</a><br /></td></tr>
+<tr class="separator:a6c371926bc859f925a9c397c59aed18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a33688e712ec250ba00f7e2bd0fdd81"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a9a33688e712ec250ba00f7e2bd0fdd81">BLUZ_DEVICE_METHOD_DISCONNECT_PROFILE</a> = &quot;DisconnectProfile&quot;</td></tr>
+<tr class="memdesc:a9a33688e712ec250ba00f7e2bd0fdd81"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 method to disconnect profile.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a9a33688e712ec250ba00f7e2bd0fdd81">More...</a><br /></td></tr>
+<tr class="separator:a9a33688e712ec250ba00f7e2bd0fdd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0123c5478c78e9160c0cc39e7759058e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a0123c5478c78e9160c0cc39e7759058e">BLUEZ_DEVICE_PROPERTY_PAIRED</a> = &quot;Paired&quot;</td></tr>
 <tr class="memdesc:a0123c5478c78e9160c0cc39e7759058e"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 paired property.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a0123c5478c78e9160c0cc39e7759058e">More...</a><br /></td></tr>
 <tr class="separator:a0123c5478c78e9160c0cc39e7759058e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ae6e1a8fac41ba09fd85abe444eec53"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a7ae6e1a8fac41ba09fd85abe444eec53">BLUEZ_DEVICE_PROPERTY_CONNECTED</a> = &quot;Connected&quot;</td></tr>
 <tr class="memdesc:a7ae6e1a8fac41ba09fd85abe444eec53"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 connected property.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a7ae6e1a8fac41ba09fd85abe444eec53">More...</a><br /></td></tr>
 <tr class="separator:a7ae6e1a8fac41ba09fd85abe444eec53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32bb02d3490765821562324b2a5b97af"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a32bb02d3490765821562324b2a5b97af">BLUEZ_DEVICE_PROPERTY_CLASS</a> = &quot;Class&quot;</td></tr>
+<tr class="memdesc:a32bb02d3490765821562324b2a5b97af"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Device1 class property.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a32bb02d3490765821562324b2a5b97af">More...</a><br /></td></tr>
+<tr class="separator:a32bb02d3490765821562324b2a5b97af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a234ce143713e003d6e3babf74e2b7979"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a234ce143713e003d6e3babf74e2b7979">BLUEZ_ADAPTER_REMOVE_DEVICE</a> = &quot;RemoveDevice&quot;</td></tr>
 <tr class="memdesc:a234ce143713e003d6e3babf74e2b7979"><td class="mdescLeft">&#160;</td><td class="mdescRight">BlueZ org.bluez.Adapter1 method to remove device.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a234ce143713e003d6e3babf74e2b7979">More...</a><br /></td></tr>
 <tr class="separator:a234ce143713e003d6e3babf74e2b7979"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,6 +263,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;BlueZDeviceManager&quot;}</td></tr>
 <tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
 <tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;BlueZHFP&quot;}</td></tr>
+<tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
+<tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;BlueZHID&quot;}</td></tr>
+<tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
+<tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;BlueZHostController&quot;}</td></tr>
 <tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
 <tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -272,6 +293,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a6bc1734fb18f157f0aba5b26e3293fd6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a6bc1734fb18f157f0aba5b26e3293fd6">DEFAULT_NAME</a> = &quot;Device&quot;</td></tr>
 <tr class="memdesc:a6bc1734fb18f157f0aba5b26e3293fd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fallback device name.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a6bc1734fb18f157f0aba5b26e3293fd6">More...</a><br /></td></tr>
 <tr class="separator:a6bc1734fb18f157f0aba5b26e3293fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;BlueZSPP&quot;}</td></tr>
+<tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
+<tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad01f6f0e39c688b091431e24036559bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">TAG</a> {&quot;DBusConnection&quot;}</td></tr>
 <tr class="memdesc:ad01f6f0e39c688b091431e24036559bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#ad01f6f0e39c688b091431e24036559bd">More...</a><br /></td></tr>
 <tr class="separator:ad01f6f0e39c688b091431e24036559bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -900,6 +924,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a32bb02d3490765821562324b2a5b97af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32bb02d3490765821562324b2a5b97af">&#9670;&nbsp;</a></span>BLUEZ_DEVICE_PROPERTY_CLASS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::BLUEZ_DEVICE_PROPERTY_CLASS = &quot;Class&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>BlueZ org.bluez.Device1 class property. </p>
+
+</div>
+</div>
 <a id="a7ae6e1a8fac41ba09fd85abe444eec53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ae6e1a8fac41ba09fd85abe444eec53">&#9670;&nbsp;</a></span>BLUEZ_DEVICE_PROPERTY_CONNECTED</h2>
 
@@ -1017,6 +1065,54 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>A BlueZ connect error indicating authentication was rejected. </p>
+
+</div>
+</div>
+<a id="a6c371926bc859f925a9c397c59aed18a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c371926bc859f925a9c397c59aed18a">&#9670;&nbsp;</a></span>BLUZ_DEVICE_METHOD_CONNECT_PROFILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::BLUZ_DEVICE_METHOD_CONNECT_PROFILE = &quot;ConnectProfile&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>BlueZ org.bluez.Device1 method to connect profile. </p>
+
+</div>
+</div>
+<a id="a9a33688e712ec250ba00f7e2bd0fdd81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a33688e712ec250ba00f7e2bd0fdd81">&#9670;&nbsp;</a></span>BLUZ_DEVICE_METHOD_DISCONNECT_PROFILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::BLUZ_DEVICE_METHOD_DISCONNECT_PROFILE = &quot;DisconnectProfile&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>BlueZ org.bluez.Device1 method to disconnect profile. </p>
 
 </div>
 </div>
@@ -2114,31 +2210,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[1/15]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;GVariantMapReader&quot;}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
-<a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[2/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[1/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2162,7 +2234,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[3/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[2/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2171,7 +2243,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;DBusObjectBase&quot;}</td>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;GVariantMapReader&quot;}</td>
         </tr>
       </table>
   </td>
@@ -2186,7 +2258,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[4/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[3/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2210,7 +2282,31 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[5/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[4/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;DBusObjectBase&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[5/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2234,7 +2330,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[6/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[6/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2258,7 +2354,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[7/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[7/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2282,55 +2378,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[8/15]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZUtils&quot;}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
-<a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[9/15]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHostController&quot;}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
-<a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[10/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[8/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2354,7 +2402,127 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[11/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[9/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHostController&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[10/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZUtils&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[11/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHID&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[12/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZSPP&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[13/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::bluetoothImplementations::blueZ::TAG {&quot;BlueZHFP&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="ad01f6f0e39c688b091431e24036559bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[14/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2378,7 +2546,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[12/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[15/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2402,7 +2570,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[13/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[16/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2426,7 +2594,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[14/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[17/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2450,7 +2618,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01f6f0e39c688b091431e24036559bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[15/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01f6f0e39c688b091431e24036559bd">&#9670;&nbsp;</a></span>TAG <span class="overload">[18/18]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2499,7 +2667,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

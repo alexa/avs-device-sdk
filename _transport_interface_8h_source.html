@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_transport_interface_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -108,39 +108,39 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">isConnected</a>() = 0;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a07c5e01fbbf98789d7a4214d4db3780f">send</a>(std::shared_ptr&lt;avsCommon::avs::MessageRequest&gt; request) = 0;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">TransportInterface</a>(<span class="keyword">const</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; rhs) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">operator=</a>(<span class="keyword">const</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; rhs) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9936c548f13019cb9532b8a22918ddc6">~TransportInterface</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">   87</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">TransportInterface::TransportInterface</a>() : <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">RequiresShutdown</a>{<span class="stringliteral">&quot;TransportInterface&quot;</span>} {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}  <span class="comment">// namespace acl</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTINTERFACE_H_</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9a935a1941ed58b98d93aa3911164f8b">onRequestEnqueued</a>() = 0;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">TransportInterface</a>(<span class="keyword">const</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; rhs) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">operator=</a>(<span class="keyword">const</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a>&amp; rhs) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9936c548f13019cb9532b8a22918ddc6">~TransportInterface</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">   85</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">TransportInterface::TransportInterface</a>() : <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">RequiresShutdown</a>{<span class="stringliteral">&quot;TransportInterface&quot;</span>} {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}  <span class="comment">// namespace acl</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTINTERFACE_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></div><div class="ttdef"><b>Definition:</b> RequiresShutdown.h:32</div></div>
 <div class="ttc" id="a_message_request_8h_html"><div class="ttname"><a href="_message_request_8h.html">MessageRequest.h</a></div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a6bb150f6f32190c7b334dc3e82fd1be3"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a6bb150f6f32190c7b334dc3e82fd1be3">alexaClientSDK::acl::TransportInterface::connect</a></div><div class="ttdeci">virtual bool connect()=0</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_ae9dd6ce2dc8aad15a269189a16dd75f5"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">alexaClientSDK::acl::TransportInterface::operator=</a></div><div class="ttdeci">TransportInterface &amp; operator=(const TransportInterface &amp;rhs)=delete</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a07c5e01fbbf98789d7a4214d4db3780f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a07c5e01fbbf98789d7a4214d4db3780f">alexaClientSDK::acl::TransportInterface::send</a></div><div class="ttdeci">virtual void send(std::shared_ptr&lt; avsCommon::avs::MessageRequest &gt; request)=0</div></div>
 <div class="ttc" id="a_requires_shutdown_8h_html"><div class="ttname"><a href="_requires_shutdown_8h.html">RequiresShutdown.h</a></div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a60baae3ab3469c7b858b3297540b5988"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">alexaClientSDK::acl::TransportInterface::isConnected</a></div><div class="ttdeci">virtual bool isConnected()=0</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a9936c548f13019cb9532b8a22918ddc6"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9936c548f13019cb9532b8a22918ddc6">alexaClientSDK::acl::TransportInterface::~TransportInterface</a></div><div class="ttdeci">virtual ~TransportInterface()=default</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a21b0b623af40d2eb6dc3716e03c22aaf"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">alexaClientSDK::acl::TransportInterface::TransportInterface</a></div><div class="ttdeci">TransportInterface()</div><div class="ttdef"><b>Definition:</b> TransportInterface.h:87</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a21b0b623af40d2eb6dc3716e03c22aaf"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">alexaClientSDK::acl::TransportInterface::TransportInterface</a></div><div class="ttdeci">TransportInterface()</div><div class="ttdef"><b>Definition:</b> TransportInterface.h:85</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_aa504ad3378271829731b0cd0a40398ae"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#aa504ad3378271829731b0cd0a40398ae">alexaClientSDK::acl::TransportInterface::disconnect</a></div><div class="ttdeci">virtual void disconnect()=0</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></div><div class="ttdef"><b>Definition:</b> TransportInterface.h:31</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_interface_html_a9a935a1941ed58b98d93aa3911164f8b"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9a935a1941ed58b98d93aa3911164f8b">alexaClientSDK::acl::TransportInterface::onRequestEnqueued</a></div><div class="ttdeci">virtual void onRequestEnqueued()=0</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

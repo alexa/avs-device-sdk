@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -144,9 +144,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a0e5ba82a4fcf54f83464cb9a9d944e91"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">AudioInputStream</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a269866d267e8991328744c2e662931d2">utils::sds::InProcessSDS</a></td></tr>
-<tr class="memdesc:a0e5ba82a4fcf54f83464cb9a9d944e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used store and stream binary data.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">More...</a><br /></td></tr>
-<tr class="separator:a0e5ba82a4fcf54f83464cb9a9d944e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab50c23baa96f369ea6478b78dac6ff7d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">AudioInputStream</a> = utils::sds::SharedDataStream&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html">utils::sds::InProcessSDSTraits</a> &gt;</td></tr>
+<tr class="memdesc:ab50c23baa96f369ea6478b78dac6ff7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used store and stream binary data.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">More...</a><br /></td></tr>
+<tr class="separator:ab50c23baa96f369ea6478b78dac6ff7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af58d993140a71e224a968ddc9f4d485c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af58d993140a71e224a968ddc9f4d485c">DirectiveHandlerConfiguration</a> = std::unordered_map&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1directive_routing_rule.html#a8c5d1cc2ef63f187585a0ddcc93fb303">directiveRoutingRule::DirectiveRoutingRule</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_blocking_policy.html">BlockingPolicy</a> &gt;</td></tr>
 <tr class="separator:af58d993140a71e224a968ddc9f4d485c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -178,6 +178,12 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a6726333d3cfb85879e33172f905baea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a64d6207438731fd2e40c98c3677c53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">ContentType</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53ae6a7228bfc2834b3ab2eee8e4572e06e">ContentType::MIXABLE</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53a54ee6cd231b32b315fd135a7851e0500">ContentType::NONMIXABLE</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53a0db45d2a4141101bdfe48e3314cfbca3">ContentType::UNDEFINED</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53afc1c628847fc7d46448e20887d278db7">ContentType::NUM_CONTENT_TYPE</a>
+ }</td></tr>
+<tr class="separator:a0a64d6207438731fd2e40c98c3677c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae31d62036894f4c57c46d65dee1482fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae31d62036894f4c57c46d65dee1482fc">ExceptionErrorType</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae31d62036894f4c57c46d65dee1482fcaba0e29c96a7dc2a0c3c7f3895dcaf79f">ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED</a>, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae31d62036894f4c57c46d65dee1482fca5a2ff7a2f2c3b40268e57995408f8e9d">ExceptionErrorType::UNSUPPORTED_OPERATION</a>, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae31d62036894f4c57c46d65dee1482fcae8c0c70879b5895c615677261d64a1ee">ExceptionErrorType::INTERNAL_ERROR</a>
@@ -193,6 +199,16 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0a0db45d2a4141101bdfe48e3314cfbca3">IndicatorState::UNDEFINED</a>
  }</td></tr>
 <tr class="separator:a6a5edb881441743163d6e1e4fd5423a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31e011146a25762bffff08aef6d8a361"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a> { <br />
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361a428429ba9ea83e4841036fb0508fd6dc">MixingBehavior::PRIMARY</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361a2ea61ca76199b605f3685c810cc8f067">MixingBehavior::MAY_DUCK</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361ad9a322c0a1036bdc8a81124babd4c573">MixingBehavior::MUST_PAUSE</a>, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361ab0a3cf02ac721776ee7c1c5c630a7834">MixingBehavior::MUST_STOP</a>, 
+<br />
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361a0db45d2a4141101bdfe48e3314cfbca3">MixingBehavior::UNDEFINED</a>
+<br />
+ }</td></tr>
+<tr class="separator:a31e011146a25762bffff08aef6d8a361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61e425aaa1522eafa6647f6b11cb9556"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> { <br />
 &#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556a6a216efc529825c60a4a4c0bc99ad77f">PlaybackButton::PLAY</a>, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556a291554596c183e837f0a6bec3767c891">PlaybackButton::PAUSE</a>, 
@@ -272,6 +288,10 @@ Functions</h2></td></tr>
 <tr class="separator:a8dc9bc386b1ddf2a3944bc8afd58b903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80971ec99b553980a79ce2a43b835c9d"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a80971ec99b553980a79ce2a43b835c9d">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">CapabilityTag</a> &amp;identifier)</td></tr>
 <tr class="separator:a80971ec99b553980a79ce2a43b835c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8268a635eea31e30200efaff850bb8a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab8268a635eea31e30200efaff850bb8a">contentTypeToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">ContentType</a> contentType)</td></tr>
+<tr class="separator:ab8268a635eea31e30200efaff850bb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870cdac730c56f76b5c257553e002f52"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a870cdac730c56f76b5c257553e002f52">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">ContentType</a> &amp;contentType)</td></tr>
+<tr class="separator:a870cdac730c56f76b5c257553e002f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ffb3ba6f9657ec6092520aefd2b7380"><td class="memItemLeft" align="right" valign="top">const std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a5ffb3ba6f9657ec6092520aefd2b7380">buildJsonEventString</a> (const std::string &amp;nameSpace, const std::string &amp;eventName, const std::string &amp;dialogRequestIdValue=&quot;&quot;, const std::string &amp;jsonPayloadValue=&quot;{}&quot;, const std::string &amp;jsonContext=&quot;&quot;)</td></tr>
 <tr class="separator:a5ffb3ba6f9657ec6092520aefd2b7380"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf9fc0345360034ddfef87875a87dad1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#adf9fc0345360034ddfef87875a87dad1">buildJsonEventString</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_header.html">AVSMessageHeader</a> &amp;eventHeader, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">AVSMessageEndpoint</a> &gt; &amp;endpoint=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">AVSMessageEndpoint</a> &gt;(), const std::string &amp;jsonPayloadValue=&quot;{}&quot;, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html">AVSContext</a> &gt; &amp;context=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html">AVSContext</a> &gt;())</td></tr>
@@ -288,10 +308,16 @@ Functions</h2></td></tr>
 <tr class="separator:a332ae2d994f93e312c438f3fb555ac7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b212635bfa8ba051063cbd465e9308"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a20b212635bfa8ba051063cbd465e9308">indicatorStateToInt</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> state)</td></tr>
 <tr class="separator:a20b212635bfa8ba051063cbd465e9308"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2b2013ac22038b6abb00776c91ecff3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af2b2013ac22038b6abb00776c91ecff3">intToIndicatorState</a> (int stateNum)</td></tr>
-<tr class="separator:af2b2013ac22038b6abb00776c91ecff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb92ac07379959c7ed28f97a029d5baa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#abb92ac07379959c7ed28f97a029d5baa">intToIndicatorState</a> (int stateNum)</td></tr>
+<tr class="separator:abb92ac07379959c7ed28f97a029d5baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cbd51cd6a7650cfa08420a0d25808de"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a2cbd51cd6a7650cfa08420a0d25808de">operator&lt;&lt;</a> (std::ostream &amp;stream, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> state)</td></tr>
 <tr class="separator:a2cbd51cd6a7650cfa08420a0d25808de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c2ea8b6286e5dca3dee5e3510f1930"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab6c2ea8b6286e5dca3dee5e3510f1930">mixingBehaviorToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a> behavior)</td></tr>
+<tr class="separator:ab6c2ea8b6286e5dca3dee5e3510f1930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ad717d266f9c61e30c2d2bd4652a93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab1ad717d266f9c61e30c2d2bd4652a93">getMixingBehavior</a> (const std::string &amp;input)</td></tr>
+<tr class="separator:ab1ad717d266f9c61e30c2d2bd4652a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e4a28b42fd27ea09f33f6ebbf64467"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a10e4a28b42fd27ea09f33f6ebbf64467">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a> &amp;behavior)</td></tr>
+<tr class="separator:a10e4a28b42fd27ea09f33f6ebbf64467"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7264635c4a1097b3ecdfa9e93f53ce6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad7264635c4a1097b3ecdfa9e93f53ce6">PlaybackButtonToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556">PlaybackButton</a> button)</td></tr>
 <tr class="separator:ad7264635c4a1097b3ecdfa9e93f53ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47d588d1db074cdc76e6685478d827e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a47d588d1db074cdc76e6685478d827e7">PlaybackToggleToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad9f7d4000e3b111db271f73d9e34604b">PlaybackToggle</a> toggle)</td></tr>
@@ -314,6 +340,8 @@ Functions</h2></td></tr>
 <tr class="separator:ad3c620e507489db593ebdd521071325b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a515dcdd94faf4e8958d4e07a8845f709"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a515dcdd94faf4e8958d4e07a8845f709">operator&gt;&gt;</a> (std::istream &amp;is, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47b">PlayerActivity</a> &amp;value)</td></tr>
 <tr class="separator:a515dcdd94faf4e8958d4e07a8845f709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68645e9da578ce8a13ec3e84fe7b1c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad68645e9da578ce8a13ec3e84fe7b1c9">operator==</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">PlayRequestor</a> &amp;playRequestorA, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">PlayRequestor</a> &amp;playRequestorB)</td></tr>
+<tr class="separator:ad68645e9da578ce8a13ec3e84fe7b1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af11a37b2716aa64332e2a3bc6c79060b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af11a37b2716aa64332e2a3bc6c79060b">requesterToString</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af31c9e4094c9b07b96d09d1ba44d13a5">Requester</a> requester)</td></tr>
 <tr class="separator:af11a37b2716aa64332e2a3bc6c79060b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae900f0690854919ef0de3475b8bf3c6d"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae900f0690854919ef0de3475b8bf3c6d">operator&lt;&lt;</a> (std::ostream &amp;stream, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af31c9e4094c9b07b96d09d1ba44d13a5">Requester</a> requester)</td></tr>
@@ -347,6 +375,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a57d4238c90e67d5d877c7a36e91cf7b6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a57d4238c90e67d5d877c7a36e91cf7b6">TAG</a> (&quot;DialogUXStateAggregator&quot;)</td></tr>
 <tr class="memdesc:a57d4238c90e67d5d877c7a36e91cf7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a57d4238c90e67d5d877c7a36e91cf7b6">More...</a><br /></td></tr>
 <tr class="separator:a57d4238c90e67d5d877c7a36e91cf7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c384c576c0a720b4ae2273bbe26ffe0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a2c384c576c0a720b4ae2273bbe26ffe0">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName)</td></tr>
+<tr class="separator:a2c384c576c0a720b4ae2273bbe26ffe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac6feef60386b431b33761dcf8c73b8b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#aac6feef60386b431b33761dcf8c73b8b">TAG</a> (&quot;EventBuilder&quot;)</td></tr>
 <tr class="memdesc:aac6feef60386b431b33761dcf8c73b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#aac6feef60386b431b33761dcf8c73b8b">More...</a><br /></td></tr>
 <tr class="separator:aac6feef60386b431b33761dcf8c73b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -465,6 +495,15 @@ Variables</h2></td></tr>
 <tr class="separator:ae6ee11f1b540ec54c98b8ad1cad7fbc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ce57fb4a0058f75a9d59eff7e8c1116"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a7ce57fb4a0058f75a9d59eff7e8c1116">SHORT_TIMEOUT</a> {200}</td></tr>
 <tr class="separator:a7ce57fb4a0058f75a9d59eff7e8c1116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c264a5d983d8411fc849a0519094219"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6c264a5d983d8411fc849a0519094219">CUSTOM_METRIC_PREFIX</a> = &quot;CUSTOM-&quot;</td></tr>
+<tr class="memdesc:a6c264a5d983d8411fc849a0519094219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom Metrics prefix used by <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">DialogUXStateAggregator</a>.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6c264a5d983d8411fc849a0519094219">More...</a><br /></td></tr>
+<tr class="separator:a6c264a5d983d8411fc849a0519094219"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a4b632ca62fbd9475a414467bec560b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a4b632ca62fbd9475a414467bec560b">LISTENING_TIMEOUT_EXPIRES</a> = &quot;LISTENING_TIMEOUT_EXPIRES&quot;</td></tr>
+<tr class="memdesc:a6a4b632ca62fbd9475a414467bec560b"><td class="mdescLeft">&#160;</td><td class="mdescRight">error metric for Listening timeout expires  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a4b632ca62fbd9475a414467bec560b">More...</a><br /></td></tr>
+<tr class="separator:a6a4b632ca62fbd9475a414467bec560b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56be1f2c888c39a2ff95471928f5217d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a56be1f2c888c39a2ff95471928f5217d">THINKING_TIMEOUT_EXPIRES</a> = &quot;THINKING_TIMEOUT_EXPIRES&quot;</td></tr>
+<tr class="memdesc:a56be1f2c888c39a2ff95471928f5217d"><td class="mdescLeft">&#160;</td><td class="mdescRight">error metric for Thinking timeout expires  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a56be1f2c888c39a2ff95471928f5217d">More...</a><br /></td></tr>
+<tr class="separator:a56be1f2c888c39a2ff95471928f5217d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5310ba02bc3850295ec127a4af65b3f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad5310ba02bc3850295ec127a4af65b3f">CONTEXT_KEY_STRING</a> = &quot;context&quot;</td></tr>
 <tr class="memdesc:ad5310ba02bc3850295ec127a4af65b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context key in the event.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad5310ba02bc3850295ec127a4af65b3f">More...</a><br /></td></tr>
 <tr class="separator:ad5310ba02bc3850295ec127a4af65b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -536,14 +575,14 @@ Variables</h2></td></tr>
 <tr class="separator:ad50aa573295bd5924140d452dd842055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a0e5ba82a4fcf54f83464cb9a9d944e91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e5ba82a4fcf54f83464cb9a9d944e91">&#9670;&nbsp;</a></span>AudioInputStream</h2>
+<a id="ab50c23baa96f369ea6478b78dac6ff7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab50c23baa96f369ea6478b78dac6ff7d">&#9670;&nbsp;</a></span>AudioInputStream</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0e5ba82a4fcf54f83464cb9a9d944e91">alexaClientSDK::avsCommon::avs::AudioInputStream</a> = typedef <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a269866d267e8991328744c2e662931d2">utils::sds::InProcessSDS</a></td>
+          <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">alexaClientSDK::avsCommon::avs::AudioInputStream</a> = typedef utils::sds::SharedDataStream&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html">utils::sds::InProcessSDSTraits</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -587,7 +626,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>An enum class indicating possible response from the endpoint on a controller API call. Response are derived from </p><dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/docs/device-apis/alexa-errorresponse.html">https://developer.amazon.com/docs/device-apis/alexa-errorresponse.html</a> </dd></dl>
+<p>An enum class indicating possible response from the endpoint on a controller API call. Response are derived from </p><dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/docs/alexa/device-apis/alexa-errorresponse.html">https://developer.amazon.com/docs/alexa/device-apis/alexa-errorresponse.html</a> </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6726333d3cfb85879e33172f905baea2ad0749aaba8b833466dfcbb0428e4f89c"></a>SUCCESS&#160;</td><td class="fielddoc"><p>Success. </p>
 </td></tr>
@@ -623,6 +662,38 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a6726333d3cfb85879e33172f905baea2a3ab1c057d7e180919d36b03d921eb57a"></a>TEMPERATURE_VALUE_OUT_OF_RANGE&#160;</td><td class="fielddoc"><p>The endpoint can't be set to the specified value because it's outside the acceptable temperature range. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a6726333d3cfb85879e33172f905baea2aa4cc566642dfcc62a204b2e89e3cae3b"></a>VALUE_OUT_OF_RANGE&#160;</td><td class="fielddoc"><p>The endpoint can't be set to the specified value because it's outside the acceptable range. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a0a64d6207438731fd2e40c98c3677c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a64d6207438731fd2e40c98c3677c53">&#9670;&nbsp;</a></span>ContentType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">alexaClientSDK::avsCommon::avs::ContentType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0a64d6207438731fd2e40c98c3677c53ae6a7228bfc2834b3ab2eee8e4572e06e"></a>MIXABLE&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity is mixable with other channels Such Activities may duck upon receiving <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275a87ed58ce5596142e11cb65deb049bb4b" title="Represents the intermediate level focus a Channel can have.">FocusState::BACKGROUND</a> focus </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a0a64d6207438731fd2e40c98c3677c53a54ee6cd231b32b315fd135a7851e0500"></a>NONMIXABLE&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity is not mixable with other channels Such Activities must pause upon receiving <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275a87ed58ce5596142e11cb65deb049bb4b" title="Represents the intermediate level focus a Channel can have.">FocusState::BACKGROUND</a> focus </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a0a64d6207438731fd2e40c98c3677c53a0db45d2a4141101bdfe48e3314cfbca3"></a>UNDEFINED&#160;</td><td class="fielddoc"><p>Indicates that the corresponding ContentType was undefined/unitialized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a0a64d6207438731fd2e40c98c3677c53afc1c628847fc7d46448e20887d278db7"></a>NUM_CONTENT_TYPE&#160;</td><td class="fielddoc"><p>Indicates the Number of <code>ContentType</code> enumerations. </p>
 </td></tr>
 </table>
 
@@ -714,6 +785,40 @@ Variables</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6a5edb881441743163d6e1e4fd5423a0a88559a0cfd8250c9d65970cc145c92d4"></a>OFF&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6a5edb881441743163d6e1e4fd5423a0a90651ebea9a35ec4e018c8157492e17c"></a>ON&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a6a5edb881441743163d6e1e4fd5423a0a0db45d2a4141101bdfe48e3314cfbca3"></a>UNDEFINED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a31e011146a25762bffff08aef6d8a361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31e011146a25762bffff08aef6d8a361">&#9670;&nbsp;</a></span>MixingBehavior</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">alexaClientSDK::avsCommon::avs::MixingBehavior</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a31e011146a25762bffff08aef6d8a361a428429ba9ea83e4841036fb0508fd6dc"></a>PRIMARY&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity is the primary Activity on the AFML Channel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a31e011146a25762bffff08aef6d8a361a2ea61ca76199b605f3685c810cc8f067"></a>MAY_DUCK&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity may duck If ducking is not possible, the Activity must pause instead </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a31e011146a25762bffff08aef6d8a361ad9a322c0a1036bdc8a81124babd4c573"></a>MUST_PAUSE&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity must pause. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a31e011146a25762bffff08aef6d8a361ab0a3cf02ac721776ee7c1c5c630a7834"></a>MUST_STOP&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity must stop. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a31e011146a25762bffff08aef6d8a361a0db45d2a4141101bdfe48e3314cfbca3"></a>UNDEFINED&#160;</td><td class="fielddoc"><p>Indicates that the corresponding Activity may adopt any one of the above behaviors. </p>
+</td></tr>
 </table>
 
 </div>
@@ -902,7 +1007,11 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>An enum class used to specify the refresh policy for the state information provided by a <code>stateProviderInterface</code>. The <code>stateProviderInterface</code> must specify the refresh policy when it updates its state via <code>setState</code>. </p>
+<p>An enum class used to specify the refresh policy for the state information provided by a <code>stateProviderInterface</code>. The <code>stateProviderInterface</code> must specify the refresh policy when it updates its state via <code>setState</code>.</p>
+<p>Note: When a <code>stateProviderInterface</code> provides an empty state, the behavior is as follows:</p><ul>
+<li>For <code>StateRefreshPolicy</code> <code>ALWAYS</code> and <code>NEVER</code>, the empty state is included in the context.</li>
+<li>For <code>StateRefreshPolicy</code> <code>SOMETIMES</code>, the empty state is NOT included in the context. </li>
+</ul>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6dceaef43ef22e8f83382c0072f0cd7ca443475558f0168dff92ecde26b98ae5a"></a>NEVER&#160;</td><td class="fielddoc"><p>Indicates to the ContextManager that the state information need not be updated on a <code>getContext</code> request. The <code>stateProviderInterface</code> is responsible for updating its state manually. </p>
 </td></tr>
@@ -1212,6 +1321,40 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab8268a635eea31e30200efaff850bb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8268a635eea31e30200efaff850bb8a">&#9670;&nbsp;</a></span>contentTypeToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::avs::contentTypeToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">ContentType</a>&#160;</td>
+          <td class="paramname"><em>contentType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function converts the provided <code>ContentType</code> to a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contentType</td><td>The <code>ContentType</code> to convert to a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string conversion of <code>contentType</code>. </dd></dl>
+
+</div>
+</div>
 <a id="ae416994da32607bb94784396f751c6fa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae416994da32607bb94784396f751c6fa">&#9670;&nbsp;</a></span>convertToValue()</h2>
 
@@ -1291,6 +1434,39 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab1ad717d266f9c61e30c2d2bd4652a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1ad717d266f9c61e30c2d2bd4652a93">&#9670;&nbsp;</a></span>getMixingBehavior()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a> alexaClientSDK::avsCommon::avs::getMixingBehavior </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function reverse maps the provided string to corresponding MixingBehavior Implementation as specified by mixingBehaviorToString </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>string to convert to corresponding MixingBehavior </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>MixingBehavior</code> that corresponds to the input string. In case of error the API returns <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53a0db45d2a4141101bdfe48e3314cfbca3" title="Indicates that the corresponding ContentType was undefined/unitialized.">MixingBehavior::UNDEFINED</a> </dd></dl>
+
+</div>
+</div>
 <a id="a20b212635bfa8ba051063cbd465e9308"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20b212635bfa8ba051063cbd465e9308">&#9670;&nbsp;</a></span>indicatorStateToInt()</h2>
 
@@ -1325,8 +1501,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af2b2013ac22038b6abb00776c91ecff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2b2013ac22038b6abb00776c91ecff3">&#9670;&nbsp;</a></span>intToIndicatorState()</h2>
+<a id="abb92ac07379959c7ed28f97a029d5baa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb92ac07379959c7ed28f97a029d5baa">&#9670;&nbsp;</a></span>intToIndicatorState()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1335,7 +1511,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> alexaClientSDK::avsCommon::avs::intToIndicatorState </td>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6a5edb881441743163d6e1e4fd5423a0">IndicatorState</a> alexaClientSDK::avsCommon::avs::intToIndicatorState </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>stateNum</em></td><td>)</td>
@@ -1356,6 +1532,40 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The IndicatorState representation of stateNum or nullptr if stateNum is invalid. </dd></dl>
+
+</div>
+</div>
+<a id="ab6c2ea8b6286e5dca3dee5e3510f1930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c2ea8b6286e5dca3dee5e3510f1930">&#9670;&nbsp;</a></span>mixingBehaviorToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::avs::mixingBehaviorToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a>&#160;</td>
+          <td class="paramname"><em>behavior</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function converts the provided <code>MixingBehavior</code> to a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">behavior</td><td>The <code>MixingBehavior</code> to convert to a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string conversion of <code>behavior</code>. </dd></dl>
 
 </div>
 </div>
@@ -1544,7 +1754,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4cf7de0359a1d9b5b7a37633354bbd48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cf7de0359a1d9b5b7a37633354bbd48">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cf7de0359a1d9b5b7a37633354bbd48">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1589,7 +1799,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7c03504af12853a6a16d7f525a0f906b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c03504af12853a6a16d7f525a0f906b">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c03504af12853a6a16d7f525a0f906b">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[2/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1634,7 +1844,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab4059f173861c459d472189724825c73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4059f173861c459d472189724825c73">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[3/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4059f173861c459d472189724825c73">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[3/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1679,7 +1889,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a80971ec99b553980a79ce2a43b835c9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80971ec99b553980a79ce2a43b835c9d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a80971ec99b553980a79ce2a43b835c9d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[4/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1723,8 +1933,53 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a870cdac730c56f76b5c257553e002f52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a870cdac730c56f76b5c257553e002f52">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::avs::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53">ContentType</a> &amp;&#160;</td>
+          <td class="paramname"><em>contentType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>ContentType</code> value to an <code>ostream</code> as a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">contenType</td><td>The <code>ContentType</code> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
 <a id="a6f52765b8c90313829f1f0b55b798aa6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f52765b8c90313829f1f0b55b798aa6">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[5/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f52765b8c90313829f1f0b55b798aa6">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[6/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1768,8 +2023,53 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a10e4a28b42fd27ea09f33f6ebbf64467"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10e4a28b42fd27ea09f33f6ebbf64467">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[7/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::avs::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">MixingBehavior</a> &amp;&#160;</td>
+          <td class="paramname"><em>behavior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>MixingBehavior</code> value to an <code>ostream</code> as a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">behavior</td><td>The <code>MixingBehavior</code> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
 <a id="a4c22420ec46081a4ee74a8ac7af8578e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c22420ec46081a4ee74a8ac7af8578e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[6/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c22420ec46081a4ee74a8ac7af8578e">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[8/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1814,7 +2114,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a803356bb92899e370bdb557e98c0cdad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a803356bb92899e370bdb557e98c0cdad">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[7/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a803356bb92899e370bdb557e98c0cdad">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[9/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1859,7 +2159,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a52bae26e13bf24009c4635e804f5e146"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52bae26e13bf24009c4635e804f5e146">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[8/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a52bae26e13bf24009c4635e804f5e146">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[10/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1904,7 +2204,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad3c620e507489db593ebdd521071325b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3c620e507489db593ebdd521071325b">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[9/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3c620e507489db593ebdd521071325b">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[11/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1949,7 +2249,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7406edde3044e40da6d6980b6161d86c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7406edde3044e40da6d6980b6161d86c">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[10/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7406edde3044e40da6d6980b6161d86c">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[12/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1985,7 +2285,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2cbd51cd6a7650cfa08420a0d25808de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cbd51cd6a7650cfa08420a0d25808de">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[11/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cbd51cd6a7650cfa08420a0d25808de">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[13/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2021,7 +2321,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae900f0690854919ef0de3475b8bf3c6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae900f0690854919ef0de3475b8bf3c6d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[12/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae900f0690854919ef0de3475b8bf3c6d">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[14/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2066,7 +2366,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a328cbb36f3a115ed3e1346f0eca02004"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a328cbb36f3a115ed3e1346f0eca02004">&#9670;&nbsp;</a></span>operator==() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a328cbb36f3a115ed3e1346f0eca02004">&#9670;&nbsp;</a></span>operator==() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2103,7 +2403,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad44d74f49b2dcf4289876e8d0a8db1a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad44d74f49b2dcf4289876e8d0a8db1a1">&#9670;&nbsp;</a></span>operator==() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44d74f49b2dcf4289876e8d0a8db1a1">&#9670;&nbsp;</a></span>operator==() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2140,7 +2440,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5a90aa545e196f4e327cde09ab07b36d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a90aa545e196f4e327cde09ab07b36d">&#9670;&nbsp;</a></span>operator==() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a90aa545e196f4e327cde09ab07b36d">&#9670;&nbsp;</a></span>operator==() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2176,7 +2476,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9757cb5209be77d3903af2659fd24bd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9757cb5209be77d3903af2659fd24bd7">&#9670;&nbsp;</a></span>operator==() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9757cb5209be77d3903af2659fd24bd7">&#9670;&nbsp;</a></span>operator==() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2212,8 +2512,44 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad68645e9da578ce8a13ec3e84fe7b1c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68645e9da578ce8a13ec3e84fe7b1c9">&#9670;&nbsp;</a></span>operator==() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::avs::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">PlayRequestor</a> &amp;&#160;</td>
+          <td class="paramname"><em>playRequestorA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">PlayRequestor</a> &amp;&#160;</td>
+          <td class="paramname"><em>playRequestorB</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a157cfd08f7258492f0c8a76f5de01b34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a157cfd08f7258492f0c8a76f5de01b34">&#9670;&nbsp;</a></span>operator==() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a157cfd08f7258492f0c8a76f5de01b34">&#9670;&nbsp;</a></span>operator==() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2667,6 +3003,49 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the string converted succesfully, else <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a2c384c576c0a720b4ae2273bbe26ffe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c384c576c0a720b4ae2273bbe26ffe0">&#9670;&nbsp;</a></span>submitMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::avsCommon::avs::submitMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Submits a metric of given event name </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The <code>MetricRecorderInterface</code> which records Metric events </td></tr>
+    <tr><td class="paramname">eventName</td><td>The name of the metric event </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -3192,6 +3571,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The correlation token key. </p>
+
+</div>
+</div>
+<a id="a6c264a5d983d8411fc849a0519094219"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c264a5d983d8411fc849a0519094219">&#9670;&nbsp;</a></span>CUSTOM_METRIC_PREFIX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::avsCommon::avs::CUSTOM_METRIC_PREFIX = &quot;CUSTOM-&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Custom Metrics prefix used by <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">DialogUXStateAggregator</a>. </p>
 
 </div>
 </div>
@@ -3843,6 +4246,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a6a4b632ca62fbd9475a414467bec560b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a4b632ca62fbd9475a414467bec560b">&#9670;&nbsp;</a></span>LISTENING_TIMEOUT_EXPIRES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::avsCommon::avs::LISTENING_TIMEOUT_EXPIRES = &quot;LISTENING_TIMEOUT_EXPIRES&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>error metric for Listening timeout expires </p>
+
+</div>
+</div>
 <a id="ae6ee11f1b540ec54c98b8ad1cad7fbc4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae6ee11f1b540ec54c98b8ad1cad7fbc4">&#9670;&nbsp;</a></span>MAX_FRIENDLY_NAME_LENGTH</h2>
 
@@ -4202,6 +4629,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a56be1f2c888c39a2ff95471928f5217d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56be1f2c888c39a2ff95471928f5217d">&#9670;&nbsp;</a></span>THINKING_TIMEOUT_EXPIRES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::avsCommon::avs::THINKING_TIMEOUT_EXPIRES = &quot;THINKING_TIMEOUT_EXPIRES&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>error metric for Thinking timeout expires </p>
+
+</div>
+</div>
 <a id="a504756bddaca51ce72faf8ff094d47ce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a504756bddaca51ce72faf8ff094d47ce">&#9670;&nbsp;</a></span>TIME_OF_SAMPLE_KEY_STRING</h2>
 
@@ -4269,7 +4720,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Key used to identify an the uncertainty in milliseconds related to the time of sample. For more information: <a href="https://developer.amazon.com/docs/alexa-voice-service/reportable-state-properties.html#property-object">https://developer.amazon.com/docs/alexa-voice-service/reportable-state-properties.html#property-object</a> </p>
+<p>Key used to identify an the uncertainty in milliseconds related to the time of sample. For more information: <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/reportable-state-properties.html#property-object">https://developer.amazon.com/docs/alexa/alexa-voice-service/reportable-state-properties.html#property-object</a> </p>
 
 </div>
 </div>
@@ -4325,7 +4776,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

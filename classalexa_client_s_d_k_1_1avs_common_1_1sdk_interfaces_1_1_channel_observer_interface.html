@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,6 +83,7 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::ChannelObserve
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface_inherit__map">
 <area shape="rect" title=" " alt="" coords="5,943,225,995"/>
+<area shape="rect" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_channel_observer.html" title="MockChannelObserver for tests." alt="" coords="275,761,469,800"/>
 <area shape="rect" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html" title="A test observer that mocks out the ChannelObserverInterface#onFocusChanged() call." alt="" coords="298,824,445,863"/>
 <area shape="rect" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title=" " alt="" coords="273,887,470,925"/>
 <area shape="rect" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html" title="A test observer that mocks out the ChannelObserverInterface#onFocusChanged() call." alt="" coords="280,949,464,988"/>
@@ -120,8 +121,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::ChannelObserve
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a451bc071c57df259d0a3c801926aba4b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html#a451bc071c57df259d0a3c801926aba4b">~ChannelObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a451bc071c57df259d0a3c801926aba4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfbd6cd87686a49ce2a51a637750eaeb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html#adfbd6cd87686a49ce2a51a637750eaeb">onFocusChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avs::FocusState</a> newFocus)=0</td></tr>
-<tr class="separator:adfbd6cd87686a49ce2a51a637750eaeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0985c489d2a9c144a2a91c7b209eb43"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html#aa0985c489d2a9c144a2a91c7b209eb43">onFocusChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avs::FocusState</a> newFocus, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avs::MixingBehavior</a> behavior)=0</td></tr>
+<tr class="separator:aa0985c489d2a9c144a2a91c7b209eb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html">ChannelObserverInterface</a> is an interface class that clients can extend to register for focus changes. </p>
@@ -153,8 +154,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="adfbd6cd87686a49ce2a51a637750eaeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfbd6cd87686a49ce2a51a637750eaeb">&#9670;&nbsp;</a></span>onFocusChanged()</h2>
+<a id="aa0985c489d2a9c144a2a91c7b209eb43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0985c489d2a9c144a2a91c7b209eb43">&#9670;&nbsp;</a></span>onFocusChanged()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,8 +167,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::ChannelObserverInterface::onFocusChanged </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avs::FocusState</a>&#160;</td>
-          <td class="paramname"><em>newFocus</em></td><td>)</td>
+          <td class="paramname"><em>newFocus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avs::MixingBehavior</a>&#160;</td>
+          <td class="paramname"><em>behavior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -180,11 +191,13 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newFocus</td><td>The new Focus of the channel. </td></tr>
+    <tr><td class="paramname">behavior</td><td>The mixingBehavior for the ChannelObserver to take as per the interrupt model </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>when newFocus is FocusState::FOREGROUND, the MixingBehavior shall be guaranteed to be PRIMARY when newFocus is FocusState::NONE, the MixingBehavior shall be guaranteed to be MUST_STOP </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#ab63458984e8abac5b7fd8df22149cf9b">alexaClientSDK::avsCommon::avs::CapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a891351809cc48b7d706567a6c5072fd1">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a891351809cc48b7d706567a6c5072fd1">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a891351809cc48b7d706567a6c5072fd1">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a891351809cc48b7d706567a6c5072fd1">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a08c9b5a5cf3e24b23500964340add7d7">alexaClientSDK::afml::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a591864696e1e04e2935d0db644cd15c6">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html#abd384872970c0be00fae82f3283f03c3">alexaClientSDK::capabilityAgents::bluetooth::Bluetooth</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a568d271fd04d11d79882d2cb6bf29cbb">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#af5b017ccdc1e0f6ce15131f48a22240f">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#a668e0e4648bf40aef21cf7206f9e12fd">alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a107eb9e4bea891e9dc5ff4fe7523861d">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#a5ea985055d5ee659359b0b8a881580df">alexaClientSDK::avsCommon::avs::CapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a5634bf811d1885b40e77ed47dd9f9dd5">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a5634bf811d1885b40e77ed47dd9f9dd5">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#ae5ddff5db0e9cdbb17470a49d30faa29">alexaClientSDK::afml::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a5634bf811d1885b40e77ed47dd9f9dd5">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#a5634bf811d1885b40e77ed47dd9f9dd5">alexaClientSDK::integration::test::TestClient</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_channel_observer.html#a474f5661d0aebfb65402f04cf1f9a51c">alexaClientSDK::afml::test::MockChannelObserver</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aa5c3cc30dd32870ba0a9d4e4daa7e533">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html#a91dc50c1a8a7a1d0e943dcba64315e39">alexaClientSDK::capabilityAgents::bluetooth::Bluetooth</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a42b57885352db556197a1c00cea31dc7">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a529623007385df0c2a08dae01215e6a4">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#a5b451acf062c9158cb33a99c9bf2b019">alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a28d3f6cdff590b0af48b81086ef129a2">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a>.</p>
 
 </div>
 </div>
@@ -195,7 +208,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

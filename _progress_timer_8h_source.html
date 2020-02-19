@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_progress_timer_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -114,104 +114,108 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html#a4d30aa47332880855cbe152c0f2d5743">~ContextInterface</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#aaa01331847ecd668ad7ffcb344340876">   65</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::chrono::milliseconds <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#aaa01331847ecd668ad7ffcb344340876">NO_DELAY</a>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afa3ef3ec5cbcd9adadd2820f2daa375a">   68</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::chrono::milliseconds <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afa3ef3ec5cbcd9adadd2820f2daa375a">NO_INTERVAL</a>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a3dcd4c796edbc826163b0255e918109f">ProgressTimer</a>();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a37793c44e89f6882a773f1aaf12b9db0">~ProgressTimer</a>();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a93d6e7a535f6616cf49f9d855edacac2">init</a>(</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">const</span> std::shared_ptr&lt;ContextInterface&gt;&amp; context,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        std::chrono::milliseconds delay,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        std::chrono::milliseconds interval,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        std::chrono::milliseconds offset = std::chrono::milliseconds::zero());</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a59c86369460ee327a3144b9cde037128">start</a>();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a82e206a504e288fdb7355dc4f91d4b92">pause</a>();</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a10dad245876833723ffc919dbdb7652f">resume</a>();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a6476a7d49c0dceec72458a24d84efb5c">stop</a>();</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a8ceb8da007755d49941ea9cc5b3b69fa">onProgress</a>(std::chrono::milliseconds progress);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">enum class</span> State {</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47baa5daf7f2ebbba4975d61dab1c40188c7">IDLE</a>,</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        INITIALIZED,</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        RUNNING,</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47ba99b2439e63f73ad515f7ab2447a80673">PAUSED</a>,</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        STOPPING,</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    };</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#ad5f2fec36319c3f6b1923b76072b5567">operator&lt;&lt;</a>(std::ostream&amp; stream, ProgressTimer::State state);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">bool</span> setState(State newState);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">void</span> startThread();</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">void</span> mainLoop();</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordtype">bool</span> updateTargetLocked();</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    std::mutex m_callMutex;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    std::mutex m_stateMutex;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    State m_state;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    std::shared_ptr&lt;ContextInterface&gt; m_context;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    std::chrono::milliseconds m_delay;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    std::chrono::milliseconds m_interval;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    std::chrono::milliseconds m_offset;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    std::chrono::milliseconds m_target;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">bool</span> m_gotProgress;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    std::chrono::milliseconds m_progress;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    std::condition_variable m_wake;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    std::thread m_thread;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;};</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a7c782f8556c1a7d4abf9c3db6fe9f13c">   65</a></span>&#160;    <span class="keyword">static</span> std::chrono::milliseconds <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a7c782f8556c1a7d4abf9c3db6fe9f13c">getNoDelay</a>() {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span> std::chrono::milliseconds::max();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afacf0b4d277aa9335689e63edbda9aef">   70</a></span>&#160;    <span class="keyword">static</span> std::chrono::milliseconds <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afacf0b4d277aa9335689e63edbda9aef">getNoInterval</a>() {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> std::chrono::milliseconds::max();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a3dcd4c796edbc826163b0255e918109f">ProgressTimer</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a37793c44e89f6882a773f1aaf12b9db0">~ProgressTimer</a>();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a93d6e7a535f6616cf49f9d855edacac2">init</a>(</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">const</span> std::shared_ptr&lt;ContextInterface&gt;&amp; context,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        std::chrono::milliseconds delay,</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        std::chrono::milliseconds interval,</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        std::chrono::milliseconds offset = std::chrono::milliseconds::zero());</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a59c86369460ee327a3144b9cde037128">start</a>();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a82e206a504e288fdb7355dc4f91d4b92">pause</a>();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a10dad245876833723ffc919dbdb7652f">resume</a>();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a6476a7d49c0dceec72458a24d84efb5c">stop</a>();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a8ceb8da007755d49941ea9cc5b3b69fa">onProgress</a>(std::chrono::milliseconds progress);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">enum class</span> State {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47baa5daf7f2ebbba4975d61dab1c40188c7">IDLE</a>,</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        INITIALIZED,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        RUNNING,</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47ba99b2439e63f73ad515f7ab2447a80673">PAUSED</a>,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        STOPPING,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    };</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#ad5f2fec36319c3f6b1923b76072b5567">operator&lt;&lt;</a>(std::ostream&amp; stream, ProgressTimer::State state);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">bool</span> setState(State newState);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">void</span> startThread();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordtype">void</span> mainLoop();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">bool</span> updateTargetLocked();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    std::mutex m_callMutex;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    std::mutex m_stateMutex;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    State m_state;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    std::shared_ptr&lt;ContextInterface&gt; m_context;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    std::chrono::milliseconds m_delay;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    std::chrono::milliseconds m_interval;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    std::chrono::milliseconds m_offset;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    std::chrono::milliseconds m_target;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordtype">bool</span> m_gotProgress;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    std::chrono::milliseconds m_progress;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    std::condition_variable m_wake;</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;}  <span class="comment">// namespace audioPlayer</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;}  <span class="comment">// namespace capabilityAgents</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    std::thread m_thread;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;};</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PROGRESSTIMER_H_</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}  <span class="comment">// namespace audioPlayer</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}  <span class="comment">// namespace capabilityAgents</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_AUDIOPLAYER_INCLUDE_AUDIOPLAYER_PROGRESSTIMER_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a8ceb8da007755d49941ea9cc5b3b69fa"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a8ceb8da007755d49941ea9cc5b3b69fa">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::onProgress</a></div><div class="ttdeci">void onProgress(std::chrono::milliseconds progress)</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:200</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a10dad245876833723ffc919dbdb7652f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a10dad245876833723ffc919dbdb7652f">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::resume</a></div><div class="ttdeci">void resume()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:154</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a93d6e7a535f6616cf49f9d855edacac2"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a93d6e7a535f6616cf49f9d855edacac2">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::init</a></div><div class="ttdeci">void init(const std::shared_ptr&lt; ContextInterface &gt; &amp;context, std::chrono::milliseconds delay, std::chrono::milliseconds interval, std::chrono::milliseconds offset=std::chrono::milliseconds::zero())</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:78</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a8ceb8da007755d49941ea9cc5b3b69fa"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a8ceb8da007755d49941ea9cc5b3b69fa">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::onProgress</a></div><div class="ttdeci">void onProgress(std::chrono::milliseconds progress)</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:197</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a10dad245876833723ffc919dbdb7652f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a10dad245876833723ffc919dbdb7652f">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::resume</a></div><div class="ttdeci">void resume()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:151</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a93d6e7a535f6616cf49f9d855edacac2"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a93d6e7a535f6616cf49f9d855edacac2">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::init</a></div><div class="ttdeci">void init(const std::shared_ptr&lt; ContextInterface &gt; &amp;context, std::chrono::milliseconds delay, std::chrono::milliseconds interval, std::chrono::milliseconds offset=std::chrono::milliseconds::zero())</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:75</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1avs_html_af150b2d10515e0e7347e09a69986a47ba99b2439e63f73ad515f7ab2447a80673"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47ba99b2439e63f73ad515f7ab2447a80673">alexaClientSDK::avsCommon::avs::PlayerActivity::PAUSED</a></div><div class="ttdoc">Indicates that the audio stream has been paused.</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a37793c44e89f6882a773f1aaf12b9db0"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a37793c44e89f6882a773f1aaf12b9db0">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::~ProgressTimer</a></div><div class="ttdeci">virtual ~ProgressTimer()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:74</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a6476a7d49c0dceec72458a24d84efb5c"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a6476a7d49c0dceec72458a24d84efb5c">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:167</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a37793c44e89f6882a773f1aaf12b9db0"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a37793c44e89f6882a773f1aaf12b9db0">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::~ProgressTimer</a></div><div class="ttdeci">virtual ~ProgressTimer()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:71</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a6476a7d49c0dceec72458a24d84efb5c"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a6476a7d49c0dceec72458a24d84efb5c">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:164</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface_html_a4d30aa47332880855cbe152c0f2d5743"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html#a4d30aa47332880855cbe152c0f2d5743">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ContextInterface::~ContextInterface</a></div><div class="ttdeci">virtual ~ContextInterface()=default</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ContextInterface</a></div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:41</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_afacf0b4d277aa9335689e63edbda9aef"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afacf0b4d277aa9335689e63edbda9aef">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::getNoInterval</a></div><div class="ttdeci">static std::chrono::milliseconds getNoInterval()</div><div class="ttdoc">Static function member to get interval value for no ProgressReportIntervalElapsed notifications.</div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:70</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer</a></div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:34</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1avs_html_af150b2d10515e0e7347e09a69986a47baa5daf7f2ebbba4975d61dab1c40188c7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47baa5daf7f2ebbba4975d61dab1c40188c7">alexaClientSDK::avsCommon::avs::PlayerActivity::IDLE</a></div><div class="ttdoc">Initial state, prior to acting on the first Play directive.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface_html_a5244822a3c6810daabc9a5b748cce32a"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html#a5244822a3c6810daabc9a5b748cce32a">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ContextInterface::onProgressReportIntervalElapsed</a></div><div class="ttdeci">virtual void onProgressReportIntervalElapsed()=0</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a3dcd4c796edbc826163b0255e918109f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a3dcd4c796edbc826163b0255e918109f">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ProgressTimer</a></div><div class="ttdeci">ProgressTimer()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:42</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_ad5f2fec36319c3f6b1923b76072b5567"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#ad5f2fec36319c3f6b1923b76072b5567">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, ProgressTimer::State state)</div><div class="ttdoc">Friend declaration to allow streaming State values.</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:58</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a59c86369460ee327a3144b9cde037128"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a59c86369460ee327a3144b9cde037128">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:109</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a7c782f8556c1a7d4abf9c3db6fe9f13c"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a7c782f8556c1a7d4abf9c3db6fe9f13c">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::getNoDelay</a></div><div class="ttdeci">static std::chrono::milliseconds getNoDelay()</div><div class="ttdoc">Static function member to get delay value for no ProgressReportDelayElapsed notifications....</div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:65</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a3dcd4c796edbc826163b0255e918109f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a3dcd4c796edbc826163b0255e918109f">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ProgressTimer</a></div><div class="ttdeci">ProgressTimer()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:39</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_ad5f2fec36319c3f6b1923b76072b5567"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#ad5f2fec36319c3f6b1923b76072b5567">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, ProgressTimer::State state)</div><div class="ttdoc">Friend declaration to allow streaming State values.</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:55</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a59c86369460ee327a3144b9cde037128"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a59c86369460ee327a3144b9cde037128">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:106</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface_html_ae33f5fde2b2ebc57ecfe8b9ea245545a"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html#ae33f5fde2b2ebc57ecfe8b9ea245545a">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ContextInterface::onProgressReportDelayElapsed</a></div><div class="ttdeci">virtual void onProgressReportDelayElapsed()=0</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface_html_a5d6c6292580d7b878c5fd966c7074791"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_1_1_context_interface.html#a5d6c6292580d7b878c5fd966c7074791">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::ContextInterface::requestProgress</a></div><div class="ttdeci">virtual void requestProgress()=0</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a82e206a504e288fdb7355dc4f91d4b92"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a82e206a504e288fdb7355dc4f91d4b92">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::pause</a></div><div class="ttdeci">void pause()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:139</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_afa3ef3ec5cbcd9adadd2820f2daa375a"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#afa3ef3ec5cbcd9adadd2820f2daa375a">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::NO_INTERVAL</a></div><div class="ttdeci">static const std::chrono::milliseconds NO_INTERVAL</div><div class="ttdoc">Interval value for no ProgressReportIntervalElapsed notifications.</div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:68</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_aaa01331847ecd668ad7ffcb344340876"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#aaa01331847ecd668ad7ffcb344340876">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::NO_DELAY</a></div><div class="ttdeci">static const std::chrono::milliseconds NO_DELAY</div><div class="ttdoc">Delay value for no ProgressReportDelayElapsed notifications.</div><div class="ttdef"><b>Definition:</b> ProgressTimer.h:65</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer_html_a82e206a504e288fdb7355dc4f91d4b92"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_progress_timer.html#a82e206a504e288fdb7355dc4f91d4b92">alexaClientSDK::capabilityAgents::audioPlayer::ProgressTimer::pause</a></div><div class="ttdeci">void pause()</div><div class="ttdef"><b>Definition:</b> ProgressTimer.cpp:136</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

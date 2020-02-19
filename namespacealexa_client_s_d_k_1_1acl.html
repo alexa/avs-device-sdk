@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -103,6 +103,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html">MessageRequestHandler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html">MessageRequestQueue</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html">MessageRequestQueueInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html">MessageRouterInterface</a></td></tr>
@@ -126,6 +130,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_sequencer.html">PostConnectSequencer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_sequencer_factory.html">PostConnectSequencerFactory</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html">SynchronizedMessageRequestQueue</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html">TransportDefines</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,6 +161,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a65638c1fb9761b937511729e01aa5260"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a65638c1fb9761b937511729e01aa5260">TAG</a> (&quot;MessageRequestHandler&quot;)</td></tr>
 <tr class="memdesc:a65638c1fb9761b937511729e01aa5260"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a65638c1fb9761b937511729e01aa5260">More...</a><br /></td></tr>
 <tr class="separator:a65638c1fb9761b937511729e01aa5260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d23da5df2e1c2eaffdcc046ffd1b0e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a66d23da5df2e1c2eaffdcc046ffd1b0e">collectSendDataResultMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, int count, const std::string &amp;readStatus)</td></tr>
+<tr class="separator:a66d23da5df2e1c2eaffdcc046ffd1b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc56b59e347ef3c49f02ae4fba40c613"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#adc56b59e347ef3c49f02ae4fba40c613">TAG</a> (&quot;MessageRequestQueue&quot;)</td></tr>
+<tr class="memdesc:adc56b59e347ef3c49f02ae4fba40c613"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#adc56b59e347ef3c49f02ae4fba40c613">More...</a><br /></td></tr>
+<tr class="separator:adc56b59e347ef3c49f02ae4fba40c613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99fdf0bd9d52d4f3587cccb99a98969f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a99fdf0bd9d52d4f3587cccb99a98969f">TAG</a> (&quot;MessageRouter&quot;)</td></tr>
 <tr class="memdesc:a99fdf0bd9d52d4f3587cccb99a98969f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a99fdf0bd9d52d4f3587cccb99a98969f">More...</a><br /></td></tr>
 <tr class="separator:a99fdf0bd9d52d4f3587cccb99a98969f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +186,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a0c2f7f8067d245ae745364d0a973a3c1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a0c2f7f8067d245ae745364d0a973a3c1">TAG</a> (&quot;PostConnectSequencerFactory&quot;)</td></tr>
 <tr class="memdesc:a0c2f7f8067d245ae745364d0a973a3c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a0c2f7f8067d245ae745364d0a973a3c1">More...</a><br /></td></tr>
 <tr class="separator:a0c2f7f8067d245ae745364d0a973a3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47be99f9700b6c1fea52328ce4e1c39a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a47be99f9700b6c1fea52328ce4e1c39a">TAG</a> (&quot;SynchronizedMessageRequestQueue&quot;)</td></tr>
+<tr class="memdesc:a47be99f9700b6c1fea52328ce4e1c39a"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a47be99f9700b6c1fea52328ce4e1c39a">More...</a><br /></td></tr>
+<tr class="separator:a47be99f9700b6c1fea52328ce4e1c39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -198,6 +212,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a7a6592c43f3fe5f0703fec4f906dde09"><td class="memItemLeft" align="right" valign="top">static std::chrono::minutes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a7a6592c43f3fe5f0703fec4f906dde09">INACTIVITY_TIMEOUT</a> {5}</td></tr>
 <tr class="memdesc:a7a6592c43f3fe5f0703fec4f906dde09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout to send a ping to AVS if there has not been any other acitivity on the connection.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a7a6592c43f3fe5f0703fec4f906dde09">More...</a><br /></td></tr>
 <tr class="separator:a7a6592c43f3fe5f0703fec4f906dde09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca31bb6dd26a768c1400b3f11c684ec2"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#aca31bb6dd26a768c1400b3f11c684ec2">MESSAGE_QUEUE_TIMEOUT</a> = std::chrono::seconds(15)</td></tr>
+<tr class="memdesc:aca31bb6dd26a768c1400b3f11c684ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max time a <code>MessageRequest</code> should linger unprocessed before it should be consider TIMEDOUT.  <a href="namespacealexa_client_s_d_k_1_1acl.html#aca31bb6dd26a768c1400b3f11c684ec2">More...</a><br /></td></tr>
+<tr class="separator:aca31bb6dd26a768c1400b3f11c684ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac595895107f8819e2029af6ae40954bb"><td class="memItemLeft" align="right" valign="top">const static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac595895107f8819e2029af6ae40954bb">AVS_EVENT_URL_PATH_EXTENSION</a> = &quot;/v20160207/events&quot;</td></tr>
 <tr class="memdesc:ac595895107f8819e2029af6ae40954bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">URL to send events to.  <a href="namespacealexa_client_s_d_k_1_1acl.html#ac595895107f8819e2029af6ae40954bb">More...</a><br /></td></tr>
 <tr class="separator:ac595895107f8819e2029af6ae40954bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,6 +239,26 @@ Variables</h2></td></tr>
 <tr class="memitem:a4f01bd45ef0ebf04b5fd233f7f950221"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a4f01bd45ef0ebf04b5fd233f7f950221">MESSAGEREQUEST_ID_PREFIX</a> = &quot;AVSEvent-&quot;</td></tr>
 <tr class="memdesc:a4f01bd45ef0ebf04b5fd233f7f950221"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix for the ID of message requests.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a4f01bd45ef0ebf04b5fd233f7f950221">More...</a><br /></td></tr>
 <tr class="separator:a4f01bd45ef0ebf04b5fd233f7f950221"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69ceae99e6e47ef4b792abb0de3b13ce"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a69ceae99e6e47ef4b792abb0de3b13ce">ACL_METRIC_SOURCE_PREFIX</a> = &quot;ACL-&quot;</td></tr>
+<tr class="memdesc:a69ceae99e6e47ef4b792abb0de3b13ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix used to identify metrics published by this module.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a69ceae99e6e47ef4b792abb0de3b13ce">More...</a><br /></td></tr>
+<tr class="separator:a69ceae99e6e47ef4b792abb0de3b13ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a924cd96c884a045f06444369dd9c41bf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a924cd96c884a045f06444369dd9c41bf">SEND_DATA_ERROR</a> = &quot;ERROR.SEND_DATA_ERROR&quot;</td></tr>
+<tr class="memdesc:a924cd96c884a045f06444369dd9c41bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric identifier for send mime data error.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a924cd96c884a045f06444369dd9c41bf">More...</a><br /></td></tr>
+<tr class="separator:a924cd96c884a045f06444369dd9c41bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f51abe29d89595bcfcc0f3a8e84fa5d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a3f51abe29d89595bcfcc0f3a8e84fa5d">READ_STATUS_TAG</a> = &quot;READ_STATUS&quot;</td></tr>
+<tr class="memdesc:a3f51abe29d89595bcfcc0f3a8e84fa5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read status tag.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a3f51abe29d89595bcfcc0f3a8e84fa5d">More...</a><br /></td></tr>
+<tr class="separator:a3f51abe29d89595bcfcc0f3a8e84fa5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04b4629d8eeeb8f4d6160217922e86d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a04b4629d8eeeb8f4d6160217922e86d6">ERROR_READ_OVERRUN</a> = &quot;READ_OVERRUN&quot;</td></tr>
+<tr class="memdesc:a04b4629d8eeeb8f4d6160217922e86d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read overrun error.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a04b4629d8eeeb8f4d6160217922e86d6">More...</a><br /></td></tr>
+<tr class="separator:a04b4629d8eeeb8f4d6160217922e86d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9270b35aafea5b866a4b7d5e2dea701f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a9270b35aafea5b866a4b7d5e2dea701f">ERROR_INTERNAL</a> = &quot;INTERNAL_ERROR&quot;</td></tr>
+<tr class="memdesc:a9270b35aafea5b866a4b7d5e2dea701f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal error.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a9270b35aafea5b866a4b7d5e2dea701f">More...</a><br /></td></tr>
+<tr class="separator:a9270b35aafea5b866a4b7d5e2dea701f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ffca4e566bfdad41d9631d274d426f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a72ffca4e566bfdad41d9631d274d426f">SEND_COMPLETED</a> = &quot;SEND_COMPLETED&quot;</td></tr>
+<tr class="memdesc:a72ffca4e566bfdad41d9631d274d426f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send completed.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a72ffca4e566bfdad41d9631d274d426f">More...</a><br /></td></tr>
+<tr class="separator:a72ffca4e566bfdad41d9631d274d426f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac76e81166c0156ad3da073320ec94b37"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac76e81166c0156ad3da073320ec94b37">EMPTY_QUEUE_NAME</a> = &quot;&quot;</td></tr>
+<tr class="separator:ac76e81166c0156ad3da073320ec94b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95e03383846e9fe3372619d7976b99ee"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a95e03383846e9fe3372619d7976b99ee">X_AMZN_REQUESTID_PREFIX</a> = &quot;x-amzn-requestid:&quot;</td></tr>
 <tr class="memdesc:a95e03383846e9fe3372619d7976b99ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prefix of request IDs passed back in the header of AVS replies.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a95e03383846e9fe3372619d7976b99ee">More...</a><br /></td></tr>
 <tr class="separator:a95e03383846e9fe3372619d7976b99ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,6 +288,57 @@ Variables</h2></td></tr>
 <tr class="separator:a001bbe37d78fbb47507c4402a7920c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a66d23da5df2e1c2eaffdcc046ffd1b0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d23da5df2e1c2eaffdcc046ffd1b0e">&#9670;&nbsp;</a></span>collectSendDataResultMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acl::collectSendDataResultMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>readStatus</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Capture metric for the last send data result.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The metric recorder object. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of errors. </td></tr>
+    <tr><td class="paramname">readStatus</td><td>The read status. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2fa363fbf0864cee86273f59ecc4ea8e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2fa363fbf0864cee86273f59ecc4ea8e">&#9670;&nbsp;</a></span>operator&lt;&lt;()</h2>
 
@@ -352,7 +440,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a85d1de5e3765c5897f6e2a3742845222"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85d1de5e3765c5897f6e2a3742845222">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d1de5e3765c5897f6e2a3742845222">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -380,7 +468,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="afccc8a1e23dde7851b9f1b375ded13c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afccc8a1e23dde7851b9f1b375ded13c8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afccc8a1e23dde7851b9f1b375ded13c8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -408,7 +496,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a01400ba9ddf0fda7d49c091b10f37cf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01400ba9ddf0fda7d49c091b10f37cf9">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a01400ba9ddf0fda7d49c091b10f37cf9">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +524,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3af97973c2d1e0bcc9a0f89aeea1e29e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3af97973c2d1e0bcc9a0f89aeea1e29e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3af97973c2d1e0bcc9a0f89aeea1e29e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -464,7 +552,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a65638c1fb9761b937511729e01aa5260"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65638c1fb9761b937511729e01aa5260">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a65638c1fb9761b937511729e01aa5260">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,8 +579,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="adc56b59e347ef3c49f02ae4fba40c613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc56b59e347ef3c49f02ae4fba40c613">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;MessageRequestQueue&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="a99fdf0bd9d52d4f3587cccb99a98969f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99fdf0bd9d52d4f3587cccb99a98969f">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a99fdf0bd9d52d4f3587cccb99a98969f">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,7 +636,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae52a94f9546731ec3fd127b1f7f0ce7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae52a94f9546731ec3fd127b1f7f0ce7e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae52a94f9546731ec3fd127b1f7f0ce7e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -548,7 +664,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a53850046260ea9cc5aa5dbd3cdde0bf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53850046260ea9cc5aa5dbd3cdde0bf7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a53850046260ea9cc5aa5dbd3cdde0bf7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[9/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +692,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6bd700f75ca78470bdf146ac35f68923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bd700f75ca78470bdf146ac35f68923">&#9670;&nbsp;</a></span>TAG() <span class="overload">[9/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bd700f75ca78470bdf146ac35f68923">&#9670;&nbsp;</a></span>TAG() <span class="overload">[10/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -604,7 +720,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0c2f7f8067d245ae745364d0a973a3c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c2f7f8067d245ae745364d0a973a3c1">&#9670;&nbsp;</a></span>TAG() <span class="overload">[10/10]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c2f7f8067d245ae745364d0a973a3c1">&#9670;&nbsp;</a></span>TAG() <span class="overload">[11/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -631,7 +747,59 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a47be99f9700b6c1fea52328ce4e1c39a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47be99f9700b6c1fea52328ce4e1c39a">&#9670;&nbsp;</a></span>TAG() <span class="overload">[12/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;SynchronizedMessageRequestQueue&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a69ceae99e6e47ef4b792abb0de3b13ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69ceae99e6e47ef4b792abb0de3b13ce">&#9670;&nbsp;</a></span>ACL_METRIC_SOURCE_PREFIX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::ACL_METRIC_SOURCE_PREFIX = &quot;ACL-&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prefix used to identify metrics published by this module. </p>
+
+</div>
+</div>
 <a id="ac10faf1e5bf481dd7a953a82de016742"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac10faf1e5bf481dd7a953a82de016742">&#9670;&nbsp;</a></span>ATTACHMENT_CONTENT_TYPE</h2>
 
@@ -824,6 +992,76 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ac76e81166c0156ad3da073320ec94b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac76e81166c0156ad3da073320ec94b37">&#9670;&nbsp;</a></span>EMPTY_QUEUE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::EMPTY_QUEUE_NAME = &quot;&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9270b35aafea5b866a4b7d5e2dea701f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9270b35aafea5b866a4b7d5e2dea701f">&#9670;&nbsp;</a></span>ERROR_INTERNAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::ERROR_INTERNAL = &quot;INTERNAL_ERROR&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Internal error. </p>
+
+</div>
+</div>
+<a id="a04b4629d8eeeb8f4d6160217922e86d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04b4629d8eeeb8f4d6160217922e86d6">&#9670;&nbsp;</a></span>ERROR_READ_OVERRUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::ERROR_READ_OVERRUN = &quot;READ_OVERRUN&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read overrun error. </p>
+
+</div>
+</div>
 <a id="aaa1190700da733de1e5c13fc653e7355"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaa1190700da733de1e5c13fc653e7355">&#9670;&nbsp;</a></span>ESTABLISH_CONNECTION_TIMEOUT</h2>
 
@@ -943,6 +1181,30 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>The maximum number of streams we can have active at once. Please see here for more information: <a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection">https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/managing-an-http-2-connection</a> </p>
+
+</div>
+</div>
+<a id="aca31bb6dd26a768c1400b3f11c684ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca31bb6dd26a768c1400b3f11c684ec2">&#9670;&nbsp;</a></span>MESSAGE_QUEUE_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::chrono::seconds alexaClientSDK::acl::MESSAGE_QUEUE_TIMEOUT = std::chrono::seconds(15)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Max time a <code>MessageRequest</code> should linger unprocessed before it should be consider TIMEDOUT. </p>
 
 </div>
 </div>
@@ -1162,6 +1424,78 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a3f51abe29d89595bcfcc0f3a8e84fa5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f51abe29d89595bcfcc0f3a8e84fa5d">&#9670;&nbsp;</a></span>READ_STATUS_TAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::READ_STATUS_TAG = &quot;READ_STATUS&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read status tag. </p>
+
+</div>
+</div>
+<a id="a72ffca4e566bfdad41d9631d274d426f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ffca4e566bfdad41d9631d274d426f">&#9670;&nbsp;</a></span>SEND_COMPLETED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::SEND_COMPLETED = &quot;SEND_COMPLETED&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send completed. </p>
+
+</div>
+</div>
+<a id="a924cd96c884a045f06444369dd9c41bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a924cd96c884a045f06444369dd9c41bf">&#9670;&nbsp;</a></span>SEND_DATA_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::SEND_DATA_ERROR = &quot;ERROR.SEND_DATA_ERROR&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Metric identifier for send mime data error. </p>
+
+</div>
+</div>
 <a id="af4106be84e76e23a265df54dab0664e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4106be84e76e23a265df54dab0664e8">&#9670;&nbsp;</a></span>STREAM_PROGRESS_TIMEOUT</h2>
 
@@ -1214,7 +1548,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,7 +77,10 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;future&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;<a class="el" href="_content_type_8h_source.html">AVSCommon/AVS/ContentType.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_channel_observer_interface_8h_source.html">ChannelObserverInterface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_focus_manager_observer_interface_8h_source.html">FocusManagerObserverInterface.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -85,13 +88,18 @@ Include dependency graph for FocusManagerInterface.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_focus_manager_interface_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8h">
-<area shape="rect" title=" " alt="" coords="71,5,312,71"/>
+<area shape="rect" title=" " alt="" coords="187,5,428,71"/>
 <area shape="rect" title=" " alt="" coords="5,119,61,144"/>
 <area shape="rect" title=" " alt="" coords="85,119,154,144"/>
-<area shape="rect" title=" " alt="" coords="237,265,291,291"/>
-<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="229,119,418,144"/>
-<area shape="rect" href="_focus_manager_observer_interface_8h.html" title=" " alt="" coords="442,119,670,144"/>
-<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="229,192,442,217"/>
+<area shape="rect" title=" " alt="" coords="179,119,237,144"/>
+<area shape="rect" title=" " alt="" coords="458,265,512,291"/>
+<area shape="rect" title=" " alt="" coords="312,119,370,144"/>
+<area shape="rect" href="_content_type_8h.html" title=" " alt="" coords="149,192,370,217"/>
+<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="468,119,657,144"/>
+<area shape="rect" href="_focus_manager_observer_interface_8h.html" title=" " alt="" coords="688,119,916,144"/>
+<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="704,192,917,217"/>
+<area shape="rect" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="444,192,680,217"/>
+<area shape="rect" title=" " alt="" coords="776,265,845,291"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -99,54 +107,56 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_focus_manager_interface_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8hdep" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_focus_manager_interface_8hdep">
-<area shape="rect" title=" " alt="" coords="3309,5,3549,71"/>
-<area shape="rect" href="_focus_manager_8h.html" title=" " alt="" coords="1172,125,1343,177"/>
-<area shape="rect" href="_audio_activity_tracker_8cpp.html" title=" " alt="" coords="4738,125,4925,177"/>
-<area shape="rect" href="_visual_activity_tracker_8cpp.html" title=" " alt="" coords="4949,125,5138,177"/>
-<area shape="rect" href="_visual_activity_tracker_test_8cpp.html" title=" " alt="" coords="5162,125,5355,177"/>
-<area shape="rect" href="_external_media_player_interface_8h.html" title=" " alt="" coords="694,119,935,184"/>
-<area shape="rect" href="_external_media_player_8h.html" title=" " alt="" coords="5,232,242,311"/>
-<area shape="rect" href="_mock_focus_manager_8h.html" title=" " alt="" coords="3198,119,3418,184"/>
-<area shape="rect" href="_audio_input_processor_8h.html" title=" " alt="" coords="1996,125,2252,177"/>
-<area shape="rect" href="_alerts_capability_agent_8h.html" title=" " alt="" coords="1601,119,1764,184"/>
-<area shape="rect" href="_audio_player_8h.html" title=" " alt="" coords="3441,119,3660,184"/>
-<area shape="rect" href="_bluetooth_8h.html" title=" " alt="" coords="4271,119,4459,184"/>
-<area shape="rect" href="_m_r_m_capability_agent_8h.html" title=" " alt="" coords="4482,119,4715,184"/>
-<area shape="rect" href="_speech_synthesizer_8h.html" title=" " alt="" coords="2620,119,2889,184"/>
-<area shape="rect" href="_template_runtime_8h.html" title=" " alt="" coords="3871,119,4118,184"/>
-<area shape="rect" href="_focus_manager_8cpp.html" title=" " alt="" coords="266,252,491,291"/>
-<area shape="rect" href="_focus_manager_test_8cpp.html" title=" " alt="" coords="514,245,718,297"/>
-<area shape="rect" href="_default_client_8h.html" title=" " alt="" coords="2533,359,2760,424"/>
-<area shape="rect" href="_alerts_integration_test_8cpp.html" title=" " alt="" coords="1278,245,1450,297"/>
-<area shape="rect" href="_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="993,239,1204,304"/>
-<area shape="rect" href="_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2439,245,2649,297"/>
-<area shape="rect" href="_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="1474,239,1677,304"/>
-<area shape="rect" href="_default_client_8cpp.html" title=" " alt="" coords="2655,472,2883,524"/>
-<area shape="rect" href="_interaction_manager_8h.html" title=" " alt="" coords="2139,572,2362,624"/>
-<area shape="rect" href="_keyword_observer_8h.html" title=" " alt="" coords="2416,472,2631,524"/>
-<area shape="rect" href="_user_input_manager_8h.html" title=" " alt="" coords="2373,672,2592,724"/>
-<area shape="rect" href="_interaction_manager_8cpp.html" title=" " alt="" coords="2143,672,2350,724"/>
-<area shape="rect" href="_sample_application_8h.html" title=" " alt="" coords="2177,772,2396,824"/>
-<area shape="rect" href="_user_input_manager_8cpp.html" title=" " alt="" coords="2420,772,2622,824"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="2187,872,2386,911"/>
-<area shape="rect" href="_sample_application_8cpp.html" title=" " alt="" coords="2501,872,2781,911"/>
-<area shape="rect" href="_keyword_observer_8cpp.html" title=" " alt="" coords="2386,579,2662,617"/>
-<area shape="rect" href="_external_media_player_8cpp.html" title=" " alt="" coords="38,359,210,424"/>
-<area shape="rect" href="_external_media_player_test_8cpp.html" title=" " alt="" coords="2164,359,2361,424"/>
-<area shape="rect" href="_audio_input_processor_test_8cpp.html" title=" " alt="" coords="2860,239,3059,304"/>
-<area shape="rect" href="_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="2235,239,2415,304"/>
-<area shape="rect" href="_audio_player_test_8cpp.html" title=" " alt="" coords="3398,239,3596,304"/>
-<area shape="rect" href="_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="3134,239,3324,304"/>
-<area shape="rect" href="_template_runtime_test_8cpp.html" title=" " alt="" coords="3620,239,3798,304"/>
-<area shape="rect" href="_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="1701,239,1917,304"/>
-<area shape="rect" href="_audio_input_processor_8cpp.html" title=" " alt="" coords="1941,245,2160,297"/>
-<area shape="rect" href="_alerts_capability_agent_8cpp.html" title=" " alt="" coords="791,239,968,304"/>
-<area shape="rect" href="_audio_player_8cpp.html" title=" " alt="" coords="3823,245,4041,297"/>
-<area shape="rect" href="_bluetooth_8cpp.html" title=" " alt="" coords="4399,245,4587,297"/>
-<area shape="rect" href="_m_r_m_capability_agent_8cpp.html" title=" " alt="" coords="4713,245,4945,297"/>
-<area shape="rect" href="_m_r_m_capability_agent_test_8cpp.html" title=" " alt="" coords="4969,239,5180,304"/>
-<area shape="rect" href="_speech_synthesizer_8cpp.html" title=" " alt="" coords="2672,239,2837,304"/>
-<area shape="rect" href="_template_runtime_8cpp.html" title=" " alt="" coords="4166,239,4375,304"/>
+<area shape="rect" title=" " alt="" coords="2562,5,2803,71"/>
+<area shape="rect" href="_channel_8h.html" title=" " alt="" coords="1269,125,1440,177"/>
+<area shape="rect" href="_audio_activity_tracker_8cpp.html" title=" " alt="" coords="436,479,623,531"/>
+<area shape="rect" href="_focus_manager_8h.html" title=" " alt="" coords="1577,359,1748,411"/>
+<area shape="rect" href="_visual_activity_tracker_8cpp.html" title=" " alt="" coords="5,479,195,531"/>
+<area shape="rect" href="_visual_activity_tracker_test_8cpp.html" title=" " alt="" coords="218,479,411,531"/>
+<area shape="rect" href="_external_media_player_interface_8h.html" title=" " alt="" coords="2316,119,2556,184"/>
+<area shape="rect" href="_external_media_player_8h.html" title=" " alt="" coords="2293,345,2530,424"/>
+<area shape="rect" href="_mock_focus_manager_8h.html" title=" " alt="" coords="4514,352,4734,417"/>
+<area shape="rect" href="_audio_input_processor_8h.html" title=" " alt="" coords="2555,359,2810,411"/>
+<area shape="rect" href="_alerts_capability_agent_8h.html" title=" " alt="" coords="2834,352,2998,417"/>
+<area shape="rect" href="_audio_player_8h.html" title=" " alt="" coords="3401,352,3620,417"/>
+<area shape="rect" href="_bluetooth_8h.html" title=" " alt="" coords="4962,352,5150,417"/>
+<area shape="rect" href="_m_r_m_capability_agent_8h.html" title=" " alt="" coords="2849,119,3082,184"/>
+<area shape="rect" href="_speech_synthesizer_8h.html" title=" " alt="" coords="3108,352,3377,417"/>
+<area shape="rect" href="_template_runtime_8h.html" title=" " alt="" coords="5276,352,5524,417"/>
+<area shape="rect" href="_activity_tracker_interface_8h.html" title=" " alt="" coords="1011,239,1186,291"/>
+<area shape="rect" href="_audio_activity_tracker_8h.html" title=" " alt="" coords="1048,359,1219,411"/>
+<area shape="rect" href="_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="1338,472,1550,537"/>
+<area shape="rect" href="_visual_activity_tracker_8h.html" title=" " alt="" coords="853,359,1024,411"/>
+<area shape="rect" href="_channel_8cpp.html" title=" " alt="" coords="1262,245,1448,284"/>
+<area shape="rect" href="_audio_activity_tracker_test_8cpp.html" title=" " alt="" coords="647,479,838,531"/>
+<area shape="rect" href="_default_client_8h.html" title=" " alt="" coords="2921,472,3148,537"/>
+<area shape="rect" href="_default_client_8cpp.html" title=" " alt="" coords="2921,585,3149,637"/>
+<area shape="rect" href="_interaction_manager_8h.html" title=" " alt="" coords="2876,685,3099,737"/>
+<area shape="rect" href="_keyword_observer_8h.html" title=" " alt="" coords="2682,585,2897,637"/>
+<area shape="rect" href="_focus_manager_8cpp.html" title=" " alt="" coords="1089,485,1313,524"/>
+<area shape="rect" href="_focus_manager_test_8cpp.html" title=" " alt="" coords="862,479,1066,531"/>
+<area shape="rect" href="_alerts_integration_test_8cpp.html" title=" " alt="" coords="2725,479,2897,531"/>
+<area shape="rect" href="_audio_player_integration_test_8cpp.html" title=" " alt="" coords="3173,479,3382,531"/>
+<area shape="rect" href="_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="1575,472,1777,537"/>
+<area shape="rect" href="_external_media_player_8cpp.html" title=" " alt="" coords="1802,472,1974,537"/>
+<area shape="rect" href="_external_media_player_test_8cpp.html" title=" " alt="" coords="3796,472,3993,537"/>
+<area shape="rect" href="_sample_application_8h.html" title=" " alt="" coords="1998,479,2218,531"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="2009,592,2207,631"/>
+<area shape="rect" href="_audio_input_processor_test_8cpp.html" title=" " alt="" coords="4260,472,4460,537"/>
+<area shape="rect" href="_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="4483,472,4664,537"/>
+<area shape="rect" href="_audio_player_test_8cpp.html" title=" " alt="" coords="4901,472,5099,537"/>
+<area shape="rect" href="_bluetooth_test_8cpp.html" title=" " alt="" coords="5123,479,5339,531"/>
+<area shape="rect" href="_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="4688,472,4877,537"/>
+<area shape="rect" href="_template_runtime_test_8cpp.html" title=" " alt="" coords="5363,472,5541,537"/>
+<area shape="rect" href="_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="2486,472,2701,537"/>
+<area shape="rect" href="_audio_input_processor_8cpp.html" title=" " alt="" coords="2242,479,2462,531"/>
+<area shape="rect" href="_alerts_capability_agent_8cpp.html" title=" " alt="" coords="3406,472,3583,537"/>
+<area shape="rect" href="_audio_player_8cpp.html" title=" " alt="" coords="4017,479,4236,531"/>
+<area shape="rect" href="_bluetooth_8cpp.html" title=" " alt="" coords="5565,479,5753,531"/>
+<area shape="rect" href="_m_r_m_capability_agent_8cpp.html" title=" " alt="" coords="3072,239,3304,291"/>
+<area shape="rect" href="_m_r_m_capability_agent_test_8cpp.html" title=" " alt="" coords="2786,232,2997,297"/>
+<area shape="rect" href="_speech_synthesizer_8cpp.html" title=" " alt="" coords="3607,472,3772,537"/>
+<area shape="rect" href="_template_runtime_8cpp.html" title=" " alt="" coords="5777,472,5985,537"/>
 </map>
 </div>
 </div>
@@ -155,6 +165,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface_1_1_activity.html">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::Activity</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -171,7 +183,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

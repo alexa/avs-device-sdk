@@ -1,11 +1,12 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="643,5,863,71"/>
+<area shape="rect" id="node1" title=" " alt="" coords="775,5,995,71"/>
 <area shape="rect" id="node2" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="5,119,205,184"/>
 <area shape="rect" id="node3" href="$_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="228,119,409,184"/>
-<area shape="rect" id="node4" href="$_time_zone_handler_test_8cpp.html" title=" " alt="" coords="432,119,637,184"/>
-<area shape="rect" id="node5" href="$_mock_certified_sender_8h.html" title=" " alt="" coords="660,125,845,177"/>
-<area shape="rect" id="node7" href="$_registration_manager_test_8cpp.html" title=" " alt="" coords="869,125,1093,177"/>
-<area shape="rect" id="node8" href="$_setting_event_sender_test_8cpp.html" title=" " alt="" coords="1117,125,1320,177"/>
-<area shape="rect" id="node9" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title=" " alt="" coords="1344,125,1581,177"/>
-<area shape="rect" id="node6" href="$_mock_certified_sender_8cpp.html" title=" " alt="" coords="624,232,881,284"/>
+<area shape="rect" id="node4" href="$_report_state_handler_test_8cpp.html" title=" " alt="" coords="433,119,649,184"/>
+<area shape="rect" id="node5" href="$_time_zone_handler_test_8cpp.html" title=" " alt="" coords="673,119,878,184"/>
+<area shape="rect" id="node6" href="$_mock_certified_sender_8h.html" title=" " alt="" coords="902,125,1087,177"/>
+<area shape="rect" id="node8" href="$_registration_manager_test_8cpp.html" title=" " alt="" coords="1110,125,1334,177"/>
+<area shape="rect" id="node9" href="$_setting_event_sender_test_8cpp.html" title=" " alt="" coords="1358,125,1561,177"/>
+<area shape="rect" id="node10" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title=" " alt="" coords="1585,125,1822,177"/>
+<area shape="rect" id="node7" href="$_mock_certified_sender_8cpp.html" title=" " alt="" coords="866,232,1123,284"/>
 </map>

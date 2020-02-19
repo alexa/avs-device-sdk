@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,238,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="27,105,216,144"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,40,238,92"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device_observer.html" title=" " alt="" coords="286,5,527,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="312,81,501,120"/>
 </map>

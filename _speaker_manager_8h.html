@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,63 +89,66 @@ $(function() {
 <code>#include &lt;<a class="el" href="_speaker_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_manager_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_executor_8h_source.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_retry_timer_8h_source.html">AVSCommon/Utils/RetryTimer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_wait_event_8h_source.html">AVSCommon/Utils/WaitEvent.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SpeakerManager.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_speaker_manager_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2include_2_speaker_manager_2_speaker_manager_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2include_2_speaker_manager_2_speaker_manager_8h" id="_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2include_2_speaker_manager_2_speaker_manager_8h">
-<area shape="rect" title=" " alt="" coords="1322,5,1566,71"/>
-<area shape="rect" title=" " alt="" coords="5,559,61,584"/>
-<area shape="rect" title=" " alt="" coords="3245,645,3293,671"/>
-<area shape="rect" title=" " alt="" coords="1756,559,1825,584"/>
-<area shape="rect" title=" " alt="" coords="1339,559,1447,584"/>
-<area shape="rect" title=" " alt="" coords="1623,559,1681,584"/>
-<area shape="rect" href="_a_v_s_directive_8h.html" title=" " alt="" coords="2155,385,2378,411"/>
-<area shape="rect" href="_capability_agent_8h.html" title=" " alt="" coords="2143,119,2336,157"/>
-<area shape="rect" href="_capability_configuration_8h.html" title=" " alt="" coords="2806,465,2999,504"/>
-<area shape="rect" href="_capability_configuration_interface_8h.html" title=" " alt="" coords="1580,379,1806,417"/>
-<area shape="rect" href="_context_manager_interface_8h.html" title=" " alt="" coords="3354,292,3544,331"/>
-<area shape="rect" href="_message_sender_interface_8h.html" title=" " alt="" coords="1282,119,1472,157"/>
-<area shape="rect" href="_speaker_interface_8h.html" title=" " alt="" coords="243,639,434,677"/>
-<area shape="rect" href="_speaker_manager_interface_8h.html" title=" " alt="" coords="139,465,330,504"/>
-<area shape="rect" href="_speaker_manager_observer_interface_8h.html" title=" " alt="" coords="136,552,381,591"/>
-<area shape="rect" href="_requires_shutdown_8h.html" title=" " alt="" coords="1019,465,1207,504"/>
-<area shape="rect" href="_executor_8h.html" title=" " alt="" coords="708,465,902,504"/>
-<area shape="rect" title=" " alt="" coords="2507,472,2580,497"/>
-<area shape="rect" title=" " alt="" coords="2629,645,2683,671"/>
-<area shape="rect" title=" " alt="" coords="1263,559,1315,584"/>
-<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="2084,465,2297,504"/>
-<area shape="rect" href="_a_v_s_message_8h.html" title=" " alt="" coords="2321,472,2433,497"/>
-<area shape="rect" title=" " alt="" coords="2057,725,2119,751"/>
-<area shape="rect" href="_attachment_8h.html" title=" " alt="" coords="1900,552,2102,591"/>
-<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="1762,639,1963,677"/>
-<area shape="rect" href="_attachment_writer_8h.html" title=" " alt="" coords="1987,639,2189,677"/>
-<area shape="rect" title=" " alt="" coords="1095,645,1155,671"/>
-<area shape="rect" title=" " alt="" coords="1318,645,1375,671"/>
-<area shape="rect" title=" " alt="" coords="1896,725,1965,751"/>
-<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="3026,645,3221,671"/>
-<area shape="rect" href="_a_v_s_message_endpoint_8h.html" title=" " alt="" coords="2921,552,3135,591"/>
-<area shape="rect" href="_a_v_s_message_header_8h.html" title=" " alt="" coords="2379,552,2593,591"/>
-<area shape="rect" title=" " alt="" coords="3259,559,3375,584"/>
-<area shape="rect" href="_namespace_and_name_8h.html" title=" " alt="" coords="3073,465,3302,504"/>
-<area shape="rect" href="_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2467,205,2732,244"/>
-<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="2035,205,2228,244"/>
-<area shape="rect" href="_context_requester_interface_8h.html" title=" " alt="" coords="2529,379,2724,417"/>
-<area shape="rect" href="_state_provider_interface_8h.html" title=" " alt="" coords="2959,379,3150,417"/>
-<area shape="rect" href="_directive_handler_interface_8h.html" title=" " alt="" coords="2252,205,2443,244"/>
-<area shape="rect" href="_directive_handler_result_interface_8h.html" title=" " alt="" coords="1932,292,2156,331"/>
-<area shape="rect" href="_capability_tag_8h.html" title=" " alt="" coords="3399,552,3592,591"/>
-<area shape="rect" href="_exception_error_type_8h.html" title=" " alt="" coords="2303,292,2526,331"/>
-<area shape="rect" href="_state_refresh_policy_8h.html" title=" " alt="" coords="3174,379,3386,417"/>
-<area shape="rect" href="_alexa_state_change_cause_type_8h.html" title=" " alt="" coords="3667,552,3882,591"/>
-<area shape="rect" href="_context_manager_observer_interface_8h.html" title=" " alt="" coords="3511,465,3752,504"/>
-<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="1382,472,1631,497"/>
-<area shape="rect" title=" " alt="" coords="639,559,768,584"/>
-<area shape="rect" title=" " alt="" coords="456,559,514,584"/>
-<area shape="rect" title=" " alt="" coords="897,645,975,671"/>
-<area shape="rect" href="_task_thread_8h.html" title=" " alt="" coords="893,552,1088,591"/>
+<area shape="rect" title=" " alt="" coords="2059,5,2302,71"/>
+<area shape="rect" title=" " alt="" coords="365,559,420,584"/>
+<area shape="rect" title=" " alt="" coords="3549,299,3596,324"/>
+<area shape="rect" title=" " alt="" coords="2010,559,2079,584"/>
+<area shape="rect" title=" " alt="" coords="2740,299,2848,324"/>
+<area shape="rect" title=" " alt="" coords="3416,299,3473,324"/>
+<area shape="rect" href="_a_v_s_directive_8h.html" title=" " alt="" coords="1570,385,1793,411"/>
+<area shape="rect" href="_capability_agent_8h.html" title=" " alt="" coords="1942,119,2134,157"/>
+<area shape="rect" href="_capability_configuration_8h.html" title=" " alt="" coords="3011,205,3204,244"/>
+<area shape="rect" href="_capability_configuration_interface_8h.html" title=" " alt="" coords="2526,119,2752,157"/>
+<area shape="rect" href="_context_manager_interface_8h.html" title=" " alt="" coords="2873,292,3064,331"/>
+<area shape="rect" href="_message_sender_interface_8h.html" title=" " alt="" coords="2259,119,2449,157"/>
+<area shape="rect" href="_speaker_interface_8h.html" title=" " alt="" coords="151,639,341,677"/>
+<area shape="rect" href="_speaker_manager_interface_8h.html" title=" " alt="" coords="225,465,416,504"/>
+<area shape="rect" href="_speaker_manager_observer_interface_8h.html" title=" " alt="" coords="45,552,290,591"/>
+<area shape="rect" href="_metric_recorder_interface_8h.html" title=" " alt="" coords="3135,119,3314,157"/>
+<area shape="rect" href="_requires_shutdown_8h.html" title=" " alt="" coords="1217,465,1405,504"/>
+<area shape="rect" href="_executor_8h.html" title=" " alt="" coords="667,465,862,504"/>
+<area shape="rect" href="_retry_timer_8h.html" title=" " alt="" coords="3531,212,3742,237"/>
+<area shape="rect" href="_wait_event_8h.html" title=" " alt="" coords="987,472,1193,497"/>
+<area shape="rect" title=" " alt="" coords="1479,472,1551,497"/>
+<area shape="rect" title=" " alt="" coords="2416,645,2470,671"/>
+<area shape="rect" title=" " alt="" coords="999,559,1050,584"/>
+<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="1576,465,1788,504"/>
+<area shape="rect" href="_a_v_s_message_8h.html" title=" " alt="" coords="2268,472,2381,497"/>
+<area shape="rect" title=" " alt="" coords="1764,725,1826,751"/>
+<area shape="rect" href="_attachment_8h.html" title=" " alt="" coords="1480,552,1681,591"/>
+<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="1480,639,1681,677"/>
+<area shape="rect" title=" " alt="" coords="1057,645,1118,671"/>
+<area shape="rect" title=" " alt="" coords="1362,645,1420,671"/>
+<area shape="rect" title=" " alt="" coords="985,725,1054,751"/>
+<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="3246,645,3441,671"/>
+<area shape="rect" title=" " alt="" coords="3226,299,3341,324"/>
+<area shape="rect" href="_namespace_and_name_8h.html" title=" " alt="" coords="2607,465,2836,504"/>
+<area shape="rect" href="_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="1243,205,1508,244"/>
+<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="1532,205,1725,244"/>
+<area shape="rect" href="_context_requester_interface_8h.html" title=" " alt="" coords="2319,379,2514,417"/>
+<area shape="rect" href="_state_provider_interface_8h.html" title=" " alt="" coords="2691,379,2881,417"/>
+<area shape="rect" href="_directive_handler_interface_8h.html" title=" " alt="" coords="1749,205,1940,244"/>
+<area shape="rect" href="_directive_handler_result_interface_8h.html" title=" " alt="" coords="1767,292,1991,331"/>
+<area shape="rect" href="_capability_tag_8h.html" title=" " alt="" coords="2768,552,2961,591"/>
+<area shape="rect" href="_state_refresh_policy_8h.html" title=" " alt="" coords="3109,379,3321,417"/>
+<area shape="rect" href="_alexa_state_change_cause_type_8h.html" title=" " alt="" coords="2985,552,3200,591"/>
+<area shape="rect" href="_context_manager_observer_interface_8h.html" title=" " alt="" coords="2963,465,3204,504"/>
+<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="2268,212,2517,237"/>
+<area shape="rect" href="_metric_event_8h.html" title=" " alt="" coords="3228,205,3405,244"/>
+<area shape="rect" title=" " alt="" coords="1124,559,1253,584"/>
+<area shape="rect" title=" " alt="" coords="546,559,604,584"/>
+<area shape="rect" title=" " alt="" coords="511,645,589,671"/>
+<area shape="rect" href="_task_thread_8h.html" title=" " alt="" coords="679,552,874,591"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -191,7 +194,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

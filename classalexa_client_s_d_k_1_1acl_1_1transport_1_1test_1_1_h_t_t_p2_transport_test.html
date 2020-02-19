@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -146,6 +146,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a407667557836ad2841039c0641d4f773"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_post_connect.html">MockPostConnect</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#a407667557836ad2841039c0641d4f773">m_mockPostConnect</a></td></tr>
 <tr class="memdesc:a407667557836ad2841039c0641d4f773"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mock <code><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_post_connect_interface.html">PostConnectInterface</a></code>.  <a href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#a407667557836ad2841039c0641d4f773">More...</a><br /></td></tr>
 <tr class="separator:a407667557836ad2841039c0641d4f773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adedb4a11a57050c3142c08d8f4956249"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html">metrics::test::MockMetricRecorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#adedb4a11a57050c3142c08d8f4956249">m_mockMetricRecorder</a></td></tr>
+<tr class="memdesc:adedb4a11a57050c3142c08d8f4956249"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mock <code>MetricRecorder</code>.  <a href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#adedb4a11a57050c3142c08d8f4956249">More...</a><br /></td></tr>
+<tr class="separator:adedb4a11a57050c3142c08d8f4956249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78aca1691df377e4ec15d6a77ac5d722"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html">SynchronizedMessageRequestQueue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#a78aca1691df377e4ec15d6a77ac5d722">m_synchronizedMessageRequestQueue</a></td></tr>
+<tr class="memdesc:a78aca1691df377e4ec15d6a77ac5d722"><td class="mdescLeft">&#160;</td><td class="mdescRight">The message queue map.  <a href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#a78aca1691df377e4ec15d6a77ac5d722">More...</a><br /></td></tr>
+<tr class="separator:a78aca1691df377e4ec15d6a77ac5d722"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc1662c9398bd2b100d2b3927991d486"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html">PromiseFuturePair</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html">AuthObserverInterface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#acc1662c9398bd2b100d2b3927991d486">m_authObserverSet</a></td></tr>
 <tr class="memdesc:acc1662c9398bd2b100d2b3927991d486"><td class="mdescLeft">&#160;</td><td class="mdescRight">A promise that the Auth Observer will be set.  <a href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html#acc1662c9398bd2b100d2b3927991d486">More...</a><br /></td></tr>
 <tr class="separator:acc1662c9398bd2b100d2b3927991d486"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -505,6 +511,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="adedb4a11a57050c3142c08d8f4956249"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adedb4a11a57050c3142c08d8f4956249">&#9670;&nbsp;</a></span>m_mockMetricRecorder</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html">metrics::test::MockMetricRecorder</a>&gt; alexaClientSDK::acl::transport::test::HTTP2TransportTest::m_mockMetricRecorder</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The mock <code>MetricRecorder</code>. </p>
+
+</div>
+</div>
 <a id="a407667557836ad2841039c0641d4f773"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a407667557836ad2841039c0641d4f773">&#9670;&nbsp;</a></span>m_mockPostConnect</h2>
 
@@ -577,6 +607,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a78aca1691df377e4ec15d6a77ac5d722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78aca1691df377e4ec15d6a77ac5d722">&#9670;&nbsp;</a></span>m_synchronizedMessageRequestQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html">SynchronizedMessageRequestQueue</a>&gt; alexaClientSDK::acl::transport::test::HTTP2TransportTest::m_synchronizedMessageRequestQueue</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The message queue map. </p>
+
+</div>
+</div>
 <a id="a5140780a96abd8d3914ec50449696813"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5140780a96abd8d3914ec50449696813">&#9670;&nbsp;</a></span>m_transportConnected</h2>
 
@@ -608,7 +662,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

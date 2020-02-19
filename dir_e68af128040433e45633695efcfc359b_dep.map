@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/test" name="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/test">
 <area shape="rect" id="node1" href="dir_e68af128040433e45633695efcfc359b.html" title="test" alt="" coords="37,51,109,99"/>
 <area shape="rect" id="node2" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="21,243,123,291"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000377_000017.html" title="4" alt="" coords="69,216,77,230"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000386_000017.html" title="4" alt="" coords="69,216,77,230"/>
 <area shape="rect" id="node3" href="dir_42bcecaea8b07e2c1ef02db2f3150d05.html" title="include" alt="" coords="73,147,145,195"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000377_000370.html" title="1" alt="" coords="98,120,105,133"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000370_000017.html" title="4" alt="" coords="92,222,100,235"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000386_000379.html" title="1" alt="" coords="98,120,105,133"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000379_000017.html" title="4" alt="" coords="92,222,100,235"/>
 <area shape="rect" id="clust1" href="dir_6b07903b29b547047bfa8a8b819c80bf.html" title="SpeechEncoder" alt="" coords="16,16,132,109"/>
 </map>

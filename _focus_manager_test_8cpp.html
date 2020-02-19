@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -71,57 +71,84 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">FocusManagerTest.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_focus_state_8h_source.html">AVSCommon/AVS/FocusState.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_focus_manager_observer_8h_source.html">AVSCommon/SDKInterfaces/MockFocusManagerObserver.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_configuration_node_8h_source.html">AVSCommon/Utils/Configuration/ConfigurationNode.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_focus_manager_8h_source.html">AFML/FocusManager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_interrupt_model_8h_source.html">InterruptModel/InterruptModel.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for FocusManagerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_focus_manager_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_f_m_l_2test_2_focus_manager_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_f_m_l_2test_2_focus_manager_test_8cpp" id="_2workplace_2avs-device-sdk_2_a_f_m_l_2test_2_focus_manager_test_8cpp">
-<area shape="rect" title=" " alt="" coords="946,5,1150,57"/>
-<area shape="rect" title=" " alt="" coords="770,105,864,131"/>
-<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="1328,425,1541,451"/>
-<area shape="rect" href="_mock_focus_manager_observer_8h.html" title=" " alt="" coords="245,252,456,291"/>
-<area shape="rect" href="_focus_manager_8h.html" title=" " alt="" coords="1192,105,1352,131"/>
-<area shape="rect" title=" " alt="" coords="1336,499,1390,524"/>
-<area shape="rect" href="_focus_manager_observer_interface_8h.html" title=" " alt="" coords="856,339,1088,377"/>
-<area shape="rect" title=" " alt="" coords="5,345,120,371"/>
-<area shape="rect" title=" " alt="" coords="1112,345,1174,371"/>
-<area shape="rect" title=" " alt="" coords="145,345,202,371"/>
-<area shape="rect" title=" " alt="" coords="226,345,355,371"/>
-<area shape="rect" title=" " alt="" coords="1326,179,1373,204"/>
-<area shape="rect" title=" " alt="" coords="1499,179,1538,204"/>
-<area shape="rect" title=" " alt="" coords="1562,179,1678,204"/>
-<area shape="rect" title=" " alt="" coords="1702,179,1810,204"/>
-<area shape="rect" title=" " alt="" coords="1194,259,1252,284"/>
-<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="1472,339,1664,377"/>
-<area shape="rect" href="_focus_manager_interface_8h.html" title=" " alt="" coords="979,252,1170,291"/>
-<area shape="rect" href="_channel_8h.html" title=" " alt="" coords="1302,259,1423,284"/>
-<area shape="rect" href="_activity_tracker_interface_8h.html" title=" " alt="" coords="1091,179,1301,204"/>
-<area shape="rect" href="_executor_8h.html" title=" " alt="" coords="491,252,685,291"/>
-<area shape="rect" title=" " alt="" coords="1198,345,1253,371"/>
-<area shape="rect" title=" " alt="" coords="1328,345,1397,371"/>
-<area shape="rect" title=" " alt="" coords="402,425,462,451"/>
-<area shape="rect" title=" " alt="" coords="480,345,539,371"/>
-<area shape="rect" title=" " alt="" coords="563,425,642,451"/>
-<area shape="rect" title=" " alt="" coords="562,345,614,371"/>
-<area shape="rect" href="_task_thread_8h.html" title=" " alt="" coords="637,339,832,377"/>
-<area shape="rect" title=" " alt="" coords="705,425,764,451"/>
+<area shape="rect" title=" " alt="" coords="182,5,385,57"/>
+<area shape="rect" title=" " alt="" coords="323,845,393,871"/>
+<area shape="rect" title=" " alt="" coords="43,105,137,131"/>
+<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="1086,592,1299,617"/>
+<area shape="rect" href="_mock_focus_manager_observer_8h.html" title=" " alt="" coords="1454,412,1665,451"/>
+<area shape="rect" href="_configuration_node_8h.html" title=" " alt="" coords="370,585,584,624"/>
+<area shape="rect" href="_focus_manager_8h.html" title=" " alt="" coords="1167,105,1327,131"/>
+<area shape="rect" href="_interrupt_model_8h.html" title=" " alt="" coords="203,412,364,451"/>
+<area shape="rect" title=" " alt="" coords="2105,679,2174,704"/>
+<area shape="rect" title=" " alt="" coords="1006,765,1060,791"/>
+<area shape="rect" href="_focus_manager_observer_interface_8h.html" title=" " alt="" coords="1091,499,1323,537"/>
+<area shape="rect" title=" " alt="" coords="1449,505,1563,531"/>
+<area shape="rect" title=" " alt="" coords="1452,679,1514,704"/>
+<area shape="rect" title=" " alt="" coords="1657,679,1715,704"/>
+<area shape="rect" title=" " alt="" coords="1920,505,2049,531"/>
+<area shape="rect" title=" " alt="" coords="594,679,658,704"/>
+<area shape="rect" title=" " alt="" coords="787,765,860,791"/>
+<area shape="rect" title=" " alt="" coords="2702,679,2742,704"/>
+<area shape="rect" title=" " alt="" coords="2821,845,2879,871"/>
+<area shape="rect" title=" " alt="" coords="421,679,570,704"/>
+<area shape="rect" title=" " alt="" coords="3131,679,3207,704"/>
+<area shape="rect" title=" " alt="" coords="305,505,352,531"/>
+<area shape="rect" title=" " alt="" coords="1008,179,1124,204"/>
+<area shape="rect" title=" " alt="" coords="1148,179,1256,204"/>
+<area shape="rect" href="_channel_observer_interface_8h.html" title=" " alt="" coords="723,499,916,537"/>
+<area shape="rect" href="_focus_manager_interface_8h.html" title=" " alt="" coords="1107,412,1297,451"/>
+<area shape="rect" href="_channel_8h.html" title=" " alt="" coords="911,252,1032,277"/>
+<area shape="rect" href="_activity_tracker_interface_8h.html" title=" " alt="" coords="1330,179,1541,204"/>
+<area shape="rect" href="_executor_8h.html" title=" " alt="" coords="2475,412,2670,451"/>
+<area shape="rect" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="608,592,844,617"/>
+<area shape="rect" title=" " alt="" coords="1841,505,1896,531"/>
+<area shape="rect" href="_content_type_8h.html" title=" " alt="" coords="428,505,649,531"/>
+<area shape="rect" title=" " alt="" coords="1009,332,1048,357"/>
+<area shape="rect" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="2148,325,2322,364"/>
+<area shape="rect" title=" " alt="" coords="2766,679,2844,704"/>
+<area shape="rect" title=" " alt="" coords="2939,592,2998,617"/>
+<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="2147,412,2323,451"/>
+<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="2225,499,2401,537"/>
+<area shape="rect" title=" " alt="" coords="2854,592,2915,617"/>
+<area shape="rect" href="_level_8h.html" title=" " alt="" coords="1822,672,1998,711"/>
+<area shape="rect" href="_log_entry_8h.html" title=" " alt="" coords="2350,585,2526,624"/>
+<area shape="rect" href="_log_level_observer_interface_8h.html" title=" " alt="" coords="1926,585,2123,624"/>
+<area shape="rect" href="_sink_observer_interface_8h.html" title=" " alt="" coords="1555,759,1731,797"/>
+<area shape="rect" href="_log_entry_stream_8h.html" title=" " alt="" coords="2401,672,2577,711"/>
+<area shape="rect" title=" " alt="" coords="2507,765,2577,791"/>
+<area shape="rect" href="_log_entry_buffer_8h.html" title=" " alt="" coords="2307,759,2483,797"/>
+<area shape="rect" title=" " alt="" coords="2355,845,2436,871"/>
+<area shape="rect" title=" " alt="" coords="2972,505,3030,531"/>
+<area shape="rect" title=" " alt="" coords="2896,505,2948,531"/>
+<area shape="rect" href="_task_thread_8h.html" title=" " alt="" coords="2627,499,2822,537"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html">alexaClientSDK::afml::test::TestClient</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the ChannelObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a08c9b5a5cf3e24b23500964340add7d7">onFocusChanged()</a> call.  <a href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the ChannelObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#ae5ddff5db0e9cdbb17470a49d30faa29">onFocusChanged()</a> call.  <a href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client_1_1test_client_info.html">alexaClientSDK::afml::test::TestClient::testClientInfo</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html">alexaClientSDK::afml::test::MockActivityTrackerInterface</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a>#<a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html#aa43c7c7b5411498a4d02712ad4bbae1b">notifyOfActivityUpdates()</a> call.  <a href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html#details">More...</a><br /></td></tr>
@@ -138,6 +165,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html">alexaClientSDK::afml::test::ChannelTest</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test fixture for testing <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.  <a href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test_1_1_activity_update_elem.html">alexaClientSDK::afml::test::ChannelTest::ActivityUpdateElem</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -148,6 +177,12 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1afml_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html">alexaClientSDK::afml::test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a3265dccf7d40a8510627eacbb2332799"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a3265dccf7d40a8510627eacbb2332799">alexaClientSDK::afml::test::JSONStream</a> = std::vector&lt; std::shared_ptr&lt; std::istream &gt; &gt;</td></tr>
+<tr class="memdesc:a3265dccf7d40a8510627eacbb2332799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for JSON stream type used in <code>ConfigurationNode</code> initialization.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a3265dccf7d40a8510627eacbb2332799">More...</a><br /></td></tr>
+<tr class="separator:a3265dccf7d40a8510627eacbb2332799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -161,6 +196,8 @@ Functions</h2></td></tr>
 <tr class="separator:a27b8dad18fa14abd8c5e8e472c923ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac08998902a56e10141dafb4b984eff9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ac08998902a56e10141dafb4b984eff9e">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_aquireLowerPriorityChannelWithTwoHigherPriorityChannelsTaken)</td></tr>
 <tr class="separator:ac08998902a56e10141dafb4b984eff9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3260591f0568713ce97f0d551939fb08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a3260591f0568713ce97f0d551939fb08">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, acquireVirtualChannelWithTwoLowerPriorityChannelsTaken)</td></tr>
+<tr class="separator:a3260591f0568713ce97f0d551939fb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68812fe8ba0c3c6f225a6998a7129dda"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a68812fe8ba0c3c6f225a6998a7129dda">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_acquireHigherPriorityChannelWithOneLowerPriorityChannelTaken)</td></tr>
 <tr class="separator:a68812fe8ba0c3c6f225a6998a7129dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9611e1dd2084e25c0149071779e2026f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a9611e1dd2084e25c0149071779e2026f">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_kickOutActivityOnSameChannel)</td></tr>
@@ -183,6 +220,10 @@ Functions</h2></td></tr>
 <tr class="separator:a32d7d8c174ded11000c4ceb20b861530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d2c41a7f62773f81ef13392eae578e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a1d2c41a7f62773f81ef13392eae578e1">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_stopAllActivitiesWithThreeChannels)</td></tr>
 <tr class="separator:a1d2c41a7f62773f81ef13392eae578e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e9e9aa2780e9b077524f66291d2f491"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a6e9e9aa2780e9b077524f66291d2f491">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, stopAllActivitiesWithSingleChannel)</td></tr>
+<tr class="separator:a6e9e9aa2780e9b077524f66291d2f491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539963d1a3b17a6a8a435389ec033719"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a539963d1a3b17a6a8a435389ec033719">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, stopAllActivitiesWithThreeChannels)</td></tr>
+<tr class="separator:a539963d1a3b17a6a8a435389ec033719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78874fd838b0b057562513736315bac2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a78874fd838b0b057562513736315bac2">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_releaseBackgroundChannelWhileTwoChannelsTaken)</td></tr>
 <tr class="separator:a78874fd838b0b057562513736315bac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc066c2498be6c4688b1a018cb8ff523"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#afc066c2498be6c4688b1a018cb8ff523">alexaClientSDK::afml::test::TEST_F</a> (FocusManagerTest, test_kickOutActivityOnSameChannelWhileOtherChannelsActive)</td></tr>
@@ -207,11 +248,23 @@ Functions</h2></td></tr>
 <tr class="memitem:ab2f28efab9128afb48b8e632baa7e8e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ab2f28efab9128afb48b8e632baa7e8e0">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_priorityComparison)</td></tr>
 <tr class="memdesc:ab2f28efab9128afb48b8e632baa7e8e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that Channels are compared properly.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ab2f28efab9128afb48b8e632baa7e8e0">More...</a><br /></td></tr>
 <tr class="separator:ab2f28efab9128afb48b8e632baa7e8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af900dad5631ea4bda73936a71eeb4199"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#af900dad5631ea4bda73936a71eeb4199">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_hasObserver)</td></tr>
-<tr class="memdesc:af900dad5631ea4bda73936a71eeb4199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that a <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> correctly reports whether it has an observer.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#af900dad5631ea4bda73936a71eeb4199">More...</a><br /></td></tr>
-<tr class="separator:af900dad5631ea4bda73936a71eeb4199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83d9a787f86d77d6408d0cb5dab3771a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a83d9a787f86d77d6408d0cb5dab3771a">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_isChannelActive)</td></tr>
+<tr class="memdesc:a83d9a787f86d77d6408d0cb5dab3771a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests that a <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> correctly reports whether it is active.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a83d9a787f86d77d6408d0cb5dab3771a">More...</a><br /></td></tr>
+<tr class="separator:a83d9a787f86d77d6408d0cb5dab3771a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3810c9dc84ca6a82706d08b5c1945024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a3810c9dc84ca6a82706d08b5c1945024">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_getTimeAtIdle)</td></tr>
 <tr class="separator:a3810c9dc84ca6a82706d08b5c1945024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1d1221de773c15d3ca126a28067ee6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a9b1d1221de773c15d3ca126a28067ee6">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_NewActivityKicksExistingActivity)</td></tr>
+<tr class="separator:a9b1d1221de773c15d3ca126a28067ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56f64072e5fc5e9ef3fc94f3ef93042a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a56f64072e5fc5e9ef3fc94f3ef93042a">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_IncomingActivityWithPatience1)</td></tr>
+<tr class="separator:a56f64072e5fc5e9ef3fc94f3ef93042a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ba23274b1e6014e01d4b76b1bb56a66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2ba23274b1e6014e01d4b76b1bb56a66">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_IncomingActivityWithPatience2)</td></tr>
+<tr class="separator:a2ba23274b1e6014e01d4b76b1bb56a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eb281642bd97ef7a9a05c0f3f6db15d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a8eb281642bd97ef7a9a05c0f3f6db15d">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_IncomingActivityWithPatience3)</td></tr>
+<tr class="separator:a8eb281642bd97ef7a9a05c0f3f6db15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae557b85ad13bc08e63e7966eba69397d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae557b85ad13bc08e63e7966eba69397d">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_IncomingActivityWithPatience4)</td></tr>
+<tr class="separator:ae557b85ad13bc08e63e7966eba69397d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57f2a93a37729bb1cefa7e06edc5f11e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a57f2a93a37729bb1cefa7e06edc5f11e">alexaClientSDK::afml::test::TEST_F</a> (ChannelTest, test_MultiActivity_IncomingActivityWithPatience5)</td></tr>
+<tr class="separator:a57f2a93a37729bb1cefa7e06edc5f11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -221,18 +274,27 @@ Variables</h2></td></tr>
 <tr class="memitem:a2112e7611274fc458be2f75b9a7ebd81"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2112e7611274fc458be2f75b9a7ebd81">alexaClientSDK::afml::test::DEFAULT_TIMEOUT</a> = std::chrono::seconds(15)</td></tr>
 <tr class="memdesc:a2112e7611274fc458be2f75b9a7ebd81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Long time out for the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> observer to wait for the focus change callback (we should not reach this).  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2112e7611274fc458be2f75b9a7ebd81">More...</a><br /></td></tr>
 <tr class="separator:a2112e7611274fc458be2f75b9a7ebd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad134513c6e11f83b95e0189169c263a2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ad134513c6e11f83b95e0189169c263a2">alexaClientSDK::afml::test::DIALOG_CHANNEL_NAME</a> = &quot;DialogChannel&quot;</td></tr>
+<tr class="memitem:a92ed337f86b7ae1ed38f4d2c06cf80d5"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a92ed337f86b7ae1ed38f4d2c06cf80d5">alexaClientSDK::afml::test::NO_ACTIVITY_UPDATE_TIMEOUT</a> = std::chrono::milliseconds(250)</td></tr>
+<tr class="memdesc:a92ed337f86b7ae1ed38f4d2c06cf80d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time out to wait for ActivityUpdates.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a92ed337f86b7ae1ed38f4d2c06cf80d5">More...</a><br /></td></tr>
+<tr class="separator:a92ed337f86b7ae1ed38f4d2c06cf80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad134513c6e11f83b95e0189169c263a2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ad134513c6e11f83b95e0189169c263a2">alexaClientSDK::afml::test::DIALOG_CHANNEL_NAME</a> = &quot;Dialog&quot;</td></tr>
 <tr class="memdesc:ad134513c6e11f83b95e0189169c263a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dialog <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> name used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ad134513c6e11f83b95e0189169c263a2">More...</a><br /></td></tr>
 <tr class="separator:ad134513c6e11f83b95e0189169c263a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65aa66c37ddd9dbb6e277e5fe99d87d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a65aa66c37ddd9dbb6e277e5fe99d87d6">alexaClientSDK::afml::test::ALERTS_CHANNEL_NAME</a> = &quot;AlertsChannel&quot;</td></tr>
+<tr class="memitem:a65aa66c37ddd9dbb6e277e5fe99d87d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a65aa66c37ddd9dbb6e277e5fe99d87d6">alexaClientSDK::afml::test::ALERTS_CHANNEL_NAME</a> = &quot;Alert&quot;</td></tr>
 <tr class="memdesc:a65aa66c37ddd9dbb6e277e5fe99d87d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The alerts <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> name used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a65aa66c37ddd9dbb6e277e5fe99d87d6">More...</a><br /></td></tr>
 <tr class="separator:a65aa66c37ddd9dbb6e277e5fe99d87d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fc75d47d3ce7fcbe9374a390dc4be4b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2fc75d47d3ce7fcbe9374a390dc4be4b">alexaClientSDK::afml::test::CONTENT_CHANNEL_NAME</a> = &quot;ContentChannel&quot;</td></tr>
+<tr class="memitem:a2fc75d47d3ce7fcbe9374a390dc4be4b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2fc75d47d3ce7fcbe9374a390dc4be4b">alexaClientSDK::afml::test::CONTENT_CHANNEL_NAME</a> = &quot;Content&quot;</td></tr>
 <tr class="memdesc:a2fc75d47d3ce7fcbe9374a390dc4be4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The content <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> name used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a2fc75d47d3ce7fcbe9374a390dc4be4b">More...</a><br /></td></tr>
 <tr class="separator:a2fc75d47d3ce7fcbe9374a390dc4be4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a711dc7200f250d791e700f1ea9d081bb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a711dc7200f250d791e700f1ea9d081bb">alexaClientSDK::afml::test::INCORRECT_CHANNEL_NAME</a> = &quot;aksdjfl;aksdjfl;akdsjf&quot;</td></tr>
 <tr class="memdesc:a711dc7200f250d791e700f1ea9d081bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">An incorrect <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> name that is never initialized as a <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a711dc7200f250d791e700f1ea9d081bb">More...</a><br /></td></tr>
 <tr class="separator:a711dc7200f250d791e700f1ea9d081bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae86f2a47bc2455b523cde3fb52cc5db2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae86f2a47bc2455b523cde3fb52cc5db2">alexaClientSDK::afml::test::VIRTUAL_CHANNEL_NAME</a> = &quot;VirtualChannel&quot;</td></tr>
+<tr class="memdesc:ae86f2a47bc2455b523cde3fb52cc5db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The virtual <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> name used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae86f2a47bc2455b523cde3fb52cc5db2">More...</a><br /></td></tr>
+<tr class="separator:ae86f2a47bc2455b523cde3fb52cc5db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4c8245cb32c211b3f71833e04f26233"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae4c8245cb32c211b3f71833e04f26233">alexaClientSDK::afml::test::VIRTUAL_CHANNEL_PRIORITY</a> = 25</td></tr>
+<tr class="memdesc:ae4c8245cb32c211b3f71833e04f26233"><td class="mdescLeft">&#160;</td><td class="mdescRight">The priority of the virtual <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae4c8245cb32c211b3f71833e04f26233">More...</a><br /></td></tr>
+<tr class="separator:ae4c8245cb32c211b3f71833e04f26233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98a5ca625ba6997f2eddf6525477790a"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a98a5ca625ba6997f2eddf6525477790a">alexaClientSDK::afml::test::DIALOG_CHANNEL_PRIORITY</a> = 10</td></tr>
 <tr class="memdesc:a98a5ca625ba6997f2eddf6525477790a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The priority of the dialog <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> used in initializing the <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html">FocusManager</a>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a98a5ca625ba6997f2eddf6525477790a">More...</a><br /></td></tr>
 <tr class="separator:a98a5ca625ba6997f2eddf6525477790a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,15 +313,27 @@ Variables</h2></td></tr>
 <tr class="memitem:af83d03b89b667d3df55d8612fb053b50"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#af83d03b89b667d3df55d8612fb053b50">alexaClientSDK::afml::test::CONTENT_INTERFACE_NAME</a> = &quot;content&quot;</td></tr>
 <tr class="memdesc:af83d03b89b667d3df55d8612fb053b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample content interface name.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#af83d03b89b667d3df55d8612fb053b50">More...</a><br /></td></tr>
 <tr class="separator:af83d03b89b667d3df55d8612fb053b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d353d790091ca7a4d268ffef2e12a9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a70d353d790091ca7a4d268ffef2e12a9">alexaClientSDK::afml::test::DIFFERENT_CONTENT_INTERFACE_NAME</a> = &quot;different content&quot;</td></tr>
+<tr class="memdesc:a70d353d790091ca7a4d268ffef2e12a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Another sample content interface name.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a70d353d790091ca7a4d268ffef2e12a9">More...</a><br /></td></tr>
+<tr class="separator:a70d353d790091ca7a4d268ffef2e12a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76a1a4cc31a22c6c86e19bce5c400c4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#aa76a1a4cc31a22c6c86e19bce5c400c4">alexaClientSDK::afml::test::DIFFERENT_DIALOG_INTERFACE_NAME</a> = &quot;different dialog&quot;</td></tr>
 <tr class="memdesc:aa76a1a4cc31a22c6c86e19bce5c400c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Another sample dialog interface name.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#aa76a1a4cc31a22c6c86e19bce5c400c4">More...</a><br /></td></tr>
 <tr class="separator:aa76a1a4cc31a22c6c86e19bce5c400c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dd0fe215023f73a268896445bd4d28e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a6dd0fe215023f73a268896445bd4d28e">alexaClientSDK::afml::test::VIRTUAL_INTERFACE_NAME</a> = &quot;virtual&quot;</td></tr>
+<tr class="memdesc:a6dd0fe215023f73a268896445bd4d28e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample Virtual <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_channel.html">Channel</a> interface name.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a6dd0fe215023f73a268896445bd4d28e">More...</a><br /></td></tr>
+<tr class="separator:a6dd0fe215023f73a268896445bd4d28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac685425f919e2601434833c498007e3a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ac685425f919e2601434833c498007e3a">alexaClientSDK::afml::test::INTERRUPT_MODEL_ROOT_KEY</a> = &quot;interruptModel&quot;</td></tr>
+<tr class="memdesc:ac685425f919e2601434833c498007e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The root key for the InterruptModel in the <code>InterruptModelConfiguration</code>.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ac685425f919e2601434833c498007e3a">More...</a><br /></td></tr>
+<tr class="separator:ac685425f919e2601434833c498007e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a9d3e95a29a546fff170daebb3828f4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a8a9d3e95a29a546fff170daebb3828f4">alexaClientSDK::afml::test::INTERRUPT_MODEL_CONFIG_JSON</a></td></tr>
+<tr class="memdesc:a8a9d3e95a29a546fff170daebb3828f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Json that describes the InterruptModelConfiguration.  <a href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#a8a9d3e95a29a546fff170daebb3828f4">More...</a><br /></td></tr>
+<tr class="separator:a8a9d3e95a29a546fff170daebb3828f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

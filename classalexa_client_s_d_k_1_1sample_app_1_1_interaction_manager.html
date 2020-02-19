@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -152,6 +152,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acd0202ff30ed270b9757246702735d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0456ff24e0d927dc9440d92c3396f99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ab0456ff24e0d927dc9440d92c3396f99">timeZone</a> ()</td></tr>
 <tr class="separator:ab0456ff24e0d927dc9440d92c3396f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20635ea9eb07765a7ee99dea3b9ebbd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a20635ea9eb07765a7ee99dea3b9ebbd7">networkInfo</a> ()</td></tr>
+<tr class="separator:a20635ea9eb07765a7ee99dea3b9ebbd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd299f8b82c0321d2ef640a358a04281"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#abd299f8b82c0321d2ef640a358a04281">doNotDisturb</a> ()</td></tr>
 <tr class="separator:abd299f8b82c0321d2ef640a358a04281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af52ad2225b6b368bc929f1062a923690"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#af52ad2225b6b368bc929f1062a923690">errorValue</a> ()</td></tr>
@@ -190,6 +192,29 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8ac597876fb632339aa10c8ef7358a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8650b77c0e0ab94712b1afb090f3ab97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a8650b77c0e0ab94712b1afb090f3ab97">setLocale</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#adbe17a1a86081b8ae8a419eec6a9c4bf">settings::DeviceLocales</a> &amp;value)</td></tr>
 <tr class="separator:a8650b77c0e0ab94712b1afb090f3ab97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890ee65e4066ae1741ccf3b3a8841dca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html">settings::types::NetworkInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a890ee65e4066ae1741ccf3b3a8841dca">getNetworkInfo</a> ()</td></tr>
+<tr class="separator:a890ee65e4066ae1741ccf3b3a8841dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57f26c86074c50884eafb8bb6d1a492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#af57f26c86074c50884eafb8bb6d1a492">setNetworkInfo</a> (const <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html">settings::types::NetworkInfo</a> &amp;value)</td></tr>
+<tr class="separator:af57f26c86074c50884eafb8bb6d1a492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Network Info Prompt Functions</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Should be called whenever a user requests a specific 'NETWORK_INFO' change. </p>
+</div></td></tr>
+<tr class="memitem:ae4930d21f090b8c6a1e97e19e19fb319"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ae4930d21f090b8c6a1e97e19e19fb319">networkInfoConnectionTypePrompt</a> ()</td></tr>
+<tr class="separator:ae4930d21f090b8c6a1e97e19e19fb319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af289ed3eb4c61aa94178891d8f698343"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#af289ed3eb4c61aa94178891d8f698343">networkInfoESSIDPrompt</a> ()</td></tr>
+<tr class="separator:af289ed3eb4c61aa94178891d8f698343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7c187dd5328e0784a2be7f61e11c5c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ae7c187dd5328e0784a2be7f61e11c5c6">networkInfoBSSIDPrompt</a> ()</td></tr>
+<tr class="separator:ae7c187dd5328e0784a2be7f61e11c5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51fe688832c393c846e2ed0931caca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a51fe688832c393c846e2ed0931caca8c">networkInfoIpPrompt</a> ()</td></tr>
+<tr class="separator:a51fe688832c393c846e2ed0931caca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ab93f6617cec64c8aa9626286c20b4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a4ab93f6617cec64c8aa9626286c20b4b">networkInfoSubnetPrompt</a> ()</td></tr>
+<tr class="separator:a4ab93f6617cec64c8aa9626286c20b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf79f49a2bcfe331624c951ba33f6e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#aaf79f49a2bcfe331624c951ba33f6e41">networkInfoMacPrompt</a> ()</td></tr>
+<tr class="separator:aaf79f49a2bcfe331624c951ba33f6e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ffcdd1854db7b2682f5ceb43a57d596"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a4ffcdd1854db7b2682f5ceb43a57d596">networkInfoDHCPPrompt</a> ()</td></tr>
+<tr class="separator:a4ffcdd1854db7b2682f5ceb43a57d596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2852c0f93d5c9e3f5c41f8583ddc16ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a2852c0f93d5c9e3f5c41f8583ddc16ae">networkInfoStaticIpPrompt</a> ()</td></tr>
+<tr class="separator:a2852c0f93d5c9e3f5c41f8583ddc16ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a></td></tr>
 <tr class="memitem:ad258e207b4ad88c3ec94ac10204a0653 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#ad258e207b4ad88c3ec94ac10204a0653">~DialogUXStateObserverInterface</a> ()=default</td></tr>
 <tr class="separator:ad258e207b4ad88c3ec94ac10204a0653 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,6 +264,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a></td></tr>
 <tr class="memitem:a654bdc7a63bd33f890c647b71359fb35 inherit pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a654bdc7a63bd33f890c647b71359fb35">stateToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> state)</td></tr>
 <tr class="separator:a654bdc7a63bd33f890c647b71359fb35 inherit pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface</a></td></tr>
+<tr class="memitem:ac355e3ffb90f1f5aacf27f54e3ad925a inherit pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#ac355e3ffb90f1f5aacf27f54e3ad925a">isStateActive</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a4aa43d132f855115fbc6c8b56e3ade76">CallStateObserverInterface::CallState</a> &amp;state)</td></tr>
+<tr class="separator:ac355e3ffb90f1f5aacf27f54e3ad925a inherit pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class manages most of the user interaction by taking in commands and notifying the DefaultClient and the userInterface (the view) accordingly. </p>
@@ -464,6 +492,24 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a890ee65e4066ae1741ccf3b3a8841dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a890ee65e4066ae1741ccf3b3a8841dca">&#9670;&nbsp;</a></span>getNetworkInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html">settings::types::NetworkInfo</a> alexaClientSDK::sampleApp::InteractionManager::getNetworkInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the network info of the device. </p><dl class="section return"><dt>Returns</dt><dd>The network info. </dd></dl>
+
+</div>
+</div>
 <a id="a1d6993408ccf75e07b9a1574691664f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d6993408ccf75e07b9a1574691664f9">&#9670;&nbsp;</a></span>help()</h2>
 
@@ -551,6 +597,160 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Toggles the microphone state if the Sample App was built with wakeword. When the microphone is turned off, the app enters a privacy mode in which it stops recording audio data from the microphone, thus disabling Alexa waking up due to wake word. Note however that hold-to-talk and tap-to-talk modes will still work by recording microphone data temporarily until a user initiated interacion is complete. If this app was built without wakeword then this will do nothing as the microphone is already off. </p>
+
+</div>
+</div>
+<a id="a20635ea9eb07765a7ee99dea3b9ebbd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20635ea9eb07765a7ee99dea3b9ebbd7">&#9670;&nbsp;</a></span>networkInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should be called whenever a user requests 'NETWORK_INFO' change. </p>
+
+</div>
+</div>
+<a id="ae7c187dd5328e0784a2be7f61e11c5c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7c187dd5328e0784a2be7f61e11c5c6">&#9670;&nbsp;</a></span>networkInfoBSSIDPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoBSSIDPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae4930d21f090b8c6a1e97e19e19fb319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4930d21f090b8c6a1e97e19e19fb319">&#9670;&nbsp;</a></span>networkInfoConnectionTypePrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoConnectionTypePrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4ffcdd1854db7b2682f5ceb43a57d596"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ffcdd1854db7b2682f5ceb43a57d596">&#9670;&nbsp;</a></span>networkInfoDHCPPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoDHCPPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af289ed3eb4c61aa94178891d8f698343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af289ed3eb4c61aa94178891d8f698343">&#9670;&nbsp;</a></span>networkInfoESSIDPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoESSIDPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a51fe688832c393c846e2ed0931caca8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51fe688832c393c846e2ed0931caca8c">&#9670;&nbsp;</a></span>networkInfoIpPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoIpPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf79f49a2bcfe331624c951ba33f6e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf79f49a2bcfe331624c951ba33f6e41">&#9670;&nbsp;</a></span>networkInfoMacPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoMacPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2852c0f93d5c9e3f5c41f8583ddc16ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2852c0f93d5c9e3f5c41f8583ddc16ae">&#9670;&nbsp;</a></span>networkInfoStaticIpPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoStaticIpPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4ab93f6617cec64c8aa9626286c20b4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ab93f6617cec64c8aa9626286c20b4b">&#9670;&nbsp;</a></span>networkInfoSubnetPrompt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::networkInfoSubnetPrompt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -939,6 +1139,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="af57f26c86074c50884eafb8bb6d1a492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af57f26c86074c50884eafb8bb6d1a492">&#9670;&nbsp;</a></span>setNetworkInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::setNetworkInfo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html">settings::types::NetworkInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the network info of the device. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The network info being set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a3fe75bb18d15c8a3ba69ef892b0fe65e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3fe75bb18d15c8a3ba69ef892b0fe65e">&#9670;&nbsp;</a></span>setSpeechConfirmation()</h2>
 
@@ -1148,7 +1372,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

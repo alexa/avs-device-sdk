@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -156,8 +156,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a61bb10f86b28e30ecd3ee00bb138af2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20efb2ba8fc363f299fdfce2f3ea6ab4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#a20efb2ba8fc363f299fdfce2f3ea6ab4">makeDefaultAudioProviderNotAlwaysReadable</a> ()</td></tr>
 <tr class="separator:a20efb2ba8fc363f299fdfce2f3ea6ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa233c49e70154548feb57973b411d60f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#aa233c49e70154548feb57973b411d60f">testFocusChange</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> state)</td></tr>
-<tr class="separator:aa233c49e70154548feb57973b411d60f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb51d3cb584ea03623642d622a9a6627"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#afb51d3cb584ea03623642d622a9a6627">testFocusChange</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> state, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a> behavior)</td></tr>
+<tr class="separator:afb51d3cb584ea03623642d622a9a6627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9aee2d242118c23f54c4c177c70a0e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#ad9aee2d242118c23f54c4c177c70a0e7">testAIPStateTransitionOnEventFinish</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status</a> eventStreamFinishedStatus, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#ab4b19df5920f48a3be1c5569164f4376">StopCaptureDirectiveSchedule</a> stopCaptureSchedule, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html#aaec10009cef97fa38316fb0f2beab1c7">AudioInputProcessorObserverInterface::State</a> expectedAIPFinalState, bool expectFocusReleased)</td></tr>
 <tr class="separator:ad9aee2d242118c23f54c4c177c70a0e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -172,6 +172,9 @@ Static Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:aa095a0d96a0315c814de65281968b7b5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#aa095a0d96a0315c814de65281968b7b5">m_metricRecorder</a></td></tr>
+<tr class="memdesc:aa095a0d96a0315c814de65281968b7b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The metric recorder.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#aa095a0d96a0315c814de65281968b7b5">More...</a><br /></td></tr>
+<tr class="separator:aa095a0d96a0315c814de65281968b7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad52f83d487bf774926d8df8a70954df5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html">avsCommon::sdkInterfaces::test::MockDirectiveSequencer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#ad52f83d487bf774926d8df8a70954df5">m_mockDirectiveSequencer</a></td></tr>
 <tr class="memdesc:ad52f83d487bf774926d8df8a70954df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mock <code>DirectiveSequencerInterface</code>.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#ad52f83d487bf774926d8df8a70954df5">More...</a><br /></td></tr>
 <tr class="separator:ad52f83d487bf774926d8df8a70954df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -735,8 +738,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa233c49e70154548feb57973b411d60f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa233c49e70154548feb57973b411d60f">&#9670;&nbsp;</a></span>testFocusChange()</h2>
+<a id="afb51d3cb584ea03623642d622a9a6627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb51d3cb584ea03623642d622a9a6627">&#9670;&nbsp;</a></span>testFocusChange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -748,8 +751,18 @@ Protected Attributes</h2></td></tr>
           <td class="memname">bool alexaClientSDK::capabilityAgents::aip::test::AudioInputProcessorTest::testFocusChange </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a>&#160;</td>
+          <td class="paramname"><em>behavior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -762,6 +775,7 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td>The focus state to test with. </td></tr>
+    <tr><td class="paramname">behavior</td><td>The MixingBehavior to test with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1186,6 +1200,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aa095a0d96a0315c814de65281968b7b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa095a0d96a0315c814de65281968b7b5">&#9670;&nbsp;</a></span>m_metricRecorder</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a>&gt; alexaClientSDK::capabilityAgents::aip::test::AudioInputProcessorTest::m_metricRecorder</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The metric recorder. </p>
+
+</div>
+</div>
 <a id="ac69667c51b782e3adb76d556b39724aa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac69667c51b782e3adb76d556b39724aa">&#9670;&nbsp;</a></span>m_mockAssetsManager</h2>
 
@@ -1575,7 +1613,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

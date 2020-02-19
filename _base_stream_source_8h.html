@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,6 +76,8 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
+<code>#include &lt;unordered_set&gt;</code><br />
 <code>#include &lt;gst/gst.h&gt;</code><br />
 <code>#include &lt;gst/app/gstappsrc.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_media_player_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</code><br />
@@ -85,28 +87,49 @@ Include dependency graph for BaseStreamSource.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_base_stream_source_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_base_stream_source_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_base_stream_source_8h" id="_2workplace_2avs-device-sdk_2_media_player_2_g_streamer_media_player_2include_2_media_player_2_base_stream_source_8h">
-<area shape="rect" title=" " alt="" coords="864,5,1094,71"/>
-<area shape="rect" title=" " alt="" coords="1252,285,1321,311"/>
-<area shape="rect" title=" " alt="" coords="892,285,964,311"/>
-<area shape="rect" title=" " alt="" coords="989,285,1126,311"/>
-<area shape="rect" href="_media_player_interface_8h.html" title=" " alt="" coords="462,192,671,231"/>
-<area shape="rect" href="_source_interface_8h.html" title=" " alt="" coords="1302,119,1506,144"/>
-<area shape="rect" title=" " alt="" coords="52,372,114,397"/>
-<area shape="rect" title=" " alt="" coords="809,285,869,311"/>
-<area shape="rect" title=" " alt="" coords="258,285,313,311"/>
-<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="583,279,785,317"/>
-<area shape="rect" href="_audio_format_8h.html" title=" " alt="" coords="337,285,559,311"/>
-<area shape="rect" href="_source_config_8h.html" title=" " alt="" coords="25,279,234,317"/>
-<area shape="rect" title=" " alt="" coords="741,372,806,397"/>
-<area shape="rect" title=" " alt="" coords="413,372,483,397"/>
-<area shape="rect" href="_reader_policy_8h.html" title=" " alt="" coords="555,365,717,404"/>
-<area shape="rect" title=" " alt="" coords="138,372,214,397"/>
-<area shape="rect" href="_pipeline_interface_8h.html" title=" " alt="" coords="1017,199,1226,224"/>
-<area shape="rect" href="_requires_shutdown_8h.html" title=" " alt="" coords="1310,192,1498,231"/>
-<area shape="rect" title=" " alt="" coords="1150,285,1229,311"/>
-<area shape="rect" title=" " alt="" coords="1506,285,1566,311"/>
-<area shape="rect" title=" " alt="" coords="1346,285,1404,311"/>
-<area shape="rect" title=" " alt="" coords="1428,285,1482,311"/>
+<area shape="rect" title=" " alt="" coords="2143,5,2372,71"/>
+<area shape="rect" title=" " alt="" coords="2295,725,2364,751"/>
+<area shape="rect" title=" " alt="" coords="2099,559,2157,584"/>
+<area shape="rect" title=" " alt="" coords="2113,125,2221,151"/>
+<area shape="rect" title=" " alt="" coords="2124,299,2196,324"/>
+<area shape="rect" title=" " alt="" coords="2505,299,2642,324"/>
+<area shape="rect" href="_media_player_interface_8h.html" title=" " alt="" coords="519,119,727,157"/>
+<area shape="rect" href="_source_interface_8h.html" title=" " alt="" coords="2302,125,2506,151"/>
+<area shape="rect" title=" " alt="" coords="352,559,414,584"/>
+<area shape="rect" title=" " alt="" coords="1990,299,2050,324"/>
+<area shape="rect" title=" " alt="" coords="171,212,227,237"/>
+<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="606,465,808,504"/>
+<area shape="rect" href="_audio_format_8h.html" title=" " alt="" coords="5,385,227,411"/>
+<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="685,212,881,237"/>
+<area shape="rect" href="_media_player_state_8h.html" title=" " alt="" coords="403,379,611,417"/>
+<area shape="rect" href="_playback_attributes_8h.html" title=" " alt="" coords="301,292,510,331"/>
+<area shape="rect" href="_playback_report_8h.html" title=" " alt="" coords="251,205,459,244"/>
+<area shape="rect" href="_source_config_8h.html" title=" " alt="" coords="832,465,1041,504"/>
+<area shape="rect" title=" " alt="" coords="725,559,790,584"/>
+<area shape="rect" title=" " alt="" coords="723,645,792,671"/>
+<area shape="rect" href="_reader_policy_8h.html" title=" " alt="" coords="489,552,651,591"/>
+<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="695,292,871,331"/>
+<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="1552,379,1728,417"/>
+<area shape="rect" title=" " alt="" coords="2181,559,2241,584"/>
+<area shape="rect" title=" " alt="" coords="1854,559,1923,584"/>
+<area shape="rect" title=" " alt="" coords="1185,725,1242,751"/>
+<area shape="rect" href="_configuration_node_8h.html" title=" " alt="" coords="1139,465,1352,504"/>
+<area shape="rect" href="_level_8h.html" title=" " alt="" coords="1603,552,1779,591"/>
+<area shape="rect" href="_log_entry_8h.html" title=" " alt="" coords="1678,465,1854,504"/>
+<area shape="rect" href="_log_level_observer_interface_8h.html" title=" " alt="" coords="1406,465,1603,504"/>
+<area shape="rect" href="_sink_observer_interface_8h.html" title=" " alt="" coords="2046,639,2222,677"/>
+<area shape="rect" title=" " alt="" coords="1577,645,1650,671"/>
+<area shape="rect" title=" " alt="" coords="865,559,904,584"/>
+<area shape="rect" title=" " alt="" coords="1732,645,1786,671"/>
+<area shape="rect" title=" " alt="" coords="927,559,1076,584"/>
+<area shape="rect" title=" " alt="" coords="1100,559,1176,584"/>
+<area shape="rect" title=" " alt="" coords="1946,559,2025,584"/>
+<area shape="rect" href="_log_entry_stream_8h.html" title=" " alt="" coords="1251,552,1427,591"/>
+<area shape="rect" href="_log_entry_buffer_8h.html" title=" " alt="" coords="1251,639,1427,677"/>
+<area shape="rect" title=" " alt="" coords="1299,725,1379,751"/>
+<area shape="rect" href="_pipeline_interface_8h.html" title=" " alt="" coords="2165,212,2374,237"/>
+<area shape="rect" href="_source_observer_interface_8h.html" title=" " alt="" coords="2450,205,2646,244"/>
+<area shape="rect" href="_requires_shutdown_8h.html" title=" " alt="" coords="2181,465,2369,504"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -143,7 +166,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

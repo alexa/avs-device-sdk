@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_mock_a_v_s_gateway_manager_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -107,26 +107,30 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html#a88a680c1503e447a7ef3ec4b63bfd8a2">MOCK_METHOD1</a>(</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        setPostConnectMesasgeSender,</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">bool</span>(std::shared_ptr&lt;avsCommon::sdkInterfaces::PostConnectSendMessageInterface&gt; postConnectMessageSender));</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}  <span class="comment">// namespace test</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}  <span class="comment">// namespace sdkInterfaces</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKAVSGATEWAYMANAGER_H_</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html#a88a680c1503e447a7ef3ec4b63bfd8a2">MOCK_METHOD1</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#ade1535c8c8bc5cb9fe65db869988a23d">addObserver</a>, <span class="keywordtype">void</span>(std::shared_ptr&lt;avsCommon::sdkInterfaces::AVSGatewayObserverInterface&gt; observer));</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html#a88a680c1503e447a7ef3ec4b63bfd8a2">MOCK_METHOD1</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#adc0edd7f9588a62b8f0ba5413d7af416">removeObserver</a>, <span class="keywordtype">void</span>(std::shared_ptr&lt;avsCommon::sdkInterfaces::AVSGatewayObserverInterface&gt; observer));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace test</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace sdkInterfaces</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_TEST_AVSCOMMON_SDKINTERFACES_MOCKAVSGATEWAYMANAGER_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAVSGatewayManager</a></div><div class="ttdef"><b>Definition:</b> MockAVSGatewayManager.h:30</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html_a4cd18cb2d9000f1d3d3967bcd1cfe462"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#a4cd18cb2d9000f1d3d3967bcd1cfe462">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface::setAVSGatewayAssigner</a></div><div class="ttdeci">virtual bool setAVSGatewayAssigner(std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSGatewayAssignerInterface &gt; avsGatewayAssigner)=0</div></div>
 <div class="ttc" id="a_a_v_s_gateway_manager_interface_8h_html"><div class="ttname"><a href="_a_v_s_gateway_manager_interface_8h.html">AVSGatewayManagerInterface.h</a></div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a></div><div class="ttdef"><b>Definition:</b> AVSGatewayManagerInterface.h:33</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html_ade1535c8c8bc5cb9fe65db869988a23d"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#ade1535c8c8bc5cb9fe65db869988a23d">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface::addObserver</a></div><div class="ttdeci">virtual void addObserver(std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSGatewayObserverInterface &gt; observer)=0</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a></div><div class="ttdef"><b>Definition:</b> AVSGatewayManagerInterface.h:34</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager_html_a88a680c1503e447a7ef3ec4b63bfd8a2"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html#a88a680c1503e447a7ef3ec4b63bfd8a2">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAVSGatewayManager::MOCK_METHOD1</a></div><div class="ttdeci">MOCK_METHOD1(setAVSGatewayAssigner, bool(std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSGatewayAssignerInterface &gt; avsGatewayAssigner))</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html_a544db8f505b83161e9fd555baa682372"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#a544db8f505b83161e9fd555baa682372">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface::setGatewayURL</a></div><div class="ttdeci">virtual bool setGatewayURL(const std::string &amp;avsGatewayURL)=0</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface_html_adc0edd7f9588a62b8f0ba5413d7af416"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#adc0edd7f9588a62b8f0ba5413d7af416">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface::removeObserver</a></div><div class="ttdeci">virtual void removeObserver(std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSGatewayObserverInterface &gt; observer)=0</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

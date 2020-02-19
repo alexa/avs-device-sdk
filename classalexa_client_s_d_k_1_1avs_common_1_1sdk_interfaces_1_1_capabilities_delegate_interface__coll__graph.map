@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesDelegateInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesDelegateInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="9,105,247,157"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="5,5,251,57"/>
+<area shape="rect" id="node1" title=" " alt="" coords="302,44,540,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="7,5,253,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html" title=" " alt="" coords="5,81,254,133"/>
 </map>

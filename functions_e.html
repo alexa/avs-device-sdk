@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,7 +76,10 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html#a01457349de504f0ba724cde1a7bb97b4">alexaClientSDK::sampleApp::ConsolePrinter</a>
 </li>
 <li>empty()
-: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a19211bf0c6023408c23e75b7c0537d4a">alexaClientSDK::playlistParser::M3UContent</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a2bc1620dd6e82175450c25cf8a0bf87f">alexaClientSDK::acl::MessageRequestQueue</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#aee595aa0b15ddf3e58fd23234b297cc6">alexaClientSDK::acl::MessageRequestQueueInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a66a12de950cb1e4cca4b7537afbfe663">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html#a19211bf0c6023408c23e75b7c0537d4a">alexaClientSDK::playlistParser::M3UContent</a>
 </li>
 <li>enable()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#a62b39ba16205e494f27cc0ba3d3ff0e0">alexaClientSDK::acl::AVSConnectionManager</a>
@@ -127,6 +130,9 @@ $(function() {
 <li>endIndex
 : <a class="el" href="structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html#aacb5342b87f221b27a3781e9745d6fe3">alexaClientSDK::kwd::test::testKeyWordObserver::detectionResult</a>
 </li>
+<li>endOffset
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_report.html#a0d2c0ee7b1ea372ca989b00246b0374f">alexaClientSDK::avsCommon::utils::mediaPlayer::PlaybackReport</a>
+</li>
 <li>Endpoint()
 : <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint.html#aab5ca2b1ea1333cd25124c632529e6e4">alexaClientSDK::endpoints::Endpoint</a>
 </li>
@@ -176,8 +182,14 @@ $(function() {
 <li>enqueueBuffers()
 : <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_buffer_queue.html#a06c8df1afeb7a761698c64ac93ffb26b">alexaClientSDK::applicationUtilities::androidUtilities::AndroidSLESBufferQueue</a>
 </li>
+<li>enqueueRequest()
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#ac2427e6bf235519997429e207596d528">alexaClientSDK::acl::MessageRequestQueue</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#ac6536148bb1635ba177947488eae62b7">alexaClientSDK::acl::MessageRequestQueueInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4828afae530033b09fd504a74b082555">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>
+</li>
 <li>enterDiscoverableMode()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_host_controller_interface.html#abd3bee21d7d12bcbe401c4365bf1290f">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_host_controller.html#ae7dec15e0d7d054365173bcf156f8905">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::test::MockBluetoothHostController</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html#a7d3df86551e1acb3a44cb0ebaef13bca">alexaClientSDK::bluetoothImplementations::blueZ::BlueZHostController</a>
 </li>
 <li>entries
@@ -192,7 +204,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html#a5cff81a79ad29664c0e169adfa0799d4">alexaClientSDK::capabilityAgents::alerts::storage::AlertStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a87b1e90dbecb4fcd662e4050663603f0">alexaClientSDK::capabilityAgents::alerts::storage::SQLiteAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html#a2e38b0f79d05fb143ff2e35c58728e0b">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_alert_storage.html#a6e1e15250402dbb272f7623347a500a6">alexaClientSDK::capabilityAgents::alerts::test::StubAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_alert_storage.html#a4c32483e41d345b7784d437153d25eed">alexaClientSDK::capabilityAgents::alerts::test::StubAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_stub_message_storage.html#a79c273b47310d166c8213d76dc64b160">alexaClientSDK::capabilityAgents::alerts::test::StubMessageStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a68bd3e2439c47ee2dc6079b74113aaf6">alexaClientSDK::certifiedSender::MessageStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a215ff84f6c26f2a3593dc2635c6313e8">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>
@@ -251,9 +263,6 @@ $(function() {
 <li>ExchangeHandler()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler.html#a0bde5d7f73fc7ff8951f87b02c402b34">alexaClientSDK::acl::ExchangeHandler</a>
 </li>
-<li>executeNotifyObservers()
-: <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_power_controller_handler.html#a234fa8297969b5578a65677f9bc402b8">alexaClientSDK::sampleApp::PowerControllerHandler</a>
-</li>
 <li>Executor()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html#ae7405ef8762a4e497fa4eef4e4a1c9ee">alexaClientSDK::avsCommon::utils::threading::Executor</a>
 </li>
@@ -265,6 +274,7 @@ $(function() {
 </li>
 <li>exitDiscoverableMode()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_host_controller_interface.html#a453340f566b4b69c097b3fc2611c5b35">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_host_controller.html#ac99af85a0c355c54e260940982606126">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::test::MockBluetoothHostController</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html#a93ae48b0cea6d8f6ba50a7a604e9d6b5">alexaClientSDK::bluetoothImplementations::blueZ::BlueZHostController</a>
 </li>
 <li>expectedData
@@ -298,7 +308,7 @@ $(function() {
 : <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item_1_1_stream.html#ae83a9cb0aba6b332691715115833c63b">alexaClientSDK::capabilityAgents::audioPlayer::AudioItem::Stream</a>
 </li>
 <li>ExternalMediaAdapterInterface()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html#ab8bcbd506e348e225d9da14c8757e1d2">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html#ac6c902cd581aca571d629936eb4e61c0">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a>
 </li>
 <li>ExternalMediaPlayerTest()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test_1_1_external_media_player_test.html#a0d9af21c8817098abef023d55078bf69">alexaClientSDK::capabilityAgents::externalMediaPlayer::test::ExternalMediaPlayerTest</a>
@@ -308,7 +318,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,11 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockFocusManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockFocusManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="170,5,390,71"/>
-<area shape="rect" id="node2" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="96,119,287,157"/>
-<area shape="rect" id="node9" title=" " alt="" coords="312,125,426,151"/>
+<area shape="rect" id="node1" title=" " alt="" coords="286,5,506,71"/>
+<area shape="rect" id="node2" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="212,119,403,157"/>
+<area shape="rect" id="node14" title=" " alt="" coords="428,125,542,151"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,205,61,231"/>
 <area shape="rect" id="node4" title=" " alt="" coords="85,205,154,231"/>
-<area shape="rect" id="node5" title=" " alt="" coords="237,352,291,377"/>
-<area shape="rect" id="node6" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="229,205,418,231"/>
-<area shape="rect" id="node8" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="442,205,670,231"/>
-<area shape="rect" id="node7" href="$_focus_state_8h.html" title=" " alt="" coords="229,279,442,304"/>
+<area shape="rect" id="node5" title=" " alt="" coords="179,205,237,231"/>
+<area shape="rect" id="node6" title=" " alt="" coords="458,352,512,377"/>
+<area shape="rect" id="node7" title=" " alt="" coords="312,205,370,231"/>
+<area shape="rect" id="node8" href="$_content_type_8h.html" title=" " alt="" coords="149,279,370,304"/>
+<area shape="rect" id="node9" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="468,205,657,231"/>
+<area shape="rect" id="node13" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="688,205,916,231"/>
+<area shape="rect" id="node10" href="$_focus_state_8h.html" title=" " alt="" coords="704,279,917,304"/>
+<area shape="rect" id="node12" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="444,279,680,304"/>
+<area shape="rect" id="node11" title=" " alt="" coords="776,352,845,377"/>
 </map>

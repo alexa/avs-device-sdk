@@ -1,11 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LogEntry.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LogEntry.h">
-<area shape="rect" id="node1" title=" " alt="" coords="35,5,215,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,125,74,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="98,125,152,151"/>
-<area shape="rect" id="node4" href="$_log_entry_stream_8h.html" title=" " alt="" coords="176,119,352,157"/>
-<area shape="rect" id="node5" title=" " alt="" coords="156,212,225,237"/>
-<area shape="rect" id="node6" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="249,205,425,244"/>
-<area shape="rect" id="node7" title=" " alt="" coords="204,292,273,317"/>
-<area shape="rect" id="node8" title=" " alt="" coords="297,292,377,317"/>
-<area shape="rect" id="node9" title=" " alt="" coords="402,292,459,317"/>
+<area shape="rect" id="node1" title=" " alt="" coords="152,5,332,71"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,125,82,151"/>
+<area shape="rect" id="node3" title=" " alt="" coords="106,125,184,151"/>
+<area shape="rect" id="node4" title=" " alt="" coords="208,125,276,151"/>
+<area shape="rect" id="node5" title=" " alt="" coords="300,125,354,151"/>
+<area shape="rect" id="node6" href="$_log_entry_stream_8h.html" title=" " alt="" coords="378,119,554,157"/>
+<area shape="rect" id="node7" title=" " alt="" coords="358,212,428,237"/>
+<area shape="rect" id="node8" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="451,205,627,244"/>
+<area shape="rect" id="node9" title=" " alt="" coords="406,292,475,317"/>
+<area shape="rect" id="node10" title=" " alt="" coords="499,292,580,317"/>
+<area shape="rect" id="node11" title=" " alt="" coords="604,292,662,317"/>
 </map>

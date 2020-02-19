@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_m_p_r_i_s_player_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -137,9 +137,9 @@ $(function() {
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> unsupportedMethod(GVariant* arguments, GDBusMethodInvocation* invocation);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">void</span> toAVRCPCommand(GVariant* arguments, GDBusMethodInvocation* invocation);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">void</span> toMediaCommand(GVariant* arguments, GDBusMethodInvocation* invocation);</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordtype">void</span> sendEvent(<span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services.html#a36a581a9e101d1b1b803a44898a17313">avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand</a>&amp; command);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordtype">void</span> sendEvent(<span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services.html#a8d9ec1584d6d6070e4df901451153fad">avsCommon::sdkInterfaces::bluetooth::services::MediaCommand</a>&amp; command);</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">const</span> std::string m_playerPath;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
@@ -160,14 +160,14 @@ $(function() {
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_m_p_r_i_s_player_html_a065da695adaf99b323b4ba45faf51a7d"><div class="ttname"><a href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_m_p_r_i_s_player.html#a065da695adaf99b323b4ba45faf51a7d">alexaClientSDK::bluetoothImplementations::blueZ::MPRISPlayer::create</a></div><div class="ttdeci">static std::unique_ptr&lt; MPRISPlayer &gt; create(std::shared_ptr&lt; DBusConnection &gt; connection, std::shared_ptr&lt; DBusProxy &gt; media, std::shared_ptr&lt; avsCommon::utils::bluetooth::BluetoothEventBus &gt; eventBus, const std::string &amp;playerPath=MPRIS_OBJECT_PATH)</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_m_p_r_i_s_player_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_m_p_r_i_s_player.html">alexaClientSDK::bluetoothImplementations::blueZ::MPRISPlayer</a></div><div class="ttdef"><b>Definition:</b> MPRISPlayer.h:39</div></div>
-<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_html_a36a581a9e101d1b1b803a44898a17313"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services.html#a36a581a9e101d1b1b803a44898a17313">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand</a></div><div class="ttdeci">AVRCPCommand</div><div class="ttdoc">An Enum representing AVRCP commands.</div><div class="ttdef"><b>Definition:</b> AVRCPTargetInterface.h:32</div></div>
 <div class="ttc" id="a_d_bus_object_8h_html"><div class="ttname"><a href="_d_bus_object_8h.html">DBusObject.h</a></div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object.html">alexaClientSDK::bluetoothImplementations::blueZ::DBusObject</a></div><div class="ttdef"><b>Definition:</b> DBusObject.h:41</div></div>
 <div class="ttc" id="a_d_bus_proxy_8h_html"><div class="ttname"><a href="_d_bus_proxy_8h.html">DBusProxy.h</a></div></div>
+<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_html_a8d9ec1584d6d6070e4df901451153fad"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services.html#a8d9ec1584d6d6070e4df901451153fad">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::MediaCommand</a></div><div class="ttdeci">MediaCommand</div><div class="ttdoc">An Enum representing Media commands.</div><div class="ttdef"><b>Definition:</b> AVRCPTargetInterface.h:32</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

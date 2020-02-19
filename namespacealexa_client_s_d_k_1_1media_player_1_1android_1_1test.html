@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -113,6 +113,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a0bcc07fd9f6d629c80d4b23007d1e385"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a0bcc07fd9f6d629c80d4b23007d1e385">MediaPlayerState</a> = <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a></td></tr>
+<tr class="separator:a0bcc07fd9f6d629c80d4b23007d1e385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bbfcb587dc92cc3334350665f859243"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a1bbfcb587dc92cc3334350665f859243">MockSlSimpleBufferQueue</a> = <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_mock_interface_impl.html">MockInterfaceImpl</a>&lt; SLAndroidSimpleBufferQueueItf_ &gt;</td></tr>
 <tr class="separator:a1bbfcb587dc92cc3334350665f859243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a859a986a8a3c7c5f07ae11606d070"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a73a859a986a8a3c7c5f07ae11606d070">MockVolumeInterface</a> = <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_mock_interface_impl.html">MockInterfaceImpl</a>&lt; SLVolumeItf_ &gt;</td></tr>
@@ -411,6 +413,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ab05c55a045dc9cdf42f47de9db5da9eb">RAW_INPUT_CSTR</a></td></tr>
 <tr class="memdesc:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">An input buffer with an mp3 file.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ab05c55a045dc9cdf42f47de9db5da9eb">More...</a><br /></td></tr>
 <tr class="separator:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae351979889b6e19f110a72d91c19e4ed"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ae351979889b6e19f110a72d91c19e4ed">DEFAULT_MEDIA_PLAYER_STATE</a> = {std::chrono::milliseconds(0)}</td></tr>
+<tr class="memdesc:ae351979889b6e19f110a72d91c19e4ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default media player state for reporting all playback offsets.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ae351979889b6e19f110a72d91c19e4ed">More...</a><br /></td></tr>
+<tr class="separator:ae351979889b6e19f110a72d91c19e4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8581c8997122771964fbff7f40c92da3"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a8581c8997122771964fbff7f40c92da3">inputsDirPath</a></td></tr>
 <tr class="memdesc:a8581c8997122771964fbff7f40c92da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The path to the input Dir containing the test audio files.  <a href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a8581c8997122771964fbff7f40c92da3">More...</a><br /></td></tr>
 <tr class="separator:a8581c8997122771964fbff7f40c92da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -498,6 +503,20 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ad6b08eaffbb60d4720ffafe0de93b712">alexaClientSDK::mediaPlayer::android::test::Byte</a> = typedef <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_decoder_interface.html#a61064239f4eac92ed319f90ec93aa3df">FFmpegDecoder::Byte</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0bcc07fd9f6d629c80d4b23007d1e385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bcc07fd9f6d629c80d4b23007d1e385">&#9670;&nbsp;</a></span>MediaPlayerState</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">alexaClientSDK::mediaPlayer::android::test::MediaPlayerState</a> = typedef <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3482,6 +3501,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae351979889b6e19f110a72d91c19e4ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae351979889b6e19f110a72d91c19e4ed">&#9670;&nbsp;</a></span>DEFAULT_MEDIA_PLAYER_STATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a> alexaClientSDK::mediaPlayer::android::test::DEFAULT_MEDIA_PLAYER_STATE = {std::chrono::milliseconds(0)}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default media player state for reporting all playback offsets. </p>
+
+</div>
+</div>
 <a id="a852bcb93aab8ff6ebf17412f849883e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a852bcb93aab8ff6ebf17412f849883e9">&#9670;&nbsp;</a></span>DO_NOT_REPEAT</h2>
 
@@ -4139,7 +4182,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

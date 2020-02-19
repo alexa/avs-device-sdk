@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html" title=" " alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html" title=" " alt="" coords="5,12,238,51"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_writer.html" title=" " alt="" coords="286,5,543,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_attachment_writer.html" title=" " alt="" coords="591,12,804,51"/>
 </map>

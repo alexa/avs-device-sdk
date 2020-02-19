@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,6 +89,10 @@ $(function() {
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metrics_8h_source.html">AVSCommon/Utils/Metrics.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_duration_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointDurationBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_string_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointStringBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_string_utils_8h_source.html">AVSCommon/Utils/String/StringUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_u_u_i_d_generation_8h_source.html">AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_utils_8h_source.html">AVSCommon/AVS/Attachment/AttachmentUtils.h</a>&gt;</code><br />
@@ -96,62 +100,63 @@ $(function() {
 <code>#include &lt;<a class="el" href="_setting_event_sender_8h_source.html">Settings/SettingEventSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_shared_a_v_s_setting_protocol_8h_source.html">Settings/SharedAVSSettingProtocol.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speech_encoder_8h_source.html">SpeechEncoder/SpeechEncoder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_default_attachment_reader_8h_source.html">AVSCommon/AVS/Attachment/DefaultAttachmentReader.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_audio_input_processor_8h_source.html">AIP/AudioInputProcessor.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioInputProcessor.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_audio_input_processor_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_a_i_p_2src_2_audio_input_processor_8cpp">
-<area shape="rect" title=" " alt="" coords="1845,5,2065,57"/>
-<area shape="rect" title=" " alt="" coords="5,105,82,131"/>
-<area shape="rect" title=" " alt="" coords="105,105,165,131"/>
-<area shape="rect" title=" " alt="" coords="189,105,228,131"/>
-<area shape="rect" title=" " alt="" coords="384,692,452,717"/>
-<area shape="rect" href="_capability_configuration_8h.html" title=" " alt="" coords="1448,265,1641,304"/>
-<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="1149,512,1325,551"/>
-<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="16,519,228,544"/>
-<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="2351,352,2600,377"/>
-<area shape="rect" href="_j_s_o_n_generator_8h.html" title=" " alt="" coords="2752,265,2922,304"/>
-<area shape="rect" href="_j_s_o_n_utils_8h.html" title=" " alt="" coords="733,265,903,304"/>
-<area shape="rect" href="_memory_8h.html" title=" " alt="" coords="3129,179,3312,217"/>
-<area shape="rect" href="_metrics_8h.html" title=" " alt="" coords="1732,185,1920,211"/>
-<area shape="rect" href="_string_utils_8h.html" title=" " alt="" coords="3220,599,3389,637"/>
-<area shape="rect" href="_u_u_i_d_generation_8h.html" title=" " alt="" coords="3730,425,3963,464"/>
-<area shape="rect" href="_attachment_utils_8h.html" title=" " alt="" coords="1760,512,1962,551"/>
-<area shape="rect" href="_setting_event_metadata_8h.html" title=" " alt="" coords="3616,272,3831,297"/>
-<area shape="rect" href="_setting_event_sender_8h.html" title=" " alt="" coords="2736,105,2938,131"/>
-<area shape="rect" href="_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="3437,179,3620,217"/>
-<area shape="rect" href="_speech_encoder_8h.html" title=" " alt="" coords="2036,519,2261,544"/>
-<area shape="rect" href="_audio_input_processor_8h.html" title=" " alt="" coords="1944,185,2124,211"/>
-<area shape="rect" title=" " alt="" coords="1282,352,1330,377"/>
-<area shape="rect" title=" " alt="" coords="2650,772,2704,797"/>
-<area shape="rect" title=" " alt="" coords="1487,352,1602,377"/>
-<area shape="rect" title=" " alt="" coords="1115,692,1172,717"/>
-<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="1727,352,1922,377"/>
-<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="1181,425,1357,464"/>
-<area shape="rect" title=" " alt="" coords="1752,692,1814,717"/>
-<area shape="rect" title=" " alt="" coords="1821,605,1882,631"/>
-<area shape="rect" title=" " alt="" coords="2749,692,2807,717"/>
-<area shape="rect" href="_configuration_node_8h.html" title=" " alt="" coords="1282,599,1496,637"/>
-<area shape="rect" href="_level_8h.html" title=" " alt="" coords="818,685,994,724"/>
-<area shape="rect" href="_log_entry_8h.html" title=" " alt="" coords="455,599,631,637"/>
-<area shape="rect" href="_log_level_observer_interface_8h.html" title=" " alt="" coords="808,599,1005,637"/>
-<area shape="rect" href="_sink_observer_interface_8h.html" title=" " alt="" coords="1570,599,1746,637"/>
-<area shape="rect" title=" " alt="" coords="2339,692,2409,717"/>
-<area shape="rect" title=" " alt="" coords="506,692,655,717"/>
-<area shape="rect" title=" " alt="" coords="2581,432,2640,457"/>
-<area shape="rect" title=" " alt="" coords="2255,432,2362,457"/>
-<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="1957,599,2159,637"/>
-<area shape="rect" href="_message_request_observer_interface_8h.html" title=" " alt="" coords="2788,425,3035,464"/>
-<area shape="rect" title=" " alt="" coords="1353,352,1413,377"/>
-<area shape="rect" title=" " alt="" coords="2821,352,2904,377"/>
-<area shape="rect" title=" " alt="" coords="2928,352,3084,377"/>
-<area shape="rect" title=" " alt="" coords="2674,352,2796,377"/>
-<area shape="rect" title=" " alt="" coords="3186,272,3237,297"/>
-<area shape="rect" href="_a_v_s_message_8h.html" title=" " alt="" coords="1850,272,2075,297"/>
-<area shape="rect" title=" " alt="" coords="2927,185,3056,211"/>
-<area shape="rect" href="_event_builder_8h.html" title=" " alt="" coords="2380,185,2600,211"/>
-<area shape="rect" href="_message_sender_interface_8h.html" title=" " alt="" coords="2453,265,2644,304"/>
+<area shape="rect" title=" " alt="" coords="2177,5,2397,57"/>
+<area shape="rect" title=" " alt="" coords="5,632,82,657"/>
+<area shape="rect" title=" " alt="" coords="3649,112,3709,137"/>
+<area shape="rect" title=" " alt="" coords="3733,112,3772,137"/>
+<area shape="rect" title=" " alt="" coords="356,632,424,657"/>
+<area shape="rect" href="_capability_configuration_8h.html" title=" " alt="" coords="1746,192,1938,231"/>
+<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="1267,452,1443,491"/>
+<area shape="rect" href="_focus_state_8h.html" title=" " alt="" coords="48,545,260,571"/>
+<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="2946,459,3195,484"/>
+<area shape="rect" href="_j_s_o_n_generator_8h.html" title=" " alt="" coords="3816,625,3986,664"/>
+<area shape="rect" href="_j_s_o_n_utils_8h.html" title=" " alt="" coords="1492,279,1662,317"/>
+<area shape="rect" href="_memory_8h.html" title=" " alt="" coords="3292,192,3475,231"/>
+<area shape="rect" href="_metrics_8h.html" title=" " alt="" coords="380,372,568,397"/>
+<area shape="rect" href="_data_point_duration_builder_8h.html" title=" " alt="" coords="1962,192,2148,231"/>
+<area shape="rect" href="_data_point_counter_builder_8h.html" title=" " alt="" coords="3796,105,3979,144"/>
+<area shape="rect" href="_data_point_string_builder_8h.html" title=" " alt="" coords="4003,105,4180,144"/>
+<area shape="rect" href="_metric_event_builder_8h.html" title=" " alt="" coords="1544,192,1721,231"/>
+<area shape="rect" href="_string_utils_8h.html" title=" " alt="" coords="3521,539,3691,577"/>
+<area shape="rect" href="_u_u_i_d_generation_8h.html" title=" " alt="" coords="3554,279,3787,317"/>
+<area shape="rect" href="_attachment_utils_8h.html" title=" " alt="" coords="2404,452,2606,491"/>
+<area shape="rect" href="_setting_event_metadata_8h.html" title=" " alt="" coords="928,632,1143,657"/>
+<area shape="rect" href="_setting_event_sender_8h.html" title=" " alt="" coords="2426,545,2629,571"/>
+<area shape="rect" href="_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="960,539,1143,577"/>
+<area shape="rect" href="_speech_encoder_8h.html" title=" " alt="" coords="2425,199,2651,224"/>
+<area shape="rect" href="_default_attachment_reader_8h.html" title=" " alt="" coords="1217,365,1419,404"/>
+<area shape="rect" href="_audio_input_processor_8h.html" title=" " alt="" coords="2197,112,2378,137"/>
+<area shape="rect" title=" " alt="" coords="1824,372,1871,397"/>
+<area shape="rect" title=" " alt="" coords="1306,712,1360,737"/>
+<area shape="rect" title=" " alt="" coords="1686,285,1801,311"/>
+<area shape="rect" title=" " alt="" coords="2259,632,2316,657"/>
+<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="1272,285,1468,311"/>
+<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="1443,365,1619,404"/>
+<area shape="rect" title=" " alt="" coords="1751,632,1813,657"/>
+<area shape="rect" title=" " alt="" coords="1760,545,1820,571"/>
+<area shape="rect" title=" " alt="" coords="1543,632,1600,657"/>
+<area shape="rect" href="_configuration_node_8h.html" title=" " alt="" coords="1370,539,1584,577"/>
+<area shape="rect" href="_level_8h.html" title=" " alt="" coords="727,625,903,664"/>
+<area shape="rect" href="_log_entry_8h.html" title=" " alt="" coords="335,539,511,577"/>
+<area shape="rect" href="_log_level_observer_interface_8h.html" title=" " alt="" coords="738,539,935,577"/>
+<area shape="rect" href="_sink_observer_interface_8h.html" title=" " alt="" coords="2653,539,2829,577"/>
+<area shape="rect" title=" " alt="" coords="2831,632,2901,657"/>
+<area shape="rect" title=" " alt="" coords="1370,632,1519,657"/>
+<area shape="rect" title=" " alt="" coords="3135,545,3194,571"/>
+<area shape="rect" title=" " alt="" coords="2954,545,3061,571"/>
+<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="2048,539,2250,577"/>
+<area shape="rect" href="_message_request_observer_interface_8h.html" title=" " alt="" coords="3151,625,3397,664"/>
+<area shape="rect" title=" " alt="" coords="3697,712,3757,737"/>
+<area shape="rect" title=" " alt="" coords="3927,712,4010,737"/>
+<area shape="rect" title=" " alt="" coords="4035,712,4191,737"/>
+<area shape="rect" title=" " alt="" coords="3781,712,3903,737"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -175,10 +180,18 @@ Functions</h2></td></tr>
 <tr class="memitem:af27d2ed2429c8bc4696b07d3f9179271"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af27d2ed2429c8bc4696b07d3f9179271">alexaClientSDK::capabilityAgents::aip::TAG</a> (&quot;AudioInputProcessor&quot;)</td></tr>
 <tr class="memdesc:af27d2ed2429c8bc4696b07d3f9179271"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af27d2ed2429c8bc4696b07d3f9179271">More...</a><br /></td></tr>
 <tr class="separator:af27d2ed2429c8bc4696b07d3f9179271"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab76a5726a8d6da78e82774e7d434dd64"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; avsCommon::avs::CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab76a5726a8d6da78e82774e7d434dd64">alexaClientSDK::capabilityAgents::aip::getSpeechRecognizerCapabilityConfiguration</a> (const avsCommon::sdkInterfaces::LocaleAssetsManagerInterface &amp;assetsManager)</td></tr>
-<tr class="separator:ab76a5726a8d6da78e82774e7d434dd64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63822ec9637973306beec90c1b04fe7d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a63822ec9637973306beec90c1b04fe7d">alexaClientSDK::capabilityAgents::aip::generateSupportedWakeWordsJson</a> (const std::string &amp;scope, const avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::WakeWordsSets &amp;wakeWordsCombination)</td></tr>
-<tr class="separator:a63822ec9637973306beec90c1b04fe7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c65c23a497e5e0adc92fe06619c3415"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2c65c23a497e5e0adc92fe06619c3415">alexaClientSDK::capabilityAgents::aip::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;activityName, const DataPoint &amp;dataPoint, const std::string &amp;dialogRequestId=&quot;&quot;)</td></tr>
+<tr class="separator:a2c65c23a497e5e0adc92fe06619c3415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6296db268ac357ca11d940e71b78b891"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a6296db268ac357ca11d940e71b78b891">alexaClientSDK::capabilityAgents::aip::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, MetricEventBuilder &amp;metricEventBuilder, const std::string &amp;dialogRequestId=&quot;&quot;)</td></tr>
+<tr class="separator:a6296db268ac357ca11d940e71b78b891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fabee4de459d733425f1de6184c7438"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2fabee4de459d733425f1de6184c7438">alexaClientSDK::capabilityAgents::aip::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; metricRecorder, const std::string &amp;activityName, const DataPoint &amp;dataPoint, const std::shared_ptr&lt; AVSDirective &gt; &amp;directive=nullptr)</td></tr>
+<tr class="separator:a2fabee4de459d733425f1de6184c7438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e27c2d52be1d51629b3a56862f5e71"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; avsCommon::avs::CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab5e27c2d52be1d51629b3a56862f5e71">alexaClientSDK::capabilityAgents::aip::getSpeechRecognizerCapabilityConfiguration</a> (const LocaleAssetsManagerInterface &amp;assetsManager)</td></tr>
+<tr class="separator:ab5e27c2d52be1d51629b3a56862f5e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a1eb700f65ee035bf38c1e4f6404c7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad8a1eb700f65ee035bf38c1e4f6404c7">alexaClientSDK::capabilityAgents::aip::shouldGenerateDialogRequestId</a> (AudioInputProcessor::ObserverInterface::State state)</td></tr>
+<tr class="separator:ad8a1eb700f65ee035bf38c1e4f6404c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4568970611a899b51a1c7b434999413"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab4568970611a899b51a1c7b434999413">alexaClientSDK::capabilityAgents::aip::generateSupportedWakeWordsJson</a> (const std::string &amp;scope, const LocaleAssetsManagerInterface::WakeWordsSets &amp;wakeWordsCombination)</td></tr>
+<tr class="separator:ab4568970611a899b51a1c7b434999413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -208,7 +221,7 @@ Variables</h2></td></tr>
 <tr class="memitem:af69d4c56522ad30c19dafd36f3c3f252"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af69d4c56522ad30c19dafd36f3c3f252">alexaClientSDK::capabilityAgents::aip::CAPABILITY_INTERFACE_DEFAULT_LOCALE</a> = &quot;DEFAULT&quot;</td></tr>
 <tr class="memdesc:af69d4c56522ad30c19dafd36f3c3f252"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope configuration used as default locale wake words support.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af69d4c56522ad30c19dafd36f3c3f252">More...</a><br /></td></tr>
 <tr class="separator:af69d4c56522ad30c19dafd36f3c3f252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6865b0d158ae906136497013216ebc4d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a6865b0d158ae906136497013216ebc4d">alexaClientSDK::capabilityAgents::aip::CHANNEL_NAME</a> = avsCommon::sdkInterfaces::FocusManagerInterface::DIALOG_CHANNEL_NAME</td></tr>
+<tr class="memitem:a6865b0d158ae906136497013216ebc4d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a6865b0d158ae906136497013216ebc4d">alexaClientSDK::capabilityAgents::aip::CHANNEL_NAME</a> = FocusManagerInterface::DIALOG_CHANNEL_NAME</td></tr>
 <tr class="memdesc:a6865b0d158ae906136497013216ebc4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the <code>FocusManager</code> channel used by <code>AudioInputProvider</code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a6865b0d158ae906136497013216ebc4d">More...</a><br /></td></tr>
 <tr class="separator:a6865b0d158ae906136497013216ebc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9d845bb12871df7e7c25ab3eefbaec4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab9d845bb12871df7e7c25ab3eefbaec4">alexaClientSDK::capabilityAgents::aip::NAMESPACE</a> = &quot;SpeechRecognizer&quot;</td></tr>
@@ -223,9 +236,6 @@ Variables</h2></td></tr>
 <tr class="memitem:a8048a6c2c004a9aa10fa5a5616677532"><td class="memItemLeft" align="right" valign="top">static const avsCommon::avs::NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a8048a6c2c004a9aa10fa5a5616677532">alexaClientSDK::capabilityAgents::aip::SET_END_OF_SPEECH_OFFSET</a> {NAMESPACE, &quot;SetEndOfSpeechOffset&quot;}</td></tr>
 <tr class="memdesc:a8048a6c2c004a9aa10fa5a5616677532"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SetEndOfSpeechOffset directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a8048a6c2c004a9aa10fa5a5616677532">More...</a><br /></td></tr>
 <tr class="separator:a8048a6c2c004a9aa10fa5a5616677532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1f4dbe884ae7c82d527cce9a69a0cbf"><td class="memItemLeft" align="right" valign="top">static const avsCommon::avs::NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab1f4dbe884ae7c82d527cce9a69a0cbf">alexaClientSDK::capabilityAgents::aip::RECOGNIZER_STATE</a> {NAMESPACE, &quot;RecognizerState&quot;}</td></tr>
-<tr class="memdesc:ab1f4dbe884ae7c82d527cce9a69a0cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SpeechRecognizer context state signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab1f4dbe884ae7c82d527cce9a69a0cbf">More...</a><br /></td></tr>
-<tr class="separator:ab1f4dbe884ae7c82d527cce9a69a0cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d48c99e77d940c71d59316253a78113"><td class="memItemLeft" align="right" valign="top">static const avsCommon::avs::NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0d48c99e77d940c71d59316253a78113">alexaClientSDK::capabilityAgents::aip::SET_WAKE_WORD_CONFIRMATION</a> {NAMESPACE, &quot;SetWakeWordConfirmation&quot;}</td></tr>
 <tr class="memdesc:a0d48c99e77d940c71d59316253a78113"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SetWakeWordConfirmation directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0d48c99e77d940c71d59316253a78113">More...</a><br /></td></tr>
 <tr class="separator:a0d48c99e77d940c71d59316253a78113"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,6 +257,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a32e0f808067c1599cbb4598d2f750706"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">alexaClientSDK::capabilityAgents::aip::TYPE_KEY</a> = &quot;type&quot;</td></tr>
 <tr class="memdesc:a32e0f808067c1599cbb4598d2f750706"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's type.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a32e0f808067c1599cbb4598d2f750706">More...</a><br /></td></tr>
 <tr class="separator:a32e0f808067c1599cbb4598d2f750706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a159c1ac58665420ef331f61564d7eef2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a159c1ac58665420ef331f61564d7eef2">alexaClientSDK::capabilityAgents::aip::TOKEN_KEY</a> = &quot;token&quot;</td></tr>
+<tr class="memdesc:a159c1ac58665420ef331f61564d7eef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's token.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a159c1ac58665420ef331f61564d7eef2">More...</a><br /></td></tr>
+<tr class="separator:a159c1ac58665420ef331f61564d7eef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">alexaClientSDK::capabilityAgents::aip::PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
 <tr class="memdesc:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The field identifying the initiator's payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">More...</a><br /></td></tr>
 <tr class="separator:abbf5dcfa5810b05aab72efc1a0005e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,6 +316,41 @@ Variables</h2></td></tr>
 <tr class="memitem:aa11df0dd9eea2ae51cbe86b3bc5edfa8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aa11df0dd9eea2ae51cbe86b3bc5edfa8">alexaClientSDK::capabilityAgents::aip::POWER_RESOURCE_COMPONENT_NAME</a> = &quot;AudioInputProcessor&quot;</td></tr>
 <tr class="memdesc:aa11df0dd9eea2ae51cbe86b3bc5edfa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The component name of power management.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aa11df0dd9eea2ae51cbe86b3bc5edfa8">More...</a><br /></td></tr>
 <tr class="separator:aa11df0dd9eea2ae51cbe86b3bc5edfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af94ae5f58a5af57563d153bd93a96ad9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">alexaClientSDK::capabilityAgents::aip::METRIC_ACTIVITY_NAME_PREFIX_AIP</a> = &quot;AIP-&quot;</td></tr>
+<tr class="memdesc:af94ae5f58a5af57563d153bd93a96ad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for AIP metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">More...</a><br /></td></tr>
+<tr class="separator:af94ae5f58a5af57563d153bd93a96ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfdbfd69dcb3840022cad77b1bfaadf7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adfdbfd69dcb3840022cad77b1bfaadf7">alexaClientSDK::capabilityAgents::aip::START_OF_UTTERANCE</a> = &quot;START_OF_UTTERANCE&quot;</td></tr>
+<tr class="memdesc:adfdbfd69dcb3840022cad77b1bfaadf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start of Utterance Activity Name for AIP metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adfdbfd69dcb3840022cad77b1bfaadf7">More...</a><br /></td></tr>
+<tr class="separator:adfdbfd69dcb3840022cad77b1bfaadf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79e8594c1ee0ab89bdf42d3fcf110d0f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a79e8594c1ee0ab89bdf42d3fcf110d0f">alexaClientSDK::capabilityAgents::aip::START_OF_UTTERANCE_ACTIVITY_NAME</a> = METRIC_ACTIVITY_NAME_PREFIX_AIP + START_OF_UTTERANCE</td></tr>
+<tr class="separator:a79e8594c1ee0ab89bdf42d3fcf110d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23c4f34d787fb8ee94d4f556382ccdc4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a23c4f34d787fb8ee94d4f556382ccdc4">alexaClientSDK::capabilityAgents::aip::START_OF_STREAM_TIMESTAMP</a> = &quot;START_OF_STREAM_TIMESTAMP&quot;</td></tr>
+<tr class="memdesc:a23c4f34d787fb8ee94d4f556382ccdc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakeword Activity Name for AIP metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a23c4f34d787fb8ee94d4f556382ccdc4">More...</a><br /></td></tr>
+<tr class="separator:a23c4f34d787fb8ee94d4f556382ccdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a05eae614c1f31778c32d52cb71aaac"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a0a05eae614c1f31778c32d52cb71aaac">alexaClientSDK::capabilityAgents::aip::WW_DURATION</a> = &quot;WW_DURATION&quot;</td></tr>
+<tr class="separator:a0a05eae614c1f31778c32d52cb71aaac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5500cbc58063dd3b706fe5ad42f7a7ce"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5500cbc58063dd3b706fe5ad42f7a7ce">alexaClientSDK::capabilityAgents::aip::WW_DURATION_ACTIVITY_NAME</a> = METRIC_ACTIVITY_NAME_PREFIX_AIP + WW_DURATION</td></tr>
+<tr class="separator:a5500cbc58063dd3b706fe5ad42f7a7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67a4e826d44a15d213ce6b7efb6b9b1b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a67a4e826d44a15d213ce6b7efb6b9b1b">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_RECEIVED</a> = &quot;STOP_CAPTURE&quot;</td></tr>
+<tr class="memdesc:a67a4e826d44a15d213ce6b7efb6b9b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop Capture Received Activity Name for AIP metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a67a4e826d44a15d213ce6b7efb6b9b1b">More...</a><br /></td></tr>
+<tr class="separator:a67a4e826d44a15d213ce6b7efb6b9b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d0cbd6ae636a5a8ec902c7eada08d4c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2d0cbd6ae636a5a8ec902c7eada08d4c">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_RECEIVED_ACTIVITY_NAME</a> = METRIC_ACTIVITY_NAME_PREFIX_AIP + STOP_CAPTURE_RECEIVED</td></tr>
+<tr class="separator:a2d0cbd6ae636a5a8ec902c7eada08d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49906932607dfebe34134b7ef4a8d7d0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">alexaClientSDK::capabilityAgents::aip::END_OF_SPEECH_OFFSET_RECEIVED</a> = &quot;END_OF_SPEECH_OFFSET&quot;</td></tr>
+<tr class="memdesc:a49906932607dfebe34134b7ef4a8d7d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">End of Speech Offset Received Activity Name for AIP metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">More...</a><br /></td></tr>
+<tr class="separator:a49906932607dfebe34134b7ef4a8d7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1036f79c472f832ead5cb439d7016c4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad1036f79c472f832ead5cb439d7016c4">alexaClientSDK::capabilityAgents::aip::END_OF_SPEECH_OFFSET_RECEIVED_ACTIVITY_NAME</a></td></tr>
+<tr class="separator:ad1036f79c472f832ead5cb439d7016c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcda769c4d71b607f755f4e8693d3b62"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adcda769c4d71b607f755f4e8693d3b62">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</a> = &quot;STOP_CAPTURE_TO_END_OF_SPEECH&quot;</td></tr>
+<tr class="memdesc:adcda769c4d71b607f755f4e8693d3b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration metric for short time out.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adcda769c4d71b607f755f4e8693d3b62">More...</a><br /></td></tr>
+<tr class="separator:adcda769c4d71b607f755f4e8693d3b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcf5ca58271580571ce35b73c41a15d4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abcf5ca58271580571ce35b73c41a15d4">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_TO_END_OF_SPEECH_ACTIVITY_NAME</a></td></tr>
+<tr class="separator:abcf5ca58271580571ce35b73c41a15d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00edb3ce3355d225e109c0ccb6048169"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a00edb3ce3355d225e109c0ccb6048169">alexaClientSDK::capabilityAgents::aip::PREROLL_DURATION</a> = std::chrono::milliseconds(500)</td></tr>
+<tr class="memdesc:a00edb3ce3355d225e109c0ccb6048169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preroll duration is a fixed 500ms.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a00edb3ce3355d225e109c0ccb6048169">More...</a><br /></td></tr>
+<tr class="separator:a00edb3ce3355d225e109c0ccb6048169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2cd6be97f4d461fcc580bf7b62ddac"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a9c2cd6be97f4d461fcc580bf7b62ddac">alexaClientSDK::capabilityAgents::aip::MILLISECONDS_PER_SECOND</a> = 1000</td></tr>
+<tr class="separator:a9c2cd6be97f4d461fcc580bf7b62ddac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -334,7 +382,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

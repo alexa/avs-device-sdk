@@ -1,4 +1,6 @@
 <map id="alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface" name="alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="17,5,218,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html" title=" " alt="" coords="5,105,230,144"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,207,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html" title=" " alt="" coords="268,5,465,57"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_metric_recorder.html" title=" " alt="" coords="277,81,457,133"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html" title=" " alt="" coords="255,157,479,196"/>
 </map>

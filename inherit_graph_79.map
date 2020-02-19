@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html" title=" " alt="" coords="5,44,233,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1_internet_connection_monitor.html" title=" " alt="" coords="281,5,508,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1test_1_1_mock_internet_connection_monitor.html" title=" " alt="" coords="286,81,504,133"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_player_observer_interface.html" title=" " alt="" coords="5,5,250,71"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test_1_1_mock_external_media_player_observer.html" title=" " alt="" coords="298,12,565,64"/>
 </map>

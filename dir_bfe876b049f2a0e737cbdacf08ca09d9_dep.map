@@ -1,9 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/test" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/test">
-<area shape="rect" id="node1" href="dir_bfe876b049f2a0e737cbdacf08ca09d9.html" title="test" alt="" coords="43,51,115,99"/>
-<area shape="rect" id="node2" href="dir_d3b0a340b0e73c93d97aa769524dbb98.html" title="include" alt="" coords="5,147,77,195"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000190_000187.html" title="2" alt="" coords="62,126,69,139"/>
-<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,243,128,291"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000190_000017.html" title="1" alt="" coords="90,219,98,232"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000187_000017.html" title="27" alt="" coords="62,216,77,229"/>
-<area shape="rect" id="clust1" href="dir_2fa9f33c88ab044378089e969c1a626c.html" title="Bluetooth" alt="" coords="32,16,125,109"/>
+<area shape="rect" id="node1" href="dir_bfe876b049f2a0e737cbdacf08ca09d9.html" title="test" alt="" coords="88,51,160,99"/>
+<area shape="rect" id="node2" href="dir_d3b0a340b0e73c93d97aa769524dbb98.html" title="include" alt="" coords="15,147,87,195"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000193_000190.html" title="5" alt="" coords="83,130,91,144"/>
+<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="44,339,145,387"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000193_000017.html" title="29" alt="" coords="148,327,163,341"/>
+<area shape="rect" id="node4" href="dir_b14333b5607b47fe7356eaa790107bd3.html" title="RegistrationManager" alt="" coords="22,243,167,291"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000193_000354.html" title="1" alt="" coords="106,219,113,233"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000190_000017.html" title="34" alt="" coords="37,314,52,327"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000190_000354.html" title="2" alt="" coords="80,215,87,229"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000354_000017.html" title="9" alt="" coords="99,313,107,327"/>
+<area shape="rect" id="clust1" href="dir_2fa9f33c88ab044378089e969c1a626c.html" title="Bluetooth" alt="" coords="77,16,171,109"/>
 </map>

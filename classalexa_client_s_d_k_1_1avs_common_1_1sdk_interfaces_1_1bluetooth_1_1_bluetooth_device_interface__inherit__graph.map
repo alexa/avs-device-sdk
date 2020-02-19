@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface">
-<area shape="rect" id="node1" title="Represents a Bluetooth Device." alt="" coords="5,5,202,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html" title="A BlueZ implementation of the BluetoothDeviceInterface." alt="" coords="15,105,192,157"/>
+<area shape="rect" id="node1" title="Represents a Bluetooth Device." alt="" coords="5,44,202,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device.html" title=" " alt="" coords="250,5,447,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html" title="A BlueZ implementation of the BluetoothDeviceInterface." alt="" coords="260,81,437,133"/>
 </map>

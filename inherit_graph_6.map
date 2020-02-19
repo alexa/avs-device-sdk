@@ -1,5 +1,35 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html" title=" " alt="" coords="5,37,187,76"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport_factory.html" title=" " alt="" coords="244,5,416,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_transport_factory.html" title=" " alt="" coords="235,68,425,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,1131,51,1156"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_h_t_t_p2_transport_test.html" title="Test harness for HTTP2Transport class." alt="" coords="119,5,360,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_post_connect_sequencer_factory_test.html" title=" " alt="" coords="143,68,337,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_post_connect_sequencer_test.html" title=" " alt="" coords="143,144,337,196"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_android_s_l_e_s_buffer_queue_test.html" title=" " alt="" coords="121,220,359,272"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_android_s_l_e_s_microphone_test.html" title=" " alt="" coords="124,296,356,348"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_android_s_l_e_s_object_test.html" title=" " alt="" coords="140,372,340,424"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_capability_resources_test.html" title=" " alt="" coords="124,448,356,487"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1test_1_1_json_generator_test.html" title=" " alt="" coords="123,511,357,549"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1test_1_1_a_v_s_gateway_manager_storage_test.html" title=" " alt="" coords="124,573,355,625"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_a_v_s_gateway_manager_test.html" title=" " alt="" coords="107,649,373,688"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_post_connect_verify_gateway_sender_test.html" title=" " alt="" coords="130,712,350,764"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1test_1_1_s_q_lite_capabilities_delegate_storage_test.html" title=" " alt="" coords="108,788,371,840"/>
+<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html" title=" " alt="" coords="111,864,369,903"/>
+<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_post_connect_capabilities_publisher_test.html" title=" " alt="" coords="112,927,368,979"/>
+<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1utils_1_1test_1_1_discovery_utils_test.html" title=" " alt="" coords="140,1003,340,1055"/>
+<area shape="rect" id="node17" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_alexa_interface_capability_agent_test.html" title=" " alt="" coords="128,1079,352,1131"/>
+<area shape="rect" id="node18" href="$classalexa_client_s_d_k_1_1capability_agents_1_1api_gateway_1_1test_1_1_api_gateway_capability_agent_test.html" title=" " alt="" coords="131,1155,349,1207"/>
+<area shape="rect" id="node19" href="$classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_interaction_model_capability_agent_test.html" title="Test harness for InteractionModelCapabilityAgent class." alt="" coords="132,1231,347,1296"/>
+<area shape="rect" id="node20" href="$classalexa_client_s_d_k_1_1endpoints_1_1test_1_1_endpoint_attribute_validation_test.html" title=" " alt="" coords="119,1320,361,1359"/>
+<area shape="rect" id="node21" href="$classalexa_client_s_d_k_1_1endpoints_1_1test_1_1_endpoint_registration_manager_test.html" title=" " alt="" coords="111,1383,369,1421"/>
+<area shape="rect" id="node22" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html" title=" " alt="" coords="127,1445,353,1497"/>
+<area shape="rect" id="node23" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_queue_test.html" title=" " alt="" coords="127,1521,353,1573"/>
+<area shape="rect" id="node24" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_speaker_test.html" title=" " alt="" coords="108,1597,372,1636"/>
+<area shape="rect" id="node25" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_f_fmpeg_decoder_test.html" title=" " alt="" coords="123,1660,357,1699"/>
+<area shape="rect" id="node26" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_f_fmpeg_url_input_controller_test.html" title=" " alt="" coords="137,1723,343,1775"/>
+<area shape="rect" id="node27" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_locale_wake_words_setting_test.html" title=" " alt="" coords="122,1799,357,1837"/>
+<area shape="rect" id="node28" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_callback_adapter_test.html" title=" " alt="" coords="129,1861,351,1900"/>
+<area shape="rect" id="node29" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_callbacks_test.html" title=" " alt="" coords="149,1924,331,1963"/>
+<area shape="rect" id="node30" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_event_sender_test.html" title=" " alt="" coords="140,1987,340,2025"/>
+<area shape="rect" id="node31" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_setting_test.html" title=" " alt="" coords="156,2049,324,2088"/>
+<area shape="rect" id="node32" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_shared_a_v_s_setting_protocol_test.html" title=" " alt="" coords="119,2112,360,2151"/>
+<area shape="rect" id="node33" href="$classalexa_client_s_d_k_1_1synchronize_state_sender_1_1test_1_1_post_connect_synchronize_state_sender_test.html" title=" " alt="" coords="99,2175,381,2227"/>
 </map>

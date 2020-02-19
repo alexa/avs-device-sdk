@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -121,12 +121,14 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer_observer.html#a8bfc4800f51267b86f2835a4f24e9162">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRendererObserver</a>
 </li>
 <li>waitForFocusChange()
-: <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a3f3a4f900ef3cfc03de1c977595cb070">alexaClientSDK::afml::test::TestClient</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">alexaClientSDK::integration::test::SpeechSynthesizerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html#a6646a049e46ffcdd2b59b152c6ad0145">alexaClientSDK::integration::test::SpeechSynthesizerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_client.html#abf34360f669de979952fd033f4679225">alexaClientSDK::integration::test::TestClient</a>
 </li>
 <li>waitForFocusChanges()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html#a1282ca5ea2b1c07d573412ad4f78fc5c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver</a>
+</li>
+<li>waitForFocusOrMixingBehaviorChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client.html#a06ffaca954e2210ee31fa32c36d51e40">alexaClientSDK::afml::test::TestClient</a>
 </li>
 <li>waitForFunctionCalls()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_mock_capability_agent.html#a859ceab5cfa71d14cc0eb3b986d821a8">alexaClientSDK::avsCommon::test::MockCapabilityAgent</a>
@@ -148,6 +150,9 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html#ad2f27c283916cfcee7c0fdf8ccf8a783">alexaClientSDK::integration::test::TestExceptionEncounteredSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html#a4734d80e07bf0feb5e4d430f6e70b44d">alexaClientSDK::integration::test::TestMessageSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_speech_synthesizer_observer.html#a4207ba4eb33a780748d0356bdc642886">alexaClientSDK::integration::test::TestSpeechSynthesizerObserver</a>
+</li>
+<li>waitForNoActivityUpdates()
+: <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html#a7df183b0fa8eeb690366896dd777d7ac">alexaClientSDK::afml::test::MockActivityTrackerInterface</a>
 </li>
 <li>waitForPingRequest()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_connection.html#a2eb16d6be8cd93db5022ec9da7da5505">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Connection</a>
@@ -174,7 +179,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_connection.html#a5923cb96afe8bbc60d9455fc5a8d8d54">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Connection</a>
 </li>
 <li>waitForQueueSizeToBe()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a0b97754844e65a7b054677a68920fa60">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html#a912677974d2e3379e96c33b64ef97917">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a>
 </li>
 <li>waitForRenderCall()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html#aa7a83c5f5e4f42b0375481fda7981a57">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a>
@@ -222,6 +227,9 @@ $(function() {
 <li>waitUntilCompleted()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a98d6404f3b70daf0450ecdd5f72d4a17">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
+<li>waitUntilEventSent()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_report_state_handler_test.html#af2b12634b9e273ebd9c62e4145b92aef">alexaClientSDK::capabilityAgents::system::test::ReportStateHandlerTest</a>
+</li>
 <li>waitUntilHandling()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a2e8ca3ab0feae2a3a1120f92a69669e4">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
@@ -250,10 +258,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#a79b77cd37732843891b8162aa457880a">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
 <li>waitUntilRenderingFinished()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html#a87efe68bf80da6237dd3e01cc0e66407">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html#afa19800fbead629e3483c52f9bc53cee">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a>
 </li>
 <li>waitUntilRenderingStarted()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html#a089a97305bb92a688ff15de8584e0692">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html#afb54274a575456c685ac43f959870b6a">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a>
 </li>
 <li>wakeOnAcquireChannel()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test_1_1_audio_player_test.html#a95935e9d99758ffad062d1d2c33db8c0">alexaClientSDK::capabilityAgents::audioPlayer::test::AudioPlayerTest</a>
@@ -283,6 +291,7 @@ $(function() {
 <li>wakeOnSetCompleted()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_alexa_interface_capability_agent_test.html#af45aae0700cb92ed87fba6e17a680b02">alexaClientSDK::capabilityAgents::alexa::test::AlexaInterfaceCapabilityAgentTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1api_gateway_1_1test_1_1_api_gateway_capability_agent_test.html#aac406edf2dd6fe1d1ff1cb8da7b9bb7e">alexaClientSDK::capabilityAgents::apiGateway::test::ApiGatewayCapabilityAgentTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_bluetooth_test.html#a479697428078cf7871e12cf9c4a7e358">alexaClientSDK::capabilityAgents::bluetooth::test::BluetoothTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html#a23ec002c78d7a548e03fd31deb8f98b2">alexaClientSDK::capabilityAgents::speakerManager::test::SpeakerManagerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_speech_synthesizer_test.html#acd25163750619a465fffff945a2a698e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::SpeechSynthesizerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_template_runtime_test.html#ada0949616c4edb77e898e460e1711c27">alexaClientSDK::capabilityAgents::templateRuntime::test::TemplateRuntimeTest</a>
@@ -386,6 +395,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a89857a79069baf67d738c7ef373fc68c">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a6f398ad84906fd446a31c29c316ade93">alexaClientSDK::endpoints::EndpointBuilder</a>
 </li>
+<li>withNetworkInfoSetting()
+: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_device_settings_manager_builder.html#a9c13cf5f1d91c2c8774debbc68fb9141">alexaClientSDK::defaultClient::DeviceSettingsManagerBuilder</a>
+</li>
 <li>withPowerController()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a5b8d5ad184270ec39afee00cd2378db5">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a10b8b668c0c4e012ff4122851830a72c">alexaClientSDK::endpoints::EndpointBuilder</a>
@@ -437,7 +449,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

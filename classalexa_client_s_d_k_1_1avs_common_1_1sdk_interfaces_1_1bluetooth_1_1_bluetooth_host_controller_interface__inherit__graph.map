@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,228,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html" title="An implementation of the BluetoothHostControllerInterface using BlueZ." alt="" coords="28,105,205,157"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,44,228,96"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_host_controller.html" title=" " alt="" coords="276,5,507,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html" title="An implementation of the BluetoothHostControllerInterface using BlueZ." alt="" coords="303,81,480,133"/>
 </map>

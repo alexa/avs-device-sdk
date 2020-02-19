@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -163,6 +163,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1e8cb582462406d255813e9fa9e3f9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8c312c00d211ca70765aaa4517f2ba6"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ad8c312c00d211ca70765aaa4517f2ba6">getSpeakerManager</a> ()</td></tr>
 <tr class="separator:ad8c312c00d211ca70765aaa4517f2ba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3376a4f0a3c3313dc565584c63c9a9ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a3376a4f0a3c3313dc565584c63c9a9ca">addSpeechSynthesizerObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html">avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a> &gt; observer)</td></tr>
+<tr class="separator:a3376a4f0a3c3313dc565584c63c9a9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac039f7c4deb866630d44d7aa38ab3009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ac039f7c4deb866630d44d7aa38ab3009">removeSpeechSynthesizerObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html">avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a> &gt; observer)</td></tr>
+<tr class="separator:ac039f7c4deb866630d44d7aa38ab3009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d38c47940660bed1f923007678c525"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html">registrationManager::RegistrationManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ae8d38c47940660bed1f923007678c525">getRegistrationManager</a> ()</td></tr>
 <tr class="separator:ae8d38c47940660bed1f923007678c525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a733ab25d1a51b68d9505f51bee131be0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_equalizer_controller.html">equalizer::EqualizerController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a733ab25d1a51b68d9505f51bee131be0">getEqualizerController</a> ()</td></tr>
@@ -175,8 +179,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a13abcaa40a6b2ef9b848bb1af38033a9"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a13abcaa40a6b2ef9b848bb1af38033a9">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; deviceInfo, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; customerDataManager, const std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;externalMusicProviderMediaPlayers, const std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;externalMusicProviderSpeakers, const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap</a> &amp;adapterCreationMap, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; speakMediaPlayer, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface</a> &gt; audioMediaPlayerFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; alertsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; notificationsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; bluetoothMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; ringtoneMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; systemSoundMediaPlayer, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_sink_interface.html">avsCommon::utils::metrics::MetricSinkInterface</a> &gt; metricSinkInterface, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; speakSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; audioSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; alertsSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; notificationsSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; bluetoothSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; ringtoneSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; systemSoundSpeaker, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;additionalSpeakers, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html">EqualizerRuntimeSetup</a> &gt; equalizerRuntimeSetup, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AudioFactoryInterface</a> &gt; audioFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; authDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">capabilityAgents::alerts::storage::AlertStorageInterface</a> &gt; alertStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html">certifiedSender::MessageStorageInterface</a> &gt; messageStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html">capabilityAgents::notifications::NotificationsStorageInterface</a> &gt; notificationsStorage, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">settings::storage::DeviceSettingStorageInterface</a> &gt; deviceSettingStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth_storage_interface.html">capabilityAgents::bluetooth::BluetoothStorageInterface</a> &gt; bluetoothStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; miscStorage, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a> &gt;&gt; alexaDialogStateObservers, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a> &gt;&gt; connectionObservers, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; internetConnectionMonitor, bool isGuiSupported, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html">avsCommon::sdkInterfaces::CapabilitiesDelegateInterface</a> &gt; capabilitiesDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">alexaClientSDK::acl::TransportFactoryInterface</a> &gt; transportFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt; localeAssetsManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_system_time_zone_interface.html">avsCommon::sdkInterfaces::SystemTimeZoneInterface</a> &gt; systemTimezone=nullptr, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#af7c2b6a74bbdcaa7ff513eb8586ad0a8">avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion</a> firmwareVersion=<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#a77da512d9f7f6355169aa7d2c46f703d">avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION</a>, bool sendSoftwareInfoOnConnected=false, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_software_info_sender_observer_interface.html">avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface</a> &gt; softwareInfoSenderObserver=nullptr, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_manager_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface</a> &gt; bluetoothDeviceManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt; avsGatewayManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt; powerResourceManager=nullptr)</td></tr>
-<tr class="separator:a13abcaa40a6b2ef9b848bb1af38033a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92922d9968fe9f8865466cba726a9289"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a92922d9968fe9f8865466cba726a9289">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; deviceInfo, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; customerDataManager, const std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;externalMusicProviderMediaPlayers, const std::unordered_map&lt; std::string, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;externalMusicProviderSpeakers, const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#aaf4ebe27e2dfdda96617f1f0c2667e1c">capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap</a> &amp;adapterCreationMap, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; speakMediaPlayer, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface</a> &gt; audioMediaPlayerFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; alertsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; notificationsMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; bluetoothMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; ringtoneMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; systemSoundMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; speakSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; audioSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; alertsSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; notificationsSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; bluetoothSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; ringtoneSpeaker, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt; systemSoundSpeaker, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html">avsCommon::sdkInterfaces::SpeakerInterface</a> &gt;&gt; &amp;additionalSpeakers, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html">EqualizerRuntimeSetup</a> &gt; equalizerRuntimeSetup, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AudioFactoryInterface</a> &gt; audioFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; authDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">capabilityAgents::alerts::storage::AlertStorageInterface</a> &gt; alertStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html">certifiedSender::MessageStorageInterface</a> &gt; messageStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_storage_interface.html">capabilityAgents::notifications::NotificationsStorageInterface</a> &gt; notificationsStorage, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">settings::storage::DeviceSettingStorageInterface</a> &gt; deviceSettingStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth_storage_interface.html">capabilityAgents::bluetooth::BluetoothStorageInterface</a> &gt; bluetoothStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; miscStorage, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a> &gt;&gt; alexaDialogStateObservers, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a> &gt;&gt; connectionObservers, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; internetConnectionMonitor, bool isGuiSupported, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html">avsCommon::sdkInterfaces::CapabilitiesDelegateInterface</a> &gt; capabilitiesDelegate, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">alexaClientSDK::acl::TransportFactoryInterface</a> &gt; transportFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt; avsGatewayManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt; localeAssetsManager, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_connection_rule_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface</a> &gt;&gt; enabledConnectionRules=std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_connection_rule_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface</a> &gt;&gt;(), std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_system_time_zone_interface.html">avsCommon::sdkInterfaces::SystemTimeZoneInterface</a> &gt; systemTimezone=nullptr, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#af7c2b6a74bbdcaa7ff513eb8586ad0a8">avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion</a> firmwareVersion=<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1software_info.html#a77da512d9f7f6355169aa7d2c46f703d">avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION</a>, bool sendSoftwareInfoOnConnected=false, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_software_info_sender_observer_interface.html">avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface</a> &gt; softwareInfoSenderObserver=nullptr, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_manager_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface</a> &gt; bluetoothDeviceManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt; powerResourceManager=nullptr)</td></tr>
+<tr class="separator:a92922d9968fe9f8865466cba726a9289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 SpeechInteractionHandlerInterface Methods</h2></td></tr>
@@ -190,7 +194,7 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 <tr class="separator:ab256bfb678b373bdb79d93f83d9af4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66f4d658aaae07f3bd201620c813b588"><td class="memItemLeft" align="right" valign="top">std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a66f4d658aaae07f3bd201620c813b588">notifyOfTapToTalkEnd</a> () override</td></tr>
 <tr class="separator:a66f4d658aaae07f3bd201620c813b588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a042b0c1c7691ffc8bcb2d740c043892b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a1424b795447dce004be6e98c567813f7">settings::DeviceSettingsManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a042b0c1c7691ffc8bcb2d740c043892b">getSettingsManager</a> ()</td></tr>
+<tr class="memitem:a042b0c1c7691ffc8bcb2d740c043892b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a042b0c1c7691ffc8bcb2d740c043892b">getSettingsManager</a> ()</td></tr>
 <tr class="memdesc:a042b0c1c7691ffc8bcb2d740c043892b"><td class="mdescLeft">&#160;</td><td class="mdescRight">}  <a href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a042b0c1c7691ffc8bcb2d740c043892b">More...</a><br /></td></tr>
 <tr class="separator:a042b0c1c7691ffc8bcb2d740c043892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a8b02644c69af1706a9649196cb9571"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a9a8b02644c69af1706a9649196cb9571">createEndpointBuilder</a> ()</td></tr>
@@ -209,6 +213,12 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 <tr class="separator:af02eb272036ae12f08fb618a1de0e480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a170392e3bd2c93eb05e4f56872247041"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a170392e3bd2c93eb05e4f56872247041">stopCommsCall</a> ()</td></tr>
 <tr class="separator:a170392e3bd2c93eb05e4f56872247041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aace8dbb05cac448c29ad15b70e5dced4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aace8dbb05cac448c29ad15b70e5dced4">isCommsCallMuted</a> ()</td></tr>
+<tr class="separator:aace8dbb05cac448c29ad15b70e5dced4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a552aff62b266ac069c384cdc1dc896b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a552aff62b266ac069c384cdc1dc896b4">muteCommsCall</a> ()</td></tr>
+<tr class="separator:a552aff62b266ac069c384cdc1dc896b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29388088427e450ede3bf10d51de857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ad29388088427e450ede3bf10d51de857">unmuteCommsCall</a> ()</td></tr>
+<tr class="separator:ad29388088427e450ede3bf10d51de857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16c25234762babfe8ee6cc4a94f03214"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a16c25234762babfe8ee6cc4a94f03214">~DefaultClient</a> ()</td></tr>
 <tr class="separator:a16c25234762babfe8ee6cc4a94f03214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -552,6 +562,30 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 
 </div>
 </div>
+<a id="a3376a4f0a3c3313dc565584c63c9a9ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3376a4f0a3c3313dc565584c63c9a9ca">&#9670;&nbsp;</a></span>addSpeechSynthesizerObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::addSpeechSynthesizerObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html">avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Adds a SpeechSynthesizerObserver to be alerted on SpeechSynthesizer state changes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to be notified upon the state change </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aff7445241c598c5eaaa4dab827b3e4f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff7445241c598c5eaaa4dab827b3e4f8">&#9670;&nbsp;</a></span>addTemplateRuntimeObserver()</h2>
 
@@ -591,12 +625,12 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connects the client to AVS. After this call, users can observe the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a13abcaa40a6b2ef9b848bb1af38033a9">create()</a> function. </p>
+<p>Connects the client to AVS. After this call, users can observe the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a92922d9968fe9f8865466cba726a9289">create()</a> function. </p>
 
 </div>
 </div>
-<a id="a13abcaa40a6b2ef9b848bb1af38033a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13abcaa40a6b2ef9b848bb1af38033a9">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a92922d9968fe9f8865466cba726a9289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92922d9968fe9f8865466cba726a9289">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -675,12 +709,6 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>systemSoundMediaPlayer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_sink_interface.html">avsCommon::utils::metrics::MetricSinkInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>metricSinkInterface</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -829,8 +857,20 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>avsGatewayManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>localeAssetsManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_connection_rule_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>enabledConnectionRules</em> = <code>std::unordered_set&lt;&#160;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_connection_rule_interface.html">avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface</a>&gt;&gt;()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -865,8 +905,8 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>avsGatewayManager</em> = <code>nullptr</code>, </td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -905,7 +945,6 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
    @param bluetoothMediaPlayer The media player to play bluetooth content.
    @param ringtoneMediaPlayer The media player to play Comms ringtones.
    @param systemSoundMediaPlayer The media player to play system sounds.
-   @param metricSinkInterface The metric sink interface to be moved into MetricRecorder
    @param speakSpeaker The speaker to control volume of Alexa speech.
    @param audioSpeaker The speaker to control volume of Alexa audio content.
    @param alertsSpeaker The speaker to control volume of alerts.
@@ -934,13 +973,15 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate.html">capabilitiesDelegate</a></td><td>The component that provides the client with the ability to send messages to the Capabilities API. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The <code>ContextManager</code> which will provide the context for various components. </td></tr>
     <tr><td class="paramname">transportFactory</td><td>The object passed in here will be used whenever a new transport object for AVS communication is needed. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_gateway_manager.html">avsGatewayManager</a></td><td>The <code>AVSGatewayManager</code> instance used to create the ApiGateway CA. </td></tr>
     <tr><td class="paramname">localeAssetsManager</td><td>The device locale assets manager. </td></tr>
+    <tr><td class="paramname">enabledConnectionRules</td><td>The set of <code>BluetoothDeviceConnectionRuleInterface</code> instances used to create the Bluetooth CA. </td></tr>
     <tr><td class="paramname">systemTimezone</td><td>Optional object used to set the system timezone. </td></tr>
     <tr><td class="paramname">firmwareVersion</td><td>The firmware version to report to <code>AVS</code> or <code>INVALID_FIRMWARE_VERSION</code>. </td></tr>
     <tr><td class="paramname">sendSoftwareInfoOnConnected</td><td>Whether to send SoftwareInfo upon connecting to <code>AVS</code>. </td></tr>
     <tr><td class="paramname">softwareInfoSenderObserver</td><td>Object to receive notifications about sending SoftwareInfo. </td></tr>
     <tr><td class="paramname">bluetoothDeviceManager</td><td>The <code>BluetoothDeviceManager</code> instance used to create the Bluetooth CA. </td></tr>
-    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_gateway_manager.html">avsGatewayManager</a></td><td>The <code>AVSGatewayManager</code> instance used to create the ApiGateway CA. </td></tr>
+    <tr><td class="paramname">metricRecorder</td><td>The metric recorder object used to capture metrics. </td></tr>
     <tr><td class="paramname">powerResourceManager</td><td>Object to manage power resource. </td></tr>
   </table>
   </dd>
@@ -984,7 +1025,7 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disconnects the client from AVS if it is connected. After the call, users can observer the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a13abcaa40a6b2ef9b848bb1af38033a9">create()</a> function. </p>
+<p>Disconnects the client from AVS if it is connected. After the call, users can observer the state of the connection asynchronously by using a connectionObserver that was passed in to the <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a92922d9968fe9f8865466cba726a9289">create()</a> function. </p>
 
 </div>
 </div>
@@ -1091,7 +1132,7 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a1424b795447dce004be6e98c567813f7">settings::DeviceSettingsManager</a> &gt; alexaClientSDK::defaultClient::DefaultClient::getSettingsManager </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt; alexaClientSDK::defaultClient::DefaultClient::getSettingsManager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1121,6 +1162,25 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 </div><div class="memdoc">
 <p>Get a shared_ptr to the SpeakerManager.</p>
 <dl class="section return"><dt>Returns</dt><dd>shared_ptr to the SpeakerManager. </dd></dl>
+
+</div>
+</div>
+<a id="aace8dbb05cac448c29ad15b70e5dced4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aace8dbb05cac448c29ad15b70e5dced4">&#9670;&nbsp;</a></span>isCommsCallMuted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::defaultClient::DefaultClient::isCommsCallMuted </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if the Comms call is muted.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the comms call is muted. </dd></dl>
 
 </div>
 </div>
@@ -1158,6 +1218,24 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>This function provides a way for application code to request this object stop any active alert as the result of a user action, such as pressing a physical 'stop' button on the device. </p>
+
+</div>
+</div>
+<a id="a552aff62b266ac069c384cdc1dc896b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a552aff62b266ac069c384cdc1dc896b4">&#9670;&nbsp;</a></span>muteCommsCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::muteCommsCall </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mute comms Call. </p>
 
 </div>
 </div>
@@ -1671,6 +1749,30 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 
 </div>
 </div>
+<a id="ac039f7c4deb866630d44d7aa38ab3009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac039f7c4deb866630d44d7aa38ab3009">&#9670;&nbsp;</a></span>removeSpeechSynthesizerObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::removeSpeechSynthesizerObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html">avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes a SpeechSynthesizerObserver from being alerted on SpeechSynthesizer state changes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to be removed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a454d37c56eb354cb63de6ff928a0bf6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a454d37c56eb354cb63de6ff928a0bf6b">&#9670;&nbsp;</a></span>removeTemplateRuntimeObserver()</h2>
 
@@ -1826,6 +1928,24 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 
 </div>
 </div>
+<a id="ad29388088427e450ede3bf10d51de857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad29388088427e450ede3bf10d51de857">&#9670;&nbsp;</a></span>unmuteCommsCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::defaultClient::DefaultClient::unmuteCommsCall </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unmute Comms call. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/workplace/avs-device-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/<a class="el" href="_default_client_8h_source.html">DefaultClient.h</a></li>
 <li>/workplace/avs-device-sdk/ApplicationUtilities/DefaultClient/src/<a class="el" href="_default_client_8cpp.html">DefaultClient.cpp</a></li>
@@ -1834,7 +1954,7 @@ SpeechInteractionHandlerInterface Methods</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

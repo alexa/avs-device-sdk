@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -173,8 +173,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae1f111aad3bfe8e13d6fa6a14479d5b4">TASK</a> = [](int arg) { return arg; }</td></tr>
 <tr class="memdesc:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple task which takes an integer argument and returns the argument when executed.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae1f111aad3bfe8e13d6fa6a14479d5b4">More...</a><br /></td></tr>
 <tr class="separator:ae1f111aad3bfe8e13d6fa6a14479d5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae505669e75c3fc058585c035a9d27a74"><td class="memItemLeft" align="right" valign="top">const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#ae505669e75c3fc058585c035a9d27a74">WAIT_TIMEOUT</a> {100}</td></tr>
-<tr class="separator:ae505669e75c3fc058585c035a9d27a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78ec2ae3a48460706e7994fd558e265"><td class="memItemLeft" align="right" valign="top">const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#af78ec2ae3a48460706e7994fd558e265">MY_WAIT_TIMEOUT</a> {100}</td></tr>
+<tr class="memdesc:af78ec2ae3a48460706e7994fd558e265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout used while waiting for synchronization events.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test.html#af78ec2ae3a48460706e7994fd558e265">More...</a><br /></td></tr>
+<tr class="separator:af78ec2ae3a48460706e7994fd558e265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a8750a11aaa469e4dde6cbd110285428f"></a>
@@ -997,6 +998,22 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="af78ec2ae3a48460706e7994fd558e265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af78ec2ae3a48460706e7994fd558e265">&#9670;&nbsp;</a></span>MY_WAIT_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::threading::test::MY_WAIT_TIMEOUT {100}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timeout used while waiting for synchronization events. </p>
+
+</div>
+</div>
 <a id="a83d0f1c5a61613e11083de02c78b837f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a83d0f1c5a61613e11083de02c78b837f">&#9670;&nbsp;</a></span>SHORT_TIMEOUT_MS</h2>
 
@@ -1069,26 +1086,11 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae505669e75c3fc058585c035a9d27a74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae505669e75c3fc058585c035a9d27a74">&#9670;&nbsp;</a></span>WAIT_TIMEOUT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::threading::test::WAIT_TIMEOUT {100}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Timeout used while waiting for synchronization events. We picked 2s to avoid failure in slower systems (e.g.: valgrind and emulators). </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

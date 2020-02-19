@@ -1,52 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/src/SpeakerManager.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/src/SpeakerManager.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="594,5,873,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="500,792,649,817"/>
-<area shape="rect" id="node3" title=" " alt="" coords="46,112,202,137"/>
-<area shape="rect" id="node4" title=" " alt="" coords="226,112,348,137"/>
-<area shape="rect" id="node5" title=" " alt="" coords="372,112,509,137"/>
-<area shape="rect" id="node6" href="$_capability_configuration_8h.html" title=" " alt="" coords="1425,279,1618,317"/>
-<area shape="rect" id="node14" href="$_logger_8h.html" title=" " alt="" coords="1304,612,1480,651"/>
-<area shape="rect" id="node28" href="$_speaker_constants_8h.html" title=" " alt="" coords="533,105,777,144"/>
-<area shape="rect" id="node30" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="631,279,801,317"/>
-<area shape="rect" id="node31" href="$_speaker_manager_constants_8h.html" title=" " alt="" coords="3453,192,3683,231"/>
-<area shape="rect" id="node34" href="$_speaker_manager_8h.html" title=" " alt="" coords="2135,112,2375,137"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1028,372,1076,397"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2358,872,2412,897"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1734,372,1850,397"/>
-<area shape="rect" id="node10" title=" " alt="" coords="803,792,861,817"/>
-<area shape="rect" id="node11" href="$_optional_8h.html" title=" " alt="" coords="2126,452,2322,477"/>
-<area shape="rect" id="node12" href="$_logger_utils_8h.html" title=" " alt="" coords="1175,525,1351,564"/>
-<area shape="rect" id="node13" title=" " alt="" coords="2041,792,2103,817"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1890,705,1950,731"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1773,792,1830,817"/>
-<area shape="rect" id="node17" title=" " alt="" coords="884,792,953,817"/>
-<area shape="rect" id="node18" href="$_configuration_node_8h.html" title=" " alt="" coords="1228,699,1442,737"/>
-<area shape="rect" id="node23" href="$_level_8h.html" title=" " alt="" coords="1572,785,1748,824"/>
-<area shape="rect" id="node24" href="$_log_entry_8h.html" title=" " alt="" coords="977,699,1153,737"/>
-<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1466,699,1663,737"/>
-<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="2516,699,2692,737"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1291,792,1355,817"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1900,792,1972,817"/>
-<area shape="rect" id="node21" title=" " alt="" coords="2821,792,2891,817"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1379,792,1418,817"/>
-<area shape="rect" id="node25" href="$_log_entry_stream_8h.html" title=" " alt="" coords="977,785,1153,824"/>
-<area shape="rect" id="node29" title=" " alt="" coords="539,372,599,397"/>
-<area shape="rect" id="node32" href="$_namespace_and_name_8h.html" title=" " alt="" coords="3518,279,3747,317"/>
-<area shape="rect" id="node33" href="$_capability_tag_8h.html" title=" " alt="" coords="3378,365,3571,404"/>
-<area shape="rect" id="node35" title=" " alt="" coords="2843,372,2898,397"/>
-<area shape="rect" id="node36" title=" " alt="" coords="1692,285,1799,311"/>
-<area shape="rect" id="node37" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="2143,285,2366,311"/>
-<area shape="rect" id="node41" href="$_capability_agent_8h.html" title=" " alt="" coords="2906,192,3099,231"/>
-<area shape="rect" id="node43" href="$_capability_configuration_interface_8h.html" title=" " alt="" coords="1614,192,1840,231"/>
-<area shape="rect" id="node44" href="$_context_manager_interface_8h.html" title=" " alt="" coords="3303,279,3494,317"/>
-<area shape="rect" id="node45" href="$_message_sender_interface_8h.html" title=" " alt="" coords="3174,192,3365,231"/>
-<area shape="rect" id="node46" href="$_speaker_interface_8h.html" title=" " alt="" coords="2629,365,2819,404"/>
-<area shape="rect" id="node47" href="$_speaker_manager_interface_8h.html" title=" " alt="" coords="2597,192,2787,231"/>
-<area shape="rect" id="node48" href="$_speaker_manager_observer_interface_8h.html" title=" " alt="" coords="2442,279,2687,317"/>
-<area shape="rect" id="node49" href="$_requires_shutdown_8h.html" title=" " alt="" coords="1561,612,1749,651"/>
-<area shape="rect" id="node50" href="$_executor_8h.html" title=" " alt="" coords="1924,279,2119,317"/>
-<area shape="rect" id="node38" title=" " alt="" coords="2214,372,2266,397"/>
-<area shape="rect" id="node39" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="2279,699,2492,737"/>
-<area shape="rect" id="node40" href="$_a_v_s_message_8h.html" title=" " alt="" coords="2441,372,2554,397"/>
-<area shape="rect" id="node42" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2913,279,3178,317"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2405,5,2685,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1286,719,1348,744"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,719,154,744"/>
+<area shape="rect" id="node4" title=" " alt="" coords="3059,112,3215,137"/>
+<area shape="rect" id="node5" title=" " alt="" coords="3239,112,3361,137"/>
+<area shape="rect" id="node6" title=" " alt="" coords="3385,112,3522,137"/>
+<area shape="rect" id="node7" href="$_capability_configuration_8h.html" title=" " alt="" coords="2694,279,2887,317"/>
+<area shape="rect" id="node14" href="$_logger_8h.html" title=" " alt="" coords="1298,539,1474,577"/>
+<area shape="rect" id="node24" href="$_speaker_constants_8h.html" title=" " alt="" coords="956,105,1200,144"/>
+<area shape="rect" id="node26" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1107,279,1277,317"/>
+<area shape="rect" id="node27" href="$_metrics_8h.html" title=" " alt="" coords="3501,199,3690,224"/>
+<area shape="rect" id="node29" href="$_data_point_counter_builder_8h.html" title=" " alt="" coords="2852,105,3035,144"/>
+<area shape="rect" id="node31" href="$_metric_event_builder_8h.html" title=" " alt="" coords="3300,192,3478,231"/>
+<area shape="rect" id="node33" href="$_speaker_manager_constants_8h.html" title=" " alt="" coords="408,105,637,144"/>
+<area shape="rect" id="node35" href="$_speaker_manager_8h.html" title=" " alt="" coords="2346,112,2586,137"/>
+<area shape="rect" id="node8" title=" " alt="" coords="2593,372,2641,397"/>
+<area shape="rect" id="node9" title=" " alt="" coords="2041,799,2095,824"/>
+<area shape="rect" id="node10" title=" " alt="" coords="2946,372,3061,397"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2030,719,2087,744"/>
+<area shape="rect" id="node12" href="$_optional_8h.html" title=" " alt="" coords="3086,372,3281,397"/>
+<area shape="rect" id="node13" href="$_logger_utils_8h.html" title=" " alt="" coords="1254,452,1430,491"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1475,632,1535,657"/>
+<area shape="rect" id="node16" title=" " alt="" coords="595,719,653,744"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1472,719,1541,744"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title=" " alt="" coords="1085,625,1299,664"/>
+<area shape="rect" id="node20" href="$_level_8h.html" title=" " alt="" coords="858,712,1034,751"/>
+<area shape="rect" id="node21" href="$_log_entry_8h.html" title=" " alt="" coords="1610,625,1786,664"/>
+<area shape="rect" id="node22" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="712,625,909,664"/>
+<area shape="rect" id="node23" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="2362,625,2538,664"/>
+<area shape="rect" id="node19" title=" " alt="" coords="2824,719,2893,744"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1067,372,1127,397"/>
+<area shape="rect" id="node28" href="$_a_v_s_message_8h.html" title=" " alt="" coords="3406,285,3631,311"/>
+<area shape="rect" id="node30" href="$_data_point_8h.html" title=" " alt="" coords="3608,365,3786,404"/>
+<area shape="rect" id="node32" href="$_metric_event_8h.html" title=" " alt="" coords="3148,279,3326,317"/>
+<area shape="rect" id="node34" href="$_namespace_and_name_8h.html" title=" " alt="" coords="408,365,637,404"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2715,632,2770,657"/>
+<area shape="rect" id="node37" title=" " alt="" coords="2963,285,3071,311"/>
+<area shape="rect" id="node38" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="3714,199,3937,224"/>
+<area shape="rect" id="node39" href="$_capability_agent_8h.html" title=" " alt="" coords="1854,279,2047,317"/>
+<area shape="rect" id="node40" href="$_capability_configuration_interface_8h.html" title=" " alt="" coords="2796,192,3022,231"/>
+<area shape="rect" id="node41" href="$_context_manager_interface_8h.html" title=" " alt="" coords="2096,625,2287,664"/>
+<area shape="rect" id="node42" href="$_message_sender_interface_8h.html" title=" " alt="" coords="2327,192,2518,231"/>
+<area shape="rect" id="node43" href="$_speaker_interface_8h.html" title=" " alt="" coords="2226,365,2416,404"/>
+<area shape="rect" id="node44" href="$_speaker_manager_interface_8h.html" title=" " alt="" coords="2112,192,2303,231"/>
+<area shape="rect" id="node45" href="$_speaker_manager_observer_interface_8h.html" title=" " alt="" coords="2121,279,2366,317"/>
+<area shape="rect" id="node46" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="3097,192,3276,231"/>
+<area shape="rect" id="node47" href="$_requires_shutdown_8h.html" title=" " alt="" coords="986,539,1174,577"/>
+<area shape="rect" id="node48" href="$_executor_8h.html" title=" " alt="" coords="1606,539,1801,577"/>
+<area shape="rect" id="node49" href="$_retry_timer_8h.html" title=" " alt="" coords="1811,632,2021,657"/>
+<area shape="rect" id="node50" href="$_wait_event_8h.html" title=" " alt="" coords="381,632,587,657"/>
 </map>

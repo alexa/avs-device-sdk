@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_renderer_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -93,11 +93,11 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_renderer_interface_8h.html">Alerts/Renderer/RendererInterface.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_renderer_observer_interface_8h.html">Alerts/Renderer/RendererObserverInterface.h</a>&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_executor_8h.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_media_player_interface_8h.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_media_player_observer_interface_8h.html">AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h</a>&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_source_config_8h.html">AVSCommon/Utils/MediaPlayer/SourceConfig.h</a>&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_device_settings_manager_8h.html">Settings/DeviceSettingsManager.h</a>&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_speaker_manager_interface_8h.html">AVSCommon/SDKInterfaces/SpeakerManagerInterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_executor_8h.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_media_player_interface_8h.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_media_player_observer_interface_8h.html">AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h</a>&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_source_config_8h.html">AVSCommon/Utils/MediaPlayer/SourceConfig.h</a>&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;condition_variable&gt;</span></div>
@@ -114,119 +114,121 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        : <span class="keyword">public</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">RendererInterface</a></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        , <span class="keyword">public</span> <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">static</span> std::shared_ptr&lt;Renderer&gt; <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a700b015647341a2f028a2c964a5d7386">create</a>(</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; mediaPlayer,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::shared_ptr&lt;settings::DeviceSettingsManager&gt; settingsManager);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5481b0a39d65a5fc09380eab17e9340f">start</a>(</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        std::shared_ptr&lt;RendererObserverInterface&gt; observer,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls = std::vector&lt;std::string&gt;(),</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">int</span> loopCount = 0,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">bool</span> startWithPause = <span class="keyword">false</span>) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">stop</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a625c513933bd3f76db04608b7d9de7bb">onPlaybackStarted</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#acd2aae5c1736f6533f46d74fc1fc023d">onPlaybackStopped</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#adbc7ca860d5b5b71632e8dbd9c11ea25">onPlaybackFinished</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ac04164215b2b78ad95a45c2914cb298b">onPlaybackError</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, <span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">avsCommon::utils::mediaPlayer::ErrorType</a>&amp; type, std::string error)</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">using</span> <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> = <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">static</span> std::shared_ptr&lt;Renderer&gt; <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5c7b116f6e600369b1056fa644ef5242">create</a>(</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; mediaPlayer);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a194bc7d0600b0e5480e970cb52d4ac1b">start</a>(</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        std::shared_ptr&lt;RendererObserverInterface&gt; observer,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">bool</span> volumeRampEnabled,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls = std::vector&lt;std::string&gt;(),</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">int</span> loopCount = 0,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">bool</span> startWithPause = <span class="keyword">false</span>) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">stop</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a4c6ecfcd0997d727497eb7d536b6362b">onFirstByteRead</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, <span class="keyword">const</span> <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&amp; state) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#aaf57dc514426341508c79bd69f9e15ab">onPlaybackStarted</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, <span class="keyword">const</span> <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&amp; state) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a665711eb8363933312f29007b244adc7">onPlaybackStopped</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, <span class="keyword">const</span> <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&amp; state) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ae711d2f0e28fcd3cc22f1f0a764b3c91">onPlaybackFinished</a>(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, <span class="keyword">const</span> <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&amp; state) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ad768535fccdab12ad20fccf244737cc0">onPlaybackError</a>(</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">avsCommon::utils::mediaPlayer::ErrorType</a>&amp; type,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        std::string error,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">const</span> <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&amp; state) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">Renderer</a>(</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; mediaPlayer,</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        std::shared_ptr&lt;settings::DeviceSettingsManager&gt; settingsManager);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">void</span> executeStart(</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        std::shared_ptr&lt;RendererObserverInterface&gt; observer,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">int</span> loopCount,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::chrono::milliseconds loopPause,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">bool</span> startWithPause);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">void</span> executeStop();</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackStarted(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackStopped(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackFinished(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackError(</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId,</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">avsCommon::utils::mediaPlayer::ErrorType</a>&amp; type,</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keyword">const</span> std::string&amp; error);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">void</span> notifyObserver(<a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html#a5e16fd254735c5defa36b6c7020ba1ab">RendererObserverInterface::State</a> state, <span class="keyword">const</span> std::string&amp; message = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">void</span> resetSourceId();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">bool</span> shouldPlayDefault();</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">bool</span> shouldMediaPlayerRepeat();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">bool</span> shouldRenderNext();</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">bool</span> shouldPause();</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordtype">bool</span> isLastSourceInLoop();</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordtype">bool</span> isLastSource();</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordtype">bool</span> pause(std::chrono::milliseconds duration);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keywordtype">void</span> play();</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config.html">avsCommon::utils::mediaPlayer::SourceConfig</a> generateMediaConfiguration();</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">bool</span> renderNextAudioAsset(<span class="keywordtype">bool</span>* pauseInterruptedOut = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordtype">void</span> handlePlaybackError(<span class="keyword">const</span> std::string&amp; error);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; m_mediaPlayer;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    std::shared_ptr&lt;RendererObserverInterface&gt; m_observer;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">using</span> <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> = <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">Renderer</a>(std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; mediaPlayer);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> executeStart(</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        std::shared_ptr&lt;RendererObserverInterface&gt; observer,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">bool</span> volumeRampEnabled,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls,</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordtype">int</span> loopCount,</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        std::chrono::milliseconds loopPause,</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordtype">bool</span> startWithPause);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> executeStop();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackStarted(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackStopped(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackFinished(<a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">void</span> executeOnPlaybackError(</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId,</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">avsCommon::utils::mediaPlayer::ErrorType</a>&amp; type,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keyword">const</span> std::string&amp; error);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">void</span> notifyObserver(<a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html#a5e16fd254735c5defa36b6c7020ba1ab">RendererObserverInterface::State</a> state, <span class="keyword">const</span> std::string&amp; message = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">void</span> resetSourceId();</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordtype">bool</span> shouldPlayDefault();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">bool</span> shouldMediaPlayerRepeat();</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordtype">bool</span> shouldRenderNext();</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordtype">bool</span> shouldPause();</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordtype">bool</span> isLastSourceInLoop();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordtype">bool</span> isLastSource();</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">bool</span> pause(std::chrono::milliseconds duration);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">void</span> play();</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <a class="code" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config.html">avsCommon::utils::mediaPlayer::SourceConfig</a> generateMediaConfiguration();</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordtype">bool</span> renderNextAudioAsset(<span class="keywordtype">bool</span>* pauseInterruptedOut = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordtype">void</span> handlePlaybackError(<span class="keyword">const</span> std::string&amp; error);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    std::shared_ptr&lt;avsCommon::utils::mediaPlayer::MediaPlayerInterface&gt; m_mediaPlayer;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    std::vector&lt;std::string&gt; m_urls;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordtype">int</span> m_numberOfStreamsRenderedThisLoop;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    std::shared_ptr&lt;RendererObserverInterface&gt; m_observer;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    std::vector&lt;std::string&gt; m_urls;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordtype">int</span> m_remainingLoopCount;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordtype">int</span> m_numberOfStreamsRenderedThisLoop;</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordtype">int</span> m_directiveLoopCount;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordtype">int</span> m_remainingLoopCount;</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    std::chrono::milliseconds m_loopPause;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordtype">int</span> m_directiveLoopCount;</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordtype">bool</span> m_shouldPauseBeforeRender;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    std::chrono::milliseconds m_loopPause;</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    std::chrono::time_point&lt;std::chrono::steady_clock&gt; m_loopStartTime;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordtype">bool</span> m_shouldPauseBeforeRender;</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; m_defaultAudioFactory;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    std::chrono::time_point&lt;std::chrono::steady_clock&gt; m_loopStartTime;</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordtype">bool</span> m_isStopping;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordtype">bool</span> m_isStartPending;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; m_defaultAudioFactory;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordtype">bool</span> m_isStopping;</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    std::condition_variable m_waitCondition;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keywordtype">bool</span> m_isStartPending;</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    std::mutex m_waitMutex;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    std::condition_variable m_waitCondition;</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> m_currentSourceId;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    std::mutex m_waitMutex;</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordtype">bool</span> m_alarmVolumeRampEnabled;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> m_currentSourceId;</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    std::shared_ptr&lt;settings::DeviceSettingsManager&gt; m_settingsManager;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordtype">bool</span> m_volumeRampEnabled;</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <a class="code" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html">avsCommon::utils::threading::Executor</a> m_executor;</div>
@@ -242,33 +244,35 @@ $(function() {
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERER_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="a_renderer_interface_8h_html"><div class="ttname"><a href="_renderer_interface_8h.html">RendererInterface.h</a></div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_ad768535fccdab12ad20fccf244737cc0"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ad768535fccdab12ad20fccf244737cc0">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackError</a></div><div class="ttdeci">void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType &amp;type, std::string error, const avsCommon::utils::mediaPlayer::MediaPlayerState &amp;state) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:124</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a></div><div class="ttdef"><b>Definition:</b> RendererInterface.h:35</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_html_a97b83ae4aaeabff7bb8a796a8a018623"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a></div><div class="ttdeci">uint64_t SourceId</div><div class="ttdoc">A type that identifies which source is currently being operated on. This must be unique across all in...</div><div class="ttdef"><b>Definition:</b> MediaPlayerInterface.h:61</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_adbc7ca860d5b5b71632e8dbd9c11ea25"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#adbc7ca860d5b5b71632e8dbd9c11ea25">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackFinished</a></div><div class="ttdeci">void onPlaybackFinished(SourceId sourceId) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:120</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a625c513933bd3f76db04608b7d9de7bb"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a625c513933bd3f76db04608b7d9de7bb">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStarted</a></div><div class="ttdeci">void onPlaybackStarted(SourceId sourceId) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:112</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a25f151b98ebebba6f785bd4edd1410fe"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::stop</a></div><div class="ttdeci">void stop() override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:103</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface_html_a97b83ae4aaeabff7bb8a796a8a018623"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId</a></div><div class="ttdeci">uint64_t SourceId</div><div class="ttdoc">A type that identifies which source is currently being operated on. This must be unique across all in...</div><div class="ttdef"><b>Definition:</b> MediaPlayerInterface.h:66</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a25f151b98ebebba6f785bd4edd1410fe"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a25f151b98ebebba6f785bd4edd1410fe">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::stop</a></div><div class="ttdeci">void stop() override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:99</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a5c7b116f6e600369b1056fa644ef5242"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5c7b116f6e600369b1056fa644ef5242">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::create</a></div><div class="ttdeci">static std::shared_ptr&lt; Renderer &gt; create(std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt; mediaPlayer)</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:57</div></div>
 <div class="ttc" id="a_source_config_8h_html"><div class="ttname"><a href="_source_config_8h.html">SourceConfig.h</a></div></div>
 <div class="ttc" id="a_renderer_observer_interface_8h_html"><div class="ttname"><a href="_renderer_observer_interface_8h.html">RendererObserverInterface.h</a></div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_ae711d2f0e28fcd3cc22f1f0a764b3c91"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ae711d2f0e28fcd3cc22f1f0a764b3c91">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackFinished</a></div><div class="ttdeci">void onPlaybackFinished(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState &amp;state) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:120</div></div>
+<div class="ttc" id="a_speaker_manager_interface_8h_html"><div class="ttname"><a href="_speaker_manager_interface_8h.html">SpeakerManagerInterface.h</a></div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html">alexaClientSDK::avsCommon::utils::threading::Executor</a></div><div class="ttdef"><b>Definition:</b> Executor.h:39</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface_html_a5e16fd254735c5defa36b6c7020ba1ab"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_observer_interface.html#a5e16fd254735c5defa36b6c7020ba1ab">alexaClientSDK::capabilityAgents::alerts::renderer::RendererObserverInterface::State</a></div><div class="ttdeci">State</div><div class="ttdef"><b>Definition:</b> RendererObserverInterface.h:34</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_html_ab6ff57ee3fc3650d3b710fa12d32e25d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">alexaClientSDK::avsCommon::utils::mediaPlayer::ErrorType</a></div><div class="ttdeci">ErrorType</div><div class="ttdoc">Identifies the specific type of error in a PlaybackFailed event.</div><div class="ttdef"><b>Definition:</b> ErrorTypes.h:27</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a665711eb8363933312f29007b244adc7"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a665711eb8363933312f29007b244adc7">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStopped</a></div><div class="ttdeci">void onPlaybackStopped(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState &amp;state) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:116</div></div>
 <div class="ttc" id="a_executor_8h_html"><div class="ttname"><a href="_executor_8h.html">Executor.h</a></div></div>
 <div class="ttc" id="astructalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_html"><div class="ttname"><a href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config.html">alexaClientSDK::avsCommon::utils::mediaPlayer::SourceConfig</a></div><div class="ttdef"><b>Definition:</b> SourceConfig.h:37</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a5481b0a39d65a5fc09380eab17e9340f"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a5481b0a39d65a5fc09380eab17e9340f">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::start</a></div><div class="ttdeci">void start(std::shared_ptr&lt; RendererObserverInterface &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}, bool startWithPause=false) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:73</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_ac04164215b2b78ad95a45c2914cb298b"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#ac04164215b2b78ad95a45c2914cb298b">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackError</a></div><div class="ttdeci">void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType &amp;type, std::string error) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:124</div></div>
 <div class="ttc" id="a_media_player_interface_8h_html"><div class="ttname"><a href="_media_player_interface_8h.html">MediaPlayerInterface.h</a></div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a194bc7d0600b0e5480e970cb52d4ac1b"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a194bc7d0600b0e5480e970cb52d4ac1b">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::start</a></div><div class="ttdeci">void start(std::shared_ptr&lt; RendererObserverInterface &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, bool volumeRampEnabled, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}, bool startWithPause=false) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:68</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_acd2aae5c1736f6533f46d74fc1fc023d"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#acd2aae5c1736f6533f46d74fc1fc023d">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStopped</a></div><div class="ttdeci">void onPlaybackStopped(SourceId sourceId) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:116</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a700b015647341a2f028a2c964a5d7386"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a700b015647341a2f028a2c964a5d7386">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::create</a></div><div class="ttdeci">static std::shared_ptr&lt; Renderer &gt; create(std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt; mediaPlayer, std::shared_ptr&lt; settings::DeviceSettingsManager &gt; settingsManager)</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:55</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></div><div class="ttdef"><b>Definition:</b> MediaPlayerObserverInterface.h:45</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_aaf57dc514426341508c79bd69f9e15ab"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#aaf57dc514426341508c79bd69f9e15ab">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onPlaybackStarted</a></div><div class="ttdeci">void onPlaybackStarted(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState &amp;state) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:112</div></div>
+<div class="ttc" id="astructalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state_html"><div class="ttname"><a href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerState</a></div><div class="ttdef"><b>Definition:</b> MediaPlayerState.h:29</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html_a4c6ecfcd0997d727497eb7d536b6362b"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html#a4c6ecfcd0997d727497eb7d536b6362b">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer::onFirstByteRead</a></div><div class="ttdeci">void onFirstByteRead(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState &amp;state) override</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:108</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></div><div class="ttdef"><b>Definition:</b> MediaPlayerObserverInterface.h:46</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer.html">alexaClientSDK::capabilityAgents::alerts::renderer::Renderer</a></div><div class="ttdef"><b>Definition:</b> Renderer.h:42</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_html_ad6a5305efc05863a6c2d49a2f40551f7"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId</a></div><div class="ttdeci">MediaPlayerInterface::SourceId SourceId</div><div class="ttdoc">A type that identifies which source is currently being operated on.</div><div class="ttdef"><b>Definition:</b> MediaPlayerObserverInterface.h:48</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_html_ad6a5305efc05863a6c2d49a2f40551f7"><div class="ttname"><a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::SourceId</a></div><div class="ttdeci">MediaPlayerInterface::SourceId SourceId</div><div class="ttdoc">A type that identifies which source is currently being operated on.</div><div class="ttdef"><b>Definition:</b> MediaPlayerObserverInterface.h:49</div></div>
 <div class="ttc" id="a_media_player_observer_interface_8h_html"><div class="ttname"><a href="_media_player_observer_interface_8h.html">MediaPlayerObserverInterface.h</a></div></div>
-<div class="ttc" id="a_device_settings_manager_8h_html"><div class="ttname"><a href="_device_settings_manager_8h.html">DeviceSettingsManager.h</a></div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

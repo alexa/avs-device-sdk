@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html" title=" " alt="" coords="5,5,205,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service." alt="" coords="5,220,213,272"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_d_p_record.html" title="Base class for an SDPRecord object used." alt="" coords="261,227,458,265"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_sink_record.html" title="A SDP record representing A2DPSink." alt="" coords="506,5,732,44"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_source_record.html" title="A SDP record representing A2DPSource." alt="" coords="519,68,718,120"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_controller_record.html" title="A SDP record representing AVRCPController." alt="" coords="506,144,731,196"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html" title="A SDP record representing AVRCPTarget." alt="" coords="516,220,721,272"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_h_f_p_record.html" title="A SDP record representing HFP." alt="" coords="520,296,717,335"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_h_i_d_record.html" title="A SDP record representing HID." alt="" coords="520,359,717,397"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_p_p_record.html" title="A SDP record representing SPP." alt="" coords="520,421,717,460"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -87,10 +87,12 @@ $(function() {
 <dd><a class="anchor" id="_deprecated000004"></a>The <code>setState</code> operation has been deprecated and so is this enumeration.  </dd>
 <dt>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#ad7e749a95830d3bf65d44e873402f1b0">alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface::provideState</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;stateProviderName, const ContextRequestToken stateRequestToken)</dt>
 <dd><a class="anchor" id="_deprecated000009"></a><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead.  </dd>
+<dt>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a9f1e46a268eebc25fb35f733752f3a72">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffset</a>  (SourceId id)=0</dt>
+<dd><a class="anchor" id="_deprecated000011"></a>Use <code>getMediaPlayerState</code> instead, which contains the offset  </dd>
 <dt>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a1aa6769739e7b822674c6f225438adbb">alexaClientSDK::endpoints::EndpointBuilder::withCapability</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface, std::shared_ptr&lt; DirectiveHandlerInterface &gt; directiveHandler)</dt>
-<dd><a class="anchor" id="_deprecated000014"></a>CapabilityConfigurationInterface is deprecated.  </dd>
-<dt>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a40a8455904ef5ae5b96303ebbd5ed02b">alexaClientSDK::endpoints::EndpointBuilder::withCapabilityConfiguration</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface)</dt>
 <dd><a class="anchor" id="_deprecated000015"></a>CapabilityConfigurationInterface is deprecated.  </dd>
+<dt>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a40a8455904ef5ae5b96303ebbd5ed02b">alexaClientSDK::endpoints::EndpointBuilder::withCapabilityConfiguration</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface)</dt>
+<dd><a class="anchor" id="_deprecated000016"></a>CapabilityConfigurationInterface is deprecated.  </dd>
 <dt>Member <a class="el" href="_http_response_codes_8h.html#a7c7e2e35af1fc43c26bd735151de06ea">HTTPResponseCode</a>  </dt>
 <dd><a class="anchor" id="_deprecated000010"></a>Use the <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893">alexaClientSDK::avsCommon::utils::http::HTTPResponseCode</a></code> instead. </dd>
 </dl>
@@ -99,7 +101,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

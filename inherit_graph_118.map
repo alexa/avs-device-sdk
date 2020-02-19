@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1error_1_1_result.html" title=" " alt="" coords="5,5,202,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event.html" title="Base class for a BluetoothEvent." alt="" coords="5,252,218,291"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_device_manager_initialized_event.html" title=" " alt="" coords="288,5,507,57"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html" title=" " alt="" coords="266,81,530,120"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html" title=" " alt="" coords="271,144,525,183"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html" title=" " alt="" coords="299,207,496,259"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_command_received_event.html" title=" " alt="" coords="288,283,508,335"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_streaming_state_changed_event.html" title=" " alt="" coords="288,359,507,411"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_scanning_state_changed_event.html" title=" " alt="" coords="293,435,502,487"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_toggle_a2_d_p_profile_state_changed_event.html" title=" " alt="" coords="281,511,515,563"/>
 </map>

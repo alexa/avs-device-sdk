@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -107,12 +107,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4db86450ab72d8a25ff3bcda3c7f606c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a344e29433555b79788509d3a5f955dc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a344e29433555b79788509d3a5f955dc1">~BaseStreamSource</a> () override</td></tr>
 <tr class="separator:a344e29433555b79788509d3a5f955dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">SourceInterface Functions</div></td></tr>
 <tr class="memitem:ae8431559ca9af10b686de63bbc910c0f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#ae8431559ca9af10b686de63bbc910c0f">hasAdditionalData</a> () override</td></tr>
 <tr class="separator:ae8431559ca9af10b686de63bbc910c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a155068ec162d01ad664c248319e8a0da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a155068ec162d01ad664c248319e8a0da">handleEndOfStream</a> () override</td></tr>
 <tr class="separator:a155068ec162d01ad664c248319e8a0da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa470bd17a8d1aaab9021f9bba41c6baf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#aa470bd17a8d1aaab9021f9bba41c6baf">preprocess</a> () override</td></tr>
 <tr class="separator:aa470bd17a8d1aaab9021f9bba41c6baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9da4d55733e0bdd36f9f78675cb2e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#afe9da4d55733e0bdd36f9f78675cb2e9">addObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html">SourceObserverInterface</a> &gt; observer) override</td></tr>
+<tr class="separator:afe9da4d55733e0bdd36f9f78675cb2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2706d7f0ab19a52fa50f0d6c9127ffad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a2706d7f0ab19a52fa50f0d6c9127ffad">removeObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html">SourceObserverInterface</a> &gt; observer) override</td></tr>
+<tr class="separator:a2706d7f0ab19a52fa50f0d6c9127ffad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html">alexaClientSDK::mediaPlayer::SourceInterface</a></td></tr>
 <tr class="memitem:a64e705aab13326da47ab2110961bccfa inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a64e705aab13326da47ab2110961bccfa">SourceInterface</a> (const std::string &amp;className)</td></tr>
 <tr class="separator:a64e705aab13326da47ab2110961bccfa inherit pub_methods_classalexa_client_s_d_k_1_1media_player_1_1_source_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,6 +162,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ad38c6c99065fbccf2e8b637c9ac4e72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add1d117c9368996e79c0a945ce8c2804"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#add1d117c9368996e79c0a945ce8c2804">clearOnReadDataHandler</a> ()</td></tr>
 <tr class="separator:add1d117c9368996e79c0a945ce8c2804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ce56135809e8ec00b804ef043fa2d34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a5ce56135809e8ec00b804ef043fa2d34">notifyObserversOnReadData</a> ()</td></tr>
+<tr class="separator:a5ce56135809e8ec00b804ef043fa2d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td></tr>
 <tr class="memitem:a66df7916e28559f30233c2ff5a166293 inherit pro_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a66df7916e28559f30233c2ff5a166293">doShutdown</a> ()=0</td></tr>
 <tr class="separator:a66df7916e28559f30233c2ff5a166293 inherit pro_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,6 +231,41 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="afe9da4d55733e0bdd36f9f78675cb2e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe9da4d55733e0bdd36f9f78675cb2e9">&#9670;&nbsp;</a></span>addObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::mediaPlayer::BaseStreamSource::addObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html">SourceObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Adds an observer to be notified of particular events which occur on this source.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#aed448271b6f417d17606d7e8453b04a8">alexaClientSDK::mediaPlayer::SourceInterface</a>.</p>
+
+</div>
+</div>
 <a id="add1d117c9368996e79c0a945ce8c2804"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#add1d117c9368996e79c0a945ce8c2804">&#9670;&nbsp;</a></span>clearOnReadDataHandler()</h2>
 
@@ -503,6 +545,32 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a5ce56135809e8ec00b804ef043fa2d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ce56135809e8ec00b804ef043fa2d34">&#9670;&nbsp;</a></span>notifyObserversOnReadData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::mediaPlayer::BaseStreamSource::notifyObserversOnReadData </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A utility function to notify the observers of this object when data has been read. </p>
+
+</div>
+</div>
 <a id="aa470bd17a8d1aaab9021f9bba41c6baf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa470bd17a8d1aaab9021f9bba41c6baf">&#9670;&nbsp;</a></span>preprocess()</h2>
 
@@ -528,6 +596,41 @@ Protected Member Functions</h2></td></tr>
 <p>Perform preprocessing of the source. Must be called before reading from the source. </p>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#a1cd97cedd9cc6e8d1822f84bb74facf3">alexaClientSDK::mediaPlayer::SourceInterface</a>.</p>
+
+</div>
+</div>
+<a id="a2706d7f0ab19a52fa50f0d6c9127ffad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2706d7f0ab19a52fa50f0d6c9127ffad">&#9670;&nbsp;</a></span>removeObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::mediaPlayer::BaseStreamSource::removeObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html">SourceObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Removes an observer from being notified of particular events which occur on this source.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_source_interface.html#ac5935c969326335fa4fbb0a864b263a0">alexaClientSDK::mediaPlayer::SourceInterface</a>.</p>
 
 </div>
 </div>
@@ -617,7 +720,7 @@ Protected Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

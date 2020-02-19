@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -122,10 +122,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9f1e46a268eebc25fb35f733752f3a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77f356052a19748eb924ee39059dccf1"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a77f356052a19748eb924ee39059dccf1">getNumBytesBuffered</a> ()=0</td></tr>
 <tr class="separator:a77f356052a19748eb924ee39059dccf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a561392afa0c0e17a45c6d8b2f41b219e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a561392afa0c0e17a45c6d8b2f41b219e">getMediaPlayerState</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a> id)=0</td></tr>
+<tr class="separator:a561392afa0c0e17a45c6d8b2f41b219e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a16150dc5c414ba33a6f20dd7547d52"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2a16150dc5c414ba33a6f20dd7547d52">addObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> &gt; playerObserver)=0</td></tr>
 <tr class="separator:a2a16150dc5c414ba33a6f20dd7547d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a370fcb089b7026f6ad91001bf4ace1d0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a370fcb089b7026f6ad91001bf4ace1d0">removeObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a> &gt; playerObserver)=0</td></tr>
 <tr class="separator:a370fcb089b7026f6ad91001bf4ace1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a6152987ceb8b18d48b14e080d1169"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_attributes.html">PlaybackAttributes</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#aa5a6152987ceb8b18d48b14e080d1169">getPlaybackAttributes</a> ()</td></tr>
+<tr class="separator:aa5a6152987ceb8b18d48b14e080d1169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae032b13a1184c2394de42e4fffa6f093"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_report.html">PlaybackReport</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ae032b13a1184c2394de42e4fffa6f093">getPlaybackReports</a> ()</td></tr>
+<tr class="separator:ae032b13a1184c2394de42e4fffa6f093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -138,7 +144,7 @@ Static Public Attributes</h2></td></tr>
 <p>Each playback controlling API call (i.e. <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code>, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code>) that succeeds will also result in a callback to the observer. To see how to tell when a method succeeded, please refer to the documentation of each method.</p>
 <p>An implementation can call <code>onPlaybackError()</code> at any time. If an <code>onPlaybackError()</code> callback occurs while a plaback controlling API call is waiting for a callback, the original callback must not be made, and the implementation should revert to a stopped state. Any subsequent operations after an <code>onPlaybackError()</code> callback must be preceded by a new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ad3d4939aca91bef956234f7ceaf35a7d">setSource()</a></code> call.</p>
 <p>Implementations must make a call to <code>onPlaybackStopped()</code> with the previous <code>SourceId</code> when a new source is set if the previous source was in a non-stopped state.</p>
-<p><code>note</code> A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must be able to support the various audio formats listed at: <a href="https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html">https://developer.amazon.com/docs/alexa-voice-service/recommended-media-support.html</a>. </p>
+<p><code>note</code> A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must be able to support the various audio formats listed at: <a href="https://developer.amazon.com/docs/alexa/alexa-voice-service/recommended-media-support.html">https://developer.amazon.com/docs/alexa/alexa-voice-service/recommended-media-support.html</a>. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a97b83ae4aaeabff7bb8a796a8a018623"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97b83ae4aaeabff7bb8a796a8a018623">&#9670;&nbsp;</a></span>SourceId</h2>
@@ -219,6 +225,42 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a561392afa0c0e17a45c6d8b2f41b219e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a561392afa0c0e17a45c6d8b2f41b219e">&#9670;&nbsp;</a></span>getMediaPlayerState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&gt; alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getMediaPlayerState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a97b83ae4aaeabff7bb8a796a8a018623">SourceId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the current state of the media player source, including the id and offset.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The unique id of the source for the desired state.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">Optional</a> state including the offset. A blank <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">Optional</a> is returned if retrieving this information fails. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#a63b633b3f45d7556d7058fd5526f8f37">alexaClientSDK::mediaPlayer::MediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_media_player.html#ae5ee08708756746c833b4853e1a88d86">alexaClientSDK::mediaPlayer::android::AndroidSLESMediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#af06164698b52111dc43883577153e4e5">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+
+</div>
+</div>
 <a id="a77f356052a19748eb924ee39059dccf1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77f356052a19748eb924ee39059dccf1">&#9670;&nbsp;</a></span>getNumBytesBuffered()</h2>
 
@@ -278,9 +320,64 @@ Static Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the specified source is playing, the offset in milliseconds that the source has been playing will be returned. If the specified source is not playing, the last offset it played will be returned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the specified source is playing, the offset in milliseconds that the source has been playing will be returned. If the specified source is not playing, the last offset it played will be returned.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated:</a></b></dt><dd>Use <code>getMediaPlayerState</code> instead, which contains the offset </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html#ae9b262d5eae687beaa30d9dc7e28d4e8">alexaClientSDK::mediaPlayer::MediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_media_player.html#a1880a09b2dd2558113a9aab4da287de1">alexaClientSDK::mediaPlayer::android::AndroidSLESMediaPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html#a375ef850b9e3270467f971595a1c6382">alexaClientSDK::integration::test::TestMediaPlayer</a>.</p>
+
+</div>
+</div>
+<a id="aa5a6152987ceb8b18d48b14e080d1169"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a6152987ceb8b18d48b14e080d1169">&#9670;&nbsp;</a></span>getPlaybackAttributes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_attributes.html">PlaybackAttributes</a> &gt; alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getPlaybackAttributes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_attributes.html">PlaybackAttributes</a></code> for the current stream being played. This method only needs to be implemented if your mediaplayer supports Premium Audio.</p>
+<dl class="section return"><dt>Returns</dt><dd>playbackAttributes The playback attributes for the current stream if premium audio is supported and it has an active source; otherwise, an empty object. </dd></dl>
+
+</div>
+</div>
+<a id="ae032b13a1184c2394de42e4fffa6f093"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae032b13a1184c2394de42e4fffa6f093">&#9670;&nbsp;</a></span>getPlaybackReports()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_report.html">PlaybackReport</a> &gt; alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getPlaybackReports </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get list of <code>PlaybackReports</code> for current track. This method only needs to be implemented if your mediaplayer supports Premium Audio.</p>
+<dl class="section return"><dt>Returns</dt><dd>The list of <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_report.html">PlaybackReport</a></code> for current track if premium audio is supported and it has an active source; otherwise, an empty list. </dd></dl>
 
 </div>
 </div>
@@ -311,9 +408,9 @@ Static Public Attributes</h2></td></tr>
 <p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code>. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> is called </p><ul>
 <li>without making a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ad3d4939aca91bef956234f7ceaf35a7d">setSource()</a></code>, <code>false</code> will be returned. </li>
 <li>when audio is not starting/resuming/playing, <code>false</code> will be returned. </li>
-<li>when a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a> or <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a> call has already been made, but no callback has been issued yet for those functions, the audio stream will pause without playing any audio. Implementations must call both <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a25607163a8c28c9f08259fe56d721c06">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab7d30a70d577310176aa85fbaefb7a1b">MediaPlayerObserverInterface::onPlaybackResumed</a></code> and <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5e278a3c0e6bf2ffe6d99386d366e40f">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> in this scenario, as both the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> are required to have corresponding callbacks.</li>
+<li>when a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a> or <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a> call has already been made, but no callback has been issued yet for those functions, the audio stream will pause without playing any audio. Implementations must call both <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a423d815f2188441452e0cd8ea955ae87">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#abb7a223af815d2963e70888c3bb884fc">MediaPlayerObserverInterface::onPlaybackResumed</a></code> and <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a1d838bdd9bf93d476f9b5d88040d59ff">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> in this scenario, as both the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> / <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> are required to have corresponding callbacks.</li>
 </ul>
-<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a5e278a3c0e6bf2ffe6d99386d366e40f">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a7352a3ad1c63e92bf19455f3abdd0e76">pause()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a1d838bdd9bf93d476f9b5d88040d59ff">MediaPlayerObserverInterface::onPlaybackPaused()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9c42c6f619e28e888c56a51edcccd07c">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The unique id of the source on which to operate.</td></tr>
@@ -356,7 +453,7 @@ Static Public Attributes</h2></td></tr>
 <li>when audio is already playing, <code>false</code> will be returned. </li>
 <li>after a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a> call has already been made but no callback or return code has been issued yet, <code>false</code> will be returned.</li>
 </ul>
-<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a25607163a8c28c9f08259fe56d721c06">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a423d815f2188441452e0cd8ea955ae87">MediaPlayerObserverInterface::onPlaybackStarted()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9c42c6f619e28e888c56a51edcccd07c">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The unique id of the source on which to operate.</td></tr>
@@ -434,7 +531,7 @@ Static Public Attributes</h2></td></tr>
 <li>when audio is not paused, <code>false</code> will be returned. </li>
 <li>after a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a> call has already been made but no callback or return code has been issued yet, <code>false</code> will be returned.</li>
 </ul>
-<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab7d30a70d577310176aa85fbaefb7a1b">MediaPlayerObserverInterface::onPlaybackResumed()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<p>If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a1bddbef99754845f428924d7b8883eb8">resume()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#abb7a223af815d2963e70888c3bb884fc">MediaPlayerObserverInterface::onPlaybackResumed()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9c42c6f619e28e888c56a51edcccd07c">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The unique id of the source on which to operate.</td></tr>
@@ -493,7 +590,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Set a url source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
-<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9ac9997b39d915c7c2c903ecc378cc8f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aee570b1ae2e8b5c41689f106a9730d00">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a4c1d24ec40cb41d76cdbf05db2fb658f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>The url to set as the source. </td></tr>
@@ -549,7 +646,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Set an <code>AttachmentReader</code> source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
-<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9ac9997b39d915c7c2c903ecc378cc8f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aee570b1ae2e8b5c41689f106a9730d00">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a4c1d24ec40cb41d76cdbf05db2fb658f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachmentReader</td><td>Object with which to read an incoming audio attachment. </td></tr>
@@ -604,7 +701,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Set an <code>istream</code> source to play. The source should be set before making calls to any of the playback control APIs. If any source was set prior to this call, that source will be discarded.</p>
-<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9ac9997b39d915c7c2c903ecc378cc8f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> implementation must handle only one source at a time. An implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aee570b1ae2e8b5c41689f106a9730d00">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> with the previous source's id if there was a source set. Also, an implementation must call <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a4c1d24ec40cb41d76cdbf05db2fb658f">MediaPlayerObserverInterface::onBufferingComplete()</a></code> when this source has been fully buffered</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stream</td><td>Object from which to read an incoming audio stream. </td></tr>
@@ -644,7 +741,7 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Stops playing the audio specified by the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#ad3d4939aca91bef956234f7ceaf35a7d">setSource()</a></code> call.</p>
 <p>The source must be set before issuing <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code>.</p>
-<p>Once <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> has been called, subsequent <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> calls will fail. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> is called when audio has already stopped, <code>false</code> will be returned. If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ab494787a945bd49bbd2299edd8eb5e64">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aa14478d88e372c90e077bc68c6d6f919">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
+<p>Once <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> has been called, subsequent <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a2bd648268d8afaf23312dad7e21238ad">play()</a></code> calls will fail. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> is called when audio has already stopped, <code>false</code> will be returned. If the id does not match the id of the active source, then <code>false</code> will be returned. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a422503c5051d68fdab1485b74c0c33a1">stop()</a></code> succeeded, <code>true</code> will be returned. When <code>true</code> is returned, a callback will be made to either <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#aee570b1ae2e8b5c41689f106a9730d00">MediaPlayerObserverInterface::onPlaybackStopped()</a></code> or to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a9c42c6f619e28e888c56a51edcccd07c">MediaPlayerObserverInterface::onPlaybackError()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The unique id of the source on which to operate.</td></tr>
@@ -689,7 +786,7 @@ Static Public Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

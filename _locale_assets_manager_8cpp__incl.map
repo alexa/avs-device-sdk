@@ -1,33 +1,35 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/LocaleAssetsManager.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/LocaleAssetsManager.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="575,5,798,57"/>
-<area shape="rect" id="node2" href="$_configuration_node_8h.html" title=" " alt="" coords="765,439,979,477"/>
-<area shape="rect" id="node12" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="602,179,772,217"/>
-<area shape="rect" id="node16" href="$_logger_8h.html" title=" " alt="" coords="1385,352,1561,391"/>
-<area shape="rect" id="node27" href="$_setting_string_conversion_8h.html" title=" " alt="" coords="403,105,631,131"/>
-<area shape="rect" id="node30" href="$_locale_assets_manager_8h.html" title=" " alt="" coords="177,359,413,384"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1149,532,1211,557"/>
-<area shape="rect" id="node4" title=" " alt="" coords="909,532,973,557"/>
-<area shape="rect" id="node5" title=" " alt="" coords="813,532,886,557"/>
-<area shape="rect" id="node6" title=" " alt="" coords="1392,699,1461,724"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1235,532,1293,557"/>
-<area shape="rect" id="node8" title=" " alt="" coords="374,532,413,557"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1048,619,1102,644"/>
-<area shape="rect" id="node10" title=" " alt="" coords="559,699,617,724"/>
-<area shape="rect" id="node11" title=" " alt="" coords="539,532,688,557"/>
-<area shape="rect" id="node13" title=" " alt="" coords="690,272,750,297"/>
-<area shape="rect" id="node14" title=" " alt="" coords="83,532,130,557"/>
-<area shape="rect" id="node15" href="$_logger_utils_8h.html" title=" " alt="" coords="1067,265,1243,304"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1630,445,1690,471"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1694,532,1762,557"/>
-<area shape="rect" id="node19" href="$_level_8h.html" title=" " alt="" coords="1317,525,1493,564"/>
-<area shape="rect" id="node20" href="$_log_entry_8h.html" title=" " alt="" coords="1765,439,1941,477"/>
-<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1307,439,1504,477"/>
-<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1625,612,1801,651"/>
-<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1965,525,2141,564"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1848,619,1917,644"/>
-<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1941,612,2117,651"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1989,699,2070,724"/>
-<area shape="rect" id="node28" title=" " alt="" coords="539,185,578,211"/>
-<area shape="rect" id="node29" title=" " alt="" coords="362,185,414,211"/>
-<area shape="rect" id="node31" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="143,439,363,477"/>
+<area shape="rect" id="node1" title=" " alt="" coords="729,5,953,57"/>
+<area shape="rect" id="node2" href="$_configuration_node_8h.html" title=" " alt="" coords="793,439,1007,477"/>
+<area shape="rect" id="node12" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1133,179,1303,217"/>
+<area shape="rect" id="node16" href="$_logger_8h.html" title=" " alt="" coords="994,352,1170,391"/>
+<area shape="rect" id="node29" href="$_setting_string_conversion_8h.html" title=" " alt="" coords="882,105,1110,131"/>
+<area shape="rect" id="node32" href="$_locale_assets_manager_8h.html" title=" " alt="" coords="159,359,395,384"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1915,532,1978,557"/>
+<area shape="rect" id="node4" title=" " alt="" coords="773,532,837,557"/>
+<area shape="rect" id="node5" title=" " alt="" coords="574,619,647,644"/>
+<area shape="rect" id="node6" title=" " alt="" coords="409,699,479,724"/>
+<area shape="rect" id="node7" title=" " alt="" coords="963,532,1021,557"/>
+<area shape="rect" id="node8" title=" " alt="" coords="408,532,447,557"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1058,619,1112,644"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1658,699,1715,724"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1044,532,1193,557"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1369,272,1428,297"/>
+<area shape="rect" id="node14" title=" " alt="" coords="55,532,102,557"/>
+<area shape="rect" id="node15" href="$_logger_utils_8h.html" title=" " alt="" coords="1068,265,1244,304"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1031,445,1091,471"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1319,532,1387,557"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title=" " alt="" coords="472,525,648,564"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title=" " alt="" coords="1465,439,1641,477"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="572,439,769,477"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="62,612,238,651"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1564,532,1641,557"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1462,532,1540,557"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1716,525,1892,564"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1908,619,1977,644"/>
+<area shape="rect" id="node25" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1708,612,1884,651"/>
+<area shape="rect" id="node26" title=" " alt="" coords="1755,699,1836,724"/>
+<area shape="rect" id="node30" title=" " alt="" coords="879,185,918,211"/>
+<area shape="rect" id="node31" title=" " alt="" coords="942,185,994,211"/>
+<area shape="rect" id="node33" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="176,439,396,477"/>
 </map>

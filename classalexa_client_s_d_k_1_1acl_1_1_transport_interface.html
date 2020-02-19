@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -108,8 +108,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa504ad3378271829731b0cd0a40398ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60baae3ab3469c7b858b3297540b5988"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">isConnected</a> ()=0</td></tr>
 <tr class="separator:a60baae3ab3469c7b858b3297540b5988"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07c5e01fbbf98789d7a4214d4db3780f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a07c5e01fbbf98789d7a4214d4db3780f">send</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt; request)=0</td></tr>
-<tr class="separator:a07c5e01fbbf98789d7a4214d4db3780f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a935a1941ed58b98d93aa3911164f8b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9a935a1941ed58b98d93aa3911164f8b">onRequestEnqueued</a> ()=0</td></tr>
+<tr class="separator:a9a935a1941ed58b98d93aa3911164f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5872af72ef57864abc0a5f8a82ed365"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae5872af72ef57864abc0a5f8a82ed365">TransportInterface</a> (const <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a> &amp;rhs)=delete</td></tr>
 <tr class="separator:ae5872af72ef57864abc0a5f8a82ed365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9dd6ce2dc8aad15a269189a16dd75f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">operator=</a> (const <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">TransportInterface</a> &amp;rhs)=delete</td></tr>
@@ -310,6 +310,34 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a9a935a1941ed58b98d93aa3911164f8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a935a1941ed58b98d93aa3911164f8b">&#9670;&nbsp;</a></span>onRequestEnqueued()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::acl::TransportInterface::onRequestEnqueued </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A message request has been added to the shared synchronized queue and is ready to be read. </p>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#afcfe1da06726d744b992b1335ffdd5db">alexaClientSDK::acl::HTTP2Transport</a>.</p>
+
+</div>
+</div>
 <a id="ae9dd6ce2dc8aad15a269189a16dd75f5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae9dd6ce2dc8aad15a269189a16dd75f5">&#9670;&nbsp;</a></span>operator=()</h2>
 
@@ -343,41 +371,6 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a07c5e01fbbf98789d7a4214d4db3780f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07c5e01fbbf98789d7a4214d4db3780f">&#9670;&nbsp;</a></span>send()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void alexaClientSDK::acl::TransportInterface::send </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td>
-          <td class="paramname"><em>request</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Sends an message request. This call blocks until the message can be sent.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request</td><td>The requested message. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a9840ae3047e1154042f368d0673e0a18">alexaClientSDK::acl::HTTP2Transport</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_transport_interface_8h_source.html">TransportInterface.h</a></li>
 </ul>
@@ -385,7 +378,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

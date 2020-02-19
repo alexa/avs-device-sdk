@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_level_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -90,70 +90,71 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>avsCommon {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>utils {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>logger {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">   29</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a8837dd9cc8da1659a1e8501909756e51">DEBUG9</a>,</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a3ebb24d8c4005bb27635ac0cbe10c6c3">DEBUG8</a>,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a45c5db4c0d35e851fe082b50d5893953">DEBUG7</a>,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6acefa9be37ed6c873dc6c07e0fe31067d">DEBUG6</a>,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a13c48142f1c3c8018a853f8e798174d0">DEBUG5</a>,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ad49737ac772ff453f1340643d60ab904">DEBUG4</a>,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6af1c09add474f7ab70a36e7a9570b148b">DEBUG3</a>,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a75c530df858253db4ee51268b47c875d">DEBUG2</a>,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a4a22284361f9f7c522f0c0fcca9a1d04">DEBUG1</a>,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6aa816eaa5724b9b805c32442781711fdc">DEBUG0</a>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a551b723eafd6a31d444fcb2f5920fbd3">INFO</a>,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a32bd8a1db2275458673903bdb84cb277">WARN</a>,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6abb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a>,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a99cd1c61610c76a57cb8d10d6df6b870">CRITICAL</a>,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ab50339a10e1de285ac99d4c3990b8693">NONE</a>,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</a></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;std::string <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a006fc7a551ca7b09270b5d3f34c7f1cc">convertLevelToName</a>(<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">char</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aa79070c5f17a01b878ef1c61b5a71476">convertLevelToChar</a>(<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a03c8a4abd0a4df30eb75029788eda840">convertNameToLevel</a>(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">  109</a></span>&#160;<span class="keyword">inline</span> std::ostream&amp; <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">operator&lt;&lt;</a>(std::ostream&amp; stream, <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level) {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    stream &lt;&lt; <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a006fc7a551ca7b09270b5d3f34c7f1cc">convertLevelToName</a>(level);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordflow">return</span> stream;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}  <span class="comment">// namespace logger</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}  <span class="comment">// namespace utils</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>avsCommon {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>utils {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span>logger {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">   30</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a8837dd9cc8da1659a1e8501909756e51">DEBUG9</a>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a3ebb24d8c4005bb27635ac0cbe10c6c3">DEBUG8</a>,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a45c5db4c0d35e851fe082b50d5893953">DEBUG7</a>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6acefa9be37ed6c873dc6c07e0fe31067d">DEBUG6</a>,</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a13c48142f1c3c8018a853f8e798174d0">DEBUG5</a>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ad49737ac772ff453f1340643d60ab904">DEBUG4</a>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6af1c09add474f7ab70a36e7a9570b148b">DEBUG3</a>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a75c530df858253db4ee51268b47c875d">DEBUG2</a>,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a4a22284361f9f7c522f0c0fcca9a1d04">DEBUG1</a>,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6aa816eaa5724b9b805c32442781711fdc">DEBUG0</a>,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a551b723eafd6a31d444fcb2f5920fbd3">INFO</a>,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a32bd8a1db2275458673903bdb84cb277">WARN</a>,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6abb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a>,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a99cd1c61610c76a57cb8d10d6df6b870">CRITICAL</a>,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ab50339a10e1de285ac99d4c3990b8693">NONE</a>,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</a></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;std::string <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a006fc7a551ca7b09270b5d3f34c7f1cc">convertLevelToName</a>(<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keywordtype">char</span> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aa79070c5f17a01b878ef1c61b5a71476">convertLevelToChar</a>(<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a03c8a4abd0a4df30eb75029788eda840">convertNameToLevel</a>(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">  110</a></span>&#160;<span class="keyword">inline</span> std::ostream&amp; <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">operator&lt;&lt;</a>(std::ostream&amp; stream, <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    stream &lt;&lt; <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a006fc7a551ca7b09270b5d3f34c7f1cc">convertLevelToName</a>(level);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> stream;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}  <span class="comment">// namespace logger</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}  <span class="comment">// namespace utils</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}  <span class="comment">// namespace avsCommon</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LEVEL_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6a75c530df858253db4ee51268b47c875d"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a75c530df858253db4ee51268b47c875d">alexaClientSDK::avsCommon::utils::logger::Level::DEBUG2</a></div><div class="ttdoc">Intermediate debug log level. Compiled out when ACSDK_DEBUG_LOG_ENABLED is not defined.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6a551b723eafd6a31d444fcb2f5920fbd3"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a551b723eafd6a31d444fcb2f5920fbd3">alexaClientSDK::avsCommon::utils::logger::Level::INFO</a></div><div class="ttdoc">Logs of normal operations, to be used in release builds.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6abb1ca97ec761fc37101737ba0aa2e7c5"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6abb1ca97ec761fc37101737ba0aa2e7c5">alexaClientSDK::avsCommon::utils::logger::Level::ERROR</a></div><div class="ttdoc">Log of an event that indicates an error.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6a99cd1c61610c76a57cb8d10d6df6b870"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a99cd1c61610c76a57cb8d10d6df6b870">alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL</a></div><div class="ttdoc">Log of a event that indicates an unrecoverable error.</div></div>
-<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">alexaClientSDK::avsCommon::utils::logger::Level</a></div><div class="ttdeci">Level</div><div class="ttdef"><b>Definition:</b> Level.h:29</div></div>
+<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">alexaClientSDK::avsCommon::utils::logger::Level</a></div><div class="ttdeci">Level</div><div class="ttdef"><b>Definition:</b> Level.h:30</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a006fc7a551ca7b09270b5d3f34c7f1cc"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a006fc7a551ca7b09270b5d3f34c7f1cc">alexaClientSDK::avsCommon::utils::logger::convertLevelToName</a></div><div class="ttdeci">std::string convertLevelToName(Level level)</div><div class="ttdef"><b>Definition:</b> Level.cpp:29</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a03c8a4abd0a4df30eb75029788eda840"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a03c8a4abd0a4df30eb75029788eda840">alexaClientSDK::avsCommon::utils::logger::convertNameToLevel</a></div><div class="ttdeci">Level convertNameToLevel(const std::string &amp;name)</div><div class="ttdef"><b>Definition:</b> Level.cpp:80</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6ab50339a10e1de285ac99d4c3990b8693"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ab50339a10e1de285ac99d4c3990b8693">alexaClientSDK::avsCommon::utils::logger::Level::NONE</a></div><div class="ttdoc">Level used to disable all logging.</div></div>
@@ -162,7 +163,7 @@ $(function() {
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6aa816eaa5724b9b805c32442781711fdc"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6aa816eaa5724b9b805c32442781711fdc">alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0</a></div><div class="ttdoc">Least verbose debug log level. Compiled out when ACSDK_DEBUG_LOG_ENABLED is not defined.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_aa79070c5f17a01b878ef1c61b5a71476"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aa79070c5f17a01b878ef1c61b5a71476">alexaClientSDK::avsCommon::utils::logger::convertLevelToChar</a></div><div class="ttdeci">char convertLevelToChar(Level level)</div><div class="ttdef"><b>Definition:</b> Level.cpp:55</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
-<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_aad0674cce8aff8a1a5ee6f7cfebbbd5c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">alexaClientSDK::avsCommon::utils::logger::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, Level level)</div><div class="ttdef"><b>Definition:</b> Level.h:109</div></div>
+<div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_aad0674cce8aff8a1a5ee6f7cfebbbd5c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#aad0674cce8aff8a1a5ee6f7cfebbbd5c">alexaClientSDK::avsCommon::utils::logger::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, Level level)</div><div class="ttdef"><b>Definition:</b> Level.h:110</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6af1c09add474f7ab70a36e7a9570b148b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6af1c09add474f7ab70a36e7a9570b148b">alexaClientSDK::avsCommon::utils::logger::Level::DEBUG3</a></div><div class="ttdoc">Intermediate debug log level. Compiled out when ACSDK_DEBUG_LOG_ENABLED is not defined.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6a32bd8a1db2275458673903bdb84cb277"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6a32bd8a1db2275458673903bdb84cb277">alexaClientSDK::avsCommon::utils::logger::Level::WARN</a></div><div class="ttdoc">Log of an event that may indicate a problem.</div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a4707ccb25a60922c47a5d8ee257b85e6ad49737ac772ff453f1340643d60ab904"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6ad49737ac772ff453f1340643d60ab904">alexaClientSDK::avsCommon::utils::logger::Level::DEBUG4</a></div><div class="ttdoc">Intermediate debug log level. Compiled out when ACSDK_DEBUG_LOG_ENABLED is not defined.</div></div>
@@ -174,7 +175,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

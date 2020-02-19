@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a40a8455904ef5ae5b96303ebbd5ed02b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a514e303df7d4ee63077591e424c70ca7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a514e303df7d4ee63077591e424c70ca7">finishDefaultEndpointConfiguration</a> ()</td></tr>
 <tr class="separator:a514e303df7d4ee63077591e424c70ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a583f28fb5d30cfac10835ee02150a78e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a583f28fb5d30cfac10835ee02150a78e">buildDefaultEndpoint</a> ()</td></tr>
+<tr class="separator:a583f28fb5d30cfac10835ee02150a78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">@c EndpointBuilderInterface methods.</div></td></tr>
 <tr class="memitem:a7d68936c9df71481cdcc77f30dfeacb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html">EndpointBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a7d68936c9df71481cdcc77f30dfeacb2">withDerivedEndpointId</a> (const std::string &amp;suffix) override</td></tr>
 <tr class="separator:a7d68936c9df71481cdcc77f30dfeacb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,6 +293,25 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A unique endpointId if the build succeeds; otherwise, an empty endpointId object. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a1b6468e54ab8615b2652a19d30d54f4e">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a>.</p>
+
+</div>
+</div>
+<a id="a583f28fb5d30cfac10835ee02150a78e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a583f28fb5d30cfac10835ee02150a78e">&#9670;&nbsp;</a></span>buildDefaultEndpoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::endpoints::EndpointBuilder::buildDefaultEndpoint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Builds the default endpoint.</p>
+<p>This will ensure that only the owner of this builder can actually build the default endpoint. </p><dl class="section return"><dt>Returns</dt><dd>Whether the build succeeded or not. </dd></dl>
 
 </div>
 </div>
@@ -528,7 +549,7 @@ The builder will fail if any of the additional attributes params are invalid.</d
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000014">Deprecated:</a></b></dt><dd>CapabilityConfigurationInterface is deprecated. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000015">Deprecated:</a></b></dt><dd>CapabilityConfigurationInterface is deprecated. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>This builder which can be used to nest configuration function calls. </dd></dl>
 
 </div>
@@ -555,7 +576,7 @@ The builder will fail if any of the additional attributes params are invalid.</d
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000015">Deprecated:</a></b></dt><dd>CapabilityConfigurationInterface is deprecated. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000016">Deprecated:</a></b></dt><dd>CapabilityConfigurationInterface is deprecated. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>This builder which can be used to nest configuration function calls. </dd></dl>
 
 </div>
@@ -1171,7 +1192,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -134,7 +134,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57eaf697004957d30cca0edfbecb6d6658b9">SettingsValues::SPEECH_CONFIRMATION</a> = '4', 
 <br />
 &#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea7ed2a86d12092f143a4024a85250b9b4">SettingsValues::TIME_ZONE</a> = '5', 
-<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57eadd5d7f619da7d63c452d3517e49ca6ea">SettingsValues::ALARM_VOLUME_RAMP</a> = '6', 
+<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea50804ef795c641acc7b735de3b5a1d35">SettingsValues::NETWORK_INFO</a> = '6', 
+<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57eadd5d7f619da7d63c452d3517e49ca6ea">SettingsValues::ALARM_VOLUME_RAMP</a> = '7', 
 <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57ea5dfd352dd6b7a5d118237fcf1e19fcc1">SettingsValues::QUIT</a> = 'q'
 <br />
  }</td></tr>
@@ -179,6 +180,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a0894730ded079fe22493e530dd48460e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a0894730ded079fe22493e530dd48460e">TAG</a> (&quot;PortAudioMicrophoneWrapper&quot;)</td></tr>
 <tr class="memdesc:a0894730ded079fe22493e530dd48460e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#a0894730ded079fe22493e530dd48460e">More...</a><br /></td></tr>
 <tr class="separator:a0894730ded079fe22493e530dd48460e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36eec3973c3f5c9b1a60fc255988acdc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a36eec3973c3f5c9b1a60fc255988acdc">notifyObservers</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_interface.html#a1ec49a6018047aa23640335d8772e751">avsCommon::sdkInterfaces::powerController::PowerControllerInterface::PowerState</a> &amp;powerState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a389764b4196f860c311e928929519112">avsCommon::sdkInterfaces::AlexaStateChangeCauseType</a> cause, const std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html">avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface</a> &gt;&gt; &amp;observers)</td></tr>
+<tr class="separator:a36eec3973c3f5c9b1a60fc255988acdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0771ca755bd28f5d8f981137b28a4bda"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a0771ca755bd28f5d8f981137b28a4bda">TAG</a> (&quot;RevokeAuthorizationObserver&quot;)</td></tr>
 <tr class="memdesc:a0771ca755bd28f5d8f981137b28a4bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#a0771ca755bd28f5d8f981137b28a4bda">More...</a><br /></td></tr>
 <tr class="separator:a0771ca755bd28f5d8f981137b28a4bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,6 +336,24 @@ Variables</h2></td></tr>
 <tr class="separator:a8c54791e474e5db1ca1620df8f7afb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae12b3e6660e35fc08dc5a05d6ddfa96d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ae12b3e6660e35fc08dc5a05d6ddfa96d">TIMEZONE_SETTING_MENU</a></td></tr>
 <tr class="separator:ae12b3e6660e35fc08dc5a05d6ddfa96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff41b66f197a71a552b1f67c41b66d5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a4ff41b66f197a71a552b1f67c41b66d5">NETWORK_INFO_SETTING_MENU</a></td></tr>
+<tr class="separator:a4ff41b66f197a71a552b1f67c41b66d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad024375c1a9012ffcc5e9faae5f7135d"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad024375c1a9012ffcc5e9faae5f7135d">NETWORK_INFO_CONNECTION_TYPE_PROMPT</a></td></tr>
+<tr class="separator:ad024375c1a9012ffcc5e9faae5f7135d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24f6f84795b76eeffc84038d001056e5"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a24f6f84795b76eeffc84038d001056e5">NETWORK_INFO_ESSID_PROMPT</a></td></tr>
+<tr class="separator:a24f6f84795b76eeffc84038d001056e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4940ebf08bb237b2b79402f8ba6aebc8"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a4940ebf08bb237b2b79402f8ba6aebc8">NETWORK_INFO_BSSID_PROMPT</a></td></tr>
+<tr class="separator:a4940ebf08bb237b2b79402f8ba6aebc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac64c6e3cb11c446bae00352715594402"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ac64c6e3cb11c446bae00352715594402">NETWORK_INFO_IP_PROMPT</a></td></tr>
+<tr class="separator:ac64c6e3cb11c446bae00352715594402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f600f801e9222742fffa2663e4edee0"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a9f600f801e9222742fffa2663e4edee0">NETWORK_INFO_SUBNET_MASK_PROMPT</a></td></tr>
+<tr class="separator:a9f600f801e9222742fffa2663e4edee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7cd981e5dbd2b7be4aff6cd45f077af"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad7cd981e5dbd2b7be4aff6cd45f077af">NETWORK_INFO_MAC_ADDRESS_PROMPT</a></td></tr>
+<tr class="separator:ad7cd981e5dbd2b7be4aff6cd45f077af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0b5a416e2447b203a776934f797aa7"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#aca0b5a416e2447b203a776934f797aa7">NETWORK_INFO_DHCP_ADDRESS_PROMPT</a></td></tr>
+<tr class="separator:aca0b5a416e2447b203a776934f797aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abebfa96e69b8fcc679e82c1b145d872c"><td class="memItemLeft" align="right" valign="top">static const std::initializer_list&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#abebfa96e69b8fcc679e82c1b145d872c">NETWORK_INFO_STATIC_IP_PROMPT</a></td></tr>
+<tr class="separator:abebfa96e69b8fcc679e82c1b145d872c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d945bb3d5340e857a6a1da9314958bd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a6d945bb3d5340e857a6a1da9314958bd">RESET_WARNING</a></td></tr>
 <tr class="separator:a6d945bb3d5340e857a6a1da9314958bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0cd0434c923487f201c31fa38d9a2ba"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad0cd0434c923487f201c31fa38d9a2ba">ENTER_LIMITED</a> = &quot;Entering limited interaction mode.&quot;</td></tr>
@@ -358,6 +379,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a1d264334cdba29388e9f005cad737b5e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a1d264334cdba29388e9f005cad737b5e">DO_NOT_DISTURB_NAME</a> = &quot;DoNotDisturb&quot;</td></tr>
 <tr class="memdesc:a1d264334cdba29388e9f005cad737b5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the do not disturb confirmation setting.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#a1d264334cdba29388e9f005cad737b5e">More...</a><br /></td></tr>
 <tr class="separator:a1d264334cdba29388e9f005cad737b5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac0e1c6cab2985af2ddfd803216f4ebe"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#aac0e1c6cab2985af2ddfd803216f4ebe">NETWORK_INFO_NAME</a> = &quot;NetworkInfo&quot;</td></tr>
+<tr class="memdesc:aac0e1c6cab2985af2ddfd803216f4ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the network info setting.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#aac0e1c6cab2985af2ddfd803216f4ebe">More...</a><br /></td></tr>
+<tr class="separator:aac0e1c6cab2985af2ddfd803216f4ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af50f04443ee8e30df7fd6a5613856b4d"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#af50f04443ee8e30df7fd6a5613856b4d">OPTION_ENUM_START</a> = 1</td></tr>
 <tr class="memdesc:af50f04443ee8e30df7fd6a5613856b4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of the first option in displaying a list of options.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#af50f04443ee8e30df7fd6a5613856b4d">More...</a><br /></td></tr>
 <tr class="separator:af50f04443ee8e30df7fd6a5613856b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -475,6 +499,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57eaa2a72fe7fd9105fe2571e54286c4b420"></a>WAKEWORD_CONFIRMATION&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57eaf697004957d30cca0edfbecb6d6658b9"></a>SPEECH_CONFIRMATION&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57ea7ed2a86d12092f143a4024a85250b9b4"></a>TIME_ZONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57ea50804ef795c641acc7b735de3b5a1d35"></a>NETWORK_INFO&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57eadd5d7f619da7d63c452d3517e49ca6ea"></a>ALARM_VOLUME_RAMP&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="acf0d771f547caeda5a3a7d2bacaaa57ea5dfd352dd6b7a5d118237fcf1e19fcc1"></a>QUIT&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -918,6 +943,57 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Tag for find the maintitle in the title node of the RenderTemplate directive. </p>
+
+</div>
+</div>
+<a id="a36eec3973c3f5c9b1a60fc255988acdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36eec3973c3f5c9b1a60fc255988acdc">&#9670;&nbsp;</a></span>notifyObservers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::sampleApp::notifyObservers </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_interface.html#a1ec49a6018047aa23640335d8772e751">avsCommon::sdkInterfaces::powerController::PowerControllerInterface::PowerState</a> &amp;&#160;</td>
+          <td class="paramname"><em>powerState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a389764b4196f860c311e928929519112">avsCommon::sdkInterfaces::AlexaStateChangeCauseType</a>&#160;</td>
+          <td class="paramname"><em>cause</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html">avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>observers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function to notify power state change to the observers of <code>PowerControllerObserverInterface</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">powerState</td><td>The changed power state to be notified to the observer. </td></tr>
+    <tr><td class="paramname">cause</td><td>The change cause represented using <code>AlexaStateChangeCauseType</code>. </td></tr>
+    <tr><td class="paramname">observers</td><td>The list of observer to be notified. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1521,6 +1597,7 @@ Variables</h2></td></tr>
 <div class="line">    <span class="stringliteral">&quot;| Press &#39;a&#39; followed by Enter to accept an incoming call.                    |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;| Press &#39;s&#39; followed by Enter to stop an ongoing call.                       |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;| Press &#39;d&#39; followed by Enter to input dtmf tones.                           |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;m&#39; followed by Enter to mute/unmte self during an active call.      |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;| Press &#39;q&#39; to exit Comms Control Mode.                                      |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div>
 </div><!-- fragment -->
@@ -2190,6 +2267,269 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<a id="a4940ebf08bb237b2b79402f8ba6aebc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4940ebf08bb237b2b79402f8ba6aebc8">&#9670;&nbsp;</a></span>NETWORK_INFO_BSSID_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_BSSID_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the name of the physical access point (BSSID)&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;and press Enter. Leave empty to reset the BSSID.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad024375c1a9012ffcc5e9faae5f7135d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad024375c1a9012ffcc5e9faae5f7135d">&#9670;&nbsp;</a></span>NETWORK_INFO_CONNECTION_TYPE_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_CONNECTION_TYPE_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;1&#39; followed by Enter to set connection type to Ethernet&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;2&#39; followed by Enter to set connection type to Wifi&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;3&#39; followed by Enter to reset the connection type.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aca0b5a416e2447b203a776934f797aa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca0b5a416e2447b203a776934f797aa7">&#9670;&nbsp;</a></span>NETWORK_INFO_DHCP_ADDRESS_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_DHCP_ADDRESS_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the dhcp server address and press Enter.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Leave empty to reset the dhcp server address.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a24f6f84795b76eeffc84038d001056e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f6f84795b76eeffc84038d001056e5">&#9670;&nbsp;</a></span>NETWORK_INFO_ESSID_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_ESSID_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the name of the network (ESSID) and press enter.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Leave empty to reset the ESSID.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac64c6e3cb11c446bae00352715594402"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac64c6e3cb11c446bae00352715594402">&#9670;&nbsp;</a></span>NETWORK_INFO_IP_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_IP_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the ip address (eg. 192.168.0.1) and press Enter.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Leave empty to reset the ip address.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad7cd981e5dbd2b7be4aff6cd45f077af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7cd981e5dbd2b7be4aff6cd45f077af">&#9670;&nbsp;</a></span>NETWORK_INFO_MAC_ADDRESS_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_MAC_ADDRESS_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the device mac address and press Enter.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Leave empty to reset the mac address.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aac0e1c6cab2985af2ddfd803216f4ebe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac0e1c6cab2985af2ddfd803216f4ebe">&#9670;&nbsp;</a></span>NETWORK_INFO_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::sampleApp::NETWORK_INFO_NAME = &quot;NetworkInfo&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the network info setting. </p>
+
+</div>
+</div>
+<a id="a4ff41b66f197a71a552b1f67c41b66d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ff41b66f197a71a552b1f67c41b66d5">&#9670;&nbsp;</a></span>NETWORK_INFO_SETTING_MENU</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::sampleApp::NETWORK_INFO_SETTING_MENU</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;|                      Network Info Configuration:                           |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;|                                                                            |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;1&#39; followed by Enter to see the current network info                |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;2&#39; followed by Enter to set the connection type                     |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;3&#39; followed by Enter to set the network name (ESSID)                |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;4&#39; followed by Enter to set the physical access point name (BSSID)  |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;5&#39; followed by Enter to set the ip address                          |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;6&#39; followed by Enter to set the subnet mask                         |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;7&#39; followed by Enter to set the mac address                         |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;8&#39; followed by Enter to set the dhcp server address                 |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;9&#39; followed by Enter to set the static ip settings                  |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;| Press &#39;q&#39; followed by Enter to quit this configuration menu.               |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abebfa96e69b8fcc679e82c1b145d872c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abebfa96e69b8fcc679e82c1b145d872c">&#9670;&nbsp;</a></span>NETWORK_INFO_STATIC_IP_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_STATIC_IP_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;1&#39; followed by Enter to set the ip type to static&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;2&#39; followed by Enter to set the ip type to dynamic&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Press &#39;3&#39; followed by Enter to reset the ip type.&quot;</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9f600f801e9222742fffa2663e4edee0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f600f801e9222742fffa2663e4edee0">&#9670;&nbsp;</a></span>NETWORK_INFO_SUBNET_MASK_PROMPT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::initializer_list&lt;std::string&gt; alexaClientSDK::sampleApp::NETWORK_INFO_SUBNET_MASK_PROMPT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;Type in the subnet mask and press Enter.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Leave empty to reset the subnet mask.&quot;</span>}</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8cb5ca537ce0862390eca6c15e427772"></a>
@@ -2976,7 +3316,8 @@ Variables</h2></td></tr>
 <div class="line">    <span class="stringliteral">&quot;|  Press &#39;3&#39; followed by Enter to see wake word confirmation options.        |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;|  Press &#39;4&#39; followed by Enter to see speech confirmation options.           |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;|  Press &#39;5&#39; followed by Enter to see time zone options.                     |\n&quot;</span></div>
-<div class="line">    <span class="stringliteral">&quot;|  Press &#39;6&#39; followed by Enter to see the Alarm Volume Ramp options.         |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;|  Press &#39;6&#39; followed by Enter to see the network options.                   |\n&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;|  Press &#39;7&#39; followed by Enter to see the Alarm Volume Ramp options.         |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;|  Press &#39;q&#39; followed by Enter to exit Settings Options.                     |\n&quot;</span></div>
 <div class="line">    <span class="stringliteral">&quot;+----------------------------------------------------------------------------+\n&quot;</span></div>
 </div><!-- fragment -->
@@ -3470,7 +3811,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

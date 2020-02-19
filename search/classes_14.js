@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['visualactivitytracker_8690',['VisualActivityTracker',['../classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html',1,'alexaClientSDK::afml']]],
-  ['visualactivitytrackertest_8691',['VisualActivityTrackerTest',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_visual_activity_tracker_test.html',1,'alexaClientSDK::afml::test']]]
+  ['visualactivitytracker_9260',['VisualActivityTracker',['../classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html',1,'alexaClientSDK::afml']]],
+  ['visualactivitytrackertest_9261',['VisualActivityTrackerTest',['../classalexa_client_s_d_k_1_1afml_1_1test_1_1_visual_activity_tracker_test.html',1,'alexaClientSDK::afml::test']]]
 ];

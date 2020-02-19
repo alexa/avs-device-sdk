@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::bluetoothImplementations::blueZ::test::MPRISPlayerTest" name="alexaClientSDK::bluetoothImplementations::blueZ::test::MPRISPlayerTest">
 <area shape="rect" id="node1" title=" " alt="" coords="146,44,323,96"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_m_p_r_i_s_player_supported_a_v_r_c_p_test.html" title="Parameterized test fixture for supported org.mpris.MediaPlayer2.Player DBus AVRCP Methods." alt="" coords="371,5,639,57"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_m_p_r_i_s_player_unsupported_test.html" title="Parameterized test fixture for unsupported DBus AVRCP Methods." alt="" coords="386,81,624,133"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_m_p_r_i_s_player_supported_media_test.html" title="Parameterized test fixture for supported org.mpris.MediaPlayer2.Player DBus Media Methods." alt="" coords="371,5,631,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_m_p_r_i_s_player_unsupported_test.html" title="Parameterized test fixture for unsupported DBus Media Methods." alt="" coords="382,81,620,133"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,57,98,83"/>
 </map>

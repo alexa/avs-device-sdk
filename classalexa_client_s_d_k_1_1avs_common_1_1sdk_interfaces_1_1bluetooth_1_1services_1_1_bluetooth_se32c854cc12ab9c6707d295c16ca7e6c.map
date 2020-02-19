@@ -1,11 +1,18 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface">
-<area shape="rect" id="node1" title="Interface representing a BluetoothService." alt="" coords="5,120,243,172"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_sink_interface.html" title=" " alt="" coords="312,5,510,57"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_source_interface.html" title=" " alt="" coords="304,81,518,133"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_controller_interface.html" title="Used to implement an instance of AVRCPController (Audio/Video Remote Control Profile)." alt="" coords="291,157,531,209"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_target_interface.html" title="Used to implement an instance of AVRCPTarget (Audio/Video Remote Control Profile)." alt="" coords="301,233,520,285"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a2_d_p_sink.html" title=" " alt="" coords="579,5,756,57"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a2_d_p_source.html" title=" " alt="" coords="579,81,756,133"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a_v_r_c_p_controller.html" title=" " alt="" coords="579,157,756,209"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a_v_r_c_p_target.html" title="A BlueZ implementation of the AVRCPTargetInterface." alt="" coords="579,233,756,285"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,272,243,324"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_sink_interface.html" title=" " alt="" coords="316,5,513,57"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_source_interface.html" title=" " alt="" coords="307,81,521,133"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_controller_interface.html" title="Used to implement an instance of AVRCPController (Audio/Video Remote Control Profile)." alt="" coords="295,157,534,209"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_target_interface.html" title="Used to implement an instance of AVRCPTarget (Audio/Video Remote Control Profile)." alt="" coords="305,233,524,285"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_h_f_p_interface.html" title=" " alt="" coords="316,309,513,361"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_h_i_d_interface.html" title=" " alt="" coords="316,385,513,437"/>
+<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_p_p_interface.html" title=" " alt="" coords="316,461,513,513"/>
+<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1test_1_1_mock_bluetooth_service.html" title=" " alt="" coords="291,537,538,589"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a2_d_p_sink.html" title=" " alt="" coords="586,5,763,57"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a2_d_p_source.html" title=" " alt="" coords="586,81,763,133"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a_v_r_c_p_controller.html" title=" " alt="" coords="586,157,763,209"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_a_v_r_c_p_target.html" title="A BlueZ implementation of the AVRCPTargetInterface." alt="" coords="586,233,763,285"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_h_f_p.html" title=" " alt="" coords="586,309,763,361"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_h_i_d.html" title=" " alt="" coords="586,385,763,437"/>
+<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_s_p_p.html" title=" " alt="" coords="586,461,763,513"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -71,6 +71,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -109,6 +110,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a732c0e3d31b300ad94563f80b7263aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a7e288c05a86b6f9c7ba5f1a561a252"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a3a7e288c05a86b6f9c7ba5f1a561a252">onCallStateChange</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a4aa43d132f855115fbc6c8b56e3ade76">CallState</a> state)=0</td></tr>
 <tr class="separator:a3a7e288c05a86b6f9c7ba5f1a561a252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac355e3ffb90f1f5aacf27f54e3ad925a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#ac355e3ffb90f1f5aacf27f54e3ad925a">isStateActive</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a4aa43d132f855115fbc6c8b56e3ade76">CallStateObserverInterface::CallState</a> &amp;state)</td></tr>
+<tr class="separator:ac355e3ffb90f1f5aacf27f54e3ad925a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface to allow being notified of changes to the state of a call. </p>
@@ -177,6 +183,40 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac355e3ffb90f1f5aacf27f54e3ad925a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac355e3ffb90f1f5aacf27f54e3ad925a">&#9670;&nbsp;</a></span>isStateActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface::isStateActive </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a4aa43d132f855115fbc6c8b56e3ade76">CallStateObserverInterface::CallState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Checks the state of the provided call state to determine if a call is in an "active" state Active states are: CONNECTING INBOUND_RINGING CALL_CONNETED</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The new CallState. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on states that are considered "active", false otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a3a7e288c05a86b6f9c7ba5f1a561a252"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a7e288c05a86b6f9c7ba5f1a561a252">&#9670;&nbsp;</a></span>onCallStateChange()</h2>
 
@@ -219,7 +259,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

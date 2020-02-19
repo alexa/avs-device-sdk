@@ -1,35 +1,37 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/Attachment/AttachmentReaderTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/Attachment/AttachmentReaderTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="690,5,947,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="301,119,395,144"/>
-<area shape="rect" id="node3" title=" " alt="" coords="419,119,533,144"/>
-<area shape="rect" id="node4" title=" " alt="" coords="558,105,810,157"/>
-<area shape="rect" id="node5" title=" " alt="" coords="834,112,1073,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="1097,112,1279,151"/>
-<area shape="rect" id="node7" href="$_a_v_s_2test_2_attachment_2_common_2_common_8h.html" title=" " alt="" coords="1302,119,1447,144"/>
-<area shape="rect" id="node8" title=" " alt="" coords="603,799,672,824"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1465,799,1522,824"/>
-<area shape="rect" id="node10" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="1294,205,1456,244"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1398,632,1455,657"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1395,545,1456,571"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1260,292,1388,317"/>
-<area shape="rect" id="node14" title=" " alt="" coords="357,719,411,744"/>
-<area shape="rect" id="node15" href="$_shared_data_stream_8h.html" title=" " alt="" coords="840,292,987,317"/>
-<area shape="rect" id="node16" title=" " alt="" coords="742,372,802,397"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1309,632,1373,657"/>
-<area shape="rect" id="node18" href="$_logger_utils_8h.html" title=" " alt="" coords="825,365,1001,404"/>
-<area shape="rect" id="node19" title=" " alt="" coords="344,632,406,657"/>
-<area shape="rect" id="node20" href="$_logger_8h.html" title=" " alt="" coords="825,452,1001,491"/>
-<area shape="rect" id="node21" title=" " alt="" coords="430,632,498,657"/>
-<area shape="rect" id="node22" href="$_configuration_node_8h.html" title=" " alt="" coords="921,539,1135,577"/>
-<area shape="rect" id="node26" href="$_level_8h.html" title=" " alt="" coords="144,625,320,664"/>
-<area shape="rect" id="node27" href="$_log_entry_8h.html" title=" " alt="" coords="712,539,888,577"/>
-<area shape="rect" id="node32" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="390,539,586,577"/>
-<area shape="rect" id="node33" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="788,712,964,751"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1048,632,1120,657"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1144,632,1184,657"/>
-<area shape="rect" id="node25" title=" " alt="" coords="875,632,1024,657"/>
-<area shape="rect" id="node28" href="$_log_entry_stream_8h.html" title=" " alt="" coords="675,625,851,664"/>
-<area shape="rect" id="node29" title=" " alt="" coords="695,719,764,744"/>
-<area shape="rect" id="node30" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="988,712,1164,751"/>
-<area shape="rect" id="node31" title=" " alt="" coords="1036,799,1116,824"/>
+<area shape="rect" id="node1" title=" " alt="" coords="806,5,1063,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="417,119,511,144"/>
+<area shape="rect" id="node3" title=" " alt="" coords="535,119,649,144"/>
+<area shape="rect" id="node4" title=" " alt="" coords="674,105,926,157"/>
+<area shape="rect" id="node5" title=" " alt="" coords="950,112,1189,151"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1213,112,1395,151"/>
+<area shape="rect" id="node7" href="$_a_v_s_2test_2_attachment_2_common_2_common_8h.html" title=" " alt="" coords="1418,119,1563,144"/>
+<area shape="rect" id="node8" title=" " alt="" coords="147,799,216,824"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1570,799,1627,824"/>
+<area shape="rect" id="node10" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="1410,205,1572,244"/>
+<area shape="rect" id="node11" title=" " alt="" coords="233,632,290,657"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1551,545,1612,571"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1553,292,1682,317"/>
+<area shape="rect" id="node14" title=" " alt="" coords="928,719,982,744"/>
+<area shape="rect" id="node15" href="$_shared_data_stream_8h.html" title=" " alt="" coords="57,292,204,317"/>
+<area shape="rect" id="node16" title=" " alt="" coords="145,372,205,397"/>
+<area shape="rect" id="node17" title=" " alt="" coords="144,632,208,657"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title=" " alt="" coords="664,365,840,404"/>
+<area shape="rect" id="node19" title=" " alt="" coords="753,632,815,657"/>
+<area shape="rect" id="node20" href="$_logger_8h.html" title=" " alt="" coords="789,452,965,491"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1492,632,1561,657"/>
+<area shape="rect" id="node22" href="$_configuration_node_8h.html" title=" " alt="" coords="380,539,594,577"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title=" " alt="" coords="839,625,1015,664"/>
+<area shape="rect" id="node27" href="$_log_entry_8h.html" title=" " alt="" coords="1173,539,1349,577"/>
+<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="910,539,1106,577"/>
+<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="93,712,269,751"/>
+<area shape="rect" id="node23" title=" " alt="" coords="638,719,711,744"/>
+<area shape="rect" id="node24" title=" " alt="" coords="467,632,506,657"/>
+<area shape="rect" id="node25" title=" " alt="" coords="530,632,678,657"/>
+<area shape="rect" id="node28" title=" " alt="" coords="1290,632,1366,657"/>
+<area shape="rect" id="node29" title=" " alt="" coords="1390,632,1469,657"/>
+<area shape="rect" id="node30" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1089,625,1265,664"/>
+<area shape="rect" id="node31" title=" " alt="" coords="1233,719,1303,744"/>
+<area shape="rect" id="node32" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1033,712,1209,751"/>
+<area shape="rect" id="node33" title=" " alt="" coords="1081,799,1162,824"/>
 </map>

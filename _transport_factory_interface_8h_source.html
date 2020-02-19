@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_transport_factory_interface_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;).</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * You may not use this file except in compliance with the License.</span></div>
@@ -99,40 +99,43 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_transport_interface_8h.html">ACL/Transport/TransportInterface.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_message_consumer_interface_8h.html">ACL/Transport/MessageConsumerInterface.h</a>&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_transport_observer_interface_8h.html">ACL/Transport/TransportObserverInterface.h</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span>acl {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">TransportFactoryInterface</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> std::shared_ptr&lt;TransportInterface&gt; <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#a9e04897a0c373c6d1cd7deb9ffb0611a">createTransport</a>(</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        std::shared_ptr&lt;avsCommon::sdkInterfaces::AuthDelegateInterface&gt; authDelegate,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::shared_ptr&lt;avsCommon::avs::attachment::AttachmentManager&gt; attachmentManager,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">const</span> std::string&amp; avsGateway,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::shared_ptr&lt;MessageConsumerInterface&gt; messageConsumerInterface,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        std::shared_ptr&lt;TransportObserverInterface&gt; transportObserverInterface) = 0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#abce14a16a18e09608b424ed632888180">~TransportFactoryInterface</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}  <span class="comment">// namespace acl</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTFACTORYINTERFACE_H_</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_synchronized_message_request_queue_8h.html">ACL/Transport/SynchronizedMessageRequestQueue.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span>acl {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">   36</a></span>&#160;<span class="keyword">class </span><a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">TransportFactoryInterface</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> std::shared_ptr&lt;TransportInterface&gt; <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#a6b7645e45fd28f97661d2be3b2e65d57">createTransport</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::shared_ptr&lt;avsCommon::sdkInterfaces::AuthDelegateInterface&gt; authDelegate,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        std::shared_ptr&lt;avsCommon::avs::attachment::AttachmentManager&gt; attachmentManager,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> std::string&amp; avsGateway,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::shared_ptr&lt;MessageConsumerInterface&gt; messageConsumerInterface,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        std::shared_ptr&lt;TransportObserverInterface&gt; transportObserverInterface,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::shared_ptr&lt;SynchronizedMessageRequestQueue&gt; sharedMessageRequestQueue) = 0;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#abce14a16a18e09608b424ed632888180">~TransportFactoryInterface</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}  <span class="comment">// namespace acl</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_TRANSPORTFACTORYINTERFACE_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="a_transport_observer_interface_8h_html"><div class="ttname"><a href="_transport_observer_interface_8h.html">TransportObserverInterface.h</a></div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">alexaClientSDK::acl::TransportFactoryInterface</a></div><div class="ttdef"><b>Definition:</b> TransportFactoryInterface.h:35</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface_html_a9e04897a0c373c6d1cd7deb9ffb0611a"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#a9e04897a0c373c6d1cd7deb9ffb0611a">alexaClientSDK::acl::TransportFactoryInterface::createTransport</a></div><div class="ttdeci">virtual std::shared_ptr&lt; TransportInterface &gt; createTransport(std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt; authDelegate, std::shared_ptr&lt; avsCommon::avs::attachment::AttachmentManager &gt; attachmentManager, const std::string &amp;avsGateway, std::shared_ptr&lt; MessageConsumerInterface &gt; messageConsumerInterface, std::shared_ptr&lt; TransportObserverInterface &gt; transportObserverInterface)=0</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html">alexaClientSDK::acl::TransportFactoryInterface</a></div><div class="ttdef"><b>Definition:</b> TransportFactoryInterface.h:36</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface_html_a6b7645e45fd28f97661d2be3b2e65d57"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#a6b7645e45fd28f97661d2be3b2e65d57">alexaClientSDK::acl::TransportFactoryInterface::createTransport</a></div><div class="ttdeci">virtual std::shared_ptr&lt; TransportInterface &gt; createTransport(std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt; authDelegate, std::shared_ptr&lt; avsCommon::avs::attachment::AttachmentManager &gt; attachmentManager, const std::string &amp;avsGateway, std::shared_ptr&lt; MessageConsumerInterface &gt; messageConsumerInterface, std::shared_ptr&lt; TransportObserverInterface &gt; transportObserverInterface, std::shared_ptr&lt; SynchronizedMessageRequestQueue &gt; sharedMessageRequestQueue)=0</div></div>
 <div class="ttc" id="a_message_consumer_interface_8h_html"><div class="ttname"><a href="_message_consumer_interface_8h.html">MessageConsumerInterface.h</a></div></div>
 <div class="ttc" id="a_attachment_manager_8h_html"><div class="ttname"><a href="_attachment_manager_8h.html">AttachmentManager.h</a></div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
 <div class="ttc" id="a_auth_delegate_interface_8h_html"><div class="ttname"><a href="_auth_delegate_interface_8h.html">AuthDelegateInterface.h</a></div></div>
+<div class="ttc" id="a_synchronized_message_request_queue_8h_html"><div class="ttname"><a href="_synchronized_message_request_queue_8h.html">SynchronizedMessageRequestQueue.h</a></div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface_html_abce14a16a18e09608b424ed632888180"><div class="ttname"><a href="classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html#abce14a16a18e09608b424ed632888180">alexaClientSDK::acl::TransportFactoryInterface::~TransportFactoryInterface</a></div><div class="ttdeci">virtual ~TransportFactoryInterface()=default</div></div>
 <div class="ttc" id="a_transport_interface_8h_html"><div class="ttname"><a href="_transport_interface_8h.html">TransportInterface.h</a></div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

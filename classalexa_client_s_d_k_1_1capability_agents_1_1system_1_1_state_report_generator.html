@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,6 +73,7 @@ $(function() {
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::capabilityAgents::system::StateReportGenerator Class Reference</div>  </div>
@@ -80,6 +81,15 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="_state_report_generator_8h_source.html">StateReportGenerator.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for alexaClientSDK::capabilityAgents::system::StateReportGenerator:</div>
+<div class="dyncontent">
+<div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator_inherit__map" alt="Inheritance graph"/></div>
+<map name="alexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator_inherit__map" id="alexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator_inherit__map">
+<area shape="rect" title=" " alt="" coords="5,5,256,44"/>
+<area shape="rect" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_state_report_generator.html" title=" " alt="" coords="25,92,237,144"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -99,6 +109,11 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab20c26981e61697d8f4686c85551c6e5"><td class="memTemplParams" colspan="2">template&lt;class SettingsManagerT &gt; </td></tr>
 <tr class="memitem:ab20c26981e61697d8f4686c85551c6e5"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator.html">StateReportGenerator</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator.html#ab20c26981e61697d8f4686c85551c6e5">create</a> (std::shared_ptr&lt; SettingsManagerT &gt; settingManager, const <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator.html#a5e0001c4b178fc321ffa4daaa646abea">SettingConfigurations</a>&lt; SettingsManagerT &gt; &amp;configurations)</td></tr>
 <tr class="separator:ab20c26981e61697d8f4686c85551c6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a4192d837d1e08ad2d8bf677ad07864e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_state_report_generator.html#a4192d837d1e08ad2d8bf677ad07864e8">StateReportGenerator</a> (const std::vector&lt; std::function&lt; std::string()&gt;&gt; &amp;reportFunctions)</td></tr>
+<tr class="separator:a4192d837d1e08ad2d8bf677ad07864e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is responsible for generating a state report for every setting available in a given <code>SettingsManager</code>.</p>
@@ -128,7 +143,7 @@ template&lt;class SettingsManagerT &gt; </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a51e045805179a54f60fd86aea4dab693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51e045805179a54f60fd86aea4dab693">&#9670;&nbsp;</a></span>StateReportGenerator()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51e045805179a54f60fd86aea4dab693">&#9670;&nbsp;</a></span>StateReportGenerator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,6 +165,39 @@ template&lt;class SettingsManagerT &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Default constructor. This should only be used by optional. </p>
+
+</div>
+</div>
+<a id="a4192d837d1e08ad2d8bf677ad07864e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4192d837d1e08ad2d8bf677ad07864e8">&#9670;&nbsp;</a></span>StateReportGenerator() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::system::StateReportGenerator::StateReportGenerator </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::function&lt; std::string()&gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>reportFunctions</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Constructor (protected for unit tests).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reportFunctions</td><td>The collection of report functions used to generate the entire report. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -234,7 +282,7 @@ template&lt;class SettingsManagerT &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

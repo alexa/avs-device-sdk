@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -107,34 +107,35 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae6332383bc135c8efa45e04504e0d75b">~RendererInterface</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a88dcc8d15bca894c5828613bb59c6e51">start</a>(</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        std::shared_ptr&lt;capabilityAgents::alerts::renderer::RendererObserverInterface&gt; observer,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls = std::vector&lt;std::string&gt;(),</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">int</span> loopCount = 0,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">bool</span> startWithPause = <span class="keyword">false</span>) = 0;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a42a7207451067b22a45ce5f697763d17">stop</a>() = 0;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}  <span class="comment">// namespace renderer</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}  <span class="comment">// namespace alerts</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}  <span class="comment">// namespace capabilityAgents</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERERINTERFACE_H_</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a3f46cb3153befcd3df37a493bafd6884">start</a>(</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        std::shared_ptr&lt;capabilityAgents::alerts::renderer::RendererObserverInterface&gt; observer,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        std::function&lt;std::unique_ptr&lt;std::istream&gt;()&gt; audioFactory,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">bool</span> volumeRampEnabled,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; urls = std::vector&lt;std::string&gt;(),</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">int</span> loopCount = 0,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">bool</span> startWithPause = <span class="keyword">false</span>) = 0;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a42a7207451067b22a45ce5f697763d17">stop</a>() = 0;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}  <span class="comment">// namespace renderer</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}  <span class="comment">// namespace alerts</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}  <span class="comment">// namespace capabilityAgents</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}  <span class="comment">// namespace alexaClientSDK</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif  // ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALERTS_INCLUDE_ALERTS_RENDERER_RENDERERINTERFACE_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface</a></div><div class="ttdef"><b>Definition:</b> RendererInterface.h:35</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html_ae6332383bc135c8efa45e04504e0d75b"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#ae6332383bc135c8efa45e04504e0d75b">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::~RendererInterface</a></div><div class="ttdeci">virtual ~RendererInterface()=default</div></div>
-<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html_a88dcc8d15bca894c5828613bb59c6e51"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a88dcc8d15bca894c5828613bb59c6e51">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::start</a></div><div class="ttdeci">virtual void start(std::shared_ptr&lt; capabilityAgents::alerts::renderer::RendererObserverInterface &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}, bool startWithPause=false)=0</div></div>
 <div class="ttc" id="a_renderer_observer_interface_8h_html"><div class="ttname"><a href="_renderer_observer_interface_8h.html">RendererObserverInterface.h</a></div></div>
 <div class="ttc" id="anamespacealexa_client_s_d_k_html"><div class="ttname"><a href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></div><div class="ttdoc">Whether or not curl logs should be emitted.</div><div class="ttdef"><b>Definition:</b> AVSConnectionManager.h:37</div></div>
+<div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html_a3f46cb3153befcd3df37a493bafd6884"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a3f46cb3153befcd3df37a493bafd6884">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::start</a></div><div class="ttdeci">virtual void start(std::shared_ptr&lt; capabilityAgents::alerts::renderer::RendererObserverInterface &gt; observer, std::function&lt; std::unique_ptr&lt; std::istream &gt;()&gt; audioFactory, bool volumeRampEnabled, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}, bool startWithPause=false)=0</div></div>
 <div class="ttc" id="aclassalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface_html_a42a7207451067b22a45ce5f697763d17"><div class="ttname"><a href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html#a42a7207451067b22a45ce5f697763d17">alexaClientSDK::capabilityAgents::alerts::renderer::RendererInterface::stop</a></div><div class="ttdeci">virtual void stop()=0</div></div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

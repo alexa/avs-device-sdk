@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::test::DialogUXAggregatorTest" name="alexaClientSDK::avsCommon::test::DialogUXAggregatorTest">
-<area shape="rect" id="node1" title="Test fixture for testing DialogUXStateAggregator." alt="" coords="5,92,210,131"/>
-<area shape="rect" id="node2" title=" " alt="" coords="13,12,58,37"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html" title="Manages testing state changes." alt="" coords="82,5,279,44"/>
+<area shape="rect" id="node1" title="Test fixture for testing DialogUXStateAggregator." alt="" coords="449,55,653,93"/>
+<area shape="rect" id="node2" title=" " alt="" coords="106,5,152,31"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html" title="Manages testing state changes." alt="" coords="30,55,227,93"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html" title=" " alt="" coords="5,117,252,156"/>
 </map>

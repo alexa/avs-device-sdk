@@ -1,22 +1,22 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/src" name="/workplace/avs&#45;device&#45;sdk/Integration/src">
 <area shape="rect" id="node1" href="dir_b305b79323af1f2661a24900bce79295.html" title="src" alt="" coords="51,51,123,99"/>
 <area shape="rect" id="node2" href="dir_d487033c4cf6e1e6824ef2db7b280e3e.html" title="include" alt="" coords="51,147,123,195"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000298_000296.html" title="14" alt="" coords="88,121,103,135"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000301_000299.html" title="14" alt="" coords="88,121,103,135"/>
 <area shape="rect" id="node3" href="dir_69fa8d0f4fee2820ffc8601fbf428b42.html" title="SampleApp" alt="" coords="124,243,215,291"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000298_000350.html" title="4" alt="" coords="165,216,173,230"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000301_000359.html" title="3" alt="" coords="165,216,173,230"/>
 <area shape="rect" id="node4" href="dir_b1dfedc9efa610ba8c818c30206ff41f.html" title="ACL" alt="" coords="60,339,132,387"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000298_000000.html" title="3" alt="" coords="76,312,83,325"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000301_000000.html" title="3" alt="" coords="76,312,83,325"/>
 <area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="46,435,147,483"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000298_000017.html" title="5" alt="" coords="59,408,67,422"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000301_000017.html" title="4" alt="" coords="59,408,67,422"/>
 <area shape="rect" id="node6" href="dir_3bb03bb8f5c109658007b64753c5da0f.html" title="SynchronizeStateSender" alt="" coords="206,339,375,387"/>
-<area shape="rect" id="edge12-headlabel" href="dir_000298_000384.html" title="1" alt="" coords="276,312,283,325"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000296_000350.html" title="2" alt="" coords="139,216,147,230"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000296_000000.html" title="3" alt="" coords="99,313,106,327"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000296_000017.html" title="24" alt="" coords="64,408,78,422"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000350_000000.html" title="2" alt="" coords="129,322,136,336"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000350_000017.html" title="89" alt="" coords="126,417,141,431"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000350_000384.html" title="1" alt="" coords="248,314,255,327"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000000_000017.html" title="100" alt="" coords="94,409,116,423"/>
-<area shape="rect" id="edge13-headlabel" href="dir_000384_000017.html" title="13" alt="" coords="158,428,172,441"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000301_000393.html" title="1" alt="" coords="276,312,283,325"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000299_000359.html" title="2" alt="" coords="139,216,147,230"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000299_000000.html" title="3" alt="" coords="99,313,106,327"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000299_000017.html" title="24" alt="" coords="64,408,78,422"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000359_000000.html" title="2" alt="" coords="129,322,136,336"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000359_000017.html" title="90" alt="" coords="126,417,141,431"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000359_000393.html" title="1" alt="" coords="248,314,255,327"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000000_000017.html" title="118" alt="" coords="94,409,115,423"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000393_000017.html" title="13" alt="" coords="158,428,172,441"/>
 <area shape="rect" id="clust1" href="dir_eecb7863cc5539e333a9a51474f7e532.html" title="Integration" alt="" coords="40,16,134,109"/>
 </map>

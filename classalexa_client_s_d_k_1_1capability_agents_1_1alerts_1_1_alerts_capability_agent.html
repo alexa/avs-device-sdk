@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -148,8 +148,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a78985125587bc62f4118ff949b197b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cc0be4c4408e978907570121ea214ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a2cc0be4c4408e978907570121ea214ac">onConnectionStatusChanged</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">Status</a> status, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11e">ChangedReason</a> reason) override</td></tr>
 <tr class="separator:a2cc0be4c4408e978907570121ea214ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a107eb9e4bea891e9dc5ff4fe7523861d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a107eb9e4bea891e9dc5ff4fe7523861d">onFocusChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState) override</td></tr>
-<tr class="separator:a107eb9e4bea891e9dc5ff4fe7523861d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d3f6cdff590b0af48b81086ef129a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a28d3f6cdff590b0af48b81086ef129a2">onFocusChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a> behavior) override</td></tr>
+<tr class="separator:a28d3f6cdff590b0af48b81086ef129a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e61f1420fcd3eb25d1e4411a91bbbea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a2e61f1420fcd3eb25d1e4411a91bbbea">onAlertStateChange</a> (const std::string &amp;token, const std::string &amp;alertType, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html#a0ceb2f80d92998fad4842437760dfad9">AlertObserverInterface::State</a> state, const std::string &amp;reason) override</td></tr>
 <tr class="separator:a2e61f1420fcd3eb25d1e4411a91bbbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">FocusManagerObserverInterface Functions</div></td></tr>
@@ -235,8 +235,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a65e847283ec8f2a78eb78049848c6ba9"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html">AlertsCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a65e847283ec8f2a78eb78049848c6ba9">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a> &gt; connectionManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html">certifiedSender::CertifiedSender</a> &gt; certifiedMessageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">storage::AlertStorageInterface</a> &gt; alertStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_alerts_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface</a> &gt; alertsAudioFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">renderer::RendererInterface</a> &gt; alertRenderer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; dataManager, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a5a2f768082d05171eb7f0394bbbaf2d8">settings::AlarmVolumeRampSetting</a> &gt; alarmVolumeRampSetting)</td></tr>
-<tr class="separator:a65e847283ec8f2a78eb78049848c6ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6225c797f0ce4e49758dad63a2c13e29"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html">AlertsCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a6225c797f0ce4e49758dad63a2c13e29">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a> &gt; connectionManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html">certifiedSender::CertifiedSender</a> &gt; certifiedMessageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html">storage::AlertStorageInterface</a> &gt; alertStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_alerts_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface</a> &gt; alertsAudioFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer_1_1_renderer_interface.html">renderer::RendererInterface</a> &gt; alertRenderer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; dataManager, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a5a2f768082d05171eb7f0394bbbaf2d8">settings::AlarmVolumeRampSetting</a> &gt; alarmVolumeRampSetting, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt; settingsManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder)</td></tr>
+<tr class="separator:a6225c797f0ce4e49758dad63a2c13e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98874f2f21662380313bd2e8f15b5b72"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structalexa_client_s_d_k_1_1settings_1_1_setting_event_metadata.html">settings::SettingEventMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html#a98874f2f21662380313bd2e8f15b5b72">getAlarmVolumeRampMetadata</a> ()</td></tr>
 <tr class="separator:a98874f2f21662380313bd2e8f15b5b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_observer_interface.html">alexaClientSDK::capabilityAgents::alerts::AlertObserverInterface</a></td></tr>
@@ -413,8 +413,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a65e847283ec8f2a78eb78049848c6ba9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65e847283ec8f2a78eb78049848c6ba9">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a6225c797f0ce4e49758dad63a2c13e29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6225c797f0ce4e49758dad63a2c13e29">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -492,7 +492,19 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a5a2f768082d05171eb7f0394bbbaf2d8">settings::AlarmVolumeRampSetting</a> &gt;&#160;</td>
-          <td class="paramname"><em>alarmVolumeRampSetting</em>&#160;</td>
+          <td class="paramname"><em>alarmVolumeRampSetting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt;&#160;</td>
+          <td class="paramname"><em>settingsManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -521,6 +533,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
     <tr><td class="paramname">alertRenderer</td><td>An alert renderer, which Alerts will use to generate user-perceivable effects when active. </td></tr>
     <tr><td class="paramname">dataManager</td><td>A dataManager object that will track the CustomerDataHandler. </td></tr>
     <tr><td class="paramname">alarmVolumeRampSetting</td><td>The alarm volume ramp setting. </td></tr>
+    <tr><td class="paramname">settingsManager</td><td>A settingsManager object that manages alarm volume ramp setting. </td></tr>
+    <tr><td class="paramname">metricRecorder</td><td>The metric recorder. </td></tr>
   </table>
   </dd>
 </dl>
@@ -812,8 +826,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a107eb9e4bea891e9dc5ff4fe7523861d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a107eb9e4bea891e9dc5ff4fe7523861d">&#9670;&nbsp;</a></span>onFocusChanged() <span class="overload">[1/2]</span></h2>
+<a id="a28d3f6cdff590b0af48b81086ef129a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28d3f6cdff590b0af48b81086ef129a2">&#9670;&nbsp;</a></span>onFocusChanged() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -825,8 +839,18 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
           <td class="memname">void alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent::onFocusChanged </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
-          <td class="paramname"><em>newFocus</em></td><td>)</td>
+          <td class="paramname"><em>newFocus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a>&#160;</td>
+          <td class="paramname"><em>behavior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -839,11 +863,13 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newFocus</td><td>The new Focus of the channel. </td></tr>
+    <tr><td class="paramname">behavior</td><td>The mixingBehavior for the ChannelObserver to take as per the interrupt model </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>when newFocus is FocusState::FOREGROUND, the MixingBehavior shall be guaranteed to be PRIMARY when newFocus is <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275ab50339a10e1de285ac99d4c3990b8693" title="This focus is used to represent when a Channel is not being used or when an observer should stop.">FocusState::NONE</a>, the MixingBehavior shall be guaranteed to be MUST_STOP </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#ab63458984e8abac5b7fd8df22149cf9b">alexaClientSDK::avsCommon::avs::CapabilityAgent</a>.</p>
+<p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#a5ea985055d5ee659359b0b8a881580df">alexaClientSDK::avsCommon::avs::CapabilityAgent</a>.</p>
 
 </div>
 </div>
@@ -1053,7 +1079,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

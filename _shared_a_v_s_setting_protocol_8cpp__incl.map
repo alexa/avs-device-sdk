@@ -1,45 +1,46 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/src/SharedAVSSettingProtocol.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/src/SharedAVSSettingProtocol.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="634,5,868,57"/>
-<area shape="rect" id="node2" href="$_logger_8h.html" title=" " alt="" coords="600,105,776,144"/>
-<area shape="rect" id="node23" href="$_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="1819,192,2003,231"/>
-<area shape="rect" id="node3" title=" " alt="" coords="2661,539,2721,564"/>
-<area shape="rect" id="node4" title=" " alt="" coords="432,459,494,484"/>
-<area shape="rect" id="node5" title=" " alt="" coords="701,459,758,484"/>
-<area shape="rect" id="node6" title=" " alt="" coords="424,285,493,311"/>
-<area shape="rect" id="node7" title=" " alt="" coords="619,459,677,484"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title=" " alt="" coords="85,365,299,404"/>
-<area shape="rect" id="node15" href="$_level_8h.html" title=" " alt="" coords="619,279,795,317"/>
-<area shape="rect" id="node16" href="$_log_entry_8h.html" title=" " alt="" coords="475,192,651,231"/>
-<area shape="rect" id="node21" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="726,192,923,231"/>
-<area shape="rect" id="node22" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1142,192,1317,231"/>
-<area shape="rect" id="node9" title=" " alt="" coords="5,459,70,484"/>
-<area shape="rect" id="node10" title=" " alt="" coords="580,539,652,564"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1684,459,1754,484"/>
-<area shape="rect" id="node12" title=" " alt="" coords="94,459,133,484"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1349,539,1403,564"/>
-<area shape="rect" id="node14" title=" " alt="" coords="208,459,357,484"/>
-<area shape="rect" id="node17" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1110,279,1285,317"/>
-<area shape="rect" id="node18" title=" " alt="" coords="2108,459,2178,484"/>
-<area shape="rect" id="node19" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="834,365,1009,404"/>
-<area shape="rect" id="node20" title=" " alt="" coords="833,459,914,484"/>
-<area shape="rect" id="node24" title=" " alt="" coords="2558,539,2637,564"/>
-<area shape="rect" id="node25" title=" " alt="" coords="3038,459,3090,484"/>
-<area shape="rect" id="node26" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="1034,365,1268,404"/>
-<area shape="rect" id="node29" href="$_executor_8h.html" title=" " alt="" coords="2731,365,2925,404"/>
-<area shape="rect" id="node35" href="$_set_setting_result_8h.html" title=" " alt="" coords="2063,372,2247,397"/>
-<area shape="rect" id="node36" href="$_setting_connection_observer_8h.html" title=" " alt="" coords="1756,365,1938,404"/>
-<area shape="rect" id="node37" href="$_setting_event_metadata_8h.html" title=" " alt="" coords="870,285,1085,311"/>
-<area shape="rect" id="node38" href="$_setting_event_sender_interface_8h.html" title=" " alt="" coords="2464,365,2656,404"/>
-<area shape="rect" id="node39" href="$_setting_observer_interface_8h.html" title=" " alt="" coords="2270,365,2440,404"/>
-<area shape="rect" id="node40" href="$_setting_protocol_interface_8h.html" title=" " alt="" coords="2330,279,2494,317"/>
-<area shape="rect" id="node41" href="$_setting_status_8h.html" title=" " alt="" coords="1518,372,1682,397"/>
-<area shape="rect" id="node42" href="$_device_setting_storage_interface_8h.html" title=" " alt="" coords="1411,279,1616,317"/>
-<area shape="rect" id="node27" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="937,452,1186,491"/>
-<area shape="rect" id="node28" href="$_message_observer_interface_8h.html" title=" " alt="" coords="1210,452,1407,491"/>
-<area shape="rect" id="node30" title=" " alt="" coords="2785,459,2914,484"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2703,459,2761,484"/>
-<area shape="rect" id="node32" title=" " alt="" coords="2303,459,2359,484"/>
-<area shape="rect" id="node33" href="$_task_thread_8h.html" title=" " alt="" coords="2434,452,2628,491"/>
-<area shape="rect" id="node34" title=" " alt="" coords="2475,539,2534,564"/>
-<area shape="rect" id="node43" title=" " alt="" coords="1444,372,1495,397"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1627,5,1860,57"/>
+<area shape="rect" id="node2" href="$_logger_8h.html" title=" " alt="" coords="813,105,989,144"/>
+<area shape="rect" id="node25" href="$_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="2565,105,2749,144"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2849,452,2910,477"/>
+<area shape="rect" id="node4" title=" " alt="" coords="772,372,835,397"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1432,372,1490,397"/>
+<area shape="rect" id="node6" title=" " alt="" coords="716,285,785,311"/>
+<area shape="rect" id="node7" title=" " alt="" coords="5,452,63,477"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title=" " alt="" coords="310,279,524,317"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title=" " alt="" coords="1160,279,1335,317"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title=" " alt="" coords="813,192,989,231"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1013,192,1210,231"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="438,192,614,231"/>
+<area shape="rect" id="node9" title=" " alt="" coords="97,372,161,397"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1211,372,1284,397"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2023,452,2093,477"/>
+<area shape="rect" id="node12" title=" " alt="" coords="185,372,224,397"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2553,452,2606,477"/>
+<area shape="rect" id="node14" title=" " alt="" coords="248,372,397,397"/>
+<area shape="rect" id="node17" title=" " alt="" coords="808,285,884,311"/>
+<area shape="rect" id="node18" title=" " alt="" coords="3446,452,3524,477"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title=" " alt="" coords="960,279,1135,317"/>
+<area shape="rect" id="node20" title=" " alt="" coords="2469,372,2538,397"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="421,365,597,404"/>
+<area shape="rect" id="node22" title=" " alt="" coords="469,452,549,477"/>
+<area shape="rect" id="node26" title=" " alt="" coords="3602,372,3653,397"/>
+<area shape="rect" id="node27" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="2000,192,2234,231"/>
+<area shape="rect" id="node30" href="$_executor_8h.html" title=" " alt="" coords="3074,279,3269,317"/>
+<area shape="rect" id="node36" href="$_set_setting_result_8h.html" title=" " alt="" coords="2418,285,2602,311"/>
+<area shape="rect" id="node37" href="$_setting_connection_observer_8h.html" title=" " alt="" coords="2396,192,2579,231"/>
+<area shape="rect" id="node38" href="$_setting_event_metadata_8h.html" title=" " alt="" coords="2972,199,3187,224"/>
+<area shape="rect" id="node39" href="$_setting_event_sender_interface_8h.html" title=" " alt="" coords="3512,279,3703,317"/>
+<area shape="rect" id="node40" href="$_setting_observer_interface_8h.html" title=" " alt="" coords="2625,279,2795,317"/>
+<area shape="rect" id="node41" href="$_setting_protocol_interface_8h.html" title=" " alt="" coords="2734,192,2897,231"/>
+<area shape="rect" id="node42" href="$_setting_status_8h.html" title=" " alt="" coords="1586,285,1749,311"/>
+<area shape="rect" id="node43" href="$_device_setting_storage_interface_8h.html" title=" " alt="" coords="1461,192,1666,231"/>
+<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="1773,279,2021,317"/>
+<area shape="rect" id="node29" href="$_message_observer_interface_8h.html" title=" " alt="" coords="2096,279,2293,317"/>
+<area shape="rect" id="node31" title=" " alt="" coords="3186,372,3315,397"/>
+<area shape="rect" id="node32" title=" " alt="" coords="3338,372,3397,397"/>
+<area shape="rect" id="node33" title=" " alt="" coords="3522,372,3578,397"/>
+<area shape="rect" id="node34" href="$_task_thread_8h.html" title=" " alt="" coords="2917,365,3111,404"/>
+<area shape="rect" id="node35" title=" " alt="" coords="2985,452,3044,477"/>
+<area shape="rect" id="node44" title=" " alt="" coords="1461,285,1511,311"/>
 </map>

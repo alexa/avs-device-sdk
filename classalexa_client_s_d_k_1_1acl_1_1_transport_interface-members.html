@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,9 +81,9 @@ $(function() {
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a60baae3ab3469c7b858b3297540b5988">isConnected</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#af9352626109735aba40b5fb310913355">isShutdown</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>() const</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">operator=</a>(const TransportInterface &amp;rhs)=delete</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a07c5e01fbbf98789d7a4214d4db3780f">send</a>(std::shared_ptr&lt; avsCommon::avs::MessageRequest &gt; request)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a9a935a1941ed58b98d93aa3911164f8b">onRequestEnqueued</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae9dd6ce2dc8aad15a269189a16dd75f5">operator=</a>(const TransportInterface &amp;rhs)=delete</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a350a147e52eb3ad3c1326e6639861066">shutdown</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">TransportInterface</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae5872af72ef57864abc0a5f8a82ed365">TransportInterface</a>(const TransportInterface &amp;rhs)=delete</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html">alexaClientSDK::acl::TransportInterface</a></td><td class="entry"></td></tr>
@@ -93,7 +93,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

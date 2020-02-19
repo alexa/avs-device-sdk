@@ -1,31 +1,52 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AFML/test/FocusManagerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AFML/test/FocusManagerTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="946,5,1150,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="770,105,864,131"/>
-<area shape="rect" id="node3" href="$_focus_state_8h.html" title=" " alt="" coords="1328,425,1541,451"/>
-<area shape="rect" id="node5" href="$_mock_focus_manager_observer_8h.html" title=" " alt="" coords="245,252,456,291"/>
-<area shape="rect" id="node11" href="$_focus_manager_8h.html" title=" " alt="" coords="1192,105,1352,131"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1336,499,1390,524"/>
-<area shape="rect" id="node6" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="856,339,1088,377"/>
-<area shape="rect" id="node7" title=" " alt="" coords="5,345,120,371"/>
-<area shape="rect" id="node8" title=" " alt="" coords="1112,345,1174,371"/>
-<area shape="rect" id="node9" title=" " alt="" coords="145,345,202,371"/>
-<area shape="rect" id="node10" title=" " alt="" coords="226,345,355,371"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1326,179,1373,204"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1499,179,1538,204"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1562,179,1678,204"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1702,179,1810,204"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1194,259,1252,284"/>
-<area shape="rect" id="node17" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="1472,339,1664,377"/>
-<area shape="rect" id="node18" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="979,252,1170,291"/>
-<area shape="rect" id="node21" href="$_channel_8h.html" title=" " alt="" coords="1302,259,1423,284"/>
-<area shape="rect" id="node22" href="$_activity_tracker_interface_8h.html" title=" " alt="" coords="1091,179,1301,204"/>
-<area shape="rect" id="node23" href="$_executor_8h.html" title=" " alt="" coords="491,252,685,291"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1198,345,1253,371"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1328,345,1397,371"/>
-<area shape="rect" id="node24" title=" " alt="" coords="402,425,462,451"/>
-<area shape="rect" id="node25" title=" " alt="" coords="480,345,539,371"/>
-<area shape="rect" id="node26" title=" " alt="" coords="563,425,642,451"/>
-<area shape="rect" id="node27" title=" " alt="" coords="562,345,614,371"/>
-<area shape="rect" id="node28" href="$_task_thread_8h.html" title=" " alt="" coords="637,339,832,377"/>
-<area shape="rect" id="node29" title=" " alt="" coords="705,425,764,451"/>
+<area shape="rect" id="node1" title=" " alt="" coords="182,5,385,57"/>
+<area shape="rect" id="node2" title=" " alt="" coords="323,845,393,871"/>
+<area shape="rect" id="node3" title=" " alt="" coords="43,105,137,131"/>
+<area shape="rect" id="node4" href="$_focus_state_8h.html" title=" " alt="" coords="1086,592,1299,617"/>
+<area shape="rect" id="node7" href="$_mock_focus_manager_observer_8h.html" title=" " alt="" coords="1454,412,1665,451"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title=" " alt="" coords="370,585,584,624"/>
+<area shape="rect" id="node19" href="$_focus_manager_8h.html" title=" " alt="" coords="1167,105,1327,131"/>
+<area shape="rect" id="node50" href="$_interrupt_model_8h.html" title=" " alt="" coords="203,412,364,451"/>
+<area shape="rect" id="node5" title=" " alt="" coords="2105,679,2174,704"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1006,765,1060,791"/>
+<area shape="rect" id="node8" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="1091,499,1323,537"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1449,505,1563,531"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1452,679,1514,704"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1657,679,1715,704"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1920,505,2049,531"/>
+<area shape="rect" id="node14" title=" " alt="" coords="594,679,658,704"/>
+<area shape="rect" id="node15" title=" " alt="" coords="787,765,860,791"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2702,679,2742,704"/>
+<area shape="rect" id="node17" title=" " alt="" coords="2821,845,2879,871"/>
+<area shape="rect" id="node18" title=" " alt="" coords="421,679,570,704"/>
+<area shape="rect" id="node20" title=" " alt="" coords="3131,679,3207,704"/>
+<area shape="rect" id="node21" title=" " alt="" coords="305,505,352,531"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1008,179,1124,204"/>
+<area shape="rect" id="node23" title=" " alt="" coords="1148,179,1256,204"/>
+<area shape="rect" id="node24" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="723,499,916,537"/>
+<area shape="rect" id="node26" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="1107,412,1297,451"/>
+<area shape="rect" id="node29" href="$_channel_8h.html" title=" " alt="" coords="911,252,1032,277"/>
+<area shape="rect" id="node45" href="$_activity_tracker_interface_8h.html" title=" " alt="" coords="1330,179,1541,204"/>
+<area shape="rect" id="node46" href="$_executor_8h.html" title=" " alt="" coords="2475,412,2670,451"/>
+<area shape="rect" id="node25" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="608,592,844,617"/>
+<area shape="rect" id="node27" title=" " alt="" coords="1841,505,1896,531"/>
+<area shape="rect" id="node28" href="$_content_type_8h.html" title=" " alt="" coords="428,505,649,531"/>
+<area shape="rect" id="node30" title=" " alt="" coords="1009,332,1048,357"/>
+<area shape="rect" id="node31" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="2148,325,2322,364"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2766,679,2844,704"/>
+<area shape="rect" id="node33" title=" " alt="" coords="2939,592,2998,617"/>
+<area shape="rect" id="node34" href="$_logger_utils_8h.html" title=" " alt="" coords="2147,412,2323,451"/>
+<area shape="rect" id="node35" href="$_logger_8h.html" title=" " alt="" coords="2225,499,2401,537"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2854,592,2915,617"/>
+<area shape="rect" id="node37" href="$_level_8h.html" title=" " alt="" coords="1822,672,1998,711"/>
+<area shape="rect" id="node38" href="$_log_entry_8h.html" title=" " alt="" coords="2350,585,2526,624"/>
+<area shape="rect" id="node43" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1926,585,2123,624"/>
+<area shape="rect" id="node44" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1555,759,1731,797"/>
+<area shape="rect" id="node39" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2401,672,2577,711"/>
+<area shape="rect" id="node40" title=" " alt="" coords="2507,765,2577,791"/>
+<area shape="rect" id="node41" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="2307,759,2483,797"/>
+<area shape="rect" id="node42" title=" " alt="" coords="2355,845,2436,871"/>
+<area shape="rect" id="node47" title=" " alt="" coords="2972,505,3030,531"/>
+<area shape="rect" id="node48" title=" " alt="" coords="2896,505,2948,531"/>
+<area shape="rect" id="node49" href="$_task_thread_8h.html" title=" " alt="" coords="2627,499,2822,537"/>
 </map>

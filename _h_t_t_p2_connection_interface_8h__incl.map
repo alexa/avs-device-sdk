@@ -1,9 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="329,5,573,71"/>
+<area shape="rect" id="node1" title=" " alt="" coords="430,5,674,71"/>
 <area shape="rect" id="node2" title=" " alt="" coords="8,205,78,231"/>
 <area shape="rect" id="node3" href="$_h_t_t_p2_request_config_8h.html" title=" " alt="" coords="464,119,641,157"/>
 <area shape="rect" id="node8" href="$_h_t_t_p2_request_type_8h.html" title=" " alt="" coords="904,205,1057,231"/>
 <area shape="rect" id="node18" href="$_h_t_t_p2_request_interface_8h.html" title=" " alt="" coords="241,119,421,157"/>
+<area shape="rect" id="node19" href="$_h_t_t_p2_connection_observer_interface_8h.html" title=" " alt="" coords="715,119,968,157"/>
 <area shape="rect" id="node4" title=" " alt="" coords="769,205,829,231"/>
 <area shape="rect" id="node5" title=" " alt="" coords="683,205,745,231"/>
 <area shape="rect" id="node6" title=" " alt="" coords="684,285,744,311"/>

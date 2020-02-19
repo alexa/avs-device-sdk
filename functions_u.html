@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,6 +76,9 @@ $(function() {
 <li>uncertaintyInMilliseconds
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_state.html#ae19a867152c3293320d84d9bd0a7953d">alexaClientSDK::avsCommon::avs::CapabilityState</a>
 </li>
+<li>UNDEFINED_CLASS_VALUE
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface_1_1_meta_data.html#a4cae5f573f1dbbf5920df4a40c3aabba">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData</a>
+</li>
 <li>uninitialize()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#ab3e4092a8f0c1ebb450bd3e26aacf268">alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#ab0e1ced7faffb2d9e327e547c3397b01">alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode</a>
@@ -89,8 +92,15 @@ $(function() {
 <li>unlock()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_mutex.html#adce300dbdbed8bedf40d3cb98608980f">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::Mutex</a>
 </li>
+<li>unmuteCommsCall()
+: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ad29388088427e450ede3bf10d51de857">alexaClientSDK::defaultClient::DefaultClient</a>
+</li>
+<li>unmuteSelf()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html#a633b51cae428816eb630ae2b5b7a909c">alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface</a>
+</li>
 <li>unpair()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html#a5e9658346c32e6cbbba9fdb13ea1f4f9">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device.html#a3b9a4e7782bc5274eee85f5ca8260519">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::test::MockBluetoothDevice</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html#a59c935793205a68d5c918c613cb767b8">alexaClientSDK::bluetoothImplementations::blueZ::BlueZBluetoothDevice</a>
 </li>
 <li>unPause()
@@ -109,6 +119,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html#a3e43fc370aff3f4ae622807c1486b93a">alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_stub_misc_storage.html#aeea128c21ba1d8b3931da4517067c6ac">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::StubMiscStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#ada59b7e5cc45132641e12d835bdbf8bc">alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage</a>
+</li>
+<li>updateByCategory()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth_storage_interface.html#a67b7899206e5c07df658cd56319a41d9">alexaClientSDK::capabilityAgents::bluetooth::BluetoothStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html#a0fa723230a7f8466951a998bc94b75f7">alexaClientSDK::capabilityAgents::bluetooth::SQLiteBluetoothStorage</a>
 </li>
 <li>updateConnectionStatus()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html#a927b060a79b82d8f52710352d858d763">alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager</a>
@@ -161,13 +175,16 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a2_d_p_source_interface.html#a490a0cb102f73319b42b669b87658152">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::A2DPSourceInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_controller_interface.html#a0ce09cae8c766fb2d4b6f5b381ec5269">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::AVRCPControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_a_v_r_c_p_target_interface.html#a7308563e209aa3146c740dd26a62789d">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::AVRCPTargetInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_h_f_p_interface.html#aff52990027f85e72a24e4053620affa1">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::HFPInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_h_i_d_interface.html#addb9b943293e3f41f24ba5e22ee4e027">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::HIDInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_p_p_interface.html#a07d6b14a936de0addf007eb9a6c0d7da">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::services::SPPInterface</a>
 </li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

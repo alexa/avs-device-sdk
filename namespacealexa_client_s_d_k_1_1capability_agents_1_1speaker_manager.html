@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -93,6 +93,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#ac8dcdcb036a00615ef8b5652254bc25c">withinBounds</a> (T value, T min, T max)</td></tr>
 <tr class="separator:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6e41c384143eebb942421ef855e70a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a8b6e41c384143eebb942421ef855e70a">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, int count)</td></tr>
+<tr class="separator:a8b6e41c384143eebb942421ef855e70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1e5526da4f88815d1f97dea9529602c"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#ad1e5526da4f88815d1f97dea9529602c">getSpeakerCapabilityConfiguration</a> ()</td></tr>
 <tr class="separator:ad1e5526da4f88815d1f97dea9529602c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -136,6 +138,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a0dbcac71a8e2111776065fa2070fbaf1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a0dbcac71a8e2111776065fa2070fbaf1">SPEAKER_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.0&quot;</td></tr>
 <tr class="memdesc:a0dbcac71a8e2111776065fa2070fbaf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Speaker interface version.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a0dbcac71a8e2111776065fa2070fbaf1">More...</a><br /></td></tr>
 <tr class="separator:a0dbcac71a8e2111776065fa2070fbaf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf71fcf5f10be7116e07c3f6afd318b6"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#acf71fcf5f10be7116e07c3f6afd318b6">DEFAULT_RETRY_TABLE</a></td></tr>
+<tr class="memdesc:acf71fcf5f10be7116e07c3f6afd318b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry timeout table.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#acf71fcf5f10be7116e07c3f6afd318b6">More...</a><br /></td></tr>
+<tr class="separator:acf71fcf5f10be7116e07c3f6afd318b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90a7290dd751d5a441bfc0073f8a828f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a90a7290dd751d5a441bfc0073f8a828f">TAG</a> {&quot;SpeakerManager&quot;}</td></tr>
 <tr class="memdesc:a90a7290dd751d5a441bfc0073f8a828f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a90a7290dd751d5a441bfc0073f8a828f">More...</a><br /></td></tr>
 <tr class="separator:a90a7290dd751d5a441bfc0073f8a828f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,6 +176,48 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Creates the Speaker capability configuration.</p>
 <dl class="section return"><dt>Returns</dt><dd>The Speaker capability configuration. </dd></dl>
+
+</div>
+</div>
+<a id="a8b6e41c384143eebb942421ef855e70a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b6e41c384143eebb942421ef855e70a">&#9670;&nbsp;</a></span>submitMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::capabilityAgents::speakerManager::submitMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -241,6 +288,33 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p>The <code>AdjustVolume</code> directive identifier. </p>
+
+</div>
+</div>
+<a id="acf71fcf5f10be7116e07c3f6afd318b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf71fcf5f10be7116e07c3f6afd318b6">&#9670;&nbsp;</a></span>DEFAULT_RETRY_TABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;int&gt; alexaClientSDK::capabilityAgents::speakerManager::DEFAULT_RETRY_TABLE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {std::chrono::milliseconds(10).count(),</div>
+<div class="line">                                                     std::chrono::milliseconds(20).count(),</div>
+<div class="line">                                                     std::chrono::milliseconds(40).count()}</div>
+</div><!-- fragment -->
+<p>Retry timeout table. </p>
 
 </div>
 </div>
@@ -535,7 +609,7 @@ template&lt;class T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

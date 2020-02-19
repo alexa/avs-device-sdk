@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -110,6 +110,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a395ce0d1bd6be8c087b0d64c4c480768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cc607975f68f3e56702d95cd6bb3e83"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#a6cc607975f68f3e56702d95cd6bb3e83">setGatewayURL</a> (const std::string &amp;avsGatewayURL) override</td></tr>
 <tr class="separator:a6cc607975f68f3e56702d95cd6bb3e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b7c8945d8ded8f695c1caa33c7c2ef5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#a9b7c8945d8ded8f695c1caa33c7c2ef5">addObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html">avsCommon::sdkInterfaces::AVSGatewayObserverInterface</a> &gt; observer) override</td></tr>
+<tr class="separator:a9b7c8945d8ded8f695c1caa33c7c2ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c9256b05c53cd331634716d2b61adc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#a14c9256b05c53cd331634716d2b61adc">removeObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html">avsCommon::sdkInterfaces::AVSGatewayObserverInterface</a> &gt; observer) override</td></tr>
+<tr class="separator:a14c9256b05c53cd331634716d2b61adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">PostConnectOperationProviderInterface Functions</div></td></tr>
 <tr class="memitem:ab844529c6ce97dfbe902b9d559dc8add"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_interface.html">avsCommon::sdkInterfaces::PostConnectOperationInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#ab844529c6ce97dfbe902b9d559dc8add">createPostConnectOperation</a> () override</td></tr>
 <tr class="separator:ab844529c6ce97dfbe902b9d559dc8add"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +142,41 @@ Static Public Member Functions</h2></td></tr>
 <p>It also provides a method to execute the gateway verification sequence by creating the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_post_connect_verify_gateway_sender.html">PostConnectVerifyGatewaySender</a></code>. Before establishing connection with AVS, clients must send the VerifyGateway event. If the response to this event is a 204 the client is connected to the right endpoint. If the response is 200, the client must connect to the new endpoint sent in the SetGateway directive.</p>
 <p>Note that the AVS gateway verification sequence should be performed only on fresh devices or after a factory reset. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9b7c8945d8ded8f695c1caa33c7c2ef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b7c8945d8ded8f695c1caa33c7c2ef5">&#9670;&nbsp;</a></span>addObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::avsGatewayManager::AVSGatewayManager::addObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html">avsCommon::sdkInterfaces::AVSGatewayObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Adds an observer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The <code>AVSGatewayObserver</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#ade1535c8c8bc5cb9fe65db869988a23d">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a>.</p>
+
+</div>
+</div>
 <a id="aa866a480e29489bbfcb47f4ccee9a366"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa866a480e29489bbfcb47f4ccee9a366">&#9670;&nbsp;</a></span>clearData()</h2>
 
@@ -208,7 +247,7 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code> </p><dl class="section return"><dt>Returns</dt><dd>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code>.</dd></dl>
+<p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">avsGatewayManagerStorage</td><td>The <code>AVSGatewayManagerInterface</code> to store avs gateway information. </td></tr>
@@ -274,6 +313,41 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a14c9256b05c53cd331634716d2b61adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14c9256b05c53cd331634716d2b61adc">&#9670;&nbsp;</a></span>removeObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::avsGatewayManager::AVSGatewayManager::removeObserver </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html">avsCommon::sdkInterfaces::AVSGatewayObserverInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Removes an observer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The <code>AVSGatewayObserver</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html#adc0edd7f9588a62b8f0ba5413d7af416">alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a>.</p>
 
 </div>
 </div>
@@ -357,7 +431,7 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

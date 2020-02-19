@@ -1,7 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/include/Bluetooth/Bluetooth.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Bluetooth/include/Bluetooth/Bluetooth.h">
-<area shape="rect" id="node1" title=" " alt="" coords="365,5,553,71"/>
+<area shape="rect" id="node1" title=" " alt="" coords="481,5,669,71"/>
 <area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="229,119,457,184"/>
 <area shape="rect" id="node13" href="$_bluetooth_8cpp.html" title=" " alt="" coords="481,125,669,177"/>
+<area shape="rect" id="node14" href="$_bluetooth_test_8cpp.html" title=" " alt="" coords="693,125,910,177"/>
 <area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="77,232,305,284"/>
 <area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="230,332,453,384"/>
 <area shape="rect" id="node11" href="$_keyword_observer_8h.html" title=" " alt="" coords="382,232,597,284"/>

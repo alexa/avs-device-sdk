@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,8 +82,9 @@ Inheritance diagram for alexaClientSDK::capabilityAgents::bluetooth::test::SQLit
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test_inherit__map" id="alexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,79,202,131"/>
-<area shape="rect" title=" " alt="" coords="81,5,127,31"/>
+<area shape="rect" title=" " alt="" coords="99,5,296,57"/>
+<area shape="rect" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_parameterized_tests.html" title="Parameterized tests to test both migrated and newly created databases." alt="" coords="344,5,634,57"/>
+<area shape="rect" title=" " alt="" coords="5,19,51,44"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -110,18 +111,29 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a132aa9fa6755733b796407926b2dda95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a132aa9fa6755733b796407926b2dda95">closeAndDeleteDB</a> ()</td></tr>
 <tr class="memdesc:a132aa9fa6755733b796407926b2dda95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleanup function to close and delete the database.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a132aa9fa6755733b796407926b2dda95">More...</a><br /></td></tr>
 <tr class="separator:a132aa9fa6755733b796407926b2dda95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22903fd4f43497aef65b659dccbfc17d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a22903fd4f43497aef65b659dccbfc17d">createLegacyDatabase</a> ()</td></tr>
+<tr class="memdesc:a22903fd4f43497aef65b659dccbfc17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to create legacy database.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a22903fd4f43497aef65b659dccbfc17d">More...</a><br /></td></tr>
+<tr class="separator:a22903fd4f43497aef65b659dccbfc17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d46e7821ce51e59c2f2b129cf81879d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a6d46e7821ce51e59c2f2b129cf81879d">insertEntryLegacy</a> (const std::string &amp;uuid, const std::string &amp;mac)</td></tr>
+<tr class="memdesc:a6d46e7821ce51e59c2f2b129cf81879d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert Entry for legacy database.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a6d46e7821ce51e59c2f2b129cf81879d">More...</a><br /></td></tr>
+<tr class="separator:a6d46e7821ce51e59c2f2b129cf81879d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8996bffab771996a3ed0d3957e46a39"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#ae8996bffab771996a3ed0d3957e46a39">setupDatabase</a> (bool migratedDatabase)</td></tr>
+<tr class="separator:ae8996bffab771996a3ed0d3957e46a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c46f9ac614a37d01007f0f2549df2f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a9c46f9ac614a37d01007f0f2549df2f6">getOrderedMacHelper</a> (bool ascending)</td></tr>
 <tr class="separator:a9c46f9ac614a37d01007f0f2549df2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8177c031fa24257464793a06b0c91804"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a8177c031fa24257464793a06b0c91804">getRowsHelper</a> (std::function&lt; bool(<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html">SQLiteBluetoothStorage</a> &amp;, std::unordered_map&lt; std::string, std::string &gt; *)&gt; retrieveRows, const std::unordered_map&lt; std::string, std::string &gt; &amp;macToUuids, const std::unordered_map&lt; std::string, std::string &gt; &amp;expected)</td></tr>
 <tr class="separator:a8177c031fa24257464793a06b0c91804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84478fd1c8457f67a1ce1b41242fad2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#af84478fd1c8457f67a1ce1b41242fad2">getMacOrUuidHelper</a> (std::function&lt; bool(<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html">SQLiteBluetoothStorage</a> &amp;, const std::string &amp;, std::string *)&gt; retrieveValue, const std::string &amp;key, const std::string &amp;expectedValue, const std::unordered_map&lt; std::string, std::string &gt; &amp;macToUuids)</td></tr>
-<tr class="separator:af84478fd1c8457f67a1ce1b41242fad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed101f005564e653f7672f5ea09bce41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#aed101f005564e653f7672f5ea09bce41">getRetrieveValueHelper</a> (std::function&lt; bool(<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html">SQLiteBluetoothStorage</a> &amp;, const std::string &amp;, std::string *)&gt; retrieveValue, const std::string &amp;key, const std::string &amp;expectedValue, const std::unordered_map&lt; std::string, std::string &gt; &amp;macToUuids)</td></tr>
+<tr class="separator:aed101f005564e653f7672f5ea09bce41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a4ed058af60c53e5bf82f6e92d5776749"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html">SQLiteBluetoothStorage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a4ed058af60c53e5bf82f6e92d5776749">m_db</a></td></tr>
 <tr class="memdesc:a4ed058af60c53e5bf82f6e92d5776749"><td class="mdescLeft">&#160;</td><td class="mdescRight">The database instance. Protected because it needs to be accessed in test cases.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a4ed058af60c53e5bf82f6e92d5776749">More...</a><br /></td></tr>
 <tr class="separator:a4ed058af60c53e5bf82f6e92d5776749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010e0e9b2c33fde6f78e4197144e1181"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">alexaClientSDK::storage::sqliteStorage::SQLiteDatabase</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a010e0e9b2c33fde6f78e4197144e1181">m_sqLiteDb</a></td></tr>
+<tr class="memdesc:a010e0e9b2c33fde6f78e4197144e1181"><td class="mdescLeft">&#160;</td><td class="mdescRight">SQLiteDatabase instance.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html#a010e0e9b2c33fde6f78e4197144e1181">More...</a><br /></td></tr>
+<tr class="separator:a010e0e9b2c33fde6f78e4197144e1181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a132aa9fa6755733b796407926b2dda95"></a>
@@ -151,8 +163,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af84478fd1c8457f67a1ce1b41242fad2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af84478fd1c8457f67a1ce1b41242fad2">&#9670;&nbsp;</a></span>getMacOrUuidHelper()</h2>
+<a id="a22903fd4f43497aef65b659dccbfc17d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22903fd4f43497aef65b659dccbfc17d">&#9670;&nbsp;</a></span>createLegacyDatabase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,7 +173,67 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::getMacOrUuidHelper </td>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::createLegacyDatabase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to create legacy database. </p>
+
+</div>
+</div>
+<a id="a9c46f9ac614a37d01007f0f2549df2f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c46f9ac614a37d01007f0f2549df2f6">&#9670;&nbsp;</a></span>getOrderedMacHelper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::getOrderedMacHelper </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ascending</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function that abstracts the test logic for getOrderedMac teste cases.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ascending</td><td>Whether we're testing the ascending or descending case. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aed101f005564e653f7672f5ea09bce41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed101f005564e653f7672f5ea09bce41">&#9670;&nbsp;</a></span>getRetrieveValueHelper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::getRetrieveValueHelper </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; bool(<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_s_q_lite_bluetooth_storage.html">SQLiteBluetoothStorage</a> &amp;, const std::string &amp;, std::string *)&gt;&#160;</td>
           <td class="paramname"><em>retrieveValue</em>, </td>
@@ -196,46 +268,13 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Helper function that abstracts the logic for getMac and getUuid test cases.</p>
+<p>Helper function that abstracts the logic for insertByMac given a macToUuids map and verifies the expected value with the one returned by the retrieveValue function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">retrieveValue</td><td>Either the getMac or getUuid function. </td></tr>
+    <tr><td class="paramname">retrieveValue</td><td>function to retrieve value from database (getMac/getUuid/getCategory). </td></tr>
     <tr><td class="paramname">key</td><td>The key (either the mac or uuid). </td></tr>
-    <tr><td class="paramname">expectedValue</td><td>The expected value (either the mac or uuid). </td></tr>
+    <tr><td class="paramname">expectedValue</td><td>The expected value from the given retrieveValue function call. </td></tr>
     <tr><td class="paramname">macToUuids</td><td>A map of macToUuids to initialize the database with. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9c46f9ac614a37d01007f0f2549df2f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c46f9ac614a37d01007f0f2549df2f6">&#9670;&nbsp;</a></span>getOrderedMacHelper()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::getOrderedMacHelper </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>ascending</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Helper function that abstracts the test logic for getOrderedMac teste cases.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ascending</td><td>Whether we're testing the ascending or descending case. </td></tr>
   </table>
   </dd>
 </dl>
@@ -277,6 +316,44 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6d46e7821ce51e59c2f2b129cf81879d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d46e7821ce51e59c2f2b129cf81879d">&#9670;&nbsp;</a></span>insertEntryLegacy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::insertEntryLegacy </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>uuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>mac</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Insert Entry for legacy database. </p>
+
+</div>
+</div>
 <a id="af22384f6aceefd1e268dcc8a20a99aa1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af22384f6aceefd1e268dcc8a20a99aa1">&#9670;&nbsp;</a></span>SetUp()</h2>
 
@@ -293,6 +370,40 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>SetUp before each test case. </p>
+
+</div>
+</div>
+<a id="ae8996bffab771996a3ed0d3957e46a39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8996bffab771996a3ed0d3957e46a39">&#9670;&nbsp;</a></span>setupDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::setupDatabase </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>migratedDatabase</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function to setup database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">migrated</td><td>Whether using migrated database. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Whether database setup successful. </dd></dl>
 
 </div>
 </div>
@@ -340,6 +451,30 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a010e0e9b2c33fde6f78e4197144e1181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a010e0e9b2c33fde6f78e4197144e1181">&#9670;&nbsp;</a></span>m_sqLiteDb</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">alexaClientSDK::storage::sqliteStorage::SQLiteDatabase</a>&gt; alexaClientSDK::capabilityAgents::bluetooth::test::SQLiteBluetoothStorageTest::m_sqLiteDb</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>SQLiteDatabase instance. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/CapabilityAgents/Bluetooth/test/<a class="el" href="_s_q_lite_bluetooth_storage_test_8cpp.html">SQLiteBluetoothStorageTest.cpp</a></li>
 </ul>
@@ -347,7 +482,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

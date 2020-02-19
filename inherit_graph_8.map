@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1afml_1_1_channel.html" title=" " alt="" coords="5,5,153,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_factory_interface.html" title=" " alt="" coords="5,37,187,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport_factory.html" title=" " alt="" coords="244,5,416,44"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_transport_factory.html" title=" " alt="" coords="235,68,425,107"/>
 </map>

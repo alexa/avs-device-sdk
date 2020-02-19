@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.17.0</span>
+   &#160;<span id="projectnumber">1.18.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,9 +76,10 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_h_t_t_p2_mime_request_source_interface_8h_source.html">AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_exchange_handler_8h_source.html">ACL/Transport/ExchangeHandler.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_message_consumer_interface_8h_source.html">ACL/Transport/MessageConsumerInterface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mime_response_status_handler_interface_8h_source.html">ACL/Transport/MimeResponseStatusHandlerInterface.h</a>&quot;</code><br />
@@ -87,56 +88,56 @@ Include dependency graph for MessageRequestHandler.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_message_request_handler_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_message_request_handler_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_message_request_handler_8h" id="_2workplace_2avs-device-sdk_2_a_c_l_2include_2_a_c_l_2_transport_2_message_request_handler_8h">
-<area shape="rect" title=" " alt="" coords="2905,5,3151,57"/>
-<area shape="rect" title=" " alt="" coords="2768,805,2837,831"/>
-<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="309,632,558,657"/>
-<area shape="rect" href="_attachment_manager_8h.html" title=" " alt="" coords="2599,105,2801,144"/>
-<area shape="rect" href="_h_t_t_p2_mime_request_source_interface_8h.html" title=" " alt="" coords="4255,625,4510,664"/>
-<area shape="rect" href="_exchange_handler_8h.html" title=" " alt="" coords="3035,372,3263,397"/>
-<area shape="rect" href="_message_consumer_interface_8h.html" title=" " alt="" coords="2764,279,2990,317"/>
-<area shape="rect" href="_mime_response_status_handler_interface_8h.html" title=" " alt="" coords="3067,625,3271,664"/>
-<area shape="rect" title=" " alt="" coords="45,719,104,744"/>
-<area shape="rect" title=" " alt="" coords="683,805,741,831"/>
-<area shape="rect" title=" " alt="" coords="2859,885,2913,911"/>
-<area shape="rect" title=" " alt="" coords="178,719,285,744"/>
-<area shape="rect" title=" " alt="" coords="2068,805,2126,831"/>
-<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="2436,712,2638,751"/>
-<area shape="rect" href="_message_request_observer_interface_8h.html" title=" " alt="" coords="310,712,556,751"/>
-<area shape="rect" title=" " alt="" coords="1103,805,1165,831"/>
-<area shape="rect" title=" " alt="" coords="4086,805,4151,831"/>
-<area shape="rect" title=" " alt="" coords="3296,805,3365,831"/>
-<area shape="rect" href="_reader_policy_8h.html" title=" " alt="" coords="289,799,451,837"/>
-<area shape="rect" title=" " alt="" coords="491,805,564,831"/>
-<area shape="rect" title=" " alt="" coords="2721,199,2836,224"/>
-<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="2489,192,2697,231"/>
-<area shape="rect" href="_attachment_8h.html" title=" " alt="" coords="2010,279,2211,317"/>
-<area shape="rect" href="_attachment_writer_8h.html" title=" " alt="" coords="2386,452,2587,491"/>
-<area shape="rect" title=" " alt="" coords="985,719,1046,744"/>
-<area shape="rect" href="_in_process_s_d_s_8h.html" title=" " alt="" coords="1911,365,2073,404"/>
-<area shape="rect" href="_writer_policy_8h.html" title=" " alt="" coords="2148,365,2310,404"/>
-<area shape="rect" title=" " alt="" coords="2131,459,2260,484"/>
-<area shape="rect" href="_shared_data_stream_8h.html" title=" " alt="" coords="2814,459,2961,484"/>
-<area shape="rect" title=" " alt="" coords="3835,719,3895,744"/>
-<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="1382,539,1558,577"/>
-<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="1382,625,1558,664"/>
-<area shape="rect" title=" " alt="" coords="1228,805,1297,831"/>
-<area shape="rect" href="_configuration_node_8h.html" title=" " alt="" coords="1473,712,1687,751"/>
-<area shape="rect" href="_level_8h.html" title=" " alt="" coords="1822,799,1998,837"/>
-<area shape="rect" href="_log_entry_8h.html" title=" " alt="" coords="1273,712,1449,751"/>
-<area shape="rect" href="_log_level_observer_interface_8h.html" title=" " alt="" coords="1812,712,2009,751"/>
-<area shape="rect" href="_sink_observer_interface_8h.html" title=" " alt="" coords="2185,712,2361,751"/>
-<area shape="rect" title=" " alt="" coords="1560,805,1599,831"/>
-<area shape="rect" href="_h_t_t_p2_get_mime_headers_result_8h.html" title=" " alt="" coords="4473,712,4694,751"/>
-<area shape="rect" href="_h_t_t_p2_send_data_result_8h.html" title=" " alt="" coords="4273,712,4449,751"/>
-<area shape="rect" href="_h_t_t_p2_send_status_8h.html" title=" " alt="" coords="4297,799,4473,837"/>
-<area shape="rect" href="_exchange_handler_context_interface_8h.html" title=" " alt="" coords="3294,452,3511,491"/>
-<area shape="rect" href="_h_t_t_p2_request_config_8h.html" title=" " alt="" coords="3345,539,3521,577"/>
-<area shape="rect" href="_h_t_t_p2_request_interface_8h.html" title=" " alt="" coords="3859,539,4039,577"/>
-<area shape="rect" href="_h_t_t_p2_request_type_8h.html" title=" " alt="" coords="3344,632,3498,657"/>
-<area shape="rect" href="_h_t_t_p2_request_source_interface_8h.html" title=" " alt="" coords="3910,632,4129,657"/>
-<area shape="rect" href="_h_t_t_p2_response_sink_interface_8h.html" title=" " alt="" coords="3521,632,3734,657"/>
-<area shape="rect" href="_h_t_t_p2_receive_data_status_8h.html" title=" " alt="" coords="3518,712,3711,751"/>
-<area shape="rect" href="_h_t_t_p2_response_finished_status_8h.html" title=" " alt="" coords="3217,712,3444,751"/>
+<area shape="rect" title=" " alt="" coords="1214,5,1460,57"/>
+<area shape="rect" title=" " alt="" coords="1316,545,1385,571"/>
+<area shape="rect" href="_attachment_manager_8h.html" title=" " alt="" coords="770,105,971,144"/>
+<area shape="rect" href="_message_request_8h.html" title=" " alt="" coords="831,459,1081,484"/>
+<area shape="rect" href="_h_t_t_p2_mime_request_source_interface_8h.html" title=" " alt="" coords="3670,365,3925,404"/>
+<area shape="rect" href="_metric_recorder_interface_8h.html" title=" " alt="" coords="2652,105,2831,144"/>
+<area shape="rect" href="_exchange_handler_8h.html" title=" " alt="" coords="1400,199,1627,224"/>
+<area shape="rect" href="_message_consumer_interface_8h.html" title=" " alt="" coords="1048,192,1275,231"/>
+<area shape="rect" href="_mime_response_status_handler_interface_8h.html" title=" " alt="" coords="1858,452,2062,491"/>
+<area shape="rect" title=" " alt="" coords="78,712,135,737"/>
+<area shape="rect" title=" " alt="" coords="2920,459,3035,484"/>
+<area shape="rect" href="_attachment_manager_interface_8h.html" title=" " alt="" coords="751,192,959,231"/>
+<area shape="rect" title=" " alt="" coords="516,712,578,737"/>
+<area shape="rect" title=" " alt="" coords="2537,545,2591,571"/>
+<area shape="rect" href="_attachment_8h.html" title=" " alt="" coords="430,279,631,317"/>
+<area shape="rect" href="_attachment_reader_8h.html" title=" " alt="" coords="251,539,453,577"/>
+<area shape="rect" href="_attachment_writer_8h.html" title=" " alt="" coords="754,365,955,404"/>
+<area shape="rect" title=" " alt="" coords="662,712,722,737"/>
+<area shape="rect" href="_reader_policy_8h.html" title=" " alt="" coords="195,625,357,664"/>
+<area shape="rect" href="_in_process_s_d_s_8h.html" title=" " alt="" coords="568,365,730,404"/>
+<area shape="rect" href="_writer_policy_8h.html" title=" " alt="" coords="331,365,493,404"/>
+<area shape="rect" title=" " alt="" coords="2061,632,2125,657"/>
+<area shape="rect" title=" " alt="" coords="1740,632,1809,657"/>
+<area shape="rect" title=" " alt="" coords="2758,712,2815,737"/>
+<area shape="rect" title=" " alt="" coords="477,459,606,484"/>
+<area shape="rect" href="_shared_data_stream_8h.html" title=" " alt="" coords="1460,459,1607,484"/>
+<area shape="rect" title=" " alt="" coords="2347,545,2407,571"/>
+<area shape="rect" href="_logger_utils_8h.html" title=" " alt="" coords="1460,539,1636,577"/>
+<area shape="rect" href="_logger_8h.html" title=" " alt="" coords="736,625,912,664"/>
+<area shape="rect" title=" " alt="" coords="790,712,858,737"/>
+<area shape="rect" title=" " alt="" coords="781,545,840,571"/>
+<area shape="rect" title=" " alt="" coords="864,545,971,571"/>
+<area shape="rect" href="_message_request_observer_interface_8h.html" title=" " alt="" coords="1045,539,1291,577"/>
+<area shape="rect" title=" " alt="" coords="2864,632,2936,657"/>
+<area shape="rect" href="_h_t_t_p2_get_mime_headers_result_8h.html" title=" " alt="" coords="3886,452,4106,491"/>
+<area shape="rect" href="_h_t_t_p2_send_data_result_8h.html" title=" " alt="" coords="2980,539,3156,577"/>
+<area shape="rect" href="_h_t_t_p2_send_status_8h.html" title=" " alt="" coords="3374,625,3551,664"/>
+<area shape="rect" href="_metric_event_8h.html" title=" " alt="" coords="3174,365,3351,404"/>
+<area shape="rect" href="_data_point_8h.html" title=" " alt="" coords="3279,452,3457,491"/>
+<area shape="rect" href="_priority_8h.html" title=" " alt="" coords="3481,452,3658,491"/>
+<area shape="rect" href="_optional_8h.html" title=" " alt="" coords="3060,459,3255,484"/>
+<area shape="rect" href="_data_type_8h.html" title=" " alt="" coords="3259,539,3437,577"/>
+<area shape="rect" href="_exchange_handler_context_interface_8h.html" title=" " alt="" coords="1866,279,2083,317"/>
+<area shape="rect" href="_h_t_t_p2_request_config_8h.html" title=" " alt="" coords="1886,365,2063,404"/>
+<area shape="rect" href="_h_t_t_p2_request_interface_8h.html" title=" " alt="" coords="2423,365,2603,404"/>
+<area shape="rect" href="_h_t_t_p2_request_type_8h.html" title=" " alt="" coords="1681,459,1834,484"/>
+<area shape="rect" href="_h_t_t_p2_request_source_interface_8h.html" title=" " alt="" coords="2677,459,2896,484"/>
+<area shape="rect" href="_h_t_t_p2_response_sink_interface_8h.html" title=" " alt="" coords="2086,459,2298,484"/>
+<area shape="rect" href="_h_t_t_p2_receive_data_status_8h.html" title=" " alt="" coords="2130,539,2323,577"/>
+<area shape="rect" href="_h_t_t_p2_response_finished_status_8h.html" title=" " alt="" coords="1829,539,2056,577"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -169,7 +170,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.17.0 - Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.18.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

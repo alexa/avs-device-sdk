@@ -1,21 +1,24 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusObjectBase.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusObjectBase.h">
-<area shape="rect" id="node1" title=" " alt="" coords="939,5,1199,57"/>
-<area shape="rect" id="node2" href="$_d_bus_object_8h.html" title=" " alt="" coords="831,105,1061,157"/>
-<area shape="rect" id="node19" href="$_d_bus_object_base_8cpp.html" title=" " alt="" coords="1086,105,1297,157"/>
-<area shape="rect" id="node3" href="$_m_p_r_i_s_player_8h.html" title=" " alt="" coords="696,205,935,257"/>
-<area shape="rect" id="node18" href="$_pairing_agent_8h.html" title=" " alt="" coords="959,205,1195,257"/>
-<area shape="rect" id="node4" href="$_blue_z_device_manager_8h.html" title=" " alt="" coords="894,305,1180,357"/>
-<area shape="rect" id="node15" href="$_m_p_r_i_s_player_8cpp.html" title=" " alt="" coords="5,412,210,464"/>
-<area shape="rect" id="node17" href="$_m_p_r_i_s_player_test_8cpp.html" title=" " alt="" coords="560,305,778,357"/>
-<area shape="rect" id="node5" href="$_blue_z_bluetooth_device_manager_8h.html" title=" " alt="" coords="1619,405,1858,471"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1284,5,1545,57"/>
+<area shape="rect" id="node2" href="$_d_bus_object_8h.html" title=" " alt="" coords="1176,105,1407,157"/>
+<area shape="rect" id="node22" href="$_d_bus_object_base_8cpp.html" title=" " alt="" coords="1431,105,1643,157"/>
+<area shape="rect" id="node3" href="$_m_p_r_i_s_player_8h.html" title=" " alt="" coords="1042,205,1280,257"/>
+<area shape="rect" id="node21" href="$_pairing_agent_8h.html" title=" " alt="" coords="1304,205,1540,257"/>
+<area shape="rect" id="node4" href="$_blue_z_device_manager_8h.html" title=" " alt="" coords="1239,305,1526,357"/>
+<area shape="rect" id="node18" href="$_m_p_r_i_s_player_8cpp.html" title=" " alt="" coords="5,412,210,464"/>
+<area shape="rect" id="node20" href="$_m_p_r_i_s_player_test_8cpp.html" title=" " alt="" coords="905,305,1123,357"/>
+<area shape="rect" id="node5" href="$_blue_z_bluetooth_device_manager_8h.html" title=" " alt="" coords="2303,405,2542,471"/>
 <area shape="rect" id="node7" href="$_media_endpoint_8h.html" title=" " alt="" coords="285,412,533,464"/>
-<area shape="rect" id="node8" href="$_blue_z_a2_d_p_source_8cpp.html" title=" " alt="" coords="982,519,1204,571"/>
+<area shape="rect" id="node8" href="$_blue_z_a2_d_p_source_8cpp.html" title=" " alt="" coords="1324,519,1547,571"/>
 <area shape="rect" id="node9" href="$_blue_z_device_manager_8cpp.html" title=" " alt="" coords="129,519,366,571"/>
 <area shape="rect" id="node11" href="$_blue_z_a2_d_p_sink_8cpp.html" title=" " alt="" coords="557,412,762,464"/>
 <area shape="rect" id="node12" href="$_blue_z_bluetooth_device_8cpp.html" title=" " alt="" coords="786,412,1029,464"/>
-<area shape="rect" id="node13" href="$_blue_z_host_controller_8cpp.html" title=" " alt="" coords="1053,412,1282,464"/>
-<area shape="rect" id="node14" href="$_d_bus_properties_proxy_8cpp.html" title=" " alt="" coords="1307,412,1543,464"/>
-<area shape="rect" id="node16" href="$_pairing_agent_8cpp.html" title=" " alt="" coords="1881,412,2086,464"/>
-<area shape="rect" id="node6" href="$_blue_z_bluetooth_device_manager_8cpp.html" title=" " alt="" coords="1591,519,1885,571"/>
+<area shape="rect" id="node13" href="$_blue_z_h_f_p_8cpp.html" title=" " alt="" coords="1052,412,1256,464"/>
+<area shape="rect" id="node14" href="$_blue_z_h_i_d_8cpp.html" title=" " alt="" coords="1280,412,1484,464"/>
+<area shape="rect" id="node15" href="$_blue_z_host_controller_8cpp.html" title=" " alt="" coords="1509,412,1738,464"/>
+<area shape="rect" id="node16" href="$_blue_z_s_p_p_8cpp.html" title=" " alt="" coords="1763,412,1967,464"/>
+<area shape="rect" id="node17" href="$_d_bus_properties_proxy_8cpp.html" title=" " alt="" coords="1991,412,2227,464"/>
+<area shape="rect" id="node19" href="$_pairing_agent_8cpp.html" title=" " alt="" coords="2565,412,2770,464"/>
+<area shape="rect" id="node6" href="$_blue_z_bluetooth_device_manager_8cpp.html" title=" " alt="" coords="2275,519,2569,571"/>
 <area shape="rect" id="node10" href="$_media_endpoint_8cpp.html" title=" " alt="" coords="391,519,595,571"/>
 </map>
