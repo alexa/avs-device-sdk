@@ -57,7 +57,7 @@ static const std::chrono::seconds TIMEOUT{2};
 /**
  * Converts a pa_context_state_t enum to a string.
  */
-static std::string stateToString(pa_context_state_t state) {
+std::string stateToString(pa_context_state_t state) {
     switch (state) {
         case PA_CONTEXT_UNCONNECTED:
             return "PA_CONTEXT_UNCONNECTED";
@@ -250,6 +250,7 @@ void PulseAudioBluetoothInitializer::onModuleFound(
 
 bool PulseAudioBluetoothInitializer::updateStateLocked(const ModuleState& state, const std::string& module) {
     ModuleState currentState = ModuleState::UNKNOWN;
+    (void)currentState;
 
     if (BLUETOOTH_POLICY == module) {
         currentState = m_policyState;
