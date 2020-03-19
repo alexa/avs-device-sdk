@@ -90,13 +90,18 @@ std::unique_ptr<AndroidSLESObject> AndroidSLESEngine::createAudioRecorder() {
     auto audioSink = AndroidSLESMicrophone::createSinkConfiguration();
     auto audioSource = AndroidSLESMicrophone::createSourceConfiguration();
 
-    constexpr uint32_t interfaceSize = 1;
-    const SLInterfaceID interfaceIDs[interfaceSize] = {SL_IID_ANDROIDSIMPLEBUFFERQUEUE};
-    const SLboolean requiredInterfaces[interfaceSize] = {SL_BOOLEAN_TRUE};
+    constexpr uint32_t interfaceSize = 2;
+    const SLInterfaceID interfaceIDs[interfaceSize] = {SL_IID_ANDROIDSIMPLEBUFFERQUEUE, SL_IID_ANDROIDCONFIGURATION};
+    const SLboolean requiredInterfaces[interfaceSize] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
 
     SLObjectItf recorderObject;
     (*m_engine)->CreateAudioRecorder(
         m_engine, &recorderObject, &audioSource, &audioSink, interfaceSize, interfaceIDs, requiredInterfaces);
+
+    // Note: the recorder must be configured before it is realized
+    if (!AndroidSLESMicrophone::configureRecognizeMode(recorderObject)) {
+        ACSDK_WARN(LX("Failed to set Recognize mode. This might affect the voice recognition."));
+    }
 
     return AndroidSLESObject::create(recorderObject);
 }

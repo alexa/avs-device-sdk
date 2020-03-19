@@ -79,22 +79,25 @@ AndroidSLESMicrophone::~AndroidSLESMicrophone() {
     stopStreamingMicrophoneData();
 }
 
-bool AndroidSLESMicrophone::configureRecognizeMode() {
+bool AndroidSLESMicrophone::configureRecognizeMode(const SLObjectItf recorderObjectItf) {
     SLAndroidConfigurationItf configurationInterface;
-    if (!m_recorderObject) {
+    if (!recorderObjectItf) {
         ACSDK_ERROR(LX("configureRecognizeModeFailed").d("reason", "recorderObjectUnavailable"));
         return false;
     }
 
-    if (!m_recorderObject->getInterface(SL_IID_RECORD, &configurationInterface) || !configurationInterface) {
+    auto result = (*recorderObjectItf)->GetInterface(recorderObjectItf, SL_IID_ANDROIDCONFIGURATION, &configurationInterface);
+    if (result != SL_RESULT_SUCCESS) {
         ACSDK_WARN(LX("configureRecognizeModeFailed")
                        .d("reason", "configurationInterfaceUnavailable")
-                       .d("configuration", configurationInterface));
+                       .d("configuration", configurationInterface)
+                       .d("result", result));
         return false;
     }
 
-    auto presetValue = SL_ANDROID_RECORDING_PRESET_VOICE_RECOGNITION;
-    auto result =
+    // We use the VOICE_COMMUNICATION preset rather than VOICE_RECOGNITION to take advantage of echo cancellation.
+    auto presetValue = SL_ANDROID_RECORDING_PRESET_VOICE_COMMUNICATION;
+    result =
         (*configurationInterface)
             ->SetConfiguration(configurationInterface, SL_ANDROID_KEY_RECORDING_PRESET, &presetValue, sizeof(SLuint32));
     if (result != SL_RESULT_SUCCESS) {
@@ -126,10 +129,6 @@ bool AndroidSLESMicrophone::startStreamingMicrophoneData() {
     if (!m_queue) {
         ACSDK_ERROR(LX("startStreamingFailed").d("reason", "Failed to create buffer queue."));
         return false;
-    }
-
-    if (!configureRecognizeMode()) {
-        ACSDK_WARN(LX("Failed to set Recognize mode. This might affect the voice recognition."));
     }
 
     if (!m_queue->enqueueBuffers()) {

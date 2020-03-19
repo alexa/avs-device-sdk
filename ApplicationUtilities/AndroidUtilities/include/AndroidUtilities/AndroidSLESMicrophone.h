@@ -57,7 +57,7 @@ public:
      *
      * @return @c true if it suceeds, and @c false if it fails.
      */
-    bool configureRecognizeMode();
+    static bool configureRecognizeMode(const SLObjectItf recorderObjectItf);
 
     /// @name MicrophoneInterface methods
     /// @{
