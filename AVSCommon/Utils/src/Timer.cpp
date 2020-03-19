@@ -35,7 +35,7 @@ void Timer::stop() {
         }
         m_waitCondition.notify_all();
     }
-
+    std::lock_guard<std::mutex> joinLock(m_joinMutex);
     if (std::this_thread::get_id() != m_thread.get_id() && m_thread.joinable()) {
         m_thread.join();
     }
