@@ -217,7 +217,7 @@ private:
 
     /// The mutex for @c m_waitCondition.
     std::mutex m_waitMutex;
-
+    std::mutex m_joinMutex;
     /// The thread to execute tasks on.
     std::thread m_thread;
 
