@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "AVSCommon/Utils/HTTP2/HTTP2SendStatus.h"
+#include "AVSCommon/Utils/PlatformDefinitions.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -46,13 +47,13 @@ public:
     HTTP2GetMimeHeadersResult(const std::vector<std::string>& headers);
 
     /// Const PAUSE result.
-    static const HTTP2GetMimeHeadersResult PAUSE;
+    static const avscommon_EXPORT HTTP2GetMimeHeadersResult PAUSE;
 
     /// Const COMPLETE result.
-    static const HTTP2GetMimeHeadersResult COMPLETE;
+    static const avscommon_EXPORT HTTP2GetMimeHeadersResult COMPLETE;
 
     /// Const ABORT result.
-    static const HTTP2GetMimeHeadersResult ABORT;
+    static const avscommon_EXPORT HTTP2GetMimeHeadersResult ABORT;
 
 private:
     /**

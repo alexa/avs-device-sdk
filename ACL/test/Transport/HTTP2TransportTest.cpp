@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 #include <future>
 #include <iterator>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -33,6 +32,7 @@
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 
 #include "MockAuthDelegate.h"
+#include "MockEventTracer.h"
 #include "MockHTTP2Connection.h"
 #include "MockHTTP2Request.h"
 #include "MockMessageConsumer.h"
@@ -55,6 +55,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::http2::test;
+using namespace avsCommon::utils::metrics::test;
 using namespace ::testing;
 
 /// Test AVS Gateway.
@@ -202,11 +203,14 @@ protected:
     /// The mock @c PostConnectFactoryInterface
     std::shared_ptr<MockPostConnectFactory> m_mockPostConnectFactory;
 
+    /// The mock @c MetricRecorderInterface
+    std::shared_ptr<MockMetricRecorder> m_mockMetricRecorder;
+
+    /// The mock @c EventTracerInterface
+    std::shared_ptr<MockEventTracer> m_mockEventTracer;
+
     /// The mock @c PostConnectInterface.
     std::shared_ptr<MockPostConnect> m_mockPostConnect;
-
-    /// The mock @c MetricRecorder.
-    std::shared_ptr<metrics::test::MockMetricRecorder> m_mockMetricRecorder;
 
     /// The message queue map.
     std::shared_ptr<SynchronizedMessageRequestQueue> m_synchronizedMessageRequestQueue;
@@ -261,12 +265,12 @@ void HTTP2TransportTest::SetUp() {
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_mockTransportObserver = std::make_shared<NiceMock<MockTransportObserver>>();
     m_mockPostConnectFactory = std::make_shared<NiceMock<MockPostConnectFactory>>();
+    m_mockEventTracer = std::make_shared<NiceMock<MockEventTracer>>();
     m_mockPostConnect = std::make_shared<NiceMock<MockPostConnect>>();
-    m_mockMetricRecorder = std::make_shared<NiceMock<metrics::test::MockMetricRecorder>>();
+    m_mockMetricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
     m_mockAuthDelegate->setAuthToken(CBL_AUTHORIZATION_TOKEN);
     HTTP2Transport::Configuration cfg;
     m_synchronizedMessageRequestQueue = std::make_shared<SynchronizedMessageRequestQueue>();
-
     m_http2Transport = HTTP2Transport::create(
         m_mockAuthDelegate,
         TEST_AVS_GATEWAY_STRING,
@@ -277,7 +281,8 @@ void HTTP2TransportTest::SetUp() {
         m_mockPostConnectFactory,
         m_synchronizedMessageRequestQueue,
         cfg,
-        m_mockMetricRecorder);
+        m_mockMetricRecorder,
+        m_mockEventTracer);
 
     ASSERT_NE(m_http2Transport, nullptr);
 }
@@ -776,6 +781,7 @@ TEST_F(HTTP2TransportTest, messageRequests_SequentialSend) {
 
     // Count the number of messages that received CANCELED or NOT_CONNECTED event.
     unsigned messagesCanceled = 0;
+    unsigned messagesRemaining = 0;
     for (unsigned messageNum = 0; messageNum < messagesCount; messageNum++) {
         if (messageObservers[messageNum]->m_status.waitFor(RESPONSE_TIMEOUT)) {
             switch (messageObservers[messageNum]->m_status.getValue()) {
@@ -787,8 +793,11 @@ TEST_F(HTTP2TransportTest, messageRequests_SequentialSend) {
             }
         }
     }
+    while (m_synchronizedMessageRequestQueue->dequeueRequest()) {
+        ++messagesRemaining;
+    }
 
-    ASSERT_EQ(messagesCanceled, messagesCount);
+    ASSERT_EQ(messagesCanceled + messagesRemaining, messagesCount);
 }
 
 /**
@@ -1069,7 +1078,8 @@ TEST_F(HTTP2TransportTest, testTimer_networkInactivityPingRequest) {
         m_mockPostConnectFactory,
         m_synchronizedMessageRequestQueue,
         cfg,
-        m_mockMetricRecorder);
+        m_mockMetricRecorder,
+        m_mockEventTracer);
 
     authorizeAndConnect();
 
@@ -1116,7 +1126,8 @@ TEST_F(HTTP2TransportTest, testSlow_tearDownPingTimeout) {
         m_mockPostConnectFactory,
         m_synchronizedMessageRequestQueue,
         cfg,
-        m_mockMetricRecorder);
+        m_mockMetricRecorder,
+        m_mockEventTracer);
 
     authorizeAndConnect();
 
@@ -1160,7 +1171,8 @@ TEST_F(HTTP2TransportTest, testSlow_tearDownPingFailure) {
         m_mockPostConnectFactory,
         m_synchronizedMessageRequestQueue,
         cfg,
-        m_mockMetricRecorder);
+        m_mockMetricRecorder,
+        m_mockEventTracer);
 
     authorizeAndConnect();
 
@@ -1272,6 +1284,109 @@ TEST_F(HTTP2TransportTest, test_onPostConnectFailureInitiatesShutdownAndNotifies
 
     ASSERT_TRUE(m_doPostConnected.waitFor(RESPONSE_TIMEOUT));
     ASSERT_TRUE(gotOnDisconnected.waitFor(RESPONSE_TIMEOUT));
+}
+
+/*
+ * Test if the event tracer gets notified when messages are sent.
+ */
+TEST_F(HTTP2TransportTest, test_eventTracerIsNotifiedForMessagesSent) {
+    EXPECT_CALL(*m_mockEventTracer, traceEvent(_)).WillOnce(Invoke([](const std::string& content) {
+        ASSERT_EQ(content, TEST_MESSAGE);
+    }));
+
+    authorizeAndConnect();
+    m_mockHttp2Connection->setResponseToPOSTRequests(HTTPResponseCode::SUCCESS_OK);
+
+    auto messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE);
+    m_synchronizedMessageRequestQueue->enqueueRequest(messageReq);
+    m_http2Transport->onRequestEnqueued();
+
+    auto request = m_mockHttp2Connection->waitForPostRequest(RESPONSE_TIMEOUT);
+    if (request) {
+        m_mockHttp2Connection->dequePostRequest();
+        request->getSink()->onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+        request->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::COMPLETE);
+    }
+}
+
+/**
+ * Test the event tracer does not get notified if message fails to send.
+ */
+TEST_F(HTTP2TransportTest, test_eventTracerIsNotNotifiedForFailedMessages) {
+    EXPECT_CALL(*m_mockEventTracer, traceEvent(_)).Times(0);
+    // Fail messages prefixed with AVSEvent-; which are ones created by calls to HTTP2Transport::send
+    ON_CALL(*m_mockHttp2Connection, createAndSendRequest(Property(&HTTP2RequestConfig::getId, StartsWith("AVSEvent-"))))
+        .WillByDefault(InvokeWithoutArgs(([]() { return nullptr; })));
+
+    authorizeAndConnect();
+
+    auto messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE);
+    std::shared_ptr<TestMessageRequestObserver> observer = std::make_shared<TestMessageRequestObserver>();
+    messageReq->addObserver(observer);
+    m_synchronizedMessageRequestQueue->enqueueRequest(messageReq);
+    m_http2Transport->onRequestEnqueued();
+
+    observer->m_status.waitFor(RESPONSE_TIMEOUT);
+}
+
+/**
+ * Test that the event tracer does get notified when the contents of the sent message is empty.
+ */
+TEST_F(HTTP2TransportTest, test_eventTracerNotifiedForEmptyMessageContent) {
+    EXPECT_CALL(*m_mockEventTracer, traceEvent(_)).WillOnce(Invoke([](const std::string& content) {
+        ASSERT_EQ(content, "");
+    }));
+
+    authorizeAndConnect();
+    m_mockHttp2Connection->setResponseToPOSTRequests(HTTPResponseCode::SUCCESS_OK);
+
+    auto messageReq = std::make_shared<MessageRequest>("");
+    m_synchronizedMessageRequestQueue->enqueueRequest(messageReq);
+    m_http2Transport->onRequestEnqueued();
+
+    auto request = m_mockHttp2Connection->waitForPostRequest(RESPONSE_TIMEOUT);
+    if (request) {
+        m_mockHttp2Connection->dequePostRequest();
+        request->getSink()->onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+        request->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::COMPLETE);
+    }
+}
+
+/**
+ * Test if the event tracer gets notified for multiple message requests.
+ */
+TEST_F(HTTP2TransportTest, test_eventTracerIsNotifiedForMultipleMessages) {
+    EXPECT_CALL(*m_mockEventTracer, traceEvent(_)).WillRepeatedly(Invoke([](const std::string& content) {
+        static int i = 0;
+        ASSERT_EQ(content, TEST_MESSAGE + std::to_string(i++));
+    }));
+
+    authorizeAndConnect();
+    m_mockHttp2Connection->setResponseToPOSTRequests(HTTPResponseCode::SUCCESS_OK);
+
+    int messagesCount = 10;
+    for (int messageNum = 0; messageNum < messagesCount; messageNum++) {
+        auto messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE + std::to_string(messageNum));
+        m_synchronizedMessageRequestQueue->enqueueRequest(messageReq);
+        m_http2Transport->onRequestEnqueued();
+    }
+
+    // Send the response code for each POST request.
+    int postsRequestsCount = 0;
+    for (int i = 0; i < messagesCount; i++) {
+        auto request = m_mockHttp2Connection->waitForPostRequest(RESPONSE_TIMEOUT);
+        if (request) {
+            m_mockHttp2Connection->dequePostRequest();
+            postsRequestsCount++;
+            request->getSink()->onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+            request->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::COMPLETE);
+        } else {
+            break;
+        }
+    }
+
+    // Check if we got all the POST requests.
+    ASSERT_EQ(postsRequestsCount, messagesCount);
 }
 
 }  // namespace test

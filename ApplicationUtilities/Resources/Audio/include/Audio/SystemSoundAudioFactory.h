@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,8 +30,10 @@ class SystemSoundAudioFactory : public avsCommon::sdkInterfaces::audio::SystemSo
 public:
     /// @name SystemSoundAudioFactoryInterface Functions
     /// @{
-    std::function<std::unique_ptr<std::istream>()> endSpeechTone() const override;
-    std::function<std::unique_ptr<std::istream>()> wakeWordNotificationTone() const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> endSpeechTone()
+        const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    wakeWordNotificationTone() const override;
     /// @}
 };
 

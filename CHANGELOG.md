@@ -1,5 +1,8 @@
 ## ChangeLog
 
+### Version 1.19.0 - April 13 2020
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
+
 ### Version 1.18.0 - February 19 2020
 
 **Enhancements** 
@@ -7,7 +10,7 @@
 * Added support for [Bluetooth Interface 2.0](https://developer.amazon.com/docs/alexa/alexa-voice-service/bluetooth.html). This interface adds support for multiple simultaneous connections to Bluetooth peripherals.
 * Added support for [Audio Focus Manager Library (AFML) Multi Activity](https://developer.amazon.com/docs/alexa/avs-device-sdk/sdk-interaction-model.html). This interface enhances the behavior of a device so it can handle more than one Activity per Channel.
 * Added the `obfuscatePrivateData` logging method to help remove certain data from logs.
-* Updated `MediaPlayerObserverInterface` to include metadata about playback states. 
+* Updated `MediaPlayerObserverInterface` to include metadata about playback states.
 * Added SDK extension point. You can integrate CMake projects into the SDK without cloning those projects into a subdirectory.
 
 **Bug fixes**
@@ -16,10 +19,10 @@
 * Fixed issue that prevented sample app from exiting various states.
 * Fixed `UIManager` issue that caused an error in the logs when the device with built without the wake word enabled.
 * Fixed volume issue that caused timers to ascend in volume when setting up ascending alarms.
-* Fixed alert volume issue that caused any changes to the alert volume to notify observers. 
-* Fixed EQ issue where changes to the EQ band levels didn't notify observers. 
+* Fixed alert volume issue that caused any changes to the alert volume to notify observers.
+* Fixed EQ issue where changes to the EQ band levels didn't notify observers.
 * Fixed Bluetooth bug that caused short notification sounds from a connected phone to stop audio playback on the device.
- 
+
 **Known Issues**
 
 * Build errors can occur on the Raspberry Pi due to incorrect linking of the atomic library. A suggested workaround is to add the following `set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")` to the top most CMake file.
@@ -42,11 +45,11 @@
 * `ServerDisconnectIntegratonTest` tests are disabled until they are updated to reflect new service behavior.
 * The `DirectiveSequencerTest.test_handleBlockingThenImmediatelyThenNonBockingOnSameDialogId` test fails intermittently.
 
-### Version 1.17.0 - December 10 2019 
+### Version 1.17.0 - December 10 2019
 
 **Enhancements** 
 
-* Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.  
+* Added support for [captions for TTS](https://developer.amazon.com/docs/alexa/avs-device-sdk/features.html#captions). This enhancement allows you to print on-screen captions for Alexa voice responses.
 * Added support for [SpeechSynthesizer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/speechsynthesizer.html). This interface supports the new `captions` parameter.
 * Added support for [AudioPlayer Interface 1.3](https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html). This interface supports the new `captions` parameter.
 * Added support for [Interaction Model 1.2](https://developer.amazon.com/docs/alexa/alexa-voice-service/interactionmodel-interface.html).
@@ -64,7 +67,7 @@
   * [Alexa.ToggleController](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html)
 * Added `PowerResourceManagerInterface`. This interface allows the SDK to control power resource levels for components such as the `AudioInputProcessor` and `SpeechSynthesizer`.
 * Added `AlexaInterfaceCapabilityAgent`. This Capability Agent handles common directives and endpoint controller capabilities support by [`Alexa.AlexaInterface`](https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa.html).
-* Added `AlexaInterfaceMessageSenderInterface`. Use this interface to send common events defined by the `Alexa.AlexaInterface` interface.   
+* Added `AlexaInterfaceMessageSenderInterface`. Use this interface to send common events defined by the `Alexa.AlexaInterface` interface.
 * Added `BufferingComplete` to [`MediaPlayerObserverInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html). This method helps improve performance in poor networking conditions by making sure `MediaPlayer` pre-buffers correctly.
 * Added `SendDTMF` to `CallManagerInterface`. This method allows you to send DTMF tones during calls.
 
@@ -117,11 +120,11 @@
 * On some devices, Pressing `t` and `h` in the Sample App doesn't exit the assigned state.
 * Exiting the settings menu doesn't provide a message to indicate that you're back in the main menu.
 
-### Version 1.16.0 - October 25 2019 
+### Version 1.16.0 - October 25 2019
 
 **Enhancements** 
 
-- Added support for [SpeechSynthesizer version 1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2)  which includes the new `playBehaviour` directive.  
+- Added support for [SpeechSynthesizer version 1.2](https://github.com/alexa/avs-device-sdk/wiki/SpeechSynthesizer-Interface-v1.2)  which includes the new `playBehaviour` directive.
 - Added support for pre-buffering in the [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html)  Capability Agent. You can optionally choose the number of instances [`MediaPlayer`](https://alexa.github.io/avs-device-sdk/namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html) uses in the [AlexaClientSDKconfig.json](https://github.com/alexa/avs-device-sdk/blob/master/Integration/AlexaClientSDKConfig.json). **Important:** the contract for [`MediaPlayerInterface`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html)  has changed. You must now make sure that the `SourceId` value returned by `setSource()` is unique across all instances.
 - The [`AudioPlayer`](https://alexa.github.io/avs-device-sdk/classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html)  Capability Agent is now licensed under the Amazon Software License instead of the Apache Software License.
 
@@ -345,7 +348,7 @@
 * The MediaPlayer reference implementation has been expanded to support the SAMPLE-AES and AES-128 encryption methods for HLS streaming.
  * AES-128 encryption is dependent on libcrypto, which is part of the required openSSL library, and is enabled by default.
  * To enable [SAMPLE-AES](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) encryption, you must set the `-DSAMPLE_AES=ON` in your CMake command, and include the [FFMPEG](https://github.com/alexa/avs-device-sdk/wiki/Dependencies#core-dependencies/Enable-SAMPLE-AES-decryption) library dependency in your build.
-* A new configuration for [deviceSettings](https://github.com/alexa/avs-device-sdk/blob/v1.11.0/Integration/AlexaClientSDKConfig.json#L59) has been added.This configuration allows you to specify the location of the device settings database.
+* A new configuration for [deviceSettings](https://github.com/alexa/avs-device-sdk/blob/v1.11/Integration/AlexaClientSDKConfig.json#L59) has been added.This configuration allows you to specify the location of the device settings database.
 * Added locale support for es-MX.
 
 **Bug Fixes**
@@ -379,9 +382,9 @@
 
 **Enhancements**
 
-* New optional configuration for [EqualizerController](https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L154). The EqualizerController interface allows you to adjust equalizer settings on your product, such as decibel (dB) levels and modes.
+* New optional configuration for [EqualizerController](https://github.com/alexa/avs-device-sdk/blob/v1.10/Integration/AlexaClientSDKConfig.json#L154). The EqualizerController interface allows you to adjust equalizer settings on your product, such as decibel (dB) levels and modes.
 * Added reference implementation of the EqualizerController for GStreamer-based (MacOS, Linux, and Raspberry Pi) and OpenSL ES-based (Android) MediaPlayers. Note: In order to use with Android, it must support OpenSL ES.
-* New optional configuration for the [TemplateRuntime display card value](https://github.com/alexa/avs-device-sdk/blob/v1.10.0/Integration/AlexaClientSDKConfig.json#L144).
+* New optional configuration for the [TemplateRuntime display card value](https://github.com/alexa/avs-device-sdk/blob/v1.10/Integration/AlexaClientSDKConfig.json#L144).
 * A configuration file generator script, `genConfig.sh` is now included with the SDK in the **tools/Install** directory. `genConfig.sh` and it's associated arguments populate `AlexaClientSDKConfig.json` with the data required to authorize with LWA.
 * Added Bluetooth A2DP source and AVRCP target support for Linux.
 * Added Alexa for Business (A4B) support, which includes support for handling the new [RevokeAuthorization](https://developer.amazon.com/docs/alexa-voice-service/system.html#revokeauth) directive in the Settings interface. A new CMake option has been added to enable A4B within the SDK, `-DA4B`.
@@ -518,7 +521,7 @@
 * Updated the sample app to enter a limited interaction mode after an unrecoverable error.
 
 **Bug Fixes**
-* [Issue 597](https://github.com/alexa/avs-device-sdk/issues/597) - Fixed a bug where the sample app did not respond to locale change settings.  
+* [Issue 597](https://github.com/alexa/avs-device-sdk/issues/597) - Fixed a bug where the sample app did not respond to locale change settings.
 * Fixed issue where GStreamer 1.14 `MediaPlayerTest` failed on Windows.
 * Fixed an issue where a segmentation fault was triggered after unrecoverable error handling.
 

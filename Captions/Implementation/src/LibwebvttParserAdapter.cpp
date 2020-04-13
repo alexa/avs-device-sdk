@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -89,9 +89,7 @@ void buildStyles(std::stringstream& cleanText, std::vector<TextStyle>& styles, c
     } else if (node.kind == WEBVTT_ITALIC || node.kind == WEBVTT_BOLD || node.kind == WEBVTT_UNDERLINE) {
         auto styleStart = TextStyle(styles.back());
         styleStart.charIndex = cleanText.str().length();
-        std::string nodeText = static_cast<const char*>(webvtt_string_text(&node.data.text));
         int childNodeCount = static_cast<int>(node.data.internal_data->length);
-        ACSDK_DEBUG9(LX("Node").d("kind", node.kind).d("childNodeCount", childNodeCount).sensitive("text", nodeText));
         for (int i = 0; i < childNodeCount; i++) {
             buildStyles(cleanText, styles, *node.data.internal_data->children[i]);
         }

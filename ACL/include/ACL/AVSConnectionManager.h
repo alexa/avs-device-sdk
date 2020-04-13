@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -105,6 +105,7 @@ public:
     bool isEnabled() override;
     void reconnect() override;
     bool isConnected() const override;
+    void onWakeConnectionRetry() override;
     void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     /// @}

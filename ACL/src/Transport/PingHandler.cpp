@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ using namespace avsCommon::utils::http2;
 const static std::string AVS_PING_URL_PATH_EXTENSION = "/ping";
 
 /// Max time to wait for a ping reply.
-static const std::chrono::milliseconds PING_TRANSFER_TIMEOUT(30000);
+static const std::chrono::milliseconds PING_TRANSFER_TIMEOUT(15000);
 
 /// Priority for ping requests (high, default is 16).
 static const uint8_t PING_PRIORITY = 200;

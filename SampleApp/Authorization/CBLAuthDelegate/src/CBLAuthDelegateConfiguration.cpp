@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,14 +51,14 @@ static const std::string CONFIG_KEY_REQUEST_TIMEOUT = "requestTimeout";
 /// Name of accessTokenRefreshHeadStart value in CBLAuthDelegate's @c ConfigurationNode.
 static const std::string CONFIG_KEY_ACCESS_TOKEN_REFRESH_HEAD_START = "accessTokenRefreshHeadStart";
 
-/// Name of @c ConfigurationNode for system
-static const std::string CONFIG_KEY_SETTINGS = "settings";
+/// Name of @c ConfigurationNode for deviceSettings
+static const std::string CONFIG_KEY_DEVICE_SETTINGS = "deviceSettings";
 
 /// Name of @c ConfigurationNode for default values under settings.
 static const std::string SETTINGS_DEFAULT_SETTINGS_ROOT_KEY = "defaultAVSClientSettings";
 
-/// Name of @c locale value in in settings's @c ConfigurationNode.
-static const std::string CONFIG_KEY_LOCALE = "locale";
+/// Name of @c locale value in in deviceSettings's @c ConfigurationNode.
+static const std::string CONFIG_KEY_DEFAULT_LOCALE = "defaultLocale";
 
 /// Default value for settings.locale.
 static const std::string CONFIG_VALUE_DEFAULT_LOCALE = "en-US";
@@ -129,8 +129,8 @@ bool CBLAuthDelegateConfiguration::init(
         &m_accessTokenRefreshHeadStart,
         DEFAULT_ACCESS_TOKEN_REFRESH_HEAD_START);
 
-    configurationRoot[CONFIG_KEY_SETTINGS][SETTINGS_DEFAULT_SETTINGS_ROOT_KEY].getString(
-        CONFIG_KEY_LOCALE, &m_locale, CONFIG_VALUE_DEFAULT_LOCALE);
+    configurationRoot[CONFIG_KEY_DEVICE_SETTINGS].getString(
+        CONFIG_KEY_DEFAULT_LOCALE, &m_locale, CONFIG_VALUE_DEFAULT_LOCALE);
 
     if (!initScopeData()) {
         ACSDK_ERROR(LX("initFailed").d("reason", "initScopeDataFailed"));

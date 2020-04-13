@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ std::shared_ptr<MetricEvent> MetricEventBuilder::build() {
         return nullptr;
     }
 
-    return std::make_shared<MetricEvent>(m_activityName, m_priority, m_dataPoints, std::chrono::system_clock::now());
+    return std::make_shared<MetricEvent>(m_activityName, m_priority, m_dataPoints, std::chrono::steady_clock::now());
 }
 
 MetricEventBuilder& MetricEventBuilder::removeDataPoint(const std::string& key) {

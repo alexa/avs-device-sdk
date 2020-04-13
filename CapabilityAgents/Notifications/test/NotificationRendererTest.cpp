@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <AVSCommon/AVS/MixingBehavior.h>
+#include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include "AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h"
 
@@ -32,7 +34,9 @@ namespace notifications {
 namespace test {
 
 using namespace ::testing;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces::test;
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::mediaPlayer::test;
@@ -51,9 +55,11 @@ static const std::chrono::milliseconds UNEXPECTED_TIMEOUT{5000};
  *
  * @return a non-null istream.
  */
-static std::function<std::unique_ptr<std::istream>()> goodStreamFunction = [] {
-    return std::unique_ptr<std::istream>(new std::stringstream);
-};
+static std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> goodStreamFunction =
+    [] {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::istream>(new std::stringstream), avsCommon::utils::MediaType::MPEG);
+    };
 
 /**
  * A NotificationRendererObserver to be observed by tests.
@@ -119,6 +125,9 @@ public:
     /// Mock player with which to exercise NotificationRenderer.
     std::shared_ptr<MockMediaPlayer> m_player;
 
+    /// Mock Focus Manager with which to exercise NotificationRenderer.
+    std::shared_ptr<MockFocusManager> m_focusManager;
+
     /// The NotificationRenderer instance to exercise.
     std::shared_ptr<NotificationRenderer> m_renderer;
 
@@ -130,10 +139,19 @@ void NotificationRendererTest::SetUp() {
     avsCommon::utils::logger::getConsoleLogger()->setLevel(avsCommon::utils::logger::Level::DEBUG9);
 
     m_player = MockMediaPlayer::create();
-    m_renderer = NotificationRenderer::create(m_player);
+    m_focusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
+    m_renderer = NotificationRenderer::create(m_player, m_focusManager);
     ASSERT_TRUE(m_renderer);
     m_observer.reset(new MockNotificationRendererObserver());
     m_renderer->addObserver(m_observer);
+
+    ON_CALL(*(m_focusManager.get()), acquireChannel(_, _)).WillByDefault(Return(true));
+    ON_CALL(*m_focusManager, releaseChannel(_, _)).WillByDefault(InvokeWithoutArgs([] {
+        auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
+        std::future<bool> returnValue = releaseChannelSuccess->get_future();
+        releaseChannelSuccess->set_value(true);
+        return returnValue;
+    }));
 }
 
 void NotificationRendererTest::TearDown() {
@@ -144,7 +162,15 @@ void NotificationRendererTest::TearDown() {
  * Test that create fails with a null MediaPlayer
  */
 TEST_F(NotificationRendererTest, test_createWithNullMediaPlayer) {
-    auto renderer = NotificationRenderer::create(nullptr);
+    auto renderer = NotificationRenderer::create(nullptr, m_focusManager);
+    ASSERT_FALSE(renderer);
+}
+
+/**
+ * Test that create fails with a null FocusManager
+ */
+TEST_F(NotificationRendererTest, test_createWithNullFocusManager) {
+    auto renderer = NotificationRenderer::create(m_player, nullptr);
     ASSERT_FALSE(renderer);
 }
 
@@ -160,6 +186,7 @@ TEST_F(NotificationRendererTest, test_playPreferredStream) {
     EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
 
     m_renderer->renderNotification(goodStreamFunction, "");
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
     m_player->waitUntilPlaybackStarted();
     m_player->mockFinished(m_player->getCurrentSourceId());
     ASSERT_TRUE(m_observer->waitForFinished());
@@ -177,6 +204,7 @@ TEST_F(NotificationRendererTest, testTimer_playDefaultStream) {
     EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
 
     m_renderer->renderNotification(goodStreamFunction, "");
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
 
     m_player->waitUntilPlaybackStarted();
     m_player->mockError(m_player->getCurrentSourceId());
@@ -200,6 +228,7 @@ TEST_F(NotificationRendererTest, test_secondPlayRejected) {
     EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
 
     ASSERT_TRUE(m_renderer->renderNotification(goodStreamFunction, ""));
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
     m_player->waitUntilPlaybackStarted();
     ASSERT_FALSE(m_renderer->renderNotification(goodStreamFunction, ""));
     m_player->mockFinished(m_player->getCurrentSourceId());
@@ -217,7 +246,7 @@ TEST_F(NotificationRendererTest, testTimer_secondPlayWhilePlayingDefaultStream) 
     EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
 
     ASSERT_TRUE(m_renderer->renderNotification(goodStreamFunction, ""));
-
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
     m_player->waitUntilPlaybackStarted();
     m_player->mockError(m_player->getCurrentSourceId());
     m_player->waitUntilPlaybackError();
@@ -228,8 +257,8 @@ TEST_F(NotificationRendererTest, testTimer_secondPlayWhilePlayingDefaultStream) 
     m_player->waitUntilPlaybackStarted();
 
     ASSERT_FALSE(m_renderer->renderNotification(goodStreamFunction, ""));
-
     m_player->mockFinished(m_player->getCurrentSourceId());
+
     ASSERT_TRUE(m_observer->waitForFinished());
 }
 
@@ -244,6 +273,7 @@ TEST_F(NotificationRendererTest, test_cancelNotificationRendering) {
     EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
 
     ASSERT_TRUE(m_renderer->renderNotification(goodStreamFunction, ""));
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
     m_player->waitUntilPlaybackStarted();
     ASSERT_TRUE(m_renderer->cancelNotificationRendering());
     ASSERT_TRUE(m_observer->waitForFinished());
@@ -272,15 +302,50 @@ TEST_F(NotificationRendererTest, test_renderNotificationWhileNotifying) {
     }));
 
     ASSERT_TRUE(m_renderer->renderNotification(goodStreamFunction, ""));
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
     m_player->waitUntilPlaybackStarted();
     m_player->mockFinished(m_player->getCurrentSourceId());
 
     ASSERT_EQ(signal.future.wait_for(UNEXPECTED_TIMEOUT), std::future_status::ready);
 
+    m_renderer->onFocusChanged(FocusState::NONE, MixingBehavior::UNDEFINED);
     ASSERT_TRUE(m_renderer->renderNotification(goodStreamFunction, ""));
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
 
     m_player->waitUntilPlaybackStarted();
     m_player->waitUntilPlaybackFinished();
+}
+
+/**
+ * Test that notification renders properly when acquireChannel succeeds and that
+ * the audio channel is successfully released
+ */
+TEST_F(NotificationRendererTest, test_renderWhenAcquireChannelsSucceeds) {
+    EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
+    EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
+    EXPECT_CALL(*(m_player.get()), play(_)).Times(1);
+    EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(1);
+    EXPECT_CALL(*(m_focusManager.get()), acquireChannel(_, _)).Times(1);
+    EXPECT_CALL(*(m_focusManager.get()), releaseChannel(_, _)).Times(1);
+
+    m_renderer->renderNotification(goodStreamFunction, "");
+    m_renderer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::UNDEFINED);
+    m_player->waitUntilPlaybackStarted();
+    m_player->mockFinished(m_player->getCurrentSourceId());
+    ASSERT_TRUE(m_observer->waitForFinished());
+}
+
+/**
+ * Test that notification does not render when acquireChannel fails
+ */
+TEST_F(NotificationRendererTest, test_renderWhenAcquireChannelsFails) {
+    EXPECT_CALL(*(m_player.get()), urlSetSource(_)).Times(1);
+    EXPECT_CALL(*(m_player.get()), streamSetSource(_, _)).Times(0);
+    EXPECT_CALL(*(m_player.get()), play(_)).Times(0);
+    EXPECT_CALL(*(m_observer.get()), onNotificationRenderingFinished()).Times(0);
+    EXPECT_CALL(*(m_focusManager.get()), acquireChannel(_, _)).Times(1).WillRepeatedly(Return(false));
+
+    ASSERT_FALSE(m_renderer->renderNotification(goodStreamFunction, ""));
 }
 
 /**

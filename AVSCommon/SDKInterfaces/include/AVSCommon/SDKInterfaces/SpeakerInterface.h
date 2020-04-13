@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,19 +27,11 @@ namespace sdkInterfaces {
  * The two settings are independent of each other, and the respective APIs shall not affect
  * the other setting in any way. Compound behaviors (such as unmuting when volume is adjusted) will
  * be handled at a layer above this interface.
+ *
+ * The methods in this interface MUST be implemented as thread safe implementations.
  */
 class SpeakerInterface {
 public:
-    /**
-     * This enum provides the type of the @c SpeakerInterface.
-     */
-    enum class Type {
-        /// Volume type reflecting AVS Speaker API volume.
-        AVS_SPEAKER_VOLUME,
-        /// Volume type reflecting AVS Alerts API volume.
-        AVS_ALERTS_VOLUME
-    };
-
     /**
      * This contains the current settings of the @c SpeakerInterface.
      * The minimum volume level should correspond to no volume output, but this setting should still be independent
@@ -69,16 +61,6 @@ public:
     virtual bool setVolume(int8_t volume) = 0;
 
     /**
-     * Set a relative change for the volume of the speaker. @c volume
-     * will be [AVS_ADJUST_VOLUME_MIN, AVS_ADJUST_VOLUME_MAX], and implementers of the interface must normalize
-     * the volume to fit the needs of their drivers.
-     *
-     * @param delta The delta to apply to the volume.
-     * @return Whether the operation was successful.
-     */
-    virtual bool adjustVolume(int8_t delta) = 0;
-
-    /**
      * Set the mute of the speaker.
      *
      * @param mute Represents whether the speaker should be muted (true) or unmuted (false).
@@ -87,46 +69,18 @@ public:
     virtual bool setMute(bool mute) = 0;
 
     /**
-     * Return a @c SpeakerSettings object to indicate the current settings of the speaker.
+     * Return a @c SpeakerSettings object to indicate the current settings of the SpeakerInterface.
      *
-     * @param settings A @c SpeakerSettings object if successful.
+     * @param [out] settings A @c SpeakerSettings object if successful.
      * @return Whether the operation was successful.
      */
     virtual bool getSpeakerSettings(SpeakerSettings* settings) = 0;
-
-    /**
-     * Get the @c Type. The @c Type should remain static and not change with the lifetime of the speaker.
-     *
-     * @return The @c Type.
-     */
-    virtual Type getSpeakerType() = 0;
 
     /**
      * Destructor.
      */
     virtual ~SpeakerInterface() = default;
 };
-
-/**
- * Write a @c Type value to an @c ostream as a string.
- *
- * @param stream The stream to write the value to.
- * @param type The type value to write to the @c ostream as a string.
- * @return The @c ostream that was passed in and written to.
- */
-inline std::ostream& operator<<(std::ostream& stream, SpeakerInterface::Type type) {
-    switch (type) {
-        case SpeakerInterface::Type::AVS_SPEAKER_VOLUME:
-            stream << "AVS_SPEAKER_VOLUME";
-            return stream;
-        case SpeakerInterface::Type::AVS_ALERTS_VOLUME:
-            stream << "AVS_ALERTS_VOLUME";
-            return stream;
-    }
-    stream << "UNKNOWN";
-    return stream;
-}
-
 }  // namespace sdkInterfaces
 }  // namespace avsCommon
 }  // namespace alexaClientSDK

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -895,7 +895,7 @@ void AudioInputProcessorTest::SetUp() {
     m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
     m_mockContextManager = std::make_shared<avsCommon::sdkInterfaces::test::MockContextManager>();
     m_mockFocusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
-    m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
+    m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>(m_metricRecorder);
     m_dialogUXStateObserver = std::make_shared<TestDialogUXStateObserver>(m_dialogUXStateAggregator);
     m_mockSystemSoundPlayer = std::make_shared<NiceMock<MockSystemSoundPlayer>>();
     m_dialogUXStateAggregator->addObserver(m_dialogUXStateObserver);

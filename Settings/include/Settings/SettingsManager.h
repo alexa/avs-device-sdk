@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -163,7 +163,8 @@ private:
      *
      */
     template <size_t index>
-    typename std::enable_if<index >= NUMBER_OF_SETTINGS, void>::type clearData();
+    typename std::enable_if<index >= NUMBER_OF_SETTINGS, void>::type doClearData() {
+    }
 
     /**
      * ClearData on the setting when @c CustomerDataHandler triggers clearData callback.
@@ -171,8 +172,22 @@ private:
      * @note This is a recursive function for iterating through a tuple.
      *
      */
+
     template <size_t index>
-    typename std::enable_if<index <= NUMBER_OF_SETTINGS - 1, void>::type clearData();
+    typename std::enable_if<index <= NUMBER_OF_SETTINGS - 1, void>::type doClearData() {
+        auto& setting = std::get<index>(m_settings);
+        if (setting) {
+            if (!setting->clearData(setting->getDefault())) {
+                avsCommon::utils::logger::acsdkError(LogEntry("SettingManager", "clearDataFailed")
+                                                         .d("reason", "invalidSetting")
+                                                         .d("settingIndex", index));
+            }
+        } else {
+            avsCommon::utils::logger::acsdkDebug0(
+                LogEntry("SettingManager", __func__).d("reason", "invalidSetting").d("settingIndex", index));
+        }
+        doClearData<index + 1>();
+    }
 
     /**
      * Delete copy constructor.
@@ -310,32 +325,9 @@ bool SettingsManager<SettingsT...>::hasSetting() {
 }
 
 template <typename... SettingsT>
-template <size_t index>
-typename std::enable_if<index >= SettingsManager<SettingsT...>::NUMBER_OF_SETTINGS, void>::type SettingsManager<
-    SettingsT...>::clearData() {
-}
-
-template <typename... SettingsT>
-template <size_t index>
-typename std::enable_if<index <= SettingsManager<SettingsT...>::NUMBER_OF_SETTINGS - 1, void>::type SettingsManager<
-    SettingsT...>::clearData() {
-    auto& setting = std::get<index>(m_settings);
-    if (setting) {
-        if (!setting->clearData(setting->getDefault())) {
-            avsCommon::utils::logger::acsdkError(
-                LogEntry("SettingManager", "clearDataFailed").d("reason", "invalidSetting").d("settingIndex", index));
-        }
-    } else {
-        avsCommon::utils::logger::acsdkDebug0(
-            LogEntry("SettingManager", __func__).d("reason", "invalidSetting").d("settingIndex", index));
-    }
-    clearData<index + 1>();
-}
-
-template <typename... SettingsT>
 void SettingsManager<SettingsT...>::clearData() {
     std::lock_guard<std::mutex> lock{m_mutex};
-    clearData<0>();
+    doClearData<0>();
 }
 
 }  // namespace settings

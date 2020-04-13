@@ -1,7 +1,6 @@
 set(INCLUDE_PATH
-        "${CapabilitiesDelegate_SOURCE_DIR}/include"
-        "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
+        "${CapabilitiesDelegate_SOURCE_DIR}/include")
 
-discover_unit_tests("${INCLUDE_PATH}" CapabilitiesDelegate)
+discover_unit_tests("${INCLUDE_PATH}" "CapabilitiesDelegate;SDKInterfacesTests")
 add_definitions("-DACSDK_LOG_MODULE=capabilitiesDelegateTest")
 

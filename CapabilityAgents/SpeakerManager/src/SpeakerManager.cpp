@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ static void submitMetric(
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeakerCapabilityConfiguration();
 
 std::shared_ptr<SpeakerManager> SpeakerManager::create(
-    const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakers,
+    const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -129,13 +129,18 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
     configurationRoot.getInt(SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY, &minUnmuteVolume, MIN_UNMUTE_VOLUME);
 
     auto speakerManager = std::shared_ptr<SpeakerManager>(new SpeakerManager(
-        speakers, metricRecorder, contextManager, messageSender, exceptionEncounteredSender, minUnmuteVolume));
+        groupVolumeInterfaces,
+        metricRecorder,
+        contextManager,
+        messageSender,
+        exceptionEncounteredSender,
+        minUnmuteVolume));
 
     return speakerManager;
 }
 
 SpeakerManager::SpeakerManager(
-    const std::vector<std::shared_ptr<SpeakerInterface>>& speakerInterfaces,
+    const std::vector<std::shared_ptr<ChannelVolumeInterface>>& groupVolumeInterfaces,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -150,17 +155,17 @@ SpeakerManager::SpeakerManager(
         m_retryTimer{DEFAULT_RETRY_TABLE},
         m_maxRetries{DEFAULT_RETRY_TABLE.size()},
         m_maximumVolumeLimit{AVS_SET_VOLUME_MAX} {
-    for (auto speaker : speakerInterfaces) {
-        m_speakerMap.insert(
-            std::pair<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>(speaker->getSpeakerType(), speaker));
+    for (auto groupVolume : groupVolumeInterfaces) {
+        m_speakerMap.insert(std::pair<ChannelVolumeInterface::Type, std::shared_ptr<ChannelVolumeInterface>>(
+            groupVolume->getSpeakerType(), groupVolume));
     }
 
-    ACSDK_DEBUG(LX("mapCreated")
-                    .d("numSpeakerVolume", m_speakerMap.count(SpeakerInterface::Type::AVS_SPEAKER_VOLUME))
-                    .d("numAlertsVolume", m_speakerMap.count(SpeakerInterface::Type::AVS_ALERTS_VOLUME)));
+    ACSDK_INFO(LX("mapCreated")
+                   .d("numSpeakerVolume", m_speakerMap.count(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME))
+                   .d("numAlertsVolume", m_speakerMap.count(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME)));
 
     // If we have at least one AVS_SPEAKER_VOLUME speaker, update the Context initially.
-    const auto type = SpeakerInterface::Type::AVS_SPEAKER_VOLUME;
+    const auto type = ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME;
     if (m_speakerMap.count(type)) {
         SpeakerInterface::SpeakerSettings settings;
         if (!validateSpeakerSettingsConsistency(type, &settings) || !updateContextManager(type, settings)) {
@@ -282,7 +287,7 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
     const std::string directiveName = info->directive->getName();
 
     // Handling only AVS Speaker API volume here.
-    SpeakerInterface::Type directiveType = SpeakerInterface::Type::AVS_SPEAKER_VOLUME;
+    ChannelVolumeInterface::Type directiveType = ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME;
 
     Document payload(kObjectType);
     if (!parseDirectivePayload(info->directive->getPayload(), &payload)) {
@@ -311,12 +316,16 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
 
                 // Unmute before volume change.
                 // Do not send a MuteChanged Event.
-                if (executeSetMute(directiveType, false, true, SpeakerManagerObserverInterface::Source::DIRECTIVE) &&
+                if (executeSetMute(
+                        directiveType,
+                        false,
+                        SpeakerManagerInterface::NotificationProperties(
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE, false, false)) &&
                     executeSetVolume(
                         directiveType,
                         static_cast<int8_t>(volume),
-                        false,
-                        SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
+                        SpeakerManagerInterface::NotificationProperties(
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE))) {
                     executeSetHandlingCompleted(info);
                 } else {
                     sendExceptionEncountered(info, "SetVolumeFailed", ExceptionErrorType::INTERNAL_ERROR);
@@ -345,12 +354,16 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
 
                 // Unmute before volume change.
                 // Do not send a MuteChanged Event.
-                if (executeSetMute(directiveType, false, true, SpeakerManagerObserverInterface::Source::DIRECTIVE) &&
+                if (executeSetMute(
+                        directiveType,
+                        false,
+                        SpeakerManagerInterface::NotificationProperties(
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE, false, false)) &&
                     executeAdjustVolume(
                         directiveType,
                         static_cast<int8_t>(delta),
-                        false,
-                        SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
+                        SpeakerManagerInterface::NotificationProperties(
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE))) {
                     executeSetHandlingCompleted(info);
                 } else {
                     sendExceptionEncountered(info, "SetVolumeFailed", ExceptionErrorType::INTERNAL_ERROR);
@@ -379,8 +392,11 @@ void SpeakerManager::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveI
                 if (!mute) {
                     success = executeRestoreVolume(directiveType, SpeakerManagerObserverInterface::Source::DIRECTIVE);
                 }
-                success &=
-                    executeSetMute(directiveType, mute, false, SpeakerManagerObserverInterface::Source::DIRECTIVE);
+                success &= executeSetMute(
+                    directiveType,
+                    mute,
+                    SpeakerManagerInterface::NotificationProperties(
+                        SpeakerManagerObserverInterface::Source::DIRECTIVE));
 
                 if (success) {
                     executeSetHandlingCompleted(info);
@@ -433,7 +449,7 @@ void SpeakerManager::removeSpeakerManagerObserver(
 }
 
 bool SpeakerManager::validateSpeakerSettingsConsistency(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     SpeakerInterface::SpeakerSettings* settings) {
     // Iterate through speakers and ensure all have the same volume.
     // Returns a pair of iterators.
@@ -459,13 +475,14 @@ bool SpeakerManager::validateSpeakerSettingsConsistency(
         return false;
     }
 
-    std::multimap<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>::iterator typeAndSpeakerIterator = begin;
+    std::multimap<ChannelVolumeInterface::Type, std::shared_ptr<ChannelVolumeInterface>>::iterator
+        typeAndSpeakerIterator = begin;
     while (++typeAndSpeakerIterator != end) {
-        auto speaker = typeAndSpeakerIterator->second;
+        auto volumeGroup = typeAndSpeakerIterator->second;
         SpeakerInterface::SpeakerSettings temp;
 
         // Retrieve speaker settings of current speaker.
-        if (!speaker->getSpeakerSettings(&temp)) {
+        if (!volumeGroup->getSpeakerSettings(&temp)) {
             ACSDK_ERROR(LX("validateSpeakerSettingsConsistencyFailed").d("reason", "gettingSpeakerSettingsFailed"));
             submitMetric(m_metricRecorder, "speakersCannotGetSetting", 1);
             return false;
@@ -499,15 +516,15 @@ bool SpeakerManager::validateSpeakerSettingsConsistency(
 }
 
 bool SpeakerManager::updateContextManager(
-    const SpeakerInterface::Type& type,
+    const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG9(LX("updateContextManagerCalled").d("speakerType", type));
 
-    if (SpeakerInterface::Type::AVS_SPEAKER_VOLUME != type) {
-        ACSDK_DEBUG(LX("updateContextManagerSkipped")
-                        .d("reason", "typeMismatch")
-                        .d("expected", SpeakerInterface::Type::AVS_SPEAKER_VOLUME)
-                        .d("actual", type));
+    if (ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME != type) {
+        ACSDK_DEBUG9(LX("updateContextManagerSkipped")
+                         .d("reason", "typeMismatch")
+                         .d("expected", ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME)
+                         .d("actual", type));
         return false;
     }
 
@@ -532,29 +549,42 @@ bool SpeakerManager::updateContextManager(
 }
 
 std::future<bool> SpeakerManager::setVolume(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
+    int8_t volume,
+    const SpeakerManagerInterface::NotificationProperties& properties) {
+    ACSDK_DEBUG9(LX(__func__).d("volume", static_cast<int>(volume)));
+    return m_executor.submit([this, type, volume, properties] {
+        return withinBounds(volume, AVS_SET_VOLUME_MIN, AVS_SET_VOLUME_MAX) &&
+               executeSetVolume(type, volume, properties);
+    });
+}
+
+std::future<bool> SpeakerManager::setVolume(
+    ChannelVolumeInterface::Type type,
     int8_t volume,
     bool forceNoNotifications,
     SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("setVolumeCalled").d("volume", static_cast<int>(volume)));
-    return m_executor.submit([this, type, volume, forceNoNotifications, source] {
-        return withinBounds(volume, AVS_SET_VOLUME_MIN, AVS_SET_VOLUME_MAX) &&
-               executeSetVolume(type, volume, forceNoNotifications, source);
-    });
+    SpeakerManagerInterface::NotificationProperties properties;
+    properties.source = source;
+
+    if (forceNoNotifications) {
+        properties.notifyObservers = false;
+        properties.notifyAVS = false;
+    }
+    return setVolume(type, volume, properties);
 }
 
 bool SpeakerManager::executeSetVolume(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     int8_t volume,
-    bool forceNoNotifications,
-    SpeakerManagerObserverInterface::Source source) {
+    const SpeakerManagerInterface::NotificationProperties& properties) {
     ACSDK_DEBUG9(LX("executeSetVolumeCalled").d("volume", static_cast<int>(volume)));
     if (m_speakerMap.count(type) == 0) {
         ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "noSpeakersWithType").d("type", type));
         submitMetric(m_metricRecorder, "setVolumeFailedZeroSpeakers", 1);
         return false;
     }
-
     submitMetric(m_metricRecorder, "setVolumeFailedZeroSpeakers", 0);
     submitMetric(m_metricRecorder, "setVolume", 1);
     if (volume == 0) {
@@ -581,14 +611,15 @@ bool SpeakerManager::executeSetVolume(
     const int8_t previousVolume = settings.volume;
 
     retryAndApplySettings([this, type, adjustedVolume]() -> bool {
-        // Go through list of Speakers with SpeakerInterface::Type equal to type, and call setVolume.
+        // Go through list of Speakers with ChannelVolumeInterface::Type equal
+        // to type, and call setVolume.
         auto beginIteratorAndEndIterator = m_speakerMap.equal_range(type);
         auto begin = beginIteratorAndEndIterator.first;
         auto end = beginIteratorAndEndIterator.second;
 
         for (auto typeAndSpeakerIterator = begin; typeAndSpeakerIterator != end; typeAndSpeakerIterator++) {
             auto speaker = typeAndSpeakerIterator->second;
-            if (!speaker->setVolume(adjustedVolume)) {
+            if (!speaker->setUnduckedVolume(adjustedVolume)) {
                 submitMetric(m_metricRecorder, "setSpeakerVolumeFailed", 1);
                 return false;
             }
@@ -606,18 +637,21 @@ bool SpeakerManager::executeSetVolume(
 
     updateContextManager(type, settings);
 
-    if (forceNoNotifications) {
-        ACSDK_INFO(LX("executeSetVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
-    } else if (previousVolume == settings.volume && SpeakerManagerObserverInterface::Source::LOCAL_API == source) {
-        ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending event").d("reason", "volumeUnchanged"));
-        executeNotifyObserver(source, type, settings);
-    } else {
-        executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
+    if (properties.notifyObservers) {
+        executeNotifyObserver(properties.source, type, settings);
     }
+
+    if (properties.notifyAVS && !(previousVolume == settings.volume &&
+                                  SpeakerManagerObserverInterface::Source::LOCAL_API == properties.source)) {
+        executeNotifySettingsChanged(settings, VOLUME_CHANGED, properties.source, type);
+    }
+
     return true;
 }
 
-bool SpeakerManager::executeRestoreVolume(SpeakerInterface::Type type, SpeakerManagerObserverInterface::Source source) {
+bool SpeakerManager::executeRestoreVolume(
+    ChannelVolumeInterface::Type type,
+    SpeakerManagerObserverInterface::Source source) {
     SpeakerInterface::SpeakerSettings settings;
 
     // All initialized speakers controlled by directives with the same type should have the same state.
@@ -630,26 +664,43 @@ bool SpeakerManager::executeRestoreVolume(SpeakerInterface::Type type, SpeakerMa
         return true;
     }
 
-    return executeSetVolume(type, m_minUnmuteVolume, true, source);
+    return executeSetVolume(
+        type, m_minUnmuteVolume, SpeakerManagerInterface::NotificationProperties(source, false, false));
 }
 
 std::future<bool> SpeakerManager::adjustVolume(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
+    int8_t delta,
+    const NotificationProperties& properties) {
+    ACSDK_DEBUG9(LX(__func__).d("delta", static_cast<int>(delta)));
+    return m_executor.submit([this, type, delta, properties] {
+        return withinBounds(delta, AVS_ADJUST_VOLUME_MIN, getMaximumVolumeLimit()) &&
+               executeAdjustVolume(type, delta, properties);
+    });
+}
+
+std::future<bool> SpeakerManager::adjustVolume(
+    ChannelVolumeInterface::Type type,
     int8_t delta,
     bool forceNoNotifications,
     SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("adjustVolumeCalled").d("delta", static_cast<int>(delta)));
-    return m_executor.submit([this, type, delta, forceNoNotifications, source] {
-        return withinBounds(delta, AVS_ADJUST_VOLUME_MIN, getMaximumVolumeLimit()) &&
-               executeAdjustVolume(type, delta, forceNoNotifications, source);
-    });
+    SpeakerManagerInterface::NotificationProperties properties;
+    properties.source = source;
+
+    if (forceNoNotifications) {
+        ACSDK_INFO(LX(__func__).d("reason", "forceNoNotifications").m("Skipping sending notifications"));
+        properties.notifyObservers = false;
+        properties.notifyAVS = false;
+    }
+
+    return adjustVolume(type, delta, properties);
 }
 
 bool SpeakerManager::executeAdjustVolume(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     int8_t delta,
-    bool forceNoNotifications,
-    SpeakerManagerObserverInterface::Source source) {
+    const SpeakerManagerInterface::NotificationProperties& properties) {
     ACSDK_DEBUG9(LX("executeAdjustVolumeCalled").d("delta", (int)delta));
     if (m_speakerMap.count(type) == 0) {
         ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "noSpeakersWithType").d("type", type));
@@ -683,15 +734,17 @@ bool SpeakerManager::executeAdjustVolume(
     }
 
     retryAndApplySettings([this, type, settings] {
-        // Go through list of Speakers with SpeakerInterface::Type equal to type, and call setVolume.
-        // using setVolume instead of adjustVolume since if a subset of speakers fail : the delta will be reapplied.
+        // Go through list of Speakers with ChannelVolumeInterface::Type equal
+        // to type, and call setVolume.
+        // NOTE : we dont use adjustVolume : since if a subset of speakers fail :
+        // the delta will be reapplied
         auto beginIteratorAndEndIterator = m_speakerMap.equal_range(type);
         auto begin = beginIteratorAndEndIterator.first;
         auto end = beginIteratorAndEndIterator.second;
 
         for (auto typeAndSpeakerIterator = begin; typeAndSpeakerIterator != end; typeAndSpeakerIterator++) {
             auto speaker = typeAndSpeakerIterator->second;
-            if (!speaker->setVolume(settings.volume)) {
+            if (!speaker->setUnduckedVolume(settings.volume)) {
                 return false;
             }
         }
@@ -707,34 +760,48 @@ bool SpeakerManager::executeAdjustVolume(
 
     updateContextManager(type, settings);
 
-    if (forceNoNotifications) {
-        ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
-    } else if (previousVolume == settings.volume && SpeakerManagerObserverInterface::Source::LOCAL_API == source) {
-        ACSDK_INFO(LX("executeAdjustVolume").m("Skipping sending event").d("reason", "volumeUnchanged"));
-        executeNotifyObserver(source, type, settings);
-    } else {
-        executeNotifySettingsChanged(settings, VOLUME_CHANGED, source, type);
+    if (properties.notifyObservers) {
+        executeNotifyObserver(properties.source, type, settings);
+    }
+
+    if (properties.notifyAVS && !(previousVolume == settings.volume &&
+                                  SpeakerManagerObserverInterface::Source::LOCAL_API == properties.source)) {
+        executeNotifySettingsChanged(settings, VOLUME_CHANGED, properties.source, type);
     }
 
     return true;
 }
 
 std::future<bool> SpeakerManager::setMute(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
+    bool mute,
+    const SpeakerManagerInterface::NotificationProperties& properties) {
+    ACSDK_DEBUG9(LX(__func__).d("mute", mute));
+    return m_executor.submit([this, type, mute, properties] { return executeSetMute(type, mute, properties); });
+}
+
+std::future<bool> SpeakerManager::setMute(
+    ChannelVolumeInterface::Type type,
     bool mute,
     bool forceNoNotifications,
     SpeakerManagerObserverInterface::Source source) {
     ACSDK_DEBUG9(LX("setMuteCalled").d("mute", mute));
-    return m_executor.submit([this, type, mute, forceNoNotifications, source] {
-        return executeSetMute(type, mute, forceNoNotifications, source);
-    });
+    SpeakerManagerInterface::NotificationProperties properties;
+    properties.source = source;
+
+    if (forceNoNotifications) {
+        ACSDK_INFO(LX(__func__).d("reason", "forceNoNotifications").m("Skipping sending notifications"));
+        properties.notifyObservers = false;
+        properties.notifyAVS = false;
+    }
+
+    return setMute(type, mute, properties);
 }
 
 bool SpeakerManager::executeSetMute(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     bool mute,
-    bool forceNoNotifications,
-    SpeakerManagerObserverInterface::Source source) {
+    const SpeakerManagerInterface::NotificationProperties& properties) {
     ACSDK_DEBUG9(LX("executeSetMuteCalled").d("mute", mute));
 
     // if unmuting an already unmute speaker, then ignore the request
@@ -755,10 +822,8 @@ bool SpeakerManager::executeSetMute(
         return false;
     }
 
-    submitMetric(m_metricRecorder, mute ? "setMute" : "setUnMute", 1);
-
     retryAndApplySettings([this, type, mute] {
-        // Go through list of Speakers with SpeakerInterface::Type equal to type, and call setMute.
+        // Go through list of Speakers with ChannelVolumeInterface::Type equal to type, and call setMute.
         auto beginIteratorAndEndIterator = m_speakerMap.equal_range(type);
         auto begin = beginIteratorAndEndIterator.first;
         auto end = beginIteratorAndEndIterator.second;
@@ -772,6 +837,7 @@ bool SpeakerManager::executeSetMute(
         return true;
     });
 
+    submitMetric(m_metricRecorder, mute ? "setMute" : "setUnMute", 1);
     SpeakerInterface::SpeakerSettings settings;
 
     // All initialized speakers controlled by directives with the same type should have the same state.
@@ -782,10 +848,12 @@ bool SpeakerManager::executeSetMute(
 
     updateContextManager(type, settings);
 
-    if (forceNoNotifications) {
-        ACSDK_INFO(LX("executeSetMute").m("Skipping sending notifications").d("reason", "forceNoNotifications"));
-    } else {
-        executeNotifySettingsChanged(settings, MUTE_CHANGED, source, type);
+    if (properties.notifyObservers) {
+        executeNotifyObserver(properties.source, type, settings);
+    }
+
+    if (properties.notifyAVS) {
+        executeNotifySettingsChanged(settings, MUTE_CHANGED, properties.source, type);
     }
 
     return true;
@@ -821,7 +889,10 @@ bool SpeakerManager::executeSetMaximumVolumeLimit(const int8_t maximumVolumeLimi
                              .d("limit", (int)maximumVolumeLimit));
 
             if (!executeSetVolume(
-                    speakerType, maximumVolumeLimit, false, SpeakerManagerObserverInterface::Source::DIRECTIVE)) {
+                    speakerType,
+                    maximumVolumeLimit,
+                    SpeakerManagerInterface::NotificationProperties(
+                        SpeakerManagerObserverInterface::Source::DIRECTIVE))) {
                 ACSDK_ERROR(LX("executeSetMaximumVolumeLimitFailed").d("reason", "setVolumeFailed"));
                 return false;
             }
@@ -830,17 +901,15 @@ bool SpeakerManager::executeSetMaximumVolumeLimit(const int8_t maximumVolumeLimi
     m_maximumVolumeLimit = maximumVolumeLimit;
     return true;
 }
-#endif
+#endif  // ENABLE_MAXVOLUME_SETTING
 
 void SpeakerManager::executeNotifySettingsChanged(
     const SpeakerInterface::SpeakerSettings& settings,
     const std::string& eventName,
     const SpeakerManagerObserverInterface::Source& source,
-    const SpeakerInterface::Type& type) {
-    executeNotifyObserver(source, type, settings);
-
+    const ChannelVolumeInterface::Type& type) {
     // Only send an event if the AVS_SPEAKER_VOLUME settings changed.
-    if (SpeakerInterface::Type::AVS_SPEAKER_VOLUME == type) {
+    if (ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME == type) {
         executeSendSpeakerSettingsChangedEvent(eventName, settings);
     } else {
         ACSDK_INFO(LX("eventNotSent").d("reason", "typeMismatch").d("speakerType", type));
@@ -849,7 +918,7 @@ void SpeakerManager::executeNotifySettingsChanged(
 
 void SpeakerManager::executeNotifyObserver(
     const SpeakerManagerObserverInterface::Source& source,
-    const SpeakerInterface::Type& type,
+    const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG9(LX("executeNotifyObserverCalled"));
     for (auto observer : m_observers) {
@@ -858,14 +927,14 @@ void SpeakerManager::executeNotifyObserver(
 }
 
 std::future<bool> SpeakerManager::getSpeakerSettings(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     SpeakerInterface::SpeakerSettings* settings) {
     ACSDK_DEBUG9(LX("getSpeakerSettingsCalled"));
     return m_executor.submit([this, type, settings] { return executeGetSpeakerSettings(type, settings); });
 }
 
 bool SpeakerManager::executeGetSpeakerSettings(
-    SpeakerInterface::Type type,
+    ChannelVolumeInterface::Type type,
     SpeakerInterface::SpeakerSettings* settings) {
     ACSDK_DEBUG9(LX("executeGetSpeakerSettingsCalled"));
     if (m_speakerMap.count(type) == 0) {
@@ -881,13 +950,16 @@ bool SpeakerManager::executeGetSpeakerSettings(
     return true;
 }
 
-void SpeakerManager::addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) {
-    if (!speaker) {
-        ACSDK_ERROR(LX("addSpeakerFailed").d("reason", "speaker cannot be nullptr"));
+void SpeakerManager::addChannelVolumeInterface(
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface) {
+    if (!channelVolumeInterface) {
+        ACSDK_ERROR(LX("addChannelVolumeInterfaceFailed").d("reason", "channelVolumeInterface cannot be nullptr"));
         return;
     }
-    m_speakerMap.insert(
-        std::pair<SpeakerInterface::Type, std::shared_ptr<SpeakerInterface>>(speaker->getSpeakerType(), speaker));
+    m_executor.submit([this, channelVolumeInterface] {
+        m_speakerMap.insert(std::pair<ChannelVolumeInterface::Type, std::shared_ptr<ChannelVolumeInterface>>(
+            channelVolumeInterface->getSpeakerType(), channelVolumeInterface));
+    });
 }
 
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeakerManager::
@@ -917,6 +989,7 @@ void SpeakerManager::retryAndApplySettings(Task task, Args&&... args) {
         attempt++;
     }
 }
+
 }  // namespace speakerManager
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,6 +29,8 @@ enum HTTPResponseCode {
     HTTP_RESPONSE_CODE_UNDEFINED = 0,
     /// HTTP Success with response payload.
     SUCCESS_OK = 200,
+    /// HTTP Success with payload accepted for processing
+    SUCCESS_ACCEPTED = 202,
     /// HTTP Success with no response payload.
     SUCCESS_NO_CONTENT = 204,
     /// This is used to detect the first Redirection (3xx) code

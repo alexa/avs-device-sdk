@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 #include <gtest/gtest.h>
 
 #include "AVSCommon/Utils/Metrics/DataPoint.h"
-#include "AVSCommon/Utils/Metrics/DataPointCounterBuilder.h"
 #include "AVSCommon/Utils/Metrics/DataPointStringBuilder.h"
 #include "AVSCommon/Utils/Metrics/MetricEvent.h"
 #include "AVSCommon/Utils/Metrics/MetricEventBuilder.h"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
@@ -202,6 +203,7 @@ public:
      * @param customerDataManager Object that will track the CustomerDataHandler.
      * @param enabledConnectionRules The set of devices connection rules enabled by the Bluetooth stack from
      * customers.
+     * @param bluetoothChannelVolumeInterface The @c ChannelVolumeInterface used to control bluetooth channel volume
      * @param mediaInputTransformer Transforms incoming Media commands if supported.
      */
     static std::shared_ptr<Bluetooth> create(
@@ -216,6 +218,7 @@ public:
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
             enabledConnectionRules,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> bluetoothChannelVolumeInterface,
         std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer = nullptr);
 
     /// @name CapabilityAgent Functions
@@ -305,6 +308,8 @@ private:
      * @param customerDataManager Object that will track the CustomerDataHandler.
      * @param enabledConnectionRules The set of devices connection rules enabled by the Bluetooth stack from
      * customers.
+     * @param bluetoothChannelVolumeInterface Responsible for Volume Control/Attenuation of the underlying
+     * SpeakerInterface
      * @param mediaInputTransformer Transforms incoming Media commands.
      */
     Bluetooth(
@@ -319,6 +324,7 @@ private:
         std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
             enabledConnectionRules,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> bluetoothChannelVolumeInterface,
         std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer);
 
     /**
@@ -905,7 +911,7 @@ private:
      * to send to cloud.
      * @param device The device.
      * @param state  The @c DeviceState of the @c BluetoothEventState.
-     * @return The @c BluetoothEventState removed from m_bluetoothEvenetStates.
+     * @return The @c BluetoothEventState removed from m_bluetoothEventStates.
      */
     std::shared_ptr<BluetoothEventState> executeRemoveBluetoothEventState(
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface> device,
@@ -1028,6 +1034,10 @@ private:
 
     /// Map of <mac, Set<BluetoothEventState>> used to keep track of Bluetooth event state needed to send to cloud.
     std::map<std::string, std::unordered_set<std::shared_ptr<BluetoothEventState>>> m_bluetoothEventStates;
+
+    /// A ChannelVolumeInterface that handles Volume Settings / Volume Attenuation for the underlying Bluetooth
+    /// SpeakerInterface
+    std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> m_bluetoothChannelVolumeInterface;
 
     /// An executor used for serializing requests on the Bluetooth agent's own thread of execution.
     avsCommon::utils::threading::Executor m_executor;

@@ -54,7 +54,6 @@ function(asdk_install_targets targets install_headers)
     endif()
 endfunction()
 
-
 # Function to install the target with list of include paths
 function(asdk_install_multiple path_list)
     SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)

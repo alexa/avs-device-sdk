@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#include <chrono>
 
 #include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/Logger/ThreadMoniker.h"
@@ -33,14 +35,30 @@ namespace utils {
 namespace threading {
 
 using namespace logger;
+using namespace std::chrono;
 
-TaskThread::TaskThread() : m_alreadyStarting{false}, m_moniker{ThreadMoniker::generateMoniker()} {
+TaskThread::TaskThread() :
+        m_shuttingDown{false},
+        m_stop{false},
+        m_alreadyStarting{false},
+        m_threadPool{ThreadPool::getDefaultThreadPool()} {
 }
 
 TaskThread::~TaskThread() {
-    m_stop = true;
-    if (m_thread.joinable()) {
-        m_thread.join();
+    for (;;) {
+        {
+            std::lock_guard<std::mutex> guard(m_mutex);
+            if (!m_alreadyStarting || m_workerThread == nullptr) {
+                m_shuttingDown = true;
+                return;
+            }
+            // if We get here, then we obtained the mutex between TaskThread::start and TaskThread::run methods.
+        }
+        // Wait until the thread has begun running so we can stop safely.
+        while (m_alreadyStarting) {
+            std::this_thread::yield();
+        }
+        m_stop = true;
     }
 }
 
@@ -56,24 +74,36 @@ bool TaskThread::start(std::function<bool()> jobRunner) {
         return false;
     }
 
-    m_oldThread = std::move(m_thread);
-    m_thread = std::thread{std::bind(&TaskThread::run, this, std::move(jobRunner))};
+    m_startTime = steady_clock::now();
+
+    m_stop = true;
+    std::lock_guard<std::mutex> guard(m_mutex);
+    if (m_shuttingDown) {
+        ACSDK_ERROR(LX("startFailed").d("reason", "shuttingDown"));
+        return false;
+    }
+    m_workerThread = m_threadPool->obtainWorker(m_moniker);
+
+    m_moniker = m_workerThread->getMoniker();
+    m_workerThread->run([this, jobRunner] {
+        TaskThread::run(jobRunner);
+        return false;
+    });
     return true;
 }
 
 void TaskThread::run(std::function<bool()> jobRunner) {
-    if (m_oldThread.joinable()) {
-        m_stop = true;
-        m_oldThread.join();
-    }
-
+    std::lock_guard<std::mutex> guard(m_mutex);
+    ACSDK_DEBUG9(LX("startThread")
+                     .d("moniker", m_moniker)
+                     .d("duration", duration_cast<microseconds>(steady_clock::now() - m_startTime).count()));
     // Reset stop flag and already starting flag.
     m_stop = false;
     m_alreadyStarting = false;
-    ThreadMoniker::setThisThreadMoniker(m_moniker);
 
     while (!m_stop && jobRunner())
         ;
+    m_threadPool->releaseWorker(std::move(m_workerThread));
 }
 
 }  // namespace threading

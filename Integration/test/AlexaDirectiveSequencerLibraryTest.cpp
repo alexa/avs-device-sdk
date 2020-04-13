@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@
 #include <string>
 #include <unordered_map>
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
+#include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-#include <rapidjson/error/en.h>
 
 #include <ACL/AVSConnectionManager.h>
 #include <ADSL/DirectiveSequencer.h>
@@ -570,7 +570,7 @@ TEST_F(AlexaDirectiveSequencerLibraryTest, test_sendDirectiveWithDifferentDialog
  * are then consumed verifying cancellation of @c AVSDirectives from the first group and handling of @c AVSDirectives
  * in the second group.
  */
-TEST_F(AlexaDirectiveSequencerLibraryTest, test_dropQueueAfterBargeIn) {
+TEST_F(AlexaDirectiveSequencerLibraryTest, DISABLED_test_dropQueueAfterBargeIn) {
     DirectiveHandlerConfiguration config;
     config[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     config[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);

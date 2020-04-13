@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,10 +71,6 @@ const static std::string MANUFACTURER_NAME_KEY = "manufacturerName";
 const static std::string DISPLAY_CATEGORIES_KEY = "displayCategories";
 /// Additional Attributes key
 const static std::string ADDITIONAL_ATTRIBUTES_KEY = "additionalAttributes";
-/// Registration object key
-const static std::string REGISTRATION_KEY = "registration";
-/// Product ID key
-const static std::string PRODUCT_ID_KEY = "productId";
 /// DSN Key
 const static std::string DEVICE_SERIAL_NUMBER_KEY = "deviceSerialNumber";
 /// Connections Key
@@ -91,7 +87,7 @@ static const std::string ADDITIONAL_SERIAL_NUMBER_KEY = "serialNumber";
 static const std::string ADDITIONAL_FIRMWARE_VERSION_KEY = "firmwareVersion";
 /// software version key
 static const std::string ADDITIONAL_SOFTWARE_VERSION_KEY = "softwareVersion";
-/// custom identitifier key
+/// custom identifier key
 static const std::string ADDITIONAL_CUSTOM_IDENTIFIER_KEY = "customIdentifier";
 /// Capabilities key in message body
 static const std::string CAPABILITIES_KEY = "capabilities";
@@ -288,8 +284,9 @@ std::string getEndpointConfigJson(
 
     /// Registration Object.
     if (endpointAttributes.registration.hasValue()) {
-        JsonObjectScope registration(&generator, REGISTRATION_KEY);
-        generator.addMember(PRODUCT_ID_KEY, endpointAttributes.registration.value().productId);
+        JsonObjectScope registration(&generator, endpointAttributes.registration.value().registrationKey);
+        generator.addMember(
+            endpointAttributes.registration.value().productIdKey, endpointAttributes.registration.value().productId);
         generator.addMember(DEVICE_SERIAL_NUMBER_KEY, endpointAttributes.registration.value().serialNumber);
     }
 

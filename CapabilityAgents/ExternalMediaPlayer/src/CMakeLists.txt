@@ -1,25 +1,23 @@
 add_definitions("-DACSDK_LOG_MODULE=ExternalMediaPlayer")
-set(ExternalMediaPlayer_SOURCES )
-list(APPEND ExternalMediaPlayer_SOURCES ExternalMediaPlayer.cpp)
-
-if(HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
-    add_subdirectory("ExternalMediaPlayerAdapters")
-endif()
 
 add_library(ExternalMediaPlayer SHARED
-        ${ExternalMediaPlayer_SOURCES})
+        AuthorizedSender.cpp
+        ExternalMediaPlayer.cpp)
 
 target_include_directories(ExternalMediaPlayer PUBLIC
-    "${ExternalMediaPlayer_SOURCE_DIR}/include"
-    "${AVSCommon_INCLUDE_DIRS}")
+    "${ExternalMediaPlayer_SOURCE_DIR}/include")
 
 target_link_libraries(ExternalMediaPlayer
-    AVSCommon)
+    AVSCommon CertifiedSender)
 
-if(HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
-    target_link_libraries(ExternalMediaPlayer ExternalMediaPlayerAdapters)
-endif()
+set(EXTERNAL_MEDIA_PLAYER_ADAPTER_TARGETS "" CACHE INTERNAL "")
 
+# Add adapters and find linkable targets.
+add_external_media_player_adapters("${EXTERNAL_MEDIA_PLAYER_ADAPTER_PATHS}")
+
+foreach(ADAPTER IN LISTS ALL_EMP_ADAPTER_TARGETS)
+    target_link_libraries(ExternalMediaPlayer ${ADAPTER})
+endforeach()
 
 # install target
 asdk_install()

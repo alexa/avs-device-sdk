@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::externalMediaPlayer;
 
 /*
- * As per Spotify integration spec request for RequestToken retries shall not be performed in
+ * As per the integration spec, request for RequestToken retries shall not be performed in
  * an interval of less than 800 milliseconds.
  */
 const std::vector<int> SESSION_RETRY_TABLE = {
@@ -128,6 +128,10 @@ rapidjson::Value buildSessionState(
     playerJson.AddMember(IS_GUEST, sessionState.isGuest, allocator);
     playerJson.AddMember(LAUNCHED, sessionState.launched, allocator);
     playerJson.AddMember(ACTIVE, sessionState.active, allocator);
+    playerJson.AddMember(SPI_VERSION, sessionState.spiVersion, allocator);
+    playerJson.AddMember(PLAYER_COOKIE, sessionState.playerCookie, allocator);
+    playerJson.AddMember(SKILL_TOKEN, sessionState.skillToken, allocator);
+    playerJson.AddMember(PLAYBACK_SESSION_ID, sessionState.playbackSessionId, allocator);
 
     return playerJson;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -249,8 +249,9 @@ public:
      * Constructor.
      */
     Alert(
-        std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-        std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+            defaultAudioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> shortAudioFactory,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
@@ -265,14 +266,16 @@ public:
      *
      * @return A factory function that generates a default audio stream.
      */
-    std::function<std::unique_ptr<std::istream>()> getDefaultAudioFactory() const;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    getDefaultAudioFactory() const;
 
     /**
      * A function that gets a factory to create a stream to the short audio for an alert.
      *
      * @return A factory function that generates a short audio stream.
      */
-    std::function<std::unique_ptr<std::istream>()> getShortAudioFactory() const;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> getShortAudioFactory()
+        const;
 
     /**
      * Returns the Context data which may be shared with AVS.
@@ -494,9 +497,11 @@ private:
     /// The renderer for the alert.
     std::shared_ptr<renderer::RendererInterface> m_renderer;
     /// This is the factory that provides a default audio stream.
-    const std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
+    const std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+        m_defaultAudioFactory;
     /// This is the factory that provides a short audio stream.
-    const std::function<std::unique_ptr<std::istream>()> m_shortAudioFactory;
+    const std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+        m_shortAudioFactory;
     /// The settings manager used to retrieve the value of alarm volume ramp setting.
     std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
 };

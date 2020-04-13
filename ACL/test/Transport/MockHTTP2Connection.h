@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,18 +49,28 @@ public:
      * Constructor
      * @param dURL The URL for downchannel requests.
      * @param pingURL The URL for ping requests.
+     * @param delegateToReal Whether the mock should delegate to real methods when possible. If false, all methods
+     * will need expectations set.
      */
-    MockHTTP2Connection(std::string dURL, std::string pingURL);
+    MockHTTP2Connection(std::string dURL, std::string pingURL, bool delegateToReal = true);
 
     ~MockHTTP2Connection() = default;
 
     /// @name HTTP2ConnectionInterface methods
     /// @{
-    std::shared_ptr<HTTP2RequestInterface> createAndSendRequest(const HTTP2RequestConfig& config);
+    MOCK_METHOD1(createAndSendRequest, std::shared_ptr<HTTP2RequestInterface>(const HTTP2RequestConfig& config));
     MOCK_METHOD0(disconnect, void());
     void addObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer);
     void removeObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer);
     /// @}
+
+    /**
+     * A concrete implementation that performs a createAndSendRequest call.
+     *
+     * @param config The HTTP2RequestConfig.
+     * @return The request that was created with the provided config.
+     */
+    std::shared_ptr<HTTP2RequestInterface> createAndSendRequestConcrete(const HTTP2RequestConfig& config);
 
     /**
      * Check whether there are any HTTP requests sent.

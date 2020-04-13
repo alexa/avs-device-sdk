@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_UTILS_DISCOVERYUTILS_H_
 #define ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_UTILS_DISCOVERYUTILS_H_
 
-#include <string>
 #include <map>
 #include <utility>
+#include <string>
 #include <vector>
 
-#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,16 +21,22 @@ namespace utils {
 namespace http2 {
 namespace test {
 
+using namespace ::testing;
 using namespace avsCommon::utils::http;
 
-MockHTTP2Connection::MockHTTP2Connection(std::string dURL, std::string pingURL) :
+MockHTTP2Connection::MockHTTP2Connection(std::string dURL, std::string pingURL, bool delegateToReal) :
         m_downchannelURL{dURL},
         m_pingURL{pingURL},
         m_postResponseCode{HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED},
         m_maxPostRequestsEnqueued{0} {
+    if (delegateToReal) {
+        ON_CALL(*this, createAndSendRequest(_))
+            .WillByDefault(Invoke(this, &MockHTTP2Connection::createAndSendRequestConcrete));
+    }
 }
 
-std::shared_ptr<HTTP2RequestInterface> MockHTTP2Connection::createAndSendRequest(const HTTP2RequestConfig& config) {
+std::shared_ptr<HTTP2RequestInterface> MockHTTP2Connection::createAndSendRequestConcrete(
+    const HTTP2RequestConfig& config) {
     std::lock_guard<std::mutex> lock(m_requestMutex);
     // Create HTTP2 request from config.
     auto request = std::make_shared<MockHTTP2Request>(config);

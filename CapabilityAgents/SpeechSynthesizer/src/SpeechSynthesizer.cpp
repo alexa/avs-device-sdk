@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -138,6 +138,12 @@ static const std::string FIRST_BYTES_AUDIO = "FIRST_BYTES_AUDIO";
 
 /// Metric to emit at the start of TTS
 static const std::string TTS_STARTED = "TTS_STARTED";
+
+/// Metric to emit when TTS finishes
+static const std::string TTS_FINISHED = "TTS_FINISHED";
+
+/// Key name for the dialogRequestId metric information
+static const std::string DIALOG_REQUEST_ID_KEY = "DIALOG_REQUEST_ID";
 
 /// Metric to emit on TTS buffer underrrun
 static const std::string BUFFER_UNDERRUN = "ERROR.TTS_BUFFER_UNDERRUN";
@@ -341,6 +347,7 @@ void SpeechSynthesizer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
 void SpeechSynthesizer::onPlaybackStarted(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackStarted").d("callbackSourceId", id));
     ACSDK_METRIC_IDS(TAG, "SpeechStarted", "", "", Metrics::Location::SPEECH_SYNTHESIZER_RECEIVE);
+
     m_executor.submit([this, id] {
         if (id != m_mediaSourceId) {
             ACSDK_ERROR(LX("queueingExecutePlaybackStartedFailed")
@@ -351,7 +358,11 @@ void SpeechSynthesizer::onPlaybackStarted(SourceId id, const MediaPlayerState&) 
         } else {
             submitMetric(MetricEventBuilder{}
                              .setActivityName(SPEECH_SYNTHESIZER_METRIC_PREFIX + TTS_STARTED)
-                             .addDataPoint(DataPointCounterBuilder{}.setName(TTS_STARTED).increment(1).build()));
+                             .addDataPoint(DataPointCounterBuilder{}.setName(TTS_STARTED).increment(1).build())
+                             .addDataPoint(DataPointStringBuilder{}
+                                               .setName(DIALOG_REQUEST_ID_KEY)
+                                               .setValue(m_currentInfo->directive->getDialogRequestId())
+                                               .build()));
             executePlaybackStarted();
         }
     });
@@ -369,6 +380,13 @@ void SpeechSynthesizer::onPlaybackFinished(SourceId id, const MediaPlayerState&)
                             .d("sourceId", m_mediaSourceId));
             executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "executePlaybackFinishedFailed");
         } else {
+            submitMetric(MetricEventBuilder{}
+                             .setActivityName(SPEECH_SYNTHESIZER_METRIC_PREFIX + TTS_FINISHED)
+                             .addDataPoint(DataPointCounterBuilder{}.setName(TTS_FINISHED).increment(1).build())
+                             .addDataPoint(DataPointStringBuilder{}
+                                               .setName(DIALOG_REQUEST_ID_KEY)
+                                               .setValue(m_currentInfo->directive->getDialogRequestId())
+                                               .build()));
             executePlaybackFinished();
         }
     });
@@ -1028,6 +1046,7 @@ void SpeechSynthesizer::setCurrentStateLocked(SpeechSynthesizerObserverInterface
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:
             break;
     }
+
     for (auto observer : m_observers) {
         observer->onStateChanged(m_currentState, m_mediaSourceId, m_speechPlayer->getMediaPlayerState(m_mediaSourceId));
     }

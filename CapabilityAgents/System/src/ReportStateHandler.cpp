@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -282,6 +282,11 @@ void system::ReportStateHandler::clearData() {
     std::lock_guard<std::mutex> lock(m_stateMutex);
     m_storage->clearTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
     m_storage->deleteTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
+}
+
+void ReportStateHandler::addStateReportGenerator(const StateReportGenerator& generator) {
+    std::lock_guard<std::mutex> lock(m_stateMutex);
+    m_generators.push_back(generator);
 }
 
 }  // namespace system

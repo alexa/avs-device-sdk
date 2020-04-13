@@ -10,14 +10,14 @@ fi
 
 FILE=${1}
 FULL_OUTPUT=${2}
+FILE_NAME=`echo $(basename ${FILE}) | sed -e 's/[^a-zA-Z0-9\]/_/g'`
 OUTPUT_FILE=$(basename ${FULL_OUTPUT})
-GUARD=`echo "ALEXA_CLIENT_SDK_${FULL_OUTPUT}" | tr '[:lower:]' '[:upper:]' | sed -e 's/[^a-zA-Z0-9\]/_/g' | sed -e 's/$/_/g'`
+GUARD=`echo "ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_${OUTPUT_FILE}" | tr '[:lower:]' '[:upper:]' | sed -e 's/[^a-zA-Z0-9\]/_/g' | sed -e 's/$/_/g'`
+CURR_YEAR=`date +"%Y"`
 
-cat <<EOF > ${FULL_OUTPUT}
+cat <<EOF > "${FULL_OUTPUT}"
 /*
- * ${OUTPUT_FILE}
- *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright ${CURR_YEAR} Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ cat <<EOF > ${FULL_OUTPUT}
  * ALEXA AUDIO ASSETS
  * ******************
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates ("Amazon").
+ * Copyright ${CURR_YEAR} Amazon.com, Inc. or its affiliates ("Amazon").
  * All Rights Reserved.
  *
  * These materials are licensed to you as "Alexa Materials" under the Alexa Voice
@@ -57,13 +57,14 @@ echo "namespace data {" >> ${FULL_OUTPUT}
 echo "" >> ${FULL_OUTPUT}
 echo "// clang-format off" >> ${FULL_OUTPUT}
 xxd -i ${FILE} >> ${FULL_OUTPUT}
+sed -i '' -e 's/unsigned int/constexpr unsigned int/' ${FULL_OUTPUT}
+echo "constexpr const char* ${FILE_NAME}_mimetype = \"$(file --mime-type -b ${FILE})\";" >> ${FULL_OUTPUT}
 echo "// clang-format on" >> ${FULL_OUTPUT}
-echo "" >> ${FULL_OUTPUT}
-echo "#endif  // ${GUARD}" >> ${FULL_OUTPUT}
 echo "" >> ${FULL_OUTPUT}
 echo "}  // namespace data" >> ${FULL_OUTPUT}
 echo "}  // namespace audio" >> ${FULL_OUTPUT}
 echo "}  // namespace resources" >> ${FULL_OUTPUT}
 echo "}  // namespace applicationUtilities" >> ${FULL_OUTPUT}
 echo "}  // namespace alexaClientSDK" >> ${FULL_OUTPUT}
-
+echo "" >> ${FULL_OUTPUT}
+echo "#endif  // ${GUARD}" >> ${FULL_OUTPUT}

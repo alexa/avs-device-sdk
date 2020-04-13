@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@
 #include <functional>
 #include <istream>
 #include <memory>
+#include <utility>
+
+#include <AVSCommon/Utils/MediaType.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -32,12 +35,18 @@ class AlertsAudioFactoryInterface {
 public:
     virtual ~AlertsAudioFactoryInterface() = default;
 
-    virtual std::function<std::unique_ptr<std::istream>()> alarmDefault() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> alarmShort() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> timerDefault() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> timerShort() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> reminderDefault() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> reminderShort() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> alarmDefault()
+        const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> alarmShort()
+        const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> timerDefault()
+        const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> timerShort()
+        const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    reminderDefault() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> reminderShort()
+        const = 0;
 };
 
 }  // namespace audio

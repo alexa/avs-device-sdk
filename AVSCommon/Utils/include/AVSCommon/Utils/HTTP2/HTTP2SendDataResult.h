@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 #include <cstddef>
 
+#include "AVSCommon/Utils/PlatformDefinitions.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2SendStatus.h"
 
 namespace alexaClientSDK {
@@ -43,13 +44,13 @@ struct HTTP2SendDataResult {
     explicit HTTP2SendDataResult(size_t size);
 
     /// Const PAUSE result.
-    static const HTTP2SendDataResult PAUSE;
+    static const avscommon_EXPORT HTTP2SendDataResult PAUSE;
 
     /// Const COMPLETE result.
-    static const HTTP2SendDataResult COMPLETE;
+    static const avscommon_EXPORT HTTP2SendDataResult COMPLETE;
 
     /// Const ABORT result.
-    static const HTTP2SendDataResult ABORT;
+    static const avscommon_EXPORT HTTP2SendDataResult ABORT;
 
 private:
     /**

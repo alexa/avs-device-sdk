@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -123,7 +123,7 @@ bool SQLiteDeviceSettingStorage::open() {
     // At this point, database is open.
     if (!m_db.tableExists(DEVICE_SETTINGS_TABLE_NAME) && !createSettingsTable()) {
         ACSDK_ERROR(LX("openFailed").m("Cannot create " + DEVICE_SETTINGS_TABLE_NAME + " table"));
-        close();
+        m_db.close();
         return false;
     }
 

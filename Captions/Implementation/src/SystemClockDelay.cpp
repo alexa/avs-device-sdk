@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ namespace alexaClientSDK {
 namespace captions {
 
 void SystemClockDelay::delay(std::chrono::milliseconds milliseconds) {
-    int64_t zero = 0;
-    auto duration = std::chrono::milliseconds(std::max(zero, milliseconds.count()));
+    auto duration =
+        std::chrono::milliseconds(std::max(std::chrono::milliseconds::zero().count(), milliseconds.count()));
     std::this_thread::sleep_for(duration);
 }
 

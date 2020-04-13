@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -76,8 +76,8 @@ static const std::string TAG("Alert");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 Alert::Alert(
-    std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-    std::function<std::unique_ptr<std::istream>()> shortAudioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> defaultAudioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> shortAudioFactory,
     std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
         m_stopReason{StopReason::UNSET},
         m_focusState{avsCommon::avs::FocusState::NONE},
@@ -209,6 +209,8 @@ static Alert::ParseFromJsonStatus parseAlertAssetConfigurationFromJson(
 }
 
 Alert::ParseFromJsonStatus Alert::parseFromJson(const rapidjson::Value& payload, std::string* errorMessage) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     if (!retrieveValue(payload, KEY_TOKEN, &m_staticData.token)) {
         ACSDK_ERROR(LX("parseFromJsonFailed").m("could not parse token."));
         *errorMessage = "missing property: " + KEY_TOKEN;
@@ -476,6 +478,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
 }
 
 std::string Alert::getToken() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
     return m_staticData.token;
 }
 
@@ -627,11 +630,13 @@ bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
     return (m_dynamicData.timePoint.getTime_Unix() < cutoffTime);
 }
 
-std::function<std::unique_ptr<std::istream>()> Alert::getDefaultAudioFactory() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> Alert::
+    getDefaultAudioFactory() const {
     return m_defaultAudioFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> Alert::getShortAudioFactory() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> Alert::
+    getShortAudioFactory() const {
     return m_shortAudioFactory;
 }
 
@@ -705,6 +710,8 @@ std::string Alert::parseFromJsonStatusToString(Alert::ParseFromJsonStatus parseF
 }
 
 void Alert::printDiagnostic() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string assetInfoString;
     for (auto asset : m_staticData.assetConfiguration.assets) {
         assetInfoString += "\nid:" + asset.second.id + ", url:" + asset.second.url;

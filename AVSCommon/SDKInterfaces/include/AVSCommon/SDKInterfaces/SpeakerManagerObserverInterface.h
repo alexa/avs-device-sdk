@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEAKERMANAGEROBSERVERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEAKERMANAGEROBSERVERINTERFACE_H_
 
-#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
 
 /**
- * This interface is for observing changes to speakers that are made by the @c SpeakerManager.
+ * This interface is for observing changes to ChannelVolumeInterfaces that are made by the @c SpeakerManager.
  *
  * Observers of the SpeakerManager are notified using the SpeakerManagers internal thread. The callback function must
  * exit as quickly as possible and perform minimal calculations. Not doing so can cause delays in the @c SpeakerManager.
@@ -43,12 +43,12 @@ public:
      * A callback for when the @c SpeakerInterface::SpeakerSettings successfully changes.
      *
      * @param source. This indicates the origin of the call.
-     * @param type. This indicates the type of speaker that was modified.
+     * @param type. This indicates the type of @c ChannelVolumeInterface that was modified.
      * @param settings. This indicates the current settings after the change.
      */
     virtual void onSpeakerSettingsChanged(
         const Source& source,
-        const SpeakerInterface::Type& type,
+        const ChannelVolumeInterface::Type& type,
         const SpeakerInterface::SpeakerSettings& settings) = 0;
 
     /**

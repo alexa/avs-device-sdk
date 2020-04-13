@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,10 @@
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_UIMANAGER_H_
 
 #include <Alerts/AlertObserverInterface.h>
+
+#include <string>
+#include <unordered_map>
+
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
@@ -71,7 +75,7 @@ public:
     /// @{
     void onSpeakerSettingsChanged(
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) override;
     /// }
 
@@ -124,6 +128,12 @@ public:
     void printLimitedHelp();
 
     /**
+     * Prints the audio injection header to warn that audio recording is unavailable when audio injection
+     * is enabled.
+     */
+    void printAudioInjectionHeader();
+
+    /**
      * Prints the Settings Options screen.
      */
     void printSettingsScreen();
@@ -159,7 +169,8 @@ public:
     void printRangeControllerScreen();
 
     /**
-     * Prints the Speaker Control Options screen. This prompts the user to select a @c SpeakerInterface::Type to modify.
+     * Prints the Speaker Control Options screen. This prompts the user to select a @c ChannelVolumeInterface::Type to
+     * modify.
      */
     void printSpeakerControlScreen();
 
@@ -318,6 +329,51 @@ public:
      * Prints menu for do not disturb mode.
      */
     void printDoNotDisturbScreen();
+
+    /**
+     * Prints menu for diagnostics screen.
+     */
+    void printDiagnosticsScreen();
+
+    /**
+     * Prints the menu for the device properties screen.
+     */
+    void printDevicePropertiesScreen();
+
+    /**
+     * Print all the device properties from @c DevicePropertyAggregator on screen.
+     * @param deviceProperties The deviceProperties map.
+     */
+    void printAllDeviceProperties(const std::unordered_map<std::string, std::string>& deviceProperties);
+
+    /**
+     * Prints the Device Protocol Tracer screen.
+     */
+    void printDeviceProtocolTracerScreen();
+
+    /**
+     * Prints the captured protocol trace.
+     *
+     * @param The protocol trace string.
+     */
+    void printProtocolTrace(const std::string& protocolTrace);
+
+    /**
+     * Prints the protocol trace flag.
+     *
+     * @param enabled the boolean indicating if protocol trace is enabled/disabled.
+     */
+    void printProtocolTraceFlag(bool enabled);
+
+    /**
+     *  Prints the Audio Injection screen.
+     */
+    void printAudioInjectionScreen();
+
+    /**
+     *  Prints audio injection failure message.
+     */
+    void printAudioInjectionFailureMessage();
 
 private:
     /**

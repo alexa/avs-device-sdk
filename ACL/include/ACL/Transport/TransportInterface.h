@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,6 +61,16 @@ public:
      * A message request has been added to the shared synchronized queue and is ready to be read.
      */
     virtual void onRequestEnqueued() = 0;
+
+    /**
+     * This method is a hint to retry connecting (if not connected).
+     */
+    virtual void onWakeConnectionRetry() = 0;
+
+    /**
+     * This method is a hint to verify that there is a valid connection ot AVS.
+     */
+    virtual void onWakeVerifyConnectivity() = 0;
 
     /**
      * Deleted copy constructor

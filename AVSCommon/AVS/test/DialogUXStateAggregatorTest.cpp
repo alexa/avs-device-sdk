@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -121,7 +121,7 @@ public:
      * Checks that a state change does not occur by waiting for the timeout duration.
      *
      * @param observer The UX state observer.
-     * @param timeout An optional timeout parameter to wait for to make sure no state change has occured.
+     * @param timeout An optional timeout parameter to wait for to make sure no state change has occurred.
      */
     void assertNoStateChange(
         std::shared_ptr<TestObserver> observer,
@@ -245,8 +245,8 @@ TEST_F(DialogUXAggregatorTest, test_requestProcessingStartedLeadsToThinkingState
 
 /// Tests that LISTENING state goes to IDLE after the specified timeout.
 TEST_F(DialogUXAggregatorTest, test_listeningGoesToIdleAfterTimeout) {
-    std::shared_ptr<DialogUXStateAggregator> anotherAggregator =
-        std::make_shared<DialogUXStateAggregator>(std::chrono::milliseconds(200), std::chrono::milliseconds(200));
+    std::shared_ptr<DialogUXStateAggregator> anotherAggregator = std::make_shared<DialogUXStateAggregator>(
+        nullptr, std::chrono::milliseconds(200), std::chrono::milliseconds(200));
 
     anotherAggregator->addObserver(m_anotherTestObserver);
 
@@ -260,8 +260,8 @@ TEST_F(DialogUXAggregatorTest, test_listeningGoesToIdleAfterTimeout) {
 
 /// Tests that THINKING state goes to IDLE after the specified timeout.
 TEST_F(DialogUXAggregatorTest, test_thinkingGoesToIdleAfterTimeout) {
-    std::shared_ptr<DialogUXStateAggregator> anotherAggregator =
-        std::make_shared<DialogUXStateAggregator>(std::chrono::milliseconds(200), std::chrono::milliseconds(200));
+    std::shared_ptr<DialogUXStateAggregator> anotherAggregator = std::make_shared<DialogUXStateAggregator>(
+        nullptr, std::chrono::milliseconds(200), std::chrono::milliseconds(200));
 
     anotherAggregator->addObserver(m_anotherTestObserver);
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
@@ -275,7 +275,7 @@ TEST_F(DialogUXAggregatorTest, test_thinkingGoesToIdleAfterTimeout) {
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, TRANSITION_TIMEOUT);
 }
 
-/// Tests that the THINKING state transitions to IDLE after receving a message and a long timeout.
+/// Tests that the THINKING state transitions to IDLE after recieving a message and a long timeout.
 TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveGoesToIdleAfterLongTimeout) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 

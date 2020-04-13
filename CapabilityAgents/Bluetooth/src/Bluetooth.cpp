@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -576,8 +576,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
-        enabledConnectionRules,
+    std::unordered_set<std::shared_ptr<bluetooth::BluetoothDeviceConnectionRuleInterface>> enabledConnectionRules,
+    std::shared_ptr<ChannelVolumeInterface> bluetoothChannelVolumeInterface,
     std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer) {
     ACSDK_DEBUG5(LX(__func__));
 
@@ -601,6 +601,8 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
         ACSDK_ERROR(LX(__func__).d("reason", "nullCustomerDataManager"));
     } else if (!validateDeviceConnectionRules(enabledConnectionRules)) {
         ACSDK_ERROR(LX(__func__).d("reason", "invalidBluetoothDeviceConnectionRules"));
+    } else if (!bluetoothChannelVolumeInterface) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullBluetoothChannelVolumeInterface"));
     } else {
         auto bluetooth = std::shared_ptr<Bluetooth>(new Bluetooth(
             contextManager,
@@ -613,6 +615,7 @@ std::shared_ptr<Bluetooth> Bluetooth::create(
             mediaPlayer,
             customerDataManager,
             enabledConnectionRules,
+            bluetoothChannelVolumeInterface,
             mediaInputTransformer));
 
         if (bluetooth->init()) {
@@ -692,6 +695,7 @@ Bluetooth::Bluetooth(
     std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
         enabledConnectionRules,
+    std::shared_ptr<ChannelVolumeInterface> bluetoothChannelVolumeInterface,
     std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"Bluetooth"},
@@ -709,7 +713,8 @@ Bluetooth::Bluetooth(
         m_db{bluetoothStorage},
         m_eventBus{eventBus},
         m_mediaInputTransformer{mediaInputTransformer},
-        m_mediaStream{nullptr} {
+        m_mediaStream{nullptr},
+        m_bluetoothChannelVolumeInterface{bluetoothChannelVolumeInterface} {
     m_capabilityConfigurations.insert(getBluetoothCapabilityConfiguration());
 
     for (const auto& connectionRule : enabledConnectionRules) {
@@ -1166,6 +1171,16 @@ void Bluetooth::executeAbortMediaPlayback() {
 
 void Bluetooth::executeEnterForeground() {
     ACSDK_DEBUG5(LX(__func__).d("streamingState", streamingStateToString(m_streamingState)));
+
+    /**
+     * If we were previously paused : we need to fall through and resume audio in the AVRCPTarget
+     * If we were previously ducked : the delegate will unduck volume and since we are in StreamingState::ACTIVE, we
+     * exit early below
+     */
+    if (!m_bluetoothChannelVolumeInterface->stopDucking()) {
+        ACSDK_WARN(LX(__func__).m("Failed To Restore Audio Channel Volume"));
+    }
+
     if (!m_activeA2DPDevice) {
         ACSDK_ERROR(LX(__func__).d("reason", "noActiveDevice"));
         executeAbortMediaPlayback();
@@ -1218,9 +1233,20 @@ void Bluetooth::executeEnterBackground(MixingBehavior behavior) {
         return;
     }
 
-    // currently Bluetooth CapabilityAgent must Always Pause on receiving Background focus
-    if (MixingBehavior::MUST_PAUSE != behavior) {
-        ACSDK_WARN(LX(__func__).d("Unhandled MixingBehavior", behavior));
+    /**
+     * In case of ducking decision : we can exit early (no need to deal with AVRCPTarget)
+     * In case of a pausing decision : the delegate shall return pause to indicate that it was not handled
+     *                                 in this case the below switch logic will pause music
+     */
+    if (MixingBehavior::MAY_DUCK == behavior) {
+        if (!m_bluetoothChannelVolumeInterface->startDucking()) {
+            ACSDK_WARN(LX(__func__).m("Failed to Attenuate Audio Channel Volume"));
+            // Fall Through and Pause By Default
+        } else {
+            // Return Early
+            ACSDK_DEBUG4(LX(__func__).d("action", "ducking audio"));
+            return;
+        }
     }
 
     auto avrcpTarget = getService<AVRCPTargetInterface>(m_activeA2DPDevice);
@@ -1256,6 +1282,14 @@ void Bluetooth::executeEnterBackground(MixingBehavior behavior) {
 // Either you were kicked off or you're done with the channel.
 void Bluetooth::executeEnterNone() {
     ACSDK_DEBUG5(LX(__func__).d("streamingState", streamingStateToString(m_streamingState)));
+
+    /**
+     * Restore channel volume when losing focus.
+     * Note that this call will be no-op if channel was not attenuated at this point.
+     */
+    if (!m_bluetoothChannelVolumeInterface->stopDucking()) {
+        ACSDK_WARN(LX(__func__).m("Failed To Restore Audio Channel Volume"));
+    }
 
     if (!m_activeA2DPDevice) {
         ACSDK_DEBUG5(LX(__func__).d("reason", "noActiveDevice"));
@@ -3311,8 +3345,10 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                      */
                 } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
                     m_executor.submit([this] {
-                        if (FocusState::FOREGROUND == m_focusState) {
-                            executeReleaseFocus(__func__);
+                        if (StreamingState::ACTIVE == m_streamingState) {
+                            if (FocusState::FOREGROUND == m_focusState || FocusState::BACKGROUND == m_focusState) {
+                                executeReleaseFocus(__func__);
+                            }
                         }
                     });
                 }

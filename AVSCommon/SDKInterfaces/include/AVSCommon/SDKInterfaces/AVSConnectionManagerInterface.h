@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -72,6 +72,11 @@ public:
      * @return Whether the AVS connection is established.
      */
     virtual bool isConnected() const = 0;
+
+    /**
+     * This method is a hint to retry connecting (if not connected).
+     */
+    virtual void onWakeConnectionRetry() = 0;
 
     /**
      * Adds an observer to be notified of message receptions.

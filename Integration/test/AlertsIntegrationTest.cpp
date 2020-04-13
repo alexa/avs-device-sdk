@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <unordered_map>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -39,10 +38,6 @@
 #include <Audio/AlertsAudioFactory.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
-#include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
-#include <AVSCommon/AVS/BlockingPolicy.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -61,7 +56,6 @@
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
 
 #include "Integration/ACLTestContext.h"
-#include "Integration/ObservableMessageRequest.h"
 #include "Integration/TestAlertObserver.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
@@ -271,9 +265,9 @@ protected:
         m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
-        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager(), m_metricRecorder);
 
         // Set up connection and connect
         m_avsConnectionManager = std::make_shared<TestMessageSender>(
@@ -284,7 +278,7 @@ protected:
         std::shared_ptr<avsCommon::sdkInterfaces::test::MockSpeakerManager> mockSpeakerManager =
             std::make_shared<avsCommon::sdkInterfaces::test::MockSpeakerManager>();
         ON_CALL(*(mockSpeakerManager.get()), getSpeakerSettings(testing::_, testing::_))
-            .WillByDefault(testing::Invoke([](avsCommon::sdkInterfaces::SpeakerInterface::Type,
+            .WillByDefault(testing::Invoke([](avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
                                               avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings*) {
                 std::promise<bool> promise;
                 promise.set_value(true);
@@ -377,7 +371,12 @@ protected:
             m_systemSoundPlayer,
             std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
             m_mockWakeWordConfirmationSetting,
-            m_mockSpeechConfirmationSetting);
+            m_mockSpeechConfirmationSetting,
+            nullptr,
+            nullptr,
+            AudioProvider::null(),
+            nullptr,
+            m_metricRecorder);
         ASSERT_NE(nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
@@ -388,7 +387,7 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            nullptr,
+            m_metricRecorder,
             m_dialogUXStateAggregator);
         ASSERT_NE(nullptr, m_speechSynthesizer);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);

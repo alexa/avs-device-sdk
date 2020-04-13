@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,6 +49,8 @@ public:
      * @param description The description of the device.
      * @param friendlyName AVS friendly name for device
      * @param deviceType The device type.
+     * @param registrationKey The Registration key value.
+     * @param productIdKey The Product Id Key value.
      * @return If successful, returns a new DeviceInfo, otherwise @c nullptr.
      */
     static std::unique_ptr<DeviceInfo> create(
@@ -59,7 +61,9 @@ public:
         const std::string& description,
         const std::string& friendlyName = "",
         const std::string& deviceType = "",
-        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId = "");
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId = "",
+        const std::string& registrationKey = "",
+        const std::string& productIdKey = "");
 
     /**
      * Gets the client Id.
@@ -118,6 +122,20 @@ public:
     sdkInterfaces::endpoints::EndpointIdentifier getDefaultEndpointId() const;
 
     /**
+     * Gets the device's registration key value.
+     *
+     * @return registration key.
+     */
+    std::string getRegistrationKey() const;
+
+    /**
+     * Gets the product id key value.
+     *
+     * @return product id key.
+     */
+    std::string getProductIdKey() const;
+
+    /**
      * Operator == for @c DeviceInfo
      *
      * @param rhs The right hand side of the == operation.
@@ -143,6 +161,8 @@ private:
      * @param manufacturerName The manufacturer name.
      * @param description The description of the device.
      * @param endpointId The device endpoint id.
+     * @param registrationKey The Registration key value.
+     * @param productIdKey The Product Id Key value.
      */
     DeviceInfo(
         const std::string& clientId,
@@ -152,7 +172,9 @@ private:
         const std::string& description,
         const std::string& friendlyName,
         const std::string& deviceType,
-        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId);
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
+        const std::string& registrationKey,
+        const std::string& productIdKey);
 
     /// Client ID
     std::string m_clientId;
@@ -177,6 +199,12 @@ private:
 
     /// Device default endpoint id.
     sdkInterfaces::endpoints::EndpointIdentifier m_defaultEndpointId;
+
+    /// Registration key.
+    std::string m_registrationKey;
+
+    /// Product ID key.
+    std::string m_productIdKey;
 };
 
 inline std::string DeviceInfo::getManufacturerName() const {

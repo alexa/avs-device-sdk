@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,6 +69,8 @@ static const std::string MP3_FILE_PATH("/fox_dog.mp3");
 static const std::string TEST_M3U_PLAYLIST_URL("fox_dog_playlist.m3u");
 
 static std::string TEST_M3U_PLAYLIST_CONTENT;
+
+static const alexaClientSDK::avsCommon::utils::MediaType MP3_TYPE = alexaClientSDK::avsCommon::utils::MediaType::MPEG;
 
 /// file URI Prefix
 static const std::string FILE_PREFIX("file://");
@@ -696,12 +698,7 @@ void MediaPlayerTest::SetUp() {
     m_playerObserver = std::make_shared<MockPlayerObserver>();
 
     // All the tests will be run with enableLiveMode set to true and false respectively
-    m_mediaPlayer = MediaPlayer::create(
-        std::make_shared<MockContentFetcherFactory>(),
-        false,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
-        "",
-        GetParam());
+    m_mediaPlayer = MediaPlayer::create(std::make_shared<MockContentFetcherFactory>(), false, "", GetParam());
     ASSERT_TRUE(m_mediaPlayer);
     m_mediaPlayer->addObserver(m_playerObserver);
 }
@@ -719,7 +716,7 @@ void MediaPlayerTest::setAttachmentReaderSource(
 
 void MediaPlayerTest::setIStreamSource(MediaPlayer::SourceId* id, bool repeat, const SourceConfig& config) {
     auto returnId = m_mediaPlayer->setSource(
-        make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH, std::ifstream::binary), repeat, config);
+        make_unique<std::ifstream>(inputsDirPath + MP3_FILE_PATH, std::ifstream::binary), repeat, config, MP3_TYPE);
     ASSERT_NE(ERROR_SOURCE_ID, returnId);
     if (id) {
         *id = returnId;
@@ -927,7 +924,8 @@ TEST_P(MediaPlayerTest, testTimer_getOffsetInMilliseconds) {
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::chrono::milliseconds offset = m_mediaPlayer->getOffset(sourceId);
-    ASSERT_TRUE((offset > std::chrono::milliseconds::zero()) && (offset <= MP3_FILE_LENGTH));
+    ASSERT_GT(offset.count(), std::chrono::milliseconds::zero().count());
+    ASSERT_LE(offset.count(), MP3_FILE_LENGTH.count());
     ASSERT_NE(MEDIA_PLAYER_INVALID_OFFSET, offset);
     ASSERT_TRUE(m_mediaPlayer->stop(sourceId));
     ASSERT_TRUE(m_playerObserver->waitForPlaybackStopped(sourceId));
@@ -1097,7 +1095,7 @@ TEST_P(MediaPlayerTest, testTimer_setOffsetSeekableSource) {
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
     ACSDK_INFO(LX("MediaPlayerTest").d("timeElapsed", timeElapsed.count()));
     // Time elapsed should be total file length minus the offset.
-    ASSERT_TRUE(timeElapsed < (MP3_FILE_LENGTH - offset + TOLERANCE));
+    ASSERT_LT(timeElapsed.count(), (MP3_FILE_LENGTH - offset + TOLERANCE).count());
 }
 
 // TODO: ACSDK-1024 MediaPlayerTest.testSetOffsetOutsideBounds is flaky
@@ -1186,75 +1184,6 @@ TEST_P(MediaPlayerTest, testSlow_setVolumePlays) {
 }
 
 /**
- * Test that the media plays after a volume adjustment.
- */
-TEST_P(MediaPlayerTest, testSlow_adjustVolumePlaysDuringPlay) {
-    MediaPlayer::SourceId sourceId;
-    setAttachmentReaderSource(&sourceId);
-
-    SpeakerInterface::SpeakerSettings settings;
-
-    ASSERT_TRUE(m_mediaPlayer->play(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
-
-    m_mediaPlayer->adjustVolume(-90);
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
-
-    m_mediaPlayer->getSpeakerSettings(&settings);
-    ASSERT_EQ(settings.volume, 10);
-}
-
-/**
- * Test that the media plays after a volume adjustment.
- */
-TEST_P(MediaPlayerTest, testSlow_adjustVolumePlays) {
-    MediaPlayer::SourceId sourceId;
-    setAttachmentReaderSource(&sourceId);
-
-    SpeakerInterface::SpeakerSettings settings;
-
-    ASSERT_TRUE(m_mediaPlayer->play(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
-
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    ASSERT_TRUE(m_mediaPlayer->pause(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused(sourceId));
-
-    m_mediaPlayer->adjustVolume(-90);
-    ASSERT_TRUE(m_mediaPlayer->resume(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
-
-    m_mediaPlayer->getSpeakerSettings(&settings);
-    ASSERT_EQ(settings.volume, 10);
-}
-
-/**
- * Test the play behavior when the media is adjusted out of bounds. The volume should be capped
- * at the bounds. The media should play to completion.
- */
-TEST_P(MediaPlayerTest, testSlow_adjustVolumeOutOfBounds) {
-    MediaPlayer::SourceId sourceId;
-    setAttachmentReaderSource(&sourceId);
-
-    ASSERT_TRUE(m_mediaPlayer->play(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackStarted(sourceId));
-
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    ASSERT_TRUE(m_mediaPlayer->pause(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackPaused(sourceId));
-
-    m_mediaPlayer->setVolume(10);
-    m_mediaPlayer->adjustVolume(-100);
-
-    ASSERT_TRUE(m_mediaPlayer->resume(sourceId));
-    ASSERT_TRUE(m_playerObserver->waitForPlaybackFinished(sourceId));
-
-    SpeakerInterface::SpeakerSettings settings;
-    m_mediaPlayer->getSpeakerSettings(&settings);
-    ASSERT_EQ(settings.volume, 0);
-}
-
-/**
  * Test the media plays to completion even if it's muted.
  */
 TEST_P(MediaPlayerTest, testSlow_setMutePlays) {
@@ -1291,22 +1220,6 @@ TEST_P(MediaPlayerTest, test_getSpeakerSettings) {
     m_mediaPlayer->getSpeakerSettings(&settings);
     ASSERT_TRUE(settings.mute);
     ASSERT_EQ(settings.volume, 15);
-}
-
-/**
- * Tests this rounding edgecase. Calling adjustVolume(-10) with volume at 90 resulted in a value of 79
- * when not rounded properly.
- */
-TEST_P(MediaPlayerTest, test_roundingEdgeCase) {
-    MediaPlayer::SourceId sourceId;
-    setAttachmentReaderSource(&sourceId);
-
-    SpeakerInterface::SpeakerSettings settings;
-
-    m_mediaPlayer->setVolume(90);
-    m_mediaPlayer->adjustVolume(-10);
-    m_mediaPlayer->getSpeakerSettings(&settings);
-    ASSERT_EQ(settings.volume, 80);
 }
 
 /**

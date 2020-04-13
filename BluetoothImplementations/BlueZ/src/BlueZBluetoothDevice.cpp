@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@
 #include "BlueZ/BlueZA2DPSource.h"
 #include "BlueZ/BlueZAVRCPController.h"
 #include "BlueZ/BlueZAVRCPTarget.h"
+#include "BlueZ/BlueZBluetoothDevice.h"
+#include "BlueZ/BlueZConstants.h"
+#include "BlueZ/BlueZDeviceManager.h"
 #include "BlueZ/BlueZHFP.h"
 #include "BlueZ/BlueZHID.h"
 #include "BlueZ/BlueZSPP.h"
-#include "BlueZ/BlueZConstants.h"
-#include "BlueZ/BlueZDeviceManager.h"
-
-#include "BlueZ/BlueZBluetoothDevice.h"
 
 namespace alexaClientSDK {
 namespace bluetoothImplementations {

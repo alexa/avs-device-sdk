@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,9 +24,11 @@
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/PlayerActivity.h>
+#include <AVSCommon/AVS/PlayRequestor.h>
 #include <AVSCommon/SDKInterfaces/Audio/MixingBehavior.h>
 #include <AVSCommon/SDKInterfaces/AudioPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -37,6 +39,8 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/DataPointDurationBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
@@ -85,7 +89,11 @@ public:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
+     * @param audioChannelVolumeInterfaces A list of @c ChannelVolumeInterface instances to use to control/attenuate
+     * channel volume. These instances are required for controlling volume for the @c MediaPlayerInterface instances
+     * created by @param mediaPlayerFactory.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     static std::shared_ptr<AudioPlayer> create(
@@ -95,7 +103,9 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
-        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr);
+        std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> audioChannelVolumeInterfaces,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name StateProviderInterface Functions
     /// @{
@@ -149,6 +159,7 @@ public:
     /// @{
     void onProgressReportDelayElapsed() override;
     void onProgressReportIntervalElapsed() override;
+    void onProgressReportIntervalUpdated() override;
     void requestProgress() override;
     /// @}
 
@@ -156,6 +167,7 @@ public:
     /// @{
     void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerObserverInterface> observer) override;
+    void stopPlayback() override;
     /// @}
 
     /// @name RenderPlayerInfoCardsProviderInterface Functions
@@ -214,6 +226,9 @@ private:
         /// so if we get the 'buffer complete' notification before the track is playing, cache the info here
         bool isBuffered;
 
+        /// Duration builder for queue time metric
+        avsCommon::utils::metrics::DataPointDurationBuilder queueTimeMetricData;
+
         /**
          * Constructor.
          *
@@ -232,7 +247,11 @@ private:
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The playback router used for switching playback buttons handler to default.
+     * @param audioChannelVolumeInterfaces A list of @c ChannelVolumeInterface instances to use to control/attenuate
+     * channel volume. These instances are required for controlling volume for the @c MediaPlayerInterface instances
+     * created by @param mediaPlayerFactory.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     AudioPlayer(
@@ -242,7 +261,9 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
-        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr);
+        std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> audioChannelVolumeInterfaces,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -285,6 +306,13 @@ private:
      * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
      */
     void handleClearQueueDirective(std::shared_ptr<DirectiveInfo> info);
+
+    /**
+     * This function handles a @c UPDATE_PROGRESS_REPORT_INTERVAL directive.
+     *
+     * @param info The @c DirectiveInfo containing the @c AVSDirective and the @c DirectiveHandlerResultInterface.
+     */
+    void handleUpdateProgressReportIntervalDirective(std::shared_ptr<DirectiveInfo> info);
 
     /**
      * Remove a directive from the map of message IDs to DirectiveInfo instances.
@@ -479,6 +507,13 @@ private:
     void executeClearQueue(ClearBehavior clearBehavior);
 
     /**
+     * This function executes a parsed @c UPDATE_PROGRESS_REPORT_INTERVAL directive.
+     *
+     * @param progressReportInterval New progress report interval in milliseconds.
+     */
+    void executeUpdateProgressReportInterval(std::chrono::milliseconds progressReportInterval);
+
+    /**
      * This function changes the @c AudioPlayer state.  All state changes are made by calling this function.
      *
      * @param activity The state to change to.
@@ -490,11 +525,13 @@ private:
      * function constructs and sends these generic @c AudioPlayer events.
      *
      * @param eventName The name of the event to send.
+     * @param includePlaybackReports If true, playbackReports are attached, default value is false.
      * @param offset The offset to send.  If this parameter is left with its default (invalid) value, the current
      *     offset from MediaPlayer will be sent.
      */
     void sendEventWithTokenAndOffset(
         const std::string& eventName,
+        bool includePlaybackReports = false,
         std::chrono::milliseconds offset = avsCommon::utils::mediaPlayer::MEDIA_PLAYER_INVALID_OFFSET);
 
     /**
@@ -599,6 +636,22 @@ private:
     std::chrono::milliseconds getOffset();
 
     /**
+     * Attaches playbackAttributes to payload for AudioPlayer events if available.
+     *
+     * @param parent The parent to which playbackAttributes to be attached.
+     * @param allocator The allocator for document.
+     */
+    void attachPlaybackAttributesIfAvailable(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator);
+
+    /**
+     * Attaches playbackReports to payload for AudioPlayer events if available.
+     *
+     * @param parent The parent to which playbackReports to be attached.
+     * @param allocator The allocator for document.
+     */
+    void attachPlaybackReportsIfAvailable(rapidjson::Value& parent, rapidjson::Document::AllocatorType& allocator);
+
+    /**
      * Get a media player state with the given offset
      *
      * @return Media player state with current offset
@@ -635,8 +688,29 @@ private:
      */
     bool configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playbackItem);
 
+    /**
+     * Returns true if the message is in the play queue.
+     *
+     * @param messageId id of message to search for
+     * @return true if in play queue.
+     */
     bool isMessageInQueue(const std::string& messageId);
-    /// @}
+
+    /**
+     * Unduck the channel volume of the underlying @c ChannelVolumeInterface and restore the volume
+     * to the earlier unducked volume.
+     *
+     * @return true if the operation succeeded, else false.
+     */
+    bool executeStopDucking();
+
+    /**
+     * Duck the channel volume of the underlying @c ChannelVolumeInterface and attenuate the channel
+     * volume as per the configured volume curve in @c ChannelVolumeManager
+     *
+     * @return true if the operation succeeded, else false.
+     */
+    bool executeStartDucking();
 
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
@@ -658,6 +732,9 @@ private:
 
     /// The @c CaptionManagerInterface used for handling captions.
     std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /**
      * The current state of the @c AudioPlayer.
@@ -743,11 +820,23 @@ private:
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
 
+    /// @c ChannelVolumeInterface instance to do volume adjustments with.
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> m_audioChannelVolumeInterfaces;
+
     /// Current ContentType Rendering in the AudioPlayer
     avsCommon::avs::ContentType m_currentMixability;
 
     /// Current MixingBehavior for the AudioPlayer.
     avsCommon::avs::MixingBehavior m_mixingBehavior;
+
+    /// Duration builder for Playback Time metric
+    avsCommon::utils::metrics::DataPointDurationBuilder m_playbackTimeMetricData;
+
+    /// Duration builder for Autoprogress metric
+    avsCommon::utils::metrics::DataPointDurationBuilder m_autoProgressTimeMetricData;
+
+    /// Flag Autoprogression started
+    bool m_isAutoProgressing;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

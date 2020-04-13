@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -104,6 +104,12 @@ static const std::string TEST_MANUFACTURER = "TEST_MANUFACTURER";
 /// A Test product ID.
 static const std::string TEST_PRODUCT_ID = "TEST_PRODUCT_ID";
 
+/// A Test registration key.
+static const std::string TEST_REGISTRATION_KEY = "TEST_REGISTRATION_KEY";
+
+/// A Test product ID key.
+static const std::string TEST_PRODUCT_ID_KEY = "TEST_PRODUCT_ID_KEY";
+
 /// A Test Endpoint configuration JSON.
 static const std::string TEST_ENDPOINT_CONFIG = R"({"endpointId":")" + TEST_ENDPOINT_ID + R"("})";
 
@@ -137,7 +143,8 @@ AVSDiscoveryEndpointAttributes getTestEndpointAttributes() {
     endpointAttributes.manufacturerName = TEST_MANUFACTURER_NAME;
     endpointAttributes.displayCategories = TEST_DISPLAY_CATEGORIES;
 
-    AVSDiscoveryEndpointAttributes::Registration testRegistration(TEST_PRODUCT_ID, TEST_SERIAL_NUMBER);
+    AVSDiscoveryEndpointAttributes::Registration testRegistration(
+        TEST_PRODUCT_ID, TEST_SERIAL_NUMBER, TEST_REGISTRATION_KEY, TEST_PRODUCT_ID_KEY);
     endpointAttributes.registration = testRegistration;
 
     AVSDiscoveryEndpointAttributes::AdditionalAttributes additionalAttributes;
@@ -256,10 +263,10 @@ void validateEndpointConfigJson(const std::string& endpointConfigJson) {
 
     /// Registration
     std::string registrationJson;
-    ASSERT_TRUE(jsonUtils::retrieveValue(endpointConfigJson, "registration", &registrationJson));
+    ASSERT_TRUE(jsonUtils::retrieveValue(endpointConfigJson, TEST_REGISTRATION_KEY, &registrationJson));
 
     std::string productId;
-    ASSERT_TRUE(jsonUtils::retrieveValue(registrationJson, "productId", &productId));
+    ASSERT_TRUE(jsonUtils::retrieveValue(registrationJson, TEST_PRODUCT_ID_KEY, &productId));
     ASSERT_EQ(productId, TEST_PRODUCT_ID);
 
     std::string deviceSerialNumber;

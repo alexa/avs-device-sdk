@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -145,6 +145,26 @@ private:
         CapabilitiesObserverInterface::State newState,
         CapabilitiesObserverInterface::Error newError) override;
     /// @}
+
+    /**
+     * The diagnostics menu.
+     */
+    void diagnosticsMenu();
+
+    /**
+     * The device properties menu.
+     */
+    void devicePropertiesMenu();
+
+    /**
+     * The device protocol tracer menu.
+     */
+    void deviceProtocolTracerMenu();
+
+    /**
+     * The audio injection menu.
+     */
+    void audioInjectionMenu();
 
     /// The main interaction manager that interfaces with the SDK.
     std::shared_ptr<InteractionManager> m_interactionManager;

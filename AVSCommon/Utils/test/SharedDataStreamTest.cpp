@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
 
 /// @file SharedDataStreamTest.cpp
 
-#include <vector>
-#include <random>
-#include <climits>
 #include <algorithm>
-#include <functional>
-#include <unordered_map>
 #include <chrono>
+#include <climits>
+#include <functional>
+#include <random>
+#include <unordered_map>
+#include <vector>
 
 #include <gtest/gtest.h>
 
-#include "AVSCommon/Utils/Timing/Timer.h"
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
+#include "AVSCommon/Utils/Timing/Timer.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {

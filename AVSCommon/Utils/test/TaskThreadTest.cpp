@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,14 +45,17 @@ TEST(TaskThreadTest, test_startFailsDueToEmptyFunction) {
 /// Test that start will trigger the provided job and thread will exit once the job is done and return @c false.
 TEST(TaskThreadTest, test_simpleJob) {
     bool finished = false;
-    auto simpleJob = [&finished] {
+    WaitEvent waitEvent;
+    auto simpleJob = [&finished, &waitEvent] {
         finished = true;
+        waitEvent.wakeUp();
         return false;
     };
 
     {
         TaskThread taskThread;
         EXPECT_TRUE(taskThread.start(simpleJob));
+        EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     }
 
     EXPECT_TRUE(finished);
@@ -63,14 +66,20 @@ TEST(TaskThreadTest, test_simpleJob) {
 TEST(TaskThreadTest, test_sequenceJobs) {
     int taskCounter = 0;
     const int runUntil = 10;
-    auto jobSequence = [&taskCounter] {
+    WaitEvent waitEvent;
+    auto jobSequence = [&] {
         taskCounter++;
-        return taskCounter < runUntil;
+        if (taskCounter < runUntil) {
+            return true;
+        }
+        waitEvent.wakeUp();
+        return false;
     };
 
     {
         TaskThread taskThread;
         EXPECT_TRUE(taskThread.start(jobSequence));
+        EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     }
 
     EXPECT_EQ(taskCounter, runUntil);
@@ -87,20 +96,28 @@ TEST(TaskThreadTest, test_startNewJob) {
         return true;
     };
 
-    auto decrement = [&taskCounter] {
+    WaitEvent waitEvent2;
+    auto decrement = [&taskCounter, &waitEvent2] {
         taskCounter--;
-        return taskCounter > 0;
+        if (taskCounter > 0) {
+            return true;
+        } else {
+            waitEvent2.wakeUp();
+            return false;
+        }
     };
 
     TaskThread taskThread;
     EXPECT_TRUE(taskThread.start(increment));
 
-    ASSERT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
+    EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     EXPECT_TRUE(taskThread.start(decrement));
+    EXPECT_TRUE(waitEvent2.wait(MY_WAIT_TIMEOUT));
+    EXPECT_TRUE(taskCounter == 0);
 }
 
-/// Test that start will fail if called multiple times while waiting for a job.
-TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
+/// Test that start will fail if called multiple times while waiting for a job to start.
+TEST(TaskThreadTest, testTimer_startFailDueTooManyThreads) {
     WaitEvent waitEnqueue, waitStart;
     auto simpleJob = [&waitEnqueue, &waitStart] {
         waitStart.wakeUp();                 // Job has started.
@@ -115,8 +132,17 @@ TEST(TaskThreadTest, test_startFailDueTooManyThreads) {
     waitStart.wait(MY_WAIT_TIMEOUT);
     EXPECT_TRUE(taskThread.start([] { return false; }));
 
-    // This should fail since the task thread is starting.
-    EXPECT_FALSE(taskThread.start([] { return false; }));
+    // Starting a thread again immediately should fail, unless the system is so fast in starting
+    // the thread on the other core that it starts and runs a few instructions before this can
+    // call start again. We can account for such a very fast system by running in a loop 100 times.
+    int threadStartCount;
+    for (threadStartCount = 0; threadStartCount < 100; threadStartCount++) {
+        // This should fail since the task thread is starting.
+        if (!taskThread.start([] { return false; })) {
+            break;
+        }
+    }
+    EXPECT_TRUE(threadStartCount < 100);
 
     waitEnqueue.wakeUp();
 }
@@ -147,11 +173,13 @@ TEST(TaskThreadTest, DISABLED_test_moniker) {
 
 /// Test that threads from different @c TaskThreads will have different monikers.
 TEST(TaskThreadTest, test_monikerDifferentObjects) {
-    WaitEvent waitGetMoniker, waitValidateMoniker;
+    WaitEvent waitGetMoniker, waitThread2Start, waitValidateMoniker;
     std::string moniker;
-    auto getMoniker = [&moniker, &waitGetMoniker] {
+    auto getMoniker = [&moniker, &waitGetMoniker, &waitThread2Start] {
         moniker = ThreadMoniker::getThisThreadMoniker();
         waitGetMoniker.wakeUp();
+        // execute until thread2 has started, to ensure it cannot re-use the same thread.
+        waitThread2Start.wait(MY_WAIT_TIMEOUT);
         return false;
     };
 
@@ -162,11 +190,11 @@ TEST(TaskThreadTest, test_monikerDifferentObjects) {
     };
 
     TaskThread taskThread1;
-    EXPECT_TRUE(taskThread1.start(getMoniker));
-    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
-
     TaskThread taskThread2;
+    EXPECT_TRUE(taskThread1.start(getMoniker));
     EXPECT_TRUE(taskThread2.start(validateMoniker));
+    waitThread2Start.wakeUp();
+    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
     waitValidateMoniker.wait(MY_WAIT_TIMEOUT);
 }
 

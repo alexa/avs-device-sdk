@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,9 +19,13 @@
 #include <mutex>
 #include <unordered_set>
 
+#include <AVSCommon/AVS/MixingBehavior.h>
+#include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "NotificationRendererInterface.h"
 
@@ -36,6 +40,7 @@ class NotificationRenderer
         : public NotificationRendererInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
+        , public avsCommon::sdkInterfaces::ChannelObserverInterface
         , public std::enable_shared_from_this<NotificationRenderer> {
 public:
     /// A type that identifies which source is currently being operated on.
@@ -46,17 +51,20 @@ public:
      * IDLE state, awaiting request to render notifications.
      *
      * @param mediaPlayer The @c MediaPlayer instance to use to render audio.
+     * @param focusManager The @c FocusManager instance to use to request audio focus.
      * @return The new NotificationRenderer, or null if the operation fails.
      */
     static std::shared_ptr<NotificationRenderer> create(
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager);
 
     /// @name NotificationRendererInterface methods
     /// @{
     void addObserver(std::shared_ptr<NotificationRendererObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<NotificationRendererObserverInterface> observer) override;
-    bool renderNotification(std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url)
-        override;
+    bool renderNotification(
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+        const std::string& url) override;
     bool cancelNotificationRendering() override;
     /// @}
 
@@ -76,6 +84,12 @@ public:
     /// @name RequiresShutdown methods
     /// @{
     void doShutdown() override;
+    /// @}
+
+    /// @name ChannelObserverInterface methods
+    /// @{
+    void onFocusChanged(alexaClientSDK::avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior)
+        override;
     /// @}
 
 private:
@@ -122,8 +136,11 @@ private:
      * Constructor.
      *
      * @param mediaPlayer The @c MediaPlayer instance to use to render audio.
+     * @param focusManager The @c FocusManager instance to use to request audio focus.
      */
-    NotificationRenderer(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer);
+    NotificationRenderer(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager);
 
     /**
      * Handle the completion of rendering an audio asset, whether successful or not.
@@ -160,6 +177,12 @@ private:
     /// The mediaPlayer with which to render the notification.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_mediaPlayer;
 
+    /// The Focus Manager used to request focus when a notification sound is played.
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_focusManager;
+
+    /// The current focus state of NotificationRenderer, which is used to determine when a notification can be rendered.
+    avsCommon::avs::FocusState m_focusState;
+
     /// The observers to notify when rendering is finished.  Access serialized by @c m_mutex.
     std::unordered_set<std::shared_ptr<NotificationRendererObserverInterface>> m_observers;
 
@@ -172,14 +195,22 @@ private:
     /// Current state. Access serialized by @c m_mutex.
     State m_state;
 
-    /// Factory for creating @c istream instances containing the default audio asset.
-    std::function<std::unique_ptr<std::istream>()> m_audioFactory;
+    /// Factory for creating pair of @c istream and media type char instances containing the default audio asset.
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> m_audioFactory;
 
     /// The id associated with the media that our MediaPlayer is currently handling.
     SourceId m_sourceId;
 
     /// Future used to capture result from std::async() call used if PLAYBACK_PREFERRED fails.
     std::future<void> m_renderFallbackFuture;
+
+    /**
+     * The @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 
     /// Friend relationship to allow accessing State to convert it to a string for logging.
     friend std::ostream& operator<<(std::ostream& stream, const NotificationRenderer::State state);

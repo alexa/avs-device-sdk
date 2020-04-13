@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,8 +54,13 @@ static const char SPEAKER_CONTROL = 'p';
 static const char FIRMWARE_VERSION = 'f';
 static const char RESET = 'k';
 static const char REAUTHORIZE = 'z';
+
 #ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
 static const char ENDPOINT_CONTROLLER = 'e';
+#endif
+
+#ifdef DIAGNOSTICS
+static const char DIAGNOSTICS_CONTROL = 'o';
 #endif
 
 #ifdef ENABLE_COMMS
@@ -152,8 +157,8 @@ static const std::unordered_map<char, std::string> TZ_VALUES({{'1', "America/Van
                                                               {'5', "America/Halifax"},
                                                               {'6', "America/St_Johns"}});
 
-static const std::unordered_map<char, SpeakerInterface::Type> SPEAKER_TYPES(
-    {{'1', SpeakerInterface::Type::AVS_SPEAKER_VOLUME}, {'2', SpeakerInterface::Type::AVS_ALERTS_VOLUME}});
+static const std::unordered_map<char, ChannelVolumeInterface::Type> SPEAKER_TYPES(
+    {{'1', ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME}, {'2', ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME}});
 
 static const int8_t INCREASE_VOLUME = 10;
 
@@ -369,6 +374,10 @@ SampleAppReturnCode UserInputManager::run() {
                 }
             }
 #endif
+#ifdef DIAGNOSTICS
+        } else if (x == DIAGNOSTICS_CONTROL) {
+            diagnosticsMenu();
+#endif
         } else {
             m_interactionManager->errorValue();
         }
@@ -401,7 +410,7 @@ void UserInputManager::controlSpeaker() {
         m_interactionManager->errorValue();
     } else {
         m_interactionManager->volumeControl();
-        SpeakerInterface::Type speaker = SPEAKER_TYPES.at(speakerChoice);
+        ChannelVolumeInterface::Type speaker = SPEAKER_TYPES.at(speakerChoice);
         char volume;
         while (std::cin >> volume && volume != 'q') {
             switch (volume) {
@@ -929,6 +938,118 @@ void UserInputManager::endpointControllerMenu() {
     }
 }
 #endif
+
+void UserInputManager::diagnosticsMenu() {
+    m_interactionManager->diagnosticsControl();
+    char input;
+    while (std::cin >> input && input != 'q') {
+        switch (input) {
+#ifdef DEVICE_PROPERTIES
+            case 'p':
+                devicePropertiesMenu();
+                break;
+#endif
+
+#ifdef AUDIO_INJECTION
+            case 'a':
+                audioInjectionMenu();
+                break;
+#endif
+
+#ifdef PROTOCOL_TRACE
+            case 't':
+                deviceProtocolTracerMenu();
+                break;
+#endif
+
+            case 'i':
+                m_interactionManager->diagnosticsControl();
+                break;
+
+            default:
+                m_interactionManager->errorValue();
+                break;
+        }
+    }
+    m_interactionManager->help();
+}
+
+void UserInputManager::devicePropertiesMenu() {
+    m_interactionManager->devicePropertiesControl();
+    char input;
+    while (std::cin >> input && input != 'q') {
+        switch (input) {
+            case 'p':
+                m_interactionManager->showDeviceProperties();
+                break;
+
+            case 'i':
+                m_interactionManager->devicePropertiesControl();
+                break;
+
+            default:
+                m_interactionManager->errorValue();
+                break;
+        }
+    }
+    m_interactionManager->diagnosticsControl();
+}
+
+void UserInputManager::deviceProtocolTracerMenu() {
+    m_interactionManager->deviceProtocolTraceControl();
+    char input;
+    while (std::cin >> input && input != 'q') {
+        switch (input) {
+            case 'e':
+                m_interactionManager->setProtocolTraceFlag(true);
+                break;
+
+            case 'd':
+                m_interactionManager->setProtocolTraceFlag(false);
+                break;
+
+            case 'c':
+                m_interactionManager->clearProtocolTrace();
+                break;
+
+            case 't':
+                m_interactionManager->printProtocolTrace();
+                break;
+
+            case 'i':
+                m_interactionManager->deviceProtocolTraceControl();
+                break;
+
+            default:
+                m_interactionManager->errorValue();
+                break;
+        }
+    }
+    m_interactionManager->diagnosticsControl();
+}
+
+void UserInputManager::audioInjectionMenu() {
+    m_interactionManager->audioInjectionControl();
+    char input;
+    std::string absoluteFilePath;
+    while (std::cin >> input && input != 'q') {
+        switch (input) {
+            case '1':
+                std::cin >> absoluteFilePath;
+                m_interactionManager->injectWavFile(absoluteFilePath);
+                break;
+
+            case 'i':
+                m_interactionManager->audioInjectionControl();
+                break;
+
+            default:
+                m_interactionManager->errorValue();
+                break;
+        }
+    }
+    m_interactionManager->diagnosticsControl();
+}
 
 }  // namespace sampleApp
 }  // namespace alexaClientSDK

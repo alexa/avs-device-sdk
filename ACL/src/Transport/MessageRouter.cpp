@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -141,6 +141,22 @@ std::string MessageRouter::getAVSGateway() {
     return m_avsGateway;
 }
 
+void MessageRouter::onWakeConnectionRetry() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    if (m_isEnabled && m_activeTransport) {
+        m_activeTransport->onWakeConnectionRetry();
+    }
+}
+
+void MessageRouter::onWakeVerifyConnectivity() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    if (m_isEnabled && m_activeTransport) {
+        m_activeTransport->onWakeVerifyConnectivity();
+    }
+}
+
 void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
 
@@ -199,8 +215,10 @@ void MessageRouter::onDisconnected(
 
 void MessageRouter::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    ACSDK_DEBUG5(LX("server-side disconnect received").d("Message router is enabled", m_isEnabled));
-    if (m_isEnabled) {
+    ACSDK_DEBUG5(LX("server-side disconnect received")
+                     .d("Message router is enabled", m_isEnabled)
+                     .d("isActiveTransport", transport == m_activeTransport));
+    if (m_isEnabled && transport == m_activeTransport) {
         setConnectionStatusLocked(
             ConnectionStatusObserverInterface::Status::PENDING,
             ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);

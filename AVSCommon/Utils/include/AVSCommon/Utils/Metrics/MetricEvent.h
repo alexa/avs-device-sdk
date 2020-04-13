@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,15 +38,13 @@ public:
      * @param activityName is the activity name of the metric event.
      * @param priority is the priority of the metric event
      * @param dataPoints is the collection of key value pairs from dataPoint id to dataPoint objects
-     * @param timestamp is the timestamp at which this metric event was created. This implementation expects Unix Time
-     * to be the epoch of the system clock, which measures Unix Time since 00:00:00 Coordinated Universal Time (UTC),
-     * Thursday, 1 January 1970.
+     * @param timestamp is the timestamp at which this metric event was created.
      */
     MetricEvent(
         const std::string& activityName,
         Priority priority,
         const std::unordered_map<std::string, DataPoint>& dataPoints,
-        std::chrono::system_clock::time_point timestamp);
+        std::chrono::steady_clock::time_point timestamp);
 
     /**
      * Getter method for the activity name of the metric event
@@ -79,11 +77,17 @@ public:
     std::vector<DataPoint> getDataPoints() const;
 
     /**
-     * Getter method for the timestamp of when the metric event was created
+     * Getter method for the timestamp of when the metric event was created as a system clock time point.
      *
      * @return the timestamp of the metric event
      */
     std::chrono::system_clock::time_point getTimestamp() const;
+
+    /**
+     * Getter method for the timestamp of when the metric event was created as a steady clock time point.
+     * @return the timestamp of the metric event
+     */
+    std::chrono::steady_clock::time_point getSteadyTimestamp() const;
 
 private:
     // The activity name of the metric event
@@ -96,7 +100,7 @@ private:
     const std::unordered_map<std::string, DataPoint> m_dataPoints;
 
     // The timestamp for when the metric event was created
-    const std::chrono::system_clock::time_point m_timestamp;
+    const std::chrono::steady_clock::time_point m_timestamp;
 };
 
 }  // namespace metrics

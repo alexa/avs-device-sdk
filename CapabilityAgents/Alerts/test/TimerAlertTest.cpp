@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,12 +29,16 @@ class TimerAlertTest : public ::testing::Test {
 public:
     TimerAlertTest();
 
-    static std::unique_ptr<std::istream> timerDefaultFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(TIMER_DEFAULT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> timerDefaultFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(TIMER_DEFAULT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
 
-    static std::unique_ptr<std::istream> timerShortFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(TIMER_SHORT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> timerShortFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(TIMER_SHORT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
 
     std::shared_ptr<Timer> m_timer;
@@ -45,14 +49,16 @@ TimerAlertTest::TimerAlertTest() : m_timer{std::make_shared<Timer>(timerDefaultF
 
 TEST_F(TimerAlertTest, test_defaultAudio) {
     std::ostringstream oss;
-    oss << m_timer->getDefaultAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_timer->getDefaultAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(TIMER_DEFAULT_DATA, oss.str());
 }
 
 TEST_F(TimerAlertTest, test_shortAudio) {
     std::ostringstream oss;
-    oss << m_timer->getShortAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_timer->getShortAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(TIMER_SHORT_DATA, oss.str());
 }

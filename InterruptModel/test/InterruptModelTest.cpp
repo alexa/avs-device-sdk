@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0
  * Licensed under the Amazon Software License (the "License").
@@ -263,8 +263,6 @@ TEST_F(InterruptModelTest, test_InvalidIncomingMixingBehaviorReturnsUndefined) {
         VIRTUAL_CHANNEL2, NONMIXABLE_CONTENT_TYPE, ALERT_CHANNEL, MIXABLE_CONTENT_TYPE);
     ASSERT_EQ(MixingBehavior::UNDEFINED, retMixingBehavior);
 }
-
-// TODO : Add happy path tests (PUFFIN-6740)
 
 }  // namespace test
 }  // namespace interruptModel

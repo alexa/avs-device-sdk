@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -126,7 +126,8 @@ public:
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat,
-        const avsCommon::utils::mediaPlayer::SourceConfig& config) override {
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
+        avsCommon::utils::MediaType format) override {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_sourceConfig = config;
         m_sourceChanged.notify_one();
@@ -193,8 +194,9 @@ protected:
     std::shared_ptr<TestMediaPlayer> m_mediaPlayer;
     std::shared_ptr<Renderer> m_renderer;
 
-    static std::unique_ptr<std::istream> audioFactoryFunc() {
-        return std::unique_ptr<std::istream>(new std::stringstream());
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> audioFactoryFunc() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::istream>(new std::stringstream()), avsCommon::utils::MediaType::MPEG);
     }
 };
 
@@ -209,7 +211,8 @@ RendererTest::~RendererTest() {
 }
 
 void RendererTest::SetUpTest() {
-    std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory =
+        RendererTest::audioFactoryFunc;
     std::vector<std::string> urls = {TEST_URL1, TEST_URL2};
     m_renderer->start(m_observer, audioFactory, true, urls, TEST_LOOP_COUNT, TEST_LOOP_PAUSE);
 }
@@ -339,7 +342,8 @@ TEST_F(RendererTest, test_onPlaybackError) {
  * Test empty URL with non-zero loop pause, simulating playing a default alarm audio on background
  */
 TEST_F(RendererTest, testTimer_emptyURLNonZeroLoopPause) {
-    std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory =
+        RendererTest::audioFactoryFunc;
     std::vector<std::string> urls;
 
     // pass empty URLS with 10s pause and no loop count
@@ -380,8 +384,9 @@ TEST_F(RendererTest, testTimer_emptyURLNonZeroLoopPause) {
 /**
  * Test alarmVolumeRampRendering.
  */
-TEST_F(RendererTest, test_alarmVolumeRampRendering) {
-    std::function<std::unique_ptr<std::istream>()> audioFactory = RendererTest::audioFactoryFunc;
+TEST_F(RendererTest, testTimer_alarmVolumeRampRendering) {
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory =
+        RendererTest::audioFactoryFunc;
     std::vector<std::string> urls;
 
     // Pause interval for this test.

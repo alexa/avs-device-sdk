@@ -14,7 +14,6 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
-     "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
      "${AVSCommon_SOURCE_DIR}/Utils/test"
      "${AudioPlayer_INCLUDE_DIRS}"
      "${AudioResources_INCLUDE_DIRS}"
@@ -40,7 +39,8 @@ set(LINK_PATH ACL
         PlaybackController
         SpeechSynthesizer
         InteractionModel
-        UtilsCommonTestLib)
+        UtilsCommonTestLib
+        SDKInterfacesTests)
 
 if(KITTAI_KEY_WORD_DETECTOR)
     SET(LINK_PATH ${LINK_PATH} KITTAI)

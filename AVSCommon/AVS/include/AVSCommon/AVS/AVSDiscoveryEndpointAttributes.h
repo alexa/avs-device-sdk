@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,13 +49,25 @@ struct AVSDiscoveryEndpointAttributes {
         /// The device serialNumber.
         std::string serialNumber;
 
+        /// The device registration key value.
+        std::string registrationKey;
+
+        /// The device product id key value.
+        std::string productIdKey;
+
         /**
          * Constructor.
          *
          * @param productId The product identifier for the Alexa client device.
-         * @param serialNumber
+         * @param serialNumber The device DSN.
+         * @param registrationKey the registration key value.
+         * @param productIdKey the product id key value.
          */
-        Registration(const std::string& productId, const std::string& serialNumber);
+        Registration(
+            const std::string& productId,
+            const std::string& serialNumber,
+            const std::string& registrationKey,
+            const std::string& productIdKey);
 
         /**
          * Default constructor.
@@ -134,9 +146,13 @@ struct AVSDiscoveryEndpointAttributes {
 
 inline AVSDiscoveryEndpointAttributes::Registration::Registration(
     const std::string& productId,
-    const std::string& serialNumber) :
+    const std::string& serialNumber,
+    const std::string& registrationKey,
+    const std::string& productIdKey) :
         productId(productId),
-        serialNumber(serialNumber) {
+        serialNumber(serialNumber),
+        registrationKey(registrationKey),
+        productIdKey(productIdKey) {
 }
 
 }  // namespace avs

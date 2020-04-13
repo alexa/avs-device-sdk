@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -111,15 +111,19 @@ static const std::string TAG("NotificationsCapabilityAgentTest");
  */
 class TestNotificationsAudioFactory : public NotificationsAudioFactoryInterface {
 public:
-    std::function<std::unique_ptr<std::istream>()> notificationDefault() const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> notificationDefault()
+        const override;
 
 private:
-    static std::unique_ptr<std::istream> defaultNotification() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(DEFAULT_NOTIFICATION_AUDIO));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> defaultNotification() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::istream>(new std::stringstream(DEFAULT_NOTIFICATION_AUDIO)),
+            avsCommon::utils::MediaType::MPEG);
     }
 };
 
-std::function<std::unique_ptr<std::istream>()> TestNotificationsAudioFactory::notificationDefault() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+TestNotificationsAudioFactory::notificationDefault() const {
     return defaultNotification;
 }
 
@@ -333,15 +337,18 @@ public:
 
     void removeObserver(std::shared_ptr<NotificationRendererObserverInterface> observer) override;
 
-    bool renderNotification(std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url)
-        override;
+    bool renderNotification(
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+        const std::string& url) override;
 
     bool cancelNotificationRendering() override;
 
     // create shim methods to prevent compiler from complaining
     MOCK_METHOD2(
         renderNotificationShim,
-        bool(std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url));
+        bool(
+            std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+            const std::string& url));
     MOCK_METHOD0(cancelNotificationRenderingShim, bool());
 
     /**
@@ -351,7 +358,9 @@ public:
      *
      * Both params are ignored in this mock implementation.
      */
-    bool mockRender(std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url);
+    bool mockRender(
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+        const std::string& url);
 
     /**
      * A method mocking cancelRenderingNotification().
@@ -443,7 +452,7 @@ void MockNotificationRenderer::removeObserver(std::shared_ptr<NotificationRender
 }
 
 bool MockNotificationRenderer::renderNotification(
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
     const std::string& url) {
     return renderNotificationShim(audioFactory, url);
 }
@@ -453,7 +462,7 @@ bool MockNotificationRenderer::cancelNotificationRendering() {
 }
 
 bool MockNotificationRenderer::mockRender(
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
     const std::string& url) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -842,19 +851,23 @@ TEST_F(NotificationsCapabilityAgentTest, test_sendSetIndicatorWithVisualIndicato
 TEST_F(NotificationsCapabilityAgentTest, test_sameAssetId) {
     EXPECT_CALL(*(m_renderer.get()), renderNotificationShim(_, ASSET_URL1))
         .Times(1)
-        .WillOnce(Invoke([this](std::function<std::unique_ptr<std::istream>()> audioFactory, const std::string& url) {
-            unsigned int expectedNumSetIndicators = 2;
+        .WillOnce(
+            Invoke([this](
+                       std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+                           audioFactory,
+                       const std::string& url) {
+                unsigned int expectedNumSetIndicators = 2;
 
-            std::unique_lock<std::mutex> lock(m_mutex);
-            if (!m_setIndicatorTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this, expectedNumSetIndicators]() {
-                    return m_numSetIndicatorsProcessed == expectedNumSetIndicators;
-                })) {
-                return false;
-            }
-            m_renderer->mockRender(audioFactory, url);
-            EXPECT_TRUE(m_renderer->waitUntilRenderingStarted());
-            return true;
-        }));
+                std::unique_lock<std::mutex> lock(m_mutex);
+                if (!m_setIndicatorTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this, expectedNumSetIndicators]() {
+                        return m_numSetIndicatorsProcessed == expectedNumSetIndicators;
+                    })) {
+                    return false;
+                }
+                m_renderer->mockRender(audioFactory, url);
+                EXPECT_TRUE(m_renderer->waitUntilRenderingStarted());
+                return true;
+            }));
     initializeCapabilityAgent();
 
     sendSetIndicatorDirective(generatePayload(true, true, ASSET_ID1), MESSAGE_ID_TEST);

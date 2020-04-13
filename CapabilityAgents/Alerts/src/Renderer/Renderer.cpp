@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ std::shared_ptr<Renderer> Renderer::create(std::shared_ptr<MediaPlayerInterface>
 
 void Renderer::start(
     std::shared_ptr<RendererObserverInterface> observer,
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
     bool volumeRampEnabled,
     const std::vector<std::string>& urls,
     int loopCount,
@@ -75,8 +75,8 @@ void Renderer::start(
     bool startWithPause) {
     ACSDK_DEBUG5(LX(__func__));
 
-    std::unique_ptr<std::istream> defaultAudio = audioFactory();
-    if (!defaultAudio) {
+    std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> defaultAudio = audioFactory();
+    if (!defaultAudio.first) {
         ACSDK_ERROR(LX("startFailed").m("default audio is nullptr"));
         return;
     }
@@ -236,10 +236,13 @@ void Renderer::play() {
     m_isStartPending = false;
 
     if (shouldPlayDefault()) {
-        m_currentSourceId = m_mediaPlayer->setSource(m_defaultAudioFactory(), shouldMediaPlayerRepeat(), mediaConfig);
+        std::shared_ptr<std::istream> stream;
+        avsCommon::utils::MediaType streamFormat = avsCommon::utils::MediaType::UNKNOWN;
+        std::tie(stream, streamFormat) = m_defaultAudioFactory();
+        m_currentSourceId = m_mediaPlayer->setSource(stream, shouldMediaPlayerRepeat(), mediaConfig, streamFormat);
     } else {
         m_currentSourceId = m_mediaPlayer->setSource(
-            m_urls[m_numberOfStreamsRenderedThisLoop], std::chrono::milliseconds::zero(), mediaConfig);
+            m_urls[m_numberOfStreamsRenderedThisLoop], std::chrono::milliseconds::zero(), mediaConfig, false);
     }
     if (!isSourceIdOk(m_currentSourceId)) {
         ACSDK_ERROR(
@@ -266,7 +269,7 @@ void Renderer::play() {
 
 void Renderer::executeStart(
     std::shared_ptr<RendererObserverInterface> observer,
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
     bool volumeRampEnabled,
     const std::vector<std::string>& urls,
     int loopCount,

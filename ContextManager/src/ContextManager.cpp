@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -67,6 +67,13 @@ ContextManager::~ContextManager() {
     m_observers.clear();
     m_pendingRequests.clear();
     m_pendingStateRequest.clear();
+}
+
+/**
+ * A helper no-op function used as a default value for onContextAvailable and onContextFailure callbacks.
+ */
+static void NoopCallback() {
+    // No-op
 }
 
 void ContextManager::setStateProvider(
@@ -141,15 +148,27 @@ SetStateResult ContextManager::setState(
         if (jsonState.empty() && (StateRefreshPolicy::ALWAYS == refreshPolicy)) {
             ACSDK_ERROR(LX("setStateFailed")
                             .d("missingState", capabilityIdentifier.nameSpace + "::" + capabilityIdentifier.name));
-            std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
-            sendContextRequestFailedLocked(stateRequestToken, ContextRequestError::BUILD_CONTEXT_ERROR);
-        } else {
-            std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
-            auto requestIt = m_pendingStateRequest.find(stateRequestToken);
-            if (requestIt != m_pendingStateRequest.end()) {
-                requestIt->second.erase(capabilityIdentifier);
+            std::function<void()> contextFailureCallback = NoopCallback;
+            {
+                std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
+                contextFailureCallback =
+                    getContextFailureCallbackLocked(stateRequestToken, ContextRequestError::BUILD_CONTEXT_ERROR);
             }
-            sendContextIfReadyLocked(stateRequestToken, "");
+            /// Callback method should be called outside the lock.
+            contextFailureCallback();
+
+        } else {
+            std::function<void()> contextAvailableCallback = NoopCallback;
+            {
+                std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
+                auto requestIt = m_pendingStateRequest.find(stateRequestToken);
+                if (requestIt != m_pendingStateRequest.end()) {
+                    requestIt->second.erase(capabilityIdentifier);
+                }
+                contextAvailableCallback = getContextAvailableCallbackIfReadyLocked(stateRequestToken, "");
+            }
+            /// Callback method should be called outside the lock.
+            contextAvailableCallback();
         }
     });
     return SetStateResult::SUCCESS;
@@ -188,31 +207,38 @@ void ContextManager::provideStateResponse(
     ACSDK_DEBUG5(LX(__func__).sensitive("capability", capabilityIdentifier));
 
     m_executor.submit([this, capabilityIdentifier, capabilityState, stateRequestToken] {
-        std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
-        auto requestIt = m_pendingStateRequest.find(stateRequestToken);
-        if (requestIt == m_pendingStateRequest.end()) {
-            ACSDK_ERROR(LX("provideStateResponseFailed")
-                            .d("reason", "outdatedStateToken")
-                            .sensitive("capability", capabilityIdentifier)
-                            .sensitive("suppliedToken", stateRequestToken));
-            return;
-        }
+        std::function<void()> contextAvailableCallback = NoopCallback;
+        {
+            std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
+            auto requestIt = m_pendingStateRequest.find(stateRequestToken);
+            if (requestIt == m_pendingStateRequest.end()) {
+                ACSDK_ERROR(LX("provideStateResponseFailed")
+                                .d("reason", "outdatedStateToken")
+                                .sensitive("capability", capabilityIdentifier)
+                                .sensitive("suppliedToken", stateRequestToken));
+                return;
+            }
 
-        auto capabilityIt = requestIt->second.find(capabilityIdentifier);
-        if (capabilityIt == requestIt->second.end()) {
-            ACSDK_ERROR(LX("provideStateResponseFailed")
-                            .d("reason", "capabilityNotPending")
-                            .sensitive("capability", capabilityIdentifier)
-                            .sensitive("suppliedToken", stateRequestToken));
-            return;
-        }
+            auto capabilityIt = requestIt->second.find(capabilityIdentifier);
+            if (capabilityIt == requestIt->second.end()) {
+                ACSDK_ERROR(LX("provideStateResponseFailed")
+                                .d("reason", "capabilityNotPending")
+                                .sensitive("capability", capabilityIdentifier)
+                                .sensitive("suppliedToken", stateRequestToken));
+                return;
+            }
 
-        updateCapabilityState(capabilityIdentifier, capabilityState);
+            updateCapabilityState(capabilityIdentifier, capabilityState);
 
-        if (requestIt != m_pendingStateRequest.end()) {
-            requestIt->second.erase(capabilityIdentifier);
+            if (requestIt != m_pendingStateRequest.end()) {
+                requestIt->second.erase(capabilityIdentifier);
+            }
+            contextAvailableCallback =
+                getContextAvailableCallbackIfReadyLocked(stateRequestToken, capabilityIdentifier.endpointId);
         }
-        sendContextIfReadyLocked(stateRequestToken, capabilityIdentifier.endpointId);
+        /// Callback method should be called outside the lock.
+        contextAvailableCallback();
+
     });
 }
 
@@ -223,6 +249,8 @@ void ContextManager::provideStateUnavailableResponse(
     ACSDK_DEBUG5(LX(__func__).sensitive("capability", capabilityIdentifier));
 
     m_executor.submit([this, capabilityIdentifier, stateRequestToken, isEndpointUnreachable] {
+        std::function<void()> contextAvailableCallback = NoopCallback;
+        std::function<void()> contextFailureCallback = NoopCallback;
         {
             std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
             auto requestIt = m_pendingStateRequest.find(stateRequestToken);
@@ -250,15 +278,21 @@ void ContextManager::provideStateUnavailableResponse(
                     if (requestIt != m_pendingStateRequest.end()) {
                         requestIt->second.erase(capabilityIdentifier);
                     }
-                    sendContextIfReadyLocked(stateRequestToken, capabilityIdentifier.endpointId);
+                    contextAvailableCallback =
+                        getContextAvailableCallbackIfReadyLocked(stateRequestToken, capabilityIdentifier.endpointId);
 
                 } else {
-                    sendContextRequestFailedLocked(stateRequestToken, ContextRequestError::BUILD_CONTEXT_ERROR);
+                    contextFailureCallback =
+                        getContextFailureCallbackLocked(stateRequestToken, ContextRequestError::BUILD_CONTEXT_ERROR);
                 }
             } else {
-                sendContextRequestFailedLocked(stateRequestToken, ContextRequestError::ENDPOINT_UNREACHABLE);
+                contextFailureCallback =
+                    getContextFailureCallbackLocked(stateRequestToken, ContextRequestError::ENDPOINT_UNREACHABLE);
             }
         }
+        /// Callback methods should be called outside the lock.
+        contextAvailableCallback();
+        contextFailureCallback();
     });
 }
 
@@ -275,7 +309,6 @@ void ContextManager::removeContextManagerObserver(const std::shared_ptr<ContextM
 }
 
 ContextRequestToken ContextManager::generateToken() {
-    std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
     return ++m_requestCounter;
 }
 
@@ -288,31 +321,45 @@ ContextRequestToken ContextManager::getContext(
     m_executor.submit([this, contextRequester, endpointId, token, timeout] {
         auto timerToken = m_multiTimer->submitTask(timeout, [this, token] {
             // Cancel request after timeout.
-            m_executor.submit(
-                [this, token] { sendContextRequestFailedLocked(token, ContextRequestError::STATE_PROVIDER_TIMEDOUT); });
+            m_executor.submit([this, token] {
+                std::function<void()> contextFailureCallback = NoopCallback;
+                {
+                    std::lock_guard<std::mutex> lock{m_requestsMutex};
+                    contextFailureCallback =
+                        getContextFailureCallbackLocked(token, ContextRequestError::STATE_PROVIDER_TIMEDOUT);
+                }
+                contextFailureCallback();
+            });
         });
 
         std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
         auto& requestEndpointId = endpointId.empty() ? m_defaultEndpointId : endpointId;
         m_pendingRequests.emplace(token, RequestTracker{timerToken, contextRequester});
 
-        std::lock_guard<std::mutex> statesLock{m_endpointsStateMutex};
-        for (auto& capability : m_endpointsState[requestEndpointId]) {
-            if (capability.second.stateProvider &&
-                (capability.second.legacyCapability ? capability.second.refreshPolicy != StateRefreshPolicy::NEVER
-                                                    : capability.second.stateProvider->canStateBeRetrieved())) {
-                capability.second.stateProvider->provideState(capability.first, token);
-                m_pendingStateRequest[token].emplace(capability.first);
+        std::function<void()> contextAvailableCallback = NoopCallback;
+        {
+            std::lock_guard<std::mutex> statesLock{m_endpointsStateMutex};
+            for (auto& capability : m_endpointsState[requestEndpointId]) {
+                if (capability.second.stateProvider &&
+                    (capability.second.legacyCapability ? capability.second.refreshPolicy != StateRefreshPolicy::NEVER
+                                                        : capability.second.stateProvider->canStateBeRetrieved())) {
+                    capability.second.stateProvider->provideState(capability.first, token);
+                    m_pendingStateRequest[token].emplace(capability.first);
+                }
             }
-        }
 
-        sendContextIfReadyLocked(token, requestEndpointId);
+            contextAvailableCallback = getContextAvailableCallbackIfReadyLocked(token, requestEndpointId);
+        }
+        /// Callback method should be called outside the lock.
+        contextAvailableCallback();
     });
 
     return token;
 }
 
-void ContextManager::sendContextRequestFailedLocked(unsigned int requestToken, ContextRequestError error) {
+std::function<void()> ContextManager::getContextFailureCallbackLocked(
+    unsigned int requestToken,
+    ContextRequestError error) {
     ACSDK_DEBUG5(LX(__func__).d("token", requestToken));
     // Make sure the request gets cleared in the end of this function no matter the outcome.
     error::FinallyGuard clearRequestGuard{[this, requestToken] {
@@ -327,7 +374,7 @@ void ContextManager::sendContextRequestFailedLocked(unsigned int requestToken, C
     auto& request = m_pendingRequests[requestToken];
     if (!request.contextRequester) {
         ACSDK_DEBUG0(LX(__func__).d("result", "nullRequester").d("token", requestToken));
-        return;
+        return NoopCallback;
     }
     for (auto& pendingState : m_pendingStateRequest[requestToken]) {
         auto metricName = STATE_PROVIDER_TIMEOUT_METRIC_PREFIX + pendingState.nameSpace;
@@ -338,14 +385,22 @@ void ContextManager::sendContextRequestFailedLocked(unsigned int requestToken, C
                 .addDataPoint(DataPointCounterBuilder{}.setName(metricName).increment(1).build())
                 .build());
     }
-    request.contextRequester->onContextFailure(error, requestToken);
+    auto contextRequester = request.contextRequester;
+
+    return [contextRequester, error, requestToken]() {
+        if (contextRequester) {
+            contextRequester->onContextFailure(error, requestToken);
+        }
+    };
 }
 
-void ContextManager::sendContextIfReadyLocked(unsigned int requestToken, const EndpointIdentifier& endpointId) {
+std::function<void()> ContextManager::getContextAvailableCallbackIfReadyLocked(
+    unsigned int requestToken,
+    const EndpointIdentifier& endpointId) {
     auto& pendingStates = m_pendingStateRequest[requestToken];
     if (!pendingStates.empty()) {
         ACSDK_DEBUG5(LX(__func__).d("result", "stateNotAvailableYet").d("pendingStates", pendingStates.size()));
-        return;
+        return NoopCallback;
     }
 
     ACSDK_DEBUG5(LX(__func__).sensitive("endpointId", endpointId).d("token", requestToken));
@@ -361,8 +416,9 @@ void ContextManager::sendContextIfReadyLocked(unsigned int requestToken, const E
 
     auto& request = m_pendingRequests[requestToken];
     if (!request.contextRequester) {
-        ACSDK_ERROR(LX("sendContextIfReadyLockedFailed").d("reason", "nullRequester").d("token", requestToken));
-        return;
+        ACSDK_ERROR(
+            LX("getContextAvailableCallbackIfReadyLockedFailed").d("reason", "nullRequester").d("token", requestToken));
+        return NoopCallback;
     }
 
     AVSContext context;
@@ -380,7 +436,13 @@ void ContextManager::sendContextIfReadyLocked(unsigned int requestToken, const E
             }
         }
     }
-    request.contextRequester->onContextAvailable(endpointId, context, requestToken);
+    auto contextRequester = request.contextRequester;
+
+    return [contextRequester, context, endpointId, requestToken]() {
+        if (contextRequester) {
+            contextRequester->onContextAvailable(endpointId, context, requestToken);
+        }
+    };
 }
 
 void ContextManager::updateCapabilityState(

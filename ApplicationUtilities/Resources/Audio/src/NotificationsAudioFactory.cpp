@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,19 +17,22 @@
 
 #include <AVSCommon/Utils/Stream/StreamFunctions.h>
 
-#include "Audio/Data/med_alerts_notification_01._TTH_.mp3.h"
+#include "Audio/Data/med_alerts_notification_01.mp3.h"
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
 namespace resources {
 namespace audio {
 
-static std::unique_ptr<std::istream> notificationDefaultFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::med_alerts_notification_01__TTH__mp3, sizeof(data::med_alerts_notification_01__TTH__mp3));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> notificationDefaultFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_alerts_notification_01_mp3, sizeof(data::med_alerts_notification_01_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_alerts_notification_01_mp3_mimetype));
 }
 
-std::function<std::unique_ptr<std::istream>()> NotificationsAudioFactory::notificationDefault() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> NotificationsAudioFactory::
+    notificationDefault() const {
     return notificationDefaultFactory;
 }
 

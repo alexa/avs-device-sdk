@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@
 #include <memory>
 #include <string>
 #include <vector>
+
+#include <AVSCommon/Utils/MediaType.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -53,8 +55,8 @@ public:
      * TODO : ACSDK-389 Investigate changing explicit file paths to a std::istream-based interface.
      *
      * @param observer The observer that will receive renderer events.
-     * @param audioFactory A function that produces a unique stream of audio that is used for the default if nothing
-     * else is available.
+     * @param audioFactory A function that produces a pair of unique stream of audio and audio format that is used for
+     * the default if nothing else is available.
      * @param volumeRampEnabled whether this media should ramp
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
@@ -67,7 +69,7 @@ public:
      */
     virtual void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         bool volumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
