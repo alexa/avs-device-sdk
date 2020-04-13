@@ -3,17 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::BluetoothEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event.html",tooltip="Base class for a BluetoothEvent. "];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::AVRCPCommand\lReceivedEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_command_received_event.html"];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::BluetoothDevice\lManagerInitializedEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_device_manager_initialized_event.html"];
-  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceDiscoveredEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html"];
-  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceRemovedEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html"];
-  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceState\lChangedEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html"];
-  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::avsCommon\l::utils::bluetooth::MediaStreaming\lStateChangedEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_streaming_state_changed_event.html"];
+  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::externalMedia\lPlayer::AdapterPlaybackState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html"];
 }

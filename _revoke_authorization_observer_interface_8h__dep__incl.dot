@@ -1,19 +1,19 @@
-digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h"
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/RevokeAuthorizationObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/RevokeAuthorizationObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockRevokeAuthorizationObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mock_revoke_authorization_observer_8h.html"];
+  Node2 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockRevokeAuthorizationObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mock_revoke_authorization_observer_8h.html"];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_test_8cpp.html"];
+  Node3 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/System\l/a4btest/RevokeAuthorizationHandler\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_test_8cpp.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/System/include/System\l/RevokeAuthorizationHandler.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_8h.html"];
+  Node4 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/System\l/include/System/RevokeAuthorization\lHandler.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_8h.html"];
   Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/System/src/RevokeAuthorization\lHandler.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_8cpp.html"];
+  Node5 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/System\l/src/RevokeAuthorizationHandler.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_handler_8cpp.html"];
   Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/RevokeAuthorization\lObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8h.html"];
+  Node6 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/RevokeAuthorizationObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8h.html"];
   Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="/workplace/avs-device\l-sdk/SampleApp/src/RevokeAuthorization\lObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8cpp.html"];
+  Node7 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/RevokeAuthorization\lObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8cpp.html"];
 }

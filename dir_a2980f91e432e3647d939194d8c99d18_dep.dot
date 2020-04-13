@@ -1,0 +1,11 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/ToggleController/include/ToggleController" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_56d034411a5083916ae57b5fd40966e2 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_56d034411a5083916ae57b5fd40966e2.html"]
+  dir_a2980f91e432e3647d939194d8c99d18 [shape=box, label="ToggleController", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a2980f91e432e3647d939194d8c99d18.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_a2980f91e432e3647d939194d8c99d18->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000265_000017.html"];
+}

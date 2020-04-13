@@ -1,0 +1,11 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/Storage" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_4b7eb928d017a80c921794c44cfcae78 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AVSGatewayManager" fontname="Helvetica", fontsize="10", URL="dir_4b7eb928d017a80c921794c44cfcae78.html"]
+  dir_3d8d4bd5f7d1154769dd15a38a11f7fb [shape=box, label="Storage", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3d8d4bd5f7d1154769dd15a38a11f7fb.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_3d8d4bd5f7d1154769dd15a38a11f7fb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000142_000017.html"];
+}

@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   dir_14dc454c65c959153e71a0c89341b1c0 [shape=box, label="Audio", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_14dc454c65c959153e71a0c89341b1c0.html"];
   }
   dir_49dd3d9ac5586189aa170bac46425b9c [shape=box label="Utils" fillcolor="white" style="filled" color="red" URL="dir_49dd3d9ac5586189aa170bac46425b9c.html"];
-  dir_14dc454c65c959153e71a0c89341b1c0->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="5", labeldistance=1.5 headhref="dir_000078_000066.html"];
+  dir_14dc454c65c959153e71a0c89341b1c0->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="9", labeldistance=1.5 headhref="dir_000064_000072.html"];
 }

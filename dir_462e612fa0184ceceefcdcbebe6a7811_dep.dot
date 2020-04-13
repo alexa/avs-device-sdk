@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -11,8 +11,8 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   }
   }
   dir_49dd3d9ac5586189aa170bac46425b9c [shape=box label="Utils" fillcolor="white" style="filled" color="red" URL="dir_49dd3d9ac5586189aa170bac46425b9c.html"];
-  dir_1a5db821e7d59772f866ab25155da9b7->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="1", labeldistance=1.5 headhref="dir_000080_000066.html"];
-  dir_462e612fa0184ceceefcdcbebe6a7811->dir_1a5db821e7d59772f866ab25155da9b7 [headlabel="6", labeldistance=1.5 headhref="dir_000079_000080.html"];
-  dir_462e612fa0184ceceefcdcbebe6a7811->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="2", labeldistance=1.5 headhref="dir_000079_000066.html"];
-  dir_49dd3d9ac5586189aa170bac46425b9c->dir_1a5db821e7d59772f866ab25155da9b7 [headlabel="7", labeldistance=1.5 headhref="dir_000066_000080.html"];
+  dir_1a5db821e7d59772f866ab25155da9b7->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="1", labeldistance=1.5 headhref="dir_000082_000072.html"];
+  dir_462e612fa0184ceceefcdcbebe6a7811->dir_1a5db821e7d59772f866ab25155da9b7 [headlabel="2", labeldistance=1.5 headhref="dir_000081_000082.html"];
+  dir_462e612fa0184ceceefcdcbebe6a7811->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="5", labeldistance=1.5 headhref="dir_000081_000072.html"];
+  dir_49dd3d9ac5586189aa170bac46425b9c->dir_1a5db821e7d59772f866ab25155da9b7 [headlabel="10", labeldistance=1.5 headhref="dir_000072_000082.html"];
 }

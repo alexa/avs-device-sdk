@@ -1,0 +1,18 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SynchronizeStateSender" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3bb03bb8f5c109658007b64753c5da0f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_3bb03bb8f5c109658007b64753c5da0f.html"];
+    dir_3bb03bb8f5c109658007b64753c5da0f [shape=plaintext label="SynchronizeStateSender"];
+    dir_e01b21eb0bf33027d7166255c85943c7 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_e01b21eb0bf33027d7166255c85943c7.html"];
+    dir_e40776bbb9101f800c7a781e35fa1df0 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_e40776bbb9101f800c7a781e35fa1df0.html"];
+    dir_bc956963215d99be9592ec1406bdd67f [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_bc956963215d99be9592ec1406bdd67f.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_bc956963215d99be9592ec1406bdd67f->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="1", labeldistance=1.5 headhref="dir_000404_000401.html"];
+  dir_bc956963215d99be9592ec1406bdd67f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000404_000017.html"];
+  dir_e01b21eb0bf33027d7166255c85943c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000401_000017.html"];
+  dir_e40776bbb9101f800c7a781e35fa1df0->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="3", labeldistance=1.5 headhref="dir_000403_000401.html"];
+  dir_e40776bbb9101f800c7a781e35fa1df0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000403_000017.html"];
+}

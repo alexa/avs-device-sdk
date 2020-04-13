@@ -1,0 +1,22 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSGatewayManager" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_393484519c59ac99088674c9b5ebc5b9 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_393484519c59ac99088674c9b5ebc5b9.html"];
+    dir_393484519c59ac99088674c9b5ebc5b9 [shape=plaintext label="AVSGatewayManager"];
+    dir_93cb2441605e861868ee09096766059d [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_93cb2441605e861868ee09096766059d.html"];
+    dir_fbd38a7cc650a7f1278835b7d1c2a9eb [shape=box label="src" color="red" fillcolor="white" style="filled" URL="dir_fbd38a7cc650a7f1278835b7d1c2a9eb.html"];
+    dir_3452ac387f4a812fbaa78b3d7d3fb653 [shape=box label="test" color="red" fillcolor="white" style="filled" URL="dir_3452ac387f4a812fbaa78b3d7d3fb653.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_93cb2441605e861868ee09096766059d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000140_000017.html"];
+  dir_93cb2441605e861868ee09096766059d->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000140_000361.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000361_000017.html"];
+  dir_3452ac387f4a812fbaa78b3d7d3fb653->dir_93cb2441605e861868ee09096766059d [headlabel="3", labeldistance=1.5 headhref="dir_000145_000140.html"];
+  dir_3452ac387f4a812fbaa78b3d7d3fb653->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000145_000017.html"];
+  dir_3452ac387f4a812fbaa78b3d7d3fb653->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000145_000361.html"];
+  dir_fbd38a7cc650a7f1278835b7d1c2a9eb->dir_93cb2441605e861868ee09096766059d [headlabel="4", labeldistance=1.5 headhref="dir_000143_000140.html"];
+  dir_fbd38a7cc650a7f1278835b7d1c2a9eb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000143_000017.html"];
+}

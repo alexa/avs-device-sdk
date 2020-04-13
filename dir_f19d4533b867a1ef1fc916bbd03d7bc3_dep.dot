@@ -1,0 +1,14 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSGatewayManager/test/Storage" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3452ac387f4a812fbaa78b3d7d3fb653 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="test" fontname="Helvetica", fontsize="10", URL="dir_3452ac387f4a812fbaa78b3d7d3fb653.html"]
+  dir_f19d4533b867a1ef1fc916bbd03d7bc3 [shape=box, label="Storage", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_f19d4533b867a1ef1fc916bbd03d7bc3.html"];
+  }
+  dir_93cb2441605e861868ee09096766059d [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_93cb2441605e861868ee09096766059d.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_93cb2441605e861868ee09096766059d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000140_000017.html"];
+  dir_f19d4533b867a1ef1fc916bbd03d7bc3->dir_93cb2441605e861868ee09096766059d [headlabel="1", labeldistance=1.5 headhref="dir_000146_000140.html"];
+  dir_f19d4533b867a1ef1fc916bbd03d7bc3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000146_000017.html"];
+}

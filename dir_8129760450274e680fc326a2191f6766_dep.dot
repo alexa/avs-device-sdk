@@ -1,0 +1,14 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Endpoints/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0a90cfc4c6fc93350190d2c91cca5e69 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Endpoints" fontname="Helvetica", fontsize="10", URL="dir_0a90cfc4c6fc93350190d2c91cca5e69.html"]
+  dir_8129760450274e680fc326a2191f6766 [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_8129760450274e680fc326a2191f6766.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_7a58df4bcbb68d87015859ee7ca53249 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_7a58df4bcbb68d87015859ee7ca53249.html"];
+  dir_8129760450274e680fc326a2191f6766->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000299_000017.html"];
+  dir_8129760450274e680fc326a2191f6766->dir_7a58df4bcbb68d87015859ee7ca53249 [headlabel="2", labeldistance=1.5 headhref="dir_000299_000296.html"];
+  dir_7a58df4bcbb68d87015859ee7ca53249->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="29", labeldistance=1.5 headhref="dir_000296_000017.html"];
+}

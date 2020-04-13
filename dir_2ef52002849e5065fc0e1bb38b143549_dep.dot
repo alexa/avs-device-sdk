@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/ApplicationUtilities/AndroidUtilities/include" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/AndroidUtilities/include" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -12,7 +12,8 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/AndroidUtilities/include
   }
   dir_64fbf9e5512ec11acc25e4f2d433d2a3 [shape=box label="Resources" fillcolor="white" style="filled" color="red" URL="dir_64fbf9e5512ec11acc25e4f2d433d2a3.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_64fbf9e5512ec11acc25e4f2d433d2a3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000037_000015.html"];
-  dir_691ac723b59835d8cc7304ebace6d7e5->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000029_000037.html"];
-  dir_691ac723b59835d8cc7304ebace6d7e5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000029_000015.html"];
+  dir_64fbf9e5512ec11acc25e4f2d433d2a3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000039_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000039.html"];
+  dir_691ac723b59835d8cc7304ebace6d7e5->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000031_000039.html"];
+  dir_691ac723b59835d8cc7304ebace6d7e5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000031_000017.html"];
 }

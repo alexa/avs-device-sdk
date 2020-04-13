@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/SpeechEncoder/OpusEncoderContext/include/SpeechEncoder" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SpeechEncoder/OpusEncoderContext/include/SpeechEncoder" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/SpeechEncoder/OpusEncoderContext/include/Spee
   dir_0a24648f5734fa81ba89fd0f27cf182b [shape=box, label="SpeechEncoder", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0a24648f5734fa81ba89fd0f27cf182b.html"];
   }
   dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
-  dir_0a24648f5734fa81ba89fd0f27cf182b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000298_000294.html"];
+  dir_0a24648f5734fa81ba89fd0f27cf182b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000390_000386.html"];
 }

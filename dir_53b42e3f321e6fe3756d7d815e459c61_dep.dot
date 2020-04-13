@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/KWD/Sensory/include" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/KWD/Sensory/include" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -12,7 +12,7 @@ digraph "/workplace/avs-device-sdk/KWD/Sensory/include" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_8dea89c1bb4f7e14d42e016f897bd2de [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_8dea89c1bb4f7e14d42e016f897bd2de.html"];
-  dir_8dea89c1bb4f7e14d42e016f897bd2de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000234_000015.html"];
-  dir_cee562da2aae732442ef025e38e67ff6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000247_000015.html"];
-  dir_cee562da2aae732442ef025e38e67ff6->dir_8dea89c1bb4f7e14d42e016f897bd2de [headlabel="1", labeldistance=1.5 headhref="dir_000247_000234.html"];
+  dir_8dea89c1bb4f7e14d42e016f897bd2de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000317_000017.html"];
+  dir_cee562da2aae732442ef025e38e67ff6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000330_000017.html"];
+  dir_cee562da2aae732442ef025e38e67ff6->dir_8dea89c1bb4f7e14d42e016f897bd2de [headlabel="1", labeldistance=1.5 headhref="dir_000330_000317.html"];
 }

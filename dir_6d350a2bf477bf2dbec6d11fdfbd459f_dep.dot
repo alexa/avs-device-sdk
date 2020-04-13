@@ -1,0 +1,15 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ModeController" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_304e5c5f242f015339c8e1473ae913b8 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SDKInterfaces" fontname="Helvetica", fontsize="10", URL="dir_304e5c5f242f015339c8e1473ae913b8.html"]
+  dir_6d350a2bf477bf2dbec6d11fdfbd459f [shape=box, label="ModeController", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6d350a2bf477bf2dbec6d11fdfbd459f.html"];
+  }
+  dir_80711c2a226d5fced33fce22558d3784 [shape=box label="AVS" fillcolor="white" style="filled" color="red" URL="dir_80711c2a226d5fced33fce22558d3784.html"];
+  dir_49dd3d9ac5586189aa170bac46425b9c [shape=box label="Utils" fillcolor="white" style="filled" color="red" URL="dir_49dd3d9ac5586189aa170bac46425b9c.html"];
+  dir_80711c2a226d5fced33fce22558d3784->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="75", labeldistance=1.5 headhref="dir_000050_000072.html"];
+  dir_6d350a2bf477bf2dbec6d11fdfbd459f->dir_80711c2a226d5fced33fce22558d3784 [headlabel="3", labeldistance=1.5 headhref="dir_000085_000050.html"];
+  dir_6d350a2bf477bf2dbec6d11fdfbd459f->dir_49dd3d9ac5586189aa170bac46425b9c [headlabel="3", labeldistance=1.5 headhref="dir_000085_000072.html"];
+  dir_49dd3d9ac5586189aa170bac46425b9c->dir_80711c2a226d5fced33fce22558d3784 [headlabel="10", labeldistance=1.5 headhref="dir_000072_000050.html"];
+}

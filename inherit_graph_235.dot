@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::settings\l::SettingCallbacks\< ManagerT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1_setting_callbacks.html"];
+  Node0 [label="alexaClientSDK::bluetooth\lImplementations::blueZ\l::BlueZConstants",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_constants.html"];
 }

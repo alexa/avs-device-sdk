@@ -1,0 +1,15 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/ApiGateway/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3a57c8530640bbf2cee32213bc543583 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="ApiGateway" fontname="Helvetica", fontsize="10", URL="dir_3a57c8530640bbf2cee32213bc543583.html"]
+  subgraph clusterdir_864db04923e477fe7497f169e5b13e3f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_864db04923e477fe7497f169e5b13e3f.html"];
+    dir_864db04923e477fe7497f169e5b13e3f [shape=plaintext label="include"];
+    dir_f18505ebb7422850ef599b7d8c3c9980 [shape=box label="ApiGateway" color="black" fillcolor="white" style="filled" URL="dir_f18505ebb7422850ef599b7d8c3c9980.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_f18505ebb7422850ef599b7d8c3c9980->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000188_000017.html"];
+}

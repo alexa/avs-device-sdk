@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/GStreamerMediaPlayer/include/Medi
   }
   dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_9b83a3a02537ea061e11167c986dd2c8->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000260_000263.html"];
-  dir_9b83a3a02537ea061e11167c986dd2c8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000260_000015.html"];
-  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="36", labeldistance=1.5 headhref="dir_000263_000015.html"];
+  dir_9b83a3a02537ea061e11167c986dd2c8->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000343_000355.html"];
+  dir_9b83a3a02537ea061e11167c986dd2c8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000343_000017.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="36", labeldistance=1.5 headhref="dir_000355_000017.html"];
 }

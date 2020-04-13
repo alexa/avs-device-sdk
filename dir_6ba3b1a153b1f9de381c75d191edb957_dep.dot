@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -9,7 +9,8 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Libcu
   dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
   dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
   dir_0bf0f45007ff5e6885dc23c0041db988 [shape=box label="HTTP2" URL="dir_0bf0f45007ff5e6885dc23c0041db988.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000096_000097.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000096_000016.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_0bf0f45007ff5e6885dc23c0041db988 [headlabel="4", labeldistance=1.5 headhref="dir_000096_000094.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000107_000108.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000107_000018.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_0bf0f45007ff5e6885dc23c0041db988 [headlabel="4", labeldistance=1.5 headhref="dir_000107_000105.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000018_000108.html"];
 }

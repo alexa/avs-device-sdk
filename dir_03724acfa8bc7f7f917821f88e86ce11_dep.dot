@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/EqualizerImplementations/src" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/EqualizerImplementations/src" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/EqualizerImplementations/src" {
   }
   dir_c3ab2912bcaa751858979eb56f868649 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_c3ab2912bcaa751858979eb56f868649.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_c3ab2912bcaa751858979eb56f868649->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000224_000015.html"];
-  dir_03724acfa8bc7f7f917821f88e86ce11->dir_c3ab2912bcaa751858979eb56f868649 [headlabel="7", labeldistance=1.5 headhref="dir_000226_000224.html"];
-  dir_03724acfa8bc7f7f917821f88e86ce11->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="8", labeldistance=1.5 headhref="dir_000226_000015.html"];
+  dir_c3ab2912bcaa751858979eb56f868649->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000301_000017.html"];
+  dir_03724acfa8bc7f7f917821f88e86ce11->dir_c3ab2912bcaa751858979eb56f868649 [headlabel="7", labeldistance=1.5 headhref="dir_000303_000301.html"];
+  dir_03724acfa8bc7f7f917821f88e86ce11->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="8", labeldistance=1.5 headhref="dir_000303_000017.html"];
 }

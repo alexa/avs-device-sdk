@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/ApplicationUtilities/Resources/Audio/src" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/Resources/Audio/src" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,8 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/Resources/Audio/src" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_0fab1f71be7e23bf3bab649bfb25be86 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_0fab1f71be7e23bf3bab649bfb25be86.html"];
-  dir_0fab1f71be7e23bf3bab649bfb25be86->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000039_000015.html"];
-  dir_b51783db643fb76509d872fb0290629a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000042_000015.html"];
-  dir_b51783db643fb76509d872fb0290629a->dir_0fab1f71be7e23bf3bab649bfb25be86 [headlabel="21", labeldistance=1.5 headhref="dir_000042_000039.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_0fab1f71be7e23bf3bab649bfb25be86 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000041.html"];
+  dir_0fab1f71be7e23bf3bab649bfb25be86->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000041_000017.html"];
+  dir_b51783db643fb76509d872fb0290629a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000044_000017.html"];
+  dir_b51783db643fb76509d872fb0290629a->dir_0fab1f71be7e23bf3bab649bfb25be86 [headlabel="21", labeldistance=1.5 headhref="dir_000044_000041.html"];
 }

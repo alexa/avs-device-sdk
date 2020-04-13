@@ -1,0 +1,21 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/PowerController" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7cf910bd1d7603f12ef47ff650cec893 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="CapabilityAgents" fontname="Helvetica", fontsize="10", URL="dir_7cf910bd1d7603f12ef47ff650cec893.html"]
+  subgraph clusterdir_32f5978b09742a25fd0ec6ffcbf8c09b {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_32f5978b09742a25fd0ec6ffcbf8c09b.html"];
+    dir_32f5978b09742a25fd0ec6ffcbf8c09b [shape=plaintext label="PowerController"];
+    dir_5373cc4a2a660f7130b6ded797fc2fed [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_5373cc4a2a660f7130b6ded797fc2fed.html"];
+    dir_4b5c6d815351d1c84cb6f2c040ee433c [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_4b5c6d815351d1c84cb6f2c040ee433c.html"];
+    dir_43cd3a85d8a0e6b28bcbca1785b1ab8a [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_43cd3a85d8a0e6b28bcbca1785b1ab8a.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000235_000233.html"];
+  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000235_000017.html"];
+  dir_5373cc4a2a660f7130b6ded797fc2fed->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000233_000017.html"];
+  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000236_000233.html"];
+  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000236_000017.html"];
+}

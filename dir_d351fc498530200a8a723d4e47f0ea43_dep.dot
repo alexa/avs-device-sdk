@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/Settings/include/Settings/Types" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Settings/include/Settings/Types" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/Settings/include/Settings/Types" {
   }
   dir_ad156fe40e841a0a09e302ebd8b7e03e [shape=box label="Storage" URL="dir_ad156fe40e841a0a09e302ebd8b7e03e.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_ad156fe40e841a0a09e302ebd8b7e03e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000286_000015.html"];
-  dir_d351fc498530200a8a723d4e47f0ea43->dir_ad156fe40e841a0a09e302ebd8b7e03e [headlabel="1", labeldistance=1.5 headhref="dir_000287_000286.html"];
-  dir_d351fc498530200a8a723d4e47f0ea43->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000287_000015.html"];
+  dir_ad156fe40e841a0a09e302ebd8b7e03e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000378_000017.html"];
+  dir_d351fc498530200a8a723d4e47f0ea43->dir_ad156fe40e841a0a09e302ebd8b7e03e [headlabel="1", labeldistance=1.5 headhref="dir_000379_000378.html"];
+  dir_d351fc498530200a8a723d4e47f0ea43->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000379_000017.html"];
 }

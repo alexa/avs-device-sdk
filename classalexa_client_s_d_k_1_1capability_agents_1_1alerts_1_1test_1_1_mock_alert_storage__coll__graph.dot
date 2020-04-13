@@ -5,4 +5,5 @@ digraph "alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage"
   Node2 [label="alexaClientSDK::capability\lAgents::alerts::test::MockAlert\lStorage",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="alexaClientSDK::capability\lAgents::alerts::storage\l::AlertStorageInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1storage_1_1_alert_storage_interface.html"];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

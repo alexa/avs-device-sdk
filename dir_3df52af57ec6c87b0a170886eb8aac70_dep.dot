@@ -1,0 +1,21 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/ModeController" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7cf910bd1d7603f12ef47ff650cec893 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="CapabilityAgents" fontname="Helvetica", fontsize="10", URL="dir_7cf910bd1d7603f12ef47ff650cec893.html"]
+  subgraph clusterdir_3df52af57ec6c87b0a170886eb8aac70 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_3df52af57ec6c87b0a170886eb8aac70.html"];
+    dir_3df52af57ec6c87b0a170886eb8aac70 [shape=plaintext label="ModeController"];
+    dir_57ba08721babe26a5d9ee6c8c820b2cd [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_57ba08721babe26a5d9ee6c8c820b2cd.html"];
+    dir_42660556b47322a2edbb122bf2e18a99 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_42660556b47322a2edbb122bf2e18a99.html"];
+    dir_2152ebfdab20cab4b9f22ee050e298af [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_2152ebfdab20cab4b9f22ee050e298af.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_42660556b47322a2edbb122bf2e18a99->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000218_000017.html"];
+  dir_42660556b47322a2edbb122bf2e18a99->dir_57ba08721babe26a5d9ee6c8c820b2cd [headlabel="2", labeldistance=1.5 headhref="dir_000218_000216.html"];
+  dir_57ba08721babe26a5d9ee6c8c820b2cd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000216_000017.html"];
+  dir_2152ebfdab20cab4b9f22ee050e298af->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000219_000017.html"];
+  dir_2152ebfdab20cab4b9f22ee050e298af->dir_57ba08721babe26a5d9ee6c8c820b2cd [headlabel="2", labeldistance=1.5 headhref="dir_000219_000216.html"];
+}

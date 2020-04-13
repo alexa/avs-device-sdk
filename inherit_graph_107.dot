@@ -3,13 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node374 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node374 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::avsCommon\l::utils::logger::LogEntryStream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html"];
-  Node167 [label="streambuf",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node167 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="alexaClientSDK::avsCommon\l::utils::logger::LogEntryBuffer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html"];
-  Node0 -> Node1 [dir="back",color="firebrick4",fontsize="10",style="solid",fontname="Helvetica"];
-  Node167 -> Node170 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node170 [label="alexaClientSDK::avsCommon\l::utils::stream::Streambuf",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html"];
+  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::RenderPlayerInfo\lCardsObserverInterface::Context",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_observer_interface_1_1_context.html",tooltip="The context of the RenderPlayerInfoCards from the RenderPlayerInfoCards provider. ..."];
 }

@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/KWD/KWDProvider/src" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/KWD/KWDProvider/src" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/KWD/KWDProvider/src" {
   dir_75b03e7b1e301cc37138f8f5b30006c4 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_75b03e7b1e301cc37138f8f5b30006c4.html"];
   }
   dir_9d4ae4016b26aa9beb737196ea1eaf71 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_9d4ae4016b26aa9beb737196ea1eaf71.html"];
-  dir_75b03e7b1e301cc37138f8f5b30006c4->dir_9d4ae4016b26aa9beb737196ea1eaf71 [headlabel="1", labeldistance=1.5 headhref="dir_000244_000242.html"];
+  dir_75b03e7b1e301cc37138f8f5b30006c4->dir_9d4ae4016b26aa9beb737196ea1eaf71 [headlabel="1", labeldistance=1.5 headhref="dir_000327_000325.html"];
 }

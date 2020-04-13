@@ -1,0 +1,11 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Captions/Interface/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_84d366bf3e804ad2ebf34dfa9ac34410 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Interface" fontname="Helvetica", fontsize="10", URL="dir_84d366bf3e804ad2ebf34dfa9ac34410.html"]
+  dir_5be4970cea35543a2d51c725b288c515 [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_5be4970cea35543a2d51c725b288c515.html"];
+  }
+  dir_8e66a004f8be64c7ee13a362fe0e9b56 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_8e66a004f8be64c7ee13a362fe0e9b56.html"];
+  dir_5be4970cea35543a2d51c725b288c515->dir_8e66a004f8be64c7ee13a362fe0e9b56 [headlabel="7", labeldistance=1.5 headhref="dir_000278_000275.html"];
+}

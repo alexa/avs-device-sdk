@@ -1,0 +1,11 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SynchronizeStateSender/include/SynchronizeStateSender" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e01b21eb0bf33027d7166255c85943c7 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_e01b21eb0bf33027d7166255c85943c7.html"]
+  dir_75c799cfc48c3513437ce24021c11881 [shape=box, label="SynchronizeStateSender", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_75c799cfc48c3513437ce24021c11881.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_75c799cfc48c3513437ce24021c11881->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000402_000017.html"];
+}

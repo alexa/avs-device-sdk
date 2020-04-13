@@ -1,0 +1,15 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/PowerController/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_32f5978b09742a25fd0ec6ffcbf8c09b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="PowerController" fontname="Helvetica", fontsize="10", URL="dir_32f5978b09742a25fd0ec6ffcbf8c09b.html"]
+  subgraph clusterdir_5373cc4a2a660f7130b6ded797fc2fed {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_5373cc4a2a660f7130b6ded797fc2fed.html"];
+    dir_5373cc4a2a660f7130b6ded797fc2fed [shape=plaintext label="include"];
+    dir_7ff25c6a5765995d2ece2c3b02f397d8 [shape=box label="PowerController" color="black" fillcolor="white" style="filled" URL="dir_7ff25c6a5765995d2ece2c3b02f397d8.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_7ff25c6a5765995d2ece2c3b02f397d8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000234_000017.html"];
+}

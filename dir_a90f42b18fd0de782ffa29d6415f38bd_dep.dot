@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/include/SpeechSynthesizer" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/include/SpeechSynthesizer" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -6,6 +6,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/include/Sp
     graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_6e2730d153b793e6456d6b6cc64aaf73.html"]
   dir_a90f42b18fd0de782ffa29d6415f38bd [shape=box, label="SpeechSynthesizer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a90f42b18fd0de782ffa29d6415f38bd.html"];
   }
+  dir_de0e77330fd0ab33359e90b501923c8e [shape=box label="Captions" fillcolor="white" style="filled" color="red" URL="dir_de0e77330fd0ab33359e90b501923c8e.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_a90f42b18fd0de782ffa29d6415f38bd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="17", labeldistance=1.5 headhref="dir_000198_000015.html"];
+  dir_de0e77330fd0ab33359e90b501923c8e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="24", labeldistance=1.5 headhref="dir_000268_000017.html"];
+  dir_a90f42b18fd0de782ffa29d6415f38bd->dir_de0e77330fd0ab33359e90b501923c8e [headlabel="2", labeldistance=1.5 headhref="dir_000249_000268.html"];
+  dir_a90f42b18fd0de782ffa29d6415f38bd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="20", labeldistance=1.5 headhref="dir_000249_000017.html"];
 }

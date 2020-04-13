@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/RegistrationManager/include" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/RegistrationManager/include" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/RegistrationManager/include" {
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_6a568f4c47ff8f5c05d806b725a69572->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000271_000015.html"];
+  dir_6a568f4c47ff8f5c05d806b725a69572->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000363_000017.html"];
 }

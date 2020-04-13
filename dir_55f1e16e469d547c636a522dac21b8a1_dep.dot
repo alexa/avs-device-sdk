@@ -1,0 +1,15 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/capabilities" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_55f1e16e469d547c636a522dac21b8a1 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_55f1e16e469d547c636a522dac21b8a1.html"];
+    dir_55f1e16e469d547c636a522dac21b8a1 [shape=plaintext label="capabilities"];
+    dir_a34f9b5658ea5accd04f680d0b8d4c8f [shape=box label="DoNotDisturb" color="red" fillcolor="white" style="filled" URL="dir_a34f9b5658ea5accd04f680d0b8d4c8f.html"];
+  }
+  dir_8ae0dd75af039a94f4269584fb8eef13 [shape=box label="Settings" fillcolor="white" style="filled" color="red" URL="dir_8ae0dd75af039a94f4269584fb8eef13.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_a34f9b5658ea5accd04f680d0b8d4c8f->dir_8ae0dd75af039a94f4269584fb8eef13 [headlabel="14", labeldistance=1.5 headhref="dir_000156_000375.html"];
+  dir_a34f9b5658ea5accd04f680d0b8d4c8f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="20", labeldistance=1.5 headhref="dir_000156_000017.html"];
+  dir_8ae0dd75af039a94f4269584fb8eef13->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="53", labeldistance=1.5 headhref="dir_000375_000017.html"];
+}

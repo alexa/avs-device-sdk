@@ -1,0 +1,15 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Metrics/MetricRecorder/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_040ed820c8939930f4ffbf04d6923076 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="MetricRecorder" fontname="Helvetica", fontsize="10", URL="dir_040ed820c8939930f4ffbf04d6923076.html"]
+  subgraph clusterdir_c30d3265a03dcc065a81fb1d0452419a {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_c30d3265a03dcc065a81fb1d0452419a.html"];
+    dir_c30d3265a03dcc065a81fb1d0452419a [shape=plaintext label="include"];
+    dir_0509ac7db52408dd560221be43771fe0 [shape=box label="Metrics" color="black" fillcolor="white" style="filled" URL="dir_0509ac7db52408dd560221be43771fe0.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0509ac7db52408dd560221be43771fe0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000349_000017.html"];
+}

@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/CapabilityAgents/Bluetooth/test" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Bluetooth/test" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,11 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/Bluetooth/test" {
   }
   dir_d3b0a340b0e73c93d97aa769524dbb98 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d3b0a340b0e73c93d97aa769524dbb98.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_d3b0a340b0e73c93d97aa769524dbb98->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000156_000015.html"];
-  dir_bfe876b049f2a0e737cbdacf08ca09d9->dir_d3b0a340b0e73c93d97aa769524dbb98 [headlabel="2", labeldistance=1.5 headhref="dir_000159_000156.html"];
-  dir_bfe876b049f2a0e737cbdacf08ca09d9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000159_000015.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_d3b0a340b0e73c93d97aa769524dbb98->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="35", labeldistance=1.5 headhref="dir_000197_000017.html"];
+  dir_d3b0a340b0e73c93d97aa769524dbb98->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000197_000361.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000361_000017.html"];
+  dir_bfe876b049f2a0e737cbdacf08ca09d9->dir_d3b0a340b0e73c93d97aa769524dbb98 [headlabel="5", labeldistance=1.5 headhref="dir_000200_000197.html"];
+  dir_bfe876b049f2a0e737cbdacf08ca09d9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="30", labeldistance=1.5 headhref="dir_000200_000017.html"];
+  dir_bfe876b049f2a0e737cbdacf08ca09d9->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000200_000361.html"];
 }

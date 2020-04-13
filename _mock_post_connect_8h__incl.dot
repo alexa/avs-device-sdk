@@ -1,8 +1,8 @@
-digraph "/workplace/avs-device-sdk/ACL/test/Transport/MockPostConnect.h"
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ACL/test/Transport/MockPostConnect.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/workplace/avs-device\l-sdk/ACL/test/Transport\l/MockPostConnect.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ACL/test/Transport\l/MockPostConnect.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="gmock/gmock.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -14,7 +14,7 @@ digraph "/workplace/avs-device-sdk/ACL/test/Transport/MockPostConnect.h"
   Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="ACL/Transport/PostConnect\lObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_observer_interface_8h.html"];
   Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="ACL/Transport/PostConnect\lSendMessageInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_send_message_interface_8h.html"];
+  Node6 [label="AVSCommon/SDKInterfaces\l/PostConnectSendMessageInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_send_message_interface_8h.html"];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="AVSCommon/AVS/MessageRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_message_request_8h.html"];
   Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

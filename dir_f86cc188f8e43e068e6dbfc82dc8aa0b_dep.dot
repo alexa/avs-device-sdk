@@ -1,0 +1,11 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Metrics/SampleMetricSink/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_88bc15e9d162c836057111d08acd2c60 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="SampleMetricSink" fontname="Helvetica", fontsize="10", URL="dir_88bc15e9d162c836057111d08acd2c60.html"]
+  dir_f86cc188f8e43e068e6dbfc82dc8aa0b [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_f86cc188f8e43e068e6dbfc82dc8aa0b.html"];
+  }
+  dir_101b095db37944aa2a0a3f24e5441fda [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_101b095db37944aa2a0a3f24e5441fda.html"];
+  dir_f86cc188f8e43e068e6dbfc82dc8aa0b->dir_101b095db37944aa2a0a3f24e5441fda [headlabel="1", labeldistance=1.5 headhref="dir_000354_000352.html"];
+}

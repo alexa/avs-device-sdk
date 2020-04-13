@@ -1,0 +1,21 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Alexa" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7cf910bd1d7603f12ef47ff650cec893 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="CapabilityAgents" fontname="Helvetica", fontsize="10", URL="dir_7cf910bd1d7603f12ef47ff650cec893.html"]
+  subgraph clusterdir_a1558373db80e0c64649c83f312e1e2c {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_a1558373db80e0c64649c83f312e1e2c.html"];
+    dir_a1558373db80e0c64649c83f312e1e2c [shape=plaintext label="Alexa"];
+    dir_7bea2613620dd0e302af38c664599d1d [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_7bea2613620dd0e302af38c664599d1d.html"];
+    dir_e6e6049ce465e638800825f7769f0fe8 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_e6e6049ce465e638800825f7769f0fe8.html"];
+    dir_0bc96bee3091e216e60f78b885692039 [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_0bc96bee3091e216e60f78b885692039.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_7bea2613620dd0e302af38c664599d1d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000182_000017.html"];
+  dir_0bc96bee3091e216e60f78b885692039->dir_7bea2613620dd0e302af38c664599d1d [headlabel="3", labeldistance=1.5 headhref="dir_000185_000182.html"];
+  dir_0bc96bee3091e216e60f78b885692039->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000185_000017.html"];
+  dir_e6e6049ce465e638800825f7769f0fe8->dir_7bea2613620dd0e302af38c664599d1d [headlabel="4", labeldistance=1.5 headhref="dir_000184_000182.html"];
+  dir_e6e6049ce465e638800825f7769f0fe8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000184_000017.html"];
+}

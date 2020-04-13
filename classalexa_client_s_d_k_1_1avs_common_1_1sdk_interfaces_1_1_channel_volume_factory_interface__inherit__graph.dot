@@ -1,0 +1,8 @@
+digraph "alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ChannelVolume\lFactoryInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::capability\lAgents::speakerManager\l::DefaultChannelVolumeFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_default_channel_volume_factory.html"];
+}

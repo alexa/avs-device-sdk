@@ -1,4 +1,4 @@
-digraph "/workplace/avs-device-sdk/CapabilityAgents/Equalizer/include/Equalizer" {
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Equalizer/include/Equalizer" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -9,9 +9,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/Equalizer/include/Equalizer"
   dir_63c328d9f040c398ed3a99417a38689e [shape=box label="EqualizerImplementations" fillcolor="white" style="filled" color="red" URL="dir_63c328d9f040c398ed3a99417a38689e.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
-  dir_63c328d9f040c398ed3a99417a38689e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="34", labeldistance=1.5 headhref="dir_000223_000015.html"];
-  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000269_000015.html"];
-  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000167_000223.html"];
-  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000167_000015.html"];
-  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000167_000269.html"];
+  dir_63c328d9f040c398ed3a99417a38689e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="34", labeldistance=1.5 headhref="dir_000300_000017.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000361_000017.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000203_000300.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000203_000017.html"];
+  dir_0d32ea32c5a6c0804d014da0ffbc6421->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000203_000361.html"];
 }

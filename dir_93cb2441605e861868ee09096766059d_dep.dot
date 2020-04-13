@@ -1,0 +1,18 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSGatewayManager/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_393484519c59ac99088674c9b5ebc5b9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AVSGatewayManager" fontname="Helvetica", fontsize="10", URL="dir_393484519c59ac99088674c9b5ebc5b9.html"]
+  subgraph clusterdir_93cb2441605e861868ee09096766059d {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_93cb2441605e861868ee09096766059d.html"];
+    dir_93cb2441605e861868ee09096766059d [shape=plaintext label="include"];
+    dir_4b7eb928d017a80c921794c44cfcae78 [shape=box label="AVSGatewayManager" color="red" fillcolor="white" style="filled" URL="dir_4b7eb928d017a80c921794c44cfcae78.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_4b7eb928d017a80c921794c44cfcae78->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000141_000017.html"];
+  dir_4b7eb928d017a80c921794c44cfcae78->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000141_000361.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000361_000017.html"];
+}

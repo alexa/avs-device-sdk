@@ -1,0 +1,36 @@
+digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node93 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node93 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8h.html"];
+  Node94 -> Node95 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8cpp.html"];
+  Node94 -> Node96 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/InteractionManager.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_interaction_manager_8h.html"];
+  Node96 -> Node97 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node97 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/UserInputManager.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_user_input_manager_8h.html"];
+  Node97 -> Node98 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node98 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html"];
+  Node98 -> Node99 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html"];
+  Node98 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node97 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/UserInputManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_user_input_manager_8cpp.html"];
+  Node96 -> Node102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/InteractionManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_interaction_manager_8cpp.html"];
+  Node94 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/KeywordObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_keyword_observer_8h.html"];
+  Node103 -> Node96 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node104 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/KeywordObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_keyword_observer_8cpp.html"];
+  Node103 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 -> Node96 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 -> Node98 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node105 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/SDKDiagnostics.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_diagnostics_8h.html"];
+  Node105 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/SDKDiagnostics.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_diagnostics_8cpp.html"];
+}
