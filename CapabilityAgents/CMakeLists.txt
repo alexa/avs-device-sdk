@@ -10,7 +10,6 @@ set(CAPABILITY_AGENTS
         "ApiGateway"
         "AudioPlayer"
         "Bluetooth"
-        "DoNotDisturb"
         "Equalizer"
         "ExternalMediaPlayer"
         "InteractionModel"

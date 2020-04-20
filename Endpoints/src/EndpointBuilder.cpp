@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -131,12 +131,18 @@ EndpointBuilder& EndpointBuilder::withEndpointId(const EndpointIdentifier& endpo
 }
 
 bool EndpointBuilder::finishDefaultEndpointConfiguration() {
-    m_attributes.registration.set(
-        EndpointAttributes::Registration(m_deviceInfo.getProductId(), m_deviceInfo.getDeviceSerialNumber()));
+    m_attributes.registration.set(EndpointAttributes::Registration(
+        m_deviceInfo.getProductId(),
+        m_deviceInfo.getDeviceSerialNumber(),
+        m_deviceInfo.getRegistrationKey(),
+        m_deviceInfo.getProductIdKey()));
     m_attributes.endpointId = m_deviceInfo.getDefaultEndpointId();
     m_attributes.displayCategories = {ALEXA_DISPLAY_CATEGORY};
     m_attributes.manufacturerName = m_deviceInfo.getManufacturerName();
     m_attributes.description = m_deviceInfo.getDeviceDescription();
+    if (!m_deviceInfo.getFriendlyName().empty()) {
+        m_attributes.friendlyName = m_deviceInfo.getFriendlyName();
+    }
     m_isDefaultEndpoint = true;
     auto attributes = m_attributes;
     return !m_invalidConfiguration;

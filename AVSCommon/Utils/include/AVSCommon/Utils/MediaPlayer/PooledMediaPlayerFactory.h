@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,12 +38,14 @@ public:
      * @param pool pre-created collection of MediaPlayers.  Ownership is not transferred.
      */
     static std::unique_ptr<PooledMediaPlayerFactory> create(
-        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool);
+        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
+        const avsCommon::utils::mediaPlayer::Fingerprint& fingerprint = {});
 
     virtual ~PooledMediaPlayerFactory();
 
     /// @name MediaPlayerFactoryInterface methods.
     ///@{
+    avsCommon::utils::mediaPlayer::Fingerprint getFingerprint() override;
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> acquireMediaPlayer() override;
     bool releaseMediaPlayer(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer) override;
     bool isMediaPlayerAvailable() override;
@@ -60,7 +62,8 @@ protected:
      * @param pool pre-created collection of MediaPlayers.  Ownership is not transferred.
      */
     PooledMediaPlayerFactory(
-        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool);
+        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
+        const avsCommon::utils::mediaPlayer::Fingerprint& fingerprint);
     /**
      * Synchronously notify all observers that a player is available
      */
@@ -72,6 +75,8 @@ protected:
     std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> m_inUsePlayerPool;
     /// Factory observers
     std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryObserverInterface>> m_observers;
+    /// MediaPlayer version information
+    avsCommon::utils::mediaPlayer::Fingerprint m_fingerprint;
 };
 
 }  // namespace mediaPlayer

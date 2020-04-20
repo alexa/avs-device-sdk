@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -145,6 +145,11 @@ bool AVSConnectionManager::isConnected() const {
     return m_messageRouter->getConnectionStatus().first == ConnectionStatusObserverInterface::Status::CONNECTED;
 }
 
+void AVSConnectionManager::onWakeConnectionRetry() {
+    ACSDK_DEBUG9(LX(__func__));
+    m_messageRouter->onWakeConnectionRetry();
+}
+
 void AVSConnectionManager::setAVSGateway(const std::string& avsGateway) {
     m_messageRouter->setAVSGateway(avsGateway);
 }
@@ -154,9 +159,13 @@ std::string AVSConnectionManager::getAVSGateway() {
 }
 
 void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
-    ACSDK_DEBUG5(LX(__func__).d("connected", connected));
-    if (!connected) {
-        reconnect();
+    ACSDK_DEBUG5(LX(__func__).d("connected", connected).d("isEnabled", m_isEnabled));
+    if (m_isEnabled) {
+        if (connected) {
+            m_messageRouter->onWakeConnectionRetry();
+        } else {
+            m_messageRouter->onWakeVerifyConnectivity();
+        }
     }
 }
 

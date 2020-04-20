@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -152,11 +152,17 @@ public:
     MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD1(onCallStateChange, void(bool));
     MOCK_METHOD1(setObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface>));
+#ifdef ENABLE_AUXCONTROLLER
+    MOCK_METHOD2(onPlaybackStateChanged, void(const std::string&, const interfaces::auxController::AuxPlaybackState));
+    MOCK_METHOD1(onAuxPlaybackStateChanged, void(alexaClientSDK::interfaces::auxController::AuxPlaybackState));
+    MOCK_METHOD1(setObserver, void(std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface>));
+    MOCK_METHOD1(clearObserver, void(std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface>));
+#endif  // ENABLE_AUXCONTROLLER
 
     /**
      * overridden function, minus the explicit override, since gtest does not use override.
      */
-    void onSpeakerSettingsChanged(const SpeakerInterface::Type& type) {
+    void onSpeakerSettingsChanged(const ChannelVolumeInterface::Type& type) {
         m_lastSpeakerType = type;
         m_speakerSettingUpdatedInvocation.invoke();
     }
@@ -177,7 +183,7 @@ public:
      * @return Whether the change occurred within the timeout, or if a non-waited-upon change occurred before this call.
      */
     bool waitForSpeakerSettingChanged(
-        const SpeakerInterface::Type& expectedType,
+        const ChannelVolumeInterface::Type& expectedType,
         const std::chrono::milliseconds timeout) {
         if (m_speakerSettingUpdatedInvocation.wait(timeout)) {
             return expectedType == m_lastSpeakerType;
@@ -202,7 +208,7 @@ private:
     /// Our invocation object to track the changing of a speaker type.
     SynchronizedInvocation m_speakerSettingUpdatedInvocation;
     /// A tracking variable for the most recently changed speaker type.
-    SpeakerInterface::Type m_lastSpeakerType;
+    ChannelVolumeInterface::Type m_lastSpeakerType;
 };
 
 /// Test harness for @c MRMCapabilityAgent class.
@@ -318,18 +324,18 @@ TEST_F(MRMCapabilityAgentTest, test_onSpeakerSettingsChanged) {
     // Test that the AVS_ALERTS_VOLUME option works.
     m_mrmCA->onSpeakerSettingsChanged(
         SpeakerManagerObserverInterface::Source::DIRECTIVE,
-        SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
         dummySpeakerSettings);
     ASSERT_TRUE(m_mockMRMHandlerPtr->waitForSpeakerSettingChanged(
-        SpeakerInterface::Type::AVS_ALERTS_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
+        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
 
     // Test that the AVS_SPEAKER_VOLUME option works.
     m_mrmCA->onSpeakerSettingsChanged(
         SpeakerManagerObserverInterface::Source::DIRECTIVE,
-        SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
         dummySpeakerSettings);
     ASSERT_TRUE(m_mockMRMHandlerPtr->waitForSpeakerSettingChanged(
-        SpeakerInterface::Type::AVS_SPEAKER_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, WAIT_FOR_INVOCATION_LONG_TIMEOUT));
 }
 
 /**

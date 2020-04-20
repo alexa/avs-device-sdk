@@ -4,7 +4,6 @@ set(INCLUDE_PATH
     "${AVSSystem_INCLUDE_DIR}"
     "${RAPIDJSON_INCLUDE_DIR}"
     "${AVSCommon_SOURCE_DIR}/AVS/test"
-    "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
     "${DeviceSettings_SOURCE_DIR}/test")
 
 discover_unit_tests("${INCLUDE_PATH}" "AVSSystem;ADSL;UtilsCommonTestLib;SDKInterfacesTests")

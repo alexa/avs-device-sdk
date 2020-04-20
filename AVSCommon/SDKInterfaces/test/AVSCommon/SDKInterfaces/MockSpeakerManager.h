@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,10 +27,31 @@ namespace test {
 
 class MockSpeakerManager : public SpeakerManagerInterface {
 public:
+    MOCK_METHOD3(
+        setVolume,
+        std::future<bool>(
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+            int8_t volume,
+            const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties));
+
+    MOCK_METHOD3(
+        adjustVolume,
+        std::future<bool>(
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+            int8_t delta,
+            const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties));
+
+    MOCK_METHOD3(
+        setMute,
+        std::future<bool>(
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+            bool mute,
+            const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties));
+
     MOCK_METHOD4(
         setVolume,
         std::future<bool>(
-            avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
             int8_t volume,
             bool forceNoNotifications,
             avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
@@ -38,7 +59,7 @@ public:
     MOCK_METHOD4(
         adjustVolume,
         std::future<bool>(
-            avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
             int8_t delta,
             bool forceNoNotifications,
             avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
@@ -46,19 +67,19 @@ public:
     MOCK_METHOD4(
         setMute,
         std::future<bool>(
-            avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
             bool mute,
             bool forceNoNotifications,
             avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source));
 
 #ifdef ENABLE_MAXVOLUME_SETTING
     MOCK_METHOD1(setMaximumVolumeLimit, std::future<bool>(const int8_t maximumVolumeLimit));
-#endif
+#endif  // ENABLE_MAXVOLUME_SETTING
 
     MOCK_METHOD2(
         getSpeakerSettings,
         std::future<bool>(
-            avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
             avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings));
 
     MOCK_METHOD1(
@@ -67,7 +88,9 @@ public:
     MOCK_METHOD1(
         removeSpeakerManagerObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer));
-    MOCK_METHOD1(addSpeaker, void(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker));
+    MOCK_METHOD1(
+        addChannelVolumeInterface,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface));
 };
 
 }  // namespace test

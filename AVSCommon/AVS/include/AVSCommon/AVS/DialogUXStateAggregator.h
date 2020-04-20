@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,16 +48,18 @@ public:
     /**
      * Constructor.
      *
+     * Note: Additional parameters to this class must be added before the timeout parameters
+     *
+     * @param metricRecorder The metric recorder.
      * @param timeoutForThinkingToIdle This timeout will be used to time out from the THINKING state in case no messages
      * arrive from AVS.
      * @param timeoutForListeningToIdle This timeout will be used to time out from the LISTENING state in case the
      * Request Processing Started (RPS) directive is not received from AVS.
-     * @param metricRecorder The metric recorder.
      */
     DialogUXStateAggregator(
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
         std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{8},
-        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8},
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8});
 
     /**
      * Adds an observer to be notified of UX state changes.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -65,19 +65,18 @@ public:
         std::shared_ptr<TransportFactoryInterface> transportFactory,
         const std::string& avsGateway = "");
 
+    /// @name MessageRouterInterface methods.
+    /// @{
     void enable() override;
-
     void disable() override;
-
     ConnectionStatus getConnectionStatus() override;
-
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
-
     void setAVSGateway(const std::string& avsGateway) override;
-
     std::string getAVSGateway() override;
-
+    void onWakeConnectionRetry() override;
+    void onWakeVerifyConnectivity() override;
     void setObserver(std::shared_ptr<MessageRouterObserverInterface> observer) override;
+    /// @}
 
     void onConnected(std::shared_ptr<TransportInterface> transport) override;
 

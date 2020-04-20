@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -55,8 +55,7 @@ static constexpr SLmillibel DEVICE_MIN_VOLUME = SL_MILLIBEL_MIN;
 std::unique_ptr<AndroidSLESSpeaker> AndroidSLESSpeaker::create(
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> engine,
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> outputMixObject,
-    std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject,
-    avsCommon::sdkInterfaces::SpeakerInterface::Type type) {
+    std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject) {
     if (!engine) {
         ACSDK_ERROR(LX("createFailed").d("reason", "invalidEngine"));
         return nullptr;
@@ -95,7 +94,7 @@ std::unique_ptr<AndroidSLESSpeaker> AndroidSLESSpeaker::create(
     }
 
     return std::unique_ptr<AndroidSLESSpeaker>(
-        new AndroidSLESSpeaker(engine, outputMixObject, speakerObject, type, volumeInterface));
+        new AndroidSLESSpeaker(engine, outputMixObject, speakerObject, volumeInterface));
 }
 
 bool AndroidSLESSpeaker::setVolume(int8_t volume) {
@@ -107,29 +106,6 @@ bool AndroidSLESSpeaker::setVolume(int8_t volume) {
     }
 
     ACSDK_DEBUG5(LX("setVolume").d("avsVolume", volume).d("deviceVolume", deviceVolume));
-    return true;
-}
-
-bool AndroidSLESSpeaker::adjustVolume(int8_t delta) {
-    bool ok;
-    int8_t currentVolume;
-    std::tie(ok, currentVolume) = getAvsVolume();
-    if (!ok) {
-        return false;
-    }
-
-    // Use int16_t to avoid over/under flow.
-    int16_t newVolume = static_cast<int16_t>(currentVolume) + delta;
-    newVolume = std::min<int16_t>(std::max<int16_t>(newVolume, AVS_SET_VOLUME_MIN), AVS_SET_VOLUME_MAX);
-    auto deviceVolume = toDeviceVolume(newVolume);
-
-    auto result = (*m_volumeInterface)->SetVolumeLevel(m_volumeInterface, deviceVolume);
-    if (result != SL_RESULT_SUCCESS) {
-        ACSDK_ERROR(LX("adjustVolumeFailed").d("result", result).d("volume", deviceVolume));
-        return false;
-    }
-
-    ACSDK_DEBUG5(LX("adjustVolume").d("avsVolume", newVolume).d("deviceVolume", deviceVolume));
     return true;
 }
 
@@ -162,27 +138,21 @@ bool AndroidSLESSpeaker::getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInt
         return false;
     }
 
-    ACSDK_DEBUG9(LX("getSettings").d("volume", (int)volume).d("mute", mute).d("type", m_type));
+    ACSDK_DEBUG9(LX("getSettings").d("volume", (int)volume).d("mute", mute));
     settings->volume = volume;
     settings->mute = mute;
     return true;
-}
-
-avsCommon::sdkInterfaces::SpeakerInterface::Type AndroidSLESSpeaker::getSpeakerType() {
-    return m_type;
 }
 
 AndroidSLESSpeaker::AndroidSLESSpeaker(
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> engine,
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> outputMixObject,
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject,
-    SpeakerInterface::Type type,
     SLVolumeItf volumeInterface) :
         m_engine{engine},
         m_outputMixObject{outputMixObject},
         m_speakerObject{speakerObject},
-        m_volumeInterface{volumeInterface},
-        m_type{type} {
+        m_volumeInterface{volumeInterface} {
 }
 
 std::pair<bool, int8_t> AndroidSLESSpeaker::getAvsVolume() const {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -187,7 +187,7 @@ void DirectiveSequencerTest::TearDown() {
  */
 TEST_F(DirectiveSequencerTest, test_nullptrExceptionSender) {
     ASSERT_TRUE(m_sequencer);
-    auto sequencer = DirectiveSequencer::create(nullptr);
+    auto sequencer = DirectiveSequencer::create(nullptr, nullptr);
     ASSERT_FALSE(sequencer);
 }
 

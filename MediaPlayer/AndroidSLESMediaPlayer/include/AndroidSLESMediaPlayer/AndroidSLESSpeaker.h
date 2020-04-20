@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,22 +43,18 @@ public:
      * @param engine The OpenSL ES engine that the @c speakerObject depends on.
      * @param outputMixObject The OpenSL ES output mix that the @c speakerObject depends on.
      * @param speakerObject The OpenSL ES object responsible for controlling the speaker output configurations.
-     * @param type The type used to categorize the speaker for volume control.
      * @return An instance of the @c AndroidSLESSpeaker if successful else @c nullptr.
      */
     static std::unique_ptr<AndroidSLESSpeaker> create(
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> engine,
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> outputMixObject,
-        std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject,
-        SpeakerInterface::Type type);
+        std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject);
 
     /// @name SpeakerInterface methods.
     ///@{
     bool setVolume(int8_t volume) override;
-    bool adjustVolume(int8_t delta) override;
     bool setMute(bool mute) override;
     bool getSpeakerSettings(SpeakerSettings* settings) override;
-    Type getSpeakerType() override;
     ///@}
 
 private:
@@ -68,14 +64,12 @@ private:
      * @param engine The OpenSL ES engine that the @c speakerObject depends on.
      * @param outputMixObject The OpenSL ES output mix that the @c speakerObject depends on.
      * @param speakerObject The speaker object used to control the media player volume.
-     * @param type The type used to categorize the speaker for volume control.
      * @param volumeInterface The interface object used to change the speaker volume.
      */
     AndroidSLESSpeaker(
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> engine,
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> outputMixObject,
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> speakerObject,
-        SpeakerInterface::Type type,
         SLVolumeItf volumeInterface);
 
     /**
@@ -116,9 +110,6 @@ private:
 
     /// The OpenSL ES volume interface.
     SLVolumeItf m_volumeInterface;
-
-    /// The speaker type.
-    const SpeakerInterface::Type m_type;
 };
 
 }  // namespace android

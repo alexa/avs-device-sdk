@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -167,6 +167,9 @@ MockBluetoothDevice::MockBluetoothDevice(
         m_mac{mac},
         m_friendlyName{friendlyName},
         m_metaData{metaData} {
+    m_isPaired = false;
+    m_isConnected = false;
+    m_deviceState = DeviceState::FOUND;
     for (unsigned int i = 0; i < supportedServices.size(); ++i) {
         auto service = supportedServices[i];
         m_supportedServices.insert({service->getRecord()->getUuid(), service});

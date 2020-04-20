@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionObserverInterface.h>
@@ -81,6 +82,7 @@ public:
      * @param sharedRequestQueue Request queue shared by all instances of HTTPTransportInterface.
      * @param configuration An optional configuration to specify HTTP2/2 connection settings.
      * @param metricRecorder The metric recorder.
+     * @param eventTracer The object used to trace events sent to AVS.
      * @return A shared pointer to a HTTP2Transport object.
      */
     static std::shared_ptr<HTTP2Transport> create(
@@ -93,7 +95,8 @@ public:
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
         std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
         Configuration configuration = Configuration(),
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr);
 
     /**
      * Method to add a TransportObserverInterface instance.
@@ -122,6 +125,8 @@ public:
     void disconnect() override;
     bool isConnected() override;
     void onRequestEnqueued() override;
+    void onWakeConnectionRetry() override;
+    void onWakeVerifyConnectivity() override;
     /// @}
 
     /// @name PostConnectSendMessageInterface methods.
@@ -210,6 +215,7 @@ private:
      * @param sharedRequestQueue Request queue shared by all instances of HTTPTransportInterface.
      * @param configuration The HTTP2/2 connection settings.
      * @param metricRecorder The metric recorder.
+     * @param eventTracer The object used to trace events sent to AVS.
      */
     HTTP2Transport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
@@ -221,7 +227,8 @@ private:
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
         std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
         Configuration configuration,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer);
 
     /**
      * Main loop for servicing the various states.
@@ -394,6 +401,9 @@ private:
 
     /// Queue of @c MessageRequest instances to send that are shared between instances of @c HTTP2Transport.
     std::shared_ptr<SynchronizedMessageRequestQueue> m_sharedRequestQueue;
+
+    /// Object for tracing events sent to AVS.
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> m_eventTracer;
 
     /// Mutex to protect access to the m_observers variable.
     std::mutex m_observerMutex;

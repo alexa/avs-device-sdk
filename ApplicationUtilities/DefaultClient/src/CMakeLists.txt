@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=defaultClient")
 add_library(DefaultClient SHARED
+    ConnectionRetryTrigger.cpp
     DefaultClient.cpp
     DeviceSettingsManagerBuilder.cpp
     EqualizerRuntimeSetup.cpp
@@ -9,7 +10,6 @@ add_library(DefaultClient SHARED
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
     "${MRM_SOURCE_DIR}/include"
-    "${ManagedDevice_SOURCE_DIR}/include"
     "${DeviceSettings_SOURCE_DIR}/include"
     "${Endpoints_SOURCE_DIR}/include")
 

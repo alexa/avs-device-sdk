@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,12 +29,16 @@ class ReminderAlertTest : public ::testing::Test {
 public:
     ReminderAlertTest();
 
-    static std::unique_ptr<std::istream> reminderDefaultFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(REMINDER_DEFAULT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> reminderDefaultFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(REMINDER_DEFAULT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
 
-    static std::unique_ptr<std::istream> reminderShortFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(REMINDER_SHORT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> reminderShortFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(REMINDER_SHORT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
     std::shared_ptr<Reminder> m_reminder;
 };
@@ -45,14 +49,16 @@ ReminderAlertTest::ReminderAlertTest() :
 
 TEST_F(ReminderAlertTest, test_defaultAudio) {
     std::ostringstream oss;
-    oss << m_reminder->getDefaultAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_reminder->getDefaultAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(REMINDER_DEFAULT_DATA, oss.str());
 }
 
 TEST_F(ReminderAlertTest, test_shortAudio) {
     std::ostringstream oss;
-    oss << m_reminder->getShortAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_reminder->getShortAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(REMINDER_SHORT_DATA, oss.str());
 }

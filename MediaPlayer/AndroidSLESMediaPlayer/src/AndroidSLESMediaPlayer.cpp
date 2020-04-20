@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -158,11 +158,16 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
-    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
+    const avsCommon::utils::mediaPlayer::SourceConfig& config,
+    avsCommon::utils::MediaType format) {
     auto input = FFmpegStreamInputController::create(stream, repeat);
     auto newId = configureNewRequest(std::move(input), config);
     if (ERROR == newId) {
-        ACSDK_ERROR(LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "istream").d("repeat", repeat));
+        ACSDK_ERROR(LX("setSourceFailed")
+                        .d("name", RequiresShutdown::name())
+                        .d("type", "istream")
+                        .d("repeat", repeat)
+                        .d("format", format));
     }
     return newId;
 }
@@ -479,7 +484,6 @@ MediaPlayerInterface::SourceId AndroidSLESMediaPlayer::configureNewRequest(
 std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     std::shared_ptr<AndroidSLESEngine> engine,
-    avsCommon::sdkInterfaces::SpeakerInterface::Type speakerType,
     bool enableEqualizer,
     const PlaybackConfiguration& config,
     const std::string& name) {
@@ -519,7 +523,7 @@ std::unique_ptr<AndroidSLESMediaPlayer> AndroidSLESMediaPlayer::create(
         return nullptr;
     }
 
-    auto speaker = AndroidSLESSpeaker::create(engine, outputMix, playerObject, speakerType);
+    auto speaker = AndroidSLESSpeaker::create(engine, outputMix, playerObject);
     if (!speaker) {
         ACSDK_ERROR(LX("createFailed").d("name", name).d("reason", "createSpeakerFailed"));
         return nullptr;

@@ -13,8 +13,8 @@ endif()
 
 macro(discover_unit_tests includes libraries)
     # This will result in some errors not finding GTest when running cmake, but allows us to better integrate with CTest
-    find_package(GTest ${GTEST_PACKAGE_CONFIG})
     if(BUILD_TESTING)
+        find_package(GTest ${GTEST_PACKAGE_CONFIG})
         set (extra_macro_args ${ARGN})
         LIST(LENGTH extra_macro_args num_extra_args)
         if (${num_extra_args} GREATER 0)

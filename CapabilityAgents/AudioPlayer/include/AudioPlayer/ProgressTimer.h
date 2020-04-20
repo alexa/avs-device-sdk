@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +54,11 @@ public:
          * Notification that it is time to send a ProgressReportIntervalElapsed event.
          */
         virtual void onProgressReportIntervalElapsed() = 0;
+
+        /**
+         * Notification that it is time to send a ProgressReportIntervalUpdated event.
+         */
+        virtual void onProgressReportIntervalUpdated() = 0;
 
         /**
          * Destructor.
@@ -129,6 +134,13 @@ public:
      * a @c ProgressTimer to it's pre @c init() state.
      */
     void stop();
+
+    /**
+     * Update interval to send @c ProgressReportIntervalElapsed events.
+     *
+     * @param newInterval New interval in milliseconds from the start of the track.
+     */
+    void updateInterval(const std::chrono::milliseconds& newInterval);
 
     /**
      * Notification of the current progress.

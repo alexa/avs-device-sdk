@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_EXTERNALMEDIAPLAYEROBSERVERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_EXTERNALMEDIAPLAYEROBSERVERINTERFACE_H_
+
+#include <AVSCommon/AVS/PlayRequestor.h>
 
 #include "AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h"
 
@@ -76,28 +78,43 @@ struct ObservablePlaybackStateProperties {
      *
      * @param state The state of the player.  State values are "IDLE", "PLAYING", "PAUSED", "STOPPED", "FINISHED".
      * @param trackName The display name for the playing track.
+     * @param playRequestor The playReqestor object in the @c Play directive.
      */
-    ObservablePlaybackStateProperties(const std::string& state, const std::string& trackName);
+    ObservablePlaybackStateProperties(
+        const std::string& state,
+        const std::string& trackName,
+        const avs::PlayRequestor& playRequestor);
 
     /// The players current state
     std::string state;
 
     /// The display name for the currently playing trackname of the track.
     std::string trackName;
+
+    /// The playRequestor object
+    avs::PlayRequestor playRequestor;
 };
 
-inline ObservablePlaybackStateProperties::ObservablePlaybackStateProperties() : state{""}, trackName{""} {};
+inline ObservablePlaybackStateProperties::ObservablePlaybackStateProperties() :
+        state{"IDLE"},
+        trackName{""},
+        playRequestor{} {};
 
 inline ObservablePlaybackStateProperties::ObservablePlaybackStateProperties(
     const std::string& state,
-    const std::string& trackName) :
+    const std::string& trackName,
+    const avsCommon::avs::PlayRequestor& playRequestor) :
         state{state},
-        trackName{trackName} {};
+        trackName{trackName},
+        // Parenthesis are used for initializing @c playRequester to work-around a bug in the C++ specification. see:
+        // http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#1288
+        playRequestor(playRequestor){};
 
 inline bool operator==(
     const ObservablePlaybackStateProperties& observableA,
     const ObservablePlaybackStateProperties& observableB) {
-    return observableA.state == observableB.state && observableA.trackName == observableB.trackName;
+    return observableA.state == observableB.state && observableA.trackName == observableB.trackName &&
+           observableA.playRequestor == observableB.playRequestor;
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ static const std::chrono::seconds TIMEOUT{2};
 /**
  * Converts a pa_context_state_t enum to a string.
  */
-static std::string stateToString(pa_context_state_t state) {
+std::string stateToString(pa_context_state_t state) {
     switch (state) {
         case PA_CONTEXT_UNCONNECTED:
             return "PA_CONTEXT_UNCONNECTED";
@@ -249,20 +249,18 @@ void PulseAudioBluetoothInitializer::onModuleFound(
 }
 
 bool PulseAudioBluetoothInitializer::updateStateLocked(const ModuleState& state, const std::string& module) {
-    ModuleState currentState = ModuleState::UNKNOWN;
-
     if (BLUETOOTH_POLICY == module) {
-        currentState = m_policyState;
+        ACSDK_DEBUG5(LX(__func__).d("currentState", m_policyState));
         m_policyState = state;
     } else if (BLUETOOTH_DISCOVER == module) {
-        currentState = m_discoverState;
+        ACSDK_DEBUG5(LX(__func__).d("currentState", m_discoverState));
         m_discoverState = state;
     } else {
         ACSDK_ERROR(LX("updateStateLockedFailed").d("reason", "invalidModule"));
         return false;
     }
 
-    ACSDK_DEBUG5(LX(__func__).d("module", module).d("currentState", currentState).d("desiredState", state));
+    ACSDK_DEBUG5(LX(__func__).d("module", module).d("desiredState", state));
     return true;
 }
 

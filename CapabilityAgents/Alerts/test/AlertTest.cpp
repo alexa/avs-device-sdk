@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,11 +63,14 @@ public:
     std::string getTypeName() const override;
 
 private:
-    static std::unique_ptr<std::istream> defaultAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(DEFAULT_AUDIO));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> defaultAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(DEFAULT_AUDIO)),
+            avsCommon::utils::MediaType::MPEG);
     }
-    static std::unique_ptr<std::istream> shortAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(SHORT_AUDIO));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> shortAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(SHORT_AUDIO)), avsCommon::utils::MediaType::MPEG);
     }
 };
 
@@ -79,7 +82,7 @@ class MockRenderer : public renderer::RendererInterface {
 public:
     void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         bool alarmVolumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
@@ -116,7 +119,7 @@ const std::string getPayloadJson(bool inclToken, bool inclSchedTime, const std::
     const std::string payloadJson =
         "{" +
             tokenJson +
-            "\"type\": \"" + ALERT_TYPE + "\"," +                                  
+            "\"type\": \"" + ALERT_TYPE + "\"," +
             schedTimeJson +
             "\"assets\": ["
                 "{"
@@ -140,14 +143,16 @@ const std::string getPayloadJson(bool inclToken, bool inclSchedTime, const std::
 
 TEST_F(AlertTest, test_defaultAudio) {
     std::ostringstream oss;
-    oss << m_alert->getDefaultAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_alert->getDefaultAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(DEFAULT_AUDIO, oss.str());
 }
 
 TEST_F(AlertTest, test_defaultShortAudio) {
     std::ostringstream oss;
-    oss << m_alert->getShortAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_alert->getShortAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(SHORT_AUDIO, oss.str());
 }

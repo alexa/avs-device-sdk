@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,11 +36,8 @@
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/AVS/BlockingPolicy.h>
-#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
-#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -411,10 +408,10 @@ protected:
         handlerConfig[SPEAK_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
         m_directiveHandler = std::make_shared<TestDirectiveHandler>(handlerConfig);
 
-        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         ASSERT_NE(nullptr, m_directiveSequencer);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager(), m_metricRecorder);
 
         m_compatibleAudioFormat.sampleRateHz = COMPATIBLE_SAMPLE_RATE;
         m_compatibleAudioFormat.sampleSizeInBits = COMPATIBLE_SAMPLE_SIZE_IN_BITS;
@@ -1091,7 +1088,7 @@ TEST_F(AudioInputProcessorTest, DISABLED_test_tapToTalkTimeOpus) {
  * To do this, audio of "....." is fed into a stream after button sends recognize to AudioInputProcessor. The
  * AudioInputProcessor is then observed to send a Recognize event to AVS which responds no directives.
  */
-TEST_F(AudioInputProcessorTest, test_tapToTalkSilence) {
+TEST_F(AudioInputProcessorTest, DISABLED_test_tapToTalkSilence) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_tapToTalkButton->startRecognizing(m_AudioInputProcessor, m_TapToTalkAudioProvider));
 
@@ -1516,7 +1513,7 @@ TEST_F(AudioInputProcessorTest, test_holdToTalkJoke) {
  * AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute, Speak,
  * and ExpectSpeech directive. Audio of "Lions" is then fed into the stream and another recognize event is sent.
  */
-TEST_F(AudioInputProcessorTest, test_holdToTalkMultiturn) {
+TEST_F(AudioInputProcessorTest, DISABLED_test_holdToTalkMultiturn) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_holdToTalkButton->startRecognizing(m_AudioInputProcessor, m_HoldToTalkAudioProvider));
 
@@ -1621,7 +1618,7 @@ TEST_F(AudioInputProcessorTest, test_holdToTalkMultiturn) {
  * and ExpectSpeech directive. Audio of "...." is then fed into the stream and another recognize event is sent
  * but no directives are given in response.
  */
-TEST_F(AudioInputProcessorTest, test_holdToTalkMultiTurnWithSilence) {
+TEST_F(AudioInputProcessorTest, DISABLED_test_holdToTalkMultiTurnWithSilence) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_holdToTalkButton->startRecognizing(m_AudioInputProcessor, m_HoldToTalkAudioProvider));
 
@@ -1742,7 +1739,7 @@ TEST_F(AudioInputProcessorTest, test_holdToTalkMultiTurnWithSilence) {
  * and ExpectSpeech directive. The button does not trigger another recognize so no recognize event is sent
  * and no directives are given in response. ExpectSpeechTimedOut event is observed to be sent.
  */
-TEST_F(AudioInputProcessorTest, test_holdToTalkMultiturnWithTimeOut) {
+TEST_F(AudioInputProcessorTest, DISABLED_test_holdToTalkMultiturnWithTimeOut) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_holdToTalkButton->startRecognizing(m_AudioInputProcessor, m_HoldToTalkAudioProvider));
 

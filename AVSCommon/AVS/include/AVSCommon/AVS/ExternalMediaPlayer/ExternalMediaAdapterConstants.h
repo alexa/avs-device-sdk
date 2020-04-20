@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,10 @@ const char USERNAME[] = "username";
 const char IS_GUEST[] = "isGuest";
 const char LAUNCHED[] = "launched";
 const char ACTIVE[] = "active";
+const char SPI_VERSION[] = "spiVersion";
+const char PLAYER_COOKIE[] = "playerCookie";
+const char SKILL_TOKEN[] = "skillToken";
+const char PLAYBACK_SESSION_ID[] = "playbackSessionId";
 
 // The key values used in the context payload from External Media Player to AVS.
 const char STATE[] = "state";

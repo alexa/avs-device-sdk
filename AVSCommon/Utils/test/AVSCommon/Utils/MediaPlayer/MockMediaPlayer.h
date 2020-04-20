@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -111,7 +111,8 @@ public:
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat = false,
-        const SourceConfig& config = emptySourceConfig()) /*override*/;
+        const SourceConfig& config = emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) /*override*/;
     void addObserver(std::shared_ptr<observer> playerObserver) /*override*/;
     void removeObserver(std::shared_ptr<observer> playerObserver) /*override*/;
     /// @}
@@ -125,6 +126,8 @@ public:
     MOCK_METHOD1(
         getMediaPlayerState,
         avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>(SourceId));
+    MOCK_METHOD0(getPlaybackAttributes, avsCommon::utils::Optional<PlaybackAttributes>());
+    MOCK_METHOD0(getPlaybackReports, std::vector<PlaybackReport>());
 
     /// @name RequiresShutdown overrides
     /// @{

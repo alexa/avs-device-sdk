@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@
 #include <AndroidSLESMediaPlayer/FFmpegDecoder.h>
 #include <AndroidUtilities/AndroidLogger.h>
 #include <AndroidUtilities/AndroidSLESEngine.h>
-#include <Audio/Data/med_alerts_notification_01._TTH_.mp3.h>
-#include <Audio/Data/med_system_alerts_melodic_01_short._TTH_.wav.h>
+#include <Audio/Data/med_alerts_notification_01.mp3.h>
+#include <Audio/Data/med_system_alerts_melodic_01_short.wav.h>
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AndroidSLESMediaPlayerTest");
@@ -59,21 +59,26 @@ using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// The size of the input buffer.
 static constexpr size_t MP3_INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3_len;
+    applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3_len;
 
 /// An input buffer with an mp3 file.
-static const auto MP3_INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3;
+static const auto MP3_INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3;
 
 /// The mp3 duration in milliseconds.
 static const std::chrono::milliseconds MP3_INPUT_DURATION{1440};
 
+/// The mp3 MediaType.
+static const alexaClientSDK::avsCommon::utils::MediaType MP3_TYPE = alexaClientSDK::avsCommon::utils::MediaType::MPEG;
+
+/// The source config.
+static const SourceConfig EMPTY_CONFIG = emptySourceConfig();
+
 /// The size of the input buffer.
 static const size_t RAW_INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short__TTH__wav_len;
+    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short_wav_len;
 
 /// An input buffer with an mp3 file.
-static const auto RAW_INPUT_CSTR =
-    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short__TTH__wav;
+static const auto RAW_INPUT_CSTR = applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short_wav;
 
 /// Default media player state for reporting all playback offsets
 static const MediaPlayerState DEFAULT_MEDIA_PLAYER_STATE = {std::chrono::milliseconds(0)};
@@ -179,7 +184,7 @@ protected:
         m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE);
         m_engine = AndroidSLESEngine::create();
         auto factory = std::make_shared<MockContentFetcherFactory>();
-        m_player = AndroidSLESMediaPlayer::create(factory, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+        m_player = AndroidSLESMediaPlayer::create(factory, m_engine, false);
         m_observer = std::make_shared<NiceMock<MockObserver>>();
         m_player->addObserver(m_observer);
     }
@@ -213,14 +218,14 @@ protected:
 
 /// Test create with null factory.
 TEST_F(AndroidSLESMediaPlayerTest, test_createNullFactory) {
-    auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+    auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, false);
     EXPECT_EQ(player, nullptr);
 }
 
 /// Test create with null engine.
 TEST_F(AndroidSLESMediaPlayerTest, test_createNullEngine) {
     auto factory = std::make_shared<MockContentFetcherFactory>();
-    auto player = AndroidSLESMediaPlayer::create(factory, nullptr, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+    auto player = AndroidSLESMediaPlayer::create(factory, nullptr, false);
     EXPECT_EQ(player, nullptr);
 }
 
@@ -306,7 +311,7 @@ TEST_F(AndroidSLESMediaPlayerTest, test_decodingTimeout) {
 
 /// Test media player and istream source.
 TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
-    auto id = m_player->setSource(createStream(), false);
+    auto id = m_player->setSource(createStream(), false, EMPTY_CONFIG, MP3_TYPE);
 
     WaitEvent finishedEvent;
     EXPECT_CALL(*m_observer, onBufferingComplete(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
@@ -321,7 +326,7 @@ TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
 /// Test media player, istream source and repeat on.
 TEST_F(AndroidSLESMediaPlayerTest, test_streamRepeatMediaPlayer) {
     auto repeat = true;
-    auto id = m_player->setSource(createStream(), repeat);
+    auto id = m_player->setSource(createStream(), repeat, EMPTY_CONFIG, MP3_TYPE);
 
     EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackStopped(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
@@ -335,7 +340,7 @@ TEST_F(AndroidSLESMediaPlayerTest, test_streamRepeatMediaPlayer) {
 /// Test media player pause / resume.
 TEST_F(AndroidSLESMediaPlayerTest, test_resumeMediaPlayer) {
     auto repeat = true;
-    auto id = m_player->setSource(createStream(), repeat);
+    auto id = m_player->setSource(createStream(), repeat, EMPTY_CONFIG, MP3_TYPE);
 
     EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
     EXPECT_CALL(*m_observer, onPlaybackStopped(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);

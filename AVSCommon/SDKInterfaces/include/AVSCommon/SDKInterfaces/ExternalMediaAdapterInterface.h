@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <set>
 #include <string>
 
+#include "AVSCommon/AVS/PlayRequestor.h"
 #include "AVSCommon/Utils/RequiresShutdown.h"
 
 namespace alexaClientSDK {
@@ -115,6 +116,18 @@ enum class RequestType {
 
     /// Set mute to true/false.
     SET_MUTE,
+
+    /// Set the name the external media player will show for this device
+    SET_DISPLAY_NAME,
+
+    /// Get Info
+    GET_INFO,
+
+    /// Add User Message
+    ADD_USER,
+
+    /// Reset User Message
+    RESET_USER,
 
     /// None means there are no pending requests.
     NONE
@@ -246,6 +259,9 @@ struct AdapterSessionState {
     /// The playerId of an adapter which is the pre-negotiated business id for a partner music provider.
     std::string playerId;
 
+    /// The localPlayerId of an adapter which is the pre-negotiated business id for a partner music provider.
+    std::string localPlayerId;
+
     /// The unique device endpoint.
     std::string endpointId;
 
@@ -266,6 +282,18 @@ struct AdapterSessionState {
      * for different applications.
      */
     bool active;
+
+    /// The service provider interface (SPI) version.
+    std::string spiVersion;
+
+    /// The playerCookie to select version-specific content or actions.
+    std::string playerCookie;
+
+    /// An opaque token for the domain or skill that is presently associated with this player.
+    std::string skillToken;
+
+    /// A universally unique identifier (UUID) generated to the RFC 4122 specification.
+    std::string playbackSessionId;
 
     /**
      * The accessToken used to login a user. The access token may also be used as a bearer token if the adapter
@@ -364,6 +392,9 @@ struct AdapterPlaybackState {
 
     /// Media item duration in milliseconds.
     std::chrono::milliseconds duration;
+
+    /// The PlayRequestor object from the @c PLAY directive.
+    avsCommon::avs::PlayRequestor playRequestor;
 };
 
 /**
@@ -386,7 +417,7 @@ public:
  * music service provider library. The adapter object handles session management of an user with the third party
  * library/cloud and provides users with an interface to manage behaviors to control their play queue.
  */
-class ExternalMediaAdapterInterface : public avsCommon::utils::RequiresShutdown {
+class ExternalMediaAdapterInterface : public virtual avsCommon::utils::RequiresShutdown {
 public:
     /**
      * ExternalMediaAdapterInterface constructor.
@@ -431,8 +462,22 @@ public:
      * @param playContextToken Play context {Track/playlist/album/artist/station/podcast} identifier.
      * @param index The index of the media item in the container, if the container is indexable.
      * @param offset The offset position within media item, in milliseconds.
+     * @param skillToken An opaque token for the domain or skill that is presently associated with this player.
+     * @param playbackSessionId A universally unique identifier (UUID) generated to the RFC 4122 specification.
+     * @param navigation Communicates desired visual display behavior for the app associated with playback.
+     * @param preload If true, this Play directive is intended to preload the identified content only but not begin
+     * playback.
+     * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
      */
-    virtual void handlePlay(std::string& playContextToken, int64_t index, std::chrono::milliseconds offset) = 0;
+    virtual void handlePlay(
+        std::string& playContextToken,
+        int64_t index,
+        std::chrono::milliseconds offset,
+        const std::string& skillToken,
+        const std::string& playbackSessionId,
+        const std::string& navigation,
+        bool preload,
+        const avsCommon::avs::PlayRequestor& playRequestor) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
@@ -454,6 +499,19 @@ public:
      * @param deltaOffset The offset to seek to relative to the current offset.
      */
     virtual void handleAdjustSeek(std::chrono::milliseconds deltaOffset) = 0;
+
+    /**
+     * Method to alert if a player has been authorized. This method also provides the playerId and skillToken as
+     * identified by the cloud. Authorization may be revoked.
+     *
+     * @param authorized Whether the player is authorized.
+     * @param playerId The playerId of this player.
+     * @param defaultSkillToken The default skillToken to use if no directives have supplied one yet.
+     */
+    virtual void handleAuthorized(
+        bool authorized,
+        const std::string& playerId,
+        const std::string& defaultSkillToken) = 0;
 
     /// Method to fetch the state(session state and playback state) of an adapter.
     virtual AdapterState getState() = 0;

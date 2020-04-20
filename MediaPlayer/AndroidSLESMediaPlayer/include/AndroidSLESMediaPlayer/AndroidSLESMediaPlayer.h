@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
 
 #include <AndroidUtilities/AndroidSLESEngine.h>
 #include <AndroidUtilities/AndroidSLESObject.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/PlaylistParser/IterativePlaylistParserInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <EqualizerImplementations/EqualizerBandMapperInterface.h>
@@ -55,7 +57,6 @@ public:
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @param engine The OpenSL ES engine that is used to access the OpenSL ES media player and output mixer.
-     * @param type The type used to categorize the media player speaker for volume control.
      * @param config The playback configuration.
      * @param name The instance name used for logging purpose.
      * @return An instance of the @c AndroidSLESMediaPlayer if successful else @c nullptr.
@@ -63,7 +64,6 @@ public:
     static std::unique_ptr<AndroidSLESMediaPlayer> create(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
         std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine> engine,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         bool enableEqualizer,
         const PlaybackConfiguration& config = PlaybackConfiguration(),
         const std::string& name = "AndroidMediaPlayer");
@@ -91,9 +91,9 @@ public:
         bool repeat = false) override;
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
-        bool repeat,
-        const avsCommon::utils::mediaPlayer::SourceConfig& config =
-            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) override;
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
     bool pause(SourceId id) override;

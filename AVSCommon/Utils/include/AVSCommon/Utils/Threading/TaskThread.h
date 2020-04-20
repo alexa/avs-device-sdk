@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,13 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_THREADING_TASKTHREAD_H_
 
 #include <atomic>
+#include <chrono>
 #include <functional>
 #include <string>
 #include <thread>
+
+#include "ThreadPool.h"
+#include "WorkerThread.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,7 +38,7 @@ namespace threading {
 class TaskThread {
 public:
     /**
-     * Constructs a TaskThread to read from the given TaskQueue. This does not start the thread.
+     * Constructs a TaskThread to run tasks on a single thread. This does not start the thread.
      */
     TaskThread();
 
@@ -62,11 +66,14 @@ private:
      */
     void run(std::function<bool()> jobRunner);
 
-    /// The thread to run tasks on.
-    std::thread m_thread;
+    /// The monotonic start time of the thread.
+    std::chrono::steady_clock::time_point m_startTime;
 
-    /// Old thread that will be terminated after start.
-    std::thread m_oldThread;
+    /// Mutex for protecting the worker thread.
+    std::mutex m_mutex;
+
+    /// Flag for when the thread pool is shutting down.
+    bool m_shuttingDown;
 
     /// Flag used by the new thread to ensure that the old thread will exit once the current job ends.
     std::atomic_bool m_stop;
@@ -76,6 +83,12 @@ private:
 
     /// The task thread moniker.
     std::string m_moniker;
+
+    /// ThreadPool to use for obtaining threads.
+    std::shared_ptr<ThreadPool> m_threadPool;
+
+    /// The worker thread to run tasks on.
+    std::unique_ptr<WorkerThread> m_workerThread;
 };
 
 }  // namespace threading

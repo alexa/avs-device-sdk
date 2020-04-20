@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@
 #include <functional>
 #include <istream>
 #include <memory>
+#include <utility>
+
+#include <AVSCommon/Utils/MediaType.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,14 +43,16 @@ public:
      *
      * @return audio stream of the end speech tone.
      */
-    virtual std::function<std::unique_ptr<std::istream>()> endSpeechTone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> endSpeechTone()
+        const = 0;
 
     /**
      * Returns an audio stream to play for the wake word notification tone.
      *
      * @return audio stream of the wake word notification tone.
      */
-    virtual std::function<std::unique_ptr<std::istream>()> wakeWordNotificationTone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    wakeWordNotificationTone() const = 0;
 };
 
 }  // namespace audio

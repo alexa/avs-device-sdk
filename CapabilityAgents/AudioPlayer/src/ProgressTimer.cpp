@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -192,6 +192,30 @@ void ProgressTimer::stop() {
     m_delay = ProgressTimer::getNoDelay();
     m_interval = ProgressTimer::getNoInterval();
     m_target = std::chrono::milliseconds::zero();
+}
+
+void ProgressTimer::updateInterval(const std::chrono::milliseconds& newInterval) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (std::chrono::milliseconds::zero() == newInterval || ProgressTimer::getNoInterval() == newInterval) {
+        ACSDK_ERROR(LX("updateIntervalFailed").d("reason", "invalidNewInterval"));
+        return;
+    }
+
+    pause();
+    {
+        std::lock_guard<std::mutex> callLock(m_callMutex);
+        m_interval = newInterval;
+
+        if (ProgressTimer::getNoDelay() != m_delay && m_progress < m_delay) {
+            m_target = std::min(m_delay, m_interval * ((m_progress / m_interval) + 1));
+        } else {
+            m_target = m_interval * ((m_progress / m_interval) + 1);
+        }
+    }
+    resume();
+
+    m_context->onProgressReportIntervalUpdated();
 }
 
 void ProgressTimer::onProgress(std::chrono::milliseconds progress) {

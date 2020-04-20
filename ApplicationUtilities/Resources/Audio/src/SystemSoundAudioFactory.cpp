@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,18 +24,24 @@ namespace applicationUtilities {
 namespace resources {
 namespace audio {
 
-static std::unique_ptr<std::istream> wakeWordNotificationToneFactory() {
-    return avsCommon::utils::stream::streamFromData(data::med_ui_wakesound_wav, sizeof(data::med_ui_wakesound_wav));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> wakeWordNotificationToneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(data::med_ui_wakesound_wav, sizeof(data::med_ui_wakesound_wav)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_ui_wakesound_wav_mimetype));
 }
-static std::unique_ptr<std::istream> endSpeechToneFactory() {
-    return avsCommon::utils::stream::streamFromData(data::med_ui_endpointing_wav, sizeof(data::med_ui_endpointing_wav));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> endSpeechToneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(data::med_ui_endpointing_wav, sizeof(data::med_ui_endpointing_wav)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_ui_endpointing_wav_mimetype));
 }
 
-std::function<std::unique_ptr<std::istream>()> SystemSoundAudioFactory::wakeWordNotificationTone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> SystemSoundAudioFactory::
+    wakeWordNotificationTone() const {
     return wakeWordNotificationToneFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> SystemSoundAudioFactory::endSpeechTone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> SystemSoundAudioFactory::
+    endSpeechTone() const {
     return endSpeechToneFactory;
 }
 

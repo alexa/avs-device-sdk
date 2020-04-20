@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,18 +30,21 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
-#include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
+#include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
+#include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
-#include <AVSCommon/SDKInterfaces/MockSpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
+#include <MockCertifiedSender.h>
 
 #include "ExternalMediaPlayer/ExternalMediaPlayer.h"
 
@@ -51,7 +54,7 @@ namespace externalMediaPlayer {
 namespace test {
 
 using namespace avsCommon::utils;
-using namespace avsCommon::utils::json;
+using namespace avsCommon::utils::json::jsonUtils;
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
@@ -61,6 +64,7 @@ using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::mediaPlayer::test;
+using namespace avsCommon::utils::metrics::test;
 using namespace capabilityAgents::externalMediaPlayer;
 
 using namespace ::testing;
@@ -96,6 +100,8 @@ static const std::string PLAYER_STATE = "IDLE";
 static const NamespaceAndName PLAY_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Play"};
 static const NamespaceAndName LOGIN_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Login"};
 static const NamespaceAndName LOGOUT_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE, "Logout"};
+static const NamespaceAndName AUTHORIZEDISCOVEREDPLAYERS_DIRECTIVE{EXTERNALMEDIAPLAYER_NAMESPACE,
+                                                                   "AuthorizeDiscoveredPlayers"};
 
 // The @c Transport control directive signatures.
 static const NamespaceAndName RESUME_DIRECTIVE{PLAYBACKCONTROLLER_NAMESPACE, "Play"};
@@ -126,57 +132,51 @@ static const NamespaceAndName UNFAVORITE_DIRECTIVE{FAVORITESCONTROLLER_NAMESPACE
 static const NamespaceAndName SESSION_STATE{EXTERNALMEDIAPLAYER_STATE_NAMESPACE, EXTERNALMEDIAPLAYER_NAME};
 static const NamespaceAndName PLAYBACK_STATE{PLAYBACKSTATEREPORTER_STATE_NAMESPACE, PLAYBACKSTATEREPORTER_NAME};
 
-// clang-format off
-static const std::string IDLE_SESSION_STATE =
-    "{"
-        "\"playerInFocus\":\"\","
-        "\"players\":[{"
-            "\"playerId\":\"\","
-            "\"endpointId\":\"\","
-            "\"loggedIn\":false,"
-            "\"username\":\"\","
-            "\"isGuest\":false,"
-            "\"launched\":false,"
-           "\"active\":false}"
-    "]}";
+// @c ExternalMediaPlayer events.
+static const NamespaceAndName REPORT_DISCOVERED_PLAYERS{EXTERNALMEDIAPLAYER_NAMESPACE, "ReportDiscoveredPlayers"};
+static const NamespaceAndName AUTHORIZATION_COMPLETE{EXTERNALMEDIAPLAYER_NAMESPACE, "AuthorizationComplete"};
 
+// A playRequestor for testing
+static const PlayRequestor testPlayRequestor{.type = "ALERT", .id = "123"};
+
+// clang-format off
 static const std::string IDLE_PLAYBACK_STATE =
-    "{"
-        "\"state\":\"IDLE\","
-        "\"supportedOperations\":[],"
-        "\"shuffle\":\"NOT_SHUFFLED\","
-        "\"repeat\":\"NOT_REPEATED\","
-        "\"favorite\":\"NOT_RATED\","
-        "\"positionMilliseconds\":0,"
-        "\"players\":[{"
-            "\"playerId\":\"\","
-            "\"state\":\"IDLE\","
-            "\"supportedOperations\":[],"
-            "\"positionMilliseconds\":0,"
-            "\"shuffle\":\"NOT_SHUFFLED\","
-            "\"repeat\":\"NOT_REPEATED\","
-            "\"favorite\":\"NOT_RATED\","
-            "\"media\":{"
-                "\"type\":\"\","
-                "\"value\":{"
-                    "\"playbackSource\":\"\","
-                    "\"playbackSourceId\":\"\","
-                    "\"trackName\":\"\","
-                    "\"trackId\":\"\","
-                    "\"trackNumber\":\"\","
-                    "\"artist\":\"\","
-                    "\"artistId\":\"\","
-                    "\"album\":\"\","
-                    "\"albumId\":\"\","
-                    "\"coverUrls\":{\"tiny\":\"\",\"small\":\"\",\"medium\":\"\",\"large\":\"\"},"
-                    "\"coverId\":\"\","
-                    "\"mediaProvider\":\"\","
-                    "\"mediaType\":\"TRACK\","
-                    "\"durationInMilliseconds\":0"
-                "}"
-            "}"
-        "}]"
-    "}";
+    R"({
+        "state":"IDLE",
+        "supportedOperations":[],
+        "shuffle":"NOT_SHUFFLED",
+        "repeat":"NOT_REPEATED",
+        "favorite":"NOT_RATED",
+        "positionMilliseconds":0,
+        "players":[{
+            "playerId":"",
+            "state":"IDLE",
+            "supportedOperations":[],
+            "positionMilliseconds":0,
+            "shuffle":"NOT_SHUFFLED",
+            "repeat":"NOT_REPEATED",
+            "favorite":"NOT_RATED",
+            "media":{
+                "type":"",
+                "value":{
+                    "playbackSource":"",
+                    "playbackSourceId":"",
+                    "trackName":"",
+                    "trackId":"",
+                    "trackNumber":"",
+                    "artist":"",
+                    "artistId":"",
+                    "album":"",
+                    "albumId":"",
+                    "coverUrls":{"tiny":"","small":"","medium":"","large":""},
+                    "coverId":"",
+                    "mediaProvider":"",
+                    "mediaType":"TRACK",
+                    "durationInMilliseconds":0
+                }
+            }
+        }]
+    })";
 // clang-format on
 
 /**
@@ -191,9 +191,9 @@ static AdapterState createAdapterState() {
     sessionState.playerId = PLAYER_ID;
 
     AdapterPlaybackState playbackState;
-    playbackState.playerId = PLAYER_ID;
     playbackState.state = PLAYER_STATE;
     playbackState.trackName = PLAYER_TRACK;
+    playbackState.playRequestor = testPlayRequestor;
 
     AdapterState adapterState;
     adapterState.sessionState = sessionState;
@@ -203,6 +203,7 @@ static AdapterState createAdapterState() {
 
 /// Message Id for testing.
 static const std::string MESSAGE_ID_TEST("MessageId_Test");
+static const std::string MESSAGE_ID_TEST2("MessageId_Test2");
 
 /// Dialog Request Id for testing.
 static const std::string DIALOG_REQUEST_ID_TEST("DialogId_Test");
@@ -211,10 +212,18 @@ static const std::string DIALOG_REQUEST_ID_TEST("DialogId_Test");
 static const std::string TAG("ExternalMediaPlayerTest");
 
 /// Music service provider id 1.
-static const std::string MSP_NAME1("MSP_PROVIDER1");
+static const std::string MSP1_LOCAL_PLAYER_ID("MSP1_LOCAL_PLAYER_ID");
+/// Cloud assigned playerId for this MSP.
+static const std::string MSP1_PLAYER_ID("MSP1_PLAYERID");
+/// Associated skillToken for this MSP.
+static const std::string MSP1_SKILLTOKEN("MSP1_SKILLTOKEN");
 
 /// Music service provider id 2.
-static const std::string MSP_NAME2("MSP_PROVIDER2");
+static const std::string MSP2_LOCAL_PLAYER_ID("MSP2_LOCAL_PLAYER_ID");
+/// Cloud assigned playerId for this MSP.
+static const std::string MSP2_PLAYER_ID("MSP2_PLAYERID");
+/// Associated skillToken for this MSP.
+static const std::string MSP2_SKILLTOKEN("MSP2_SKILLTOKEN");
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -230,6 +239,7 @@ public:
      * Method that adheres to the AdapterCreateFunc interface to create an adapter. This method create a mock
      * instances and assigns it to a class static to keep the mock class simple.
      *
+     * @param metricRecorder The metricRecorder instance to be used to record metrics
      * @param mediaPlayer The mediaPlayer instance to be used to play Spotify content.
      * @param speakerManager A @c SpeakerManagerInterface to perform volume changes requested by ESDK.
      * @param messageSender The object to use for sending events.
@@ -239,8 +249,9 @@ public:
      * @return A @c std::shared_ptr to the new @c ExternalMediaAdapter instance.
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> getInstance(
+        std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> speaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -260,10 +271,23 @@ public:
             bool forceLogin,
             std::chrono::milliseconds tokenRefreshInterval));
     MOCK_METHOD0(handleLogout, void());
-    MOCK_METHOD3(handlePlay, void(std::string& playContextToken, int64_t index, std::chrono::milliseconds offset));
+    MOCK_METHOD8(
+        handlePlay,
+        void(
+            std::string& playContextToken,
+            int64_t index,
+            std::chrono::milliseconds offset,
+            const std::string& skillToken,
+            const std::string& playbackSessionId,
+            const std::string& navigation,
+            bool preload,
+            const avsCommon::avs::PlayRequestor& playRequestor));
     MOCK_METHOD1(handlePlayControl, void(RequestType requestType));
     MOCK_METHOD1(handleSeek, void(std::chrono::milliseconds offset));
     MOCK_METHOD1(handleAdjustSeek, void(std::chrono::milliseconds deltaOffset));
+    MOCK_METHOD3(
+        handleAuthorized,
+        void(bool authorized, const std::string& playerId, const std::string& defaultSkillToken));
     MOCK_METHOD1(handleSetVolume, void(int8_t volume));
     MOCK_METHOD1(handleSetMute, void(bool));
     MOCK_METHOD0(getState, AdapterState());
@@ -278,13 +302,15 @@ private:
 std::shared_ptr<MockExternalMediaPlayerAdapter> MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter;
 
 MockExternalMediaPlayerAdapter::MockExternalMediaPlayerAdapter() :
+        RequiresShutdown("MockExternalMediaPlayerAdapter"),
         ExternalMediaAdapterInterface("MockExternalMediaPlayerAdapter") {
 }
 
 std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface>
 MockExternalMediaPlayerAdapter::getInstance(
+    std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
+    std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> speaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -322,6 +348,91 @@ MockExternalMediaPlayerObserver::MockExternalMediaPlayerObserver() {
 }
 
 /**
+ * Method to create AuthorizeDiscoveredPlayers payload.
+ *
+ * @param players A set of players JSON objects.
+ *
+ * @return A string representation of the payload.
+ */
+static std::string createAuthorizeDiscoveredPlayersPayload(
+    std::unordered_set<std::string> players = std::unordered_set<std::string>()) {
+    // clang-format off
+    std::string payload = R"(
+    {
+        "players" : [
+        )";
+
+    for (auto it = players.begin(); it != players.end(); it++) {
+        if (it != players.begin()) {
+            payload += ",";
+        }
+        payload += *it;
+    }
+    payload += R"(]})";
+    // clang-format on
+
+    return payload;
+}
+
+/**
+ * Create the players json object.
+ *
+ * @param localPlayerId The localPlayerId.
+ * @param authorized Whether the player is authorized.
+ * @param playerId The cloud assigned playerId.
+ * @param skillToken The skillToken.
+ *
+ * @return A string representation of the payload.
+ */
+static std::string createPlayerJson(
+    const std::string& localPlayerId,
+    bool authorized,
+    const std::string& playerId,
+    const std::string& skillToken) {
+    // clang-format off
+    return
+        R"({
+            "localPlayerId" : ")" + localPlayerId + R"(",
+            "authorized" : )" + (authorized ? "true" : "false") + R"(,
+            "metadata" : {
+                "playerId" : ")" + playerId + R"(",
+                "skillToken" : ")" + skillToken + R"("
+            }
+        })";
+    // clang-format on
+}
+
+/**
+ * Get idle session state json object
+ *
+ * @return A string representation of idle session state json object
+ */
+static std::string getIdleSessionStateJson(std::string agent) {
+    // clang-format off
+    std::string idle_session_state =
+        R"({
+            "agent":")" + std::string(agent) + R"(",
+            "spiVersion":")" + std::string(ExternalMediaPlayer::SPI_VERSION) + R"(",
+            "playerInFocus":"",
+            "players":[{
+                "playerId":"",
+                "endpointId":"",
+                "loggedIn":false,
+                "username":"",
+                "isGuest":false,
+                "launched":false,
+                "active":false,
+                "spiVersion":"",
+                "playerCookie":"",
+                "skillToken":"",
+                "playbackSessionId":""
+            }]
+        })";
+    // clang-format on
+    return idle_session_state;
+}
+
+/**
  * Method to create payload with parse error.
  *
  * @param playContext Play context {Track/playlist/album/artist/station/podcast} identifier.
@@ -334,7 +445,11 @@ static std::string createPlayPayloadWithParseError(
     const std::string& playContext,
     int index,
     int64_t offsetInMilliseconds,
-    const std::string& playerId) {
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
@@ -342,6 +457,10 @@ static std::string createPlayPayloadWithParseError(
             "\"offsetInMilliseconds\":" + std::to_string(offsetInMilliseconds) + "\","
             "\"playerId\":\"" + playerId + "\","
             "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
         "}";
     // clang-format on
 
@@ -378,14 +497,69 @@ static std::string createPlayPayload(
     const std::string& playContext,
     int index,
     int64_t offsetInMilliseconds,
-    const std::string& playerId) {
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
             "\"playbackContextToken\":\"" + playContext + "\","
             "\"offsetInMilliseconds\":\"" + std::to_string(offsetInMilliseconds) + "\","
             "\"playerId\":\"" + playerId + "\","
-            "\"index\":\"" + std::to_string(index) + "\""
+            "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
+        "}";
+    // clang-format on
+
+    return PLAY_PAYLOAD_TEST;
+}
+
+/**
+ * Method to create a Play payload with playContext, index, offsetInMilliseconds, playerId, and playRequestor.
+ *
+ * @param playContext Play context {Track/playlist/album/artist/station/podcast} identifier.
+ * @param index The index of the media item in the container, if the container is indexable.
+ * @param offsetInMilliseconds The offset position within media item, in milliseconds.
+ * @param playerId The business name of the player.
+ * @param skillToken The token identifying the domain or skill associated with this player.
+ * @param playbackSessionId A UUID associated with the most recent @c Play directive.
+ * @param navigation Communicates desired visual display behavior for the app associated with playback.
+ * @param preload Indicates if @c Play directive is intended to preload the identified content only but not begin
+ * playback.
+ * @param playRequestor The playRequestor object of the @c play directive.
+ *
+ * @return A string representation of the payload.
+ */
+static std::string createPlayPayloadWithPlayRequestor(
+    const std::string& playContext,
+    int index,
+    int64_t offsetInMilliseconds,
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload,
+    const PlayRequestor& playRequestor) {
+    // clang-format off
+    const std::string PLAY_PAYLOAD_TEST =
+        "{"
+            "\"playbackContextToken\":\"" + playContext + "\","
+            "\"offsetInMilliseconds\":\"" + std::to_string(offsetInMilliseconds) + "\","
+            "\"playerId\":\"" + playerId + "\","
+            "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ","
+            "\"playRequestor\":{"
+                "\"type\":\"" + playRequestor.type + "\","
+                "\"id\":\"" + playRequestor.id + "\""
+            "}"
         "}";
     // clang-format on
 
@@ -400,13 +574,24 @@ static std::string createPlayPayload(
  * @param playerId The business name of the player.
  * @return A string representation of the payload.
  */
-static std::string createPlayPayloadNoContext(int index, int64_t offsetInMilliseconds, const std::string& playerId) {
+static std::string createPlayPayloadNoContext(
+    int index,
+    int64_t offsetInMilliseconds,
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
             "\"offsetInMilliseconds\":\"" + std::to_string(offsetInMilliseconds) + "\","
             "\"playerId\":\"" + playerId + "\","
-            "\"index\":\"" + std::to_string(index) + "\""
+            "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
         "}";
     // clang-format on
 
@@ -424,13 +609,21 @@ static std::string createPlayPayloadNoContext(int index, int64_t offsetInMillise
 static std::string createPlayPayloadNoPlayerId(
     const std::string& playContext,
     int index,
-    int64_t offsetInMilliseconds) {
+    int64_t offsetInMilliseconds,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
             "\"playbackContextToken\":\"" + playContext + "\","
             "\"offsetInMilliseconds\":\"" + std::to_string(offsetInMilliseconds) + "\","
-            "\"index\":\"" + std::to_string(index) + "\""
+            "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
         "}";
 
     // clang-format on
@@ -449,13 +642,21 @@ static std::string createPlayPayloadNoPlayerId(
 static std::string createPlayPayloadNoIndex(
     const std::string& playContext,
     int64_t offsetInMilliseconds,
-    const std::string& playerId) {
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
             "\"playbackContextToken\":\"" + playContext + "\","
             "\"offsetInMilliseconds\":" + std::to_string(offsetInMilliseconds) + ","
-            "\"playerId\":\"" + playerId + "\""
+            "\"playerId\":\"" + playerId + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
         "}";
 
     // clang-format on
@@ -471,13 +672,24 @@ static std::string createPlayPayloadNoIndex(
  * @param playerId The business name of the player.
  * @return A string representation of the payload.
  */
-static std::string createPlayPayloadNoOffset(const std::string& playContext, int index, const std::string& playerId) {
+static std::string createPlayPayloadNoOffset(
+    const std::string& playContext,
+    int index,
+    const std::string& playerId,
+    const std::string& skillToken,
+    const std::string& playbackSessionId,
+    const std::string& navigation,
+    bool preload) {
     // clang-format off
     const std::string PLAY_PAYLOAD_TEST =
         "{"
             "\"playbackContextToken\":\"" + playContext + "\","
             "\"playerId\":\"" + playerId + "\","
-            "\"index\":\"" + std::to_string(index) + "\""
+            "\"index\":\"" + std::to_string(index) + "\","
+            "\"skillToken\":\"" + skillToken + "\","
+            "\"playbackSessionId\":\"" + playbackSessionId + "\","
+            "\"navigation\":\"" + navigation + "\","
+            "\"preload\":" + (preload ? "true" : "false") + ""
         "}";
 
     // clang-format on
@@ -557,6 +769,16 @@ public:
     void verifyState(const std::string& providedState, const std::string& expectedState);
 
     /**
+     * Helper method to authorize a set of players.
+     *
+     * @param payload The payload for an AuthorizeDiscoveredPlayers directive.
+     * @param resultHandler A result handler associated with the directive upon which expectations can be set.
+     */
+    void sendAuthorizeDiscoveredPlayersDirective(
+        const std::string& payload,
+        std::unique_ptr<DirectiveHandlerResultInterface> resultHandler = nullptr);
+
+    /**
      * This is invoked in response to a @c setState call.
      *
      * @return @c SUCCESS.
@@ -570,6 +792,15 @@ public:
      */
     SetStateResult resetWakeOnSetState();
 
+    /// The map of adapters to @c MediaPlayerInterface.
+    ExternalMediaPlayer::AdapterMediaPlayerMap m_adapterMediaPlayerMap;
+
+    /// The map of adapters to @c SpeakerInterface.
+    ExternalMediaPlayer::AdapterSpeakerMap m_adapterSpeakerMap;
+
+    /// The map of adapter creation functions.
+    ExternalMediaPlayer::AdapterCreationMap m_adapterMap;
+
     /// @c ExternalMediaPlayer to test
     std::shared_ptr<ExternalMediaPlayer> m_externalMediaPlayer;
 
@@ -577,10 +808,13 @@ public:
     std::shared_ptr<MockMediaPlayer> m_mockMediaPlayer;
 
     /// @c SpeakerInterface to manage volume changes of individual speakers.
-    std::shared_ptr<MockSpeakerInterface> m_mockSpeakerInterface;
+    std::shared_ptr<MockChannelVolumeInterface> m_mockSpeakerInterface;
 
     /// @c SpeakerManager to manage volume changes across speakers.
     std::shared_ptr<MockSpeakerManager> m_mockSpeakerManager;
+
+    /// @c MetricRecorder to send metrics
+    std::shared_ptr<MockMetricRecorder> m_metricRecorder;
 
     /// @c ContextManager to provide state and update state.
     std::shared_ptr<MockContextManager> m_mockContextManager;
@@ -593,6 +827,8 @@ public:
 
     /// A message sender used to send events to AVS.
     std::shared_ptr<MockMessageSender> m_mockMessageSender;
+
+    std::shared_ptr<certifiedSender::test::MockCertifiedSender> m_mockCertifiedSender;
 
     /// An exception sender used to send exception encountered events to AVS.
     std::shared_ptr<MockExceptionEncounteredSender> m_mockExceptionSender;
@@ -616,9 +852,9 @@ ExternalMediaPlayerTest::ExternalMediaPlayerTest() :
 }
 
 void ExternalMediaPlayerTest::SetUp() {
-    m_mockSpeakerInterface =
-        std::make_shared<NiceMock<MockSpeakerInterface>>(SpeakerInterface::Type::AVS_SPEAKER_VOLUME);
+    m_mockSpeakerInterface = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
     m_mockSpeakerManager = std::make_shared<NiceMock<MockSpeakerManager>>();
+    m_metricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
     m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
@@ -626,27 +862,30 @@ void ExternalMediaPlayerTest::SetUp() {
     m_mockMediaPlayer = MockMediaPlayer::create();
     m_mockPlaybackRouter = std::make_shared<NiceMock<MockPlaybackRouter>>();
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
+    m_mockCertifiedSender = std::make_shared<certifiedSender::test::MockCertifiedSender>();
 
-    ExternalMediaPlayer::AdapterMediaPlayerMap adapterMediaPlayerMap;
-    ExternalMediaPlayer::AdapterSpeakerMap adapterSpeakerMap;
-    ExternalMediaPlayer::AdapterCreationMap adapterMap;
-
-    adapterMediaPlayerMap.insert(std::make_pair(MSP_NAME1, m_mockMediaPlayer));
-    adapterSpeakerMap.insert(std::make_pair(MSP_NAME1, m_mockSpeakerInterface));
-    adapterMap.insert(std::make_pair(MSP_NAME1, &MockExternalMediaPlayerAdapter::getInstance));
+    m_adapterMediaPlayerMap.insert(std::make_pair(MSP1_LOCAL_PLAYER_ID, m_mockMediaPlayer));
+    m_adapterSpeakerMap.insert(std::make_pair(MSP1_LOCAL_PLAYER_ID, m_mockSpeakerInterface));
+    m_adapterMap.insert(std::make_pair(MSP1_LOCAL_PLAYER_ID, &MockExternalMediaPlayerAdapter::getInstance));
 
     m_externalMediaPlayer = ExternalMediaPlayer::create(
-        adapterMediaPlayerMap,
-        adapterSpeakerMap,
-        adapterMap,
+        m_adapterMediaPlayerMap,
+        m_adapterSpeakerMap,
+        m_adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
     ASSERT_TRUE(m_externalMediaPlayer);
+
+    // Authorize Players.
+    const std::string playersJson = createPlayerJson(MSP1_LOCAL_PLAYER_ID, true, MSP1_PLAYER_ID, MSP1_SKILLTOKEN);
+    sendAuthorizeDiscoveredPlayersDirective(createAuthorizeDiscoveredPlayersPayload({playersJson}));
 }
 
 void ExternalMediaPlayerTest::TearDown() {
@@ -693,10 +932,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         nullptr,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 
     testExternalMediaPlayer = ExternalMediaPlayer::create(
@@ -705,10 +946,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         m_mockSpeakerManager,
         nullptr,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 
     testExternalMediaPlayer = ExternalMediaPlayer::create(
@@ -717,10 +960,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         nullptr,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 
     testExternalMediaPlayer = ExternalMediaPlayer::create(
@@ -729,10 +974,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         nullptr,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 
     testExternalMediaPlayer = ExternalMediaPlayer::create(
@@ -741,10 +988,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         nullptr,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 
     testExternalMediaPlayer = ExternalMediaPlayer::create(
@@ -753,10 +1002,12 @@ TEST_F(ExternalMediaPlayerTest, test_createWithNullPointers) {
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        nullptr);
+        nullptr,
+        m_metricRecorder);
     EXPECT_EQ(testExternalMediaPlayer, nullptr);
 }
 
@@ -776,28 +1027,32 @@ TEST_F(ExternalMediaPlayerTest, test_createWithAdapterCreationFailures) {
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
     ASSERT_TRUE(testExternalMediaPlayer);
     testExternalMediaPlayer->shutdown();
 
     // Create an adapter MSP_PROVIDER2 but do not create a mediaPlayer for it.
     adapterMap.clear();
     adapterMediaPlayerMap.clear();
-    adapterMediaPlayerMap.insert(std::make_pair(MSP_NAME1, m_mockMediaPlayer));
-    adapterMap.insert(std::make_pair(MSP_NAME2, &MockExternalMediaPlayerAdapter::getInstance));
+    adapterMediaPlayerMap.insert(std::make_pair(MSP1_LOCAL_PLAYER_ID, m_mockMediaPlayer));
+    adapterMap.insert(std::make_pair(MSP2_LOCAL_PLAYER_ID, &MockExternalMediaPlayerAdapter::getInstance));
     testExternalMediaPlayer = ExternalMediaPlayer::create(
         adapterMediaPlayerMap,
         adapterSpeakerMap,
         adapterMap,
         m_mockSpeakerManager,
         m_mockMessageSender,
+        m_mockCertifiedSender->get(),
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        m_metricRecorder);
 
     ASSERT_TRUE(testExternalMediaPlayer);
     testExternalMediaPlayer->shutdown();
@@ -813,6 +1068,7 @@ TEST_F(ExternalMediaPlayerTest, test_getConfiguration) {
 
     // TODO: ARC-227 Verify default values
     ASSERT_EQ(configuration[PLAY_DIRECTIVE], audioNonBlockingPolicy);
+    ASSERT_EQ(configuration[AUTHORIZEDISCOVEREDPLAYERS_DIRECTIVE], audioNonBlockingPolicy);
     ASSERT_EQ(configuration[LOGIN_DIRECTIVE], neitherNonBlockingPolicy);
     ASSERT_EQ(configuration[LOGOUT_DIRECTIVE], neitherNonBlockingPolicy);
     ASSERT_EQ(configuration[RESUME_DIRECTIVE], audioNonBlockingPolicy);
@@ -834,6 +1090,22 @@ TEST_F(ExternalMediaPlayerTest, test_getConfiguration) {
     ASSERT_EQ(configuration[UNFAVORITE_DIRECTIVE], neitherNonBlockingPolicy);
 }
 
+void ExternalMediaPlayerTest::sendAuthorizeDiscoveredPlayersDirective(
+    const std::string& payload,
+    std::unique_ptr<DirectiveHandlerResultInterface> resultHandler) {
+    if (!resultHandler) {
+        resultHandler = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
+    }
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        AUTHORIZEDISCOVEREDPLAYERS_DIRECTIVE.nameSpace, AUTHORIZEDISCOVEREDPLAYERS_DIRECTIVE.name, MESSAGE_ID_TEST2);
+
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, payload, m_attachmentManager, "");
+
+    m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(resultHandler));
+    m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST2);
+}
+
 /**
  * Test session state information on an ExternalMediaPlayer .
  */
@@ -847,7 +1119,10 @@ TEST_F(ExternalMediaPlayerTest, test_callingProvideSessionState) {
                        const avs::NamespaceAndName& namespaceAndName,
                        const std::string& jsonState,
                        const avs::StateRefreshPolicy& refreshPolicy,
-                       const unsigned int stateRequestToken) { verifyState(jsonState, IDLE_SESSION_STATE); }),
+                       const unsigned int stateRequestToken) {
+                std::string agent = "";
+                verifyState(jsonState, getIdleSessionStateJson(agent));
+            }),
             InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState)));
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState());
@@ -855,7 +1130,6 @@ TEST_F(ExternalMediaPlayerTest, test_callingProvideSessionState) {
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
-
 /**
  * Test playback state information on an ExternalMediaPlayer.
  */
@@ -873,7 +1147,7 @@ TEST_F(ExternalMediaPlayerTest, test_callingProvidePlaybackState) {
                        const unsigned int stateRequestToken) { verifyState(jsonState, IDLE_PLAYBACK_STATE); }),
             InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState)));
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState());
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState()).Times(AtLeast(1));
 
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
@@ -887,7 +1161,11 @@ TEST_F(ExternalMediaPlayerTest, test_playParserError) {
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createPlayPayloadWithParseError("XXX", 0, 0, "Spotify"), m_attachmentManager, "");
+        "",
+        avsMessageHeader,
+        createPlayPayloadWithParseError("XXX", 0, 0, "Adapter", "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -903,8 +1181,12 @@ TEST_F(ExternalMediaPlayerTest, test_playNoAdapter) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPlayPayload("XXX", 0, 0, "Spotify"), m_attachmentManager, "");
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createPlayPayload("XXX", 0, 0, "Adapter", "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -921,7 +1203,11 @@ TEST_F(ExternalMediaPlayerTest, test_playNoPlayContext) {
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createPlayPayloadNoContext(0, 0, MSP_NAME1), m_attachmentManager, "");
+        "",
+        avsMessageHeader,
+        createPlayPayloadNoContext(0, 0, MSP1_PLAYER_ID, "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -937,8 +1223,12 @@ TEST_F(ExternalMediaPlayerTest, test_playNoPlayerId) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPlayPayloadNoPlayerId("XXX", 0, 0), m_attachmentManager, "");
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createPlayPayloadNoPlayerId("XXX", 0, 0, "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -955,9 +1245,39 @@ TEST_F(ExternalMediaPlayerTest, test_playNoOffset) {
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createPlayPayloadNoOffset("XXX", 0, MSP_NAME1), m_attachmentManager, "");
+        "",
+        avsMessageHeader,
+        createPlayPayloadNoOffset("XXX", 0, MSP1_PLAYER_ID, "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlay(_, _, _));
+    EXPECT_CALL(
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
+        handlePlay(_, _, _, _, _, _, _, PlayRequestor{}));
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
+
+    m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+/**
+ * Test PLAY payload with playRequestor in ExternalMediaPlayer. This should succeed.
+ */
+TEST_F(ExternalMediaPlayerTest, testPlaywithPlayRequestor) {
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createPlayPayloadWithPlayRequestor(
+            "XXX", 0, 0, MSP1_PLAYER_ID, "YYY", "ZZZ", "DEFAULT", false, testPlayRequestor),
+        m_attachmentManager,
+        "");
+
+    EXPECT_CALL(
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
+        handlePlay(_, _, _, _, _, _, _, testPlayRequestor));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
 
     m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
@@ -972,9 +1292,14 @@ TEST_F(ExternalMediaPlayerTest, test_playNoIndex) {
         PLAY_DIRECTIVE.nameSpace, PLAY_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createPlayPayloadNoIndex("XXX", 0, MSP_NAME1), m_attachmentManager, "");
+        "",
+        avsMessageHeader,
+        createPlayPayloadNoIndex("XXX", 0, MSP1_PLAYER_ID, "YYY", "ZZZ", "DEFAULT", false),
+        m_attachmentManager,
+        "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlay(_, _, _));
+    EXPECT_CALL(
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlay(_, _, _, _, _, _, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
 
     m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
@@ -989,7 +1314,7 @@ TEST_F(ExternalMediaPlayerTest, test_logout) {
         LOGOUT_DIRECTIVE.nameSpace, LOGOUT_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handleLogout());
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1008,7 +1333,7 @@ TEST_F(ExternalMediaPlayerTest, test_login) {
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
         "",
         avsMessageHeader,
-        createLoginPayload("XXX", "msploginuser", 1000, false, MSP_NAME1),
+        createLoginPayload("XXX", "msploginuser", 1000, false, MSP1_PLAYER_ID),
         m_attachmentManager,
         "");
 
@@ -1059,7 +1384,7 @@ TEST_F(ExternalMediaPlayerTest, test_playbackStateChangeObserverIsNotified) {
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), getState())
         .WillRepeatedly(Return(createAdapterState()));
 
-    ObservablePlaybackStateProperties observablePlaybackStateProperties{PLAYER_STATE, PLAYER_TRACK};
+    ObservablePlaybackStateProperties observablePlaybackStateProperties{PLAYER_STATE, PLAYER_TRACK, testPlayRequestor};
     EXPECT_CALL(*(observer), onPlaybackStateProvided(PLAYER_ID, observablePlaybackStateProperties)).Times(1);
 
     m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
@@ -1129,7 +1454,7 @@ TEST_F(ExternalMediaPlayerTest, test_play) {
         RESUME_DIRECTIVE.nameSpace, RESUME_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
@@ -1146,7 +1471,24 @@ TEST_F(ExternalMediaPlayerTest, test_pause) {
         PAUSE_DIRECTIVE.nameSpace, PAUSE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
+
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
+
+    m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
+    m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+/**
+ * Test successful stop.
+ */
+TEST_F(ExternalMediaPlayerTest, testStop) {
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        STOP_DIRECTIVE.nameSpace, STOP_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
+
+    std::shared_ptr<AVSDirective> directive =
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1163,7 +1505,7 @@ TEST_F(ExternalMediaPlayerTest, test_stop) {
         STOP_DIRECTIVE.nameSpace, STOP_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1180,7 +1522,7 @@ TEST_F(ExternalMediaPlayerTest, test_next) {
         NEXT_DIRECTIVE.nameSpace, NEXT_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1197,7 +1539,7 @@ TEST_F(ExternalMediaPlayerTest, test_previous) {
         PREVIOUS_DIRECTIVE.nameSpace, PREVIOUS_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1214,7 +1556,7 @@ TEST_F(ExternalMediaPlayerTest, test_startOver) {
         STARTOVER_DIRECTIVE.nameSpace, STARTOVER_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1231,7 +1573,7 @@ TEST_F(ExternalMediaPlayerTest, test_rewind) {
         REWIND_DIRECTIVE.nameSpace, REWIND_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1248,7 +1590,7 @@ TEST_F(ExternalMediaPlayerTest, test_fastForward) {
         FASTFORWARD_DIRECTIVE.nameSpace, FASTFORWARD_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1265,7 +1607,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableRepeatOne) {
         ENABLEREPEATONE_DIRECTIVE.nameSpace, ENABLEREPEATONE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1282,7 +1624,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableRepeat) {
         ENABLEREPEAT_DIRECTIVE.nameSpace, ENABLEREPEAT_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1299,7 +1641,7 @@ TEST_F(ExternalMediaPlayerTest, test_disableRepeat) {
         DISABLEREPEAT_DIRECTIVE.nameSpace, DISABLEREPEAT_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1316,7 +1658,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableShuffle) {
         ENABLESHUFFLE_DIRECTIVE.nameSpace, ENABLESHUFFLE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1333,7 +1675,7 @@ TEST_F(ExternalMediaPlayerTest, test_disableShuffle) {
         DISABLESHUFFLE_DIRECTIVE.nameSpace, DISABLESHUFFLE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1350,7 +1692,7 @@ TEST_F(ExternalMediaPlayerTest, test_favorite) {
         FAVORITE_DIRECTIVE.nameSpace, FAVORITE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1367,7 +1709,7 @@ TEST_F(ExternalMediaPlayerTest, test_unfavorite) {
         UNFAVORITE_DIRECTIVE.nameSpace, UNFAVORITE_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1384,7 +1726,7 @@ TEST_F(ExternalMediaPlayerTest, test_incorrectDirective) {
         FAVORITE_DIRECTIVE.nameSpace, PREVIOUS_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP_NAME1), m_attachmentManager, "");
+        AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -1400,8 +1742,8 @@ TEST_F(ExternalMediaPlayerTest, test_seekFailure) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         SEEK_DIRECTIVE.nameSpace, SEEK_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createSeekPayload(100, MSP_NAME1, true), m_attachmentManager, "");
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "", avsMessageHeader, createSeekPayload(100, MSP1_PLAYER_ID, true), m_attachmentManager, "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -1417,8 +1759,8 @@ TEST_F(ExternalMediaPlayerTest, test_seekSuccess) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         SEEK_DIRECTIVE.nameSpace, SEEK_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createSeekPayload(100, MSP_NAME1, false), m_attachmentManager, "");
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "", avsMessageHeader, createSeekPayload(100, MSP1_PLAYER_ID, false), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handleSeek(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
@@ -1434,8 +1776,8 @@ TEST_F(ExternalMediaPlayerTest, test_adjustSeekFailure) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
         ADJUSTSEEK_DIRECTIVE.nameSpace, ADJUSTSEEK_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
-    std::shared_ptr<AVSDirective> directive =
-        AVSDirective::create("", avsMessageHeader, createSeekPayload(100, MSP_NAME1, false), m_attachmentManager, "");
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "", avsMessageHeader, createSeekPayload(100, MSP1_PLAYER_ID, false), m_attachmentManager, "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -1452,7 +1794,7 @@ TEST_F(ExternalMediaPlayerTest, test_adjustSeekFailure2) {
         ADJUSTSEEK_DIRECTIVE.nameSpace, ADJUSTSEEK_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createSeekPayload(86400014, MSP_NAME1, true), m_attachmentManager, "");
+        "", avsMessageHeader, createSeekPayload(86400014, MSP1_PLAYER_ID, true), m_attachmentManager, "");
 
     EXPECT_CALL(*(m_mockExceptionSender.get()), sendExceptionEncountered(_, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setFailed(_));
@@ -1469,13 +1811,316 @@ TEST_F(ExternalMediaPlayerTest, test_adjustSeekSuccess) {
         ADJUSTSEEK_DIRECTIVE.nameSpace, ADJUSTSEEK_DIRECTIVE.name, MESSAGE_ID_TEST, DIALOG_REQUEST_ID_TEST);
 
     std::shared_ptr<AVSDirective> directive = AVSDirective::create(
-        "", avsMessageHeader, createSeekPayload(86400000, MSP_NAME1, true), m_attachmentManager, "");
+        "", avsMessageHeader, createSeekPayload(86400000, MSP1_PLAYER_ID, true), m_attachmentManager, "");
 
     EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handleAdjustSeek(_));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
 
     m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+/**
+ * Custom matcher to check an event of a certain name is sent.
+ * Returns true if the event with that name is sent.
+ * */
+MATCHER_P2(
+    EventNamed,
+    /* std::string */ expectedNameSpace,
+    /* std::string */ expectedName,
+    "") {
+    // Throw obvious compile error if not a MessageRequest.
+    std::shared_ptr<MessageRequest> request = arg;
+
+    if (!request) {
+        return false;
+    }
+
+    rapidjson::Document document;
+    ParseResult result = document.Parse(request->getJsonContent());
+
+    if (!result) {
+        return false;
+    }
+
+    rapidjson::Value::ConstMemberIterator eventIt;
+    rapidjson::Value::ConstMemberIterator headerIt;
+    if (!json::jsonUtils::findNode(document, "event", &eventIt) ||
+        !json::jsonUtils::findNode(eventIt->value, "header", &headerIt)) {
+        return false;
+    }
+
+    std::string name;
+    std::string nameSpace;
+
+    if (!json::jsonUtils::retrieveValue(headerIt->value, "name", &name) ||
+        !json::jsonUtils::retrieveValue(headerIt->value, "namespace", &nameSpace) || nameSpace != expectedNameSpace ||
+        name != expectedName) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Checks that the AuthorizationComplete event contains the expected authorized and deauthorized fields.
+ *
+ * @param request The AuthorizationComplete event sent.
+ * @param expectedAuthorized The expected list of @c playerId to @c skillToken pairs to verify against.
+ * @param expectedDeauthorized The expected list of @c deauthorized localPlayerId the verify against.
+ */
+static void veryifyAuthorizationCompletePayload(
+    std::shared_ptr<MessageRequest> request,
+    std::unordered_map<std::string, std::string> expectedAuthorized,
+    std::unordered_set<std::string> expectedDeauthorized = std::unordered_set<std::string>()) {
+    rapidjson::Document document;
+    ParseResult result = document.Parse(request->getJsonContent());
+
+    if (!result) {
+        FAIL();
+    }
+
+    rapidjson::Value::ConstMemberIterator eventIt;
+    rapidjson::Value::ConstMemberIterator payloadIt;
+    rapidjson::Value::ConstMemberIterator authorizedIt;
+    rapidjson::Value::ConstMemberIterator deauthorizedIt;
+
+    if (!findNode(document, "event", &eventIt) || !findNode(eventIt->value, "payload", &payloadIt) ||
+        !findNode(payloadIt->value, "authorized", &authorizedIt) ||
+        !findNode(payloadIt->value, "deauthorized", &deauthorizedIt)) {
+        FAIL();
+    }
+
+    std::unordered_map<std::string, std::string> authorized;
+    std::unordered_set<std::string> deauthorized;
+
+    for (rapidjson::Value::ConstValueIterator it = authorizedIt->value.Begin(); it != authorizedIt->value.End(); it++) {
+        std::string playerId;
+        std::string skillToken;
+
+        if (!retrieveValue(*it, "playerId", &playerId) || !retrieveValue(*it, "skillToken", &skillToken)) {
+            FAIL();
+        }
+
+        authorized[playerId] = skillToken;
+    }
+
+    for (rapidjson::Value::ConstValueIterator it = deauthorizedIt->value.Begin(); it != deauthorizedIt->value.End();
+         it++) {
+        std::string localPlayerId;
+
+        if (!retrieveValue(*it, "localPlayerId", &localPlayerId)) {
+            FAIL();
+        }
+
+        deauthorized.insert(localPlayerId);
+    }
+
+    ASSERT_THAT(authorized, ContainerEq(expectedAuthorized));
+    ASSERT_THAT(deauthorized, ContainerEq(expectedDeauthorized));
+}
+
+/**
+ * Test that ReportDiscoveredPlayers is sent.
+ */
+TEST_F(ExternalMediaPlayerTest, testReportDiscoveredPlayers) {
+    std::promise<void> eventPromise;
+    std::future<void> eventFuture = eventPromise.get_future();
+
+    // Initialize the CertifiedSender
+    auto mockCertifiedSender = std::make_shared<certifiedSender::test::MockCertifiedSender>();
+    std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> connectionObserver =
+        std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(
+            mockCertifiedSender->get());
+    connectionObserver->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    // Set expectation on m_mockCertifiedSender's @c MessageSenderInterface
+    // because @c MockCertifiedSender isn't a gmock mock.
+    EXPECT_CALL(
+        *(mockCertifiedSender->getMockMessageSender()),
+        sendMessage(EventNamed(REPORT_DISCOVERED_PLAYERS.nameSpace, REPORT_DISCOVERED_PLAYERS.name)))
+        .Times(1)
+        .WillOnce(InvokeWithoutArgs([&eventPromise]() { eventPromise.set_value(); }));
+
+    auto messageSender = std::make_shared<NiceMock<MockMessageSender>>();
+    m_externalMediaPlayer = ExternalMediaPlayer::create(
+        m_adapterMediaPlayerMap,
+        m_adapterSpeakerMap,
+        m_adapterMap,
+        m_mockSpeakerManager,
+        m_mockMessageSender,
+        mockCertifiedSender->get(),
+        m_mockFocusManager,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_mockPlaybackRouter,
+        m_metricRecorder);
+
+    ASSERT_TRUE(std::future_status::ready == eventFuture.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test successful AuthorizeDiscoveredPlayers directive processing.
+ */
+TEST_F(ExternalMediaPlayerTest, testAuthorizeDiscoveredPlayersSuccess) {
+    std::promise<void> authorizationCompletePromise;
+    std::future<void> authorizationCompleteFuture = authorizationCompletePromise.get_future();
+
+    ON_CALL(*m_mockContextManager, getContext(_, _, _)).WillByDefault(InvokeWithoutArgs([this]() {
+        m_externalMediaPlayer->onContextAvailable("");
+        return 0;
+    }));
+
+    // Use another instance to avoid SetUp() interferring with the test.
+    auto messageSender = std::make_shared<NiceMock<MockMessageSender>>();
+    m_externalMediaPlayer = ExternalMediaPlayer::create(
+        m_adapterMediaPlayerMap,
+        m_adapterSpeakerMap,
+        m_adapterMap,
+        m_mockSpeakerManager,
+        messageSender,
+        m_mockCertifiedSender->get(),
+        m_mockFocusManager,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_mockPlaybackRouter,
+        m_metricRecorder);
+
+    EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted());
+    EXPECT_CALL(*messageSender, sendMessage(EventNamed(AUTHORIZATION_COMPLETE.nameSpace, AUTHORIZATION_COMPLETE.name)))
+        .Times(1)
+        .WillOnce(Invoke([&authorizationCompletePromise](std::shared_ptr<MessageRequest> request) {
+            veryifyAuthorizationCompletePayload(request, {{MSP1_PLAYER_ID, MSP1_SKILLTOKEN}});
+            authorizationCompletePromise.set_value();
+        }));
+    EXPECT_CALL(
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
+        handleAuthorized(true, MSP1_PLAYER_ID, MSP1_SKILLTOKEN));
+
+    const std::string playersJson = createPlayerJson(MSP1_LOCAL_PLAYER_ID, true, MSP1_PLAYER_ID, MSP1_SKILLTOKEN);
+    sendAuthorizeDiscoveredPlayersDirective(
+        createAuthorizeDiscoveredPlayersPayload({playersJson}), std::move(m_mockDirectiveHandlerResult));
+
+    ASSERT_TRUE(std::future_status::ready == authorizationCompleteFuture.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test successful AuthorizeDiscoveredPlayers directive processing of multiple directives.
+ */
+TEST_F(ExternalMediaPlayerTest, testMultipleAuthorizeDiscoveredPlayersSuccess) {
+    ON_CALL(*m_mockContextManager, getContext(_, _, _)).WillByDefault(InvokeWithoutArgs([this]() {
+        m_externalMediaPlayer->onContextAvailable("");
+        return 0;
+    }));
+
+    // Use another instance to avoid SetUp() interferring with the test.
+    auto messageSender = std::make_shared<NiceMock<MockMessageSender>>();
+    m_externalMediaPlayer = ExternalMediaPlayer::create(
+        m_adapterMediaPlayerMap,
+        m_adapterSpeakerMap,
+        m_adapterMap,
+        m_mockSpeakerManager,
+        messageSender,
+        m_mockCertifiedSender->get(),
+        m_mockFocusManager,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_mockPlaybackRouter,
+        m_metricRecorder);
+
+    std::promise<void> authorizationCompletePromise;
+    std::future<void> authorizationCompleteFuture = authorizationCompletePromise.get_future();
+    auto mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
+    EXPECT_CALL(*mockDirectiveHandlerResult, setCompleted());
+    EXPECT_CALL(
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
+        handleAuthorized(true, MSP1_PLAYER_ID, MSP1_SKILLTOKEN));
+
+    std::promise<void> authorizationCompletePromise2;
+    std::future<void> authorizationCompleteFuture2 = authorizationCompletePromise2.get_future();
+    auto mockDirectiveHandlerResult2 = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
+    EXPECT_CALL(*mockDirectiveHandlerResult2, setCompleted());
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handleAuthorized(false, "", ""));
+
+    {
+        InSequence s;
+        EXPECT_CALL(
+            *messageSender, sendMessage(EventNamed(AUTHORIZATION_COMPLETE.nameSpace, AUTHORIZATION_COMPLETE.name)))
+            .Times(1)
+            .WillOnce(Invoke([&authorizationCompletePromise](std::shared_ptr<MessageRequest> request) {
+                veryifyAuthorizationCompletePayload(request, {{MSP1_PLAYER_ID, MSP1_SKILLTOKEN}});
+                authorizationCompletePromise.set_value();
+            }));
+
+        EXPECT_CALL(
+            *messageSender, sendMessage(EventNamed(AUTHORIZATION_COMPLETE.nameSpace, AUTHORIZATION_COMPLETE.name)))
+            .Times(1)
+            .WillOnce(Invoke([&authorizationCompletePromise2](std::shared_ptr<MessageRequest> request) {
+                veryifyAuthorizationCompletePayload(
+                    request, std::unordered_map<std::string, std::string>(), {MSP1_LOCAL_PLAYER_ID});
+                authorizationCompletePromise2.set_value();
+            }));
+    }
+
+    const std::string playersJson = createPlayerJson(MSP1_LOCAL_PLAYER_ID, true, MSP1_PLAYER_ID, MSP1_SKILLTOKEN);
+    sendAuthorizeDiscoveredPlayersDirective(
+        createAuthorizeDiscoveredPlayersPayload({playersJson}), std::move(mockDirectiveHandlerResult));
+    sendAuthorizeDiscoveredPlayersDirective(
+        createAuthorizeDiscoveredPlayersPayload(), std::move(mockDirectiveHandlerResult2));
+
+    ASSERT_TRUE(std::future_status::ready == authorizationCompleteFuture.wait_for(MY_WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == authorizationCompleteFuture2.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test setPlayerInFocus succeeds for authorized players.
+ */
+TEST_F(ExternalMediaPlayerTest, testSetPlayerInFocusSucceedsForAuthorized) {
+    EXPECT_CALL(*m_mockContextManager, setState(SESSION_STATE, _, _, _))
+        .WillOnce(Invoke([this](
+                             const avs::NamespaceAndName& namespaceAndName,
+                             const std::string& jsonState,
+                             const avs::StateRefreshPolicy& refreshPolicy,
+                             const unsigned int stateRequestToken) {
+            rapidjson::Document document;
+            ParseResult result = document.Parse(jsonState);
+            if (!result) {
+                return SetStateResult::SUCCESS;
+            }
+
+            std::string playerInFocus;
+            if (!retrieveValue(document, "playerInFocus", &playerInFocus)) {
+                return SetStateResult::SUCCESS;
+            }
+
+            if (MSP1_PLAYER_ID == playerInFocus) {
+                wakeOnSetState();
+            }
+
+            return SetStateResult::SUCCESS;
+        }));
+
+    // Authorized from SetUp().
+    m_externalMediaPlayer->setPlayerInFocus(MSP1_PLAYER_ID);
+    m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test setPlayerInFocus fails for unauthorized players.
+ */
+TEST_F(ExternalMediaPlayerTest, testSetPlayerInFocusFailsForAuthorized) {
+    const std::string INVALID_ID = "invalidPlayerId";
+
+    EXPECT_CALL(*m_mockPlaybackRouter, setHandler(_)).Times(0);
+    EXPECT_CALL(*m_mockContextManager, setState(_, Not(HasSubstr(INVALID_ID)), _, _))
+        .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetState));
+
+    m_externalMediaPlayer->setPlayerInFocus(INVALID_ID);
+    m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 }  // namespace test

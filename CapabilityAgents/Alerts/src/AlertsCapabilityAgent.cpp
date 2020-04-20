@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -677,7 +677,8 @@ bool AlertsCapabilityAgent::handleAdjustVolume(
     submitMetric(m_metricRecorder, INVALID_PAYLOAD_FOR_CHANGE_ALARM_VOLUME, 0);
 
     SpeakerInterface::SpeakerSettings speakerSettings;
-    if (!m_speakerManager->getSpeakerSettings(SpeakerInterface::Type::AVS_ALERTS_VOLUME, &speakerSettings).get()) {
+    if (!m_speakerManager->getSpeakerSettings(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, &speakerSettings)
+             .get()) {
         ACSDK_ERROR(LX("handleAdjustVolumeFailed").m("Could not retrieve speaker volume."));
         return false;
     }
@@ -911,10 +912,10 @@ void AlertsCapabilityAgent::executeOnFocusManagerFocusChanged(
                 // Alert is sounding with volume higher than Base Volume. Assume that it was adjusted because of
                 // content being played and reset it to the base one. Keep lower values, though.
                 m_speakerManager->setVolume(
-                    SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+                    ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
                     m_lastReportedSpeakerSettings.volume,
-                    false,
-                    SpeakerManagerObserverInterface::Source::DIRECTIVE);
+                    SpeakerManagerInterface::NotificationProperties(
+                        SpeakerManagerObserverInterface::Source::DIRECTIVE));
             }
         }
     }
@@ -990,10 +991,10 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
                 if (m_lastReportedSpeakerSettings.volume < contentSpeakerSettings.volume) {
                     // Adjust alerts volume to be at least as loud as content volume
                     m_speakerManager->setVolume(
-                        SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+                        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
                         m_lastReportedSpeakerSettings.volume,
-                        false,
-                        SpeakerManagerObserverInterface::Source::DIRECTIVE);
+                        SpeakerManagerInterface::NotificationProperties(
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE));
                 }
             }
         }
@@ -1005,7 +1006,10 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             // Reset Active Alerts Volume volume to the Base Alerts Volume when alert stops
             m_alertIsSounding = false;
             m_speakerManager->setVolume(
-                SpeakerInterface::Type::AVS_ALERTS_VOLUME, m_lastReportedSpeakerSettings.volume, true);
+                ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
+                m_lastReportedSpeakerSettings.volume,
+                SpeakerManagerInterface::NotificationProperties(
+                    SpeakerManagerObserverInterface::Source::LOCAL_API, false, false));
         }
     }
 
@@ -1096,13 +1100,13 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Ale
 
 void AlertsCapabilityAgent::onSpeakerSettingsChanged(
     const SpeakerManagerObserverInterface::Source& source,
-    const SpeakerInterface::Type& type,
+    const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
     m_executor.submit([this, settings, type]() { executeOnSpeakerSettingsChanged(type, settings); });
 }
 
 bool AlertsCapabilityAgent::getAlertVolumeSettings(SpeakerInterface::SpeakerSettings* speakerSettings) {
-    if (!m_speakerManager->getSpeakerSettings(SpeakerInterface::Type::AVS_ALERTS_VOLUME, speakerSettings).get()) {
+    if (!m_speakerManager->getSpeakerSettings(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, speakerSettings).get()) {
         ACSDK_ERROR(LX("getAlertSpeakerSettingsFailed").d("reason", "Failed to get speaker settings"));
         return false;
     }
@@ -1110,7 +1114,8 @@ bool AlertsCapabilityAgent::getAlertVolumeSettings(SpeakerInterface::SpeakerSett
 }
 
 bool AlertsCapabilityAgent::getSpeakerVolumeSettings(SpeakerInterface::SpeakerSettings* speakerSettings) {
-    if (!m_speakerManager->getSpeakerSettings(SpeakerInterface::Type::AVS_SPEAKER_VOLUME, speakerSettings).get()) {
+    if (!m_speakerManager->getSpeakerSettings(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, speakerSettings)
+             .get()) {
         ACSDK_ERROR(LX("getContentSpeakerSettingsFailed").d("reason", "Failed to get speaker settings"));
         return false;
     }
@@ -1130,10 +1135,9 @@ void AlertsCapabilityAgent::setNextAlertVolume(int64_t volume) {
 
     m_speakerManager
         ->setVolume(
-            SpeakerInterface::Type::AVS_ALERTS_VOLUME,
+            ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
             static_cast<int8_t>(volume),
-            false,
-            SpeakerManagerObserverInterface::Source::DIRECTIVE)
+            SpeakerManagerInterface::NotificationProperties(SpeakerManagerObserverInterface::Source::DIRECTIVE))
         .get();
 
     // Always notify AVS of volume changes here
@@ -1141,9 +1145,9 @@ void AlertsCapabilityAgent::setNextAlertVolume(int64_t volume) {
 }
 
 void AlertsCapabilityAgent::executeOnSpeakerSettingsChanged(
-    const SpeakerInterface::Type& type,
+    const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& speakerSettings) {
-    if (SpeakerInterface::Type::AVS_ALERTS_VOLUME == type && !m_alertIsSounding) {
+    if (ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME == type && !m_alertIsSounding) {
         updateAVSWithLocalVolumeChanges(speakerSettings.volume, true);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public:
         start,
         void(
             std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-            std::function<std::unique_ptr<std::istream>()> audioFactory,
+            std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
             bool alarmVolumeRampEnabled,
             const std::vector<std::string>& urls,
             int loopCount,
@@ -102,12 +102,16 @@ public:
     }
 
 private:
-    static std::unique_ptr<std::istream> defaultAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("default audio"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> defaultAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream("default audio")),
+            avsCommon::utils::MediaType::MPEG);
     }
 
-    static std::unique_ptr<std::istream> shortAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("short audio"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> shortAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream("short audio")),
+            avsCommon::utils::MediaType::MPEG);
     }
 
     const std::string m_alertType;

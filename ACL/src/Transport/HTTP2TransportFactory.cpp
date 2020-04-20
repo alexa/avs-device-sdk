@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,16 +48,19 @@ std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
         m_postConnectFactory,
         sharedMessageRequestQueue,
         HTTP2Transport::Configuration(),
-        m_metricRecorder);
+        m_metricRecorder,
+        m_eventTracer);
 }
 
 HTTP2TransportFactory::HTTP2TransportFactory(
     std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
     std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer) :
         m_connectionFactory{std::move(connectionFactory)},
         m_postConnectFactory{std::move(postConnectFactory)},
-        m_metricRecorder{std::move(metricRecorder)} {
+        m_metricRecorder{std::move(metricRecorder)},
+        m_eventTracer{eventTracer} {
 }
 
 }  // namespace acl

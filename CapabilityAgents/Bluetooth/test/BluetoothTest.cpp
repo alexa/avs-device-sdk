@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/HIDInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/MockBluetoothService.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/SPPInterface.h>
+#include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
@@ -101,6 +102,15 @@ static const std::string TEST_BLUETOOTH_FRIENDLY_NAME_2 = "test_friendly_name_2"
 
 /// Test Bluetooth device uuid 2.
 static const std::string TEST_BLUETOOTH_UUID_2 = "650f973b-c2ab-4c6e-bff4-3788cd521341";
+
+/// Test Bluetooth device mac address 3.
+static const std::string TEST_BLUETOOTH_DEVICE_MAC_3 = "21:23:45:67:89:ab";
+
+/// Test Bluetooth device friendly name 3.
+static const std::string TEST_BLUETOOTH_FRIENDLY_NAME_3 = "test_friendly_name_3";
+
+/// Test Bluetooth device uuid 3.
+static const std::string TEST_BLUETOOTH_UUID_3 = "650f973b-c2ab-4c6e-bff4-3788cd521342";
 
 /// Test Database file name. Can be changed if there are conflicts.
 static const std::string TEST_DATABASE = "BluetoothCATest.db";
@@ -397,6 +407,7 @@ public:
     /// Bluetooth devices used to test the Bluetooth CA connection logic.
     std::shared_ptr<MockBluetoothDevice> m_mockBluetoothDevice1;
     std::shared_ptr<MockBluetoothDevice> m_mockBluetoothDevice2;
+    std::shared_ptr<MockBluetoothDevice> m_mockBluetoothDevice3;
 
     /// Bluetooth device connection rules.
     /// Bluetooth device connection rule for DeviceCategory::REMOTE_CONTROL.
@@ -412,6 +423,9 @@ public:
 
     /// An observer to be notified of the Bluetooth connection change.
     std::shared_ptr<MockBluetoothDeviceObserver> m_mockBluetoothDeviceObserver;
+
+    /// A @c ChannelVolumeInterface object to control volume
+    std::shared_ptr<MockChannelVolumeInterface> m_mockChannelVolumeInterface;
 
     /// Condition variable to wake on a message being sent.
     std::condition_variable m_messageSentTrigger;
@@ -504,6 +518,13 @@ void BluetoothTest::SetUp() {
         TEST_BLUETOOTH_DEVICE_MAC_2, TEST_BLUETOOTH_FRIENDLY_NAME_2, metaData2, services2);
     m_mockDiscoveredBluetoothDevices.push_back(m_mockBluetoothDevice2);
 
+    auto metaData3 =MockBluetoothDevice::MetaData(Optional<int>(), Optional<int>(),
+            MockBluetoothDevice::MetaData::UNDEFINED_CLASS_VALUE, Optional<int>(), Optional<std::string>());
+    std::vector<std::shared_ptr<BluetoothServiceInterface>> services3 = {a2dpSink};
+    m_mockBluetoothDevice3 = std::make_shared<NiceMock<MockBluetoothDevice>>(
+        TEST_BLUETOOTH_DEVICE_MAC_3, TEST_BLUETOOTH_FRIENDLY_NAME_3, metaData3, services3);
+    m_mockDiscoveredBluetoothDevices.push_back(m_mockBluetoothDevice3);
+
     /*
      * Create mock device connection rules.
      */
@@ -535,6 +556,12 @@ void BluetoothTest::SetUp() {
     m_mockEnabledConnectionRules =
         {m_remoteControlConnectionRule, m_gadgetConnectionRule, BasicDeviceConnectionRule::create()};
 
+   /**
+    * create MockChannelVolumeInterface for ducking.
+    */
+    m_mockChannelVolumeInterface = std::make_shared<MockChannelVolumeInterface>();
+    m_mockChannelVolumeInterface->DelegateToReal();
+
     /*
      * Generate a Bluetooth database for testing.
      * Ensure the db file does not exist already. We don't want to overwrite anything.
@@ -553,6 +580,7 @@ void BluetoothTest::SetUp() {
     // Insert the test device data into the test database
     m_bluetoothStorage->insertByMac(TEST_BLUETOOTH_DEVICE_MAC, TEST_BLUETOOTH_UUID, true);
     m_bluetoothStorage->insertByMac(TEST_BLUETOOTH_DEVICE_MAC_2, TEST_BLUETOOTH_UUID_2, true);
+    m_bluetoothStorage->insertByMac(TEST_BLUETOOTH_DEVICE_MAC_3, TEST_BLUETOOTH_UUID_3, true);
     m_bluetoothStorage->close();
 
     m_Bluetooth = Bluetooth::create(
@@ -567,6 +595,7 @@ void BluetoothTest::SetUp() {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     ASSERT_THAT(m_Bluetooth, NotNull());
     m_Bluetooth->addObserver(m_mockBluetoothDeviceObserver);
@@ -668,6 +697,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth1, IsNull());
 
@@ -684,6 +714,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth2, IsNull());
 
@@ -700,6 +731,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth3, IsNull());
 
@@ -716,6 +748,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth4, IsNull());
 
@@ -732,6 +765,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth5, IsNull());
 
@@ -747,6 +781,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth6, IsNull());
 
@@ -763,6 +798,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth7, IsNull());
 
@@ -779,6 +815,7 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         nullptr,
         m_customerDataManager,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
     EXPECT_THAT(bluetooth8, IsNull());
 
@@ -795,8 +832,9 @@ TEST_F(BluetoothTest, test_createBTWithNullParams) {
         m_mockBluetoothMediaPlayer,
         nullptr,
         m_mockEnabledConnectionRules,
+        m_mockChannelVolumeInterface,
         nullptr);
-    EXPECT_THAT(bluetooth8, IsNull());
+    EXPECT_THAT(bluetooth9, IsNull());
 }
 
 /**
@@ -872,10 +910,7 @@ TEST_F(BluetoothTest, test_createBTWithLackOfProfilesInConnectionRules) {
  * 3) Two @c ConnectByDeviceIdsSucceed events, both of which have CLOUD as @c Requester, and one
  * @c DisconnectDevicesSucceed event, should be sent to cloud.
  */
-TEST_F(BluetoothTest, DISABLED_test_handleConnectByDeviceIdsDirectiveWithTwoA2DPDevices) {
-    m_mockBluetoothDevice1->disconnect();
-    m_mockBluetoothDevice2->disconnect();
-
+TEST_F(BluetoothTest, test_handleConnectByDeviceIdsDirectiveWithTwoA2DPDevices) {
     EXPECT_CALL(*m_mockBluetoothDeviceObserver, onActiveDeviceConnected(_)).Times(Exactly(2));
     EXPECT_CALL(*m_mockBluetoothDeviceObserver, onActiveDeviceDisconnected(_)).Times(Exactly(1));
     EXPECT_CALL(*(m_mockDirectiveHandlerResult.get()), setCompleted())
@@ -1084,7 +1119,7 @@ TEST_F(BluetoothTest, test_handleConnectByProfileWithMatchedProfileName) {
  * m_mockBluetoothDevice1.
  * b. {PAIR_DEVICES_SUCCEEDED} is sent when Bluetooth CapabilityAgent tries to pair m_mockBluetoothDevice2.
  */
-TEST_F(BluetoothTest, DISABLED_test_handlePairDevices) {
+TEST_F(BluetoothTest, test_handlePairDevices) {
     // Initially, all devices are stored as DeviceCategory::UNKNOWN. Need to manually update device category in order
     // to test.
     m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::PHONE));
@@ -1324,6 +1359,54 @@ TEST_F(BluetoothTest, test_handleSetDeviceCategories) {
     m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 
+TEST_F(BluetoothTest, test_contentDucksUponReceivingBackgroundFocus) {
+    // Assume all devices are paired and connected before.
+    m_mockBluetoothDevice1->pair();
+    m_mockBluetoothDevice1->connect();
+    m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::CONNECTED));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
+
+    // change streaming state to ACTIVE
+    m_eventBus->sendEvent(MediaStreamingStateChangedEvent(avsCommon::utils::bluetooth::MediaStreamingState::ACTIVE, avsCommon::utils::bluetooth::A2DPRole::SOURCE, m_mockBluetoothDevice1));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    // ensure that music is not stopped when ducking.
+    EXPECT_CALL(*m_mockBluetoothMediaPlayer, stop(_)).Times(0);
+    EXPECT_CALL(*m_mockChannelVolumeInterface, startDucking()).Times(1);
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+}
+
+TEST_F(BluetoothTest, test_contentUnducksUponReceivingForegroundOrNoneFocus) {
+    // Assume all devices are paired and connected before.
+    m_mockBluetoothDevice1->pair();
+    m_mockBluetoothDevice1->connect();
+    m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::CONNECTED));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
+
+    // change streaming state to ACTIVE.
+    m_eventBus->sendEvent(MediaStreamingStateChangedEvent(avsCommon::utils::bluetooth::MediaStreamingState::ACTIVE, avsCommon::utils::bluetooth::A2DPRole::SOURCE, m_mockBluetoothDevice1));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    // ensure that music is not stopped when ducking upon receiving background focus.
+    EXPECT_CALL(*m_mockBluetoothMediaPlayer, stop(_)).Times(0);
+    EXPECT_CALL(*m_mockChannelVolumeInterface, startDucking()).Times(1);
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    // upon receiving foreground focus , content must be unducked.
+    EXPECT_CALL(*m_mockChannelVolumeInterface, stopDucking()).Times(1);
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    // upon receiving foreground focus , content must be unducked.
+    EXPECT_CALL(*m_mockChannelVolumeInterface, stopDucking()).Times(1);
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::NONE, avsCommon::avs::MixingBehavior::MUST_STOP);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+}
+
 /**
  * Test streaming state change of multiple device connections.
  *
@@ -1368,6 +1451,47 @@ TEST_F(BluetoothTest, test_streamingStateChange) {
     // Reset device categories.
     m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
     m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
+}
+
+/**
+ * Test focus state change of barge-in scenario.
+ *
+ * Assumption:
+ * A @c DeviceManager contains m_mockBluetoothDevice3, which belongs to DeviceCategory::PHONE.
+ * Use case:
+ * 1. m_mockBluetoothDevice3 initiates connection. Stream audio from m_mockBluetoothDevice3.
+ * 2. A job(e.g, TTS) barge-in, which moves Bluetooth to background.
+ * Exepected Result:
+ * 1. m_mockBluetoothDevice3 should connect and start streaming audio. It should acquire focus.
+ * 2. m_mockBluetoothDevice3 should pause streaming audio. However, it should NOT release focus.
+ */
+TEST_F(BluetoothTest, test_focusStateChange) {
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_3, deviceCategoryToString(DeviceCategory::PHONE));
+
+    EXPECT_CALL(*m_mockFocusManager, acquireChannel(_, _)).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockBluetoothMediaPlayer, play(_)).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockFocusManager, releaseChannel(_, _)).Times(0);
+    EXPECT_CALL(*m_mockBluetoothMediaPlayer, stop(_)).Times(1).WillOnce(Return(true));
+
+    m_mockBluetoothDevice3->connect();
+    m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice3, DeviceState::CONNECTED));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    m_eventBus->sendEvent(MediaStreamingStateChangedEvent(
+        MediaStreamingState::ACTIVE, A2DPRole::SINK, m_mockBluetoothDevice3));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    m_Bluetooth->onPlaybackStarted(m_mockBluetoothMediaPlayer->getCurrentSourceId(), {std::chrono::milliseconds(0)});
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    // The other job barges in, which moves Bluetooth to background.
+    m_Bluetooth->onFocusChanged(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MUST_STOP);
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+    m_eventBus->sendEvent(MediaStreamingStateChangedEvent(
+        MediaStreamingState::IDLE, A2DPRole::SINK, m_mockBluetoothDevice3));
+    m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
+
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_3, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 }  // namespace test
 }  // namespace bluetooth

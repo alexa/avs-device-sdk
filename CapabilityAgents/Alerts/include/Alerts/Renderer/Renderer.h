@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <AVSCommon/Utils/MediaType.h>
 
 #include <chrono>
 #include <condition_variable>
@@ -54,7 +55,7 @@ public:
 
     void start(
         std::shared_ptr<RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         bool volumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
@@ -101,8 +102,8 @@ private:
      * This function will start rendering audio for the currently active alert.
      *
      * @param observer The observer that will receive renderer events.
-     * @param audioFactory A function that produces a stream of audio that is used for the default if nothing
-     * else is available.
+     * @param audioFactory A function that produces a pair of stream of audio and audio format that is used for the
+     * default if nothing else is available.
      * @param volumeRampEnabled whether this media should ramp
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
@@ -115,7 +116,7 @@ private:
      */
     void executeStart(
         std::shared_ptr<RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         bool volumeRampEnabled,
         const std::vector<std::string>& urls,
         int loopCount,
@@ -295,8 +296,9 @@ private:
     /// The timestamp when the current loop began rendering.
     std::chrono::time_point<std::chrono::steady_clock> m_loopStartTime;
 
-    /// A pointer to a stream factory to use as the default audio to use when the audio assets aren't available.
-    std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
+    /// A pointer to a pair of stream and stream format factory to use as the default audio to use when the audio assets
+    /// aren't available.
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> m_defaultAudioFactory;
 
     /// A flag to capture if the renderer has been asked to stop by its owner. @c m_waitMutex must be locked when
     /// modifying this variable.

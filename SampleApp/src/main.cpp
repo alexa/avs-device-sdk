@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 #include "SampleApp/ConsoleReader.h"
 #include "SampleApp/SampleApplication.h"
 #include "SampleApp/SampleApplicationReturnCodes.h"
+
+#ifdef DIAGNOSTICS
+#include "SampleApp/SDKDiagnostics.h"
+#endif
 
 #include <cstdlib>
 #include <string>
@@ -113,10 +117,27 @@ int main(int argc, char* argv[]) {
     std::unique_ptr<SampleApplication> sampleApplication;
     SampleAppReturnCode returnCode = SampleAppReturnCode::OK;
 
+#ifdef DIAGNOSTICS
+    std::unique_ptr<SDKDiagnostics> diagnostics = SDKDiagnostics::create();
+    if (!diagnostics) {
+        return SampleAppReturnCode::ERROR;
+    }
+#endif
+
     do {
-        sampleApplication = SampleApplication::create(consoleReader, configFiles, pathToKWDInputFolder, logLevel);
+        sampleApplication = SampleApplication::create(
+            consoleReader,
+            configFiles,
+            pathToKWDInputFolder,
+            logLevel
+#ifdef DIAGNOSTICS
+            ,
+            std::move(diagnostics)
+#endif
+        );
+
         if (!sampleApplication) {
-            ConsolePrinter::simplePrint("Failed to create to SampleApplication!");
+            ConsolePrinter::simplePrint("Failed to create SampleApplication!");
             return SampleAppReturnCode::ERROR;
         }
         returnCode = sampleApplication->run();

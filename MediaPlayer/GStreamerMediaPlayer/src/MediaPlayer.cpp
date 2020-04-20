@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -87,12 +87,6 @@ static const int8_t GST_SET_VOLUME_MIN = 0;
 /// GStreamer Volume Element Maximum.
 static const int8_t GST_SET_VOLUME_MAX = 1;
 
-/// GStreamer Volume Adjust Minimum.
-static const int8_t GST_ADJUST_VOLUME_MIN = -1;
-
-/// GStreamer Volume Adjust Maximum.
-static const int8_t GST_ADJUST_VOLUME_MAX = 1;
-
 /// GStreamer Timed Volume Control Element factor.
 static const gdouble GST_CONTROL_VOLUME_FACTOR = 1000;
 
@@ -168,12 +162,11 @@ static void collectOneTag(const GstTagList* tagList, const gchar* tag, gpointer 
 std::shared_ptr<MediaPlayer> MediaPlayer::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     bool enableEqualizer,
-    SpeakerInterface::Type type,
     std::string name,
     bool enableLiveMode) {
     ACSDK_DEBUG9(LX("createCalled").d("name", name));
     std::shared_ptr<MediaPlayer> mediaPlayer(
-        new MediaPlayer(contentFetcherFactory, enableEqualizer, type, name, enableLiveMode));
+        new MediaPlayer(contentFetcherFactory, enableEqualizer, name, enableLiveMode));
     if (mediaPlayer->init()) {
         return mediaPlayer;
     } else {
@@ -221,8 +214,10 @@ MediaPlayer::SourceId MediaPlayer::setSource(
 MediaPlayer::SourceId MediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
-    const SourceConfig& config) {
-    ACSDK_DEBUG9(LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "istream"));
+    const SourceConfig& config,
+    avsCommon::utils::MediaType format) {
+    ACSDK_DEBUG9(
+        LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "istream").d("format", format));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
     std::function<gboolean()> callback = [this, &stream, repeat, &config, &promise]() {
@@ -408,12 +403,19 @@ bool MediaPlayer::setVolume(int8_t volume) {
 }
 
 void MediaPlayer::handleSetVolumeInternal(gdouble gstVolume) {
+    m_lastVolume = gstVolume;
+
+    // in case channel is muted, defer volume update until unmuting.
+    if (m_isMuted) {
+        ACSDK_WARN(LX("handleSetVolumeInternal").m("Channel is muted, deferring volume update"));
+        return;
+    }
+
     if (gstVolume == 0) {
         g_object_set(m_pipeline.volume, "volume", VOLUME_ZERO, NULL);
     } else {
         g_object_set(m_pipeline.volume, "volume", gstVolume, NULL);
     }
-    m_lastVolume = gstVolume;
 }
 
 void MediaPlayer::handleSetVolume(std::promise<bool>* promise, int8_t volume) {
@@ -440,58 +442,6 @@ void MediaPlayer::handleSetVolume(std::promise<bool>* promise, int8_t volume) {
         promise->set_value(false);
         return;
     }
-
-    handleSetVolumeInternal(gstVolume);
-    promise->set_value(true);
-}
-
-bool MediaPlayer::adjustVolume(int8_t delta) {
-    ACSDK_DEBUG9(LX("adjustVolumeCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, delta]() {
-        handleAdjustVolume(&promise, delta);
-        return false;
-    };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
-        return future.get();
-    }
-    return false;
-}
-
-void MediaPlayer::handleAdjustVolume(std::promise<bool>* promise, int8_t delta) {
-    ACSDK_DEBUG9(LX("handleAdjustVolumeCalled").d("name", RequiresShutdown::name()));
-    auto toGstDeltaVolume =
-        Normalizer::create(AVS_ADJUST_VOLUME_MIN, AVS_ADJUST_VOLUME_MAX, GST_ADJUST_VOLUME_MIN, GST_ADJUST_VOLUME_MAX);
-
-    if (!toGstDeltaVolume) {
-        ACSDK_ERROR(
-            LX("handleAdjustVolumeFailed").d("name", RequiresShutdown::name()).d("reason", "createNormalizerFailed"));
-        promise->set_value(false);
-        return;
-    }
-
-    if (!m_pipeline.volume) {
-        ACSDK_ERROR(LX("adjustVolumeFailed").d("name", RequiresShutdown::name()).d("reason", "volumeElementNull"));
-        promise->set_value(false);
-        return;
-    }
-
-    gdouble gstVolume;
-    g_object_get(m_pipeline.volume, "volume", &gstVolume, NULL);
-
-    gdouble gstDelta;
-    if (!toGstDeltaVolume->normalize(delta, &gstDelta)) {
-        ACSDK_ERROR(LX("adjustVolumeFailed").d("name", RequiresShutdown::name()).d("reason", "normalizeVolumeFailed"));
-        promise->set_value(false);
-        return;
-    }
-
-    gstVolume += gstDelta;
-
-    // If adjustment exceeds bounds, cap at max/min.
-    gstVolume = std::min(gstVolume, static_cast<gdouble>(GST_SET_VOLUME_MAX));
-    gstVolume = std::max(gstVolume, static_cast<gdouble>(GST_SET_VOLUME_MIN));
 
     handleSetVolumeInternal(gstVolume);
     promise->set_value(true);
@@ -590,11 +540,6 @@ void MediaPlayer::handleGetSpeakerSettings(
     promise->set_value(true);
 }
 
-SpeakerInterface::Type MediaPlayer::getSpeakerType() {
-    ACSDK_DEBUG9(LX("getSpeakerTypeCalled").d("name", RequiresShutdown::name()));
-    return m_speakerType;
-}
-
 void MediaPlayer::setAppSrc(GstAppSrc* appSrc) {
     m_pipeline.appsrc = appSrc;
 }
@@ -618,7 +563,6 @@ GstElement* MediaPlayer::getPipeline() const {
 MediaPlayer::MediaPlayer(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     bool enableEqualizer,
-    SpeakerInterface::Type type,
     std::string name,
     bool enableLiveMode) :
         RequiresShutdown{name},
@@ -626,7 +570,6 @@ MediaPlayer::MediaPlayer(
         m_isMuted{false},
         m_contentFetcherFactory{contentFetcherFactory},
         m_equalizerEnabled{enableEqualizer},
-        m_speakerType{type},
         m_playbackStartedSent{false},
         m_playbackFinishedSent{false},
         m_isPaused{false},

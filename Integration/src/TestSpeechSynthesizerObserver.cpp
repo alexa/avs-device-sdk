@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ bool TestSpeechSynthesizerObserver::checkState(
     const std::chrono::seconds duration) {
     // Pull the front of the state queue
     SpeechSynthesizerObserverInterface::SpeechSynthesizerState hold = waitForNext(duration);
-    return hold == expectedState;
+    return (hold == expectedState);
 }
 
 SpeechSynthesizerObserverInterface::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext(

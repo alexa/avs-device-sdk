@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,11 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
+#ifdef ENABLE_AUXCONTROLLER
+#include <AuxController/Interfaces/AuxPlaybackDelegateObserverInterface.h>
+#include <AuxController/Interfaces/AuxPlaybackStateObserverInterface.h>
+#endif  // ENABLE_AUXCONTROLLER
+
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace mrm {
@@ -36,7 +41,12 @@ namespace mrm {
  * The api provided here is minimal and
  * sufficient with respect to integration with other AVS Client SDK components.
  */
-class MRMHandlerInterface : public avsCommon::utils::RequiresShutdown {
+class MRMHandlerInterface
+        : public avsCommon::utils::RequiresShutdown
+#ifdef ENABLE_AUXCONTROLLER
+        , public interfaces::auxController::AuxPlaybackStateObserverInterface
+#endif  // ENABLE_AUXCONTROLLER
+{
 public:
     /**
      * Constructor.
@@ -75,7 +85,7 @@ public:
      *
      * @param type The type of the speaker which has changed.
      */
-    virtual void onSpeakerSettingsChanged(const avsCommon::sdkInterfaces::SpeakerInterface::Type& type) = 0;
+    virtual void onSpeakerSettingsChanged(const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type) = 0;
 
     /**
      * Function to be called when a System.UserInactivityReportSent Event has been sent to AVS.
@@ -94,6 +104,34 @@ public:
      */
     virtual void setObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) = 0;
+
+#ifdef ENABLE_AUXCONTROLLER
+    /**
+     * Function to handle aux playback state changes.
+     *
+     * @param playbackState The @c AuxPlaybackState to be handled.
+     */
+    virtual void onAuxPlaybackStateChanged(
+        alexaClientSDK::interfaces::auxController::AuxPlaybackState playbackState) = 0;
+
+    /**
+     * This function sets an observer to @c MRMHandlerInterface so that it will get notified
+     * for aux playback delegate state changes.
+     *
+     * @param observer The @c AuxPlaybackDelegateObserverInterface object.
+     */
+    virtual void setObserver(
+        std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) = 0;
+
+    /**
+     * This function clears an observer from @c MRMHandlerInterface so that it will no longer
+     * be notified of aux playback delegate state changes.
+     *
+     * @param observer The @c AuxPlaybackDelegateObserverInterface object.
+     */
+    virtual void clearObserver(
+        std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) = 0;
+#endif  // ENABLE_AUXCONTROLLER
 };
 
 inline MRMHandlerInterface::MRMHandlerInterface(const std::string& shutdownName) :

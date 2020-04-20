@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
  * ALEXA AUDIO ASSETS
  * ******************
  *
- * Copyright 2018 Amazon.com, Inc. or its affiliates ("Amazon").
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates ("Amazon").
  * All Rights Reserved.
  *
  * These materials are licensed to you as "Alexa Materials" under the Alexa Voice
@@ -11242,14 +11242,14 @@ unsigned char med_ui_endpointing_wav[] = {
   0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00,
   0x00, 0x00, 0x01, 0x00, 0xff, 0xff, 0xff, 0xff
 };
-unsigned int med_ui_endpointing_wav_len = 134444;
-
+constexpr unsigned int med_ui_endpointing_wav_len = 134444;
+constexpr const char* med_ui_endpointing_wav_mimetype = "audio/x-wav";
 // clang-format on
-
-#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_MED_UI_ENDPOINTING_WAV_H_
 
 }  // namespace data
 }  // namespace audio
 }  // namespace resources
 }  // namespace applicationUtilities
 }  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_MED_UI_ENDPOINTING_WAV_H_

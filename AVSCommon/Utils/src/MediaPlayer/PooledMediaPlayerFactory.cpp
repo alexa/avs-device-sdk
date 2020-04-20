@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,7 +28,8 @@ static const std::string TAG("PooledMediaPlayerFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<PooledMediaPlayerFactory> PooledMediaPlayerFactory::create(
-    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool) {
+    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
+    const avsCommon::utils::mediaPlayer::Fingerprint& fingerprint) {
     if (pool.size() == 0) {
         ACSDK_ERROR(LX(__func__).m("createFailed").d("reason", "empty Pool"));
         return nullptr;
@@ -39,11 +40,15 @@ std::unique_ptr<PooledMediaPlayerFactory> PooledMediaPlayerFactory::create(
             return nullptr;
         }
     }
-    return std::unique_ptr<PooledMediaPlayerFactory>(new PooledMediaPlayerFactory(pool));
+    return std::unique_ptr<PooledMediaPlayerFactory>(new PooledMediaPlayerFactory(pool, fingerprint));
 }
 
 PooledMediaPlayerFactory::PooledMediaPlayerFactory(
-    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool) {
+    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
+    const Fingerprint& fingerprint) :
+        // Parenthesis are used for initializing @c m_fingerprint to work-around a bug in the C++ specification.  see:
+        // http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#1288
+        m_fingerprint(fingerprint) {
     m_availablePlayerPool.insert(m_availablePlayerPool.end(), pool.begin(), pool.end());
 }
 
@@ -53,6 +58,10 @@ PooledMediaPlayerFactory::~PooledMediaPlayerFactory() {
     m_availablePlayerPool.clear();
     m_inUsePlayerPool.clear();
     m_observers.clear();
+}
+
+Fingerprint PooledMediaPlayerFactory::getFingerprint() {
+    return m_fingerprint;
 }
 
 std::shared_ptr<MediaPlayerInterface> PooledMediaPlayerFactory::acquireMediaPlayer() {

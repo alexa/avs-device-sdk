@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -234,7 +234,7 @@ void MRMCapabilityAgent::onUserInactivityReportSent() {
 
 void MRMCapabilityAgent::onSpeakerSettingsChanged(
     const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-    const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+    const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
     const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG5(LX(__func__).d("type", type));
     m_executor.submit([this, type]() { executeOnSpeakerSettingsChanged(type); });
@@ -260,6 +260,30 @@ void MRMCapabilityAgent::setObserver(
     ACSDK_DEBUG5(LX(__func__));
     m_executor.submit([this, observer]() { executeSetObserver(observer); });
 }
+
+#ifdef ENABLE_AUXCONTROLLER
+void MRMCapabilityAgent::setObserver(
+    std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!observer) {
+        ACSDK_ERROR(LX(__func__).m("Observer is null."));
+        return;
+    }
+
+    m_executor.submit([this, observer]() { executeSetObserver(observer); });
+}
+
+void MRMCapabilityAgent::clearObserver(
+    std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!observer) {
+        ACSDK_ERROR(LX(__func__).m("Observer is null."));
+        return;
+    }
+
+    m_executor.submit([this, observer]() { executeClearObserver(observer); });
+}
+#endif  // ENABLE_AUXCONTROLLER
 
 void MRMCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
@@ -287,7 +311,8 @@ void MRMCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<Direc
     removeDirective(info->directive->getMessageId());
 }
 
-void MRMCapabilityAgent::executeOnSpeakerSettingsChanged(const avsCommon::sdkInterfaces::SpeakerInterface::Type& type) {
+void MRMCapabilityAgent::executeOnSpeakerSettingsChanged(
+    const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type) {
     ACSDK_DEBUG5(LX(__func__));
     m_mrmHandler->onSpeakerSettingsChanged(type);
 }
@@ -316,6 +341,20 @@ void MRMCapabilityAgent::executeSetObserver(
     ACSDK_DEBUG5(LX(__func__));
     m_mrmHandler->setObserver(observer);
 }
+
+#ifdef ENABLE_AUXCONTROLLER
+void MRMCapabilityAgent::executeSetObserver(
+    std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_mrmHandler->setObserver(observer);
+}
+
+void MRMCapabilityAgent::executeClearObserver(
+    std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_mrmHandler->clearObserver(observer);
+}
+#endif  // ENABLE_AUXCONTROLLER
 
 std::unordered_set<std::shared_ptr<CapabilityConfiguration>> MRMCapabilityAgent::getCapabilityConfigurations() {
     return readCapabilities();

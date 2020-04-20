@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -107,7 +107,8 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
     std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
     std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
     Configuration configuration,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<EventTracerInterface> eventTracer) {
     ACSDK_DEBUG5(LX(__func__)
                      .d("authDelegate", authDelegate.get())
                      .d("avsGateway", avsGateway)
@@ -163,7 +164,8 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
         std::move(postConnectFactory),
         std::move(sharedRequestQueue),
         configuration,
-        std::move(metricRecorder)));
+        std::move(metricRecorder),
+        std::move(eventTracer)));
 
     return transport;
 }
@@ -178,7 +180,8 @@ HTTP2Transport::HTTP2Transport(
     std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
     std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
     Configuration configuration,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<EventTracerInterface> eventTracer) :
         m_metricRecorder{std::move(metricRecorder)},
         m_state{State::INIT},
         m_authDelegate{std::move(authDelegate)},
@@ -188,6 +191,7 @@ HTTP2Transport::HTTP2Transport(
         m_attachmentManager{std::move(attachmentManager)},
         m_postConnectFactory{std::move(postConnectFactory)},
         m_sharedRequestQueue{std::move(sharedRequestQueue)},
+        m_eventTracer{std::move(eventTracer)},
         m_connectRetryCount{0},
         m_countOfUnfinishedMessageHandlers{0},
         m_postConnected{false},
@@ -263,6 +267,28 @@ void HTTP2Transport::onRequestEnqueued() {
     ACSDK_DEBUG7(LX(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_wakeEvent.notify_all();
+}
+
+void HTTP2Transport::onWakeConnectionRetry() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    if (State::WAITING_TO_RETRY_CONNECTING != m_state) {
+        return;
+    }
+
+    if (!setStateLocked(State::CONNECTING, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST)) {
+        ACSDK_ERROR(LX("onWakeRetryConnectingFailed").d("reason", "setStateFailed"));
+    }
+}
+
+void HTTP2Transport::onWakeVerifyConnectivity() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!m_pingHandler) {
+        m_timeOfLastActivity = m_timeOfLastActivity.min();
+        m_wakeEvent.notify_all();
+    }
 }
 
 void HTTP2Transport::sendPostConnectMessage(std::shared_ptr<MessageRequest> request) {
@@ -442,12 +468,8 @@ void HTTP2Transport::onMessageRequestSent() {
 }
 
 void HTTP2Transport::onMessageRequestTimeout() {
-    // If a message request times out, trigger a ping to test connectivity to AVS.
-    std::lock_guard<std::mutex> lock(m_mutex);
-    if (!m_pingHandler) {
-        m_timeOfLastActivity = m_timeOfLastActivity.min();
-        m_wakeEvent.notify_all();
-    }
+    // If a message request times out, verify our connectivity to AVS.
+    onWakeVerifyConnectivity();
 }
 
 void HTTP2Transport::onMessageRequestAcknowledged() {
@@ -757,7 +779,8 @@ HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(
                     messageRequest,
                     m_messageConsumer,
                     m_attachmentManager,
-                    m_metricRecorder);
+                    m_metricRecorder,
+                    m_eventTracer);
                 if (!handler) {
                     messageRequest->sendCompleted(MessageRequestObserverInterface::Status::INTERNAL_ERROR);
                 }

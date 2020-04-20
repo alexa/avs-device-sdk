@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 
 #include "ACL/Transport/HTTP2Transport.h"
@@ -45,7 +45,7 @@ const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
 const static std::string MIME_BOUNDARY = "WhooHooZeerOoonie!";
 
 /// Timeout for transmission of data on a given stream
-static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(30);
+static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(15);
 
 /// Mime header strings for mime parts containing json payloads.
 static const std::vector<std::string> JSON_MIME_PART_HEADER_LINES = {
@@ -123,7 +123,8 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer) {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (!context) {
@@ -162,6 +163,10 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
         handler->reportMessageRequestFinished();
         ACSDK_ERROR(LX("MessageRequestHandlerCreateFailed").d("reason", "createAndSendRequestFailed"));
         return nullptr;
+    }
+
+    if (eventTracer) {
+        eventTracer->traceEvent(messageRequest->getJsonContent());
     }
 
     return handler;

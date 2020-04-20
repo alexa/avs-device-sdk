@@ -1,6 +1,5 @@
 set(INCLUDE_PATH
         "${AVSGatewayManager_SOURCE_DIR}/include"
-        "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
         "${AVSCommon_SOURCE_DIR}/SDKInterfaces")
 
 set(LIBS

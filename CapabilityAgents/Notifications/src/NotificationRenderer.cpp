@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 
 #include <thread>
 
+#include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "Notifications/NotificationRenderer.h"
@@ -24,9 +26,15 @@ namespace capabilityAgents {
 namespace notifications {
 
 using namespace avsCommon::utils::mediaPlayer;
+using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("NotificationsRenderer");
+static const std::string TAG("NotificationRenderer");
+/// String to identify the name of the Virtual Audio Channel "Earcon".
+static const std::string CHANNEL_NAME = "Earcon";
+/// String to identify the namespace this CapabilityAgent uses to acquire focus.
+static const std::string NAMESPACE = "NotificationRenderer";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -69,38 +77,105 @@ void NotificationRenderer::doShutdown() {
     if (m_mediaPlayer) {
         m_mediaPlayer->removeObserver(shared_from_this());
     }
-
+    m_executor.shutdown();
+    m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+    m_focusManager.reset();
     std::lock_guard<std::mutex> lock(m_mutex);
     m_observers.clear();
 }
 
-std::shared_ptr<NotificationRenderer> NotificationRenderer::create(std::shared_ptr<MediaPlayerInterface> mediaPlayer) {
-    ACSDK_DEBUG5(LX("create"));
+void NotificationRenderer::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
+    {
+        std::lock_guard<std::mutex> locker(m_mutex);
+        auto currentFocus = m_focusState;
+        m_focusState = newFocus;
+        // If we haven't obtained focus, we don't need to do anything.
+        // If we already have focus, it means we are playing something already, so we should return out.
+        // Additionally, if mixing behavior isn't PRIMARY or UNDEFINED, we should return out as it means another
+        // activity is the primary activity.
+        if ((FocusState::NONE == newFocus || FocusState::NONE != currentFocus) ||
+            !(behavior == MixingBehavior::UNDEFINED || behavior == MixingBehavior::PRIMARY)) {
+            return;
+        }
+    }
+
+    // If we reach here, we must have acquired focus (either background or foreground).
+    m_executor.submit([this]() {
+        if (MediaPlayerInterface::ERROR == m_sourceId) {
+            ACSDK_ERROR(LX("renderNotificationPreferredFailed").d("reason", "invalid sourceId"));
+        } else if (m_mediaPlayer->play(m_sourceId)) {
+            ACSDK_DEBUG5(LX("renderNotificationSuccess").d("sourceId", m_sourceId));
+            return;
+        }
+        ACSDK_ERROR(LX("renderNotificationPreferredFailure").d("sourceId", m_sourceId));
+
+        // If unable to start rendering the preferred asset, render the default asset, instead.
+        if (!setState(State::RENDERING_DEFAULT)) {
+            ACSDK_ERROR(LX("renderNotificationFailed").d("reason", "setState(RENDERING_DEFAULT) failed"));
+            auto result = m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+            if (!result.valid() || !result.get()) {
+                ACSDK_ERROR(LX("renderNotification").m("UnableToReleaseChannel"));
+            }
+            return;
+        }
+
+        std::shared_ptr<std::istream> stream;
+        avsCommon::utils::MediaType streamFormat = avsCommon::utils::MediaType::UNKNOWN;
+        std::tie(stream, streamFormat) = m_audioFactory();
+        m_sourceId =
+            m_mediaPlayer->setSource(stream, false, avsCommon::utils::mediaPlayer::emptySourceConfig(), streamFormat);
+        if (MediaPlayerInterface::ERROR == m_sourceId) {
+            ACSDK_ERROR(LX("renderNotificationDefaultFailed").d("reason", "invalid sourceId"));
+        } else if (m_mediaPlayer->play(m_sourceId)) {
+            ACSDK_DEBUG5(LX("renderNotificationDefaultSuccess").d("sourceId", m_sourceId));
+            return;
+        }
+        ACSDK_ERROR(LX("renderNotificationDefaultFailure").d("sourceId", m_sourceId));
+        m_sourceId = MediaPlayerInterface::ERROR;
+        m_audioFactory = nullptr;
+        setState(State::IDLE);
+        auto result = m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+        if (!result.valid() || !result.get()) {
+            ACSDK_ERROR(LX("renderNotification").m("UnableToReleaseChannel"));
+        }
+    });
+}
+
+std::shared_ptr<NotificationRenderer> NotificationRenderer::create(
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager) {
+    ACSDK_DEBUG5(LX(__func__));
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMediaPlayer"));
         return nullptr;
     }
-    std::shared_ptr<NotificationRenderer> result(new NotificationRenderer(mediaPlayer));
+
+    if (!focusManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullFocusManager"));
+        return nullptr;
+    }
+
+    std::shared_ptr<NotificationRenderer> result(new NotificationRenderer(mediaPlayer, focusManager));
     mediaPlayer->addObserver(result);
     return result;
 }
 
 void NotificationRenderer::addObserver(std::shared_ptr<NotificationRendererObserverInterface> observer) {
-    ACSDK_DEBUG5(LX("addObserver"));
+    ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_observers.insert(observer);
 }
 
 void NotificationRenderer::removeObserver(std::shared_ptr<NotificationRendererObserverInterface> observer) {
-    ACSDK_DEBUG5(LX("removeObserver"));
+    ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_observers.erase(observer);
 }
 
 bool NotificationRenderer::renderNotification(
-    std::function<std::unique_ptr<std::istream>()> audioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
     const std::string& url) {
-    ACSDK_DEBUG5(LX("renderNotification"));
+    ACSDK_DEBUG5(LX(__func__));
 
     if (!audioFactory) {
         ACSDK_ERROR(LX("renderNotificationFailed").d("reason", "nullAudioFactory"));
@@ -120,25 +195,17 @@ bool NotificationRenderer::renderNotification(
         ACSDK_ERROR(LX("renderNotificationFailed").d("reason", "setState(RENDERING_PREFERRED) failed"));
         return false;
     }
-
     m_audioFactory = audioFactory;
     m_sourceId = m_mediaPlayer->setSource(url);
-    if (m_sourceId != MediaPlayerInterface::ERROR && m_mediaPlayer->play(m_sourceId)) {
-        ACSDK_DEBUG5(LX("renderNotificationPreferredSuccess").d("sourceId", m_sourceId));
+    // We attempt to acquire the Notifications channel. If it is successfully acquired, the sound will attempt
+    // to be rendered in onFocusChanged().
+    auto activity = FocusManagerInterface::Activity::create(
+        NAMESPACE, shared_from_this(), std::chrono::milliseconds::zero(), ContentType::MIXABLE);
+    if (m_focusManager->acquireChannel(CHANNEL_NAME, activity)) {
+        ACSDK_DEBUG5(LX("renderNotificationPreferred").m("AcquireChannelSuccess").d("sourceId", m_sourceId));
         return true;
     }
-    ACSDK_ERROR(LX("playPreferredFailed"));
-
-    // If unable to start rendering the preferred asset, render the default asset, instead.
-    if (setState(State::RENDERING_DEFAULT)) {
-        m_sourceId = m_mediaPlayer->setSource(m_audioFactory(), false);
-        if (m_sourceId != MediaPlayerInterface::ERROR && m_mediaPlayer->play(m_sourceId)) {
-            ACSDK_DEBUG5(LX("renderNotificationDefaultSuccess").d("sourceId", m_sourceId));
-            return true;
-        }
-        ACSDK_ERROR(LX("playDefaultFailed"));
-    }
-
+    ACSDK_ERROR(LX("renderNotificationPreferred").m("AcquireChannelFailure").d("sourceId", m_sourceId));
     m_sourceId = MediaPlayerInterface::ERROR;
     m_audioFactory = nullptr;
     setState(State::IDLE);
@@ -146,7 +213,7 @@ bool NotificationRenderer::renderNotification(
 }
 
 bool NotificationRenderer::cancelNotificationRendering() {
-    ACSDK_DEBUG5(LX("cancelNotificationRendering"));
+    ACSDK_DEBUG5(LX(__func__));
     if (!setState(State::CANCELLING)) {
         ACSDK_DEBUG5(LX("cancelNotificationRenderingFailed").d("reason", "setState(CANCELLING) failed"));
         return false;
@@ -164,7 +231,7 @@ void NotificationRenderer::onFirstByteRead(SourceId sourceId, const MediaPlayerS
 }
 
 void NotificationRenderer::onPlaybackStarted(SourceId sourceId, const MediaPlayerState&) {
-    ACSDK_DEBUG5(LX("onPlaybackStarted").d("sourceId", sourceId));
+    ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackStartedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
         return;
@@ -175,7 +242,7 @@ void NotificationRenderer::onPlaybackStarted(SourceId sourceId, const MediaPlaye
 }
 
 void NotificationRenderer::onPlaybackStopped(SourceId sourceId, const MediaPlayerState&) {
-    ACSDK_DEBUG5(LX("onPlaybackStopped").d("sourceId", sourceId));
+    ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackStoppedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
         return;
@@ -184,7 +251,7 @@ void NotificationRenderer::onPlaybackStopped(SourceId sourceId, const MediaPlaye
 }
 
 void NotificationRenderer::onPlaybackFinished(SourceId sourceId, const MediaPlayerState&) {
-    ACSDK_DEBUG5(LX("onPlaybackFinished").d("sourceId", sourceId));
+    ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId));
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackFinishedFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
         return;
@@ -197,7 +264,7 @@ void NotificationRenderer::onPlaybackError(
     const ErrorType& type,
     std::string error,
     const MediaPlayerState&) {
-    ACSDK_DEBUG5(LX("onPlaybackError").d("sourceId", sourceId).d("type", type).d("error", error));
+    ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId).d("type", type).d("error", error));
 
     if (sourceId != m_sourceId) {
         ACSDK_ERROR(LX("onPlaybackErrorFailed").d("reason", "unexpectedSourceId").d("expected", m_sourceId));
@@ -228,7 +295,11 @@ void NotificationRenderer::onPlaybackError(
     // Calling m_mediaPlayer->setSource() or m_mediaPlayer->play() will deadlock if called from a
     // MediaPlayerObserverInterface callback.  We need a separate thread to kick off rendering the default audio.
     m_renderFallbackFuture = std::async(std::launch::async, [this, sourceId]() {
-        m_sourceId = m_mediaPlayer->setSource(m_audioFactory(), false);
+        std::shared_ptr<std::istream> stream;
+        avsCommon::utils::MediaType streamFormat = avsCommon::utils::MediaType::UNKNOWN;
+        std::tie(stream, streamFormat) = m_audioFactory();
+        m_sourceId =
+            m_mediaPlayer->setSource(stream, false, avsCommon::utils::mediaPlayer::emptySourceConfig(), streamFormat);
         if (m_sourceId != MediaPlayerInterface::ERROR && m_mediaPlayer->play(m_sourceId)) {
             return;
         }
@@ -237,15 +308,23 @@ void NotificationRenderer::onPlaybackError(
     });
 }
 
-NotificationRenderer::NotificationRenderer(std::shared_ptr<MediaPlayerInterface> mediaPlayer) :
+NotificationRenderer::NotificationRenderer(
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager) :
         RequiresShutdown{"NotificationRenderer"},
         m_mediaPlayer{mediaPlayer},
+        m_focusManager{focusManager},
+        m_focusState{FocusState::NONE},
         m_state{State::IDLE},
         m_sourceId{MediaPlayerInterface::ERROR} {
 }
 
 void NotificationRenderer::onRenderingFinished(SourceId sourceId) {
     std::unordered_set<std::shared_ptr<NotificationRendererObserverInterface>> localObservers;
+    auto result = m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+    if (!result.valid() || !result.get()) {
+        ACSDK_ERROR(LX(__func__).m("UnableToReleaseChannel"));
+    }
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         localObservers = m_observers;

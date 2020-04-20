@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
 #include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
@@ -70,7 +71,6 @@ public:
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
-     * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name for the new instance.
      * @param enableLiveMode Flag, indicating if the player is in live mode.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
@@ -79,8 +79,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
             nullptr,
         bool enableEqualizer = false,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type =
-            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         std::string name = "",
         bool enableLiveMode = false);
     /**
@@ -105,8 +103,8 @@ public:
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat = false,
-        const avsCommon::utils::mediaPlayer::SourceConfig& config =
-            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) override;
 
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
@@ -127,10 +125,8 @@ public:
     /// @name Overridden SpeakerInterface methods.
     /// @{
     bool setVolume(int8_t volume) override;
-    bool adjustVolume(int8_t volume) override;
     bool setMute(bool mute) override;
     bool getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
-    avsCommon::sdkInterfaces::SpeakerInterface::Type getSpeakerType() override;
     /// @}
 
     /// @name Overridden PipelineInterface methods.
@@ -230,14 +226,12 @@ private:
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
-     * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name of this instance.
      * @param enableLiveMode Flag, indicating the player is in live mode
      */
     MediaPlayer(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
         bool enableEqualizer,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         std::string name,
         bool enableLiveMode);
 
@@ -659,9 +653,6 @@ private:
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
-
-    /// The Speaker type.
-    avsCommon::sdkInterfaces::SpeakerInterface::Type m_speakerType;
 
     /// Main event loop.
     GMainLoop* m_mainLoop;

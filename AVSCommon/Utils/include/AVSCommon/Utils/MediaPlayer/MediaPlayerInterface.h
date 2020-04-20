@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@
 #include "AVSCommon/Utils/MediaPlayer/PlaybackAttributes.h"
 #include "AVSCommon/Utils/MediaPlayer/PlaybackReport.h"
 #include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
+#include "AVSCommon/Utils/MediaType.h"
 #include "AVSCommon/Utils/Optional.h"
 
 namespace alexaClientSDK {
@@ -128,6 +129,7 @@ public:
      * @param stream Object from which to read an incoming audio stream.
      * @param repeat Whether the audio stream should be played in a loop until stopped.
      * @param config Media configuration of source.
+     * @param format The @c MediaType audio encoding format of the incoming audio stream.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      * returned if the source failed to be set.  Must be unique across all instances.
@@ -135,7 +137,8 @@ public:
     virtual SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat = false,
-        const SourceConfig& config = emptySourceConfig()) = 0;
+        const SourceConfig& config = emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) = 0;
 
     /**
      * Starts playing audio specified by the @c setSource() call.

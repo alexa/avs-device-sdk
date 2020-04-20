@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -210,22 +210,36 @@ private:  // Private method declarations.
         const avsCommon::avs::CapabilityState& capabilityState);
 
     /**
-     * Send context if there is no state request pending.
+     * This method returns a callback which should be invoked once the context is ready.
+     * If the context is not ready, this method will return a no-op function.
      *
-     * @param requestToken The request token used to identify the target request.
-     * @param endpointId The endpoint identifier.
+     * @note The callback method that is returned should only be called outside of a lock to prevent deadlock scenarios.
+     *
+     * @note If the context is ready, the method also removes the request from the pending requests map.
+     *
+     * @param requestToken The request token associated with the context request.
+     * @param endpointId The endpointId associated with the context request.
+     * @return A callback method to notify the context requester when the context is ready. An empty no-op function
+     * if the context is not ready.
      */
-    void sendContextIfReadyLocked(
+    std::function<void()> getContextAvailableCallbackIfReadyLocked(
         avsCommon::sdkInterfaces::ContextRequestToken requestToken,
         const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId);
 
     /**
-     * Notify context requester that its request has failed.
+     * This method returns a callback which should be invoked once there is a context failure.
+     * If the contextRequester is invalid, this method returns a no-op function.
      *
-     * @param requestToken The token used to identify the request.
-     * @param error The error found.
+     * @note The callback method that is returned should only be called outside of a lock to prevent deadlock scenarios.
+     *
+     * @note The method also cleans up the request from the pending requests map.
+     *
+     * @param requestToken The request token associated with the context request.
+     * @param error The @c ContextRequestError to be notified to the requester.
+     * @return A callback method to notify the context requester of a context fetch failure. An empty no-op function if
+     * the context requester is invalid.
      */
-    void sendContextRequestFailedLocked(
+    std::function<void()> getContextFailureCallbackLocked(
         avsCommon::sdkInterfaces::ContextRequestToken requestToken,
         avsCommon::sdkInterfaces::ContextRequestError error);
 
@@ -251,7 +265,7 @@ private:  // Member variable declarations
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The request token counter.
-    unsigned int m_requestCounter;
+    std::atomic<unsigned int> m_requestCounter;
 
     /// Map of pending states per ongoing request.
     std::unordered_map<unsigned int, std::unordered_set<avsCommon::avs::CapabilityTag>> m_pendingStateRequest;

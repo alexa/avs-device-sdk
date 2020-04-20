@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ extern "C" {
 #include <libavutil/error.h>
 }
 
-#include <Audio/Data/med_alerts_notification_01._TTH_.mp3.h>
+#include <Audio/Data/med_alerts_notification_01.mp3.h>
 
 #include "AndroidSLESMediaPlayer/FFmpegStreamInputController.h"
 
@@ -39,11 +39,10 @@ using namespace ::testing;
 static constexpr size_t BUFFER_SIZE = 1024;
 
 /// The size of the input buffer.
-static constexpr size_t INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3_len;
+static constexpr size_t INPUT_SIZE = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3_len;
 
 /// An input buffer with an mp3 file.
-static const auto INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3;
+static const auto INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3;
 
 std::shared_ptr<std::stringstream> createStream() {
     auto stream = std::make_shared<std::stringstream>();

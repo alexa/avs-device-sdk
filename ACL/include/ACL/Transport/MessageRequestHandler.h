@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
@@ -53,6 +54,7 @@ public:
      * @param messageConsumer Where to send messages.
      * @param attachmentManager Where to get attachments to write to.
      * @param metricRecorder The metric recorder.
+     * @param eventTracer The object to trace events sent to AVS.
      * @return A new MessageRequestHandler or nullptr if the operation fails.
      */
     static std::shared_ptr<MessageRequestHandler> create(
@@ -61,7 +63,8 @@ public:
         std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr);
 
 private:
     /**

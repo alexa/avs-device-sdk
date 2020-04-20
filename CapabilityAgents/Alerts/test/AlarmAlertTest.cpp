@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ namespace capabilityAgents {
 namespace alerts {
 namespace test {
 
+using namespace avsCommon::utils;
+
 static const std::string ALARM_DEFAULT_DATA = "alarm default data";
 static const std::string ALARM_SHORT_DATA = "alarm short data";
 
@@ -29,12 +31,16 @@ class AlarmAlertTest : public ::testing::Test {
 public:
     AlarmAlertTest();
 
-    static std::unique_ptr<std::istream> alarmDefaultFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(ALARM_DEFAULT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> alarmDefaultFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(ALARM_DEFAULT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
 
-    static std::unique_ptr<std::istream> alarmShortFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream(ALARM_SHORT_DATA));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> alarmShortFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream(ALARM_SHORT_DATA)),
+            avsCommon::utils::MediaType::MPEG);
     }
 
     std::shared_ptr<Alarm> m_alarm;
@@ -45,14 +51,16 @@ AlarmAlertTest::AlarmAlertTest() : m_alarm{std::make_shared<Alarm>(alarmDefaultF
 
 TEST_F(AlarmAlertTest, test_defaultAudio) {
     std::ostringstream oss;
-    oss << m_alarm->getDefaultAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_alarm->getDefaultAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(ALARM_DEFAULT_DATA, oss.str());
 }
 
 TEST_F(AlarmAlertTest, test_shortAudio) {
     std::ostringstream oss;
-    oss << m_alarm->getShortAudioFactory()()->rdbuf();
+    auto audioStream = std::get<0>(m_alarm->getShortAudioFactory()());
+    oss << audioStream->rdbuf();
 
     ASSERT_EQ(ALARM_SHORT_DATA, oss.str());
 }

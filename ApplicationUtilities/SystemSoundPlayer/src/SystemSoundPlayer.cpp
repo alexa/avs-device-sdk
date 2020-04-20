@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,12 +68,18 @@ std::shared_future<bool> SystemSoundPlayer::playTone(Tone tone) {
     }
 
     m_sourceId = avsCommon::utils::mediaPlayer::MediaPlayerInterface::ERROR;
+    std::shared_ptr<std::istream> stream;
+    avsCommon::utils::MediaType streamFormat = avsCommon::utils::MediaType::UNKNOWN;
     switch (tone) {
         case Tone::WAKEWORD_NOTIFICATION:
-            m_sourceId = m_mediaPlayer->setSource(m_soundPlayerAudioFactory->wakeWordNotificationTone()(), false);
+            std::tie(stream, streamFormat) = m_soundPlayerAudioFactory->wakeWordNotificationTone()();
+            m_sourceId = m_mediaPlayer->setSource(
+                stream, false, avsCommon::utils::mediaPlayer::emptySourceConfig(), streamFormat);
             break;
         case Tone::END_SPEECH:
-            m_sourceId = m_mediaPlayer->setSource(m_soundPlayerAudioFactory->endSpeechTone()(), false);
+            std::tie(stream, streamFormat) = m_soundPlayerAudioFactory->endSpeechTone()();
+            m_sourceId = m_mediaPlayer->setSource(
+                stream, false, avsCommon::utils::mediaPlayer::emptySourceConfig(), streamFormat);
             break;
     }
 

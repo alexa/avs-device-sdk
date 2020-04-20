@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+
+#ifdef ENABLE_AUXCONTROLLER
+#include <AuxController/Interfaces/AuxPlaybackDelegateObserverInterface.h>
+#endif  // ENABLE_AUXCONTROLLER
 
 #include "MRMHandlerInterface.h"
 
@@ -96,7 +100,7 @@ public:
     /// @{
     void onSpeakerSettingsChanged(
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) override;
     /// @}
 
@@ -134,6 +138,24 @@ public:
      * implementation.
      */
     std::string getVersionString() const;
+
+#ifdef ENABLE_AUXCONTROLLER
+    /**
+     * This function sets an observer to @c MRMCapabilityAgent so that it will get notified
+     * for aux playback delegate state changes.
+     *
+     * @param observer The @c AuxPlaybackDelegateObserverInterface object.
+     */
+    void setObserver(std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer);
+
+    /**
+     * This function clears an observer from @c MRMCapabilityAgent so that it will no longer
+     * be notified of aux playback delegate state changes.
+     *
+     * @param observer The @c AuxPlaybackDelegateObserverInterface object.
+     */
+    void clearObserver(std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer);
+#endif  // ENABLE_AUXCONTROLLER
 
 private:
     /**
@@ -177,7 +199,7 @@ private:
      *
      * @param type The type of the Speaker which changed.
      */
-    void executeOnSpeakerSettingsChanged(const avsCommon::sdkInterfaces::SpeakerInterface::Type& type);
+    void executeOnSpeakerSettingsChanged(const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type);
 
     /**
      * This function handles when the CallState has been changed.
@@ -196,6 +218,23 @@ private:
      * @param observer The RenderPlayerInfoCardsObserverInterface to be set.
      */
     void executeSetObserver(std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer);
+
+#ifdef ENABLE_AUXCONTROLLER
+    /**
+     * This function sets the @c AuxPlaybackDelegateObserverInterface object.
+     *
+     * @param The @c AuxPlaybackDelegateObserverInterface object to be set.
+     */
+    void executeSetObserver(std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer);
+
+    /**
+     * This function clears the @c AuxPlaybackDelegateObserverInterface object.
+     *
+     * @param The @c AuxPlaybackDelegateObserverInterface object to be cleared.
+     */
+    void executeClearObserver(
+        std::shared_ptr<interfaces::auxController::AuxPlaybackDelegateObserverInterface> observer);
+#endif  // ENABLE_AUXCONTROLLER
 
     /// @}
 

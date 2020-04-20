@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -97,10 +97,10 @@ struct AudioItem {
     /// The caption content that goes with the audio.
     captions::CaptionData captionData;
 
-    /// Metadata cache for duplicate removal
+    /// Metadata cache for duplicate removal.
     alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::VectorOfTags cachedMetadata;
 
-    /// Time of last Metadata event (used to rate limit metadata events)
+    /// Time of last Metadata event (used to rate limit metadata events).
     std::chrono::time_point<std::chrono::steady_clock> lastMetadataEvent;
 };
 

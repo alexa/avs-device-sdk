@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ public:
 class StubRenderer : public RendererInterface {
     void start(
         std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         bool alarmVolumeRampEnabled,
         const std::vector<std::string>& urls,
         int loopCount,
@@ -206,7 +206,7 @@ public:
         start,
         void(
             std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-            std::function<std::unique_ptr<std::istream>()>,
+            std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>,
             bool,
             const std::vector<std::string>&,
             int,
@@ -342,18 +342,19 @@ void AlertsCapabilityAgentTest::SetUp() {
     ASSERT_TRUE(m_settingsManager->addSetting<DeviceSettingsIndex::ALARM_VOLUME_RAMP>(m_mockAlarmVolumeRampSetting));
 
     ON_CALL(*(m_speakerManager.get()), getSpeakerSettings(_, _))
-        .WillByDefault(Invoke([](SpeakerInterface::Type, SpeakerInterface::SpeakerSettings*) {
+        .WillByDefault(Invoke([](ChannelVolumeInterface::Type, SpeakerInterface::SpeakerSettings*) {
             std::promise<bool> promise;
             promise.set_value(true);
             return promise.get_future();
         }));
 
-    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _, _))
-        .WillByDefault(Invoke([](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
-            std::promise<bool> promise;
-            promise.set_value(true);
-            return promise.get_future();
-        }));
+    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _))
+        .WillByDefault(
+            Invoke([](ChannelVolumeInterface::Type, int8_t, const SpeakerManagerInterface::NotificationProperties&) {
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
 
     ON_CALL(*(m_alertStorage), createDatabase()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), open()).WillByDefault(Return(true));
@@ -413,41 +414,44 @@ void AlertsCapabilityAgentTest::testStartAlertWithContentVolume(
     const std::string& otherChannel,
     bool shouldResultInSetVolume) {
     ON_CALL(*(m_speakerManager.get()), getSpeakerSettings(_, _))
-        .WillByDefault(Invoke(
-            [speakerVolume, alertsVolume](SpeakerInterface::Type type, SpeakerInterface::SpeakerSettings* settings) {
-                if (type == SpeakerInterface::Type::AVS_SPEAKER_VOLUME) {
-                    settings->volume = speakerVolume;
-                } else {
-                    settings->volume = alertsVolume;
-                }
-                settings->mute = false;
-                std::promise<bool> promise;
-                promise.set_value(true);
-                return promise.get_future();
-            }));
-
-    std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
-            waitCV.notify_all();
+        .WillByDefault(Invoke([speakerVolume, alertsVolume](
+                                  ChannelVolumeInterface::Type type, SpeakerInterface::SpeakerSettings* settings) {
+            if (type == ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME) {
+                settings->volume = speakerVolume;
+            } else {
+                settings->volume = alertsVolume;
+            }
+            settings->mute = false;
             std::promise<bool> promise;
             promise.set_value(true);
             return promise.get_future();
         }));
 
-    EXPECT_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, _, _, _))
+    std::condition_variable waitCV;
+    ON_CALL(*(m_speakerManager.get()), setVolume(_, _, _))
+        .WillByDefault(Invoke(
+            [&waitCV](ChannelVolumeInterface::Type, int8_t, const SpeakerManagerInterface::NotificationProperties&) {
+                waitCV.notify_all();
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
+
+    EXPECT_CALL(*(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, _, _))
         .Times(shouldResultInSetVolume ? 1 : 0);
 
     SpeakerInterface::SpeakerSettings speakerSettings{speakerVolume, false};
     speakerSettings.mute = false;
     m_alertsCA->onSpeakerSettingsChanged(
         SpeakerManagerObserverInterface::Source::LOCAL_API,
-        SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
         speakerSettings);
 
     speakerSettings.volume = alertsVolume;
     m_alertsCA->onSpeakerSettingsChanged(
-        SpeakerManagerObserverInterface::Source::LOCAL_API, SpeakerInterface::Type::AVS_ALERTS_VOLUME, speakerSettings);
+        SpeakerManagerObserverInterface::Source::LOCAL_API,
+        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
+        speakerSettings);
 
     // "Start" content
     m_alertsCA->onFocusChanged(otherChannel, avsCommon::avs::FocusState::BACKGROUND);
@@ -467,7 +471,9 @@ TEST_F(AlertsCapabilityAgentTest, test_localAlertVolumeChangeNoAlert) {
     speakerSettings.volume = TEST_VOLUME_VALUE;
     speakerSettings.mute = false;
     m_alertsCA->onSpeakerSettingsChanged(
-        SpeakerManagerObserverInterface::Source::LOCAL_API, SpeakerInterface::Type::AVS_ALERTS_VOLUME, speakerSettings);
+        SpeakerManagerObserverInterface::Source::LOCAL_API,
+        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
+        speakerSettings);
 
     auto future = m_mockMessageSender->getNextMessage();
 
@@ -493,7 +499,9 @@ TEST_F(AlertsCapabilityAgentTest, testTimer_localAlertVolumeChangeAlertPlaying) 
     SpeakerInterface::SpeakerSettings speakerSettings;
     speakerSettings.volume = TEST_VOLUME_VALUE;
     m_alertsCA->onSpeakerSettingsChanged(
-        SpeakerManagerObserverInterface::Source::LOCAL_API, SpeakerInterface::Type::AVS_ALERTS_VOLUME, speakerSettings);
+        SpeakerManagerObserverInterface::Source::LOCAL_API,
+        ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
+        speakerSettings);
 
     ASSERT_EQ(
         m_mockMessageSender->getNextMessage().wait_for(std::chrono::milliseconds(MAX_WAIT_TIME_MS)),
@@ -512,7 +520,7 @@ TEST_F(AlertsCapabilityAgentTest, test_avsAlertVolumeChangeNoAlert) {
         AVSDirective::create("", avsMessageHeader, VOLUME_PAYLOAD, attachmentManager, "");
 
     EXPECT_CALL(
-        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _, _))
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
         .Times(1);
 
     std::static_pointer_cast<CapabilityAgent>(m_alertsCA)
@@ -539,7 +547,7 @@ TEST_F(AlertsCapabilityAgentTest, test_avsAlertVolumeChangeAlertPlaying) {
         AVSDirective::create("", avsMessageHeader, VOLUME_PAYLOAD, attachmentManager, "");
 
     EXPECT_CALL(
-        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _, _))
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
         .Times(1);
 
     m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
@@ -614,17 +622,19 @@ TEST_F(AlertsCapabilityAgentTest, test_startAlertWithDialogChannelHigherVolume) 
  */
 TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMax) {
     EXPECT_CALL(
-        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _, _))
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _))
         .Times(1);
 
     std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
-            waitCV.notify_all();
-            std::promise<bool> promise;
-            promise.set_value(true);
-            return promise.get_future();
-        }));
+    ON_CALL(
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MAX, _))
+        .WillByDefault(Invoke(
+            [&waitCV](ChannelVolumeInterface::Type, int8_t, const SpeakerManagerInterface::NotificationProperties&) {
+                waitCV.notify_all();
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
 
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
@@ -645,17 +655,19 @@ TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMax) {
  */
 TEST_F(AlertsCapabilityAgentTest, test_invalidVolumeValuesMin) {
     EXPECT_CALL(
-        *(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _, _))
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _))
         .Times(1);
 
     std::condition_variable waitCV;
-    ON_CALL(*(m_speakerManager.get()), setVolume(SpeakerInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _, _))
-        .WillByDefault(Invoke([&waitCV](SpeakerInterface::Type, int8_t, bool, SpeakerManagerObserverInterface::Source) {
-            waitCV.notify_all();
-            std::promise<bool> promise;
-            promise.set_value(true);
-            return promise.get_future();
-        }));
+    ON_CALL(
+        *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, AVS_SET_VOLUME_MIN, _))
+        .WillByDefault(Invoke(
+            [&waitCV](ChannelVolumeInterface::Type, int8_t, const SpeakerManagerInterface::NotificationProperties&) {
+                waitCV.notify_all();
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
 
     // Create Directive.
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();

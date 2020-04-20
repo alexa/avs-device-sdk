@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,12 +28,24 @@ namespace test {
 
 /// Mock class that implements AlertsAudioFactoryInterface
 class MockAlertsAudioFactory : public AlertsAudioFactoryInterface {
-    MOCK_CONST_METHOD0(alarmDefault, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(alarmShort, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(timerDefault, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(timerShort, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(reminderDefault, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(reminderShort, std::function<std::unique_ptr<std::istream>()>());
+    MOCK_CONST_METHOD0(
+        alarmDefault,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        alarmShort,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        timerDefault,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        timerShort,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        reminderDefault,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        reminderShort,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
 };
 
 }  // namespace test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,10 @@
 #include <memory>
 
 #include <Audio/MicrophoneInterface.h>
+#include <AVSCommon/SDKInterfaces/Diagnostics/AudioInjectorInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
@@ -88,7 +90,6 @@ public:
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
         std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
-
 #ifdef POWER_CONTROLLER
         std::shared_ptr<PowerControllerHandler> powerControllerHandler = nullptr,
 #endif
@@ -101,7 +102,8 @@ public:
 #ifdef MODE_CONTROLLER
         std::shared_ptr<ModeControllerHandler> modeControllerHandler = nullptr,
 #endif
-        std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -315,12 +317,12 @@ public:
     /**
      * Should be called after a user wishes to modify the volume.
      */
-    void adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type type, int8_t delta);
+    void adjustVolume(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, int8_t delta);
 
     /**
      * Should be called after a user wishes to set mute.
      */
-    void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
+    void setMute(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, bool mute);
 
     /**
      * Reset the device and remove any customer data.
@@ -525,6 +527,72 @@ public:
     void setMode(const std::string mode);
 #endif
 
+    /**
+     * Stop the microphone from streaming audio data.
+     */
+    void stopMicrophone();
+
+    /**
+     * Start streaming audio data from the microphone.
+     */
+    void startMicrophone();
+
+    /**
+     * Prints the diagnostics screen.
+     */
+    void diagnosticsControl();
+
+    /**
+     * Prints the device properties screen.
+     */
+    void devicePropertiesControl();
+
+    /**
+     * Prints a requested device property.
+     */
+    void showDeviceProperties();
+
+    /**
+     * Prints the audio injection screen.
+     */
+    void audioInjectionControl();
+
+    /**
+     * Injects wav file into audio stream.
+     *
+     * Note: Currently audio injection is supported for wav files with the following properties
+     * Sample Size: 16 bits
+     * Sample Rate: 16 KHz
+     * Number of channels : 1
+     * Endianness : Little
+     * Encoding Format : LPCM
+     *
+     * @param absoluteFilePath the absolute filepath of the wav file containing the audio to be injected.
+     */
+    void injectWavFile(const std::string& absoluteFilePath);
+
+    /**
+     * Prints device protocol tracer screen.
+     */
+    void deviceProtocolTraceControl();
+
+    /**
+     * Prints the protocol trace string.
+     */
+    void printProtocolTrace();
+
+    /**
+     * Enables the protocol trace utility.
+     *
+     * @param enabled flag indicating if protocol trace is enabled/disabled.
+     */
+    void setProtocolTraceFlag(bool enabled);
+
+    /**
+     * Clears the protocol trace message list.
+     */
+    void clearProtocolTrace();
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -593,6 +661,9 @@ private:
 
     /// Whether the microphone is currently on.
     bool m_isMicOn;
+
+    /// Diagnostics object.
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> m_diagnostics;
 
     /**
      * An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,15 +30,24 @@ namespace test {
 class MockSystemSoundAudioFactory : public SystemSoundAudioFactoryInterface {
 public:
     static std::shared_ptr<testing::NiceMock<MockSystemSoundAudioFactory>> create();
-    MOCK_CONST_METHOD0(endSpeechTone, std::function<std::unique_ptr<std::istream>()>());
-    MOCK_CONST_METHOD0(wakeWordNotificationTone, std::function<std::unique_ptr<std::istream>()>());
+    MOCK_CONST_METHOD0(
+        endSpeechTone,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
+    MOCK_CONST_METHOD0(
+        wakeWordNotificationTone,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>());
 
 private:
-    static std::unique_ptr<std::istream> createWakeWordNotificationTone() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("testWakeTone"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>
+    createWakeWordNotificationTone() {
+        return std::make_pair(
+            std::unique_ptr<std::stringstream>(new std::stringstream("testWakeTone")),
+            avsCommon::utils::MediaType::MPEG);
     }
-    static std::unique_ptr<std::istream> createEndSpeechTone() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("testEndSpeech"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> createEndSpeechTone() {
+        return std::make_pair(
+            std::unique_ptr<std::stringstream>(new std::stringstream("testEndSpeech")),
+            avsCommon::utils::MediaType::MPEG);
     }
 };
 

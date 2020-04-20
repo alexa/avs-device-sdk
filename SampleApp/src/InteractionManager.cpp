@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "RegistrationManager/CustomerDataManager.h"
 #include "SampleApp/InteractionManager.h"
@@ -28,7 +30,18 @@
 namespace alexaClientSDK {
 namespace sampleApp {
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("InteractionManager");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
 using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
 
 InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
@@ -45,6 +58,7 @@ InteractionManager::InteractionManager(
     capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
     std::shared_ptr<sampleApp::GuiRenderer> guiRenderer,
     capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
+
 #ifdef POWER_CONTROLLER
     std::shared_ptr<PowerControllerHandler> powerControllerHandler,
 #endif
@@ -57,7 +71,8 @@ InteractionManager::InteractionManager(
 #ifdef MODE_CONTROLLER
     std::shared_ptr<ModeControllerHandler> modeControllerHandler,
 #endif
-    std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager) :
+    std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
         m_micWrapper{micWrapper},
@@ -89,7 +104,8 @@ InteractionManager::InteractionManager(
         m_isHoldOccurring{false},
         m_isTapOccurring{false},
         m_isCallConnected{false},
-        m_isMicOn{true} {
+        m_isMicOn{true},
+        m_diagnostics{diagnostics} {
     if (m_wakeWordAudioProvider) {
         m_micWrapper->startStreamingMicrophoneData();
     }
@@ -98,6 +114,9 @@ InteractionManager::InteractionManager(
 void InteractionManager::begin() {
     m_executor.submit([this]() {
         m_userInterface->printWelcomeScreen();
+        if (m_diagnostics && m_diagnostics->getAudioInjector()) {
+            m_userInterface->printAudioInjectionHeader();
+        }
         m_userInterface->printHelpScreen();
     });
 }
@@ -234,6 +253,7 @@ void InteractionManager::holdToggled() {
         if (!m_isMicOn) {
             return;
         }
+
         if (!m_isHoldOccurring) {
             if (m_client->notifyOfHoldToTalkStart(m_holdToTalkAudioProvider).get()) {
                 m_isHoldOccurring = true;
@@ -250,6 +270,7 @@ void InteractionManager::tap() {
         if (!m_isMicOn) {
             return;
         }
+
         if (!m_isTapOccurring) {
             if (m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
                 m_isTapOccurring = true;
@@ -334,19 +355,24 @@ void InteractionManager::volumeControl() {
     m_executor.submit([this]() { m_userInterface->printVolumeControlScreen(); });
 }
 
-void InteractionManager::adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type type, int8_t delta) {
+void InteractionManager::adjustVolume(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, int8_t delta) {
     m_executor.submit([this, type, delta]() {
         /*
          * Group the unmute action as part of the same affordance that caused the volume change, so we don't
          * send another event. This isn't a requirement by AVS.
          */
-        std::future<bool> unmuteFuture = m_client->getSpeakerManager()->setMute(type, false, true);
+        std::future<bool> unmuteFuture = m_client->getSpeakerManager()->setMute(
+            type,
+            false,
+            SpeakerManagerInterface::NotificationProperties(
+                SpeakerManagerObserverInterface::Source::LOCAL_API, false, false));
         if (!unmuteFuture.valid()) {
             return;
         }
         unmuteFuture.get();
 
-        std::future<bool> future = m_client->getSpeakerManager()->adjustVolume(type, delta);
+        std::future<bool> future =
+            m_client->getSpeakerManager()->adjustVolume(type, delta, SpeakerManagerInterface::NotificationProperties());
         if (!future.valid()) {
             return;
         }
@@ -354,9 +380,10 @@ void InteractionManager::adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface
     });
 }
 
-void InteractionManager::setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute) {
+void InteractionManager::setMute(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, bool mute) {
     m_executor.submit([this, type, mute]() {
-        std::future<bool> future = m_client->getSpeakerManager()->setMute(type, mute);
+        std::future<bool> future =
+            m_client->getSpeakerManager()->setMute(type, mute, SpeakerManagerInterface::NotificationProperties());
         future.get();
     });
 }
@@ -702,6 +729,104 @@ void InteractionManager::sendCalendarClientErrorOccured() {
 
 void InteractionManager::setDoNotDisturbMode(bool enable) {
     m_client->getSettingsManager()->setValue<settings::DO_NOT_DISTURB>(enable);
+}
+
+void InteractionManager::diagnosticsControl() {
+    m_executor.submit([this]() { m_userInterface->printDiagnosticsScreen(); });
+}
+
+void InteractionManager::devicePropertiesControl() {
+    m_executor.submit([this]() { m_userInterface->printDevicePropertiesScreen(); });
+}
+
+void InteractionManager::showDeviceProperties() {
+    m_executor.submit([this]() {
+        if (m_diagnostics) {
+            auto deviceProperties = m_diagnostics->getDevicePropertyAggregator();
+            if (deviceProperties) {
+                m_userInterface->printAllDeviceProperties(deviceProperties->getAllDeviceProperties());
+            }
+        }
+    });
+}
+
+void InteractionManager::audioInjectionControl() {
+    m_executor.submit([this]() { m_userInterface->printAudioInjectionScreen(); });
+}
+
+void InteractionManager::injectWavFile(const std::string& absoluteFilePath) {
+    m_executor.submit([this, absoluteFilePath]() {
+        if (!m_diagnostics) {
+            ACSDK_ERROR(LX("audioInjectionFailed").d("reason", "nullDiagnosticObject"));
+            m_userInterface->printAudioInjectionFailureMessage();
+            return;
+        }
+        auto audioInjector = m_diagnostics->getAudioInjector();
+        if (!audioInjector) {
+            ACSDK_ERROR(LX("audioInjectionFailed").d("reason", "nullAudioInjector"));
+            m_userInterface->printAudioInjectionFailureMessage();
+            return;
+        }
+
+        // Notify DefaultClient of tap-to-talk if wakeword is disabled.
+        if (!m_wakeWordAudioProvider) {
+            if (!m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
+                m_userInterface->printAudioInjectionFailureMessage();
+                return;
+            }
+        }
+
+        if (!audioInjector->injectAudio(absoluteFilePath)) {
+            m_userInterface->printAudioInjectionFailureMessage();
+            return;
+        }
+    });
+}
+
+void InteractionManager::deviceProtocolTraceControl() {
+    m_executor.submit([this]() { m_userInterface->printDeviceProtocolTracerScreen(); });
+}
+
+void InteractionManager::printProtocolTrace() {
+    m_executor.submit([this]() {
+        if (m_diagnostics) {
+            auto protocolTrace = m_diagnostics->getProtocolTracer();
+            if (protocolTrace) {
+                m_userInterface->printProtocolTrace(protocolTrace->getProtocolTrace());
+            }
+        }
+    });
+}
+
+void InteractionManager::setProtocolTraceFlag(bool enabled) {
+    m_executor.submit([this, enabled]() {
+        if (m_diagnostics) {
+            auto protocolTrace = m_diagnostics->getProtocolTracer();
+            if (protocolTrace) {
+                protocolTrace->setProtocolTraceFlag(enabled);
+                m_userInterface->printProtocolTraceFlag(enabled);
+            }
+        }
+    });
+}
+
+void InteractionManager::clearProtocolTrace() {
+    m_executor.submit([this]() {
+        if (m_diagnostics) {
+            auto protocolTrace = m_diagnostics->getProtocolTracer();
+            if (protocolTrace) {
+                protocolTrace->clearTracedMessages();
+            }
+        }
+    });
+}
+
+void InteractionManager::startMicrophone() {
+    m_micWrapper->startStreamingMicrophoneData();
+}
+
+void InteractionManager::stopMicrophone() {
+    m_micWrapper->stopStreamingMicrophoneData();
 }
 
 void InteractionManager::doShutdown() {

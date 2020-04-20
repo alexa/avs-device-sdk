@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include "AVSCommon/Utils/MediaType.h"
 #include "AVSCommon/Utils/Timing/Timer.h"
 
 namespace alexaClientSDK {
@@ -53,8 +54,8 @@ public:
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat,
-        const avsCommon::utils::mediaPlayer::SourceConfig& config =
-            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         const std::string& url,

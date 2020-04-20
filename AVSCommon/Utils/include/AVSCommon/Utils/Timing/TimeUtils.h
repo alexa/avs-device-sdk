@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #include <chrono>
 #include <ctime>
 #include <string>
-#include <sys/time.h>
 
 #include "AVSCommon/Utils/RetryTimer.h"
 #include "AVSCommon/Utils/Timing/SafeCTimeAccess.h"

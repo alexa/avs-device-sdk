@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-find_package(CURL ${CURL_PACKAGE_CONFIG})
-
 add_definitions("-DACSDK_LOG_MODULE=capabilitiesDelegate")
 add_library(CapabilitiesDelegate SHARED
     CapabilitiesDelegate.cpp

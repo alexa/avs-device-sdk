@@ -85,6 +85,15 @@
         // The database file should only be used for notifications (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_NOTIFICATIONS_DATABASE_FILE_PATH}"
     },
+    "diagnostics":{
+        // The maximum number of directive/event messages to store. If exceeded, additional messages will not be stored.
+        // "maxTracedMessages":1
+    },
+    "externalMediaPlayer": {
+        // Agent identifier provided by AlexaMusic.
+        // Developers creating their own adaptors must use an Agent ID assigned to them by Alexa Music
+        "agentString": "CQCAFYNYDC"
+    },
     "sampleApp": {
         // To specify if the SampleApp supports display cards.
         "displayCardsSupported":true

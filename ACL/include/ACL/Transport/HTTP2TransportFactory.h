@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
@@ -43,11 +44,13 @@ public:
      * @param connectionFactory Object used to create instances of HTTP2ConnectionInterface.
      * @param postConnectFactory Object used to create instances of the PostConnectInterface.
      * @param metricRecorder The metric recorder.
+     * @param eventTracer Object used to trace events sent to AVS.
      */
     HTTP2TransportFactory(
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr);
 
     /// @name TransportFactoryInterface methods.
     /// @{
@@ -74,6 +77,9 @@ private:
 
     /// The metric recorder.
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
+    /// The @c EventTracerInterface object used to pass in the tracer to HTTP2Transport.
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> m_eventTracer;
 };
 
 }  // namespace acl

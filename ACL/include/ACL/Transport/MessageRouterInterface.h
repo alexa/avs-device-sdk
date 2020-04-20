@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -86,6 +86,16 @@ public:
      * @return The URL for the current AVS gateway.
      */
     virtual std::string getAVSGateway() = 0;
+
+    /**
+     * This method is a hint to retry connecting (if not connected).
+     */
+    virtual void onWakeConnectionRetry() = 0;
+
+    /**
+     * This method is a hint to verify that there is a valid connection to AVS.
+     */
+    virtual void onWakeVerifyConnectivity() = 0;
 
     /**
      * Set the observer to this object.

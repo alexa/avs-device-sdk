@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,12 @@ using namespace avsCommon::sdkInterfaces::endpoints;
 const std::string CONFIG_KEY_DEVICE_INFO = "deviceInfo";
 /// Name of clientId value in DeviceInfo's @c ConfigurationNode.
 const std::string CONFIG_KEY_CLIENT_ID = "clientId";
+/// Name of registration key value in DeviceInfo's @c ConfigurationNode.
+const static std::string CONFIG_KEY_REGISTRATION_KEY = "registrationKey";
+/// Name of productId key value in DeviceInfo's @c ConfigurationNode.
+const std::string CONFIG_KEY_PRODUCT_ID_KEY = "productIdKey";
+/// Name of registration value in DeviceInfo's @c ConfigurationNode.
+const static std::string CONFIG_KEY_REGISTRATION = "registration";
 /// Name of productId value in DeviceInfo's @c ConfigurationNode.
 const std::string CONFIG_KEY_PRODUCT_ID = "productId";
 /// Name of deviceSerialNumber value in DeviceInfo's @c ConfigurationNode.
@@ -78,6 +84,9 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
     std::string description;
     std::string friendlyName;
     std::string deviceType;
+    std::string registrationKey;
+    std::string productIdKey;
+
     const std::string errorEvent = "createFailed";
     const std::string errorReasonKey = "reason";
     const std::string errorValueKey = "key";
@@ -124,7 +133,27 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
         return nullptr;
     }
 
-    return create(clientId, productId, deviceSerialNumber, manufacturerName, description, friendlyName, deviceType);
+    if (!deviceInfoConfiguration.getString(CONFIG_KEY_REGISTRATION_KEY, &registrationKey)) {
+        ACSDK_INFO(LX(__func__).d("result", "skipRegistrationKey").d(errorValueKey, CONFIG_KEY_REGISTRATION_KEY));
+        registrationKey = CONFIG_KEY_REGISTRATION;
+    }
+
+    if (!deviceInfoConfiguration.getString(CONFIG_KEY_PRODUCT_ID_KEY, &productIdKey)) {
+        ACSDK_INFO(LX(__func__).d("result", "skipProductIdKey").d(errorValueKey, CONFIG_KEY_PRODUCT_ID_KEY));
+        productIdKey = CONFIG_KEY_PRODUCT_ID;
+    }
+
+    return create(
+        clientId,
+        productId,
+        deviceSerialNumber,
+        manufacturerName,
+        description,
+        friendlyName,
+        deviceType,
+        "",
+        registrationKey,
+        productIdKey);
 }
 
 std::unique_ptr<DeviceInfo> DeviceInfo::create(
@@ -135,7 +164,9 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
     const std::string& description,
     const std::string& friendlyName,
     const std::string& deviceType,
-    const EndpointIdentifier& endpointId) {
+    const EndpointIdentifier& endpointId,
+    const std::string& registrationKey,
+    const std::string& productIdKey) {
     const std::string errorEvent = "createFailed";
     const std::string errorReasonKey = "reason";
     const std::string errorValueKey = "key";
@@ -169,6 +200,10 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
     auto defaultEndpointId =
         endpointId.empty() ? generateEndpointId(clientId, productId, deviceSerialNumber) : endpointId;
 
+    auto defaultRegistrationKey = registrationKey.empty() ? CONFIG_KEY_REGISTRATION : registrationKey;
+
+    auto defaultProductIdKey = productIdKey.empty() ? CONFIG_KEY_PRODUCT_ID : productIdKey;
+
     std::unique_ptr<DeviceInfo> instance(new DeviceInfo(
         clientId,
         productId,
@@ -177,7 +212,9 @@ std::unique_ptr<DeviceInfo> DeviceInfo::create(
         description,
         friendlyName,
         deviceType,
-        defaultEndpointId));
+        defaultEndpointId,
+        defaultRegistrationKey,
+        defaultProductIdKey));
 
     return instance;
 }
@@ -200,6 +237,14 @@ std::string DeviceInfo::getFriendlyName() const {
 
 std::string DeviceInfo::getDeviceType() const {
     return m_deviceType;
+}
+
+std::string DeviceInfo::getRegistrationKey() const {
+    return m_registrationKey;
+}
+
+std::string DeviceInfo::getProductIdKey() const {
+    return m_productIdKey;
 }
 
 bool DeviceInfo::operator==(const DeviceInfo& rhs) {
@@ -235,7 +280,9 @@ DeviceInfo::DeviceInfo(
     const std::string& description,
     const std::string& friendlyName,
     const std::string& deviceType,
-    const EndpointIdentifier& endpointId) :
+    const EndpointIdentifier& endpointId,
+    const std::string& registrationKey,
+    const std::string& productIdKey) :
         m_clientId{clientId},
         m_productId{productId},
         m_deviceSerialNumber{deviceSerialNumber},
@@ -243,7 +290,9 @@ DeviceInfo::DeviceInfo(
         m_deviceDescription{description},
         m_friendlyName{friendlyName},
         m_deviceType{deviceType},
-        m_defaultEndpointId{endpointId} {
+        m_defaultEndpointId{endpointId},
+        m_registrationKey{registrationKey},
+        m_productIdKey{productIdKey} {
 }
 
 }  // namespace utils

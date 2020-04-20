@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ MetricEvent::MetricEvent(
     const std::string& activityName,
     Priority priority,
     const std::unordered_map<std::string, DataPoint>& dataPoints,
-    std::chrono::system_clock::time_point timestamp) :
+    std::chrono::steady_clock::time_point timestamp) :
         m_activityName{activityName},
         m_priority{priority},
         m_dataPoints{dataPoints},
@@ -73,6 +73,11 @@ std::vector<DataPoint> MetricEvent::getDataPoints() const {
 }
 
 std::chrono::system_clock::time_point MetricEvent::getTimestamp() const {
+    return std::chrono::system_clock::now() - std::chrono::duration_cast<std::chrono::system_clock::duration>(
+                                                  std::chrono::steady_clock::now() - m_timestamp);
+}
+
+std::chrono::steady_clock::time_point MetricEvent::getSteadyTimestamp() const {
     return m_timestamp;
 }
 

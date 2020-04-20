@@ -1,13 +1,21 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-set(INCLUDE_PATH
-    "${DeviceSettings_SOURCE_DIR}/include"
-    "${AVSCommon_SOURCE_DIR}/AVS/test"
-    "${AVSCommon_SOURCE_DIR}/Utils/include"
-    "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
-    "${CertifiedSender_SOURCE_DIR}/test")
+if (BUILD_TESTING)
+    add_library(DeviceSettingsTests INTERFACE)
 
-set(TEST_FOLDER "${DeviceSettings_SOURCE_DIR}/test")
+    target_include_directories(DeviceSettingsTests INTERFACE "${DeviceSettings_SOURCE_DIR}/test")
 
+    target_link_libraries(DeviceSettingsTests INTERFACE DeviceSettings SDKInterfacesTests gmock_main)
 
-discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings" "${TEST_FOLDER}")
+    set(INCLUDE_PATH
+        "${DeviceSettings_SOURCE_DIR}/include"
+        "${AVSCommon_SOURCE_DIR}/AVS/test"
+        "${AVSCommon_SOURCE_DIR}/Utils/include"
+        "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
+        "${CertifiedSender_SOURCE_DIR}/test")
+
+    set(TEST_FOLDER "${DeviceSettings_SOURCE_DIR}/test")
+
+    discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings;DeviceSettingsTests" "${TEST_FOLDER}")
+
+endif()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,23 +26,21 @@
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
-#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
-#include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
+#include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include <AVSCommon/Utils/Logger/ConsoleLogger.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
-#include <AVSCommon/Utils/PromiseFuturePair.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <MockCaptionManager.h>
 
 #include "AudioPlayer/AudioPlayer.h"
@@ -62,6 +60,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::memory;
+using namespace avsCommon::utils::metrics::test;
 using namespace captions::test;
 using namespace avsCommon::utils::mediaPlayer::test;
 using namespace rapidjson;
@@ -93,6 +92,9 @@ static const std::string NAME_STOP("Stop");
 
 /// Name for AudioPlayer ClearQueue directive.
 static const std::string NAME_CLEARQUEUE("ClearQueue");
+
+/// Name for AudioPlayer UpdateProgressReportInterval directive.
+static const std::string NAME_UPDATE_PROGRESS_REPORT_INTERVAL("UpdateProgressReportInterval");
 
 /// The @c NamespaceAndName to send to the @c ContextManager.
 static const NamespaceAndName NAMESPACE_AND_NAME_PLAYBACK_STATE{NAMESPACE_AUDIO_PLAYER, "PlaybackState"};
@@ -314,6 +316,14 @@ static const std::string IDLE_STATE_TEST =
 /// Provide State Token for testing.
 static const unsigned int PROVIDE_STATE_TOKEN_TEST{1};
 
+/// UPDATE_PROGRESS_REPORT_INTERVAL payload for testing.
+// clang-format off
+static const std::string UPDATE_PROGRESS_REPORT_INTERVAL_PAYLOAD_TEST =
+    "{"
+        "\"progressReportIntervalInMilliseconds\": 500"
+    "}";
+// clang-format on
+
 /// JSON key for the event section of a message.
 static const std::string MESSAGE_EVENT_KEY = "event";
 
@@ -368,6 +378,48 @@ static const std::string MESSAGE_METADATA_BOOLEAN_KEY = "BooleanKey";
 /// JSON value for "boolean" type field in metadata section of StreamMetadataExtracted event.
 static const std::string MESSAGE_METADATA_BOOLEAN_VALUE = "true";
 
+/// JSON key for the playbackAttributes section of a message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_KEY = "playbackAttributes";
+
+/// JSON key for "name" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_NAME_KEY = "name";
+
+/// JSON value for "name" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_NAME_VALUE = "STREAM_NAME_ABSENT";
+
+/// JSON key for "codec" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_KEY = "codec";
+
+/// JSON value for "codec" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_VALUE = "opus";
+
+/// JSON key for "samplingRateInHertz" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_KEY = "samplingRateInHertz";
+
+/// JSON value for "samplingRateInHertz" field in playbackAttributes section of message.
+static const long MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_VALUE = 48000;
+
+/// JSON key for "dataRateInBitsPerSecond" field in playbackAttributes section of message.
+static const std::string MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_KEY = "dataRateInBitsPerSecond";
+
+/// JSON value for "dataRateInBitsPerSecond" field in playbackAttributes section of message.
+static const long MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_VALUE = 49000;
+
+/// JSON key for the playbackReports section of a message.
+static const std::string MESSAGE_PLAYBACK_REPORTS_KEY = "playbackReports";
+
+/// JSON key for "startOffsetInMilliseconds" field in playbackReports section of message.
+static const std::string MESSAGE_PLAYBACK_REPORTS_START_OFFSET_KEY = "startOffsetInMilliseconds";
+
+/// JSON value for "startOffsetInMilliseconds" field in playbackReports section of message.
+static const long MESSAGE_PLAYBACK_REPORTS_START_OFFSET_VALUE = 0;
+
+/// JSON key for "endOffsetInMilliseconds" field in playbackReports section of message.
+static const std::string MESSAGE_PLAYBACK_REPORTS_END_OFFSET_KEY = "endOffsetInMilliseconds";
+
+/// JSON value for "endOffsetInMilliseconds" field in playbackReports section of message.
+static const long MESSAGE_PLAYBACK_REPORTS_END_OFFSET_VALUE = 10000;
+
 /// Name of PlaybackStarted event
 static const std::string PLAYBACK_STARTED_NAME = "PlaybackStarted";
 
@@ -401,11 +453,29 @@ static const std::string PROGRESS_REPORT_DELAY_ELAPSED_NAME = "ProgressReportDel
 /// Name of ProgressReportIntervalElapsed event
 static const std::string PROGRESS_REPORT_INTERVAL_ELAPSED_NAME = "ProgressReportIntervalElapsed";
 
+/// Name of ProgressReportIntervalUpdated event
+static const std::string PROGRESS_REPORT_INTERVAL_UPDATED_NAME = "ProgressReportIntervalUpdated";
+
 /// Name of StreamMetadataExtracted event
 static const std::string STREAM_METADATA_EXTRACTED_NAME = "StreamMetadataExtracted";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AudioPlayerTest");
+
+/// Fingerprint for media player.
+static const Fingerprint FINGERPRINT = {"com.audioplayer.test", "DEBUG", "0001"};
+
+/// Key for "fingerprint" in AudioPlayer configurations.
+static const std::string FINGERPRINT_KEY = "fingerprint";
+
+/// JSON key for "package" in fingerprint configuration.
+static const std::string FINGERPRINT_PACKAGE_KEY = "package";
+
+/// JSON key for "buildType" in fingerprint configuration.
+static const std::string FINGERPRINT_BUILD_TYPE_KEY = "buildType";
+
+/// JSON key for "versionNumber" in fingerprint configuration.
+static const std::string FINGERPRINT_VERSION_NUMBER_KEY = "versionNumber";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -473,6 +543,9 @@ public:
     /// Another Player to send the audio to.
     std::shared_ptr<MockMediaPlayer> m_mockMediaPlayerTrack3;
 
+    /// Speaker to send the audio to.
+    std::shared_ptr<MockChannelVolumeInterface> m_mockSpeaker;
+
     /// @c ContextManager to provide state and update state.
     std::shared_ptr<MockContextManager> m_mockContextManager;
 
@@ -502,6 +575,9 @@ public:
 
     /// Identifier for the currently selected audio source.
     MediaPlayerInterface::SourceId m_sourceId;
+
+    /// The mock @c MetricRecorderInterface
+    std::shared_ptr<MockMetricRecorder> m_mockMetricRecorder;
 
     /**
      * This is invoked in response to a @c setState call.
@@ -573,6 +649,11 @@ public:
     void sendClearQueueDirective();
 
     /**
+     * Sends UpdateProgressReportInterval directive.
+     */
+    void sendUpdateProgressReportIntervalDirective();
+
+    /**
      * Verify that the message name matches the expected name
      *
      * @param request The @c MessageRequest to verify
@@ -624,6 +705,26 @@ public:
         bool validateBoolean = true);
 
     /**
+     * Extracts playback attributes from message for verification.
+     *
+     * @param request The @c MessageRequest to extract.
+     * @param actualPlaybackAttributes The @c PlaybackAttributes extracted.
+     */
+    void extractPlaybackAttributes(
+        std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        PlaybackAttributes* actualPlaybackAttributes);
+
+    /**
+     * Extracts playback reports from message for verification.
+     *
+     * @param request The @c MessageRequest to extract.
+     * @param actualPlaybackReports Pointer to list of @c PlaybackReport extracted.
+     */
+    void extractPlaybackReports(
+        std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        std::vector<PlaybackReport>* actualPlaybackReports);
+
+    /**
      * Run through test of playing, enqueuing, finish, play
      */
     void testPlayEnqueueFinishPlay();
@@ -658,6 +759,7 @@ void AudioPlayerTest::SetUp() {
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
     m_mockExceptionSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
+    m_mockSpeaker = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
     m_mockMediaPlayer = MockMediaPlayer::create();
     m_mockPlaybackRouter = std::make_shared<NiceMock<MockPlaybackRouter>>();
     ASSERT_TRUE(m_mockMediaPlayer);
@@ -667,8 +769,9 @@ void AudioPlayerTest::SetUp() {
     ASSERT_TRUE(m_mockMediaPlayerTrack3);
     std::vector<std::shared_ptr<MediaPlayerInterface>> pool = {
         m_mockMediaPlayer, m_mockMediaPlayerTrack2, m_mockMediaPlayerTrack3};
-    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool, FINGERPRINT);
     m_mockCaptionManager = std::make_shared<NiceMock<MockCaptionManager>>();
+    m_mockMetricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
     m_audioPlayer = AudioPlayer::create(
         std::move(m_mockFactory),
         m_mockMessageSender,
@@ -676,7 +779,9 @@ void AudioPlayerTest::SetUp() {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
 
     ASSERT_TRUE(m_audioPlayer);
 
@@ -717,7 +822,10 @@ void AudioPlayerTest::reSetUp(int numberOfPlayers) {
         m_mockFocusManager,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_mockPlaybackRouter);
+        m_mockPlaybackRouter,
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
 
     ASSERT_TRUE(m_audioPlayer);
 
@@ -790,6 +898,15 @@ void AudioPlayerTest::sendClearQueueDirective() {
         AVSDirective::create("", avsClearMessageHeader, CLEAR_ALL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
 
     m_audioPlayer->CapabilityAgent::preHandleDirective(clearQueueDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+void AudioPlayerTest::sendUpdateProgressReportIntervalDirective() {
+    auto header = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_AUDIO_PLAYER, NAME_UPDATE_PROGRESS_REPORT_INTERVAL, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directive = AVSDirective::create(
+        "", header, UPDATE_PROGRESS_REPORT_INTERVAL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
 }
 
@@ -918,6 +1035,96 @@ void AudioPlayerTest::verifyTags(
     }
 }
 
+void AudioPlayerTest::extractPlaybackAttributes(
+    std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    PlaybackAttributes* actualPlaybackAttributes) {
+    rapidjson::Document document;
+    document.Parse(request->getJsonContent().c_str());
+    EXPECT_FALSE(document.HasParseError())
+        << "rapidjson detected a parsing error at offset:" + std::to_string(document.GetErrorOffset()) +
+               ", error message: " + GetParseError_En(document.GetParseError());
+
+    auto event = document.FindMember(MESSAGE_EVENT_KEY);
+    EXPECT_NE(event, document.MemberEnd());
+
+    auto payload = event->value.FindMember(MESSAGE_PAYLOAD_KEY);
+    EXPECT_NE(payload, event->value.MemberEnd());
+
+    auto playbackAttributes = payload->value.FindMember(MESSAGE_PLAYBACK_ATTRIBUTES_KEY);
+    EXPECT_NE(playbackAttributes, payload->value.MemberEnd());
+
+    std::string name;
+    jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_NAME_KEY, &name);
+    actualPlaybackAttributes->name = name;
+
+    std::string codec;
+    jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_KEY, &codec);
+    actualPlaybackAttributes->codec = codec;
+
+    int64_t samplingRate;
+    jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_KEY, &samplingRate);
+    actualPlaybackAttributes->samplingRateInHertz = (long)samplingRate;
+
+    int64_t bitrate;
+    jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_KEY, &bitrate);
+    actualPlaybackAttributes->dataRateInBitsPerSecond = (long)bitrate;
+}
+
+void AudioPlayerTest::extractPlaybackReports(
+    std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    std::vector<PlaybackReport>* actualPlaybackReports) {
+    rapidjson::Document document;
+    document.Parse(request->getJsonContent().c_str());
+    EXPECT_FALSE(document.HasParseError())
+        << "rapidjson detected a parsing error at offset:" + std::to_string(document.GetErrorOffset()) +
+               ", error message: " + GetParseError_En(document.GetParseError());
+
+    auto event = document.FindMember(MESSAGE_EVENT_KEY);
+    EXPECT_NE(event, document.MemberEnd());
+
+    auto payload = event->value.FindMember(MESSAGE_PAYLOAD_KEY);
+    EXPECT_NE(payload, event->value.MemberEnd());
+
+    auto playbackReports = payload->value.FindMember(MESSAGE_PLAYBACK_REPORTS_KEY);
+    if (playbackReports == payload->value.MemberEnd()) {
+        return;
+    }
+
+    for (const auto& playbackReport : playbackReports->value.GetArray()) {
+        PlaybackReport actualPlaybackReport;
+
+        int64_t startOffset;
+        jsonUtils::retrieveValue(playbackReport, MESSAGE_PLAYBACK_REPORTS_START_OFFSET_KEY, &startOffset);
+        actualPlaybackReport.startOffset = std::chrono::milliseconds(startOffset);
+
+        int64_t endOffset;
+        jsonUtils::retrieveValue(playbackReport, MESSAGE_PLAYBACK_REPORTS_END_OFFSET_KEY, &endOffset);
+        actualPlaybackReport.endOffset = std::chrono::milliseconds(endOffset);
+
+        auto playbackAttributes = playbackReport.FindMember(MESSAGE_PLAYBACK_ATTRIBUTES_KEY);
+        EXPECT_NE(playbackAttributes, playbackReport.MemberEnd());
+
+        std::string name;
+        jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_NAME_KEY, &name);
+        actualPlaybackReport.playbackAttributes.name = name;
+
+        std::string codec;
+        jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_KEY, &codec);
+        actualPlaybackReport.playbackAttributes.codec = codec;
+
+        int64_t samplingRate;
+        jsonUtils::retrieveValue(
+            playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_KEY, &samplingRate);
+        actualPlaybackReport.playbackAttributes.samplingRateInHertz = (long)samplingRate;
+
+        int64_t bitrate;
+        jsonUtils::retrieveValue(playbackAttributes->value, MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_KEY, &bitrate);
+        actualPlaybackReport.playbackAttributes.dataRateInBitsPerSecond = (long)bitrate;
+
+        actualPlaybackReports->push_back(actualPlaybackReport);
+    }
+}
+
 /**
  * Test create() with nullptrs
  */
@@ -934,7 +1141,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
     m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
@@ -945,7 +1154,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
     m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
@@ -956,7 +1167,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
     m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
@@ -967,7 +1180,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         nullptr,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
     m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
@@ -978,7 +1193,9 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         nullptr,
         m_mockPlaybackRouter,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 
     m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
@@ -989,7 +1206,22 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         nullptr,
-        m_mockCaptionManager);
+        {m_mockSpeaker},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
+    EXPECT_EQ(testAudioPlayer, nullptr);
+
+    m_mockFactory = alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::create(pool);
+    testAudioPlayer = AudioPlayer::create(
+        std::move(m_mockFactory),
+        m_mockMessageSender,
+        m_mockFocusManager,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_mockPlaybackRouter,
+        {},
+        m_mockCaptionManager,
+        m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
 }
 
@@ -1259,6 +1491,9 @@ TEST_F(AudioPlayerTest, test_onPlaybackError_Stopped) {
     m_expectedMessages.insert({PLAYBACK_STOPPED_NAME, 0});
     // we don't want to see this, as it shouldn't be send when stopped
     m_expectedMessages.insert({PLAYBACK_FAILED_NAME, -1});
+
+    // Return offset that's greater than 500ms so that no PlaybackFailed event is sent
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getOffset(_)).WillRepeatedly(Return(std::chrono::milliseconds(600)));
 
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
         .Times(AtLeast(1))
@@ -1537,6 +1772,107 @@ TEST_F(AudioPlayerTest, test_onPlaybackFinished_bufferCompleteBeforeStarted) {
         }
         return true;
     });
+
+    ASSERT_TRUE(result);
+}
+
+/**
+ * Test @c onPlaybackFinished with playbackAttributes.
+ */
+
+TEST_F(AudioPlayerTest, testOnPlaybackFinishedWithPlaybackAttributes) {
+    PlaybackAttributes expectedPlaybackAttributes = {MESSAGE_PLAYBACK_ATTRIBUTES_NAME_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_VALUE};
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getPlaybackAttributes())
+        .WillRepeatedly(Return(avsCommon::utils::Optional<PlaybackAttributes>(expectedPlaybackAttributes)));
+
+    PlaybackAttributes* actualPlaybackAttributes = new PlaybackAttributes();
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(
+            Invoke([this, actualPlaybackAttributes](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+                std::lock_guard<std::mutex> lock(m_mutex);
+                extractPlaybackAttributes(request, actualPlaybackAttributes);
+                m_messageSentTrigger.notify_one();
+            }));
+
+    sendPlayDirective();
+
+    m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    bool result;
+
+    result =
+        m_messageSentTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [expectedPlaybackAttributes, actualPlaybackAttributes] {
+            if (actualPlaybackAttributes->name != expectedPlaybackAttributes.name ||
+                actualPlaybackAttributes->codec != expectedPlaybackAttributes.codec ||
+                actualPlaybackAttributes->samplingRateInHertz != expectedPlaybackAttributes.samplingRateInHertz ||
+                actualPlaybackAttributes->dataRateInBitsPerSecond !=
+                    expectedPlaybackAttributes.dataRateInBitsPerSecond) {
+                return false;
+            }
+
+            return true;
+        });
+
+    ASSERT_TRUE(result);
+}
+
+/**
+ * Test @c onPlaybackStopped with playbackReports.
+ */
+
+TEST_F(AudioPlayerTest, testOnPlaybackStoppedWithPlaybackReports) {
+    PlaybackAttributes expectedPlaybackAttributes = {MESSAGE_PLAYBACK_ATTRIBUTES_NAME_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_CODEC_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_SAMPLING_RATE_VALUE,
+                                                     MESSAGE_PLAYBACK_ATTRIBUTES_BITRATE_VALUE};
+    PlaybackReport expectedPlaybackReport = {std::chrono::milliseconds(MESSAGE_PLAYBACK_REPORTS_START_OFFSET_VALUE),
+                                             std::chrono::milliseconds(MESSAGE_PLAYBACK_REPORTS_END_OFFSET_VALUE),
+                                             expectedPlaybackAttributes};
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), getPlaybackReports())
+        .WillRepeatedly(Return(std::vector<PlaybackReport>{expectedPlaybackReport}));
+
+    std::vector<PlaybackReport>* actualPlaybackReports = new std::vector<PlaybackReport>();
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([this, actualPlaybackReports](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            extractPlaybackReports(request, actualPlaybackReports);
+            m_messageSentTrigger.notify_one();
+        }));
+
+    sendPlayDirective();
+
+    m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    bool result;
+
+    result = m_messageSentTrigger.wait_for(
+        lock, MY_WAIT_TIMEOUT, [expectedPlaybackReport, expectedPlaybackAttributes, actualPlaybackReports] {
+            if (actualPlaybackReports->size() != 1) {
+                return false;
+            }
+
+            PlaybackAttributes actualPlaybackAttributes = actualPlaybackReports->at(0).playbackAttributes;
+            if (actualPlaybackReports->at(0).startOffset != expectedPlaybackReport.startOffset ||
+                actualPlaybackReports->at(0).endOffset != expectedPlaybackReport.endOffset ||
+                actualPlaybackAttributes.name != expectedPlaybackAttributes.name ||
+                actualPlaybackAttributes.codec != expectedPlaybackAttributes.codec ||
+                actualPlaybackAttributes.samplingRateInHertz != expectedPlaybackAttributes.samplingRateInHertz ||
+                actualPlaybackAttributes.dataRateInBitsPerSecond !=
+                    expectedPlaybackAttributes.dataRateInBitsPerSecond) {
+                return false;
+            }
+
+            return true;
+        });
 
     ASSERT_TRUE(result);
 }
@@ -2598,6 +2934,40 @@ TEST_F(AudioPlayerTest, testPlayRequestor) {
     EXPECT_EQ(playRequestor.id, PLAY_REQUESTOR_ID);
 }
 
+/**
+ * Test that when UpdateProgressReportInterval directive is sent then onProgressReportIntervalUpdated event is called.
+ */
+TEST_F(AudioPlayerTest, testUpdateProgressReportInterval) {
+    sendPlayDirective();
+
+    m_expectedMessages.insert({PROGRESS_REPORT_INTERVAL_UPDATED_NAME, 0});
+
+    EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([this](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            std::lock_guard<std::mutex> lock(m_mutex);
+            verifyMessageMap(request, &m_expectedMessages);
+            m_messageSentTrigger.notify_one();
+        }));
+
+    sendUpdateProgressReportIntervalDirective();
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+
+    bool result;
+
+    result = m_messageSentTrigger.wait_for(lock, MY_WAIT_TIMEOUT, [this] {
+        for (auto messageStatus : m_expectedMessages) {
+            if (messageStatus.second == 0) {
+                return false;
+            }
+        }
+        return true;
+    });
+
+    ASSERT_TRUE(result);
+}
+
 void AudioPlayerTest::verifyMessageOrder(
     const std::vector<std::string>& orderedMessageList,
     int index,
@@ -2699,6 +3069,23 @@ TEST_F(AudioPlayerTest, test_playbackStoppedMessageOrder_2Players) {
     verifyMessageOrder(expectedMessages, 3, [this] {
         m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
     });
+}
+
+TEST_F(AudioPlayerTest, test_publishedCapabiltiesContainsFingerprint) {
+    std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> caps =
+        m_audioPlayer->getCapabilityConfigurations();
+    auto cap = *caps.begin();
+
+    auto configuration = cap->additionalConfigurations.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
+    ASSERT_NE(configuration, cap->additionalConfigurations.end());
+
+    JsonGenerator expectedConfigurations;
+    expectedConfigurations.startObject(FINGERPRINT_KEY);
+    expectedConfigurations.addMember(FINGERPRINT_PACKAGE_KEY, FINGERPRINT.package);
+    expectedConfigurations.addMember(FINGERPRINT_BUILD_TYPE_KEY, FINGERPRINT.buildType);
+    expectedConfigurations.addMember(FINGERPRINT_VERSION_NUMBER_KEY, FINGERPRINT.versionNumber);
+
+    ASSERT_EQ(expectedConfigurations.toString(), configuration->second);
 }
 
 }  // namespace test

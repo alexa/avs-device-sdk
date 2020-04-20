@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -440,6 +440,7 @@ std::future<bool> AudioInputProcessor::recognize(
     std::shared_ptr<const std::vector<char>> KWDMetadata,
     const std::string& initiatorToken) {
     ACSDK_METRIC_IDS(TAG, "Recognize", "", "", Metrics::Location::AIP_RECEIVE);
+    ACSDK_DEBUG5(LX(__func__));
 
     std::string upperCaseKeyword = keyword;
     std::transform(upperCaseKeyword.begin(), upperCaseKeyword.end(), upperCaseKeyword.begin(), ::toupper);
@@ -978,6 +979,10 @@ bool AudioInputProcessor::executeRecognize(
     // executeResetState() after this point.
     m_shouldGenerateDialogRequestId = shouldGenerateDialogRequestId(m_state);
 
+    if (m_shouldGenerateDialogRequestId) {
+        m_preCachedDialogRequestId = uuidGeneration::generateUUID();
+    }
+
     setState(ObserverInterface::State::RECOGNIZING);
 
     // Note that we're preparing to send a Recognize event.
@@ -1006,7 +1011,7 @@ bool AudioInputProcessor::executeRecognize(
         m_metricRecorder,
         START_OF_UTTERANCE_ACTIVITY_NAME,
         DataPointCounterBuilder{}.setName(START_OF_UTTERANCE).increment(1).build(),
-        m_directiveSequencer->getDialogRequestId());
+        m_preCachedDialogRequestId);
 
     if (initiatedByWakeword) {
         auto duration = milliseconds((end - begin) * MILLISECONDS_PER_SECOND / provider.format.sampleRateHz);
@@ -1025,7 +1030,7 @@ bool AudioInputProcessor::executeRecognize(
                     DataPointDurationBuilder{duration_cast<milliseconds>(startOfStreamTimestamp.time_since_epoch())}
                         .setName(START_OF_STREAM_TIMESTAMP)
                         .build()),
-            m_directiveSequencer->getDialogRequestId());
+            m_preCachedDialogRequestId);
         ACSDK_DEBUG(LX(__func__).d("WW_DURATION(ms)", duration.count()));
     }
 
@@ -1066,8 +1071,9 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
         }
     }
 
-    if (m_shouldGenerateDialogRequestId) {
-        m_directiveSequencer->setDialogRequestId(uuidGeneration::generateUUID());
+    if (m_shouldGenerateDialogRequestId && !m_preCachedDialogRequestId.empty()) {
+        m_directiveSequencer->setDialogRequestId(m_preCachedDialogRequestId);
+        m_preCachedDialogRequestId.clear();
     }
 
     // Assemble the MessageRequest.  It will be sent by executeOnFocusChanged when we acquire the channel.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,23 @@ namespace utils {
 namespace mediaPlayer {
 
 /**
+ * A struct to hold fingerprint for MediaPlayer.
+ * This is an optional structure sent to cloud as part of AudioPlayer Capability.
+ *
+ * For further details, see AVS AudioPlayer (>= 1.4) Capability documentation.
+ */
+struct Fingerprint {
+    /// Package name of media player.
+    std::string package;
+
+    /// Build type of media player.
+    std::string buildType;
+
+    /// Version number of media player.
+    std::string versionNumber;
+};
+
+/**
  * A @c MediaPlayerFactoryInterface allows access to @c MediaPlayerInterface instances as needed (and if availible)
  * This is a capability needed to support pre-buffering
  *
@@ -36,6 +53,13 @@ public:
      * Destructor.
      */
     virtual ~MediaPlayerFactoryInterface() = default;
+
+    /**
+     * Get @c Fingerprint of @c MediaPlayer.
+     *
+     * @return @c Fingerprint of @c MediaPlayer.
+     */
+    virtual Fingerprint getFingerprint() = 0;
 
     /**
      * Acquire an instance of a @c MediaPlayerInterface, if available.

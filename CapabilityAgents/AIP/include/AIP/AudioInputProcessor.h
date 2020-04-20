@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -732,6 +732,12 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /**
+     * Temporary value of dialogRequestId generated when onRecognize starts. This should be cleared after being
+     * passed to the directive sequencer.
+     */
+    std::string m_preCachedDialogRequestId;
 };
 
 }  // namespace aip

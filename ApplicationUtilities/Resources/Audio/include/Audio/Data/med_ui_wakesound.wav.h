@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
  * ALEXA AUDIO ASSETS
  * ******************
  *
- * Copyright 2018 Amazon.com, Inc. or its affiliates ("Amazon").
+ * Copyright 2019-2020 Amazon.com, Inc. or its affiliates ("Amazon").
  * All Rights Reserved.
  *
  * These materials are licensed to you as "Alexa Materials" under the Alexa Voice
@@ -10397,14 +10397,14 @@ unsigned char med_ui_wakesound_wav[] = {
   0x7d, 0xff, 0x62, 0x00, 0x7a, 0xff, 0x6f, 0x00, 0x75, 0xff, 0x74, 0x00,
   0x70, 0xff, 0x7e, 0x00, 0x69, 0xff, 0x82, 0x00
 };
-unsigned int med_ui_wakesound_wav_len = 124304;
-
+constexpr unsigned int med_ui_wakesound_wav_len = 124304;
+constexpr const char* med_ui_wakesound_wav_mimetype = "audio/x-wav";
 // clang-format on
-
-#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_MED_UI_WAKESOUND_WAV_H_
 
 }  // namespace data
 }  // namespace audio
 }  // namespace resources
 }  // namespace applicationUtilities
 }  // namespace alexaClientSDK
+
+#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_RESOURCES_AUDIO_INCLUDE_AUDIO_DATA_MED_UI_WAKESOUND_WAV_H_

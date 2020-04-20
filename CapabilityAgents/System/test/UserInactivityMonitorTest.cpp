@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
-#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockUserInactivityMonitorObserver.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <ADSL/DirectiveSequencer.h>
@@ -118,7 +118,7 @@ void UserInactivityMonitorTest::SetUp() {
 /**
  * This case tests if @c UserInactivityMonitor basic create function works properly
  */
-TEST_F(UserInactivityMonitorTest, test_createSuccessfully) {
+TEST_F(UserInactivityMonitorTest, testTimer_createSuccessfully) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
@@ -188,7 +188,7 @@ TEST_F(UserInactivityMonitorTest, testTimer_handleDirectiveProperly) {
 /**
  * This case tests if multiple requests are being sent up to AVS.
  */
-TEST_F(UserInactivityMonitorTest, test_sendMultipleReports) {
+TEST_F(UserInactivityMonitorTest, testTimer_sendMultipleReports) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);

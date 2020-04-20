@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-
-add_library(CaptionsInterfaceTestLib
+if (BUILD_TESTING)
+    add_library(CaptionsInterfaceTestLib
         CaptionDataTest.cpp
         CaptionFormatAvsTest.cpp
         CaptionFormatUtilsTest.cpp
@@ -8,26 +8,27 @@ add_library(CaptionsInterfaceTestLib
         CaptionLineTest.cpp
         TextStyleTest.cpp)
 
-target_include_directories(CaptionsInterfaceTestLib PUBLIC
+    target_include_directories(CaptionsInterfaceTestLib PUBLIC
         "${AVSCommon_INCLUDE_DIRS}"
         "${AVSCommon_SOURCE_DIR}/Utils/test"
         "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
         "${Captions_SOURCE_DIR}/Interface/include"
         "${Captions_SOURCE_DIR}/test")
 
-target_link_libraries(CaptionsInterfaceTestLib
+    target_link_libraries(CaptionsInterfaceTestLib
         AVSCommon
         Captions
         UtilsCommonTestLib
         gtest_main
         gmock_main)
 
-set(INCLUDE_PATH
+    set(INCLUDE_PATH
         "${AVSCommon_INCLUDE_DIRS}"
         "${AVSCommon_SOURCE_DIR}/AVS/test"
         "${AVSCommon_SOURCE_DIR}/Utils/test"
         "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
 
-add_definitions("-DACSDK_LOG_MODULE=captionsInterfaceTest")
+    add_definitions("-DACSDK_LOG_MODULE=captionsInterfaceTest")
 
-discover_unit_tests("${Captions}/Interface/test" "Captions;UtilsCommonTestLib")
+    discover_unit_tests("${Captions}/Interface/test" "Captions;UtilsCommonTestLib")
+endif()

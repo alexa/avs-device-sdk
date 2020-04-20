@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,12 +17,9 @@
 
 #include <chrono>
 #include <deque>
-#include <fstream>
-#include <future>
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <unordered_map>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -36,20 +33,17 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 
 #include "Integration/ACLTestContext.h"
-#include "Integration/ClientMessageHandler.h"
-#include "Integration/ConnectionStatusObserver.h"
 #include "Integration/ObservableMessageRequest.h"
-#include "Integration/TestMessageSender.h"
-#include "Integration/TestSpeechSynthesizerObserver.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
+#include "Integration/TestMessageSender.h"
+#include "Integration/TestSpeechSynthesizerObserver.h"
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include "MediaPlayer/MediaPlayer.h"
@@ -325,9 +319,9 @@ protected:
         config[EXPECT_SPEECH_PAIR] = audioBlockingPolicy;
         m_directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
-        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager(), m_metricRecorder);
 
         // Set up connection and connect
         m_avsConnectionManager = std::make_shared<TestMessageSender>(
@@ -355,7 +349,7 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            nullptr,
+            m_metricRecorder,
             m_dialogUXStateAggregator,
             nullptr);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
