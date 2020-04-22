@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -103,9 +103,6 @@ static constexpr char JSON_KEY_LEVELDIRECTION[] = "levelDirection";
 static constexpr char LEVEL_DIRECTION_UP[] = "UP";
 /// String representing negative level adjustment.
 static constexpr char LEVEL_DIRECTION_DOWN[] = "DOWN";
-
-/// Adjustment value used by AVS by default, in dB, when you, for example, say "Alexa, raise the bass".
-static constexpr int64_t AVS_DEFAULT_ADJUST_DELTA = 1;
 
 std::shared_ptr<EqualizerCapabilityAgent> EqualizerCapabilityAgent::create(
     std::shared_ptr<alexaClientSDK::equalizer::EqualizerController> equalizerController,
@@ -391,11 +388,22 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Equ
 }
 
 void EqualizerCapabilityAgent::doShutdown() {
+    m_executor.shutdown();
     m_equalizerController->removeListener(shared_from_this());
+    m_equalizerController.reset();
+    std::lock_guard<std::mutex> lock(m_storageMutex);
+    m_equalizerStorage.reset();
 }
 
 void EqualizerCapabilityAgent::clearData() {
-    m_equalizerStorage->clear();
+    std::unique_lock<std::mutex> lock(m_storageMutex);
+    // Create a local copy in case m_equalizerStorage is reset
+    auto equalizerStorage = m_equalizerStorage;
+    if (equalizerStorage) {
+        // We should not wait before clearing storage
+        lock.unlock();
+        equalizerStorage->clear();
+    }
 }
 
 void EqualizerCapabilityAgent::onEqualizerStateChanged(const EqualizerState& state) {
@@ -409,6 +417,10 @@ void EqualizerCapabilityAgent::onEqualizerStateChanged(const EqualizerState& sta
     auto request = std::make_shared<MessageRequest>(eventJson.second);
 
     m_messageSender->sendMessage(request);
+}
+
+void EqualizerCapabilityAgent::onEqualizerSameStateChanged(const EqualizerState& state) {
+    onEqualizerStateChanged(state);
 }
 
 bool EqualizerCapabilityAgent::handleSetBandsDirective(
@@ -511,8 +523,9 @@ bool EqualizerCapabilityAgent::handleAdjustBandsDirective(
         EqualizerBand band = bandResult.value();
 
         // Assume default delta if none provided.
-        int64_t bandLevelDelta = AVS_DEFAULT_ADJUST_DELTA;
+        int64_t bandLevelDelta = eqConfig->getDefaultBandDelta();
         retrieveValue(bandDesc, JSON_KEY_LEVELDELTA, &bandLevelDelta);
+        ACSDK_DEBUG5(LX(__func__).d("modifying band with delta", bandLevelDelta));
 
         std::string direction;
         if (!retrieveValue(bandDesc, JSON_KEY_LEVELDIRECTION, &direction)) {

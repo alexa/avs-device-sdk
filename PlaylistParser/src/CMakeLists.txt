@@ -1,6 +1,3 @@
-find_package(PkgConfig)
-pkg_check_modules(CRYPTO REQUIRED libcrypto)
-
 add_definitions("-DACSDK_LOG_MODULE=PlaylistParser")
 
 add_library(PlaylistParser SHARED

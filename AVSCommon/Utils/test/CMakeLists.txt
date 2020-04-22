@@ -1,7 +1,6 @@
 add_subdirectory("Common")
 
 set(INCLUDE_PATH
-	"${AVSCommon_INCLUDE_DIRS}"
-	"${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
+	"${AVSCommon_INCLUDE_DIRS}")
 
-discover_unit_tests("${INCLUDE_PATH}" "AVSCommon;UtilsCommonTestLib")
+discover_unit_tests("${INCLUDE_PATH}" "AVSCommon;UtilsCommonTestLib;SDKInterfacesTests")

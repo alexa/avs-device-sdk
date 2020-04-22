@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,17 +57,16 @@ static constexpr unsigned int MAX_COMPRESSION_FACTOR = 10;
 
 /// Output format for mock encoder.
 static const AudioFormat MOCK_ENCODER_FORMAT = {
-    .encoding = AudioFormat::Encoding::LPCM,
-    .endianness = AudioFormat::Endianness::LITTLE,
-    .sampleRateHz = 16000,
-    .sampleSizeInBits = FRAME_WORDSIZE * CHAR_BIT,
-    .numChannels = 1,
-    .dataSigned = false,
-    .layout = AudioFormat::Layout::INTERLEAVED,
+    AudioFormat::Encoding::LPCM,
+    AudioFormat::Endianness::LITTLE,
+    16000,
+    FRAME_WORDSIZE* CHAR_BIT,
+    1,
+    false,
+    AudioFormat::Layout::INTERLEAVED,
 };
 
 using ::testing::Return;
-using ::testing::_;
 using namespace ::testing;
 
 /**
@@ -109,16 +108,14 @@ protected:
  * This test will feed a dummy PCM stream into SpeechEncoder, then test the behavior with
  * the mock @c EncoderContext.
  */
-TEST_F(SpeechEncoderTest, test_startEncoding) {
-    AudioFormat audioFormat = {
-        .encoding = AudioFormat::Encoding::LPCM,
-        .endianness = AudioFormat::Endianness::LITTLE,
-        .sampleRateHz = 16000,
-        .sampleSizeInBits = FRAME_WORDSIZE * CHAR_BIT,
-        .numChannels = 1,
-        .dataSigned = false,
-        .layout = AudioFormat::Layout::INTERLEAVED,
-    };
+TEST_F(SpeechEncoderTest, testTimer_startEncoding) {
+    AudioFormat audioFormat = {AudioFormat::Encoding::LPCM,
+                               AudioFormat::Endianness::LITTLE,
+                               16000,
+                               FRAME_WORDSIZE * CHAR_BIT,
+                               1,
+                               false,
+                               AudioFormat::Layout::INTERLEAVED};
     auto buffer = std::make_shared<AudioInputStream::Buffer>(4000);
     std::shared_ptr<AudioInputStream> inputStream = AudioInputStream::create(buffer, FRAME_WORDSIZE, 1);
     ASSERT_TRUE(inputStream);
@@ -164,13 +161,13 @@ TEST_F(SpeechEncoderTest, test_startEncoding) {
  */
 TEST_F(SpeechEncoderTest, test_shutdownOnBlockingWrite) {
     AudioFormat audioFormat = {
-        .encoding = AudioFormat::Encoding::LPCM,
-        .endianness = AudioFormat::Endianness::LITTLE,
-        .sampleRateHz = 16000,
-        .sampleSizeInBits = FRAME_WORDSIZE * CHAR_BIT,
-        .numChannels = 1,
-        .dataSigned = false,
-        .layout = AudioFormat::Layout::INTERLEAVED,
+        AudioFormat::Encoding::LPCM,
+        AudioFormat::Endianness::LITTLE,
+        16000,
+        FRAME_WORDSIZE * CHAR_BIT,
+        1,
+        false,
+        AudioFormat::Layout::INTERLEAVED,
     };
 
     auto inputBufferSize = AudioInputStream::calculateBufferSize(INPUT_WORD_COUNT, FRAME_WORDSIZE, 1);

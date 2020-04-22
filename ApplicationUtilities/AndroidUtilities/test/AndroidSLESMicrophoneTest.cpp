@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ protected:
         auto buffer = std::make_shared<avsCommon::avs::AudioInputStream::Buffer>(SDS_BUFFER_SIZE);
         m_stream = avsCommon::avs::AudioInputStream::create(buffer);
         auto engine = AndroidSLESEngine::create();
-        m_mic = engine->createMicrophoneRecorder(m_stream);
+        m_mic = engine->createAndroidMicrophone(m_stream);
         m_reader = m_stream->createReader(avsCommon::avs::AudioInputStream::Reader::Policy::BLOCKING);
         EXPECT_TRUE(m_mic);
     }

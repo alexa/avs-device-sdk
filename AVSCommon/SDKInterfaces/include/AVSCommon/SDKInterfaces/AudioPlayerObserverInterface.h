@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <string>
 
 #include <AVSCommon/AVS/PlayerActivity.h>
+#include <AVSCommon/AVS/PlayRequestor.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -42,6 +43,9 @@ public:
 
         /// The offset in millisecond from the start of the @c AudioItem.
         std::chrono::milliseconds offset;
+
+        /// The @c PlayRequestor object in @c Play directive.
+        avsCommon::avs::PlayRequestor playRequestor;
     };
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRY_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRY_H_
 
+#include <algorithm>
+#include <functional>
 #include <sstream>
 #include <string>
 
@@ -129,6 +131,18 @@ public:
     inline LogEntry& sensitive(const char* key, const ValueType& value);
 
     /**
+     * Add data in the form of a @c key, @c value pair to the metadata of this log entry.
+     * If the value includes a privacy blacklist entry, the portion after that will be obfuscated.
+     * This is done in a distinct method (instead of m or d)  to avoid the cost of always checking
+     * against the blacklist.
+     *
+     * @param key The key identifying the value to add to this LogEntry.
+     * @param value The value to add to this LogEntry, obfuscated if needed.
+     * @return This instance to facilitate adding more information to this log entry.
+     */
+    inline LogEntry& obfuscatePrivateData(const char* key, const std::string& value);
+
+    /**
      * Add an arbitrary message to the end of the text of this LogEntry.  Once this has been called no other
      * additions should be made to this LogEntry.
      *
@@ -160,6 +174,12 @@ private:
 
     /// Add the appropriate prefix for an arbitrary message that is about to be appended to the text of this LogEntry.
     void prefixMessage();
+
+    /// Return a list of labels we will obfuscate if sent to obfuscatePrivateData
+    static std::vector<std::string> getPrivateLabelBlacklist() {
+        static std::vector<std::string> privateLabelBlacklist = {"ssid"};
+        return privateLabelBlacklist;
+    }
 
     /**
      * Append an escaped string to m_stream.
@@ -197,10 +217,40 @@ LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
 }
 #else
 template <typename ValueType>
-LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
+LogEntry& LogEntry::sensitive(const char*, const ValueType&) {
     return *this;
 }
 #endif
+
+LogEntry& LogEntry::obfuscatePrivateData(const char* key, const std::string& value) {
+    // if value contains any  private label, obfuscate the section after the label
+    // since it can (but shouldn't) contain multiple,  obfuscate from the earliest one found onward
+    auto firstPosition = value.length();
+
+    for (auto privateLabel : getPrivateLabelBlacklist()) {
+        auto it = std::search(
+            value.begin(),
+            value.end(),
+            privateLabel.begin(),
+            privateLabel.end(),
+            [](char valueChar, char blackListChar) { return std::tolower(valueChar) == std::tolower(blackListChar); });
+        if (it != value.end()) {
+            // capture the least value
+            auto thisPosition = std::distance(value.begin(), it) + privateLabel.length();
+            if (thisPosition < firstPosition) {
+                firstPosition = thisPosition;
+            }
+        }
+    }
+
+    if (firstPosition <= value.length()) {
+        // hash everything after the label itself
+        auto labelPart = value.substr(0, firstPosition);
+        auto obfuscatedPart = std::to_string(std::hash<std::string>{}(value.substr(firstPosition)));
+        return d(key, labelPart + obfuscatedPart);
+    }
+    return d(key, value);
+}
 
 }  // namespace logger
 }  // namespace utils

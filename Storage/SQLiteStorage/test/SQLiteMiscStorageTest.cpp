@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -151,6 +151,139 @@ TEST_F(SQLiteMiscStorageTest, test_createStringKeyValueTable) {
     ASSERT_TRUE(m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists));
     ASSERT_TRUE(tableExists);
 
+    deleteTestTable(tableName);
+}
+
+TEST_F(SQLiteMiscStorageTest, test_removeWithNonEscapedStringKey) {
+    const std::string tableName = "SQLiteMiscStorageTableEntryTest";
+    const std::string tableEntryKey = R"(non-escaped'\\%$#*?!`\"key)";
+    const std::string tableEntryAddedValue = R"(non-escaped'\\%$#*?!`\"tableEntryAddedValue)";
+    const std::string tableEntryPutValue = R"(non-escaped'\\%$#*?!`\"tableEntryPutValue)";
+    const std::string tableEntryAnotherPutValue = R"(non-escaped'\\%$#*?!`\"tableEntryAnotherPutValue)";
+    const std::string tableEntryUpdatedValue = R"(non-escaped'\\%$#*?!`\"tableEntryUpdatedValue)";
+    std::string tableEntryValue;
+    deleteTestTable(tableName);
+
+    createTestTable(tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+    /// Setup.
+    bool tableEntryExists;
+    ASSERT_TRUE(
+        m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, R"(non-escaped'\\%$#*?!`\"key)", &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAddedValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryAddedValue);
+
+    /// Test remove.
+    ASSERT_TRUE(m_miscStorage->remove(COMPONENT_NAME, tableName, tableEntryKey));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    /// Teardown.
+    deleteTestTable(tableName);
+}
+
+TEST_F(SQLiteMiscStorageTest, test_updateWithNonEscapedStringKey) {
+    const std::string tableName = "SQLiteMiscStorageTableEntryTest";
+    const std::string tableEntryKey = R"(non-escaped'\\%$#*?!`\"key)";
+    const std::string tableEntryAddedValue = R"(non-escaped'\\%$#*?!`\"tableEntryAddedValue)";
+    const std::string tableEntryUpdatedValue = R"(non-escaped'\\%$#*?!`\"tableEntryUpdatedValue)";
+    std::string tableEntryValue;
+    deleteTestTable(tableName);
+
+    createTestTable(tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+    /// Setup.
+    bool tableEntryExists;
+    ASSERT_TRUE(
+        m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, R"(non-escaped'\\%$#*?!`\"key)", &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAddedValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryAddedValue);
+
+    /// Test update.
+    ASSERT_TRUE(m_miscStorage->update(COMPONENT_NAME, tableName, tableEntryKey, tableEntryUpdatedValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryUpdatedValue);
+
+    /// Teardown.
+    deleteTestTable(tableName);
+}
+
+TEST_F(SQLiteMiscStorageTest, test_putWithNonEscapedStringKey) {
+    const std::string tableName = "SQLiteMiscStorageTableEntryTest";
+    const std::string tableEntryKey = R"(non-escaped'\\%$#*?!`\"key)";
+    const std::string tableEntryAddedValue = R"(non-escaped'\\%$#*?!`\"tableEntryAddedValue)";
+    const std::string tableEntryPutValue = R"(non-escaped'\\%$#*?!`\"tableEntryPutValue)";
+    const std::string tableEntryAnotherPutValue = R"(non-escaped'\\%$#*?!`\"tableEntryAnotherPutValue)";
+    std::string tableEntryValue;
+    deleteTestTable(tableName);
+
+    createTestTable(tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+    /// Setup.
+    bool tableEntryExists;
+    ASSERT_TRUE(
+        m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, R"(non-escaped'\\%$#*?!`\"key)", &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAddedValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryAddedValue);
+
+    /// Ensure that put entry works
+    /// Try with a new entry for key
+    ASSERT_TRUE(m_miscStorage->put(COMPONENT_NAME, tableName, tableEntryKey, tableEntryPutValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryPutValue);
+    /// Try with an existing entry for key
+    ASSERT_TRUE(m_miscStorage->put(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAnotherPutValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryAnotherPutValue);
+
+    /// Teardown.
+    deleteTestTable(tableName);
+}
+
+TEST_F(SQLiteMiscStorageTest, test_addWithNonEscapedStringKey) {
+    const std::string tableName = "SQLiteMiscStorageTableEntryTest";
+    const std::string tableEntryKey = R"(non-escaped'\\%$#*?!`\"key)";
+    const std::string tableEntryAddedValue = R"(non-escaped'\\%$#*?!`\"tableEntryAddedValue)";
+    std::string tableEntryValue;
+    deleteTestTable(tableName);
+
+    createTestTable(tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+    /// Setup.
+    bool tableEntryExists;
+    ASSERT_TRUE(
+        m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, R"(non-escaped'\\%$#*?!`\"key)", &tableEntryExists));
+    ASSERT_FALSE(tableEntryExists);
+
+    /// Test add.
+    ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAddedValue));
+    ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+    ASSERT_TRUE(tableEntryExists);
+    ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+    ASSERT_EQ(tableEntryValue, tableEntryAddedValue);
+
+    /// Teardown.
     deleteTestTable(tableName);
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,21 +34,22 @@ namespace utils {
 
 std::string createRandomAlphabetString(int stringSize) {
     // First, let's efficiently generate random numbers of the appropriate size.
-    std::vector<uint8_t> vec(stringSize);
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint8_t> engine;
+    std::vector<uint16_t> vec(stringSize);
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t> engine;
     std::random_device rd;
     engine.seed(
         rd() + std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch())
                    .count());
     std::generate(begin(vec), end(vec), std::ref(engine));
 
+    std::vector<uint8_t> vec8(stringSize);
     // Now perform a modulo, bounding them within [a,z].
     for (size_t i = 0; i < vec.size(); ++i) {
-        vec[i] = static_cast<uint8_t>('a' + (vec[i] % 26));
+        vec8[i] = static_cast<uint8_t>('a' + (vec[i] % 26));
     }
 
     /// Convert the data into a std::string.
-    char* dataBegin = reinterpret_cast<char*>(&vec[0]);
+    char* dataBegin = reinterpret_cast<char*>(&vec8[0]);
 
     return std::string(dataBegin, stringSize);
 }

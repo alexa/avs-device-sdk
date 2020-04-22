@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,7 +48,11 @@ public:
         /// The alert has entered the background.
         FOCUS_ENTERED_BACKGROUND,
         /// The alert has encountered an error.
-        ERROR
+        ERROR,
+        /// The alert has been deleted.
+        DELETED,
+        /// The alert has been scheduled to trigger at a future time.
+        SCHEDULED_FOR_LATER
     };
 
     /**
@@ -99,6 +103,10 @@ inline std::string AlertObserverInterface::stateToString(State state) {
             return "FOCUS_ENTERED_BACKGROUND";
         case State::ERROR:
             return "ERROR";
+        case State::DELETED:
+            return "DELETED";
+        case State::SCHEDULED_FOR_LATER:
+            return "SCHEDULED_FOR_LATER";
     }
     return "unknown State";
 }

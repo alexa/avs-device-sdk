@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "ADSL/DirectiveProcessor.h"
 #include "ADSL/DirectiveRouter.h"
@@ -41,16 +42,20 @@ public:
      *
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
+     * @param metricRecorder The metric recorder.
      * @return Returns a new DirectiveSequencer, or nullptr if the operation failed.
      */
     static std::unique_ptr<DirectiveSequencerInterface> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     bool addDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
     bool removeDirectiveHandler(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler) override;
 
     void setDialogRequestId(const std::string& dialogRequestId) override;
+
+    std::string getDialogRequestId() override;
 
     bool onDirective(std::shared_ptr<avsCommon::avs::AVSDirective> directive) override;
 
@@ -61,17 +66,14 @@ public:
 private:
     /**
      * Constructor.
-     *
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
+     * @param metricRecorder The metric recorder.
      */
-    DirectiveSequencer(std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+    DirectiveSequencer(
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
-    /**
-     * @copydoc
-     *
-     * This method blocks until all processing of directives has stopped.
-     */
     void doShutdown() override;
 
     /**

@@ -26,6 +26,7 @@ target_link_libraries(AndroidSLESMediaPlayer
         avcodec
         avutil
         avformat
+        avfilter
         swresample)
 
 # install target

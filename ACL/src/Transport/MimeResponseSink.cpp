@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -224,7 +224,7 @@ HTTP2ReceiveDataStatus MimeResponseSink::onReceiveNonMimeData(const char* bytes,
         ACSDK_ERROR(LX("nonMimeBodyTruncated").d("total", total).d("maxSize", NON_MIME_BODY_MAX_SIZE));
     }
 
-    return HTTP2ReceiveDataStatus(size);
+    return HTTP2ReceiveDataStatus::SUCCESS;
 }
 
 void MimeResponseSink::onResponseFinished(HTTP2ResponseFinishedStatus status) {

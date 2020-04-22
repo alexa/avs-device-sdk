@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
-#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 
 #include "TemplateRuntime/TemplateRuntime.h"
@@ -253,14 +252,14 @@ void TemplateRuntimeTest::SetUp() {
     m_templateRuntime->addObserver(m_mockGui);
 
     ON_CALL(*m_mockFocusManager, acquireChannel(_, _, _)).WillByDefault(InvokeWithoutArgs([this] {
-        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
+        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, MixingBehavior::PRIMARY);
         return true;
     }));
 
     ON_CALL(*m_mockFocusManager, releaseChannel(_, _)).WillByDefault(InvokeWithoutArgs([this] {
         auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
         std::future<bool> returnValue = releaseChannelSuccess->get_future();
-        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
+        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE, MixingBehavior::MUST_STOP);
         releaseChannelSuccess->set_value(true);
         return returnValue;
     }));
@@ -768,7 +767,7 @@ TEST_F(TemplateRuntimeTest, test_focusNone) {
     m_templateRuntime->CapabilityAgent::handleDirective(MESSAGE_ID);
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
     m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
-    m_templateRuntime->onFocusChanged(FocusState::NONE);
+    m_templateRuntime->onFocusChanged(FocusState::NONE, MixingBehavior::MUST_STOP);
     m_wakeClearTemplateCardFuture.wait_for(TIMEOUT);
 }
 
@@ -792,7 +791,7 @@ TEST_F(TemplateRuntimeTest, test_displayCardCleared) {
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(_, _)).Times(Exactly(1)).WillOnce(InvokeWithoutArgs([this] {
         auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
         std::future<bool> returnValue = releaseChannelSuccess->get_future();
-        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
+        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE, MixingBehavior::MUST_STOP);
         releaseChannelSuccess->set_value(true);
         wakeOnReleaseChannel();
         return returnValue;
@@ -850,14 +849,14 @@ TEST_F(TemplateRuntimeTest, test_reacquireChannel) {
         .WillOnce(InvokeWithoutArgs(this, &TemplateRuntimeTest::wakeOnRenderTemplateCard));
 
     m_templateRuntime->handleDirectiveImmediately(directive1);
-    m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
+    m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE, MixingBehavior::MUST_STOP);
     m_wakeRenderTemplateCardFuture.wait_for(TIMEOUT);
 }
 
 /**
  * Test that we should skip rendering a player info card if the audio has already changed.
  */
-TEST_F(TemplateRuntimeTest, test_RenderPlayerInfoAfterPlayerActivityChanged) {
+TEST_F(TemplateRuntimeTest, testTimer_RenderPlayerInfoAfterPlayerActivityChanged) {
     // Create Directive1.
     const std::string messageId1{"messageId1"};
     auto attachmentManager = std::make_shared<StrictMock<MockAttachmentManager>>();
@@ -888,7 +887,7 @@ TEST_F(TemplateRuntimeTest, test_RenderPlayerInfoAfterPlayerActivityChanged) {
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(_, _)).Times(Exactly(1)).WillOnce(InvokeWithoutArgs([this] {
         auto releaseChannelSuccess = std::make_shared<std::promise<bool>>();
         std::future<bool> returnValue = releaseChannelSuccess->get_future();
-        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE);
+        m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::NONE, MixingBehavior::MUST_STOP);
         releaseChannelSuccess->set_value(true);
         wakeOnReleaseChannel();
         return returnValue;
@@ -908,7 +907,7 @@ TEST_F(TemplateRuntimeTest, test_RenderPlayerInfoAfterPlayerActivityChanged) {
     m_wakeReleaseChannelFuture.wait_for(TIMEOUT);
     context.audioItemId = AUDIO_ITEM_ID_1;
     m_templateRuntime->onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity::PLAYING, context);
-    m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND);
+    m_templateRuntime->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, MixingBehavior::PRIMARY);
     m_templateRuntime->displayCardCleared();
     m_wakeReleaseChannelFuture.wait_for(TIMEOUT);
 }

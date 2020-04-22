@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,10 @@ TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver() :
         m_state(SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED) {
 }
 
-void TestSpeechSynthesizerObserver::onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState state) {
+void TestSpeechSynthesizerObserver::onStateChanged(
+    SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
+    const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
+    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_state = state;
     m_queue.push_back(state);
@@ -37,7 +40,7 @@ bool TestSpeechSynthesizerObserver::checkState(
     const std::chrono::seconds duration) {
     // Pull the front of the state queue
     SpeechSynthesizerObserverInterface::SpeechSynthesizerState hold = waitForNext(duration);
-    return hold == expectedState;
+    return (hold == expectedState);
 }
 
 SpeechSynthesizerObserverInterface::SpeechSynthesizerState TestSpeechSynthesizerObserver::waitForNext(
@@ -47,6 +50,7 @@ SpeechSynthesizerObserverInterface::SpeechSynthesizerState TestSpeechSynthesizer
     if (!m_wakeTrigger.wait_for(lock, duration, [this]() { return !m_queue.empty(); })) {
         return m_state;
     }
+
     ret = m_queue.front();
     m_queue.pop_front();
     return ret;

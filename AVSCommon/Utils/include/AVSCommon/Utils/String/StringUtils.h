@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -98,6 +98,14 @@ std::string stringToUpperCase(const std::string& input);
  * @return A new string with the replaced substrings.
  */
 std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to);
+
+/**
+ * Trim whitespace from the left.
+ *
+ * @param str the string to trim from the left
+ * @return the trimmed string
+ */
+std::string ltrim(const std::string& str);
 
 }  // namespace string
 }  // namespace utils

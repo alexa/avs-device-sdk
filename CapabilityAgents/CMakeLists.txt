@@ -1,29 +1,57 @@
 cmake_minimum_required(VERSION 3.0)
 project(CapabilityAgents LANGUAGES CXX)
 
-include(../build/BuildDefaults.cmake)
+include(${AVS_CORE}/build/BuildDefaults.cmake)
 
-add_subdirectory("AIP")
-add_subdirectory("Alerts")
-add_subdirectory("AudioPlayer")
-add_subdirectory("Bluetooth")
-add_subdirectory("DoNotDisturb")
-add_subdirectory("Equalizer")
-add_subdirectory("ExternalMediaPlayer")
-add_subdirectory("InteractionModel")
-add_subdirectory("MRM")
-add_subdirectory("Notifications")
-add_subdirectory("PlaybackController")
-add_subdirectory("SpeakerManager")
-add_subdirectory("SpeechSynthesizer")
-add_subdirectory("Settings")
-add_subdirectory("System")
-add_subdirectory("TemplateRuntime")
+set(CAPABILITY_AGENTS
+        "AIP"
+        "Alerts"
+        "Alexa"
+        "ApiGateway"
+        "AudioPlayer"
+        "Bluetooth"
+        "Equalizer"
+        "ExternalMediaPlayer"
+        "InteractionModel"
+        "MRM"
+        "Notifications"
+        "PlaybackController"
+        "SpeakerManager"
+        "SpeechSynthesizer"
+        "System"
+        "TemplateRuntime")
 
 if (COMMS)
-    add_subdirectory("CallManager")
+    list(APPEND CAPABILITY_AGENTS "CallManager")
 endif()
 
 if (PCC)
-    add_subdirectory("PhoneCallController")
+    list(APPEND CAPABILITY_AGENTS "PhoneCallController")
 endif()
+
+if (MCC)
+    list(APPEND CAPABILITY_AGENTS "MeetingClientController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_POWER_CONTROLLER)
+    list(APPEND CAPABILITY_AGENTS "PowerController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_TOGGLE_CONTROLLER)
+    list(APPEND CAPABILITY_AGENTS "ToggleController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_RANGE_CONTROLLER)
+    list(APPEND CAPABILITY_AGENTS "RangeController")
+endif()
+
+if (ENDPOINT_CONTROLLERS_MODE_CONTROLLER)
+    list(APPEND CAPABILITY_AGENTS "ModeController")
+endif()
+
+foreach (CA IN LISTS CAPABILITY_AGENTS)
+    if (IS_DIRECTORY "${CapabilityAgents_SOURCE_DIR}/${CA}" AND EXISTS "${CapabilityAgents_SOURCE_DIR}/${CA}/CMakeLists.txt")
+        message("Adding CapabilityAgent ${CA}")
+        add_subdirectory(${CA})
+    endif()
+endforeach()

@@ -4,7 +4,8 @@ add_library(AudioResources SHARED
         AlertsAudioFactory.cpp
         AudioFactory.cpp
         NotificationsAudioFactory.cpp
-        CommunicationsAudioFactory.cpp)
+        CommunicationsAudioFactory.cpp
+        SystemSoundAudioFactory.cpp)
 
 target_include_directories(AudioResources PUBLIC
         "${AudioResources_SOURCE_DIR}/include"

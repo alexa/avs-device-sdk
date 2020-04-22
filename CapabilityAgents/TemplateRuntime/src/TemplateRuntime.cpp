@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -196,7 +196,7 @@ DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     return configuration;
 }
 
-void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus) {
+void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus, MixingBehavior) {
     m_executor.submit([this, newFocus]() { executeOnFocusChangedEvent(newFocus); });
 }
 

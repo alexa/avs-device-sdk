@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public:
     virtual void onDownchannelFinished() = 0;
 
     /**
-     * Notification that an @c MessgeRequest has been sent.
+     * Notification that an @c MessageRequest has been sent.
      */
     virtual void onMessageRequestSent() = 0;
 
@@ -101,9 +101,9 @@ public:
         const avsCommon::utils::http2::HTTP2RequestConfig& cfg) = 0;
 
     /**
-     * Get AVS endpoint to send request to.
+     * Get AVS gateway to send request to.
      */
-    virtual std::string getEndpoint() = 0;
+    virtual std::string getAVSGateway() = 0;
 };
 
 }  // namespace acl

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,9 +26,6 @@ namespace audioPlayer {
 
 using namespace avsCommon::utils::timing;
 
-const std::chrono::milliseconds ProgressTimer::NO_DELAY{std::chrono::milliseconds::max()};
-const std::chrono::milliseconds ProgressTimer::NO_INTERVAL{std::chrono::milliseconds::max()};
-
 /// String to identify log entries originating from this file.
 static const std::string TAG("ProgressTimer");
 
@@ -41,8 +38,8 @@ static const std::string TAG("ProgressTimer");
 
 ProgressTimer::ProgressTimer() :
         m_state{State::IDLE},
-        m_delay{NO_DELAY},
-        m_interval{NO_INTERVAL},
+        m_delay{ProgressTimer::getNoDelay()},
+        m_interval{ProgressTimer::getNoInterval()},
         m_target{std::chrono::milliseconds::zero()},
         m_gotProgress{false},
         m_progress{std::chrono::milliseconds::zero()} {
@@ -101,7 +98,7 @@ void ProgressTimer::init(
 
     m_context = context;
     m_interval = interval;
-    m_delay = delay >= offset ? delay : NO_DELAY;
+    m_delay = delay >= offset ? delay : ProgressTimer::getNoDelay();
     m_offset = offset;
     m_progress = offset;
 }
@@ -116,14 +113,14 @@ void ProgressTimer::start() {
         return;
     }
 
-    if (m_delay != NO_DELAY) {
-        if (m_interval != NO_INTERVAL) {
+    if (m_delay != ProgressTimer::getNoDelay()) {
+        if (m_interval != ProgressTimer::getNoInterval()) {
             m_target = std::min(m_delay, m_interval * ((m_offset / m_interval) + 1));
         } else {
             m_target = m_delay;
         }
     } else {
-        if (m_interval != NO_INTERVAL) {
+        if (m_interval != ProgressTimer::getNoInterval()) {
             m_target = m_interval * ((m_offset / m_interval) + 1);
         } else {
             ACSDK_DEBUG5(LX("startNotStartingThread").d("reason", "noTarget"));
@@ -192,9 +189,33 @@ void ProgressTimer::stop() {
     }
 
     m_context.reset();
-    m_delay = NO_DELAY;
-    m_interval = NO_INTERVAL;
+    m_delay = ProgressTimer::getNoDelay();
+    m_interval = ProgressTimer::getNoInterval();
     m_target = std::chrono::milliseconds::zero();
+}
+
+void ProgressTimer::updateInterval(const std::chrono::milliseconds& newInterval) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (std::chrono::milliseconds::zero() == newInterval || ProgressTimer::getNoInterval() == newInterval) {
+        ACSDK_ERROR(LX("updateIntervalFailed").d("reason", "invalidNewInterval"));
+        return;
+    }
+
+    pause();
+    {
+        std::lock_guard<std::mutex> callLock(m_callMutex);
+        m_interval = newInterval;
+
+        if (ProgressTimer::getNoDelay() != m_delay && m_progress < m_delay) {
+            m_target = std::min(m_delay, m_interval * ((m_progress / m_interval) + 1));
+        } else {
+            m_target = m_interval * ((m_progress / m_interval) + 1);
+        }
+    }
+    resume();
+
+    m_context->onProgressReportIntervalUpdated();
 }
 
 void ProgressTimer::onProgress(std::chrono::milliseconds progress) {
@@ -251,14 +272,14 @@ void ProgressTimer::mainLoop() {
 
     std::unique_lock<std::mutex> stateLock(m_stateMutex);
 
-    if (NO_DELAY == m_delay && NO_INTERVAL == m_interval) {
+    if (ProgressTimer::getNoDelay() == m_delay && ProgressTimer::getNoInterval() == m_interval) {
         ACSDK_DEBUG5(LX("mainLoopExiting").d("reason", "noDelayOrInterval"));
         return;
     }
 
     while (State::RUNNING == m_state) {
-        stateLock.unlock();
         m_gotProgress = false;
+        stateLock.unlock();
         m_context->requestProgress();
         stateLock.lock();
 
@@ -272,7 +293,7 @@ void ProgressTimer::mainLoop() {
             if (m_target == m_delay) {
                 m_context->onProgressReportDelayElapsed();
                 // If delay and interval coincide, send both notifications.
-                if (m_interval != NO_INTERVAL && (m_target.count() % m_interval.count()) == 0) {
+                if (m_interval != ProgressTimer::getNoInterval() && (m_target.count() % m_interval.count()) == 0) {
                     m_context->onProgressReportIntervalElapsed();
                 }
             } else {
@@ -300,7 +321,7 @@ bool ProgressTimer::updateTargetLocked() {
     // progress reports to send.  The rules for interpreting the delay and interval values are
     // explained in progressReportDelayElapsed event and progressReportIntervalElapsed event
     // sections of the AudioPlayer interface documentation:
-    //     https://developer.amazon.com/docs/alexa-voice-service/audioplayer.html
+    //     https://developer.amazon.com/docs/alexa/alexa-voice-service/audioplayer.html
 
     // Haven't reached the target yet, so no need to update it.
     if (m_progress < m_target) {
@@ -308,9 +329,9 @@ bool ProgressTimer::updateTargetLocked() {
     }
 
     // No reporting after an initial delay.
-    if (NO_DELAY == m_delay) {
+    if (ProgressTimer::getNoDelay() == m_delay) {
         // If no periodic reports, either, there will be no progress reports, and so, no target.
-        if (NO_INTERVAL == m_interval) {
+        if (ProgressTimer::getNoInterval() == m_interval) {
             ACSDK_DEBUG9(LX("noTarget"));
             return false;
         }
@@ -322,12 +343,12 @@ bool ProgressTimer::updateTargetLocked() {
     }
 
     // Handle reporting progress after an initial delay, and without reporting periodic progress.
-    if (NO_INTERVAL == m_interval) {
+    if (ProgressTimer::getNoInterval() == m_interval) {
         // If progress has already reached the initial delay and there is no interval, there is
         // no more progress to report and mainLoop() will exit.  Reset m_delay before returning
         // so that a pesky call to resume() won't trigger more progress reports.
         if (m_target == m_delay) {
-            m_delay = NO_DELAY;
+            m_delay = ProgressTimer::getNoDelay();
             return false;
         }
 

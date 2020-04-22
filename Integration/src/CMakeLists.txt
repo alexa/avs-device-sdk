@@ -15,6 +15,7 @@ if(BUILD_TESTING)
     target_include_directories(Integration PUBLIC "${RegistrationManager_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${SQLiteStorage_SOURCE_DIR}/include")
+    target_include_directories(Integration PUBLIC "${SynchronizeStateSender_SOURCE_DIR}/include")
 
-    target_link_libraries(Integration ACL CBLAuthDelegate ContextManager gtest gmock RegistrationManager)
+    target_link_libraries(Integration ACL CBLAuthDelegate ContextManager gtest gmock RegistrationManager SynchronizeStateSender)
 endif()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 
 #include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
-#include <AVSCommon/SDKInterfaces/AVSEndpointAssignerInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
@@ -70,7 +70,7 @@ namespace acl {
 class AVSConnectionManager
         : public avsCommon::avs::AbstractAVSConnectionManager
         , public avsCommon::sdkInterfaces::MessageSenderInterface
-        , public avsCommon::sdkInterfaces::AVSEndpointAssignerInterface
+        , public avsCommon::sdkInterfaces::AVSGatewayAssignerInterface
         , public MessageRouterObserverInterface
         , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
         , public avsCommon::utils::RequiresShutdown
@@ -105,6 +105,7 @@ public:
     bool isEnabled() override;
     void reconnect() override;
     bool isConnected() const override;
+    void onWakeConnectionRetry() override;
     void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     /// @}
@@ -112,15 +113,15 @@ public:
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
     /**
-     * @note Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
-     * current active connection to be closed, and a new one opened to the new endpoint.
+     * @note Set the gateway URL for the AVS connection.  Calling this function with a new value will cause the
+     * current active connection to be closed, and a new one opened to the new gateway.
      */
-    void setAVSEndpoint(const std::string& avsEndpoint) override;
+    void setAVSGateway(const std::string& avsGateway) override;
 
     /**
-     * @return The current URL endpoint for AVS connection.
+     * @return The current gateway URL for AVS connection.
      */
-    std::string getAVSEndpoint();
+    std::string getAVSGateway();
 
     /// @name InternetConnectionObserverInterface method overrides.
     /// @{

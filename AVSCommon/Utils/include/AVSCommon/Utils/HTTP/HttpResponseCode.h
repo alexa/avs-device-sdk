@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,9 +30,11 @@ enum HTTPResponseCode {
     /// No HTTP response received.
     HTTP_RESPONSE_CODE_UNDEFINED = 0,
 
-    /// HTTP Success with reponse payload.
+    /// HTTP Success with response payload.
     SUCCESS_OK = 200,
-    /// HTTP Succcess with no response payload.
+    // HTTP Success Accepted with no response payload.
+    SUCCESS_ACCEPTED = 202,
+    /// HTTP Success with no response payload.
     SUCCESS_NO_CONTENT = 204,
 
     /// Multiple redirection choices
@@ -55,6 +57,8 @@ enum HTTPResponseCode {
 
     /// HTTP code for internal error by server which didn't fulfill the request.
     SERVER_ERROR_INTERNAL = 500,
+    /// HTTP code for internal error by server for not supporting the facility requested.
+    SERVER_ERROR_NOT_IMPLEMENTED = 501,
 
     /// First success code
     SUCCESS_START_CODE = SUCCESS_OK,
@@ -104,6 +108,8 @@ inline HTTPResponseCode intToHTTPResponseCode(int code) {
     switch (code) {
         case 200:
             return HTTPResponseCode::SUCCESS_OK;
+        case 202:
+            return HTTPResponseCode::SUCCESS_ACCEPTED;
         case 204:
             return HTTPResponseCode::SUCCESS_NO_CONTENT;
         case 300:
@@ -152,6 +158,8 @@ inline std::string responseCodeToString(HTTPResponseCode responseCode) {
             return "HTTP_RESPONSE_CODE_UNDEFINED";
         case HTTPResponseCode::SUCCESS_OK:
             return "SUCCESS_OK";
+        case HTTPResponseCode::SUCCESS_ACCEPTED:
+            return "SUCCESS_ACCEPTED";
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
             return "SUCCESS_NO_CONTENT";
         case HTTPResponseCode::SUCCESS_END_CODE:
@@ -174,6 +182,8 @@ inline std::string responseCodeToString(HTTPResponseCode responseCode) {
             return "CLIENT_ERROR_FORBIDDEN";
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
             return "SERVER_ERROR_INTERNAL";
+        case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
+            return "SERVER_ERROR_NOT_IMPLEMENTED";
     }
     logger::acsdkError(logger::LogEntry("HttpResponseCodes", __func__)
                            .d("longValue", static_cast<long>(responseCode))

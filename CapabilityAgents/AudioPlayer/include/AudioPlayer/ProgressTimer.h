@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,16 +56,25 @@ public:
         virtual void onProgressReportIntervalElapsed() = 0;
 
         /**
+         * Notification that it is time to send a ProgressReportIntervalUpdated event.
+         */
+        virtual void onProgressReportIntervalUpdated() = 0;
+
+        /**
          * Destructor.
          */
         virtual ~ContextInterface() = default;
     };
 
-    /// Delay value for no ProgressReportDelayElapsed notifications.
-    static const std::chrono::milliseconds NO_DELAY;
+    /// Static function member to get delay value for no ProgressReportDelayElapsed notifications..
+    static std::chrono::milliseconds getNoDelay() {
+        return std::chrono::milliseconds::max();
+    }
 
-    /// Interval value for no ProgressReportIntervalElapsed notifications.
-    static const std::chrono::milliseconds NO_INTERVAL;
+    /// Static function member to get interval value for no ProgressReportIntervalElapsed notifications.
+    static std::chrono::milliseconds getNoInterval() {
+        return std::chrono::milliseconds::max();
+    }
 
     /**
      * Constructor.
@@ -84,10 +93,10 @@ public:
      *
      * @param context The context within which to operate.
      * @param delay The offset (in milliseconds from the start of the track) at which to send the
-     * @c ProgressReportDelayElapsed event. If delay is @c NO_DELAY, no @c ProgressReportDelayElapsed
+     * @c ProgressReportDelayElapsed event. If delay is @c ProgressTimer::getNoDelay(), no @c ProgressReportDelayElapsed
      * notifications will be sent.
      * @param interval The interval (in milliseconds from the start of the track) at which to send
-     * @c ProgressReportIntervalElapsed events. If interval is @c NO_INTERVAL, no
+     * @c ProgressReportIntervalElapsed events. If interval is @c ProgressTimer::getNoInterval(), no
      * @c ProgressReportIntervalElapsed notifications will be sent.
      * @param offset The offset (in milliseconds from the start of the track) at which playback of
      * the track will start.
@@ -125,6 +134,13 @@ public:
      * a @c ProgressTimer to it's pre @c init() state.
      */
     void stop();
+
+    /**
+     * Update interval to send @c ProgressReportIntervalElapsed events.
+     *
+     * @param newInterval New interval in milliseconds from the start of the track.
+     */
+    void updateInterval(const std::chrono::milliseconds& newInterval);
 
     /**
      * Notification of the current progress.

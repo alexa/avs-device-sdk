@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 #include <gmock/gmock-actions.h>
 
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
+#include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/DeviceSettingsManager.h>
 
 #include "Alerts/AlertScheduler.h"
 
@@ -51,11 +53,12 @@ static const std::chrono::seconds ALERT_PAST_DUE_TIME_LIMIT{10};
 
 class MockRenderer : public renderer::RendererInterface {
 public:
-    MOCK_METHOD6(
+    MOCK_METHOD7(
         start,
         void(
             std::shared_ptr<capabilityAgents::alerts::renderer::RendererObserverInterface> observer,
-            std::function<std::unique_ptr<std::istream>()> audioFactory,
+            std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+            bool alarmVolumeRampEnabled,
             const std::vector<std::string>& urls,
             int loopCount,
             std::chrono::milliseconds loopPause,
@@ -66,14 +69,14 @@ public:
 class TestAlert : public Alert {
 public:
     TestAlert() :
-            Alert(defaultAudioFactory, shortAudioFactory),
+            Alert(defaultAudioFactory, shortAudioFactory, nullptr),
             m_alertType{ALERT_TYPE},
             m_renderer{std::make_shared<MockRenderer>()} {
         this->setRenderer(m_renderer);
     }
 
     TestAlert(const std::string& token, const std::string& schedTime) :
-            Alert(defaultAudioFactory, shortAudioFactory),
+            Alert(defaultAudioFactory, shortAudioFactory, nullptr),
             m_alertType{ALERT_TYPE},
             m_renderer{std::make_shared<MockRenderer>()} {
         this->setRenderer(m_renderer);
@@ -99,12 +102,16 @@ public:
     }
 
 private:
-    static std::unique_ptr<std::istream> defaultAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("default audio"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> defaultAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream("default audio")),
+            avsCommon::utils::MediaType::MPEG);
     }
 
-    static std::unique_ptr<std::istream> shortAudioFactory() {
-        return std::unique_ptr<std::stringstream>(new std::stringstream("short audio"));
+    static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> shortAudioFactory() {
+        return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
+            std::unique_ptr<std::stringstream>(new std::stringstream("short audio")),
+            avsCommon::utils::MediaType::MPEG);
     }
 
     const std::string m_alertType;
@@ -140,7 +147,9 @@ public:
     bool store(std::shared_ptr<Alert> alert) {
         return m_storeRetVal;
     }
-    bool load(std::vector<std::shared_ptr<Alert>>* alertContainer) {
+    bool load(
+        std::vector<std::shared_ptr<Alert>>* alertContainer,
+        std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
         if (m_loadRetVal) {
             alertContainer->clear();
             for (std::shared_ptr<Alert> alertToAdd : m_alertsInStorage) {
@@ -231,6 +240,7 @@ protected:
     std::chrono::seconds m_alertPastDueTimeLimit;
     std::shared_ptr<AlertScheduler> m_alertScheduler;
     std::shared_ptr<TestAlertObserver> m_testAlertObserver;
+    std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
 };
 
 static std::string getFutureInstant(int yearsPlus) {
@@ -257,6 +267,8 @@ AlertSchedulerTest::AlertSchedulerTest() :
 
 void AlertSchedulerTest::SetUp() {
     m_alertStorage->setOpenRetVal(true);
+    m_settingsManager =
+        std::make_shared<settings::DeviceSettingsManager>(std::make_shared<registrationManager::CustomerDataManager>());
 }
 
 /**
@@ -276,11 +288,12 @@ std::shared_ptr<TestAlert> AlertSchedulerTest::doSimpleTestSetup(bool activateAl
     m_alertStorage->setAlerts(alertToAdd);
 
     if (initWithAlertObserver) {
-        m_alertScheduler->initialize(m_testAlertObserver);
+        m_alertScheduler->initialize(m_testAlertObserver, m_settingsManager);
+        ;
     } else {
         std::shared_ptr<AlertScheduler> alertSchedulerObs{
             std::make_shared<AlertScheduler>(m_alertStorage, m_alertRenderer, m_alertPastDueTimeLimit)};
-        m_alertScheduler->initialize(alertSchedulerObs);
+        m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
     }
 
     if (activateAlert) {
@@ -296,12 +309,13 @@ std::shared_ptr<TestAlert> AlertSchedulerTest::doSimpleTestSetup(bool activateAl
  */
 TEST_F(AlertSchedulerTest, test_initialize) {
     /// check if init fails if scheduler is not available
-    ASSERT_FALSE(m_alertScheduler->initialize(nullptr));
+    ASSERT_FALSE(m_alertScheduler->initialize(nullptr, nullptr));
+    ASSERT_FALSE(m_alertScheduler->initialize(nullptr, m_settingsManager));
 
     /// check if init fails if a database for alerts cant be created
     m_alertStorage->setOpenRetVal(false);
     m_alertStorage->setCreateDatabaseRetVal(false);
-    ASSERT_FALSE(m_alertScheduler->initialize(m_alertScheduler));
+    ASSERT_FALSE(m_alertScheduler->initialize(m_alertScheduler, m_settingsManager));
 
     /// check if init succeeds. Pass in 3 alerts of which 1 is expired. Only 2 should actually remain in the end.
     std::shared_ptr<AlertScheduler> alertSchedulerObs{
@@ -330,7 +344,7 @@ TEST_F(AlertSchedulerTest, test_initialize) {
     /// active alert should get modified
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
 
-    ASSERT_TRUE(m_alertScheduler->initialize(alertSchedulerObs));
+    ASSERT_TRUE(m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager));
 
     const unsigned int expectedRemainingAlerts = 2;
 
@@ -455,7 +469,7 @@ TEST_F(AlertSchedulerTest, test_deleteAlertSingle) {
     std::shared_ptr<TestAlert> alert1 = std::make_shared<TestAlert>(ALERT1_TOKEN, getFutureInstant(1));
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     // if active alert and the token matches, ensure that we dont delete it (we deactivate the alert actually)
@@ -469,7 +483,7 @@ TEST_F(AlertSchedulerTest, test_deleteAlertSingle) {
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, getFutureInstant(1));
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
     ASSERT_TRUE(m_alertScheduler->deleteAlert(ALERT2_TOKEN));
 }
@@ -489,7 +503,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsSingle) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete one existing
     ASSERT_EQ(m_alertScheduler->getAllAlerts().size(), 2u);
@@ -520,7 +534,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsMultipleExisting) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete multiple existing
     EXPECT_TRUE(m_alertScheduler->deleteAlerts({ALERT1_TOKEN, ALERT2_TOKEN}));
@@ -542,7 +556,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsMultipleMixed) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete multiple mixed
     EXPECT_TRUE(m_alertScheduler->deleteAlerts({ALERT1_TOKEN, ALERT3_TOKEN}));
@@ -564,7 +578,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsMultipleMissing) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete multiple non-existing
     EXPECT_TRUE(m_alertScheduler->deleteAlerts({ALERT3_TOKEN, ALERT4_TOKEN}));
@@ -586,7 +600,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsMultipleSame) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete same multiple times
     EXPECT_TRUE(m_alertScheduler->deleteAlerts({ALERT1_TOKEN, ALERT1_TOKEN}));
@@ -608,7 +622,7 @@ TEST_F(AlertSchedulerTest, test_bulkDeleteAlertsMultipleEmpty) {
     alertsToAdd.push_back(alert1);
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
 
     // Delete empty
     EXPECT_TRUE(m_alertScheduler->deleteAlerts({}));
@@ -627,7 +641,7 @@ TEST_F(AlertSchedulerTest, test_isAlertActive) {
     std::shared_ptr<TestAlert> alert1 = std::make_shared<TestAlert>(ALERT1_TOKEN, getFutureInstant(1));
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     /// inactive alert
@@ -656,7 +670,7 @@ TEST_F(AlertSchedulerTest, test_getContextInfo) {
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, getFutureInstant(1));
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
-    m_alertScheduler->initialize(alertSchedulerObs);
+    m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
 
     AlertScheduler::AlertsContextInfo resultContextInfo = m_alertScheduler->getContextInfo();

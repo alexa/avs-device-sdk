@@ -1,7 +1,7 @@
 /*
  * SDKVersion.h
  *
- * Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  * permissions and limitations under the License.
  */
 
-
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDKVERSION_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDKVERSION_H_
 
@@ -27,25 +26,23 @@ namespace utils {
 
 /// These functions are responsible for providing access to the current SDK version.
 /// NOTE: To make changes to this file you *MUST* do so via SDKVersion.h.in.
-namespace sdkVersion{
+namespace sdkVersion {
 
-inline static std::string getCurrentVersion(){
-	return "1.14.0";
+inline static std::string getCurrentVersion() {
+    return "1.19.0";
 }
 
-inline static int getMajorVersion(){
-	return 1;
+inline static int getMajorVersion() {
+    return 1;
 }
 
-inline static int getMinorVersion(){
-	return 14;
+inline static int getMinorVersion() {
+    return 19;
 }
 
-inline static int getPatchVersion(){
-	return 0;
+inline static int getPatchVersion() {
+    return 0;
 }
-
-
 
 }  // namespace sdkVersion
 }  // namespace utils

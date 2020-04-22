@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -141,19 +141,7 @@ void CapabilityAgent::removeDirective(const std::string& messageId) {
     m_directiveInfoMap.erase(messageId);
 }
 
-void CapabilityAgent::onFocusChanged(FocusState) {
-    // default no-op
-}
-
-void CapabilityAgent::provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextAvailable(const std::string&) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextFailure(const sdkInterfaces::ContextRequestError) {
+void CapabilityAgent::onFocusChanged(FocusState, MixingBehavior) {
     // default no-op
 }
 
@@ -161,7 +149,7 @@ const std::pair<std::string, std::string> CapabilityAgent::buildJsonEventString(
     const std::string& eventName,
     const std::string& dialogRequestIdString,
     const std::string& payload,
-    const std::string& context) {
+    const std::string& context) const {
     return avs::buildJsonEventString(m_namespace, eventName, dialogRequestIdString, payload, context);
 }
 

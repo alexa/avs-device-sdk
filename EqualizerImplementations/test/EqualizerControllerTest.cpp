@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,12 +43,14 @@ using namespace equalizer;
 static constexpr int MIN_LEVEL = -10;
 /// Band level used as maximum value in tests
 static constexpr int MAX_LEVEL = 10;
-/// Band level below the minimum allowed.
+/// Band level below the minimum allowed
 static constexpr int BELOW_MIN_LEVEL = -11;
-/// Band level above the maximum allowed.
+/// Band level above the maximum allowed
 static constexpr int ABOVE_MAX_LEVEL = 11;
 /// Band level used as a default
 static constexpr int DEFAULT_LEVEL = 0;
+/// Default value to adjust band level
+static constexpr int DEFAULT_ADJUST_DELTA = 1;
 
 /// A sample default band level for MIDRANGE band
 static constexpr int DEFAULT_MIDRANGE = DEFAULT_LEVEL;
@@ -87,7 +89,8 @@ void EqualizerControllerTest::SetUp() {
         DEFAULT_MODE,
         EqualizerBandLevelMap({{EqualizerBand::MIDRANGE, DEFAULT_MIDRANGE}, {EqualizerBand::TREBLE, DEFAULT_TREBLE}})};
     auto modes = std::set<EqualizerMode>({EqualizerMode::NIGHT, EqualizerMode::TV});
-    m_configuration = InMemoryEqualizerConfiguration::create(MIN_LEVEL, MAX_LEVEL, bands, modes, defaultState);
+    m_configuration =
+        InMemoryEqualizerConfiguration::create(MIN_LEVEL, MAX_LEVEL, DEFAULT_ADJUST_DELTA, bands, modes, defaultState);
     m_storage = std::make_shared<NiceMock<MockEqualizerStorageInterface>>();
     m_modeController = std::make_shared<NiceMock<MockEqualizerModeControllerInterface>>();
 
@@ -203,8 +206,10 @@ TEST_F(EqualizerControllerTest, test_providedBandLevelChanges_addRemoveListener_
     controller->setBandLevel(EqualizerBand::TREBLE, NON_DEFAULT_TREBLE);
     EXPECT_EQ(reportedState.bandLevels[EqualizerBand::TREBLE], NON_DEFAULT_TREBLE);
 
-    // Call again with the same value. Must not report changes
+    // Call again with the same value. Must not report changes by onEqualizerStateChanged()
     EXPECT_CALL(*(listener.get()), onEqualizerStateChanged(_)).Times(0);
+    // Call again with the same value. Must report changes by onEqualizerSameStateChanged() once
+    EXPECT_CALL(*(listener.get()), onEqualizerSameStateChanged(_)).Times(AtLeast(1));
     controller->setBandLevel(EqualizerBand::TREBLE, NON_DEFAULT_TREBLE);
 
     // Reset level to default and try to adjust.

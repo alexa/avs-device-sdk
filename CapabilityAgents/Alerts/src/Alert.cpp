@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include "Alerts/Alarm.h"
 #include "Alerts/Alert.h"
 
 #include <AVSCommon/AVS/FocusState.h>
@@ -75,14 +76,16 @@ static const std::string TAG("Alert");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 Alert::Alert(
-    std::function<std::unique_ptr<std::istream>()> defaultAudioFactory,
-    std::function<std::unique_ptr<std::istream>()> shortAudioFactory) :
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> defaultAudioFactory,
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> shortAudioFactory,
+    std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
         m_stopReason{StopReason::UNSET},
         m_focusState{avsCommon::avs::FocusState::NONE},
         m_hasTimerExpired{false},
         m_observer{nullptr},
         m_defaultAudioFactory{defaultAudioFactory},
-        m_shortAudioFactory{shortAudioFactory} {
+        m_shortAudioFactory{shortAudioFactory},
+        m_settingsManager{settingsManager} {
 }
 
 /**
@@ -206,6 +209,8 @@ static Alert::ParseFromJsonStatus parseAlertAssetConfigurationFromJson(
 }
 
 Alert::ParseFromJsonStatus Alert::parseFromJson(const rapidjson::Value& payload, std::string* errorMessage) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     if (!retrieveValue(payload, KEY_TOKEN, &m_staticData.token)) {
         ACSDK_ERROR(LX("parseFromJsonFailed").m("could not parse token."));
         *errorMessage = "missing property: " + KEY_TOKEN;
@@ -246,8 +251,7 @@ void Alert::setObserver(AlertObserverInterface* observer) {
 }
 
 void Alert::setFocusState(FocusState focusState) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    auto rendererCopy = m_renderer;
+    std::lock_guard<std::mutex> lock(m_mutex);
     auto alertState = m_dynamicData.state;
 
     if (focusState == m_focusState) {
@@ -256,11 +260,9 @@ void Alert::setFocusState(FocusState focusState) {
 
     m_focusState = focusState;
 
-    lock.unlock();
-
     if (State::ACTIVE == alertState) {
-        rendererCopy->stop();
-        startRenderer();
+        m_renderer->stop();
+        startRendererLocked();
     }
 }
 
@@ -299,23 +301,17 @@ void Alert::activate() {
         }
     }
 
-    lock.unlock();
-
-    startRenderer();
+    startRendererLocked();
 }
 
 void Alert::deactivate(StopReason reason) {
     ACSDK_DEBUG9(LX("deactivate").d("reason", reason));
-    std::unique_lock<std::mutex> lock(m_mutex);
-    auto rendererCopy = m_renderer;
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     m_dynamicData.state = Alert::State::STOPPING;
     m_stopReason = reason;
     m_maxLengthTimer.stop();
-
-    lock.unlock();
-
-    rendererCopy->stop();
+    m_renderer->stop();
 }
 
 void Alert::getAlertData(StaticData* staticData, DynamicData* dynamicData) const {
@@ -482,6 +478,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
 }
 
 std::string Alert::getToken() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
     return m_staticData.token;
 }
 
@@ -529,8 +526,7 @@ bool Alert::updateScheduledTime(const std::string& newScheduledTime) {
 }
 
 bool Alert::snooze(const std::string& updatedScheduledTime) {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    auto rendererCopy = m_renderer;
+    std::lock_guard<std::mutex> lock(m_mutex);
 
     if (!m_dynamicData.timePoint.setTime_ISO_8601(updatedScheduledTime)) {
         ACSDK_ERROR(LX("snoozeFailed").d("reason", "setTimeFailed").d("updatedScheduledTime", updatedScheduledTime));
@@ -538,9 +534,8 @@ bool Alert::snooze(const std::string& updatedScheduledTime) {
     }
 
     m_dynamicData.state = State::SNOOZING;
-    lock.unlock();
 
-    rendererCopy->stop();
+    m_renderer->stop();
     return true;
 }
 
@@ -570,17 +565,20 @@ Alert::AssetConfiguration Alert::getAssetConfiguration() const {
 }
 
 void Alert::startRenderer() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    startRendererLocked();
+}
+
+void Alert::startRendererLocked() {
     ACSDK_DEBUG9(LX("startRenderer"));
     std::vector<std::string> urls;
 
-    std::unique_lock<std::mutex> lock(m_mutex);
-    auto rendererCopy = m_renderer;
     auto loopCount = m_dynamicData.loopCount;
     auto loopPause = m_staticData.assetConfiguration.loopPause;
     bool startWithPause = false;
 
     // If there are no assets to play (due to the alert not providing any assets), or there was a previous error
-    // (indicated by m_staticData.assetConfiguration.hasRenderingFailed), we call rendererCopy->start(..) with an
+    // (indicated by m_staticData.assetConfiguration.hasRenderingFailed), we call m_renderer->start(..) with an
     // empty vector of urls.  This causes the default audio to be rendered.
     auto audioFactory = getDefaultAudioFactory();
     if (avsCommon::avs::FocusState::BACKGROUND == m_focusState) {
@@ -600,21 +598,28 @@ void Alert::startRenderer() {
         }
     }
 
-    lock.unlock();
+    auto alarmVolumeRampEnabled = false;
+    if (m_settingsManager) {
+        // When Alert starts, check the current volume ramp setting so the alert renders with the most current setting
+        auto alarmVolumeRampSetting = m_settingsManager
+                                          ->getValue<settings::DeviceSettingsIndex::ALARM_VOLUME_RAMP>(
+                                              settings::types::getAlarmVolumeRampDefault())
+                                          .second;
+        alarmVolumeRampEnabled =
+            settings::types::isEnabled(alarmVolumeRampSetting) && (getTypeName() == Alarm::getTypeNameStatic());
+    }
 
-    rendererCopy->start(shared_from_this(), audioFactory, urls, loopCount, loopPause, startWithPause);
+    m_renderer->start(
+        shared_from_this(), audioFactory, alarmVolumeRampEnabled, urls, loopCount, loopPause, startWithPause);
 }
 
 void Alert::onMaxTimerExpiration() {
     ACSDK_DEBUG1(LX("onMaxTimerExpiration"));
-    std::unique_lock<std::mutex> lock(m_mutex);
-    auto rendererCopy = m_renderer;
+    std::lock_guard<std::mutex> lock(m_mutex);
     m_dynamicData.state = Alert::State::STOPPING;
     m_hasTimerExpired = true;
 
-    lock.unlock();
-
-    rendererCopy->stop();
+    m_renderer->stop();
 }
 
 bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
@@ -625,11 +630,13 @@ bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
     return (m_dynamicData.timePoint.getTime_Unix() < cutoffTime);
 }
 
-std::function<std::unique_ptr<std::istream>()> Alert::getDefaultAudioFactory() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> Alert::
+    getDefaultAudioFactory() const {
     return m_defaultAudioFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> Alert::getShortAudioFactory() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> Alert::
+    getShortAudioFactory() const {
     return m_shortAudioFactory;
 }
 
@@ -703,6 +710,8 @@ std::string Alert::parseFromJsonStatusToString(Alert::ParseFromJsonStatus parseF
 }
 
 void Alert::printDiagnostic() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string assetInfoString;
     for (auto asset : m_staticData.assetConfiguration.assets) {
         assetInfoString += "\nid:" + asset.second.id + ", url:" + asset.second.url;

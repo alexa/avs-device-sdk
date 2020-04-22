@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,11 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
+#include <set>
+#include <string>
+#include <vector>
+#include <cmath>
 
 #include <gtest/gtest.h>
 
@@ -90,6 +95,19 @@ TEST_F(JsonGeneratorTest, test_jsonBool) {
     EXPECT_EQ(m_generator.toString(), expected);
 }
 
+/// Test json generator double creation.
+TEST_F(JsonGeneratorTest, test_jsonDouble) {
+    double value = 1234.456;
+    EXPECT_TRUE(m_generator.addMember("member", value));
+
+    std::stringstream expectedString;
+    expectedString.precision(3);
+    expectedString << std::fixed << value;
+
+    auto expected = R"({"member":)" + expectedString.str() + R"(})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
 /// Test json generator char creation.
 TEST_F(JsonGeneratorTest, test_jsonCString) {
     EXPECT_TRUE(m_generator.addMember("member", "value"));
@@ -103,6 +121,33 @@ TEST_F(JsonGeneratorTest, test_jsonNullCString) {
     EXPECT_FALSE(m_generator.addMember("member", nullptr));
 
     auto expected = R"({})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for string array creation.
+TEST_F(JsonGeneratorTest, test_jsonStringArray) {
+    std::vector<std::string> values({"value1", "value2"});
+    EXPECT_TRUE(m_generator.addStringArray("member", values));
+
+    auto expected = R"({"member":["value1","value2"]})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for array creation.
+TEST_F(JsonGeneratorTest, test_jsonArray) {
+    std::vector<std::string> values({R"("value1")", "true"});
+    EXPECT_TRUE(m_generator.addMembersArray("member", values));
+
+    auto expected = R"({"member":["value1",true]})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for empty array creation.
+TEST_F(JsonGeneratorTest, test_jsonEmptyList) {
+    std::set<std::string> values;
+    EXPECT_TRUE(m_generator.addStringArray("member", values));
+
+    auto expected = R"({"member":[]})";
     EXPECT_EQ(m_generator.toString(), expected);
 }
 
@@ -160,6 +205,33 @@ TEST_F(JsonGeneratorTest, test_addMemberAfterFinalize) {
     EXPECT_FALSE(m_generator.addMember("key5", static_cast<uint64_t>(10uL)));
 
     auto expected = "{}";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for collection of string array creation.
+TEST_F(JsonGeneratorTest, test_jsonCollectionOfStringArray) {
+    std::vector<std::vector<std::string>> values{{"value1", "value2"}, {"value3"}};
+    EXPECT_TRUE(m_generator.addCollectionOfStringArray("member", values));
+
+    auto expected = R"({"member":[["value1","value2"],["value3"]]})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for collection of empty collection.
+TEST_F(JsonGeneratorTest, test_jsonCollectionOfEmptyCollection) {
+    std::vector<std::set<std::string>> values{};
+    EXPECT_TRUE(m_generator.addCollectionOfStringArray("member", values));
+
+    auto expected = R"({"member":[]})";
+    EXPECT_EQ(m_generator.toString(), expected);
+}
+
+/// Test json generator for collection of empty string array.
+TEST_F(JsonGeneratorTest, test_jsonCollectionOfEmptyStringArray) {
+    std::vector<std::vector<std::string>> values{{"value1"}, {}};
+    EXPECT_TRUE(m_generator.addCollectionOfStringArray("member", values));
+
+    auto expected = R"({"member":[["value1"],[]]})";
     EXPECT_EQ(m_generator.toString(), expected);
 }
 

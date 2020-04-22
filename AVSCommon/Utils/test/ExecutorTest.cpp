@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,6 @@ namespace avsCommon {
 namespace utils {
 namespace threading {
 namespace test {
-
-using namespace utils::test;
 
 class ExecutorTest : public ::testing::Test {
 public:
@@ -306,8 +304,9 @@ TEST_F(ExecutorTest, test_shutdownCancelJob) {
     jobToDropResult = executor.submit(jobToDrop);
 
     // Wake up first job and wait for it to start running.
+    const std::chrono::seconds DEFAULT_TIMEOUT{5};
     waitSetUp.wakeUp();
-    waitJobStart.wait();
+    waitJobStart.wait(DEFAULT_TIMEOUT);
 
     // Shutdown should cancel enqueued jobs and wait for the ongoing job.
     executor.shutdown();

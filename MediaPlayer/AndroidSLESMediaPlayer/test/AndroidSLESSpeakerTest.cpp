@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -142,30 +142,26 @@ void AndroidSLESSpeakerTest::SetUp() {
     m_volumeMock->get().GetMute = mockGetMute;
     m_volumeMock->get().SetMute = mockSetMute;
 
-    m_speaker =
-        AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject, AndroidSLESSpeaker::Type::AVS_SPEAKER_VOLUME);
+    m_speaker = AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject);
     ASSERT_NE(m_speaker, nullptr);
 }
 
 /// Test speaker create with null engine.
 TEST_F(AndroidSLESSpeakerTest, test_createNullEngine) {
-    auto speaker =
-        AndroidSLESSpeaker::create(nullptr, m_outputMix, m_slObject, AndroidSLESSpeaker::Type::AVS_SPEAKER_VOLUME);
+    auto speaker = AndroidSLESSpeaker::create(nullptr, m_outputMix, m_slObject);
     EXPECT_EQ(speaker, nullptr);
 }
 
 /// Test speaker create with null output mix.
 TEST_F(AndroidSLESSpeakerTest, test_createNullSpeaker) {
-    auto speaker =
-        AndroidSLESSpeaker::create(m_engine, m_outputMix, nullptr, AndroidSLESSpeaker::Type::AVS_SPEAKER_VOLUME);
+    auto speaker = AndroidSLESSpeaker::create(m_engine, m_outputMix, nullptr);
     EXPECT_EQ(speaker, nullptr);
 }
 
 /// Test speaker create with null engine.
 TEST_F(AndroidSLESSpeakerTest, test_createInterfaceUnavailable) {
     m_objectMock->mockGetInterface(SL_IID_VOLUME, nullptr);
-    auto speaker =
-        AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject, AndroidSLESSpeaker::Type::AVS_SPEAKER_VOLUME);
+    auto speaker = AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject);
     EXPECT_EQ(speaker, nullptr);
 }
 
@@ -176,8 +172,7 @@ TEST_F(AndroidSLESSpeakerTest, test_createInvalidMaxVolume) {
         return SL_RESULT_SUCCESS;
     };
     m_volumeMock->get().GetMaxVolumeLevel = mockInvalidMaxVolume;
-    auto speaker =
-        AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject, AndroidSLESSpeaker::Type::AVS_SPEAKER_VOLUME);
+    auto speaker = AndroidSLESSpeaker::create(m_engine, m_outputMix, m_slObject);
     EXPECT_EQ(speaker, nullptr);
 }
 
@@ -228,49 +223,6 @@ TEST_F(AndroidSLESSpeakerTest, test_getMuteFailed) {
     m_volumeMock->get().GetMute = mockGetMuteFailed;
     AndroidSLESSpeaker::SpeakerSettings settings;
     EXPECT_FALSE(m_speaker->getSpeakerSettings(&settings));
-}
-
-/// Test adjust and get volume succeed.
-TEST_F(AndroidSLESSpeakerTest, test_adjustVolumeSucceed) {
-    int8_t volume = (AVS_SET_VOLUME_MAX - AVS_SET_VOLUME_MIN) / 2;  // Set volume to 50% of max then add 50% more.
-    EXPECT_TRUE(m_speaker->setVolume(volume));
-    EXPECT_TRUE(m_speaker->adjustVolume(volume));
-
-    AndroidSLESSpeaker::SpeakerSettings settings;
-    EXPECT_TRUE(m_speaker->getSpeakerSettings(&settings));
-    EXPECT_EQ(settings.volume, volume * 2);
-}
-
-/// Test adjust volume failed.
-TEST_F(AndroidSLESSpeakerTest, test_adjustVolumeFailed) {
-    m_volumeMock->get().SetVolumeLevel = mockSetVolumeFailed;
-
-    int8_t volume = (AVS_SET_VOLUME_MAX - AVS_SET_VOLUME_MIN) * 0.1;  // Adjust volume by 10% of max.
-    EXPECT_FALSE(m_speaker->adjustVolume(volume));
-}
-
-/// Test adjust volume over maximum value. Speaker should be adjusted till maximum.
-TEST_F(AndroidSLESSpeakerTest, test_adjustVolumeOverMax) {
-    int8_t delta = 10;  // Try to adjust volume by a random value.
-    int8_t volume = AVS_SET_VOLUME_MAX;
-    EXPECT_TRUE(m_speaker->setVolume(volume));
-    EXPECT_TRUE(m_speaker->adjustVolume(delta));
-
-    AndroidSLESSpeaker::SpeakerSettings settings;
-    EXPECT_TRUE(m_speaker->getSpeakerSettings(&settings));
-    EXPECT_EQ(settings.volume, AVS_SET_VOLUME_MAX);
-}
-
-/// Test adjust volume below minimum value. Speaker should be adjusted to minimum.
-TEST_F(AndroidSLESSpeakerTest, test_adjustVolumeUnderMin) {
-    int8_t delta = -10;  // Try to adjust volume by a random value.
-    int8_t volume = AVS_SET_VOLUME_MIN;
-    EXPECT_TRUE(m_speaker->setVolume(volume));
-    EXPECT_TRUE(m_speaker->adjustVolume(delta));
-
-    AndroidSLESSpeaker::SpeakerSettings settings;
-    EXPECT_TRUE(m_speaker->getSpeakerSettings(&settings));
-    EXPECT_EQ(settings.volume, AVS_SET_VOLUME_MIN);
 }
 
 /// Test set and get volume on values in different ranges to guarantee accuracy.

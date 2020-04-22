@@ -6,6 +6,7 @@ target_include_directories(AudioPlayer PUBLIC
     "${AudioPlayer_SOURCE_DIR}/include"
     "${AVSCommon_INCLUDE_DIRS}")
 target_link_libraries(AudioPlayer
+    Captions
     AVSCommon)
 
 # install target

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
 
 #include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-#include <rapidjson/error/en.h>
 
 #include "AVSCommon/AVS/NamespaceAndName.h"
 #include "AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h"
@@ -81,7 +81,7 @@ rapidjson::Value buildSupportedOperations(
  * Method to convert a playbackState to JSON.
  *
  * @param playbackState The playback state of the adapter.
- * @param The rapidjson allocator, required for the results of this function to be mergable with other
+ * @param The rapidjson allocator, required for the results of this function to be merge-able with other
  * rapidjson::Value objects.
  * @return The rapidjson::Value representing the playback state JSON.
  */
@@ -105,7 +105,7 @@ rapidjson::Value buildSessionState(
  * Method to build the default player.
  *
  * @param document The JSON Value to write the default player state into.
- * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
+ * @param allocator The rapidjson allocator, required for the results of this function to be merge-able with other
  * rapidjson::Value objects.
  * @return @c true if the build of default player state was successful, @c false otherwise.
  */

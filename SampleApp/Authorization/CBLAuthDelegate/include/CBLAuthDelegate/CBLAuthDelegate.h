@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ namespace cblAuthDelegate {
 /**
  * CBLAuthDelegate provides an implementation of the @c AuthDelegateInterface using the Code-Based Linking
  * authorization process.
- * @see https://developer.amazon.com/docs/alexa-voice-service/code-based-linking-other-platforms.html
+ * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/code-based-linking-other-platforms.html
  */
 class CBLAuthDelegate
         : public avsCommon::sdkInterfaces::AuthDelegateInterface

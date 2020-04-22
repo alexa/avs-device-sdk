@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 #include <curl/multi.h>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -279,6 +278,33 @@ void LibcurlHTTP2Connection::disconnect() {
     }
 }
 
+void LibcurlHTTP2Connection::addObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer != nullptr) {
+        m_observers.insert(observer);
+    }
+}
+void LibcurlHTTP2Connection::removeObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer != nullptr) {
+        m_observers.erase(observer);
+    }
+}
+
+void LibcurlHTTP2Connection::notifyObserversOfGoawayReceived() {
+    std::vector<std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface>> observers;
+    {
+        std::lock_guard<std::mutex> lock{m_observersMutex};
+        for (auto& observer : m_observers) {
+            observers.push_back(observer);
+        }
+    }
+
+    for (auto& observer : observers) {
+        observer->onGoawayReceived();
+    }
+}
+
 bool LibcurlHTTP2Connection::addStream(std::shared_ptr<LibcurlHTTP2Request> stream) {
     if (!stream) {
         ACSDK_ERROR(LX("addStream").d("failed", "null stream"));
@@ -309,10 +335,10 @@ void LibcurlHTTP2Connection::cleanupFinishedStreams() {
                 } else {
                     it->second->reportCompletion(HTTP2ResponseFinishedStatus::COMPLETE);
                 }
-                ACSDK_DEBUG(LX("streamFinished")
-                                .d("streamId", it->second->getId())
-                                .d("result", curl_easy_strerror(message->data.result))
-                                .d("CURLcode", message->data.result));
+                ACSDK_DEBUG7(LX("streamFinished")
+                                 .d("streamId", it->second->getId())
+                                 .d("result", curl_easy_strerror(message->data.result))
+                                 .d("CURLcode", message->data.result));
                 releaseStream(*(it->second));
             } else {
                 ACSDK_ERROR(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@
 #include <functional>
 #include <istream>
 #include <memory>
+#include <utility>
+
+#include <AVSCommon/Utils/MediaType.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -32,11 +35,16 @@ class CommunicationsAudioFactoryInterface {
 public:
     virtual ~CommunicationsAudioFactoryInterface() = default;
 
-    virtual std::function<std::unique_ptr<std::istream>()> callConnectedRingtone() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> callDisconnectedRingtone() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> outboundRingtone() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> dropInConnectedRingtone() const = 0;
-    virtual std::function<std::unique_ptr<std::istream>()> callIncomingRingtone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    callConnectedRingtone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    callDisconnectedRingtone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    outboundRingtone() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    dropInIncoming() const = 0;
+    virtual std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    callIncomingRingtone() const = 0;
 };
 
 }  // namespace audio

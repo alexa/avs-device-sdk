@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,43 @@ namespace bluetooth {
 
 /// An Enum representing the current A2DP role.
 enum class A2DPRole {
+    /// Does not support A2DP.
+    NONE,
     /// AVS device acting as an A2DPSink.
     SINK,
     /// AVS device acting as an A2DPSource.
     SOURCE
 };
+
+/**
+ * Converts the @c A2DPRole enum to a string.
+ *
+ * @param The @c A2DPRole to convert.
+ * @return A string representation of the @c A2DPRole.
+ */
+inline std::string a2DPRoleToString(A2DPRole value) {
+    switch (value) {
+        case A2DPRole::NONE:
+            return "NONE";
+        case A2DPRole::SINK:
+            return "SINK";
+        case A2DPRole::SOURCE:
+            return "SOURCE";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+/**
+ * Overload for the @c A2DPRole enum. This will write the @c A2DPRole as a string to the provided stream.
+ *
+ * @param An ostream to send the @c A2DPRole as a string.
+ * @param The @c A2DPRole to convert.
+ * @return The stream.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const A2DPRole a2DPRole) {
+    return stream << a2DPRoleToString(a2DPRole);
+}
 
 }  // namespace bluetooth
 }  // namespace utils

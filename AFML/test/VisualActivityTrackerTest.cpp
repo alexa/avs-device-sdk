@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ using namespace avsCommon::utils::json;
 using namespace ::testing;
 
 /// Plenty of time for a test to complete.
-static std::chrono::milliseconds WAIT_TIMEOUT(1000);
+static std::chrono::milliseconds MY_WAIT_TIMEOUT(1000);
 
 /// Namespace for AudioActivityTracke.
 static const std::string NAMESPACE_AUDIO_ACTIVITY_TRACKER("VisualActivityTracker");
@@ -133,7 +133,6 @@ void VisualActivityTrackerTest::SetUp() {
     ASSERT_TRUE(m_mockContextManager != nullptr);
 
     m_visualChannel = std::make_shared<Channel>(VISUAL_CHANNEL_NAME, VISUAL_CHANNEL_PRIORITY);
-    m_visualChannel->setInterface(VISUAL_INTERFACE_NAME);
     ASSERT_TRUE(m_visualChannel != nullptr);
 }
 
@@ -197,7 +196,7 @@ void VisualActivityTrackerTest::provideUpdate(const std::vector<Channel::State>&
     m_VisualActivityTracker->notifyOfActivityUpdates(channels);
     std::this_thread::sleep_for(SHORT_TIMEOUT_MS);
     m_VisualActivityTracker->provideState(NAMESPACE_AND_NAME_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 SetStateResult VisualActivityTrackerTest::wakeOnSetState() {
@@ -214,7 +213,7 @@ TEST_F(VisualActivityTrackerTest, test_noActivityUpdate) {
         .WillOnce(InvokeWithoutArgs(this, &VisualActivityTrackerTest::wakeOnSetState));
 
     m_VisualActivityTracker->provideState(NAMESPACE_AND_NAME_STATE, PROVIDE_STATE_TOKEN_TEST);
-    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(WAIT_TIMEOUT));
+    ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
 }
 
 /// Test if there's an empty vector of activity updates, VisualActivityTracker will return an empty context.
@@ -226,7 +225,7 @@ TEST_F(VisualActivityTrackerTest, test_emptyActivityUpdate) {
 /// Test if there's an activityUpdate for one idle channel, VisualActivityTracker will return an empty context.
 TEST_F(VisualActivityTrackerTest, test_oneIdleChannel) {
     std::vector<Channel::State> channels;
-    m_visualChannel->setFocus(FocusState::NONE);
+    m_visualChannel->setFocus(FocusState::NONE, MixingBehavior::MUST_STOP);
     channels.push_back(m_visualChannel->getState());
     provideUpdate(channels);
 }
@@ -234,7 +233,7 @@ TEST_F(VisualActivityTrackerTest, test_oneIdleChannel) {
 /// Test if there's an activityUpdate for one active channel, context will be reported correctly.
 TEST_F(VisualActivityTrackerTest, test_oneActiveChannel) {
     std::vector<Channel::State> channels;
-    m_visualChannel->setFocus(FocusState::FOREGROUND);
+    m_visualChannel->setFocus(FocusState::FOREGROUND, MixingBehavior::PRIMARY);
     channels.push_back(m_visualChannel->getState());
     provideUpdate(channels);
 }
@@ -246,7 +245,7 @@ TEST_F(VisualActivityTrackerTest, test_oneActiveChannel) {
 TEST_F(VisualActivityTrackerTest, test_invalidChannelActivityUpdate) {
     std::vector<Channel::State> channels;
     auto invalidChannel = std::make_shared<Channel>(INVALID_CHANNEL_NAME, INVALID_CHANNEL_PRIORITY);
-    m_visualChannel->setFocus(FocusState::FOREGROUND);
+    m_visualChannel->setFocus(FocusState::FOREGROUND, MixingBehavior::PRIMARY);
     channels.push_back(m_visualChannel->getState());
     channels.push_back(invalidChannel->getState());
     provideUpdate(channels);
@@ -258,9 +257,9 @@ TEST_F(VisualActivityTrackerTest, test_invalidChannelActivityUpdate) {
  */
 TEST_F(VisualActivityTrackerTest, test_validChannelTwoActivityUpdates) {
     std::vector<Channel::State> channels;
-    m_visualChannel->setFocus(FocusState::FOREGROUND);
+    m_visualChannel->setFocus(FocusState::FOREGROUND, MixingBehavior::PRIMARY);
     channels.push_back(m_visualChannel->getState());
-    m_visualChannel->setFocus(FocusState::BACKGROUND);
+    m_visualChannel->setFocus(FocusState::BACKGROUND, MixingBehavior::MUST_PAUSE);
     channels.push_back(m_visualChannel->getState());
     provideUpdate(channels);
 }

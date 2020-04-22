@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,15 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <queue>
 #include <string>
+#include <unordered_map>
+#include <utility>
 
+#include "ExternalMediaPlayer/AuthorizedSender.h"
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
+#include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h>
@@ -34,10 +39,13 @@
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
-#include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <CertifiedSender/CertifiedSender.h>
+
+#include "ExternalMediaPlayer/AuthorizedSender.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -65,13 +73,14 @@ public:
 
     // Map of adapter business names to their speakers.
     using AdapterSpeakerMap =
-        std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>;
+        std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>;
 
     // Signature of functions to create an ExternalMediaAdapter.
     using AdapterCreateFunction =
         std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> (*)(
+            std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface>,
             std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
+            std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> speaker,
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
             std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
             std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
@@ -81,20 +90,26 @@ public:
     // Map of adapter business names to their creation method.
     using AdapterCreationMap = std::unordered_map<std::string, AdapterCreateFunction>;
 
+    /// The spiVersion of this implementation of ExternalMediaPlayer.
+    static constexpr const char* SPI_VERSION = "1.0";
+
     /**
      * Creates a new @c ExternalMediaPlayer instance.
      *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
-     * @param speakers The map of <PlayerId, SpeakerInterface> to be used to find the speaker to use for this
+     * @param speakers The map of <PlayerId, ChannelVolumeInterface> to be used to find the speaker to use for this
      * adapter.
      * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
+
      * @param speakerManager A @c SpeakerManagerInterface to perform volume changes requested by adapters.
      * @param messageSender The object to use for sending events.
+     * @param certifiedMessageSender Used to send messages that must be guaranteed.
      * @param focusManager The object used to manage focus for the adapter managed by the EMP.
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c ExternalMediaPlayer becomes active.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c ExternalMediaPlayer instance.
      */
     static std::shared_ptr<ExternalMediaPlayer> create(
@@ -103,10 +118,18 @@ public:
         const AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+
+    /// @name ContextRequesterInterface Functions
+    /// @{
+    void onContextAvailable(const std::string& jsonContext) override;
+    void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
+    /// @}
 
     /// @name StateProviderInterface Functions
     /// @{
@@ -170,21 +193,53 @@ public:
         const std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface>
             observer);
 
+    /**
+     * Iniitalize the ExternalMediaAdapter.
+     *
+     * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
+     * adapter.
+     * @param speakers The map of <PlayerId, SpeakerInterface> to be used to find the speaker to use for this
+     * adapter.
+     * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
+     * @param focusManager Used to control channel focus.
+     *
+     * @return true if successful, otherwise false.
+     */
+    bool init(
+        const AdapterMediaPlayerMap& mediaPlayers,
+        const AdapterSpeakerMap& speakers,
+        const AdapterCreationMap& adapterCreationMap,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager);
+
+    /**
+     * Getter for m_adapters
+     *
+     * @return The Map of @c localPlayerId (business names) to adapters.
+     */
+    std::map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface>>
+    getAdaptersMap();
+
 private:
     /**
      * Constructor.
      *
      * @param speakerManager A @c SpeakerManagerInterface to perform volume changes requested by adapters.
+     * @param messageSender The messager sender of the adapter.
+     * @param certifiedMessageSender Used to send messages that must be guaranteed.
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c ExternalMediaPlayer becomes active.
+     * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c ExternalMediaPlayer instance.
      */
     ExternalMediaPlayer(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<certifiedSender::CertifiedSender> certifiedMessageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter);
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * This method returns the ExternalMediaPlayer session state registered in the ExternalMediaPlayer namespace.
@@ -218,11 +273,27 @@ private:
     /// @}
 
     /**
+     * Sends an event which reveals all the discovered players.
+     */
+    void sendReportDiscoveredPlayersEvent();
+
+    /**
+     * Sends an event indicating that the authorization workflow has completed.
+     *
+     * @param authorized A map of playerId to skillToken for authorized adapters.
+     * The attributes should be the one in the corresponding @c AuthorizedPlayers directive
+     * @param deauthorized A set of deauthorized localPlayerId.
+     */
+    void sendAuthorizationCompleteEvent(
+        const std::unordered_map<std::string, std::string>& authorized,
+        const std::unordered_set<std::string>& deauthorized);
+
+    /**
      * Method to create all the adapters registered.
      *
      * @param mediaPlayers The map of <PlayerId, MediaPlayer> to be used to find the mediaPlayer to use for this
      * adapter.
-     * @param speakers The map of <PlayerId, SpeakerInterface> to be used to find the speaker to use for this
+     * @param speakers The map of <PlayerId, ChannelVolumeInterface> to be used to find the speaker to use for this
      * adapter.
      * @param adapterCreationMap The map of <PlayerId, AdapterCreateFunction> to be used to create the adapters.
      * @param messageSender The messager sender of the adapter.
@@ -292,6 +363,17 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> preprocessDirective(
         std::shared_ptr<DirectiveInfo> info,
         rapidjson::Document* document);
+
+    /**
+     * Handler for AuthorizeDiscoveredPlayers directive.
+     *
+     * @param info The DirectiveInfo to be processed.
+     * @param The type of the request. Will be NONE for the
+     *        handleAuthorizeDiscoveredPlayers case.
+     */
+    void handleAuthorizeDiscoveredPlayers(
+        std::shared_ptr<DirectiveInfo> info,
+        avsCommon::sdkInterfaces::externalMediaPlayer::RequestType request);
 
     /**
      * Handler for login directive.
@@ -386,12 +468,45 @@ private:
         const avsCommon::sdkInterfaces::externalMediaPlayer::ObservablePlaybackStateProperties* playbackProperties);
 
     /**
+     * Helper method to get an adapter by playerId.
+     *
+     * @param playerId The cloud assigned playerId.
+     *
+     * @return An instance of the adapter if found, else a nullptr.
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> getAdapterByPlayerId(
+        const std::string& playerId);
+
+    /**
+     * Helper method to get an adapter by localPlayerId.
+     *
+     * @param localPlayerId The local player id associated with a player.
+     *
+     * @return An instance of the adapter if found, else a nullptr.
+     */
+    std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface>
+    getAdapterByLocalPlayerId(const std::string& playerId);
+
+    /**
      * Calls observer and provides the supplied changes related to RenderPlayerInfoCards for the active adapter.
      */
     void notifyRenderPlayerInfoCardsObservers();
 
-    /// The @c SpeakerManagerInterface used to change the volume when requested by @c ExternalMediaAdapterInterface.
+    /// The EMP Agent String, for server identification
+    std::string m_agentString;
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
+    /// The @c SpeakerManagerInterface used to change the volume when requested by
+    /// @c ExternalMediaAdapterInterface.
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
+
+    /// The @c MessageSenderInterface for sending events.
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+
+    /// The @c CertifiedSender for guaranteeing sending of events.
+    std::shared_ptr<certifiedSender::CertifiedSender> m_certifiedMessageSender;
 
     /// The @c ContextManager that needs to be updated of the state.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
@@ -399,9 +514,15 @@ private:
     /// The @c PlaybackRouterInterface instance to use when @c ExternalMediaPlayer becomes active.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> m_playbackRouter;
 
-    /// The @ m_adapters Map of business names to the adapters.
+    /// The @c m_adapters Map of @c localPlayerId (business names) to adapters.
     std::map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface>>
         m_adapters;
+
+    /// Protects access to @c m_authorizedAdapters.
+    std::mutex m_authorizedMutex;
+
+    /// A map of cloud assigned @c playerId to localPlayerId. Unauthorized adapters will not be in this map.
+    std::unordered_map<std::string, std::string> m_authorizedAdapters;
 
     /// The id of the player which currently has focus.  Access to @c m_playerInFocus is protected by @c
     /// m_inFocusAdapterMutex.
@@ -409,7 +530,7 @@ private:
     std::string m_playerInFocus;
 
     /// The adapter with the @c m_playerInFocus which currently has focus.  Access to @c m_adapterInFocus is
-    // protected by @c m_inFocusAdapterMutex.
+    /// protected by @c m_inFocusAdapterMutex.
     std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface> m_adapterInFocus;
 
     /// Mutex to serialize access to the @c m_playerInFocus.
@@ -417,6 +538,9 @@ private:
 
     /// Mutex to serialize access to @c m_adapters.
     std::mutex m_adaptersMutex;
+
+    /// The @c AuthorizedSender that will only allow authorized players to send events.
+    std::shared_ptr<AuthorizedSender> m_authorizedSender;
 
     /// Mutex to serialize access to the observers.
     std::mutex m_observersMutex;
@@ -428,6 +552,9 @@ private:
 
     /// Observer for changes related to RenderPlayerInfoCards.
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> m_renderPlayerObserver;
+
+    /// An event queue used to store events which need to be sent to the cloud. The pair is <eventName, eventPayload>.
+    std::queue<std::pair<std::string, std::string>> m_eventQueue;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

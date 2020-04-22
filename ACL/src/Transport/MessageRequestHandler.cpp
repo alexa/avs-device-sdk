@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 
 #include "ACL/Transport/HTTP2Transport.h"
 #include "ACL/Transport/MimeResponseSink.h"
@@ -33,6 +36,7 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
+using namespace avsCommon::utils::metrics;
 
 /// URL to send events to
 const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
@@ -41,7 +45,7 @@ const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
 const static std::string MIME_BOUNDARY = "WhooHooZeerOoonie!";
 
 /// Timeout for transmission of data on a given stream
-static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(30);
+static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(15);
 
 /// Mime header strings for mime parts containing json payloads.
 static const std::vector<std::string> JSON_MIME_PART_HEADER_LINES = {
@@ -63,12 +67,50 @@ static const std::string MESSAGEREQUEST_ID_PREFIX = "AVSEvent-";
 /// String to identify log entries originating from this file.
 static const std::string TAG("MessageRequestHandler");
 
+/// Prefix used to identify metrics published by this module.
+static const std::string ACL_METRIC_SOURCE_PREFIX = "ACL-";
+
+/// Metric identifier for send mime data error
+static const std::string SEND_DATA_ERROR = "ERROR.SEND_DATA_ERROR";
+
+/// Read status tag
+static const std::string READ_STATUS_TAG = "READ_STATUS";
+
+/// Read overrun error
+static const std::string ERROR_READ_OVERRUN = "READ_OVERRUN";
+
+/// Internal error
+static const std::string ERROR_INTERNAL = "INTERNAL_ERROR";
+
+/// Send completed
+static const std::string SEND_COMPLETED = "SEND_COMPLETED";
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
  * @param The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Capture metric for the last send data result.
+ *
+ * @param metricRecorder The metric recorder object.
+ * @param count Number of errors.
+ * @param readStatus The read status.
+ */
+static void collectSendDataResultMetric(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    int count,
+    const std::string& readStatus) {
+    recordMetric(
+        metricRecorder,
+        MetricEventBuilder{}
+            .setActivityName(ACL_METRIC_SOURCE_PREFIX + SEND_DATA_ERROR)
+            .addDataPoint(DataPointCounterBuilder{}.setName(SEND_DATA_ERROR).increment(count).build())
+            .addDataPoint(DataPointStringBuilder{}.setName(READ_STATUS_TAG).setValue(readStatus).build())
+            .build());
+}
 
 MessageRequestHandler::~MessageRequestHandler() {
     reportMessageRequestAcknowledged();
@@ -80,8 +122,10 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     const std::string& authToken,
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer) {
+    ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (!context) {
         ACSDK_CRITICAL(LX("MessageRequestHandlerCreateFailed").d("reason", "nullHttp2Transport"));
@@ -93,11 +137,12 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
         return nullptr;
     }
 
-    std::shared_ptr<MessageRequestHandler> handler(new MessageRequestHandler(context, authToken, messageRequest));
+    std::shared_ptr<MessageRequestHandler> handler(
+        new MessageRequestHandler(context, authToken, messageRequest, std::move(metricRecorder)));
 
     // Allow custom path extension, if provided by the sender of the MessageRequest
 
-    auto url = context->getEndpoint();
+    auto url = context->getAVSGateway();
     if (messageRequest->getUriPathExtension().empty()) {
         url += AVS_EVENT_URL_PATH_EXTENSION;
     } else {
@@ -120,19 +165,25 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
         return nullptr;
     }
 
+    if (eventTracer) {
+        eventTracer->traceEvent(messageRequest->getJsonContent());
+    }
+
     return handler;
 }
 
 MessageRequestHandler::MessageRequestHandler(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken,
-    std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest) :
+    std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
         ExchangeHandler{context, authToken},
         m_messageRequest{messageRequest},
         m_json{messageRequest->getJsonContent()},
         m_jsonNext{m_json.c_str()},
         m_countOfJsonBytesLeft{m_json.size()},
         m_countOfPartsSent{0},
+        m_metricRecorder{metricRecorder},
         m_wasMessageRequestAcknowledgeReported{false},
         m_wasMessageRequestFinishedReported{false},
         m_responseCode{0} {
@@ -219,11 +270,17 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
                 // Stream consumed.  Move on to next part.
                 m_namedReader.reset();
                 m_countOfPartsSent++;
+                collectSendDataResultMetric(m_metricRecorder, 0, SEND_COMPLETED);
                 return HTTP2SendDataResult::COMPLETE;
 
             // Handle any attachment read errors.
             case AttachmentReader::ReadStatus::ERROR_OVERRUN:
+                collectSendDataResultMetric(m_metricRecorder, 1, ERROR_READ_OVERRUN);
+                // Stream failure.  Abort sending the request.
+                return HTTP2SendDataResult::ABORT;
+
             case AttachmentReader::ReadStatus::ERROR_INTERNAL:
+                collectSendDataResultMetric(m_metricRecorder, 1, ERROR_INTERNAL);
                 // Stream failure.  Abort sending the request.
                 return HTTP2SendDataResult::ABORT;
 
@@ -289,6 +346,7 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
     static const std::unordered_map<long, MessageRequestObserverInterface::Status> responseToResult = {
         {HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
         {HTTPResponseCode::SUCCESS_OK, MessageRequestObserverInterface::Status::SUCCESS},
+        {HTTPResponseCode::SUCCESS_ACCEPTED, MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED},
         {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
         {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
         {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},

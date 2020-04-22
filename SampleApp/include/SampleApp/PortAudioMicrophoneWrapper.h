@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,13 @@ public:
      * @return Whether the start was successful.
      */
     bool startStreamingMicrophoneData() override;
+
+    /**
+     * Whether the microphone is currently streaming.
+     *
+     * @return Whether the microphone is streaming.
+     */
+    bool isStreaming() override;
 
     /**
      * Destructor.
@@ -110,6 +117,11 @@ private:
      * threads.
      */
     std::mutex m_mutex;
+
+    /**
+     * Whether the microphone is currently streaming.
+     */
+    bool m_isStreaming;
 };
 
 }  // namespace sampleApp

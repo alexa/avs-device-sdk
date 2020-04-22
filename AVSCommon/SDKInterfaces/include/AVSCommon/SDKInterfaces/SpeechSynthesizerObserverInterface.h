@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEECHSYNTHESIZEROBSERVERINTERFACE_H_
 
 #include <iostream>
+
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -37,6 +39,9 @@ public:
         /// In this state, the @c SpeechSynthesizer is idle and not playing speech.
         FINISHED,
 
+        /// In this state, the @c SpeechSynthesizer is idle due to a barge in.
+        INTERRUPTED,
+
         /// In this state, the @c SpeechSynthesizer is gaining the channel focus while still not playing anything
         GAINING_FOCUS,
 
@@ -52,8 +57,14 @@ public:
     /**
      * Notification that the @c SpeechSynthesizer state has changed. Callback functions must return as soon as possible.
      * @param state The new state of the @c speechSynthesizer.
+     * @param mediaSourceId The current media source id for SpeechSynthesizer
+     * @param mediaPlayerState Optional state of the media player as of this state change. The Optional is blank
+     *                         if the state is unavailable.
      */
-    virtual void onStateChanged(SpeechSynthesizerState state) = 0;
+    virtual void onStateChanged(
+        SpeechSynthesizerState state,
+        const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) = 0;
 };
 
 /**
@@ -72,6 +83,9 @@ inline std::ostream& operator<<(
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
             stream << "FINISHED";
+            break;
+        case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
+            stream << "INTERRUPTED";
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS:
             stream << "GAINING_FOCUS";

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,13 +53,13 @@ public:
      * rendering operation is in progress, this method fails and returns false.
      * @note: Calling this method from a NotificationRendererObserverInterface callback will lead to a deadlock.
      *
-     * @param audioFactory A function that produces an audio stream to play if the audio specified by
-     * @c url can not be played.
+     * @param audioFactory A function that produces a pair of audio stream and media type char to play if the audio
+     * specified by @c url can not be played.
      * @param url URL of the preferred audio asset to play.
      * @return Whether rendering the notification was initiated.
      */
     virtual bool renderNotification(
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
         const std::string& url) = 0;
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <AVSCommon/Utils/MediaPlayer/ErrorTypes.h>
 
 #include "MediaPlayerInterface.h"
+#include "MediaPlayerState.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -52,10 +53,6 @@ public:
 
     /**
      * Structure to hold the key, value and type of tag that is found.
-     *
-     * @param key Key of the stream tag
-     * @param value Value of the stream tag
-     * @param type Type of the stream tag.
      */
     struct TagKeyValueType {
         /// Key extracted from the stream tag.
@@ -74,13 +71,24 @@ public:
     virtual ~MediaPlayerObserverInterface() = default;
 
     /**
+     * This is an indication to the observer that the @c MediaPlayer has read its first byte of data.
+     *
+     * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
+     */
+    virtual void onFirstByteRead(SourceId id, const MediaPlayerState& state) = 0;
+
+    /**
      * This is an indication to the observer that the @c MediaPlayer has started playing the source specified by
      * the id.
      *
      * @note The observer must quickly return to quickly from this callback. Failure to do so could block the @c
      * MediaPlayer from further processing.
+     *
+     * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackStarted(SourceId id) = 0;
+    virtual void onPlaybackStarted(SourceId id, const MediaPlayerState& state) = 0;
 
     /**
      * This is an indication to the observer that the @c MediaPlayer finished the source.
@@ -89,8 +97,9 @@ public:
      * MediaPlayer from further processing.
      *
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackFinished(SourceId id) = 0;
+    virtual void onPlaybackFinished(SourceId id, const MediaPlayerState& state) = 0;
 
     /**
      * This is an indication to the observer that the @c MediaPlayer encountered an error. Errors can occur during
@@ -102,8 +111,13 @@ public:
      * @param id The id of the source to which this callback corresponds to.
      * @param type The type of error encountered by the @c MediaPlayerInterface.
      * @param error The error encountered by the @c MediaPlayerInterface.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackError(SourceId id, const ErrorType& type, std::string error) = 0;
+    virtual void onPlaybackError(
+        SourceId id,
+        const ErrorType& type,
+        std::string error,
+        const MediaPlayerState& state) = 0;
 
     /**
      * This is an indication to the observer that the @c MediaPlayer has paused playing the source.
@@ -112,8 +126,9 @@ public:
      * further processing.
 
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackPaused(SourceId id){};
+    virtual void onPlaybackPaused(SourceId id, const MediaPlayerState& state){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer has resumed playing the source.
@@ -122,8 +137,9 @@ public:
      * further processing.
      *
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackResumed(SourceId id){};
+    virtual void onPlaybackResumed(SourceId id, const MediaPlayerState& state){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer has stopped the source.
@@ -132,8 +148,9 @@ public:
      * further processing.
      *
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onPlaybackStopped(SourceId id){};
+    virtual void onPlaybackStopped(SourceId id, const MediaPlayerState& state){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer is experiencing a buffer underrun.
@@ -143,8 +160,9 @@ public:
      * further processing.
      *
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onBufferUnderrun(SourceId id) {
+    virtual void onBufferUnderrun(SourceId id, const MediaPlayerState& state) {
     }
 
     /**
@@ -155,8 +173,24 @@ public:
      * further processing.
      *
      * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
      */
-    virtual void onBufferRefilled(SourceId id) {
+    virtual void onBufferRefilled(SourceId id, const MediaPlayerState& state) {
+    }
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer has completed buffering of the source specified by
+     * the id.  This can be sent anytime after a source is set.
+     * This notification is part of @c AudioPlayer's implementation for pre-buffering, and must be called by
+     * @c MediaPlayer implementations for this feature to work properly.
+     *
+     * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
+     * further processing.
+     *
+     * @param id The id of the source to which this callback corresponds to.
+     * @param state Metadata about the media player state
+     */
+    virtual void onBufferingComplete(SourceId id, const MediaPlayerState& state) {
     }
 
     /**
@@ -170,9 +204,21 @@ public:
      *
      * @param id The id of the source to which this callback corresponds to.
      * @param vectorOfTags The vector containing stream tags.
+     * @param state Metadata about the media player state
      */
-    virtual void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags){};
+    virtual void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags, const MediaPlayerState& state){};
 };
+
+/**
+ * Write a @c MediaPlayerState to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param state The state value to write to teh @c ostream as a string
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const MediaPlayerState& state) {
+    return stream << "MediaPlayerState: offsetInMilliseconds=" << state.offset.count();
+}
 
 }  // namespace mediaPlayer
 }  // namespace utils

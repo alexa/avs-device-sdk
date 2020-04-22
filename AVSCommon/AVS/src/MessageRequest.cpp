@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -115,8 +115,6 @@ void MessageRequest::removeObserver(
     std::lock_guard<std::mutex> lock{m_observerMutex};
     m_observers.erase(observer);
 }
-
-using namespace avsCommon::sdkInterfaces;
 
 }  // namespace avs
 }  // namespace avsCommon

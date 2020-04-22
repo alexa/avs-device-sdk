@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -72,6 +72,7 @@ public:
     MOCK_METHOD0(requestProgress, void());
     MOCK_METHOD0(onProgressReportDelayElapsed, void());
     MOCK_METHOD0(onProgressReportIntervalElapsed, void());
+    MOCK_METHOD0(onProgressReportIntervalUpdated, void());
 };
 
 /**
@@ -157,7 +158,7 @@ TEST_F(ProgressTimerTest, test_noDelayOrInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
-    m_timer.init(m_mockContext, ProgressTimer::NO_DELAY, ProgressTimer::NO_INTERVAL);
+    m_timer.init(m_mockContext, ProgressTimer::getNoDelay(), ProgressTimer::getNoInterval());
 
     play();
     std::this_thread::sleep_for(MILLIS_100);
@@ -169,7 +170,7 @@ TEST_F(ProgressTimerTest, test_zeroInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
-    m_timer.init(m_mockContext, ProgressTimer::NO_DELAY, std::chrono::milliseconds{0});
+    m_timer.init(m_mockContext, ProgressTimer::getNoDelay(), std::chrono::milliseconds{0});
 
     play();
     std::this_thread::sleep_for(MILLIS_100);
@@ -184,7 +185,7 @@ TEST_F(ProgressTimerTest, test_justDelay) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(1);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
-    m_timer.init(m_mockContext, MILLIS_10, ProgressTimer::NO_INTERVAL);
+    m_timer.init(m_mockContext, MILLIS_10, ProgressTimer::getNoInterval());
 
     play();
     std::this_thread::sleep_for(MILLIS_100);
@@ -207,7 +208,7 @@ TEST_F(ProgressTimerTest, test_justInterval) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(0);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).WillRepeatedly(Invoke(notifyOnTenReports));
 
-    m_timer.init(m_mockContext, ProgressTimer::NO_DELAY, MILLIS_10);
+    m_timer.init(m_mockContext, ProgressTimer::getNoDelay(), MILLIS_10);
 
     play();
     ASSERT_TRUE(gotTenReports.waitFor(FAIL_TIMEOUT));
@@ -308,7 +309,7 @@ TEST_F(ProgressTimerTest, test_resumeDoesNotRepeat) {
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportDelayElapsed()).Times(1);
     EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(0);
 
-    m_timer.init(m_mockContext, MILLIS_10, ProgressTimer::NO_INTERVAL);
+    m_timer.init(m_mockContext, MILLIS_10, ProgressTimer::getNoInterval());
 
     play();
     std::this_thread::sleep_for(MILLIS_100);
@@ -362,6 +363,38 @@ TEST_F(ProgressTimerTest, test_delayAndIntervalCoincide) {
 
     play();
     ASSERT_TRUE(gotReport.waitFor(FAIL_TIMEOUT));
+
+    stop();
+}
+
+TEST_F(ProgressTimerTest, test_updateInterval) {
+    auto requestProgress = [this] { callOnProgress(); };
+
+    PromiseFuturePair<void> oldIntervalReport;
+    auto notifyOldReport = [this, &oldIntervalReport]() {
+        verifyOffset(OFFSET_TEST_INTERVAL, m_stopwatch.getElapsed());
+        oldIntervalReport.setValue();
+    };
+
+    EXPECT_CALL(*(m_mockContext.get()), requestProgress()).WillRepeatedly(Invoke(requestProgress));
+    EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).Times(1).WillOnce(Invoke(notifyOldReport));
+
+    m_timer.init(m_mockContext, ProgressTimer::getNoDelay(), OFFSET_TEST_INTERVAL);
+
+    play();
+    ASSERT_TRUE(oldIntervalReport.waitFor(FAIL_TIMEOUT));
+
+    PromiseFuturePair<void> newIntervalReport;
+    auto notifyNewReport = [this, &newIntervalReport]() {
+        verifyOffset(OFFSET_TEST_INTERVAL + MILLIS_100, m_stopwatch.getElapsed());
+        newIntervalReport.setValue();
+    };
+
+    EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalElapsed()).WillRepeatedly(Invoke(notifyNewReport));
+    EXPECT_CALL(*(m_mockContext.get()), onProgressReportIntervalUpdated()).Times(1);
+
+    m_timer.updateInterval(MILLIS_100);
+    ASSERT_TRUE(newIntervalReport.waitFor(FAIL_TIMEOUT));
 
     stop();
 }

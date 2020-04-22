@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
 
 namespace alexaClientSDK {
@@ -32,6 +34,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::logger;
+using namespace avsCommon::utils::metrics;
 
 /// Notifications capability constants
 /// Notifications interface type
@@ -53,6 +56,9 @@ static const std::string TAG("NotificationsCapabilityAgent");
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "Notifications";
+
+/// Metric Activity Name Prefix for NOTIFICATION metric source
+static const std::string NOTIFICATION_METRIC_SOURCE_PREFIX = "NOTIFICATION-";
 
 /// The @c NotificationsCapabilityAgent context state signature.
 static const NamespaceAndName INDICATOR_STATE_CONTEXT_KEY{NAMESPACE, "IndicatorState"};
@@ -85,13 +91,36 @@ static const std::chrono::milliseconds SHUTDOWN_TIMEOUT{500};
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getNotificationsCapabilityConfiguration();
 
+/**
+ * Submits a metric count of 1 by name
+ * @param metricRecorder The @c MetricRecorderInterface which records Metric events
+ * @param eventName The name of the metric event
+ */
+static void submitMetric(const std::shared_ptr<MetricRecorderInterface>& metricRecorder, const std::string& eventName) {
+    if (!metricRecorder) {
+        return;
+    }
+
+    auto metricEvent = MetricEventBuilder{}
+                           .setActivityName(NOTIFICATION_METRIC_SOURCE_PREFIX + eventName)
+                           .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(1).build())
+                           .build();
+
+    if (metricEvent == nullptr) {
+        ACSDK_ERROR(LX("Error creating metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metricEvent);
+}
+
 std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::create(
     std::shared_ptr<NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<NotificationRendererInterface> renderer,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
     if (nullptr == notificationsStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullNotificationsStorage"));
         return nullptr;
@@ -118,7 +147,13 @@ std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::crea
     }
 
     auto notificationsCapabilityAgent = std::shared_ptr<NotificationsCapabilityAgent>(new NotificationsCapabilityAgent(
-        notificationsStorage, renderer, contextManager, exceptionSender, notificationsAudioFactory, dataManager));
+        notificationsStorage,
+        renderer,
+        contextManager,
+        exceptionSender,
+        notificationsAudioFactory,
+        dataManager,
+        metricRecorder));
 
     if (!notificationsCapabilityAgent->init()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "initFailed"));
@@ -133,14 +168,16 @@ NotificationsCapabilityAgent::NotificationsCapabilityAgent(
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
-        CapabilityAgent{NAMESPACE, exceptionSender},
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+        CapabilityAgent{NAMESPACE, std::move(exceptionSender)},
         RequiresShutdown{"NotificationsCapabilityAgent"},
-        CustomerDataHandler{dataManager},
-        m_notificationsStorage{notificationsStorage},
-        m_contextManager{contextManager},
-        m_renderer{renderer},
-        m_notificationsAudioFactory{notificationsAudioFactory},
+        CustomerDataHandler{std::move(dataManager)},
+        m_metricRecorder{std::move(metricRecorder)},
+        m_notificationsStorage{std::move(notificationsStorage)},
+        m_contextManager{std::move(contextManager)},
+        m_renderer{std::move(renderer)},
+        m_notificationsAudioFactory{std::move(notificationsAudioFactory)},
         m_isEnabled{false},
         m_currentState{NotificationsCapabilityAgentState::IDLE} {
     m_capabilityConfigurations.insert(getNotificationsCapabilityConfiguration());
@@ -183,7 +220,7 @@ void NotificationsCapabilityAgent::executeInit() {
         ACSDK_ERROR(LX("executeInitFailed").d("reason", "getIndicatorStateFailed"));
         return;
     }
-    notifyObservers(currentIndicatorState);
+    notifyObserversOfIndicatorState(currentIndicatorState);
 
     int queueSize = 0;
     if (!m_notificationsStorage->getQueueSize(&queueSize)) {
@@ -191,7 +228,7 @@ void NotificationsCapabilityAgent::executeInit() {
         return;
     }
 
-    m_isEnabled = (queueSize > 0);
+    m_isEnabled = (queueSize > 0 || (IndicatorState::ON == currentIndicatorState));
     // relevant state has been updated here (m_isEnabled and currentIndicatorState)
     executeProvideState();
 
@@ -201,10 +238,16 @@ void NotificationsCapabilityAgent::executeInit() {
     }
 }
 
-void NotificationsCapabilityAgent::notifyObservers(IndicatorState state) {
+void NotificationsCapabilityAgent::notifyObserversOfIndicatorState(IndicatorState state) {
     ACSDK_DEBUG5(LX(__func__).d("indicatorState", indicatorStateToInt(state)));
     for (const auto& observer : m_observers) {
         observer->onSetIndicator(state);
+    }
+}
+
+void NotificationsCapabilityAgent::notifyObserversOfNotificationReceived() {
+    for (const auto& observer : m_observers) {
+        observer->onNotificationReceived();
     }
 }
 
@@ -264,6 +307,8 @@ void NotificationsCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirectiveInfo"));
         return;
     }
+
+    submitMetric(m_metricRecorder, info->directive->getName());
     if (info->directive->getName() == SET_INDICATOR.name) {
         handleSetIndicatorDirective(info);
     } else if (info->directive->getName() == CLEAR_INDICATOR.name) {
@@ -380,7 +425,7 @@ void NotificationsCapabilityAgent::executePossibleIndicatorStateChange(const Ind
                 LX("executePossibleIndicatorStateChangeFailed").d("reason", "failed to set new indicator state"));
             return;
         }
-        notifyObservers(nextIndicatorState);
+        notifyObserversOfIndicatorState(nextIndicatorState);
         executeProvideState();
     }
 }
@@ -429,6 +474,8 @@ void NotificationsCapabilityAgent::executeSetIndicator(
     }
     // if we make it past the switch statement, a NotificationIndicator was successfully enqueued
     setHandlingCompleted(info);
+
+    notifyObserversOfNotificationReceived();
 
     // m_isEnabled needs to be true until we are sure that the user has been properly notified, so despite the
     // possibility of immediately calling executeRenderNotification(), m_isEnabled should only be set to false upon
@@ -495,6 +542,7 @@ void NotificationsCapabilityAgent::executeProvideState(bool sendToken, unsigned 
 
     if (!m_notificationsStorage->getIndicatorState(&currentIndicatorState)) {
         ACSDK_ERROR(LX("executeProvideState").d("reason", "getIndicatorStateFailed"));
+        submitMetric(m_metricRecorder, "getIndicatorStateFailed");
         return;
     }
 
@@ -770,6 +818,7 @@ void NotificationsCapabilityAgent::clearData() {
     auto result = m_executor.submit([this]() {
         m_notificationsStorage->clearNotificationIndicators();
         m_notificationsStorage->setIndicatorState(IndicatorState::OFF);
+        notifyObserversOfIndicatorState(IndicatorState::OFF);
     });
 
     result.wait();

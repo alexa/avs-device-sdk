@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,14 @@
 #include "Alerts/Renderer/RendererInterface.h"
 #include "Alerts/Renderer/RendererObserverInterface.h"
 
+#include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <AVSCommon/Utils/MediaType.h>
 
+#include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <string>
@@ -51,7 +55,8 @@ public:
 
     void start(
         std::shared_ptr<RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+        bool volumeRampEnabled,
         const std::vector<std::string>& urls = std::vector<std::string>(),
         int loopCount = 0,
         std::chrono::milliseconds loopPause = std::chrono::milliseconds{0},
@@ -59,14 +64,19 @@ public:
 
     void stop() override;
 
-    void onPlaybackStarted(SourceId sourceId) override;
+    void onFirstByteRead(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackStopped(SourceId sourceId) override;
+    void onPlaybackStarted(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackFinished(SourceId sourceId) override;
+    void onPlaybackStopped(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
-    void onPlaybackError(SourceId sourceId, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error)
-        override;
+    void onPlaybackFinished(SourceId sourceId, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+
+    void onPlaybackError(
+        SourceId sourceId,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
 private:
     /// A type that identifies which source is currently being operated on.
@@ -92,8 +102,9 @@ private:
      * This function will start rendering audio for the currently active alert.
      *
      * @param observer The observer that will receive renderer events.
-     * @param audioFactory A function that produces a stream of audio that is used for the default if nothing
-     * else is available.
+     * @param audioFactory A function that produces a pair of stream of audio and audio format that is used for the
+     * default if nothing else is available.
+     * @param volumeRampEnabled whether this media should ramp
      * @param urls A container of urls to be rendered per the above description.
      * @param loopCount The number of times the urls should be rendered.
      * @param loopPause The duration which must expire between the beginning of rendering of any loop of audio.
@@ -105,7 +116,8 @@ private:
      */
     void executeStart(
         std::shared_ptr<RendererObserverInterface> observer,
-        std::function<std::unique_ptr<std::istream>()> audioFactory,
+        std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> audioFactory,
+        bool volumeRampEnabled,
         const std::vector<std::string>& urls,
         int loopCount,
         std::chrono::milliseconds loopPause,
@@ -208,8 +220,10 @@ private:
      * Implements the pause between playback loops
      *
      * @param duration The duration the pause should be for.  Must be a positive value.
+     * @return @c true if the pause completed succesfully. Returns @c false if the pause
+     * was interrupted by a user action or the duration was less than or equal to 0.
      */
-    void pause(std::chrono::milliseconds duration);
+    bool pause(std::chrono::milliseconds duration);
 
     /**
      * Implements the playback of the audio source
@@ -217,14 +231,24 @@ private:
     void play();
 
     /**
+     * Generate the media player configuration for the current media rendering including volume gain.
+     *
+     * @return The media player configuration for the current media rendering.
+     */
+    avsCommon::utils::mediaPlayer::SourceConfig generateMediaConfiguration();
+
+    /**
      * Utility function to handle the rendering of the next audio asset, with respect to @c m_remainingLoopCount and @c
      * m_nextUrlIndexToRender.  If all urls within a loop have completed, and there are further loops to render, this
      * function will also perform a sleep for the @c m_loopPause duration.
      *
+     * @param pauseInterruptedOut A return value parameter. If there are no more audio assets to render because
+     * a pause during the render loop was interrupted, the boolean pointed to will be set to true. Otherwise it
+     * will be set to false.
      * @return @c true if there are more audio assets to render, and the next one has been successfully sent to the @c
      * m_mediaPlayer to be played.  Returns @c false otherwise.
      */
-    bool renderNextAudioAsset();
+    bool renderNextAudioAsset(bool* pauseInterruptedOut = nullptr);
 
     /**
      * Utility function to handle all aspects of an error occurring.  The sourceId is reset, the observer is notified
@@ -272,15 +296,13 @@ private:
     /// The timestamp when the current loop began rendering.
     std::chrono::time_point<std::chrono::steady_clock> m_loopStartTime;
 
-    /// A pointer to a stream factory to use as the default audio to use when the audio assets aren't available.
-    std::function<std::unique_ptr<std::istream>()> m_defaultAudioFactory;
+    /// A pointer to a pair of stream and stream format factory to use as the default audio to use when the audio assets
+    /// aren't available.
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> m_defaultAudioFactory;
 
     /// A flag to capture if the renderer has been asked to stop by its owner. @c m_waitMutex must be locked when
     /// modifying this variable.
     bool m_isStopping;
-
-    /// A flag to indicate if last pause was interrupted and is not expected to continue.
-    bool m_pauseWasInterrupted;
 
     /// A flag to indicate that renderer is going to start playing a new asset once the old one is stopped.
     bool m_isStartPending;
@@ -294,6 +316,9 @@ private:
     /// The id associated with the media that our MediaPlayer is currently handling.
     SourceId m_currentSourceId;
 
+    /// Whether the volume ramp property was enabled when the media started playing.
+    bool m_volumeRampEnabled;
+
     /// @}
 
     /**
@@ -303,6 +328,9 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /// The time that the alert started rendering.
+    std::chrono::steady_clock::time_point m_renderStartTime;
 };
 
 }  // namespace renderer

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -74,14 +74,7 @@ public:
 
     void onDeregistered() override;
 
-    void onFocusChanged(FocusState newFocus) override;
-
-    void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
-        override;
-
-    void onContextAvailable(const std::string& jsonContext) override;
-
-    void onContextFailure(const sdkInterfaces::ContextRequestError error) override;
+    void onFocusChanged(FocusState newFocus, MixingBehavior behavior) override;
 
 protected:
     /**
@@ -220,7 +213,7 @@ protected:
         const std::string& eventName,
         const std::string& dialogRequestIdString = "",
         const std::string& payload = "{}",
-        const std::string& context = "");
+        const std::string& context = "") const;
 
     /// The namespace of the capability agent.
     const std::string m_namespace;

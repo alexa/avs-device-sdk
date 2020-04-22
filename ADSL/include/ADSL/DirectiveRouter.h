@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,10 +20,12 @@
 #include <set>
 #include <unordered_map>
 
-#include <AVSCommon/AVS/NamespaceAndName.h>
+#include <AVSCommon/AVS/CapabilityTag.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/HandlerAndPolicy.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 namespace alexaClientSDK {
 namespace adsl {
@@ -34,11 +36,12 @@ namespace adsl {
 class DirectiveRouter : public avsCommon::utils::RequiresShutdown {
 public:
     /// Constructor.
-    DirectiveRouter();
+    /// @param metricRecorder The metric recorder.
+    DirectiveRouter(std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
-     * Add mappings from from handler's @c NamespaceAndName values to @c BlockingPolicy values, gotten through the
-     * handler's getConfiguration() method. If a mapping for any of the specified @c NamespaceAndName values already
+     * Add mappings from handler's directives to @c BlockingPolicy values, gotten through the
+     * handler's getConfiguration() method. If a mapping for any of the specified directives already
      * exists the entire call is refused.
      *
      * @param handler The handler to add.
@@ -152,7 +155,7 @@ private:
      * @param directive The directive to look up a value for.
      * @return The corresponding @c HandlerAndPolicy value for the specified directive.
      */
-    avsCommon::avs::HandlerAndPolicy getdHandlerAndPolicyLocked(
+    avsCommon::avs::HandlerAndPolicy getHandlerAndPolicyLocked(
         const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
 
     /**
@@ -194,11 +197,14 @@ private:
      */
     bool removeDirectiveHandlerLocked(std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> handler);
 
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// A mutex used to serialize access to @c m_configuration and @c m_handlerReferenceCounts.
     std::mutex m_mutex;
 
-    /// Mapping from @c NamespaceAndName to @c PolicyAndHandler.
-    std::unordered_map<avsCommon::avs::NamespaceAndName, avsCommon::avs::HandlerAndPolicy> m_configuration;
+    /// Mapping from @c CapabilityMessageIdentifier to @c PolicyAndHandler.
+    std::unordered_map<avsCommon::avs::CapabilityTag, avsCommon::avs::HandlerAndPolicy> m_configuration;
 
     /**
      * Instances of DirectiveHandlerInterface may receive calls after @c removeDirectiveHandlers() because
@@ -211,6 +217,16 @@ private:
      */
     std::unordered_map<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>, int>
         m_handlerReferenceCounts;
+
+    /**
+     * Submit metrics related to the given directive.
+     *
+     * @param metricEventBuilder The metric event builder to be used.
+     * @param directive The given directive.
+     */
+    void submitMetric(
+        avsCommon::utils::metrics::MetricEventBuilder& metricEventBuilder,
+        const std::shared_ptr<avsCommon::avs::AVSDirective>& directive);
 };
 
 }  // namespace adsl

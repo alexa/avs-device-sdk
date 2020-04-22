@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,15 +44,16 @@ MessageRouter::MessageRouter(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
     std::shared_ptr<AttachmentManager> attachmentManager,
     std::shared_ptr<TransportFactoryInterface> transportFactory,
-    const std::string& avsEndpoint) :
+    const std::string& avsGateway) :
         MessageRouterInterface{"MessageRouter"},
-        m_avsEndpoint{avsEndpoint},
+        m_avsGateway{avsGateway},
         m_authDelegate{authDelegate},
         m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
         m_connectionReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
         m_isEnabled{false},
         m_attachmentManager{attachmentManager},
-        m_transportFactory{transportFactory} {
+        m_transportFactory{transportFactory},
+        m_requestQueue{std::make_shared<SynchronizedMessageRequestQueue>()} {
 }
 
 MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
@@ -82,6 +83,20 @@ void MessageRouter::enable() {
 
 void MessageRouter::doShutdown() {
     disable();
+
+    // The above call will release all the transports. If m_requestQueue is non-empty once all of the transports
+    // have been released, any outstanding MessageRequest instances must receive an onCompleted(NOT_CONNECTED)
+    // notification.
+    std::unique_lock<std::mutex> lock{m_connectionMutex};
+    if (!m_requestQueue->empty()) {
+        auto request = m_requestQueue->dequeueRequest();
+        if (request != nullptr) {
+            request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
+        }
+        m_requestQueue->clear();
+    }
+    lock.unlock();
+
     m_executor.shutdown();
 }
 
@@ -98,17 +113,18 @@ void MessageRouter::sendMessage(std::shared_ptr<MessageRequest> request) {
     }
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_activeTransport) {
-        m_activeTransport->send(request);
+        m_requestQueue->enqueueRequest(request);
+        m_activeTransport->onRequestEnqueued();
     } else {
         ACSDK_ERROR(LX("sendFailed").d("reason", "noActiveTransport"));
         request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
     }
 }
 
-void MessageRouter::setAVSEndpoint(const std::string& avsEndpoint) {
+void MessageRouter::setAVSGateway(const std::string& avsGateway) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    if (avsEndpoint != m_avsEndpoint) {
-        m_avsEndpoint = avsEndpoint;
+    if (avsGateway != m_avsGateway) {
+        m_avsGateway = avsGateway;
         if (m_isEnabled) {
             disconnectAllTransportsLocked(
                 lock, ConnectionStatusObserverInterface::ChangedReason::SERVER_ENDPOINT_CHANGED);
@@ -120,9 +136,25 @@ void MessageRouter::setAVSEndpoint(const std::string& avsEndpoint) {
     }
 }
 
-std::string MessageRouter::getAVSEndpoint() {
+std::string MessageRouter::getAVSGateway() {
     std::lock_guard<std::mutex> lock{m_connectionMutex};
-    return m_avsEndpoint;
+    return m_avsGateway;
+}
+
+void MessageRouter::onWakeConnectionRetry() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    if (m_isEnabled && m_activeTransport) {
+        m_activeTransport->onWakeConnectionRetry();
+    }
+}
+
+void MessageRouter::onWakeVerifyConnectivity() {
+    ACSDK_DEBUG9(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_connectionMutex};
+    if (m_isEnabled && m_activeTransport) {
+        m_activeTransport->onWakeVerifyConnectivity();
+    }
 }
 
 void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
@@ -183,7 +215,10 @@ void MessageRouter::onDisconnected(
 
 void MessageRouter::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    if (m_isEnabled) {
+    ACSDK_DEBUG5(LX("server-side disconnect received")
+                     .d("Message router is enabled", m_isEnabled)
+                     .d("isActiveTransport", transport == m_activeTransport));
+    if (m_isEnabled && transport == m_activeTransport) {
         setConnectionStatusLocked(
             ConnectionStatusObserverInterface::Status::PENDING,
             ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
@@ -239,7 +274,7 @@ void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const 
 
 void MessageRouter::createActiveTransportLocked() {
     auto transport = m_transportFactory->createTransport(
-        m_authDelegate, m_attachmentManager, m_avsEndpoint, shared_from_this(), shared_from_this());
+        m_authDelegate, m_attachmentManager, m_avsGateway, shared_from_this(), shared_from_this(), m_requestQueue);
     if (transport && transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;

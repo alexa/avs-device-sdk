@@ -2,8 +2,10 @@ add_definitions("-DACSDK_LOG_MODULE=bluetooth")
 
 add_library(
     Bluetooth SHARED
+    BasicDeviceConnectionRule.cpp
     Bluetooth.cpp
-    BluetoothAVRCPTransformer.cpp
+    BluetoothEventState.cpp
+    BluetoothMediaInputTransformer.cpp
     SQLiteBluetoothStorage.cpp
 )
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -266,6 +266,25 @@ TEST_F(FFmpegDecoderTest, test_abortInitialization) {
     decoder->abort();
     decoderThread.join();
     EXPECT_EQ(status, FFmpegDecoder::Status::ERROR);
+}
+
+TEST_F(FFmpegDecoderTest, test_alarmVolumeRamp) {
+    writeInput();
+    auto config = avsCommon::utils::mediaPlayer::SourceConfig::createWithFadeIn(0, 100, std::chrono::seconds(2));
+    auto decoder = FFmpegDecoder::create(std::move(m_reader), PlaybackConfiguration(), config);
+    ASSERT_NE(decoder, nullptr);
+
+    FFmpegDecoder::Status status = FFmpegDecoder::Status::OK;
+    Byte buffer[BUFFER_SIZE];
+    size_t totalWordsRead = 0;
+    while (status == FFmpegDecoder::Status::OK) {
+        size_t wordsRead;
+        std::tie(status, wordsRead) = decoder->read(buffer, BUFFER_SIZE);
+        totalWordsRead += wordsRead;
+        EXPECT_TRUE(status != FFmpegDecoder::Status::OK || wordsRead > 0);
+    }
+    EXPECT_EQ(status, FFmpegDecoder::Status::DONE);
+    EXPECT_GT(totalWordsRead * sizeof(buffer[0]), m_inputSize);
 }
 
 }  // namespace test

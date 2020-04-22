@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_JSON_JSONUTILS_H_
 
 #include <cstdint>
+#include <map>
 #include <string>
+#include <vector>
 
 #include <rapidjson/document.h>
 
@@ -98,6 +100,15 @@ bool convertToValue(const rapidjson::Value& documentNode, uint64_t* value);
 bool convertToValue(const rapidjson::Value& documentNode, bool* value);
 
 /**
+ * Converts a given rapidjson value node to a double. The node must be double type.
+ *
+ * @param documentNode A logical node within a parsed JSON document which rapidjson understands.
+ * @param[out] value The output parameter which will be assigned the double value.
+ * @return @c true If the node was successfully converted, @c false otherwise.
+ */
+bool convertToValue(const rapidjson::Value& documentNode, double* value);
+
+/**
  * A template function to find and retrieve a value of type T from a direct child of the
  * provided @c rapidjson::Value object. The type T must have an overload of the function
  * @c convertToValue.
@@ -107,6 +118,7 @@ bool convertToValue(const rapidjson::Value& documentNode, bool* value);
  * @param[out] value The output parameter which will be assigned the value of type T if the function
  * succeeds. No modification is done in case of failure.
  * @return @c true If the value was successfully retrieved, @c false otherwise.
+ *
  */
 template <typename T>
 bool retrieveValue(const rapidjson::Value& jsonNode, const std::string& key, T* value) {
@@ -158,6 +170,106 @@ bool retrieveValue(const std::string jsonString, const std::string& key, T* valu
  * @return Whether a child element of array type was found.
  */
 bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& key);
+
+/**
+ * Find and retrieve a string collection from the provided stringified JSON.
+ *
+ * Example:
+ * @code
+ * auto elements = retrieveStringArray(R"({"key":["element1", "element2"]})", "key");
+ * @endcode
+ *
+ * @tparam CollectionT The collection type.
+ * @param jsonString The input JSON string.
+ * @param key The name of the array being looked for.
+ * @return The output collection which will contain all extracted elements.  An empty collection if jsonString is
+ * malformed, contains non-string elements, or if array elements with key is not found.
+ *
+ * @note  This function will only look at the first level to find the array with the key.
+ */
+template <class CollectionT>
+CollectionT retrieveStringArray(const std::string& jsonString, const std::string& key);
+
+/**
+ * Convert a JSON array of strings into a string collection.
+ *
+ * @param jsonString The input JSON. This should represent the array string not the entire document. E.g.:
+ * @code
+ * auto elements = retrieveStringArray(R"(["element1", "element2"])");
+ * @endcode
+ * @return The output string collection which will contain all extracted elements.  An empty collection if jsonString is
+ * malformed, or contains non-string elements.
+ */
+template <class CollectionT>
+CollectionT retrieveStringArray(const std::string& jsonString);
+
+/**
+ * Retrieve string elements from a rapidjson value.
+ *
+ * @param value A @c Value that represents an array of strings.
+ * @return The output string collection which will contain all extracted elements.  An empty collection if value
+ * contains non-string elements.
+ */
+template <class CollectionT>
+CollectionT retrieveStringArray(const rapidjson::Value& value);
+
+/**
+ * Convert a string collection into a JSON string array representation.
+ *
+ * @param elements A collection that will be converted to the JSON array representation.
+ * @return The JSON string array representation if it succeeds; otherwise, return an empty string.
+ */
+template <class CollectionT>
+std::string convertToJsonString(const CollectionT& elements);
+
+/**
+ * Retrieve a string map from a @c rapidjson value with the given key.
+ *
+ * @param value A @c Value that represents a string map.
+ * @param key The name of the array being looked for.
+ * @return The output collection which will contain all extracted elements.  An empty collection if value
+ * contains non-string elements or if the key was not found.
+ */
+std::map<std::string, std::string> retrieveStringMap(const rapidjson::Value& value, const std::string& key);
+
+//----- Templated functions implementation and specializations.
+
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(
+    const std::string& jsonString,
+    const std::string& key);
+
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(const std::string& jsonString);
+
+template <>
+std::vector<std::string> retrieveStringArray<std::vector<std::string>>(const rapidjson::Value& value);
+
+template <>
+std::string convertToJsonString<std::vector<std::string>>(const std::vector<std::string>& elements);
+
+template <class CollectionT>
+CollectionT retrieveStringArray(const std::string& jsonString, const std::string& key) {
+    auto values = retrieveStringArray<std::vector<std::string>>(jsonString, key);
+    return CollectionT{values.begin(), values.end()};
+}
+
+template <class CollectionT>
+CollectionT retrieveStringArray(const std::string& jsonString) {
+    auto values = retrieveStringArray<std::vector<std::string>>(jsonString);
+    return CollectionT{values.begin(), values.end()};
+}
+
+template <class CollectionT>
+CollectionT retrieveStringArray(const rapidjson::Value& value) {
+    auto values = retrieveStringArray<std::vector<std::string>>(value);
+    return CollectionT{values.begin(), values.end()};
+}
+
+template <class CollectionT>
+std::string convertToJsonString(const CollectionT& elements) {
+    return convertToJsonString(std::vector<std::string>{elements.begin(), elements.end()});
+}
 
 }  // namespace jsonUtils
 }  // namespace json

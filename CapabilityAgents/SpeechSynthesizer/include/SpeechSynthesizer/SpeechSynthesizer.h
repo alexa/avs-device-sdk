@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <deque>
 
 #include <AVSCommon/AVS/AVSDirective.h>
+#include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
@@ -34,10 +35,15 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <Captions/CaptionData.h>
+#include <Captions/CaptionManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -66,8 +72,11 @@ public:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the @c SpeechSynthesizer.
+     * @param metricRecorder The instance of the @c MetricRecorderInterface used to record metrics
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param powerResourceManager Power Resource Manager.
      *
      * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
      */
@@ -77,7 +86,10 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     void onDialogUXStateChanged(DialogUXState newState) override;
 
@@ -110,7 +122,10 @@ public:
 
     void cancelDirective(std::shared_ptr<DirectiveInfo> info) override;
 
-    void onFocusChanged(avsCommon::avs::FocusState newFocus) override;
+    /// @name Overridden ChannelObserverInterface methods.
+    /// @{
+    void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
+    /// @}
 
     void provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int stateRequestToken)
         override;
@@ -119,13 +134,19 @@ public:
 
     void onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) override;
 
-    void onPlaybackStarted(SourceId id) override;
-
-    void onPlaybackFinished(SourceId id) override;
-
-    void onPlaybackError(SourceId id, const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) override;
-
-    void onPlaybackStopped(SourceId id) override;
+    /// @name Overridden MediaPlayerObserverInterface methods.
+    /// @{
+    void onFirstByteRead(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStarted(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackFinished(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackError(
+        SourceId id,
+        const avsCommon::utils::mediaPlayer::ErrorType& type,
+        std::string error,
+        const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onPlaybackStopped(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    void onBufferUnderrun(SourceId id, const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
+    /// @}
 
     /// @name CapabilityConfigurationInterface Functions
     /// @{
@@ -136,8 +157,7 @@ private:
     /**
      * This class has all the data that is needed to process @c Speak directives.
      */
-    class SpeakDirectiveInfo {
-    public:
+    struct SpeakDirectiveInfo {
         /**
          * Constructor.
          *
@@ -163,7 +183,7 @@ private:
         /// A flag to indicate if an event needs to be sent to AVS on playback started.
         bool sendPlaybackStartedMessage;
 
-        /// A flag to indicate if an event needs to be sent to AVS on playback finished.
+        /// A flag to indicate if an event needs to be sent to AVS on playback finished / interrupted.
         bool sendPlaybackFinishedMessage;
 
         /// A flag to indicate if the directive complete message has to be sent to the @c DirectiveSequencer.
@@ -175,9 +195,14 @@ private:
         /// A flag to indicate if playback has been initiated.
         bool isPlaybackInitiated;
 
-        /// A flag to indicate that a cancel was requested but not yet processed, which may happen when a cancel
-        /// was called before playback started.
-        bool isDelayedCancel;
+        /// A flag to indicate the directive has been handled.
+        bool isHandled;
+
+        /// The play behavior of this directive.
+        avsCommon::avs::PlayBehavior playBehavior;
+
+        /// The caption content that goes with the speech.
+        captions::CaptionData captionData;
     };
 
     /**
@@ -188,15 +213,21 @@ private:
      * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
      * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
      * of the SpeechSynthesizer.
+     * @param metricRecorder The instance of the @c MetricRecorderInterface used to record metrics
      * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
      * when a directive cannot be processed.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param powerResourceManager Power Resource Manager.
      */
     SpeechSynthesizer(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     void doShutdown() override;
 
@@ -268,8 +299,10 @@ private:
      * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the
      * audio of the current directive is started. If the @c m_desiredState is @c FINISHED this method triggers
      * termination of playing the audio.
+     *
+     * @param newState The target state.
      */
-    void executeStateChange();
+    void executeStateChange(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
 
     /**
      * Request to provide an update of the SpeechSynthesizer's state to the ContextManager (on the @c m_executor
@@ -277,7 +310,7 @@ private:
      *
      * @param stateRequestToken The token to pass through when setting the state.
      */
-    void executeProvideState(const unsigned int& stateRequestToken);
+    void executeProvideStateLocked(const unsigned int& stateRequestToken);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback has started.
@@ -295,6 +328,12 @@ private:
      * @param error Text describing the nature of the error.
      */
     void executePlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error);
+
+    /**
+     * Submits a metric built using MetricEventBuilder
+     * @param metricEventBuilder The @c MetricEventBuilder to build the metric activity name and datapoint.
+     */
+    void submitMetric(avsCommon::utils::metrics::MetricEventBuilder& metricEventBuilder);
 
     /**
      * This function is called whenever the AVS UX dialog state of the system changes. This function will block
@@ -315,12 +354,28 @@ private:
     std::string buildState(std::string& token, int64_t offsetInMilliseconds) const;
 
     /**
+     * Notify AVS of a state change.
+     *
+     * @param eventName The name of the event to send to AVS.
+     */
+    void sendEvent(const std::string& eventName, const std::string& payload) const;
+
+    /**
      * Builds a JSON payload string part of the event to be sent to AVS.
      *
      * @param token the token sent in the message from AVS.
      * @return The JSON payload string.
      */
     static std::string buildPayload(std::string& token);
+
+    /**
+     * Builds a JSON payload string part of the event to be sent to AVS including the playback offset.
+     *
+     * @param token the token sent in the message from AVS.
+     * @param offsetInMilliseconds The current offset of text to speech in milliseconds.
+     * @return The JSON payload string.
+     */
+    static std::string buildPayload(std::string& token, int64_t offsetInMilliseconds);
 
     /**
      * Start playing Speak directive audio.
@@ -344,12 +399,12 @@ private:
     void setCurrentStateLocked(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
 
     /**
-     * Set the desired state the @c SpeechSynthesizer needs to transition to based on the @c newFocus.
-     * @c m_mutex must be acquired before calling this function.
+     * Set the desired state the @c SpeechSynthesizer needs to transition to.
      *
-     * @param newFocus The new focus of the @c SpeechSynthesizer.
+     * @param desiredState The target state.
+     * @note This method will acquire m_mutex.
      */
-    void setDesiredStateLocked(avsCommon::avs::FocusState newFocus);
+    void setDesiredState(SpeechSynthesizerObserverInterface::SpeechSynthesizerState desiredState);
 
     /**
      * Reset @c m_currentInfo, cleaning up any @c SpeechSynthesizer resources and removing from CapabilityAgent's
@@ -451,14 +506,33 @@ private:
     void resetMediaSourceId();
 
     /**
+     * Clear the enqueued directives.
+     *
+     * @note Make sure you acquired @c m_speakInfoQueueMutex.
+     */
+    void clearPendingDirectivesLocked();
+
+    /**
+     * Acquire power resource when speaking and release power resource when finished speaking.
+     * @param newState The new state of SpeechSynthesizer.
+     */
+    void managePowerResource(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState);
+
+    /**
      * Id to identify the specific source when making calls to MediaPlayerInterface.
      * If this is modified or retrieved from methods that are not protected by the executor
      * then additional locking will be needed.
      */
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId m_mediaSourceId;
 
+    /// The last media player offset reportted. This is used to provide the interrupted state information.
+    int64_t m_offsetInMilliseconds;
+
     /// MediaPlayerInterface instance to send audio attachments to
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_speechPlayer;
+
+    /// MetricRecorder instance to record metrics with
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Object used to send events.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
@@ -468,6 +542,9 @@ private:
 
     /// The @c ContextManager that needs to be updated of the state.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// The @c CaptionManagerInterface used for handling captions.
+    std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
 
     /// The set of @c SpeechSynthesizerObserverInterface instances to notify of state changes.
     std::unordered_set<std::shared_ptr<SpeechSynthesizerObserverInterface>> m_observers;
@@ -493,9 +570,6 @@ private:
 
     /// Mutex to serialize access to m_currentState, m_desiredState, and m_waitOnStateChange.
     std::mutex m_mutex;
-
-    /// A flag to keep track of if @c SpeechSynthesizer has called @c Stop() already or not.
-    bool m_isAlreadyStopping;
 
     /// Condition variable to wake @c onFocusChanged() once the state transition to desired state is complete.
     std::condition_variable m_waitOnStateChange;
@@ -525,6 +599,9 @@ private:
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
+    /// The power resource manager
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> m_powerResourceManager;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -74,18 +74,28 @@ public:
     virtual ConnectionStatus getConnectionStatus() = 0;
 
     /**
-     * Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
-     * current active connection to be closed, and a new one opened to the new endpoint.
-     * @param avsEndpoint The URL for the new AVS endpoint.
+     * Set the gateway URL for the AVS connection.  Calling this function with a new value will cause the
+     * current active connection to be closed, and a new one opened to the new gateway.
+     * @param avsGateway The URL for the new AVS gateway.
      */
-    virtual void setAVSEndpoint(const std::string& avsEndpoint) = 0;
+    virtual void setAVSGateway(const std::string& avsGateway) = 0;
 
     /**
-     * Get the URL endpoint for the AVS connection.
+     * Get the gateway URL for the AVS connection.
      *
-     * @return The URL for the current AVS endpoint.
+     * @return The URL for the current AVS gateway.
      */
-    virtual std::string getAVSEndpoint() = 0;
+    virtual std::string getAVSGateway() = 0;
+
+    /**
+     * This method is a hint to retry connecting (if not connected).
+     */
+    virtual void onWakeConnectionRetry() = 0;
+
+    /**
+     * This method is a hint to verify that there is a valid connection to AVS.
+     */
+    virtual void onWakeVerifyConnectivity() = 0;
 
     /**
      * Set the observer to this object.
