@@ -1059,7 +1059,7 @@ void ExternalMediaPlayer::setPlayerInFocus(const std::string& playerInFocus) {
         }
     }
     ACSDK_DEBUG(LX(__func__).d("playerInFocus", playerInFocus));
-    auto adapterInFocus = getAdapterByLocalPlayerId(playerInFocus);
+    auto adapterInFocus = getAdapterByPlayerId(playerInFocus);
 
     {
         std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};

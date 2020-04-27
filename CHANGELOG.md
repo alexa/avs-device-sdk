@@ -1,5 +1,10 @@
 ## ChangeLog
 
+### Version 1.19.1 - April 27 2020
+* Fixed a bug that caused Display Cards for certain EMP adapters to stop rendering.
+
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
+
 ### Version 1.19.0 - April 13 2020
 Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
 

@@ -38,6 +38,7 @@
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockPlaybackRouter.h>
+#include <AVSCommon/SDKInterfaces/MockRenderPlayerInfoCardsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
@@ -2121,6 +2122,28 @@ TEST_F(ExternalMediaPlayerTest, testSetPlayerInFocusFailsForAuthorized) {
     m_externalMediaPlayer->setPlayerInFocus(INVALID_ID);
     m_externalMediaPlayer->provideState(SESSION_STATE, PROVIDE_STATE_TOKEN_TEST);
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test setPlayerInFocus notifies any RenderPlayerInfoCardsObservers.
+ */
+TEST_F(ExternalMediaPlayerTest, testSetPlayerInFocusNotfiesTemplateRuntimeObserver) {
+    std::promise<void> promise;
+    std::future<void> future = promise.get_future();
+
+    auto renderCardObserver = std::make_shared<MockRenderPlayerInfoCardsObserver>();
+    m_externalMediaPlayer->setObserver(renderCardObserver);
+
+    EXPECT_CALL(*renderCardObserver, onRenderPlayerCardsInfoChanged(_, _))
+        .WillOnce(Invoke([&promise](
+                             avsCommon::avs::PlayerActivity state,
+                             const RenderPlayerInfoCardsObserverInterface::Context& context) { promise.set_value(); }));
+
+    // Authorized from SetUp().
+    m_externalMediaPlayer->setPlayerInFocus(MSP1_PLAYER_ID);
+    m_externalMediaPlayer->provideState(PLAYBACK_STATE, PROVIDE_STATE_TOKEN_TEST);
+
+    ASSERT_TRUE(std::future_status::ready == future.wait_for(MY_WAIT_TIMEOUT));
 }
 
 }  // namespace test

@@ -29,7 +29,7 @@ namespace utils {
 namespace sdkVersion {
 
 inline static std::string getCurrentVersion() {
-    return "1.19.0";
+    return "1.19.1";
 }
 
 inline static int getMajorVersion() {
@@ -41,7 +41,7 @@ inline static int getMinorVersion() {
 }
 
 inline static int getPatchVersion() {
-    return 0;
+    return 1;
 }
 
 }  // namespace sdkVersion
