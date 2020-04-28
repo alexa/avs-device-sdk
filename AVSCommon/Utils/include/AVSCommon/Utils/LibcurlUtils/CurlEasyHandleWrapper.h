@@ -64,6 +64,18 @@ public:
     using CurlDebugCallback =
         int (*)(CURL* handle, curl_infotype infoType, char* buffer, size_t blockSize, void* userData);
 
+
+    /**
+     * Callback signature of the libcurl SEEK function
+     *
+     * https://curl.haxx.se/libcurl/c/CURLOPT_SEEKFUNCTION.html
+     *
+     * @param userp User data as set with CURLOPT_SEEKDATA
+     * @param offset Absolute index if `SEEK_SET`. Relative delta if `SEEK_CUR` or `SEEK_END`
+     * @param origin Always SEEK_SET from <stdio.h>
+     */
+    using CurlSeekCallback = int (*)(void *userp, curl_off_t offset, int origin);
+
     /**
      * Definitions for HTTP action types
      */
@@ -212,6 +224,16 @@ public:
      * @return Whether the addition was successful
      */
     bool setReadCallback(CurlCallback callback, void* userData);
+
+    /**
+     * Sets the callback to call when libcurl needs to retry
+     * sending post data
+     *
+     * @param callback A function pointer to the seek callback
+     * @param userData Any data to be passed to the callback
+     * @return Whether the addition was successful
+     */
+    bool setSeekCallback(CurlSeekCallback callback, void* userData);
 
     /**
      * Helper function for calling curl_easy_setopt and checking the result.

@@ -64,6 +64,10 @@ HTTP2SendDataResult MockHTTP2MimeRequestEncodeSource::onSendMimePartData(char* b
     return HTTP2SendDataResult(bytesToWrite);
 }
 
+bool MockHTTP2MimeRequestEncodeSource::rewindData() {
+    return true; // NOT IMPLEMENTED IN TEST
+}
+
 std::vector<std::string> MockHTTP2MimeRequestEncodeSource::getRequestHeaderLines() {
     return std::vector<std::string>();
 }

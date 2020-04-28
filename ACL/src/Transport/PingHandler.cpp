@@ -107,6 +107,14 @@ HTTP2SendDataResult PingHandler::onSendData(char* bytes, size_t size) {
     return HTTP2SendDataResult::COMPLETE;
 }
 
+bool PingHandler::rewindData() {
+    ACSDK_DEBUG9(LX(__func__));
+    // no-op: this function is only called
+    // during data upload and this class
+    // does not upload data
+    return true;
+}
+
 bool PingHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
 

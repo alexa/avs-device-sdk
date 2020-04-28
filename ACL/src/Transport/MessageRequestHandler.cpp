@@ -186,7 +186,8 @@ MessageRequestHandler::MessageRequestHandler(
         m_metricRecorder{metricRecorder},
         m_wasMessageRequestAcknowledgeReported{false},
         m_wasMessageRequestFinishedReported{false},
-        m_responseCode{0} {
+        m_responseCode{0},
+        m_bytesReadFromAttachmentReader{0} {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 }
 
@@ -255,6 +256,7 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
     } else if (m_namedReader) {
         auto readStatus = AttachmentReader::ReadStatus::OK;
         auto bytesRead = m_namedReader->reader->read(bytes, size, &readStatus);
+        m_bytesReadFromAttachmentReader += bytesRead;
         ACSDK_DEBUG9(LX("attachmentRead").d("readStatus", (int)readStatus).d("bytesRead", bytesRead));
         switch (readStatus) {
             // The good cases.
@@ -291,6 +293,25 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
 
     ACSDK_ERROR(LX("onSendMimePartDataFailed").d("reason", "noMoreAttachments"));
     return HTTP2SendDataResult::ABORT;
+}
+
+bool MessageRequestHandler::rewindData() {
+    ACSDK_DEBUG9(LX(__func__).d("m_bytesReadFromAttachmentReader", m_bytesReadFromAttachmentReader));
+    if (!m_namedReader->reader->seekRelativeBytes(-m_bytesReadFromAttachmentReader)) {
+        ACSDK_ERROR(LX(__func__).m("Could not seek!"));
+        return false;
+    }
+
+    // Reset mime parts
+    m_jsonNext = m_json.c_str();
+    m_countOfJsonBytesLeft = m_json.size();
+    m_countOfPartsSent = 0;
+    m_wasMessageRequestAcknowledgeReported = false;
+    m_wasMessageRequestFinishedReported = false;
+    m_responseCode = 0;
+    m_bytesReadFromAttachmentReader = 0;
+
+    return true;
 }
 
 void MessageRequestHandler::onActivity() {

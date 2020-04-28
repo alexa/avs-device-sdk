@@ -239,6 +239,18 @@ HTTP2SendDataResult HTTP2MimeRequestEncoder::onSendData(char* bytes, size_t size
     }
 }
 
+bool HTTP2MimeRequestEncoder::rewindData() {
+    ACSDK_DEBUG9(LX(__func__));
+    if (m_source->rewindData()) {
+        m_state = State::NEW;
+        m_getMimeHeaderLinesResult = HTTP2GetMimeHeadersResult::ABORT;
+        m_headerLine = m_getMimeHeaderLinesResult.headers.begin();
+        m_stringIndex = 0;
+        return true;
+    }
+    return false;
+}
+
 std::vector<std::string> HTTP2MimeRequestEncoder::getRequestHeaderLines() {
     ACSDK_DEBUG9(LX(__func__));
     if (m_source) {

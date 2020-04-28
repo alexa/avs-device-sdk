@@ -59,6 +59,14 @@ public:
      * @return Result indicating the disposition of the operation and number of bytes copied.  @see HTTPSendDataResult.
      */
     virtual HTTP2SendDataResult onSendData(char* bytes, size_t size) = 0;
+
+    /**
+     * Rewinds the data to the beginning. Used for uploading
+     * data to the server again if there is a connection issue.
+     *
+     * @return true, if the rewind was successful. False otherwise
+     */
+    virtual bool rewindData() = 0;
 };
 
 }  // namespace http2
