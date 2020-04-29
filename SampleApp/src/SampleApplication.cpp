@@ -222,6 +222,7 @@ static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_SOFTWARE_VERSION("
 /// The custom identifier.
 static const std::string SAMPLE_ENDPOINT_ADDITIONAL_ATTRIBUTE_CUSTOM_IDENTIFIER("SampleApp");
 
+#ifdef ENDPOINT_CONTROLLERS_RANGE_CONTROLLER
 /// The range controller preset 'high'.
 static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_HIGH = 10;
 
@@ -230,6 +231,7 @@ static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_MEDIUM = 5;
 
 /// The range controller preset 'low'.
 static const double SAMPLE_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW = 1;
+#endif
 
 /// US English locale string.
 static const std::string EN_US("en-US");
