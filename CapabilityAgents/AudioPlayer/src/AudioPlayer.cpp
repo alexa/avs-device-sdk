@@ -1013,7 +1013,7 @@ void AudioPlayer::handleUpdateProgressReportIntervalDirective(std::shared_ptr<Di
 void AudioPlayer::removeDirective(std::shared_ptr<DirectiveInfo> info) {
     // Check result too, to catch cases where DirectiveInfo was created locally, without a nullptr result.
     // In those cases there is no messageId to remove because no result was expected.
-    if (info->directive && info->result) {
+    if (info && info->directive && info->result) {
         auto messageId = info->directive->getMessageId();
         CapabilityAgent::removeDirective(messageId);
     }
