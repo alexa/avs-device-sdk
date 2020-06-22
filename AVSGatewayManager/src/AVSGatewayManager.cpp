@@ -86,6 +86,12 @@ AVSGatewayManager::AVSGatewayManager(
         m_currentState{defaultAVSGateway, false} {
 }
 
+AVSGatewayManager::~AVSGatewayManager() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_mutex};
+    m_observers.clear();
+}
+
 std::shared_ptr<PostConnectOperationInterface> AVSGatewayManager::createPostConnectOperation() {
     std::lock_guard<std::mutex> m_lock{m_mutex};
     ACSDK_DEBUG5(LX(__func__));
@@ -101,6 +107,8 @@ std::shared_ptr<PostConnectOperationInterface> AVSGatewayManager::createPostConn
 }
 
 bool AVSGatewayManager::init() {
+    std::lock_guard<std::mutex> m_lock{m_mutex};
+
     if (!m_avsGatewayStorage->init()) {
         ACSDK_ERROR(LX("initFailed").d("reason", "unable to initialize gateway storage."));
         return false;
@@ -111,11 +119,14 @@ bool AVSGatewayManager::init() {
         return false;
     }
 
+    ACSDK_DEBUG5(LX("init").d("avsGateway", m_currentState.avsGatewayURL));
     return true;
 }
 
 bool AVSGatewayManager::setAVSGatewayAssigner(std::shared_ptr<AVSGatewayAssignerInterface> avsGatewayAssigner) {
     ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> m_lock{m_mutex};
+
     if (!avsGatewayAssigner) {
         ACSDK_ERROR(LX("setAVSGatewayAssignerFailed").d("reason", "nullAvsGatewayAssigner"));
         return false;
@@ -125,43 +136,50 @@ bool AVSGatewayManager::setAVSGatewayAssigner(std::shared_ptr<AVSGatewayAssigner
     return true;
 }
 
+std::string AVSGatewayManager::getGatewayURL() const {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    return m_currentState.avsGatewayURL;
+}
+
 bool AVSGatewayManager::setGatewayURL(const std::string& avsGatewayURL) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX(__func__).d("avsGateway", avsGatewayURL));
     if (avsGatewayURL.empty()) {
         ACSDK_ERROR(LX("setGatewayURLFailed").d("reason", "empty avsGatewayURL"));
         return false;
     };
 
-    if (avsGatewayURL != m_currentState.avsGatewayURL) {
-        std::unordered_set<std::shared_ptr<AVSGatewayObserverInterface>> observersCopy;
-        {
-            std::lock_guard<std::mutex> lock{m_mutex};
+    std::unordered_set<std::shared_ptr<AVSGatewayObserverInterface>> observersCopy;
+    std::shared_ptr<AVSGatewayAssignerInterface> avsGatewayAssignerCopy;
+
+    {
+        std::lock_guard<std::mutex> lock{m_mutex};
+        if (avsGatewayURL != m_currentState.avsGatewayURL) {
             m_currentState = GatewayVerifyState{avsGatewayURL, false};
             saveStateLocked();
             observersCopy = m_observers;
-        }
-
-        if (!observersCopy.empty()) {
-            for (auto& observer : observersCopy) {
-                observer->onAVSGatewayChanged(avsGatewayURL);
-            }
-        }
-
-        if (m_avsGatewayAssigner) {
-            m_avsGatewayAssigner->setAVSGateway(avsGatewayURL);
+            avsGatewayAssignerCopy = m_avsGatewayAssigner;
         } else {
-            ACSDK_ERROR(LX("setGatewayURLFailed").d("reason", "invalid AVSGatewayAssigner"));
+            ACSDK_ERROR(LX("setGatewayURLFailed").d("reason", "no change in URL"));
             return false;
         }
+    }
+
+    if (avsGatewayAssignerCopy) {
+        avsGatewayAssignerCopy->setAVSGateway(avsGatewayURL);
     } else {
-        ACSDK_ERROR(LX("setGatewayURLFailed").d("reason", "no change in URL"));
-        return false;
+        ACSDK_WARN(LX("setGatewayURLWARN").d("reason", "invalid AVSGatewayAssigner"));
+    }
+
+    if (!observersCopy.empty()) {
+        for (auto& observer : observersCopy) {
+            observer->onAVSGatewayChanged(avsGatewayURL);
+        }
     }
 
     return true;
 }
 
-void AVSGatewayManager::onGatewayVerified(const std::shared_ptr<PostConnectVerifyGatewaySender>& verifyGatewaySender) {
+void AVSGatewayManager::onGatewayVerified(const std::shared_ptr<PostConnectOperationInterface>& verifyGatewaySender) {
     ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
     if (m_currentVerifyGatewaySender == verifyGatewaySender && !m_currentState.isVerified) {
@@ -213,6 +231,7 @@ void AVSGatewayManager::removeObserver(std::shared_ptr<AVSGatewayObserverInterfa
 
 void AVSGatewayManager::clearData() {
     ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_mutex};
     m_avsGatewayStorage->clear();
 }
 

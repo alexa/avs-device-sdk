@@ -16,27 +16,29 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_UIMANAGER_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_UIMANAGER_H_
 
-#include <Alerts/AlertObserverInterface.h>
-
 #include <string>
+#include <memory>
 #include <unordered_map>
+#include <vector>
 
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
-#include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
+#include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/SettingCallbacks.h>
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothDeviceObserverInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -52,24 +54,37 @@ class UIManager
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::SingleSettingObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
-        , public avsCommon::sdkInterfaces::NotificationsObserverInterface
-        , public avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface
+        , public acsdkNotificationsInterfaces::NotificationsObserverInterface
+        , public acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface
         , public authorization::cblAuthDelegate::CBLAuthRequesterInterface {
 public:
-    using DeviceAttributes = avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface::DeviceAttributes;
+    using DeviceAttributes = acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface::DeviceAttributes;
 
     /**
-     * Constructor.
+     * Create a UIManager.
      *
      * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param deviceInfo Information about the device.  For example, the default endpoint.
+     * @return a new instyance of UIManager.
      */
-    UIManager(std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
+    static std::shared_ptr<UIManager> create(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
 
+    /// @name DialogUxStateObserverInetrface methods.
+    /// @{
     void onDialogUXStateChanged(DialogUXState state) override;
+    /// @}
 
+    /// @name ConnectionStatusObserverInterface methods.
+    /// @{
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
+    /// @}
 
+    /// @name SingleSettingObserverInterface methods
+    /// @{
     void onSettingChanged(const std::string& key, const std::string& value) override;
+    /// @}
 
     /// @name SpeakerManagerObserverInterface Functions
     /// @{
@@ -82,7 +97,6 @@ public:
     /// @name NotificationsObserverInterface Functions
     /// @{
     void onSetIndicator(avsCommon::avs::IndicatorState state) override;
-
     void onNotificationReceived() override{};
     /// }
 
@@ -103,7 +117,9 @@ public:
     /// @{
     void onCapabilitiesStateChange(
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError) override;
+        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) override;
     /// }
 
     /// @name BluetoothDeviceObserverInterface Methods
@@ -137,6 +153,17 @@ public:
      * Prints the Settings Options screen.
      */
     void printSettingsScreen();
+
+    /**
+     * Prints the endpoint modification screen.
+     */
+    void printEndpointModificationScreen();
+
+    /**
+     * Prints an error message.
+     * @param message The error message to print.
+     */
+    void printEndpointModificationError(const std::string& message);
 
     /**
      * Prints the Endpoint Controller Options screen.
@@ -377,6 +404,16 @@ public:
 
 private:
     /**
+     * Constructor
+     *
+     * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param deviceInfo Information about the device.  For example, the default endpoint.
+     */
+    UIManager(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
+
+    /**
      * Prints the current state of Alexa after checking what the appropriate message to display is based on the current
      * component states. This should only be used within the internal executor.
      */
@@ -426,12 +463,6 @@ private:
     /// The current dialog UX state of the SDK
     DialogUXState m_dialogState;
 
-    /// The current CapabilitiesDelegate state.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State m_capabilitiesState;
-
-    /// The error associated with the CapabilitiesDelegate state.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error m_capabilitiesError;
-
     /// The current authorization state of the SDK.
     avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
 
@@ -452,6 +483,9 @@ private:
 
     // Object that manages settings notifications.
     std::shared_ptr<settings::SettingCallbacks<settings::DeviceSettingsManager>> m_callbacks;
+
+    // The @c EndpointIdentifier of the default endpoint.
+    avsCommon::sdkInterfaces::endpoints::EndpointIdentifier m_defaultEndpointId;
 };
 
 }  // namespace sampleApp

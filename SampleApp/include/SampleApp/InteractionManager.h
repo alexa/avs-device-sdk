@@ -23,7 +23,9 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
 #include <RegistrationManager/CustomerDataManager.h>
@@ -45,19 +47,19 @@
 #endif
 
 #ifdef POWER_CONTROLLER
-#include "PowerControllerHandler.h"
+#include "PeripheralEndpoint/PeripheralEndpointPowerControllerHandler.h"
 #endif
 
 #ifdef TOGGLE_CONTROLLER
-#include "ToggleControllerHandler.h"
+#include "PeripheralEndpoint/PeripheralEndpointToggleControllerHandler.h"
 #endif
 
 #ifdef RANGE_CONTROLLER
-#include "RangeControllerHandler.h"
+#include "PeripheralEndpoint/PeripheralEndpointRangeControllerHandler.h"
 #endif
 
 #ifdef MODE_CONTROLLER
-#include "ModeControllerHandler.h"
+#include "PeripheralEndpoint/PeripheralEndpointModeControllerHandler.h"
 #endif
 
 namespace alexaClientSDK {
@@ -91,16 +93,16 @@ public:
         std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
 #ifdef POWER_CONTROLLER
-        std::shared_ptr<PowerControllerHandler> powerControllerHandler = nullptr,
+        std::shared_ptr<PeripheralEndpointPowerControllerHandler> powerControllerHandler = nullptr,
 #endif
 #ifdef TOGGLE_CONTROLLER
-        std::shared_ptr<ToggleControllerHandler> toggleControllerHandler = nullptr,
+        std::shared_ptr<PeripheralEndpointToggleControllerHandler> toggleControllerHandler = nullptr,
 #endif
 #ifdef RANGE_CONTROLLER
-        std::shared_ptr<RangeControllerHandler> rangeControllerHandler = nullptr,
+        std::shared_ptr<PeripheralEndpointRangeControllerHandler> rangeControllerHandler = nullptr,
 #endif
 #ifdef MODE_CONTROLLER
-        std::shared_ptr<ModeControllerHandler> modeControllerHandler = nullptr,
+        std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler = nullptr,
 #endif
         std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
@@ -224,7 +226,41 @@ public:
      */
     void locale();
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+    /**
+     * Resets cached endpoint identifiers.
+     */
+    void clearCachedEndpointIdentifiers(
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints);
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+    /**
+     * Should be called whenever a user requests dynamic endpoint modification options.
+     */
+    void endpointModification();
+
+    /**
+     * Builds and dynamically registers an endpoint with the given friendlyName.
+     * @param friendlyName
+     * @return Whether building and enqueuing the endpoint for registration succeeded.
+     * The CapabilitiesDelegate observer callback will indicate whether registration with AVS succeeded.
+     */
+    bool addEndpoint(const std::string& friendlyName);
+
+    /**
+     * Adds an endpoint.
+     */
+    void addDynamicEndpoint();
+
+    /**
+     * Modifies an endpoint.
+     */
+    void modifyDynamicEndpoint();
+
+    /**
+     * Deletes an endpoint.
+     */
+    void deleteDynamicEndpoint();
+
     /**
      * Should be called whenever a user presses 'ENDPOINT_CONTROLLER' for endpoint point controller options.
      */
@@ -632,22 +668,22 @@ private:
 
 #ifdef POWER_CONTROLLER
     /// The Power Controller Handler
-    std::shared_ptr<PowerControllerHandler> m_powerControllerHandler;
+    std::shared_ptr<PeripheralEndpointPowerControllerHandler> m_powerControllerHandler;
 #endif
 
 #ifdef TOGGLE_CONTROLLER
     /// The Toggle Controller Handler
-    std::shared_ptr<ToggleControllerHandler> m_toggleControllerHandler;
+    std::shared_ptr<PeripheralEndpointToggleControllerHandler> m_toggleControllerHandler;
 #endif
 
 #ifdef RANGE_CONTROLLER
     /// The Range Controller Handler
-    std::shared_ptr<RangeControllerHandler> m_rangeControllerHandler;
+    std::shared_ptr<PeripheralEndpointRangeControllerHandler> m_rangeControllerHandler;
 #endif
 
 #ifdef MODE_CONTROLLER
     /// The Mode Controller Handler
-    std::shared_ptr<ModeControllerHandler> m_modeControllerHandler;
+    std::shared_ptr<PeripheralEndpointModeControllerHandler> m_modeControllerHandler;
 #endif
 
     /// Whether a hold is currently occurring.
@@ -661,6 +697,14 @@ private:
 
     /// Whether the microphone is currently on.
     bool m_isMicOn;
+
+    /// Optional dynamic endpointId.
+    avsCommon::utils::Optional<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier> m_dynamicEndpointId;
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+    /// Whether to toggle the dynamic endpoint's friendly name.
+    bool m_friendlyNameToggle;
+#endif
 
     /// Diagnostics object.
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> m_diagnostics;

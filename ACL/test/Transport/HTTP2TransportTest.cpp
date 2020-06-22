@@ -222,8 +222,7 @@ protected:
     PromiseFuturePair<void> m_createPostConnectCalled;
 
     /// A promise that @c PostConnectInterface:doPostConnect() will be called).
-    PromiseFuturePair<
-        std::pair<std::shared_ptr<PostConnectSendMessageInterface>, std::shared_ptr<PostConnectObserverInterface>>>
+    PromiseFuturePair<std::pair<std::shared_ptr<MessageSenderInterface>, std::shared_ptr<PostConnectObserverInterface>>>
         m_doPostConnected;
 
     /// A promise that the @c TransportObserver.onConnected() will be called.
@@ -318,7 +317,7 @@ void HTTP2TransportTest::setupHandlers(bool sendOnPostConnected, bool expectConn
         EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
             .InSequence(s2)
             .WillOnce(Invoke([this, sendOnPostConnected](
-                                 std::shared_ptr<PostConnectSendMessageInterface> postConnectSender,
+                                 std::shared_ptr<MessageSenderInterface> postConnectSender,
                                  std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
                 m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
                 if (sendOnPostConnected) {
@@ -529,7 +528,7 @@ TEST_F(HTTP2TransportTest, test_messageRequestContent) {
 
     // Send post connect message.
     std::shared_ptr<MessageRequest> messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE, "");
-    m_http2Transport->sendPostConnectMessage(messageReq);
+    m_http2Transport->sendMessage(messageReq);
 
     // Wait for the postConnect message to become HTTP message request and HTTP body to be fully reassembled.
     auto postMessage = m_mockHttp2Connection->waitForPostRequest(LONG_RESPONSE_TIMEOUT);
@@ -573,7 +572,7 @@ TEST_F(HTTP2TransportTest, test_messageRequestWithAttachment) {
     // Send post connect message with attachment.
     std::shared_ptr<MessageRequest> messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE, "");
     messageReq->addAttachmentReader(TEST_ATTACHMENT_FIELD, attachmentReader);
-    m_http2Transport->sendPostConnectMessage(messageReq);
+    m_http2Transport->sendMessage(messageReq);
 
     // Wait for the postConnect message to become HTTP message request and HTTP body to be fully reassembled.
     auto postMessage = m_mockHttp2Connection->waitForPostRequest(LONG_RESPONSE_TIMEOUT);
@@ -619,7 +618,7 @@ TEST_F(HTTP2TransportTest, test_pauseSendWhenSDSEmpty) {
         attMgr.createReader(TEST_ATTACHMENT_ID_STRING_ONE, avsCommon::utils::sds::ReaderPolicy::NONBLOCKING);
     ASSERT_NE(attachmentReader, nullptr);
     messageReq->addAttachmentReader(TEST_ATTACHMENT_FIELD, attachmentReader);
-    m_http2Transport->sendPostConnectMessage(messageReq);
+    m_http2Transport->sendMessage(messageReq);
 
     // Send the attachment in chunks in another thread.
     std::thread writerThread([this, &attMgr, &attachment]() {
@@ -726,7 +725,7 @@ TEST_F(HTTP2TransportTest, testSlow_messageRequestsQueuing) {
             }
         }
     }
-    while (m_synchronizedMessageRequestQueue->dequeueRequest()) {
+    while (m_synchronizedMessageRequestQueue->dequeueOldestRequest()) {
         ++messagesRemaining;
     }
 
@@ -734,7 +733,7 @@ TEST_F(HTTP2TransportTest, testSlow_messageRequestsQueuing) {
 }
 
 /**
- * Test MessageRequests are sent for sequential queue types.
+ * Test MessageRequests are sent sequentially.
  */
 TEST_F(HTTP2TransportTest, messageRequests_SequentialSend) {
     authorizeAndConnect();
@@ -793,7 +792,69 @@ TEST_F(HTTP2TransportTest, messageRequests_SequentialSend) {
             }
         }
     }
-    while (m_synchronizedMessageRequestQueue->dequeueRequest()) {
+    while (m_synchronizedMessageRequestQueue->dequeueOldestRequest()) {
+        ++messagesRemaining;
+    }
+
+    ASSERT_EQ(messagesCanceled + messagesRemaining, messagesCount);
+}
+
+/**
+ * Test concurrent send of non sequential MessageRequests.
+ */
+TEST_F(HTTP2TransportTest, messageRequests_concurrentSend) {
+    authorizeAndConnect();
+
+    // Send 5 messages.
+    std::vector<std::shared_ptr<TestMessageRequestObserver>> messageObservers;
+    unsigned int messagesCount = 5;  // number of test messages to Send
+    for (unsigned messageNum = 0; messageNum < messagesCount; messageNum++) {
+        // 'false' parameter flags the new MessageRequst as not serialized.
+        std::shared_ptr<MessageRequest> messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE, false, "");
+        auto messageObserver = std::make_shared<TestMessageRequestObserver>();
+        messageObservers.push_back(messageObserver);
+        messageReq->addObserver(messageObserver);
+        m_synchronizedMessageRequestQueue->enqueueRequest(messageReq);
+        m_http2Transport->onRequestEnqueued();
+    }
+
+    unsigned int postsRequestsCount = 0;
+    while (postsRequestsCount < messagesCount) {
+        auto request = m_mockHttp2Connection->waitForPostRequest(RESPONSE_TIMEOUT);
+        postsRequestsCount++;
+        // Note: do not acknowledge the request.
+    }
+    // Make sure HTTP2Transport sent out the 5 POST requests.
+    ASSERT_EQ(postsRequestsCount, messagesCount);
+
+    // On disconnect, send CANCELED response for each POST REQUEST.
+    EXPECT_CALL(*m_mockHttp2Connection, disconnect()).WillOnce(Invoke([this]() {
+        while (true) {
+            auto request = m_mockHttp2Connection->dequePostRequest();
+            if (!request) {
+                break;
+            }
+            request->getSink()->onResponseFinished(HTTP2ResponseFinishedStatus::CANCELLED);
+        };
+    }));
+
+    m_http2Transport->shutdown();
+
+    // Count the number of messages that received CANCELED or NOT_CONNECTED event.
+    unsigned messagesCanceled = 0;
+    unsigned messagesRemaining = 0;
+    for (unsigned messageNum = 0; messageNum < messagesCount; messageNum++) {
+        if (messageObservers[messageNum]->m_status.waitFor(RESPONSE_TIMEOUT)) {
+            switch (messageObservers[messageNum]->m_status.getValue()) {
+                case MessageRequestObserverInterface::Status::CANCELED:
+                case MessageRequestObserverInterface::Status::NOT_CONNECTED:
+                    messagesCanceled++;
+                default:
+                    break;
+            }
+        }
+    }
+    while (m_synchronizedMessageRequestQueue->dequeueOldestRequest()) {
         ++messagesRemaining;
     }
 
@@ -1262,7 +1323,7 @@ TEST_F(HTTP2TransportTest, test_onPostConnectFailureInitiatesShutdownAndNotifies
     // Handle PostConnectInterface::doPostConnect() when called.
     EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
         .WillOnce(Invoke([this](
-                             std::shared_ptr<PostConnectSendMessageInterface> postConnectSender,
+                             std::shared_ptr<MessageSenderInterface> postConnectSender,
                              std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
             m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
             postConnectObserver->onUnRecoverablePostConnectFailure();

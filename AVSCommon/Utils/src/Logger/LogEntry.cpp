@@ -112,6 +112,10 @@ LogEntry& LogEntry::m(const std::string& message) {
     return *this;
 }
 
+LogEntry& LogEntry::p(const char* key, void* ptr) {
+    return d(key, ptr);
+}
+
 const char* LogEntry::c_str() const {
     return m_stream.c_str();
 }

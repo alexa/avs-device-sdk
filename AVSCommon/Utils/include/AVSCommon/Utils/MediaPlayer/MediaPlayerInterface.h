@@ -24,8 +24,10 @@
 #include "AVSCommon/AVS/Attachment/AttachmentReader.h"
 #include "AVSCommon/Utils/AudioFormat.h"
 #include "AVSCommon/Utils/Optional.h"
+#include "AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h"
 #include "AVSCommon/Utils/MediaPlayer/MediaPlayerState.h"
 #include "AVSCommon/Utils/MediaPlayer/PlaybackAttributes.h"
+#include "AVSCommon/Utils/MediaPlayer/PlaybackContext.h"
 #include "AVSCommon/Utils/MediaPlayer/PlaybackReport.h"
 #include "AVSCommon/Utils/MediaPlayer/SourceConfig.h"
 #include "AVSCommon/Utils/MediaType.h"
@@ -107,6 +109,7 @@ public:
      * @param offset An optional offset parameter to start playing from when a @c play() call is made.
      * @param config Media configuration of source.
      * @param repeat An optional parameter to play the url source in a loop.
+     * @param playbackContext An optional parameter used for sending headers needed for data requests.
      *
      * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
      *     returned if the source failed to be set.  Must be unique across all instances.
@@ -115,7 +118,8 @@ public:
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const SourceConfig& config = emptySourceConfig(),
-        bool repeat = false) = 0;
+        bool repeat = false,
+        const PlaybackContext& playbackContext = PlaybackContext()) = 0;
 
     /**
      * Set an @c istream source to play. The source should be set before making calls to any of the playback control
@@ -168,17 +172,41 @@ public:
      * The source must be set before issuing @c stop().
      *
      * Once @c stop() has been called, subsequent @c play() calls will fail.
-     * If @c stop() is called when audio has already stopped, @c false will be returned.
-     * If the id does not match the id of the active source, then @c false will be returned.
-     * If the @c stop() succeeded, @c true will be returned.
-     * When @c true is returned, a callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStopped()
-     * or to @c MediaPlayerObserverInterface::onPlaybackError().
+     * If @c stop() is called when audio has already stopped, @c false will be returned. If the id does not
+     * match the id of the active source, then @c false will be returned. If the @c stop() succeeded, @c true will be
+     * returned. When @c true is returned, a callback will be made to either @c
+     * MediaPlayerObserverInterface::onPlaybackStopped() or to @c MediaPlayerObserverInterface::onPlaybackError().
      *
      * @param id The unique id of the source on which to operate.
      *
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
     virtual bool stop(SourceId id) = 0;
+
+    /**
+     * Stops playing the audio specified by the @c setSource() call, but will keep the pipeline open for a set time.
+     * NOTE: This call is optional, and may not be implemented by all MediaPlayers
+     *
+     * The source must be set before issuing @c stop().
+     *
+     * Once @c stop() has been called, and the pipeline has shutdown, subsequent @c play() calls will fail.
+     * However, if @c play() is called while the pipeline remains open, playback will continue from the stopped
+     * location, or, if @c seekTo() is called while the pipeline is open, and @c play() also called while the pipeline
+     * is open, then playback will resume from the location specified in the @c seekTo() call. If @c stop() is called
+     * when audio has already stopped, @c false will be returned. If the id does not match the id of the active source,
+     * then @c false will be returned. If the @c stop() succeeded, @c true will be returned. When @c true is returned, a
+     * callback will be made to either @c MediaPlayerObserverInterface::onPlaybackStopped() or to @c
+     * MediaPlayerObserverInterface::onPlaybackError().
+     *
+     * @param id The unique id of the source on which to operate.
+     * @param timeToPipelineShutdown The pipeline will be kept open for this long, and during that time,
+     *        a call to @play will resume playback from the stopped location (or seeked location, if seek is called)
+     *
+     * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
+     */
+    virtual bool stop(SourceId id, std::chrono::seconds timeToPipelineShutdown) {
+        return false;
+    }
 
     /**
      * Pauses playing audio specified by the @c setSource() call.
@@ -226,6 +254,26 @@ public:
      * @return @c true if the call succeeded, in which case a callback will be made, or @c false otherwise.
      */
     virtual bool resume(SourceId id) = 0;
+
+    /**
+     * Seek to a position within the current song.
+     * This should only be called after setSource, and while playing or after a call to @c stop(id, timeout)
+     * before the timeout period has expired.
+     * NOTE: A call to @c seekTo() while STOPPED will not result in playback starting.
+     * If the pipeline has shutdown, false will be returned,  if the pipeline is still open, a @c onSeeked
+     * callback will be made with the requested location as the endState offset, but playback will not resume
+     * until @c play is called again.
+     *
+     * NOTE: Default empty implementation to avoid build breakage.
+     * @param id The unique id of the source on which to operate.
+     * @param location Seek location
+     * @param fromStart true if seek location is reletive to song start, false if reletive to current position.
+     *
+     * @return @c true if the call succeeded, or @c false otherwise.
+     */
+    virtual bool seekTo(SourceId id, std::chrono::milliseconds location, bool fromStart) {
+        return false;
+    }
 
     /**
      * Returns the offset, in milliseconds, of the media source.
@@ -290,6 +338,13 @@ public:
      *      active source; otherwise, an empty list.
      */
     virtual std::vector<PlaybackReport> getPlaybackReports();
+
+    /**
+     * Get fingerprint
+     *
+     * @return Media Player fingerprint
+     */
+    virtual utils::Optional<Fingerprint> getFingerprint();
 };
 
 inline utils::Optional<PlaybackAttributes> MediaPlayerInterface::getPlaybackAttributes() {
@@ -298,6 +353,10 @@ inline utils::Optional<PlaybackAttributes> MediaPlayerInterface::getPlaybackAttr
 
 inline std::vector<PlaybackReport> MediaPlayerInterface::getPlaybackReports() {
     return {};
+}
+
+inline utils::Optional<Fingerprint> MediaPlayerInterface::getFingerprint() {
+    return utils::Optional<Fingerprint>();
 }
 
 }  // namespace mediaPlayer

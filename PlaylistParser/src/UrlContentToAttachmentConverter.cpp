@@ -49,12 +49,13 @@ std::shared_ptr<UrlContentToAttachmentConverter> UrlContentToAttachmentConverter
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
     std::chrono::milliseconds startTime,
-    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver) {
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver,
+    size_t numOfReaders) {
     if (!contentFetcherFactory) {
         return nullptr;
     }
-    auto thisSharedPointer = std::shared_ptr<UrlContentToAttachmentConverter>(
-        new UrlContentToAttachmentConverter(contentFetcherFactory, url, observer, startTime, writeCompleteObserver));
+    auto thisSharedPointer = std::shared_ptr<UrlContentToAttachmentConverter>(new UrlContentToAttachmentConverter(
+        contentFetcherFactory, url, observer, startTime, writeCompleteObserver, numOfReaders));
     auto retVal = thisSharedPointer->m_playlistParser->parsePlaylist(url, thisSharedPointer);
     if (0 == retVal) {
         thisSharedPointer->shutdown();
@@ -72,7 +73,8 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
     std::chrono::milliseconds startTime,
-    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver) :
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver,
+    size_t numOfReaders) :
         RequiresShutdown{"UrlContentToAttachmentConverter"},
         m_desiredStreamPoint{startTime},
         m_contentFetcherFactory{contentFetcherFactory},
@@ -84,7 +86,7 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
         m_streamWriterClosed{false} {
     m_playlistParser = PlaylistParser::create(m_contentFetcherFactory);
     m_startStreamingPointFuture = m_startStreamingPointPromise.get_future();
-    m_stream = std::make_shared<InProcessAttachment>(url);
+    m_stream = std::make_shared<InProcessAttachment>(url, nullptr, numOfReaders);
     m_streamWriter = m_stream->createWriter(avsCommon::utils::sds::WriterPolicy::BLOCKING);
     m_contentDecrypter = std::make_shared<ContentDecrypter>();
 }
@@ -179,6 +181,12 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                     closeStreamWriter();
                     notifyError();
                 }
+            });
+            break;
+        case avsCommon::utils::playlistParser::PlaylistParseResult::SHUTDOWN:
+            m_executor.submit([this]() {
+                ACSDK_DEBUG9(LX("closingWriter"));
+                closeStreamWriter();
             });
             break;
         default:

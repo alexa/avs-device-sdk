@@ -32,9 +32,8 @@
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <AIP/Initiator.h>
-#include <Alerts/AlertObserverInterface.h>
-#include <Alerts/AlertsCapabilityAgent.h>
-#include <Alerts/Storage/SQLiteAlertStorage.h>
+#include <acsdkAlerts/AlertsCapabilityAgent.h>
+#include <acsdkAlerts/Storage/SQLiteAlertStorage.h>
 #include <Audio/AlertsAudioFactory.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
@@ -54,6 +53,7 @@
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/UserInactivityMonitor.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/TestAlertObserver.h"
@@ -73,6 +73,8 @@ namespace integration {
 namespace test {
 
 using namespace acl;
+using namespace acsdkAlerts;
+using namespace acsdkAlertsInterfaces;
 using namespace adsl;
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -406,11 +408,11 @@ protected:
 #else
         m_rendererMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
-        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer);
+        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer, nullptr);
 
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
-        m_alertStorage = capabilityAgents::alerts::storage::SQLiteAlertStorage::create(
+        m_alertStorage = acsdkAlerts::storage::SQLiteAlertStorage::create(
             avsCommon::utils::configuration::ConfigurationNode::getRoot(), alertsAudioFactory);
 
         m_alertObserver = std::make_shared<TestAlertObserver>();
@@ -604,7 +606,7 @@ protected:
     std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
-    std::shared_ptr<capabilityAgents::alerts::storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<acsdkAlerts::storage::SQLiteAlertStorage> m_alertStorage;
     std::shared_ptr<MockSetting<types::AlarmVolumeRampTypes>> m_mockAlarmVolumeRampSetting;
     std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
     std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;
@@ -933,9 +935,13 @@ TEST_F(AlertsTest, test_disconnectAndReconnect) {
 
     connect();
 
+    // AlertStarted Event is sent.
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
+
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
 
     // Low priority Test client gets back permission to the test channel
     EXPECT_EQ(
@@ -1260,7 +1266,7 @@ TEST_F(AlertsTest, DISABLED_testTimer_UserLongUnrelatedBargeInOnActive) {
  * the alert has become active in the background. Once the alert is active, call stopCapture and see that is is in the
  * foreground before locally stopping it.
  */
-TEST_F(AlertsTest, test_userSpeakingWhenAlertShouldBeActive) {
+TEST_F(AlertsTest, DISABLED_test_userSpeakingWhenAlertShouldBeActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1330,7 +1336,7 @@ TEST_F(AlertsTest, test_userSpeakingWhenAlertShouldBeActive) {
     ASSERT_TRUE(focusChanged);
 }
 
-TEST_F(AlertsTest, test_handleOneTimerWithVocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleOneTimerWithVocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);

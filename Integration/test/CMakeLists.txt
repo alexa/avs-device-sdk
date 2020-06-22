@@ -10,12 +10,10 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${AIP_SOURCE_DIR}/include"
      "${SpeechSynthesizer_SOURCE_DIR}/include"
      "${InteractionModel_SOURCE_DIR}/include"
-     "${Alerts_SOURCE_DIR}/include"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
      "${AVSCommon_SOURCE_DIR}/Utils/test"
-     "${AudioPlayer_INCLUDE_DIRS}"
      "${AudioResources_INCLUDE_DIRS}"
      "${MediaPlayer_SOURCE_DIR}/include"
      "${PlaybackController_SOURCE_DIR}/include"
@@ -27,8 +25,6 @@ set(LINK_PATH ACL
         ADSL
         AFML
         AIP
-        Alerts
-        AudioPlayer
         AVSSystem
         CBLAuthDelegate
         ContextManager
@@ -40,7 +36,9 @@ set(LINK_PATH ACL
         SpeechSynthesizer
         InteractionModel
         UtilsCommonTestLib
-        SDKInterfacesTests)
+        SDKInterfacesTests
+        acsdkAlerts
+        acsdkAudioPlayer)
 
 if(KITTAI_KEY_WORD_DETECTOR)
     SET(LINK_PATH ${LINK_PATH} KITTAI)

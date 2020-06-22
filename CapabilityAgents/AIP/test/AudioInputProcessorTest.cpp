@@ -1017,7 +1017,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     m_recognizeEvent = std::make_shared<RecognizeEvent>(
         audioProvider, initiator, begin, keywordEnd, keyword, avsInitiator, KWDMetadata);
     if (keyword.empty()) {
-        EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
             .WillOnce(InvokeWithoutArgs([this, contextJson, stopPoint] {
                 m_audioInputProcessor->onContextAvailable(contextJson);
                 if (RecognizeStopPoint::AFTER_CONTEXT == stopPoint) {
@@ -1027,11 +1027,11 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                 return CONTEXT_REQUEST_TOKEN;
             }));
     } else {
-        // Enforce the sequence; setState needs to be called before getContext, otherwise ContextManager will not
-        // include the new state in the context for this recognize.
+        // Enforce the sequence; setState needs to be called before getContextWithoutReportableStateProperties,
+        // otherwise ContextManager will not include the new state in the context for this recognize.
         InSequence dummy;
 
-        EXPECT_CALL(*m_mockContextManager, getContext(_, _, _))
+        EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
             .WillOnce(InvokeWithoutArgs([this, contextJson, stopPoint] {
                 m_audioInputProcessor->onContextAvailable(contextJson);
                 if (RecognizeStopPoint::AFTER_CONTEXT == stopPoint) {
@@ -1143,10 +1143,11 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
     bool done = false;
     RecognizeEvent recognize(*m_audioProvider, Initiator::TAP);
 
-    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _)).WillOnce(InvokeWithoutArgs([this, error] {
-        m_audioInputProcessor->onContextFailure(error);
-        return CONTEXT_REQUEST_TOKEN;
-    }));
+    EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
+        .WillOnce(InvokeWithoutArgs([this, error] {
+            m_audioInputProcessor->onContextFailure(error);
+            return CONTEXT_REQUEST_TOKEN;
+        }));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
     EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
@@ -1241,12 +1242,13 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
-    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _)).WillOnce(InvokeWithoutArgs([&] {
-        std::lock_guard<std::mutex> lock(mutex);
-        done = true;
-        conditionVariable.notify_one();
-        return CONTEXT_REQUEST_TOKEN;
-    }));
+    EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
+        .WillOnce(InvokeWithoutArgs([&] {
+            std::lock_guard<std::mutex> lock(mutex);
+            done = true;
+            conditionVariable.notify_one();
+            return CONTEXT_REQUEST_TOKEN;
+        }));
 
     if (!withDialogRequestId) {
         directiveHandler->handleDirectiveImmediately(avsDirective);
@@ -1381,7 +1383,8 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
     EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
-    EXPECT_CALL(*m_mockContextManager, getContext(_, _, _)).WillOnce(Return(CONTEXT_REQUEST_TOKEN));
+    EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
+        .WillOnce(Return(CONTEXT_REQUEST_TOKEN));
     EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
         .Times(AtLeast(1));
 

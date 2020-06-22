@@ -353,7 +353,7 @@ void LibcurlHTTP2Connection::cleanupCancelledAndStalledStreams() {
     while (it != m_activeStreams.end()) {
         auto stream = (it++)->second;
         if (stream->isCancelled()) {
-            cancelStream(*stream);
+            cancelActiveStream(*stream);
         } else if (stream->hasProgressTimedOut()) {
             ACSDK_WARN(LX("streamProgressTimedOut").d("streamId", stream->getId()));
             stream->reportCompletion(HTTP2ResponseFinishedStatus::TIMEOUT);
@@ -383,17 +383,36 @@ void LibcurlHTTP2Connection::unPauseActiveStreams() {
     }
 }
 
-bool LibcurlHTTP2Connection::cancelStream(LibcurlHTTP2Request& stream) {
-    ACSDK_INFO(LX("cancelStream").d("streamId", stream.getId()));
+bool LibcurlHTTP2Connection::cancelActiveStream(LibcurlHTTP2Request& stream) {
+    ACSDK_INFO(LX(__func__).d("streamId", stream.getId()));
     stream.reportCompletion(HTTP2ResponseFinishedStatus::CANCELLED);
     return releaseStream(stream);
 }
 
-void LibcurlHTTP2Connection::cancelAllStreams() {
+void LibcurlHTTP2Connection::cancelActiveStreams() {
     auto it = m_activeStreams.begin();
     while (it != m_activeStreams.end()) {
-        cancelStream(*(it++)->second);
+        cancelActiveStream(*(it++)->second);
     }
+}
+
+void LibcurlHTTP2Connection::cancelPendingStreams() {
+    std::deque<std::shared_ptr<LibcurlHTTP2Request>> pendingStreamsCopy;
+    {
+        std::lock_guard<std::mutex> lock{m_mutex};
+        pendingStreamsCopy = m_requestQueue;
+    }
+
+    for (auto pendingStream : pendingStreamsCopy) {
+        ACSDK_DEBUG9(LX(__func__).d("pending streamId", pendingStream->getId()));
+        pendingStream->reportCompletion(HTTP2ResponseFinishedStatus::CANCELLED);
+    }
+}
+
+void LibcurlHTTP2Connection::cancelAllStreams() {
+    /// Cancel the pending streams before the active streams.
+    cancelPendingStreams();
+    cancelActiveStreams();
 }
 
 bool LibcurlHTTP2Connection::releaseStream(LibcurlHTTP2Request& stream) {

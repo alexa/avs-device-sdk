@@ -42,8 +42,10 @@ std::shared_ptr<NiceMock<MockMediaPlayer>> MockMediaPlayer::create() {
         .WillByDefault(InvokeWithoutArgs(result.get(), &MockMediaPlayer::mockSetSource));
     ON_CALL(*result.get(), play(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPlay));
     ON_CALL(*result.get(), stop(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockStop));
+    ON_CALL(*result.get(), stop(_, _)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockStop2));
     ON_CALL(*result.get(), pause(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockPause));
     ON_CALL(*result.get(), resume(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockResume));
+    ON_CALL(*result.get(), seekTo(_, _, _)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockSeek));
     ON_CALL(*result.get(), getOffset(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockGetOffset));
     ON_CALL(*result.get(), getMediaPlayerState(_)).WillByDefault(Invoke(result.get(), &MockMediaPlayer::mockGetState));
     return result;
@@ -63,23 +65,24 @@ MockMediaPlayer::MockMediaPlayer() : RequiresShutdown{"MockMediaPlayer"} {
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
     const avsCommon::utils::AudioFormat* audioFormat,
-    const SourceConfig& config) {
+    const SourceConfig&) {
     return attachmentSetSource(attachmentReader, audioFormat);
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     const std::string& url,
-    std::chrono::milliseconds offset,
-    const SourceConfig& config,
-    bool repeat) {
+    std::chrono::milliseconds,
+    const SourceConfig&,
+    bool,
+    const PlaybackContext&) {
     return urlSetSource(url);
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
-    const SourceConfig& config,
-    avsCommon::utils::MediaType format) {
+    const SourceConfig&,
+    avsCommon::utils::MediaType) {
     return streamSetSource(stream, repeat);
 }
 
@@ -168,6 +171,10 @@ bool MockMediaPlayer::mockResume(SourceId sourceId) {
 }
 
 bool MockMediaPlayer::mockStop(SourceId sourceId) {
+    return mockStop2(sourceId, std::chrono::minutes::zero());
+}
+
+bool MockMediaPlayer::mockStop2(SourceId sourceId, std::chrono::seconds closePipelineTime) {
     auto source = getCurrentSource(sourceId);
     if (!source) {
         // The AudioPlayer may have set a new MediaPlayer source before stopping
@@ -180,6 +187,9 @@ bool MockMediaPlayer::mockStop(SourceId sourceId) {
     }
 
     source->stopwatch.stop();
+    if (closePipelineTime != std::chrono::seconds::zero()) {
+        source->stopwatch.reset();
+    }
     source->stopped.trigger();
     return true;
 }
@@ -201,6 +211,21 @@ bool MockMediaPlayer::mockError(SourceId sourceId) {
     }
     source->stopwatch.stop();
     source->error.trigger();
+    return true;
+}
+
+bool MockMediaPlayer::mockSeek(SourceId sourceId, std::chrono::milliseconds location, bool fromStart) {
+    auto source = getCurrentSource(sourceId);
+    if (!source) {
+        return false;
+    }
+
+    source->stopwatch.stop();
+    source->stopwatch.reset();
+    source->stopwatch.start();
+
+    mockSetOffset(sourceId, location);
+    source->seekComplete.trigger(MediaPlayerState(location));
     return true;
 }
 
@@ -229,6 +254,7 @@ Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> MockMediaPlayer::mockG
     }
     auto state = MediaPlayerState();
     state.offset = offset;
+    state.duration = std::chrono::milliseconds(10000000);
     return Optional<MediaPlayerState>(state);
 }
 
@@ -293,6 +319,10 @@ bool MockMediaPlayer::waitUntilPlaybackError(std::chrono::milliseconds timeout) 
     return m_sources[getCurrentSourceId()]->error.wait(timeout);
 }
 
+bool MockMediaPlayer::waitUntilSeeked(std::chrono::milliseconds timeout) {
+    return m_sources[getCurrentSourceId()]->seekComplete.wait(timeout);
+}
+
 MediaPlayerInterface::SourceId MockMediaPlayer::getCurrentSourceId() {
     return m_currentSourceId;
 }
@@ -336,28 +366,32 @@ MockMediaPlayer::SourceState::~SourceState() {
     }
 }
 
-void MockMediaPlayer::SourceState::trigger() {
+void MockMediaPlayer::SourceState::trigger(const MediaPlayerState state) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_stateReached) {
         return;
     }
     auto observers = m_source->mockMediaPlayer->getObservers();
-    m_thread = std::thread(&MockMediaPlayer::SourceState::notify, this, observers, DEFAULT_TIME);
+    m_thread = std::thread(&MockMediaPlayer::SourceState::notify, this, observers, DEFAULT_TIME, state);
     m_stateReached = true;
     m_wake.notify_all();
 }
 
 void MockMediaPlayer::SourceState::notify(
     const std::unordered_set<std::shared_ptr<MediaPlayerObserverInterface>>& observers,
-    const std::chrono::milliseconds timeout) {
+    const std::chrono::milliseconds timeout,
+    const MediaPlayerState state) {
     std::unique_lock<std::mutex> lock(m_mutex);
     auto timedOut = !m_wake.wait_for(lock, timeout, [this]() { return (m_stateReached || m_shutdown); });
     lock.unlock();
-    const MediaPlayerState state = {timeout};
+    const MediaPlayerState timeoutState = {timeout};
     for (const auto& observer : observers) {
         if (timedOut) {
             observer->onPlaybackError(
-                m_source->sourceId, ErrorType::MEDIA_ERROR_UNKNOWN, m_name + ": wait to notify timed out", state);
+                m_source->sourceId,
+                ErrorType::MEDIA_ERROR_UNKNOWN,
+                m_name + ": wait to notify timed out",
+                timeoutState);
 
             return;
         }
@@ -423,6 +457,13 @@ static void notifyPlaybackError(
     observer->onPlaybackError(sourceId, ErrorType::MEDIA_ERROR_INTERNAL_SERVER_ERROR, "mock error", state);
 }
 
+static void notifySeekComplete(
+    std::shared_ptr<MediaPlayerObserverInterface> observer,
+    MediaPlayerInterface::SourceId sourceId,
+    const MediaPlayerState& state) {
+    observer->onSeeked(sourceId, state, state);
+}
+
 MockMediaPlayer::Source::Source(MockMediaPlayer* player, SourceId id) :
         mockMediaPlayer{player},
         sourceId{id},
@@ -432,6 +473,7 @@ MockMediaPlayer::Source::Source(MockMediaPlayer* player, SourceId id) :
         resumed{this, "resumed", notifyPlaybackResumed},
         stopped{this, "stopped", notifyPlaybackStopped},
         finished{this, "finished", notifyPlaybackFinished},
+        seekComplete{this, "seekComplete", notifySeekComplete},
         error{this, "error", notifyPlaybackError} {
 }
 

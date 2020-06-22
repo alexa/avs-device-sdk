@@ -159,6 +159,9 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
     m_stream.setHeaderCallback(LibcurlHTTP2Request::headerCallback, this);
     m_stream.setopt(CURLOPT_TCP_KEEPALIVE, 1);
     m_stream.setopt(CURLOPT_STREAM_WEIGHT, config.getPriority());
+#ifdef ACSDK_ENABLE_CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE
+    m_stream.setopt(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE);
+#endif
 
     if (config.getSource()) {
         m_source = config.getSource();

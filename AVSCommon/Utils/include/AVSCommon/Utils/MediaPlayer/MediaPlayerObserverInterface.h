@@ -125,10 +125,10 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
 
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onPlaybackPaused(SourceId id, const MediaPlayerState& state){};
+    virtual void onPlaybackPaused(SourceId, const MediaPlayerState&){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer has resumed playing the source.
@@ -136,10 +136,10 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onPlaybackResumed(SourceId id, const MediaPlayerState& state){};
+    virtual void onPlaybackResumed(SourceId, const MediaPlayerState&){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer has stopped the source.
@@ -147,10 +147,10 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onPlaybackStopped(SourceId id, const MediaPlayerState& state){};
+    virtual void onPlaybackStopped(SourceId, const MediaPlayerState&){};
 
     /**
      * This is an indication to the observer that the @c MediaPlayer is experiencing a buffer underrun.
@@ -159,10 +159,10 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onBufferUnderrun(SourceId id, const MediaPlayerState& state) {
+    virtual void onBufferUnderrun(SourceId, const MediaPlayerState&) {
     }
 
     /**
@@ -172,10 +172,10 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onBufferRefilled(SourceId id, const MediaPlayerState& state) {
+    virtual void onBufferRefilled(SourceId, const MediaPlayerState&) {
     }
 
     /**
@@ -187,10 +187,25 @@ public:
      * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onBufferingComplete(SourceId id, const MediaPlayerState& state) {
+    virtual void onBufferingComplete(SourceId, const MediaPlayerState&) {
+    }
+
+    /**
+     * This is an indication to the observer that the @c MediaPlayer has seeked in the source specified by
+     * the id.  This can be sent anytime after @c onPlaybackStarted has been called
+     *
+     * @note The observer must quickly return from this callback. Failure to do so could block the @c MediaPlayer from
+     * further processing.
+     *
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param MediaPlayerState Metadata about the media player state at the point seek started
+     * @param MediaPlayerState Metadata about the media player state at the point the seek completed, or, if stopped /
+     * paused, the point playback will be resumed.
+     */
+    virtual void onSeeked(SourceId, const MediaPlayerState&, const MediaPlayerState&) {
     }
 
     /**
@@ -202,11 +217,11 @@ public:
      * @note The observer must quickly returnfrom this callback. Failure to do so could block the @c MediaPlayer from
      * further processing.
      *
-     * @param id The id of the source to which this callback corresponds to.
-     * @param vectorOfTags The vector containing stream tags.
-     * @param state Metadata about the media player state
+     * @param SourceId The id of the source to which this callback corresponds to.
+     * @param VectorOfTags The vector containing stream tags.
+     * @param MediaPlayerState Metadata about the media player state
      */
-    virtual void onTags(SourceId id, std::unique_ptr<const VectorOfTags> vectorOfTags, const MediaPlayerState& state){};
+    virtual void onTags(SourceId, std::unique_ptr<const VectorOfTags>, const MediaPlayerState&){};
 };
 
 /**

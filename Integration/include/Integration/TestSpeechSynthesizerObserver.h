@@ -39,7 +39,8 @@ public:
     void onStateChanged(
         avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
         const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
-        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) override;
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
+        const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) override;
 
     bool checkState(
         const avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState expectedState,

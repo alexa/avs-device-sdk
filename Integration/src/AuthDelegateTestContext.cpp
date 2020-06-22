@@ -15,6 +15,8 @@
 
 #include <gtest/gtest.h>
 
+#include <AVSCommon/Utils/DeviceInfo.h>
+#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 
@@ -73,9 +75,9 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
         return;
     }
 
-    auto config = ConfigurationNode::getRoot();
-    EXPECT_TRUE(config);
-    if (!config) {
+    auto config = std::make_shared<ConfigurationNode>(ConfigurationNode::getRoot());
+    EXPECT_TRUE(*config);
+    if (!*config) {
         return;
     }
 
@@ -87,14 +89,20 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
         return;
     }
 
-    auto storage = SQLiteCBLAuthDelegateStorage::create(config);
+    auto storage = SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(config);
     EXPECT_TRUE(storage);
     if (!storage) {
         return;
     }
 
-    m_authDelegate =
-        CBLAuthDelegate::create(config, m_customerDataManager, std::move(storage), std::make_shared<AuthRequester>());
+    m_authDelegate = CBLAuthDelegate::createAuthDelegateInterface(
+        config,
+        m_customerDataManager,
+        std::move(storage),
+        std::make_shared<AuthRequester>(),
+        avsCommon::utils::libcurlUtils::HttpPost::create(),
+        avsCommon::utils::DeviceInfo::createFromConfiguration(config));
+
     EXPECT_TRUE(m_authDelegate);
 }
 

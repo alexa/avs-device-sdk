@@ -17,7 +17,7 @@
 #include <gtest/gtest.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include "InterruptModel/InterruptModel.h"
-#include "InterruptModelConfiguration.h"
+#include "InterruptModel/config/InterruptModelConfiguration.h"
 
 namespace alexaClientSDK {
 namespace afml {

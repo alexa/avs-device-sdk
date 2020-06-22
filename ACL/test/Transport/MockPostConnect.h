@@ -33,7 +33,7 @@ public:
     MOCK_METHOD2(
         doPostConnect,
         bool(
-            std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+            std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
             std::shared_ptr<PostConnectObserverInterface> postConnectObserver));
     MOCK_METHOD0(onDisconnect, void());
 };

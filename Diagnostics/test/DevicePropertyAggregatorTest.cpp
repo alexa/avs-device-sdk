@@ -18,11 +18,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <Alerts/AlertObserverInterface.h>
 #include <AVSCommon/AVS/IndicatorState.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <Diagnostics/DevicePropertyAggregator.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace diagnostics {
@@ -31,7 +31,7 @@ namespace test {
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
-using namespace capabilityAgents::alerts;
+using namespace acsdkAlertsInterfaces;
 using namespace testing;
 
 /// string indicating default alert state.
@@ -271,7 +271,7 @@ TEST_F(DevicePropertyAggregatorTest, test_getNotificationStatusProperty) {
  * Test if the Audio Player Status gets updated if the observer method is called.
  */
 TEST_F(DevicePropertyAggregatorTest, test_getAudioPlayerStatusProperty) {
-    AudioPlayerObserverInterface::Context context;
+    acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::Context context;
     context.audioItemId = "abcd";
     context.offset = std::chrono::seconds(5);
 

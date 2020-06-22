@@ -37,6 +37,10 @@ static const std::string TAG("HttpPost");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::unique_ptr<HttpPostInterface> HttpPost::createHttpPostInterface() {
+    return std::unique_ptr<HttpPostInterface>(new HttpPost());
+}
+
 std::unique_ptr<HttpPost> HttpPost::create() {
     return std::unique_ptr<HttpPost>(new HttpPost());
 }

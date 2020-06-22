@@ -41,12 +41,14 @@ public:
      * @param interactionManager An instance of the @c InteractionManager used to manage user input.
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param defaultEndpointId The @c EndpointIdentifier of the default endpoint.
      * @return Returns a new @c UserInputManager, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<UserInputManager> create(
         std::shared_ptr<InteractionManager> interactionManager,
         std::shared_ptr<ConsoleReader> consoleReader,
-        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& defaultEndpointId);
 
     /**
      * Processes user input until a quit command or a device reset is triggered.
@@ -67,11 +69,13 @@ private:
      * @param interactionManager An instance of the @c InteractionManager used to manage user input.
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param defaultEndpointId The @c EndpointIdentifier of the default endpoint.
      */
     UserInputManager(
         std::shared_ptr<InteractionManager> interactionManager,
         std::shared_ptr<ConsoleReader> consoleReader,
-        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& defaultEndpointId);
 
     /**
      * Reads an input from the console.  This is a blocking call until an input is read from the console or if m_restart
@@ -123,6 +127,11 @@ private:
     void settingsMenu();
 
     /**
+     * Dynamic endpoint modification Menu.
+     */
+    void dynamicEndpointModificationMenu();
+
+    /**
      * Endpoint Controller menu.
      */
     void endpointControllerMenu();
@@ -139,12 +148,13 @@ private:
     void onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) override;
     /// @}
 
-    /// @name CapabilitiesObserverInterface Function
-    /// @{
+    /// @name CapabilitiesObserverInterface Methods
     void onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State newState,
-        CapabilitiesObserverInterface::Error newError) override;
-    /// @}
+        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
+        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) override;
+    /// }
 
     /**
      * The diagnostics menu.
@@ -174,6 +184,9 @@ private:
 
     /// The @c LocaleAssetsManagerInterface that provides the supported locales.
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> m_localeAssetsManager;
+
+    /// The @c EndpointIdentifier of the default endpoint.
+    const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& m_defaultEndpointId;
 
     /// Flag to indicate that a fatal failure occurred. In this case, customer can either reset the device or kill
     /// the app.

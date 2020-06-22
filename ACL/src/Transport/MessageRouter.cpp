@@ -33,6 +33,9 @@ using namespace avsCommon::avs;
 /// String to identify log entries originating from this file.
 static const std::string TAG("MessageRouter");
 
+/// String for logging purpose as the key for the size of m_transports.
+static constexpr const char* KEY_SIZEOF_TRANSPORTS = "sizeOf m_transports";
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -62,10 +65,11 @@ MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
 }
 
 void MessageRouter::enable() {
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_connectionMutex};
 
     if (m_isEnabled) {
-        ACSDK_DEBUG0(LX(__func__).m("already enabled"));
+        ACSDK_INFO(LX(__func__).m("already enabled"));
         return;
     }
 
@@ -89,7 +93,7 @@ void MessageRouter::doShutdown() {
     // notification.
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (!m_requestQueue->empty()) {
-        auto request = m_requestQueue->dequeueRequest();
+        auto request = m_requestQueue->dequeueOldestRequest();
         if (request != nullptr) {
             request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
         }
@@ -101,6 +105,7 @@ void MessageRouter::doShutdown() {
 }
 
 void MessageRouter::disable() {
+    ACSDK_INFO(LX(__func__));
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     m_isEnabled = false;
     disconnectAllTransportsLocked(lock, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
@@ -122,6 +127,7 @@ void MessageRouter::sendMessage(std::shared_ptr<MessageRequest> request) {
 }
 
 void MessageRouter::setAVSGateway(const std::string& avsGateway) {
+    ACSDK_INFO(LX(__func__).d("avsGateway", avsGateway));
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (avsGateway != m_avsGateway) {
         m_avsGateway = avsGateway;
@@ -142,23 +148,26 @@ std::string MessageRouter::getAVSGateway() {
 }
 
 void MessageRouter::onWakeConnectionRetry() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_connectionMutex};
     if (m_isEnabled && m_activeTransport) {
+        ACSDK_INFO(LX(__func__).p("m_activeTransport", m_activeTransport));
         m_activeTransport->onWakeConnectionRetry();
     }
 }
 
 void MessageRouter::onWakeVerifyConnectivity() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_connectionMutex};
     if (m_isEnabled && m_activeTransport) {
+        ACSDK_INFO(LX(__func__).p("m_activeTransport", m_activeTransport));
         m_activeTransport->onWakeVerifyConnectivity();
     }
 }
 
 void MessageRouter::onConnected(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
+    ACSDK_INFO(LX(__func__).p("transport", transport).p("m_activeTransport", m_activeTransport));
 
     /*
      * Transport shutdown might be asynchronous,so the following scenarios are valid,
@@ -183,10 +192,16 @@ void MessageRouter::onDisconnected(
     std::shared_ptr<TransportInterface> transport,
     ConnectionStatusObserverInterface::ChangedReason reason) {
     std::lock_guard<std::mutex> lock{m_connectionMutex};
+    ACSDK_INFO(LX(__func__)
+                   .p("transport", transport)
+                   .p("m_activeTransport", m_activeTransport)
+                   .d(KEY_SIZEOF_TRANSPORTS, m_transports.size())
+                   .d("reason", reason));
 
     for (auto it = m_transports.begin(); it != m_transports.end(); it++) {
         if (*it == transport) {
             m_transports.erase(it);
+            ACSDK_INFO(LX("releaseTransport").p("transport", transport).d(KEY_SIZEOF_TRANSPORTS, m_transports.size()));
             safelyReleaseTransport(transport);
             break;
         }
@@ -215,9 +230,10 @@ void MessageRouter::onDisconnected(
 
 void MessageRouter::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    ACSDK_DEBUG5(LX("server-side disconnect received")
-                     .d("Message router is enabled", m_isEnabled)
-                     .d("isActiveTransport", transport == m_activeTransport));
+    ACSDK_INFO(LX("server-side disconnect received")
+                   .d("Message router is enabled", m_isEnabled)
+                   .p("transport", transport)
+                   .p("m_activeTransport", m_activeTransport));
     if (m_isEnabled && transport == m_activeTransport) {
         setConnectionStatusLocked(
             ConnectionStatusObserverInterface::Status::PENDING,
@@ -242,6 +258,7 @@ void MessageRouter::setObserver(std::shared_ptr<MessageRouterObserverInterface> 
 void MessageRouter::setConnectionStatusLocked(
     const ConnectionStatusObserverInterface::Status status,
     const ConnectionStatusObserverInterface::ChangedReason reason) {
+    ACSDK_INFO(LX(__func__).d("status", status).d("reason", reason));
     if (status != m_connectionStatus) {
         m_connectionStatus = status;
         m_connectionReason = reason;
@@ -275,9 +292,14 @@ void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const 
 void MessageRouter::createActiveTransportLocked() {
     auto transport = m_transportFactory->createTransport(
         m_authDelegate, m_attachmentManager, m_avsGateway, shared_from_this(), shared_from_this(), m_requestQueue);
+    ACSDK_INFO(LX(__func__).p("transport", transport).d(KEY_SIZEOF_TRANSPORTS, m_transports.size()));
     if (transport && transport->connect()) {
         m_transports.push_back(transport);
         m_activeTransport = transport;
+        ACSDK_INFO(LX("setAsActiveTransport").p("transport", transport).d(KEY_SIZEOF_TRANSPORTS, m_transports.size()));
+        if (m_transports.size() > 2) {
+            ACSDK_WARN(LX("tooManyTransports").d(KEY_SIZEOF_TRANSPORTS, m_transports.size()));
+        }
     } else {
         safelyResetActiveTransportLocked();
         setConnectionStatusLocked(
@@ -291,6 +313,11 @@ void MessageRouter::createActiveTransportLocked() {
 void MessageRouter::disconnectAllTransportsLocked(
     std::unique_lock<std::mutex>& lock,
     const ConnectionStatusObserverInterface::ChangedReason reason) {
+    ACSDK_INFO(LX(__func__)
+                   .d("reason", reason)
+                   .d(KEY_SIZEOF_TRANSPORTS, m_transports.size())
+                   .p("m_activeTransport", m_activeTransport));
+
     safelyResetActiveTransportLocked();
 
     // Use std::move() to optimize copy. Use clear() otherwise contents of m_transports becomes undefined.
@@ -301,6 +328,7 @@ void MessageRouter::disconnectAllTransportsLocked(
 
     lock.unlock();
     for (auto transport : movedTransports) {
+        ACSDK_INFO(LX(__func__).p("transport", transport));
         transport->shutdown();
     }
     lock.lock();
@@ -317,6 +345,7 @@ void MessageRouter::safelyResetActiveTransportLocked() {
             ACSDK_ERROR(LX("safelyResetActiveTransportLockedError").d("reason", "activeTransportNotInTransports)"));
             safelyReleaseTransport(m_activeTransport);
         }
+        ACSDK_INFO(LX("clearActiveTransport").p("m_activeTransport", m_activeTransport));
         m_activeTransport.reset();
     }
 }

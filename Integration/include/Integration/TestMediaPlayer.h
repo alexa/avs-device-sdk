@@ -61,7 +61,9 @@ public:
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
-        bool repeat = false) override;
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext =
+            avsCommon::utils::mediaPlayer::PlaybackContext()) override;
 
     bool play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
 

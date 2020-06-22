@@ -61,6 +61,9 @@ static const std::string SPEAKERMANAGER_CONFIGURATION_ROOT_KEY = "speakerManager
 /// The key in our config file to find the minUnmuteVolume value.
 static const std::string SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY = "minUnmuteVolume";
 
+/// prefix for metrics emitted from the SpeakerManager CA
+static const std::string SPEAKER_MANAGER_METRIC_PREFIX = "SPEAKER_MANAGER-";
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -84,18 +87,29 @@ static bool withinBounds(T value, T min, T max) {
     return true;
 }
 
+/**
+ * Handles a Metric event by creating and recording it. Failure to create or record the event results
+ * in an early return.
+ *
+ * @param metricRecorder The @c MetricRecorderInterface which records Metric events.
+ * @param eventName The name of the Metric event.
+ * @param count Count of the metric that is emitted.
+ */
 static void submitMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
     const std::string& eventName,
     int count) {
-    if (!metricRecorder) {
+    auto metricEventBuilder = MetricEventBuilder{}
+                                  .setActivityName(SPEAKER_MANAGER_METRIC_PREFIX + eventName)
+                                  .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(count).build());
+
+    auto metricEvent = metricEventBuilder.build();
+
+    if (metricEvent == nullptr) {
+        ACSDK_ERROR(LX("Error creating metric."));
         return;
     }
-    metricRecorder->recordMetric(
-        MetricEventBuilder{}
-            .setActivityName("SPEAKER_MANAGER-" + eventName)
-            .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(count).build())
-            .build());
+    recordMetric(metricRecorder, metricEvent);
 }
 
 /**
@@ -107,10 +121,10 @@ static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeakerCapabi
 
 std::shared_ptr<SpeakerManager> SpeakerManager::create(
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
     if (!contextManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
         return nullptr;
@@ -130,22 +144,22 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
 
     auto speakerManager = std::shared_ptr<SpeakerManager>(new SpeakerManager(
         groupVolumeInterfaces,
-        metricRecorder,
         contextManager,
         messageSender,
         exceptionEncounteredSender,
-        minUnmuteVolume));
+        minUnmuteVolume,
+        metricRecorder));
 
     return speakerManager;
 }
 
 SpeakerManager::SpeakerManager(
     const std::vector<std::shared_ptr<ChannelVolumeInterface>>& groupVolumeInterfaces,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    const int minUnmuteVolume) :
+    const int minUnmuteVolume,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"SpeakerManager"},
         m_metricRecorder{metricRecorder},
@@ -664,8 +678,7 @@ bool SpeakerManager::executeRestoreVolume(
         return true;
     }
 
-    return executeSetVolume(
-        type, m_minUnmuteVolume, SpeakerManagerInterface::NotificationProperties(source, false, false));
+    return executeSetVolume(type, m_minUnmuteVolume, SpeakerManagerInterface::NotificationProperties(source));
 }
 
 std::future<bool> SpeakerManager::adjustVolume(

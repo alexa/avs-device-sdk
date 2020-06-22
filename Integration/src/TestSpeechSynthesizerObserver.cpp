@@ -28,7 +28,8 @@ TestSpeechSynthesizerObserver::TestSpeechSynthesizerObserver() :
 void TestSpeechSynthesizerObserver::onStateChanged(
     SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
     const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
-    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) {
+    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
+    const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) {
     std::unique_lock<std::mutex> lock(m_mutex);
     m_state = state;
     m_queue.push_back(state);

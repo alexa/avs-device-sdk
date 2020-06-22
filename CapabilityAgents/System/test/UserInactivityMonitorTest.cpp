@@ -53,7 +53,7 @@ static const std::string USER_INACTIVITY_RESET_NAME = "ResetUserInactivity";
 /// This is the string for the message ID used in the directive.
 static const std::string USER_INACTIVITY_MESSAGE_ID = "ABC123DEF";
 static const std::string USER_INACTIVITY_PAYLOAD_KEY = "inactiveTimeInSeconds";
-static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{20};
+static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{100};
 
 /// This is the condition variable to be used to control the exit of the test case.
 std::condition_variable exitTrigger;

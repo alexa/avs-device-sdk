@@ -27,6 +27,7 @@
 #include <AVSCommon/SDKInterfaces/MockSpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <SpeakerManager/SpeakerManagerConstants.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -97,10 +98,6 @@ public:
     MOCK_METHOD3(
         onSpeakerSettingsChanged,
         void(const Source&, const ChannelVolumeInterface::Type&, const SpeakerInterface::SpeakerSettings&));
-};
-
-struct MockMetricRecorder : public avsCommon::utils::metrics::MetricRecorderInterface {
-    MOCK_METHOD1(recordMetric, void(std::shared_ptr<avsCommon::utils::metrics::MetricEvent>));
 };
 
 class SpeakerManagerTest : public ::testing::TestWithParam<std::vector<ChannelVolumeInterface::Type>> {
@@ -175,7 +172,7 @@ protected:
 };
 
 void SpeakerManagerTest::SetUp() {
-    m_metricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
+    m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
     m_mockMessageSender = std::make_shared<StrictMock<MockMessageSender>>();
     m_mockExceptionSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
@@ -231,11 +228,9 @@ void SpeakerManagerTest::createAndSendVolumeDirective(const std::string directiv
     m_wakeSetCompletedFuture.wait_for(TIMEOUT);
 }
 
-static int8_t getSpeakerVolume(std::shared_ptr<SpeakerInterface> speaker) {
+static int8_t getSpeakerVolume(std::shared_ptr<ChannelVolumeInterface> channelVolumeInterface) {
     SpeakerInterface::SpeakerSettings speakerSettings;
-
-    speaker->getSpeakerSettings(&speakerSettings);
-
+    channelVolumeInterface->getSpeakerSettings(&speakerSettings);
     return speakerSettings.volume;
 }
 #endif
@@ -262,7 +257,7 @@ TEST_F(SpeakerManagerTest, test_nullContextManager) {
     auto channelVolumeInterfaces = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaces, m_metricRecorder, nullptr, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaces, nullptr, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     ASSERT_EQ(m_speakerManager, nullptr);
 }
@@ -273,7 +268,7 @@ TEST_F(SpeakerManagerTest, test_nullContextManager) {
 TEST_F(SpeakerManagerTest, test_nullMessageSender) {
     auto channelVolumeInterfaces = createChannelVolumeInterfaces();
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaces, m_metricRecorder, m_mockContextManager, nullptr, m_mockExceptionSender);
+        channelVolumeInterfaces, m_mockContextManager, nullptr, m_mockExceptionSender, m_metricRecorder);
 
     ASSERT_EQ(m_speakerManager, nullptr);
 }
@@ -284,7 +279,7 @@ TEST_F(SpeakerManagerTest, test_nullMessageSender) {
 TEST_F(SpeakerManagerTest, test_nullExceptionSender) {
     auto channelVolumeInterfaces = createChannelVolumeInterfaces();
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaces, m_metricRecorder, m_mockContextManager, m_mockMessageSender, nullptr);
+        channelVolumeInterfaces, m_mockContextManager, m_mockMessageSender, nullptr, m_metricRecorder);
 
     ASSERT_EQ(m_speakerManager, nullptr);
 }
@@ -294,7 +289,7 @@ TEST_F(SpeakerManagerTest, test_nullExceptionSender) {
  */
 TEST_F(SpeakerManagerTest, test_noChannelVolumeInterfaces) {
     m_speakerManager =
-        SpeakerManager::create({}, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        SpeakerManager::create({}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     ASSERT_NE(m_speakerManager, nullptr);
 }
@@ -310,7 +305,7 @@ TEST_F(SpeakerManagerTest, test_contextManagerSetStateConstructor) {
     auto groups = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        groups, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groups, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 }
 
 /*
@@ -322,7 +317,7 @@ TEST_F(SpeakerManagerTest, test_setVolumeUnderBounds) {
     EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).Times(Exactly(0));
 
     m_speakerManager = SpeakerManager::create(
-        {channelVolumeInterface}, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -341,7 +336,7 @@ TEST_F(SpeakerManagerTest, test_setVolumeOverBounds) {
     EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).Times(Exactly(0));
 
     m_speakerManager = SpeakerManager::create(
-        {channelVolumeInterface}, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -360,7 +355,7 @@ TEST_F(SpeakerManagerTest, test_adjustVolumeUnderBounds) {
     EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).Times(Exactly(0));
 
     m_speakerManager = SpeakerManager::create(
-        {channelVolumeInterface}, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -380,7 +375,7 @@ TEST_F(SpeakerManagerTest, test_adjustVolumeOverBounds) {
     EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).Times(Exactly(0));
 
     m_speakerManager = SpeakerManager::create(
-        {channelVolumeInterface}, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -406,10 +401,10 @@ TEST_F(SpeakerManagerTest, test_setVolumeOutOfSync) {
 
     m_speakerManager = SpeakerManager::create(
         {channelVolumeInterface, channelVolumeInterface2},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -435,10 +430,10 @@ TEST_F(SpeakerManagerTest, test_adjustVolumeOutOfSync) {
 
     m_speakerManager = SpeakerManager::create(
         {channelVolumeInterface, channelVolumeInterface2},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
     SpeakerManagerInterface::NotificationProperties properties;
@@ -457,7 +452,7 @@ TEST_F(SpeakerManagerTest, test_eventNotSentWhenAdjustVolumeUnchanged) {
     auto groupVec = std::vector<std::shared_ptr<ChannelVolumeInterface>>{channelVolumeInterface};
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     // The test adjusts the volume by AVS_ADJUST_VOLUME_MIN, which results in the lowest volume possible.
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MIN, UNMUTE};
@@ -494,7 +489,7 @@ TEST_F(SpeakerManagerTest, test_eventNotSentWhenSetVolumeUnchanged) {
 
     auto groupVec = std::vector<std::shared_ptr<ChannelVolumeInterface>>{channelVolumeInterface};
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MIN, UNMUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -535,10 +530,10 @@ TEST_F(SpeakerManagerTest, test_setMuteOutOfSync) {
     EXPECT_CALL(*channelVolumeInterface2, getSpeakerSettings(_)).WillRepeatedly(Return(false));
     m_speakerManager = SpeakerManager::create(
         {channelVolumeInterface, channelVolumeInterface2},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -564,10 +559,10 @@ TEST_F(SpeakerManagerTest, test_getSpeakerSettingsSpeakersOutOfSync) {
 
     m_speakerManager = SpeakerManager::create(
         {channelVolumeInterface, channelVolumeInterface2},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -585,7 +580,7 @@ TEST_F(SpeakerManagerTest, test_getConfiguration) {
     auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     auto configuration = m_speakerManager->getConfiguration();
     auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
@@ -601,7 +596,7 @@ TEST_F(SpeakerManagerTest, test_addNullObserver) {
     auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(nullptr);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(2));
     SpeakerManagerInterface::NotificationProperties properties;
@@ -623,7 +618,7 @@ TEST_F(SpeakerManagerTest, test_removeSpeakerManagerObserver) {
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(2));
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(m_observer);
     m_speakerManager->removeSpeakerManagerObserver(m_observer);
     SpeakerManagerInterface::NotificationProperties properties;
@@ -644,7 +639,7 @@ TEST_F(SpeakerManagerTest, test_removeNullObserver) {
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(2));
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->removeSpeakerManagerObserver(nullptr);
     SpeakerManagerInterface::NotificationProperties properties;
 
@@ -663,7 +658,7 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForSetVolume) {
     auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     SpeakerManagerInterface::NotificationProperties properties;
 
     std::future<bool> future =
@@ -679,7 +674,7 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForAdjustVolume) {
     auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     std::future<bool> future = m_speakerManager->adjustVolume(
         ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
@@ -696,7 +691,7 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForSetMute) {
     auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
     SpeakerManagerInterface::NotificationProperties properties;
@@ -720,10 +715,8 @@ TEST_F(SpeakerManagerTest, test_setMaximumVolumeLimit) {
         std::make_shared<NiceMock<MockChannelVolumeInterface>>(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME);
     alertsChannelVolumeInterface->DelegateToReal();
 
-    m_stubMaximumVolumeLimitSetting->setLocalChange(VALID_MAXIMUM_VOLUME_LIMIT);
-
-    avsChannelVolumeInterface->setVolume(VALID_MAXIMUM_VOLUME_LIMIT - 1);
-    alertsChannelVolumeInterface->setVolume(VALID_MAXIMUM_VOLUME_LIMIT - 1);
+    avsChannelVolumeInterface->setUnduckedVolume(VALID_MAXIMUM_VOLUME_LIMIT - 1);
+    alertsChannelVolumeInterface->setUnduckedVolume(VALID_MAXIMUM_VOLUME_LIMIT - 1);
 
     // Expect volumeChanged event.
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
@@ -736,16 +729,19 @@ TEST_F(SpeakerManagerTest, test_setMaximumVolumeLimit) {
         m_mockContextManager,
         m_mockMessageSender,
         m_mockExceptionSender,
-        m_deviceSettingsManager);
+        m_metricRecorder);
+    SpeakerManagerInterface::NotificationProperties properties;
 
     EXPECT_TRUE(m_speakerManager->setMaximumVolumeLimit(VALID_MAXIMUM_VOLUME_LIMIT).get());
 
     // Local change either with setVolume will set to limit but with adjustVolume will fail
     EXPECT_TRUE(
-        m_speakerManager->setVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, VALID_MAXIMUM_VOLUME_LIMIT + 1)
+        m_speakerManager
+            ->setVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, VALID_MAXIMUM_VOLUME_LIMIT + 1, properties)
             .get());
     EXPECT_FALSE(
-        m_speakerManager->adjustVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, VALID_MAXIMUM_VOLUME_LIMIT + 1)
+        m_speakerManager
+            ->adjustVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, VALID_MAXIMUM_VOLUME_LIMIT + 1, properties)
             .get());
 
     // The volume went to upper limit.
@@ -753,7 +749,7 @@ TEST_F(SpeakerManagerTest, test_setMaximumVolumeLimit) {
     EXPECT_EQ(getSpeakerVolume(alertsChannelVolumeInterface), VALID_MAXIMUM_VOLUME_LIMIT);
 
     // Increase the volume by 2, so end result will exceed the limit.
-    EXPECT_TRUE(m_speakerManager->adjustVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, 2).get());
+    EXPECT_TRUE(m_speakerManager->adjustVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, 2, properties).get());
 
     // Following the 2nd adjustVolume, the volume will change to the limit.
     EXPECT_EQ(getSpeakerVolume(alertsChannelVolumeInterface), VALID_MAXIMUM_VOLUME_LIMIT);
@@ -784,10 +780,10 @@ TEST_F(SpeakerManagerTest, testSetMaximumVolumeLimitWhileVolumeIsHigher) {
 
     m_speakerManager = SpeakerManager::create(
         {avsChannelVolumeInterface, alertsChannelVolumeInterface},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
 
     EXPECT_TRUE(m_speakerManager->setMaximumVolumeLimit(VALID_MAXIMUM_VOLUME_LIMIT).get());
 
@@ -816,10 +812,10 @@ TEST_F(SpeakerManagerTest, testAVSSetVolumeHigherThanLimit) {
 
     m_speakerManager = SpeakerManager::create(
         {avsChannelVolumeInterface, alertsChannelVolumeInterface},
-        m_metricRecorder,
         m_mockContextManager,
         m_mockMessageSender,
-        m_mockExceptionSender);
+        m_mockExceptionSender,
+        m_metricRecorder);
 
     EXPECT_TRUE(m_speakerManager->setMaximumVolumeLimit(VALID_MAXIMUM_VOLUME_LIMIT).get());
 
@@ -836,7 +832,7 @@ TEST_F(SpeakerManagerTest, testSetMaximumVolumeLimitWithInvalidValue) {
     auto avsChannelVolumeInterface = createChannelVolumeInterfaces();
 
     m_speakerManager = SpeakerManager::create(
-        avsChannelVolumeInterface, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        avsChannelVolumeInterface, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_FALSE(m_speakerManager->setMaximumVolumeLimit(INVALID_MAXIMUM_VOLUME_LIMIT).get());
 }
@@ -886,7 +882,7 @@ TEST_P(SpeakerManagerTest, test_setVolume) {
     }
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -925,7 +921,7 @@ TEST_P(SpeakerManagerTest, test_adjustVolume) {
     }
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     // The test adjusts the volume by AVS_ADJUST_VOLUME_MAX, which results in the lowest volume possible.
     SpeakerInterface::SpeakerSettings expectedSettings{AVS_SET_VOLUME_MAX, UNMUTE};
@@ -966,7 +962,7 @@ TEST_P(SpeakerManagerTest, test_setMute) {
     }
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     SpeakerInterface::SpeakerSettings expectedSettings{DEFAULT_SETTINGS.volume, MUTE};
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -1007,7 +1003,7 @@ TEST_P(SpeakerManagerTest, test_getSpeakerSettings) {
     auto uniqueTypes = getUniqueTypes(groupVec);
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
     EXPECT_CALL(*m_observer, onSpeakerSettingsChanged(_, _, _)).Times(Exactly(0));
     m_speakerManager->addSpeakerManagerObserver(m_observer);
@@ -1078,7 +1074,7 @@ TEST_P(SpeakerManagerTest, test_setVolumeDirective) {
         .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetCompleted));
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     // Create Directive.
@@ -1149,7 +1145,7 @@ TEST_P(SpeakerManagerTest, test_adjustVolumeDirective) {
         .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetCompleted));
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     // Create Directive.
@@ -1216,7 +1212,7 @@ TEST_P(SpeakerManagerTest, test_setMuteDirective) {
         .WillOnce(InvokeWithoutArgs(this, &SpeakerManagerTest::wakeOnSetCompleted));
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(m_observer);
 
     // Create Directive.
@@ -1253,7 +1249,7 @@ TEST_P(SpeakerManagerTest, test_setVolumeDirectiveWhenMuted) {
     }
 
     m_speakerManager = SpeakerManager::create(
-        groupVec, m_metricRecorder, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender);
+        groupVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
     m_speakerManager->addSpeakerManagerObserver(m_observer);
     SpeakerManagerInterface::NotificationProperties properties(
         SpeakerManagerObserverInterface::Source::LOCAL_API, false, false);
@@ -1272,8 +1268,16 @@ TEST_P(SpeakerManagerTest, test_setVolumeDirectiveWhenMuted) {
     SpeakerInterface::SpeakerSettings unMuteSettings{MIN_UNMUTE_VOLUME, UNMUTE};
 
     if (uniqueTypes.count(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME)) {
-        eventsSent = 1;
+        // 2 events : {MIN_UNMUTE_VOLUME, MUTE} followed by {MIN_UNMUTE_VOLUME, UNMUTE}
+        eventsSent = 2;
 
+        EXPECT_CALL(
+            *m_observer,
+            onSpeakerSettingsChanged(
+                SpeakerManagerObserverInterface::Source::DIRECTIVE,
+                ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
+                SpeakerInterface::SpeakerSettings{MIN_UNMUTE_VOLUME, MUTE}))
+            .Times(Exactly(1));
         EXPECT_CALL(
             *m_observer,
             onSpeakerSettingsChanged(

@@ -51,7 +51,7 @@ static const NamespaceAndName REPORT_SOFTWARE_INFO(NAMESPACE_SYSTEM, "ReportSoft
 std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
     FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoUponConnect,
-    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> observers,
     std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender) {
@@ -60,6 +60,13 @@ std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
     if (firmwareVersion <= 0) {
         ACSDK_ERROR(LX("createFailed").d("reason", "invalidFirmwareVersion").d("firmwareVersion", firmwareVersion));
         return nullptr;
+    }
+
+    for (auto observer : observers) {
+        if (!observer) {
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullSoftwareInfoSenderObserver").d("return", "nullptr"));
+            return nullptr;
+        }
     }
 
     if (!connection) {
@@ -78,7 +85,12 @@ std::shared_ptr<SoftwareInfoSender> SoftwareInfoSender::create(
     }
 
     auto result = std::shared_ptr<SoftwareInfoSender>(new SoftwareInfoSender(
-        firmwareVersion, sendSoftwareInfoUponConnect, observer, connection, messageSender, exceptionEncounteredSender));
+        firmwareVersion,
+        sendSoftwareInfoUponConnect,
+        observers,
+        connection,
+        messageSender,
+        exceptionEncounteredSender));
 
     connection->addConnectionStatusObserver(result);
 
@@ -278,7 +290,7 @@ void SoftwareInfoSender::doShutdown() {
 
     // Local shared_ptrs used to prevent deletion of objects pointed to by members until m_mutex is released.
 
-    std::shared_ptr<SoftwareInfoSenderObserverInterface> localObserver;
+    std::unordered_set<std::shared_ptr<SoftwareInfoSenderObserverInterface>> localObservers;
     std::shared_ptr<AVSConnectionManagerInterface> localConnection;
     std::shared_ptr<MessageSenderInterface> localMessageSender;
     std::shared_ptr<ExceptionEncounteredSenderInterface> localExceptionEncounteredSender;
@@ -294,7 +306,7 @@ void SoftwareInfoSender::doShutdown() {
         // the reference from our member data while holding the lock, but do the
         // (potentially) final release of a shared_ptr to these instances while
         // NOT holding the lock (i.e. when these locals go out of scope).
-        std::swap(m_observer, localObserver);
+        std::swap(m_observers, localObservers);
         std::swap(m_connection, localConnection);
         std::swap(m_messageSender, localMessageSender);
         std::swap(m_exceptionEncounteredSender, localExceptionEncounteredSender);
@@ -314,12 +326,10 @@ void SoftwareInfoSender::doShutdown() {
 }
 
 void SoftwareInfoSender::onFirmwareVersionAccepted(FirmwareVersion firmwareVersion) {
-    std::shared_ptr<SoftwareInfoSenderObserverInterface> localObserver;
-    {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        std::swap(m_observer, localObserver);
-    }
-    if (localObserver) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    auto localObservers = m_observers;
+    lock.unlock();
+    for (const auto& localObserver : localObservers) {
         localObserver->onFirmwareVersionAccepted(firmwareVersion);
     }
 }
@@ -327,7 +337,7 @@ void SoftwareInfoSender::onFirmwareVersionAccepted(FirmwareVersion firmwareVersi
 SoftwareInfoSender::SoftwareInfoSender(
     FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoUponConnect,
-    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> observers,
     std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
@@ -335,7 +345,7 @@ SoftwareInfoSender::SoftwareInfoSender(
         RequiresShutdown{"SoftwareInfoSender"},
         m_firmwareVersion{firmwareVersion},
         m_sendSoftwareInfoUponConnect{sendSoftwareInfoUponConnect},
-        m_observer{observer},
+        m_observers{observers},
         m_connection{connection},
         m_messageSender{messageSender},
         m_exceptionEncounteredSender{exceptionEncounteredSender},

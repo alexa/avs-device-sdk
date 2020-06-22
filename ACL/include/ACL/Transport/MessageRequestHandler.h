@@ -66,6 +66,20 @@ public:
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr);
 
+    /// @name HTTP2MimeRequestSourceInterface methods
+    /// @{
+    avsCommon::utils::http2::HTTP2GetMimeHeadersResult getMimePartHeaderLines() override;
+    std::vector<std::string> getRequestHeaderLines() override;
+    avsCommon::utils::http2::HTTP2SendDataResult onSendMimePartData(char* bytes, size_t size) override;
+    /// @}
+
+    /// @name MimeResponseStatusHandlerInterface
+    /// @{
+    void onActivity() override;
+    bool onReceiveResponseCode(long responseCode) override;
+    void onResponseFinished(avsCommon::utils::http2::HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody)
+        override;
+    /// @}
 private:
     /**
      * Constructor.
@@ -90,21 +104,6 @@ private:
      * Notify the associated HTTP2Transport instance that the message request exchange has finished.
      */
     void reportMessageRequestFinished();
-
-    /// @name HTTP2MimeRequestSourceInterface methods
-    /// @{
-    std::vector<std::string> getRequestHeaderLines() override;
-    avsCommon::utils::http2::HTTP2GetMimeHeadersResult getMimePartHeaderLines() override;
-    avsCommon::utils::http2::HTTP2SendDataResult onSendMimePartData(char* bytes, size_t size) override;
-    /// @}
-
-    /// @name MimeResponseStatusHandlerInterface
-    /// @{
-    void onActivity() override;
-    bool onReceiveResponseCode(long responseCode) override;
-    void onResponseFinished(avsCommon::utils::http2::HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody)
-        override;
-    /// @}
 
     /// The MessageRequest that this handler is servicing.
     std::shared_ptr<avsCommon::avs::MessageRequest> m_messageRequest;

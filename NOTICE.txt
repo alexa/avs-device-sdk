@@ -89,6 +89,10 @@ Copyright 2008, Google Inc.
 - Part of the code in BluetoothImplementations/BlueZ/src/MediaEndpoint.cpp is based on
 BlueALSA project - Copyright (c) 2016-2017 Arkadiusz Bokowy.
 
+- Part of the code in shared/acsdkManufactory is based on fruit -
+Copyright 2014 Google Inc. All rights reserved, available at
+https://github.com/google/fruit.
+ 
 NOTE: Other license terms may apply to certain, identified software files
 contained within or distributed with the accompanying software if such terms
 are included in the directory containing the accompanying software. Such

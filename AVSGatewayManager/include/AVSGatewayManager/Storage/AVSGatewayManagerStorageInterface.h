@@ -42,7 +42,8 @@ public:
     /**
      * Loads the @c GatewayVerifyState from the database.
      *
-     * @param state The pointer to the @c GatewayVerifyState that will populated.
+     * @param state The pointer to the @c GatewayVerifyState that will populated. If the default state is passed and
+     * there is no data to be loaded, the state remains unchanged.
      * @return True if load is successful, else false.
      */
     virtual bool loadState(GatewayVerifyState* state) = 0;

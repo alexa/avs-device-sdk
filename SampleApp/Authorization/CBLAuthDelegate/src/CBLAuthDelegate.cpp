@@ -37,10 +37,12 @@ namespace alexaClientSDK {
 namespace authorization {
 namespace cblAuthDelegate {
 
-using namespace alexaClientSDK::avsCommon::sdkInterfaces;
-using namespace alexaClientSDK::avsCommon::utils::http;
-using namespace alexaClientSDK::avsCommon::utils::libcurlUtils;
-using namespace alexaClientSDK::registrationManager;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::http;
+using namespace avsCommon::utils::libcurlUtils;
+using namespace registrationManager;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
@@ -267,6 +269,54 @@ AuthObserverInterface::Error parseLWAResponse(
     return result;
 }
 
+std::shared_ptr<AuthDelegateInterface> CBLAuthDelegate::createAuthDelegateInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configuration,
+    const std::shared_ptr<CustomerDataManager>& customerDataManager,
+    const std::shared_ptr<CBLAuthDelegateStorageInterface>& storage,
+    const std::shared_ptr<CBLAuthRequesterInterface>& authRequester,
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost,
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "sdkNotInitialized"));
+        return nullptr;
+    }
+    if (!configuration || !*configuration) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullConfiguration"));
+        return nullptr;
+    }
+    if (!customerDataManager) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullCustomerDataManager"));
+        return nullptr;
+    }
+    if (!storage) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullStorage"));
+        return nullptr;
+    }
+    if (!authRequester) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullAuthRequester"));
+        return nullptr;
+    }
+    if (!httpPost) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullHttPost"));
+        return nullptr;
+    }
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createAuthDelegateInterfaceFailed").d("reason", "nullDeviceInfo"));
+        return nullptr;
+    }
+
+    std::shared_ptr<CBLAuthDelegate> cblAuthDelegate(
+        new CBLAuthDelegate(customerDataManager, storage, authRequester, std::move(httpPost)));
+
+    if (cblAuthDelegate->init(*configuration, deviceInfo)) {
+        return cblAuthDelegate;
+    }
+
+    return nullptr;
+}
+
 std::unique_ptr<CBLAuthDelegate> CBLAuthDelegate::create(
     const avsCommon::utils::configuration::ConfigurationNode& configuration,
     std::shared_ptr<CustomerDataManager> customerDataManager,
@@ -278,6 +328,10 @@ std::unique_ptr<CBLAuthDelegate> CBLAuthDelegate::create(
 
     if (!avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "sdkNotInitialized"));
+        return nullptr;
+    }
+    if (!configuration) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullConfiguration"));
         return nullptr;
     }
     if (!customerDataManager) {
@@ -307,12 +361,13 @@ std::unique_ptr<CBLAuthDelegate> CBLAuthDelegate::create(
         }
     }
 
-    std::unique_ptr<CBLAuthDelegate> instance(
-        new CBLAuthDelegate(customerDataManager, storage, authRequester, httpPost));
+    std::unique_ptr<CBLAuthDelegate> cblAuthDelegate(
+        new CBLAuthDelegate(customerDataManager, storage, authRequester, std::move(httpPost)));
 
-    if (instance->init(configuration, deviceInfo)) {
-        return instance;
+    if (cblAuthDelegate->init(configuration, deviceInfo)) {
+        return cblAuthDelegate;
     }
+
     return nullptr;
 }
 
@@ -387,9 +442,7 @@ CBLAuthDelegate::CBLAuthDelegate(
     ACSDK_DEBUG5(LX("CBLAuthDelegate"));
 }
 
-bool CBLAuthDelegate::init(
-    const avsCommon::utils::configuration::ConfigurationNode& configuration,
-    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
+bool CBLAuthDelegate::init(const ConfigurationNode& configuration, const std::shared_ptr<DeviceInfo>& deviceInfo) {
     ACSDK_DEBUG5(LX("init"));
 
     m_configuration = CBLAuthDelegateConfiguration::create(configuration, deviceInfo);

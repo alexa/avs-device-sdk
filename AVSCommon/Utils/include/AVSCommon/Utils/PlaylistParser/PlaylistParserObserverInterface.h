@@ -68,6 +68,9 @@ inline std::ostream& operator<<(std::ostream& stream, const PlaylistParseResult&
         case PlaylistParseResult::STILL_ONGOING:
             stream << "STILL_ONGOING";
             break;
+        case PlaylistParseResult::SHUTDOWN:
+            stream << "SHUTDOWN";
+            break;
     }
     return stream;
 }

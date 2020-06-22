@@ -35,7 +35,6 @@ public:
      */
     virtual ~MessageRouterObserverInterface() = default;
 
-private:
     /**
      * This function will be called when the connection status changes.
      *
@@ -53,9 +52,6 @@ private:
      * @param message The AVS message that has been received.
      */
     virtual void receive(const std::string& contextId, const std::string& message) = 0;
-
-    /// The friend declaration.
-    friend class MessageRouter;
 };
 
 }  // namespace acl

@@ -43,7 +43,7 @@ public:
     MOCK_METHOD0(onRequestEnqueued, void());
     MOCK_METHOD0(onWakeConnectionRetry, void());
     MOCK_METHOD0(onWakeVerifyConnectivity, void());
-    MOCK_METHOD1(sendPostConnectMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest>));
+    MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest>));
     MOCK_METHOD2(onAttachmentReceived, void(const std::string& contextId, const std::string& message));
 
     const int m_id;

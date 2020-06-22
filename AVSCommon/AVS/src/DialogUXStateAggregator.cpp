@@ -135,7 +135,8 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
 void DialogUXStateAggregator::onStateChanged(
     SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
     const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
-    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) {
+    const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
+    const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) {
     m_speechSynthesizerState = state;
 
     m_executor.submit([this, state]() {

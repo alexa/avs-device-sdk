@@ -33,6 +33,9 @@ using namespace avsCommon::utils;
 /// String to identify log entries originating from this file.
 static const std::string TAG("CapabilityAgent");
 
+/// Maximum number of directives that Can be Queued before we emit warning logs.
+static const int CAPABILITY_QUEUE_WARN_SIZE = 10;
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -81,6 +84,13 @@ void CapabilityAgent::preHandleDirective(
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_directiveInfoMap[messageId] = info;
+        if (m_directiveInfoMap.size() > CAPABILITY_QUEUE_WARN_SIZE) {
+            ACSDK_WARN(LX("Expected directiveInfoMap size exceeded")
+                           .d("namespace", directive->getNamespace())
+                           .d("name", directive->getName())
+                           .d("size", m_directiveInfoMap.size())
+                           .d("limit", CAPABILITY_QUEUE_WARN_SIZE));
+        }
     }
     preHandleDirective(info);
 }

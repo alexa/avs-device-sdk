@@ -19,7 +19,7 @@
 #include <memory>
 #include <string>
 
-#include "AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h"
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h"
 #include "AVSCommon/SDKInterfaces/ModeController/ModeControllerAttributes.h"
 #include "AVSCommon/SDKInterfaces/ModeController/ModeControllerInterface.h"
 #include "AVSCommon/SDKInterfaces/PowerController/PowerControllerInterface.h"
@@ -38,9 +38,9 @@ namespace endpoints {
 /**
  * Interface for an endpoint builder.
  *
- * The builder is responsible for building an endpoint object and requesting its registration with the
- * @c EndpointRegistrationManagerInterface. Use the @c EndpointRegistrationObserverInterface to be notified about any
- * changes to the endpoint registration.
+ * The builder is responsible for building an endpoint object. Use the @c EndpointRegistrationManagerInterface
+ * to register the endpoint and @c EndpointRegistrationObserverInterface to be notified about any changes to
+ * the endpoint registration.
  *
  * @note The following attributes are mandatory and the build will fail if they are missing:
  *   - EndpointId
@@ -58,7 +58,6 @@ namespace endpoints {
  * withEndpointId(). The identifier must be unique across endpoints registered to the user and consistent for every
  * build.
  *
- * @warning Currently the SDK only support endpoints to be built before the initial connection with AVS.
  */
 class EndpointBuilderInterface {
 public:
@@ -81,8 +80,9 @@ public:
      * @warning Do not use this function if endpoint being created can be controlled by different AVS clients. The
      * endpoint identifier must be consistent for every endpoint independently from the client that is controlling it.
      *
-     * @param suffix A suffix that should be unique for the given client. The @c build() function will fail if the
-     * given suffix has already been used to build a different endpoint or if it exceeds 10 characters.
+     * @param suffix A suffix that should be unique for the given client. The @c build() function fails if it exceeds 10
+     * characters. If the suffix is not unique, the newly-built endpoint will replace the previous endpoint
+     * which had the same suffix when registered.
      * @return This builder which can be used to nest configuration function calls.
      */
     virtual EndpointBuilderInterface& withDerivedEndpointId(const std::string& suffix) = 0;
@@ -91,7 +91,8 @@ public:
      * Configures builder to use the given identifier for the new endpoint.
      *
      * @note This will override any previous endpoint identifier configuration.
-     * @note The identifier must be unique across all devices for the user. In addition, the identifier must be
+     * @note The identifier must be unique across all devices for the user. Registering an endpoint with the same
+     * identifier as an existing endpoint will replace the original endpoint. In addition, the identifier must be
      * consistent for all discovery requests for the same device. An identifier can contain letters or numbers, spaces,
      * and the following special characters: _ - = # ; : ? @ &. The identifier cannot exceed 256 characters.
      * @note The builder will fail if the endpointId param is invalid.
@@ -272,14 +273,13 @@ public:
         bool isNonControllable = false) = 0;
 
     /**
-     * Builds a new endpoint with the configured properties / components.
+     * Builds an endpoint with the configured properties / components.
      *
-     * Build will fail if the identifier has been used to build another endpoint, if the format of any attribute is
-     * invalid or if a mandatory attribute is missing.
+     * Build will fail iff the format of any attribute is invalid or if a mandatory attribute is missing.
      *
-     * @return A unique endpointId if the build succeeds; otherwise, an empty endpointId object.
+     * @return A unique endpoint if the build succeeds; otherwise, nullptr.
      */
-    virtual utils::Optional<EndpointIdentifier> build() = 0;
+    virtual std::unique_ptr<EndpointInterface> build() = 0;
 };
 
 }  // namespace endpoints

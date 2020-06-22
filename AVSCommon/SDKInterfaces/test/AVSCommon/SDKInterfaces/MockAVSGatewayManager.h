@@ -32,10 +32,8 @@ public:
     MOCK_METHOD1(
         setAVSGatewayAssigner,
         bool(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> avsGatewayAssigner));
+    MOCK_CONST_METHOD0(getGatewayURL, std::string());
     MOCK_METHOD1(setGatewayURL, bool(const std::string& avsGatewayURL));
-    MOCK_METHOD1(
-        setPostConnectMesasgeSender,
-        bool(std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectMessageSender));
     MOCK_METHOD1(addObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer));
     MOCK_METHOD1(removeObserver, void(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer));
 };

@@ -62,7 +62,8 @@ avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::s
     const std::string& url,
     std::chrono::milliseconds offset,
     const avsCommon::utils::mediaPlayer::SourceConfig& config,
-    bool repeat) {
+    bool repeat,
+    const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext) {
     return ++g_sourceId;
 }
 

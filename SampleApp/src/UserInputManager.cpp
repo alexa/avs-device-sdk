@@ -22,8 +22,8 @@
 #include "SampleApp/UserInputManager.h"
 #include "SampleApp/ConsolePrinter.h"
 
-#ifdef RANGE_CONTROLLER
-#include "SampleApp/ModeControllerHandler.h"
+#ifdef MODE_CONTROLLER
+#include "SampleApp/PeripheralEndpoint/PeripheralEndpointModeControllerHandler.h"
 #endif
 
 namespace alexaClientSDK {
@@ -55,8 +55,9 @@ static const char FIRMWARE_VERSION = 'f';
 static const char RESET = 'k';
 static const char REAUTHORIZE = 'z';
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
 static const char ENDPOINT_CONTROLLER = 'e';
+static const char DYNAMIC_ENDPOINT_SCREEN = 'y';
 #endif
 
 #ifdef DIAGNOSTICS
@@ -106,7 +107,14 @@ static const std::unordered_map<char, CallManagerInterface::DTMFTone> dtmfToneMa
 };
 #endif
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+enum class DynamicEndpointModificationMenuChoice : char {
+    ADD_ENDPOINT = 'a',
+    MODIFY_ENDPOINT = 'm',
+    DELETE_ENDPOINT = 'd',
+    QUIT = 'q'
+};
+
 enum class EndpointControllerMenuChoice : char {
 #ifdef POWER_CONTROLLER
     POWER_CONTROLLER_OPTION = '1',
@@ -180,7 +188,8 @@ static const std::string TAG("UserInputManager");
 std::unique_ptr<UserInputManager> UserInputManager::create(
     std::shared_ptr<InteractionManager> interactionManager,
     std::shared_ptr<ConsoleReader> consoleReader,
-    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager) {
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+    const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& defaultEndpointId) {
     if (!interactionManager) {
         ACSDK_CRITICAL(LX("Invalid InteractionManager passed to UserInputManager"));
         return nullptr;
@@ -197,16 +206,18 @@ std::unique_ptr<UserInputManager> UserInputManager::create(
     }
 
     return std::unique_ptr<UserInputManager>(
-        new UserInputManager(interactionManager, consoleReader, localeAssetsManager));
+        new UserInputManager(interactionManager, consoleReader, localeAssetsManager, defaultEndpointId));
 }
 
 UserInputManager::UserInputManager(
     std::shared_ptr<InteractionManager> interactionManager,
     std::shared_ptr<ConsoleReader> consoleReader,
-    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager) :
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+    const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& defaultEndpointId) :
         m_interactionManager{interactionManager},
         m_consoleReader{consoleReader},
         m_localeAssetsManager{localeAssetsManager},
+        m_defaultEndpointId{defaultEndpointId},
         m_limitedInteraction{false},
         m_restart{false} {
 }
@@ -279,9 +290,11 @@ SampleAppReturnCode UserInputManager::run() {
 #endif
         } else if (x == SETTINGS) {
             settingsMenu();
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
         } else if (x == ENDPOINT_CONTROLLER) {
             endpointControllerMenu();
+        } else if (x == DYNAMIC_ENDPOINT_SCREEN) {
+            dynamicEndpointModificationMenu();
 #endif
         } else if (x == INFO) {
             if (m_limitedInteraction) {
@@ -398,8 +411,22 @@ void UserInputManager::onAuthStateChange(AuthObserverInterface::State newState, 
 
 void UserInputManager::onCapabilitiesStateChange(
     CapabilitiesObserverInterface::State newState,
-    CapabilitiesObserverInterface::Error newError) {
-    m_limitedInteraction = m_limitedInteraction || (newState == CapabilitiesObserverInterface::State::FATAL_ERROR);
+    CapabilitiesObserverInterface::Error newError,
+    const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
+    const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) {
+    // If one of the added or updated endpointIds is the default endpoint, and the
+    // add/update failed, go into limited mode.
+    // Limited mode is unnecessary if the failure is for non-default endpoints.
+    bool shouldLimitInteration = false;
+    if (CapabilitiesObserverInterface::State::FATAL_ERROR == newState) {
+        auto it = std::find(addedOrUpdatedEndpoints.begin(), addedOrUpdatedEndpoints.end(), m_defaultEndpointId);
+        if (addedOrUpdatedEndpoints.end() != it) {
+            shouldLimitInteration = true;
+        }
+    }
+
+    m_interactionManager->clearCachedEndpointIdentifiers(deletedEndpoints);
+    m_limitedInteraction = m_limitedInteraction || shouldLimitInteration;
 }
 
 void UserInputManager::controlSpeaker() {
@@ -830,7 +857,32 @@ void UserInputManager::settingsMenu() {
     }
 }
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+void UserInputManager::dynamicEndpointModificationMenu() {
+    m_interactionManager->endpointModification();
+    char input;
+    std::cin >> input;
+    switch (input) {
+        case static_cast<char>(DynamicEndpointModificationMenuChoice::ADD_ENDPOINT):
+            m_interactionManager->addDynamicEndpoint();
+            break;
+        case static_cast<char>(DynamicEndpointModificationMenuChoice::MODIFY_ENDPOINT):
+            m_interactionManager->modifyDynamicEndpoint();
+            break;
+        case static_cast<char>(DynamicEndpointModificationMenuChoice::DELETE_ENDPOINT):
+            m_interactionManager->deleteDynamicEndpoint();
+            break;
+        case static_cast<char>(DynamicEndpointModificationMenuChoice::QUIT):
+            return;
+        default:
+            m_interactionManager->errorValue();
+            // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+            // input.
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+}
+
 void UserInputManager::endpointControllerMenu() {
     m_interactionManager->endpointController();
     char y;
@@ -897,11 +949,11 @@ void UserInputManager::endpointControllerMenu() {
             std::cin >> optionSelected;
             if (!std::cin.fail()) {
                 if (optionSelected == MODE_RED) {
-                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_RED);
+                    m_interactionManager->setMode(PeripheralEndpointModeControllerHandler::MODE_CONTROLLER_MODE_RED);
                 } else if (optionSelected == MODE_GREEN) {
-                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_GREEN);
+                    m_interactionManager->setMode(PeripheralEndpointModeControllerHandler::MODE_CONTROLLER_MODE_GREEN);
                 } else if (optionSelected == MODE_BLUE) {
-                    m_interactionManager->setMode(ModeControllerHandler::MODE_CONTROLLER_MODE_BLUE);
+                    m_interactionManager->setMode(PeripheralEndpointModeControllerHandler::MODE_CONTROLLER_MODE_BLUE);
                 } else if (QUIT == optionSelected) {
                     return;
                 } else {

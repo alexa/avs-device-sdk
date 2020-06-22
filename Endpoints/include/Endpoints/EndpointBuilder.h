@@ -24,7 +24,6 @@
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/SDKInterfaces/AlexaInterfaceMessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
-#include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationManagerInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
@@ -41,8 +40,10 @@ namespace endpoints {
 /**
  * Interface for an endpoint builder.
  *
- * The builder is responsible for configuring and building an endpoint object. Once build, the endpoint will be
- * registered with AVS and it should be ready for use.
+ * The builder is responsible for configuring and building an endpoint object. Once built,
+ * @c EndpointRegistrationManagerInterface should be used to register the endpoint with AVS
+ * for it to be ready to use.
+ *
  */
 class EndpointBuilder : public avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface {
 public:
@@ -50,8 +51,7 @@ public:
     /// @{
     using EndpointAttributes = avsCommon::avs::AVSDiscoveryEndpointAttributes;
     using EndpointIdentifier = avsCommon::sdkInterfaces::endpoints::EndpointIdentifier;
-    using EndpointRegistrationManagerInterface =
-        avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface;
+    using EndpointInterface = avsCommon::sdkInterfaces::endpoints::EndpointInterface;
     using CapabilityConfiguration = avsCommon::avs::CapabilityConfiguration;
     using DirectiveHandlerInterface = avsCommon::sdkInterfaces::DirectiveHandlerInterface;
     /// @}
@@ -60,7 +60,6 @@ public:
      * Creates an EndpointBuilder.
      *
      * @param deviceInfo Structure with information about the Alexa client device.
-     * @param endpointRegistrationManager Object responsible for registering a new endpoint.
      * @param contextManager Object used to retrieve the current state of an endpoint.
      * @param exceptionSender Object used to send exceptions.
      * @param alexaInterfaceMessageSender Object used to send AlexaInterface events.
@@ -68,7 +67,6 @@ public:
      */
     static std::unique_ptr<EndpointBuilder> create(
         const avsCommon::utils::DeviceInfo& deviceInfo,
-        std::shared_ptr<EndpointRegistrationManagerInterface> endpointRegistrationManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender);
@@ -120,7 +118,7 @@ public:
         bool isProactivelyReported,
         bool isRetrievable,
         bool isNonControllable = false) override;
-    avsCommon::utils::Optional<EndpointIdentifier> build() override;
+    std::unique_ptr<EndpointInterface> build() override;
     /// @}
 
     /**
@@ -170,9 +168,9 @@ public:
      * Builds the default endpoint.
      *
      * This will ensure that only the owner of this builder can actually build the default endpoint.
-     * @return Whether the build succeeded or not.
+     * @return The default endpoint.
      */
-    bool buildDefaultEndpoint();
+    std::unique_ptr<EndpointInterface> buildDefaultEndpoint();
 
 private:
     /// Defines a function that can be used to build a capability.
@@ -183,14 +181,12 @@ private:
      * Constructor.
      *
      * @param deviceInfo Structure with information about the Alexa client device.
-     * @param endpointRegistrationManager Object responsible for registering a new endpoint.
      * @param contextManager Object used to retrieve the current state of an endpoint.
      * @param exceptionSender Object used to send exceptions.
      * @param alexaInterfaceMessageSender Object used to send AlexaInterface events.
      */
     EndpointBuilder(
         const avsCommon::utils::DeviceInfo& deviceInfo,
-        std::shared_ptr<EndpointRegistrationManagerInterface> endpointRegistrationManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender);
@@ -198,9 +194,9 @@ private:
     /**
      * Implements the build logic used by @c buildDefaultEndpoint() and @c build().
      *
-     * @return A unique endpointId if the build succeeds; otherwise, an empty endpointId object.
+     * @return A unique pointer to an endpoint if the build succeeds; otherwise, nullptr.
      */
-    avsCommon::utils::Optional<EndpointIdentifier> buildImplementation();
+    std::unique_ptr<EndpointInterface> buildImplementation();
 
     /// Flag used to identify the default endpoint builder.
     /// We use this flag to restrict the amount of customization available for the default endpoint.
@@ -217,9 +213,6 @@ private:
 
     /// The attributes used to build the endpoint.
     EndpointAttributes m_attributes;
-
-    /// The endpoint registration manager used to register the new endpoint.
-    std::shared_ptr<EndpointRegistrationManagerInterface> m_registrationManager;
 
     /// The context manager object that is used during the create of many capability agents.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;

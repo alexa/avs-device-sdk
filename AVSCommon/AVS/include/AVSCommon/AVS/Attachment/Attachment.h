@@ -93,8 +93,8 @@ protected:
     std::mutex m_mutex;
     /// An atomic tracking variable to tell whether this object has created a writer.
     std::atomic<bool> m_hasCreatedWriter;
-    /// An atomic tracking variable to tell whether this object has created a reader.
-    std::atomic<bool> m_hasCreatedReader;
+    /// An atomic tracking variable to tell how many readers have been created.
+    std::atomic<size_t> m_numReaders;
 };
 
 }  // namespace attachment

@@ -116,6 +116,7 @@ static const std::string MALFORM_PLAYERINFO_PAYLOAD = "{"
 class MockMediaPropertiesFetcher : public MediaPropertiesInterface {
 public:
     MOCK_METHOD0(getAudioItemOffset, std::chrono::milliseconds());
+    MOCK_METHOD0(getAudioItemDuration, std::chrono::milliseconds());
 };
 
 class MockRenderInfoCardsPlayer : public RenderPlayerInfoCardsProviderInterface {

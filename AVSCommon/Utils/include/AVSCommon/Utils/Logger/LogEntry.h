@@ -161,6 +161,27 @@ public:
     LogEntry& m(const std::string& message);
 
     /**
+     * Add pointer (hence the name 'p') in the form of a @c key, address of the object pointed to by the shared_ptr @c
+     * ptr to the metadata of this log entry.
+     *
+     * @param key The key identifying the value to add to this LogEntry.
+     * @param ptr The shared_ptr of the object to add to this LogEntry.
+     * @return This instance to facilitate adding more information to this log entry.
+     */
+    template <typename PtrType>
+    LogEntry& p(const char* key, const std::shared_ptr<PtrType>& ptr);
+
+    /**
+     * Add pointer (hence the name 'p') in the form of a @c key, address of the raw @c ptr to the metadata of this
+     * log entry.
+     *
+     * @param key The key identifying the value to add to this LogEntry.
+     * @param ptr The raw pointer of the object to add to this LogEntry.
+     * @return This instance to facilitate adding more information to this log entry.
+     */
+    LogEntry& p(const char* key, void* ptr);
+
+    /**
      * Get the rendered text of this LogEntry.
      *
      * @return The rendered text of this LogEntry.  The returned buffer is only guaranteed to be valid for
@@ -206,6 +227,11 @@ LogEntry& LogEntry::d(const char* key, const ValueType& value) {
     prefixKeyValuePair();
     m_stream << key << KEY_VALUE_SEPARATOR << value;
     return *this;
+}
+
+template <typename PtrType>
+LogEntry& LogEntry::p(const char* key, const std::shared_ptr<PtrType>& ptr) {
+    return d(key, ptr.get());
 }
 
 // Define ACSDK_EMIT_SENSITIVE_LOGS if you want to include sensitive data in log output.

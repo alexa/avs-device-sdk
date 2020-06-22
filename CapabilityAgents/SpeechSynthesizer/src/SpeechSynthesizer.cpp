@@ -115,6 +115,15 @@ static const char KEY_OFFSET_IN_MILLISECONDS[] = "offsetInMilliseconds";
 /// The "playerActivity" key used to build "SpeechState" string.
 static const char KEY_PLAYER_ACTIVITY[] = "playerActivity";
 
+/// The "analyzers" key used to retrieve analyzer data from directive.
+static const char KEY_ANALYZERS[] = "analyzers";
+
+/// The key used to retrieve the audio analyzer name from directive.
+static const char KEY_ANALYZERS_INTERFACE[] = "interface";
+
+/// The key used to retrieve the audio analyzer enabled state from directive.
+static const char KEY_ANALYZERS_ENABLED[] = "enabled";
+
 /// The player activity value used to build the "SpeechState" string.
 static const char PLAYER_STATE_PLAYING[] = "PLAYING";
 
@@ -573,6 +582,9 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
     if (payload.MemberEnd() == it) {
         sendExceptionEncounteredAndReportMissingProperty(speakInfo, KEY_TOKEN);
         return;
+    } else if (!(it->value.IsString())) {
+        sendExceptionEncounteredAndReportUnexpectedPropertyType(speakInfo, KEY_TOKEN);
+        return;
     }
     speakInfo->token = it->value.GetString();
 
@@ -580,7 +592,11 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
     if (payload.MemberEnd() == it) {
         sendExceptionEncounteredAndReportMissingProperty(speakInfo, KEY_FORMAT);
         return;
+    } else if (!(it->value.IsString())) {
+        sendExceptionEncounteredAndReportUnexpectedPropertyType(speakInfo, KEY_FORMAT);
+        return;
     }
+
     std::string format = it->value.GetString();
     if (format != FORMAT) {
         const std::string message("unknownFormat " + speakInfo->directive->getMessageId() + " format " + format);
@@ -596,7 +612,11 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
     if (payload.MemberEnd() == it) {
         sendExceptionEncounteredAndReportMissingProperty(speakInfo, KEY_URL);
         return;
+    } else if (!(it->value.IsString())) {
+        sendExceptionEncounteredAndReportUnexpectedPropertyType(speakInfo, KEY_URL);
+        return;
     }
+
     std::string urlValue = it->value.GetString();
     auto contentIdPosition = urlValue.find(CID_PREFIX);
     if (contentIdPosition != 0) {
@@ -616,6 +636,10 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
 
     it = payload.FindMember(KEY_PLAY_BEHAVIOR);
     if (payload.MemberEnd() != it) {
+        if (!(it->value.IsString())) {
+            sendExceptionEncounteredAndReportUnexpectedPropertyType(speakInfo, KEY_PLAY_BEHAVIOR);
+            return;
+        }
         std::string behavior = it->value.GetString();
         if (!stringToPlayBehavior(behavior, &(speakInfo->playBehavior))) {
             const std::string message = "failedToParsePlayBehavior";
@@ -633,28 +657,55 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
     } else {
         auto captionIterator = payload.FindMember(KEY_CAPTION);
         if (payload.MemberEnd() != captionIterator) {
-            rapidjson::Value& captionsPayload = payload[KEY_CAPTION];
+            if (captionIterator->value.IsObject()) {
+                rapidjson::Value& captionsPayload = payload[KEY_CAPTION];
 
-            auto captionFormat = captions::CaptionFormat::UNKNOWN;
-            captionIterator = captionsPayload.FindMember(KEY_CAPTION_TYPE);
-            if (payload.MemberEnd() != captionIterator) {
-                captionFormat = captions::avsStringToCaptionFormat(captionIterator->value.GetString());
+                auto captionFormat = captions::CaptionFormat::UNKNOWN;
+                captionIterator = captionsPayload.FindMember(KEY_CAPTION_TYPE);
+                if ((payload.MemberEnd() != captionIterator) && (captionIterator->value.IsString())) {
+                    captionFormat = captions::avsStringToCaptionFormat(captionIterator->value.GetString());
+                } else {
+                    ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "type"));
+                }
+
+                std::string captionContent;
+                captionIterator = captionsPayload.FindMember(KEY_CAPTION_CONTENT);
+                if ((payload.MemberEnd() != captionIterator) && (captionIterator->value.IsString())) {
+                    captionContent = captionIterator->value.GetString();
+                } else {
+                    ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "content"));
+                }
+
+                ACSDK_DEBUG3(LX("captionPayloadParsed").d("type", captionFormat));
+                speakInfo->captionData = captions::CaptionData(captionFormat, captionContent);
             } else {
-                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "type"));
+                ACSDK_WARN(LX("captionsNotParsed").d("reason", "keyNotAnObject"));
             }
-
-            std::string captionContent;
-            captionIterator = captionsPayload.FindMember(KEY_CAPTION_CONTENT);
-            if (payload.MemberEnd() != captionIterator) {
-                captionContent = captionIterator->value.GetString();
-            } else {
-                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "content"));
-            }
-
-            ACSDK_DEBUG3(LX("captionPayloadParsed").d("type", captionFormat));
-            speakInfo->captionData = captions::CaptionData(captionFormat, captionContent);
         } else {
             ACSDK_DEBUG3(LX("captionsNotParsed").d("reason", "keyNotFoundInPayload"));
+        }
+    }
+
+    // Populate audio analyzers state from directive to speak info
+    auto analyzerIterator = payload.FindMember(KEY_ANALYZERS);
+    if (payload.MemberEnd() != analyzerIterator) {
+        const Value& analyzersPayload = payload[KEY_ANALYZERS];
+        if (!analyzersPayload.IsArray()) {
+            ACSDK_WARN(LX("audioAnalyzerParsingIncomplete").d("reason", "NotAnArray").d("field", "analyzers"));
+        } else {
+            std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState> analyzersData;
+            for (auto itr = analyzersPayload.Begin(); itr != analyzersPayload.End(); ++itr) {
+                const Value& analyzerStatePayload = *itr;
+                auto nameIterator = analyzerStatePayload.FindMember(KEY_ANALYZERS_INTERFACE);
+                auto stateIterator = analyzerStatePayload.FindMember(KEY_ANALYZERS_ENABLED);
+                if (analyzerStatePayload.MemberEnd() != nameIterator &&
+                    analyzerStatePayload.MemberEnd() != stateIterator) {
+                    audioAnalyzer::AudioAnalyzerState state(
+                        nameIterator->value.GetString(), stateIterator->value.GetString());
+                    analyzersData.push_back(state);
+                }
+            }
+            speakInfo->analyzersData = analyzersData;
         }
     }
 
@@ -1047,8 +1098,14 @@ void SpeechSynthesizer::setCurrentStateLocked(SpeechSynthesizerObserverInterface
             break;
     }
 
+    std::vector<audioAnalyzer::AudioAnalyzerState> analyzersData;
+    if (m_currentInfo) {
+        analyzersData = m_currentInfo->analyzersData;
+    }
+
     for (auto observer : m_observers) {
-        observer->onStateChanged(m_currentState, m_mediaSourceId, m_speechPlayer->getMediaPlayerState(m_mediaSourceId));
+        observer->onStateChanged(
+            m_currentState, m_mediaSourceId, m_speechPlayer->getMediaPlayerState(m_mediaSourceId), analyzersData);
     }
 }
 
@@ -1128,6 +1185,16 @@ void SpeechSynthesizer::sendExceptionEncounteredAndReportMissingProperty(
         speakInfo,
         avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
         std::string("missing property: ") + key);
+}
+
+void SpeechSynthesizer::sendExceptionEncounteredAndReportUnexpectedPropertyType(
+    std::shared_ptr<SpeakDirectiveInfo> speakInfo,
+    const std::string& key) {
+    ACSDK_ERROR(LX("executePreHandleFailed").d("reason", "invalidProperty").d("key", key));
+    sendExceptionEncounteredAndReportFailed(
+        speakInfo,
+        avsCommon::avs::ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED,
+        std::string("invalid property: ") + key);
 }
 
 void SpeechSynthesizer::releaseForegroundFocus() {

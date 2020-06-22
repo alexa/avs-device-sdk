@@ -13,11 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#include "SampleApp/ConsolePrinter.h"
-
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+
+#include <AVSCommon/Utils/CoutMutex.h>
+
+#include "SampleApp/ConsolePrinter.h"
 
 /**
  *  When using pretty print, we pad our strings in the beginning and in the end with the margin representation '#'
@@ -31,15 +33,15 @@ static const size_t PADDING_LENGTH = 8;
 namespace alexaClientSDK {
 namespace sampleApp {
 
-std::shared_ptr<std::mutex> ConsolePrinter::m_globalMutex = std::make_shared<std::mutex>();
+using namespace avsCommon::utils;
 
 ConsolePrinter::ConsolePrinter() :
-        avsCommon::utils::logger::Logger(avsCommon::utils::logger::Level::UNKNOWN),
-        m_mutex(m_globalMutex) {
+        avsCommon::utils::logger::Logger{avsCommon::utils::logger::Level::UNKNOWN},
+        m_mutex{getCoutMutex()} {
 }
 
 void ConsolePrinter::simplePrint(const std::string& stringToPrint) {
-    auto mutex = m_globalMutex;
+    auto mutex = getCoutMutex();
     if (!mutex) {
         return;
     }

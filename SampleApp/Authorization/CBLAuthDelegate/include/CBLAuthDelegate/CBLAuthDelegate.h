@@ -50,7 +50,7 @@ class CBLAuthDelegate
         , public registrationManager::CustomerDataHandler {
 public:
     /**
-     * Create a CBLAuthDelegate.
+     * Create an instance of AuthDelegateInterface
      * This function cannot be called if:
      * <ul>
      * <li>AlexaClientSDKInit::initialize has not been called yet.</li>
@@ -64,6 +64,33 @@ public:
      * @param httpPost Instance that implements HttpPostInterface. If nullptr, a default implementation.
      * @param deviceInfo The deviceInfo instance.
      * will be provided.
+     * @return A new instance of CBLAuthDelegate.
+     */
+    static std::shared_ptr<AuthDelegateInterface> createAuthDelegateInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configuration,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<CBLAuthDelegateStorageInterface>& storage,
+        const std::shared_ptr<CBLAuthRequesterInterface>& authRequester,
+        std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
+
+    /**
+     * Create a CBLAuthDelegate.
+     * This function cannot be called if:
+     * <ul>
+     * <li>AlexaClientSDKInit::initialize has not been called yet.</li>
+     * <li>After AlexaClientSDKInit::un-initialize has been called.</li>
+     * </ul>
+     *
+     * @deprecated
+     * @param configuration The ConfigurationNode containing the configuration parameters for the new instance.
+     * @param customerDataManager The CustomerDataManager instance this instance should register with.
+     * @param storage The object used to persist the new CBLAuthDelegate's state.
+     * @param authRequester Observer used to tell the user to browse to a URL and enter a 'user code'.
+     * @param httpPost Instance that implements HttpPostInterface. If nullptr, a default implementation.
+     * @param deviceInfo The deviceInfo instance.
+     * will be provided.
+     * @return A new instance of CBLAuthDelegate.
      */
     static std::unique_ptr<CBLAuthDelegate> create(
         const avsCommon::utils::configuration::ConfigurationNode& configuration,

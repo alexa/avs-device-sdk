@@ -51,6 +51,20 @@ static const std::string DEFAULT_LOCALE_VALUE = "en-US";
 /// The default supported wake word.
 static const std::string DEFAULT_SUPPORTED_WAKEWORD = "ALEXA";
 
+std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> LocaleAssetsManager::
+    createLocaleAssetsManagerInterface() {
+    auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
+#ifdef KWD
+    static constexpr bool enableWakeWord = true;
+#else
+    static constexpr bool enableWakeWord = false;
+#endif
+    if (!manager->initialize(enableWakeWord)) {
+        return nullptr;
+    }
+    return manager;
+}
+
 std::shared_ptr<LocaleAssetsManager> LocaleAssetsManager::create(bool enableWakeWord) {
     auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
     if (!manager->initialize(enableWakeWord)) {

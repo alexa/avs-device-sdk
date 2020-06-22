@@ -27,9 +27,13 @@ namespace test {
  */
 class MockCapabilitiesObserver : public avsCommon::sdkInterfaces::CapabilitiesObserverInterface {
 public:
-    MOCK_METHOD2(
+    MOCK_METHOD4(
         onCapabilitiesStateChange,
-        void(CapabilitiesObserverInterface::State, CapabilitiesObserverInterface::Error));
+        void(
+            CapabilitiesObserverInterface::State,
+            CapabilitiesObserverInterface::Error,
+            const std::vector<std::string>&,
+            const std::vector<std::string>&));
 };
 
 }  // namespace test

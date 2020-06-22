@@ -355,6 +355,88 @@ std::map<std::string, std::string> retrieveStringMap(const rapidjson::Value& val
     return elements;
 }
 
+void retrieveStringMapFromArray(
+    const rapidjson::Value& value,
+    const std::string& key,
+    std::map<std::string, std::string>& elements) {
+    rapidjson::Value::ConstMemberIterator objectIt = value.FindMember(key);
+    if (objectIt == value.MemberEnd()) {
+        ACSDK_DEBUG0(LX("retrieveStringMapFromArrayFailed").d("reason", "couldNotFindObject").d("key", key));
+        return;
+    }
+
+    const rapidjson::Value& mapOfAttributes = objectIt->value;
+    if (!mapOfAttributes.IsArray()) {
+        ACSDK_DEBUG0(LX("retrieveStringMapFromArrayFailed").d("reason", "NotAnArray").d("key", key));
+        return;
+    }
+
+    for (rapidjson::Value::ConstValueIterator itr = mapOfAttributes.Begin(); itr != mapOfAttributes.End(); ++itr) {
+        const rapidjson::Value& attribute = *itr;
+        // each attribute is an object
+        if (!attribute.IsObject()) {
+            ACSDK_DEBUG0(LX("retrieveStringMapFromArrayFailed").d("reason", "NotAnObject").d("key", key));
+            return;
+        }
+
+        rapidjson::Value::ConstMemberIterator keyEntry = attribute.MemberBegin();
+        if (keyEntry != attribute.MemberEnd()) {
+            rapidjson::Value::ConstMemberIterator valueEntry = keyEntry + 1;
+            if (valueEntry != attribute.MemberEnd()) {
+                if (keyEntry->value.IsString() && valueEntry->value.IsString()) {
+                    elements[keyEntry->value.GetString()] = valueEntry->value.GetString();
+                } else {
+                    ACSDK_DEBUG0(LX("retrieveStringMapFromArrayFailed").d("reason", "NotAString").d("key", key));
+                    elements.clear();
+                    return;
+                }
+            }
+        }
+    }
+}
+
+bool retrieveArrayOfStringMapFromArray(
+    const rapidjson::Value& value,
+    const std::string& key,
+    std::vector<std::map<std::string, std::string>>& elements) {
+    rapidjson::Value::ConstMemberIterator objectIt = value.FindMember(key);
+    if (objectIt == value.MemberEnd()) {
+        ACSDK_DEBUG0(LX(__func__).d("reason", "couldNotFindObject").d("key", key));
+        return false;
+    }
+
+    const rapidjson::Value& mapOfAttributes = objectIt->value;
+    if (!mapOfAttributes.IsArray()) {
+        ACSDK_DEBUG0(LX(__func__).d("reason", "NotAnArray").d("key", key));
+        return false;
+    }
+
+    for (rapidjson::Value::ConstValueIterator itr = mapOfAttributes.Begin(); itr != mapOfAttributes.End(); ++itr) {
+        std::map<std::string, std::string> element;
+        const rapidjson::Value& attribute = *itr;
+        // each attribute is an object
+        if (!attribute.IsObject()) {
+            ACSDK_DEBUG0(LX(__func__).d("reason", "NotAnObject").d("key", key));
+            elements.clear();
+            return false;
+        }
+
+        for (auto keyEntry = attribute.MemberBegin(); keyEntry != attribute.MemberEnd(); keyEntry++) {
+            if (keyEntry->name.IsString() && keyEntry->value.IsString()) {
+                element[keyEntry->name.GetString()] = keyEntry->value.GetString();
+            } else {
+                ACSDK_DEBUG0(LX(__func__).d("reason", "ObjectValuesNotString").d("key", key));
+                elements.clear();
+                return false;
+            }
+        }
+
+        elements.push_back(element);
+    }
+
+    return true;
+}
+
 }  // namespace jsonUtils
 }  // namespace json
 }  // namespace utils

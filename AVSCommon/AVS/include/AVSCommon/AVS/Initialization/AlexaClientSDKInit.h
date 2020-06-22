@@ -21,13 +21,38 @@
 #include <memory>
 #include <vector>
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 namespace initialization {
 
+/**
+ * Class encapsulating the lifetime of initialization of the Alexa Client SDK.
+ */
 class AlexaClientSDKInit {
 public:
+    /**
+     * Get a function to create an instance of AlexaClientSDKInit.
+     *
+     * @param jsonStreams Vector of @c istreams containing JSON documents from which
+     * to parse configuration parameters. Streams are processed in the order they appear in the vector. When a
+     * value appears in more than one JSON stream the last processed stream's value overwrites the previous value
+     * (and a debug log entry will be created). This allows for specifying default settings (by providing them
+     * first) and specifying the configuration from multiple sources (e.g. a separate stream for each component).
+     * Documentation of the JSON configuration format and methods to access the resulting global configuration
+     * can be found here: avsCommon::utils::configuration::ConfigurationNode.
+     * @return A  function to create an instance of AlexaClientSDKInit.
+     */
+    static std::function<std::shared_ptr<AlexaClientSDKInit>(std::shared_ptr<utils::logger::Logger>)>
+    getCreateAlexaClientSDKInit(const std::vector<std::shared_ptr<std::istream>>& jsonStreams);
+
+    /**
+     * Destructor.
+     */
+    ~AlexaClientSDKInit();
+
     /*
      * Checks whether the Alexa Client SDK has been initialized.
      *

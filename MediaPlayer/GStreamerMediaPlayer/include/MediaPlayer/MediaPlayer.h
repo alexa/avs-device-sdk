@@ -98,7 +98,9 @@ public:
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
-        bool repeat = false) override;
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext =
+            avsCommon::utils::mediaPlayer::PlaybackContext()) override;
 
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
@@ -642,6 +644,10 @@ private:
     /// Used to stream urls into attachments
     std::shared_ptr<playlistParser::UrlContentToAttachmentConverter> m_urlConverter;
 
+    /// A parked reader to make sure the attachment is seekable to the beginning until @c seek() is called.  This
+    /// reader will be released after @c seek() is called.
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::attachment::AttachmentReader> m_parkedReader;
+
     /// An instance of the @c OffsetManager.
     OffsetManager m_offsetManager;
 
@@ -686,6 +692,9 @@ private:
 
     /// The current source id.
     SourceId m_currentId;
+
+    /// Flag to indicate whether the audiosink is a fakesink.
+    bool m_isFakeSink;
 
     /// Flag to indicate whether a play is currently pending a callback.
     bool m_playPending;

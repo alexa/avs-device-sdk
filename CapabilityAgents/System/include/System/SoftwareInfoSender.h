@@ -62,7 +62,7 @@ public:
     static std::shared_ptr<SoftwareInfoSender> create(
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoUponConnect,
-        std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> observers,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
@@ -119,7 +119,7 @@ private:
     SoftwareInfoSender(
         avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
         bool sendSoftwareInfoUponConnect,
-        std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> observer,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> observers,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
@@ -137,8 +137,8 @@ private:
     /// Whether to send the SoftwareInfo event upon @c CONNECTED.  Access to this member is serialized by @c m_mutex.
     bool m_sendSoftwareInfoUponConnect;
 
-    /// Object to receive notifications from this SoftwareInfoSender.
-    std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> m_observer;
+    /// A set of observers to receive notifications from this SoftwareInfoSender.
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> m_observers;
 
     /// Our connection to AVS.
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connection;

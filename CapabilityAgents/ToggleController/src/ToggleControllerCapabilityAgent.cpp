@@ -250,6 +250,11 @@ bool ToggleControllerCapabilityAgent::canStateBeRetrieved() {
     return m_isRetrievable;
 }
 
+bool ToggleControllerCapabilityAgent::hasReportableStateProperties() {
+    ACSDK_DEBUG5(LX(__func__));
+    return (m_isRetrievable || m_isProactivelyReported);
+}
+
 void ToggleControllerCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
     if (!info || !info->directive) {

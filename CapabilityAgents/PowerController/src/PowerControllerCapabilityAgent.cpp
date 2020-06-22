@@ -207,6 +207,11 @@ bool PowerControllerCapabilityAgent::canStateBeRetrieved() {
     return m_isRetrievable;
 }
 
+bool PowerControllerCapabilityAgent::hasReportableStateProperties() {
+    ACSDK_DEBUG5(LX(__func__));
+    return m_isRetrievable || m_isProactivelyReported;
+}
+
 void PowerControllerCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
     if (!info || !info->directive) {

@@ -82,6 +82,7 @@ public:
      * streaming will begin from the beginning.
      * @param writeCompleteObserver An observer to be notified when data written to the attachment is complete.
      * Optional.
+     * @param numOfReaders Maximum number of readers to this contentFetcher.
      * @return A @c std::shared_ptr to the new @c UrlContentToAttachmentConverter object or @c nullptr on failure.
      *
      * @note This object is intended to be used once. Subsequent calls to @c convertPlaylistToAttachment() will fail.
@@ -91,7 +92,8 @@ public:
         const std::string& url,
         std::shared_ptr<ErrorObserverInterface> observer,
         std::chrono::milliseconds startTime = std::chrono::milliseconds::zero(),
-        std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver = nullptr);
+        std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver = nullptr,
+        size_t numOfReaders = 1);
 
     /**
      * Returns the attachment into which the URL content was streamed into.
@@ -128,13 +130,15 @@ private:
      * streaming will begin from the beginning.
      * @param writeCompleteObserver An observer to be notified when data written to the attachment is complete.
      * Optional.
+     * @param numOfReaders Maximum number of readers to this contentFetcher.
      */
     UrlContentToAttachmentConverter(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
         const std::string& url,
         std::shared_ptr<ErrorObserverInterface> observer,
         std::chrono::milliseconds startTime,
-        std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver);
+        std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver,
+        size_t numOfReaders);
 
     void onPlaylistEntryParsed(int requestId, avsCommon::utils::playlistParser::PlaylistEntry playlistEntry) override;
 

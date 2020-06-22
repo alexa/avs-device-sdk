@@ -12,16 +12,51 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#include "Metrics/SampleMetricSink.h"
 
 #include <fstream>
 #include <iostream>
+
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+
+#include "Metrics/SampleMetricSink.h"
+
+/// Root key for metricvs settings.
+static std::string METRICS_KEY = "metrics";
+
+/// Key under metrics for string value specifying name of the file to write metrics to.
+static std::string METRICS_FILENAME_KEY = "fileName";
 
 namespace alexaClientSDK {
 namespace metrics {
 namespace implementations {
 
+using namespace alexaClientSDK::avsCommon::utils::configuration;
 using namespace alexaClientSDK::avsCommon::utils::metrics;
+
+/// String to identify log entries originating from this file.
+static const std::string TAG("SampleMetricSink");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+std::unique_ptr<MetricSinkInterface> SampleMetricSink::createMetricSinkInterface() {
+    std::string fileName;
+    if (!ConfigurationNode::getRoot()[METRICS_KEY].getString(METRICS_FILENAME_KEY, &fileName)) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "NoFileNameInConfiguration"));
+        return nullptr;
+    }
+    if (fileName.empty()) {
+        ACSDK_ERROR(LX("createFiled").d("reason", "emptyFileName"));
+        return nullptr;
+    }
+    return std::unique_ptr<MetricSinkInterface>(new SampleMetricSink(fileName));
+}
 
 SampleMetricSink::~SampleMetricSink() {
     m_file.close();

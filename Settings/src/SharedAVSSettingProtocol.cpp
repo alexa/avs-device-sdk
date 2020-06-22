@@ -99,6 +99,12 @@ SetSettingResult SharedAVSSettingProtocol::localChange(
             std::unique_lock<std::mutex> lock(m_requestLock);
             auto request = std::move(m_pendingRequest);
             lock.unlock();
+            // It is possible that the m_pendingRequest was reset in SharedAVSSettingProtocol::clearData()
+            // Check that the request from it is not null.
+            if (request == nullptr) {
+                ACSDK_ERROR(LX("localChangeFailed").d("reason", "nullRequestPtr"));
+                return;
+            }
 
             request->notifyObservers(SettingNotifications::LOCAL_CHANGE_IN_PROGRESS);
 
@@ -158,6 +164,12 @@ bool SharedAVSSettingProtocol::avsChange(
             std::unique_lock<std::mutex> lock(m_requestLock);
             auto request = std::move(m_pendingRequest);
             lock.unlock();
+            // It is possible that the m_pendingRequest was reset in SharedAVSSettingProtocol::clearData()
+            // Check that the request from it is not null.
+            if (request == nullptr) {
+                ACSDK_ERROR(LX("avsChangeFailed").d("reason", "nullRequestPtr"));
+                return;
+            }
 
             request->notifyObservers(SettingNotifications::AVS_CHANGE_IN_PROGRESS);
 

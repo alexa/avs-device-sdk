@@ -59,27 +59,24 @@ const std::string ALEXA_DISPLAY_CATEGORY = "ALEXA_VOICE_ENABLED";
 
 std::unique_ptr<EndpointBuilder> EndpointBuilder::create(
     const avsCommon::utils::DeviceInfo& deviceInfo,
-    std::shared_ptr<EndpointRegistrationManagerInterface> endpointRegistrationManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender) {
-    if (!endpointRegistrationManager || !contextManager || !alexaMessageSender || !exceptionSender) {
+    if (!contextManager || !alexaMessageSender || !exceptionSender) {
         ACSDK_ERROR(LX("createFailed")
                         .d("reason", "nullParameter")
-                        .d("isRegistrationNull", !endpointRegistrationManager)
                         .d("isContextManagerNull", !contextManager)
                         .d("isExceptionSenderNull", !exceptionSender)
                         .d("isAlexaMessageSenderNull", !alexaMessageSender));
         return nullptr;
     }
 
-    return std::unique_ptr<EndpointBuilder>(new EndpointBuilder(
-        deviceInfo, endpointRegistrationManager, contextManager, exceptionSender, alexaMessageSender));
+    return std::unique_ptr<EndpointBuilder>(
+        new EndpointBuilder(deviceInfo, contextManager, exceptionSender, alexaMessageSender));
 }
 
 EndpointBuilder::EndpointBuilder(
     const avsCommon::utils::DeviceInfo& deviceInfo,
-    std::shared_ptr<EndpointRegistrationManagerInterface> endpointRegistrationManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender) :
@@ -87,7 +84,6 @@ EndpointBuilder::EndpointBuilder(
         m_hasBeenBuilt{false},
         m_invalidConfiguration{false},
         m_deviceInfo{deviceInfo},
-        m_registrationManager{endpointRegistrationManager},
         m_contextManager{contextManager},
         m_exceptionSender{exceptionSender},
         m_alexaMessageSender{alexaMessageSender} {
@@ -187,8 +183,7 @@ EndpointBuilder& EndpointBuilder::withDisplayCategory(const std::vector<std::str
         return *this;
     }
 
-    m_attributes.displayCategories.insert(
-        m_attributes.displayCategories.begin(), displayCategories.begin(), displayCategories.end());
+    m_attributes.displayCategories = displayCategories;
     return *this;
 }
 
@@ -429,38 +424,37 @@ alexaClientSDK::endpoints::EndpointBuilder& alexaClientSDK::endpoints::EndpointB
     return *this;
 }
 
-avsCommon::utils::Optional<EndpointBuilder::EndpointIdentifier> EndpointBuilder::build() {
+std::unique_ptr<EndpointInterface> EndpointBuilder::build() {
     if (m_isDefaultEndpoint) {
         ACSDK_ERROR(LX("buildFailed").d("reason", "buildDefaultEndpointNotAllowed"));
-        return avsCommon::utils::Optional<EndpointIdentifier>();
     }
     return buildImplementation();
 }
 
-bool EndpointBuilder::buildDefaultEndpoint() {
+std::unique_ptr<EndpointInterface> EndpointBuilder::buildDefaultEndpoint() {
     if (!m_isDefaultEndpoint) {
         ACSDK_ERROR(LX("buildDefaultEndpointFailed").d("reason", "notDefaultEndpoint"));
-        return false;
+        return nullptr;
     }
-    return buildImplementation().hasValue();
+
+    return buildImplementation();
 }
 
-avsCommon::utils::Optional<EndpointBuilder::EndpointIdentifier> EndpointBuilder::buildImplementation() {
-    avsCommon::utils::Optional<EndpointIdentifier> endpointId;
+std::unique_ptr<EndpointInterface> EndpointBuilder::buildImplementation() {
     if (m_hasBeenBuilt) {
         ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "endpointAlreadyBuilt"));
-        return endpointId;
+        return nullptr;
     }
 
     if (m_invalidConfiguration) {
         ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "invalidConfiguration"));
-        return endpointId;
+        return nullptr;
     }
 
     if (!m_isDefaultEndpoint && !isFriendlyNameValid(m_attributes.friendlyName)) {
         ACSDK_ERROR(
             LX("buildFailed").d("reason", "friendlyNameInvalid").sensitive("friendlyName", m_attributes.friendlyName));
-        return endpointId;
+        return nullptr;
     }
 
     auto endpoint = avsCommon::utils::memory::make_unique<Endpoint>(m_attributes);
@@ -471,7 +465,7 @@ avsCommon::utils::Optional<EndpointBuilder::EndpointIdentifier> EndpointBuilder:
             m_deviceInfo, m_attributes.endpointId, m_exceptionSender, m_alexaMessageSender);
         if (!alexaCapabilityAgent) {
             ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "unableToCreateAlexaCapabilityAgent"));
-            return endpointId;
+            return nullptr;
         }
         endpoint->addCapability(alexaCapabilityAgent->getCapabilityConfiguration(), alexaCapabilityAgent);
     }
@@ -482,7 +476,7 @@ avsCommon::utils::Optional<EndpointBuilder::EndpointIdentifier> EndpointBuilder:
             // Default endpoint might have capability configurations without a directive handler.
             if (!m_isDefaultEndpoint) {
                 ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "buildCapabilityFailed"));
-                return endpointId;
+                return nullptr;
             }
             endpoint->addCapabilityConfiguration(capability.first);
         } else {
@@ -494,23 +488,13 @@ avsCommon::utils::Optional<EndpointBuilder::EndpointIdentifier> EndpointBuilder:
     endpoint->addRequireShutdownObjects(m_requireShutdownObjects);
     m_requireShutdownObjects.clear();
 
-    auto resultFuture = m_registrationManager->registerEndpoint(std::move(endpoint));
-    if ((resultFuture.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)) {
-        auto result = resultFuture.get();
-        if (result != EndpointRegistrationManagerInterface::RegistrationResult::SUCCEEDED) {
-            ACSDK_ERROR(LX("buildImplementationFailed")
-                            .d("reason", "registrationFailed")
-                            .d("result", static_cast<int>(result)));
-            return endpointId;
-        }
-    }
     ACSDK_DEBUG2(LX(__func__)
                      .d("isDefault", m_isDefaultEndpoint)
                      .d("#capabilities", m_capabilitiesBuilders.size())
                      .sensitive("endpointId", m_attributes.endpointId)
                      .sensitive("friendlyName", m_attributes.friendlyName));
-    endpointId.set(m_attributes.endpointId);
-    return endpointId;
+
+    return std::move(endpoint);
 }
 
 }  // namespace endpoints

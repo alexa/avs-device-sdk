@@ -4,4 +4,4 @@ set(INCLUDE_PATH
     "${SpeakerManager_INCLUDE_DIRS}"
     "${AVSCommon_SOURCE_DIR}/AVS/test")
 
-discover_unit_tests("${INCLUDE_PATH}" "SpeakerManager;SDKInterfacesTests")
+discover_unit_tests("${INCLUDE_PATH}" "SpeakerManager;UtilsCommonTestLib;SDKInterfacesTests")

@@ -32,6 +32,8 @@ class ConsolePrinter : public avsCommon::utils::logger::Logger {
 public:
     /**
      * Constructor.
+     *
+     * @deprecated (instances of ConsolePrinter needlessly duplicate ConsoleLogger functionality.)
      */
     ConsolePrinter();
 
@@ -64,16 +66,16 @@ public:
      */
     static void captionsPrint(const std::vector<std::string>& lines);
 
+    /// @name Logger methods
+    /// @{
     void emit(
         avsCommon::utils::logger::Level level,
         std::chrono::system_clock::time_point time,
         const char* threadMoniker,
         const char* text) override;
+    /// @}
 
 private:
-    /// Used to serialize access to std::cout.
-    static std::shared_ptr<std::mutex> m_globalMutex;
-
     /**
      * Holding a shared pointer to the mutex
      * to make sure the mutex is not already destroyed

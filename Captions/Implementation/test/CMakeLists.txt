@@ -3,9 +3,7 @@ if (BUILD_TESTING)
     set(CaptionsTestLib_SOURCES)
     list(APPEND CaptionsTestLib_SOURCES
         CaptionManagerTest.cpp
-        CaptionTimingAdapterTest.cpp
-        TestTimingAdapterFactory.h
-        TestTimingAdapterFactory.cpp)
+        CaptionTimingAdapterTest.cpp)
     if (CAPTIONS)
       list(APPEND CaptionsTestLib_SOURCES LibwebvttParserAdapterTest.cpp)
     endif()

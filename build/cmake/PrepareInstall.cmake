@@ -16,6 +16,11 @@ function(asdk_install)
     install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
 endfunction()
 
+# Function to install an interface library
+function(asdk_install_interface)
+    install(DIRECTORY include DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
+endfunction()
+
 # Function to install the given set of targets
 function(asdk_install_targets targets install_headers)
     foreach(target IN LISTS targets)
@@ -54,6 +59,20 @@ function(asdk_install_targets targets install_headers)
     endif()
 endfunction()
 
+# Function to install the given set of targets with header location
+function(asdk_install_targets_with_headers targets install_headers header_location)
+    foreach(target IN LISTS targets)
+        SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${target}" CACHE INTERNAL "" FORCE)
+        install(TARGETS "${target}" DESTINATION "${ASDK_LIB_INSTALL_DIR}")
+    endforeach()
+
+    if (${install_headers})
+        message(${header_location})
+        install(DIRECTORY "${header_location}" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
+    endif()
+endfunction()
+
+
 # Function to install the target with list of include paths
 function(asdk_install_multiple path_list)
     SET(PKG_CONFIG_LIBS "${PKG_CONFIG_LIBS} -l${PROJECT_NAME}" CACHE INTERNAL "" FORCE)
@@ -81,3 +100,8 @@ SET(PKG_CONFIG_CFLAGS       "-I\${includedir}")
 # Set library and header files install directory
 SET(ASDK_LIB_INSTALL_DIR     "${CMAKE_INSTALL_PREFIX}/lib")
 SET(ASDK_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}")
+
+# Use this RPATH when installing.
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+

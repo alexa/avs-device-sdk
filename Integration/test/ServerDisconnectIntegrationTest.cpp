@@ -49,7 +49,10 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::libcurlUtils;
+using namespace contextManager;
 
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
@@ -131,7 +134,7 @@ private:
     /// Connection Manager for handling the communication between client.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
     /// ContextManager object.
-    std::shared_ptr<contextManager::ContextManager> m_contextManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
     /// Pointer to message router so we can properly shutdown
     std::shared_ptr<MessageRouter> m_messageRouter;
 };
@@ -146,19 +149,19 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthD
         return nullptr;
     }
 
-    auto config = avsCommon::utils::configuration::ConfigurationNode::getRoot();
+    auto config = ConfigurationNode::getRoot();
     EXPECT_TRUE(config);
     if (!config) {
         return nullptr;
     }
 
-    auto deviceInfo = avsCommon::utils::DeviceInfo::create(config);
+    auto deviceInfo = DeviceInfo::createFromConfiguration(std::make_shared<ConfigurationNode>(config));
     EXPECT_TRUE(deviceInfo);
     if (!deviceInfo) {
         ACSDK_ERROR(LX("createFailed").d("reason", "createDeviceInfoFailed"));
         return nullptr;
     }
-    avsCommunication->m_contextManager = contextManager::ContextManager::create(*deviceInfo);
+    avsCommunication->m_contextManager = ContextManager::createContextManagerInterface(std::move(deviceInfo));
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
     auto synchronizeStateSenderFactory =

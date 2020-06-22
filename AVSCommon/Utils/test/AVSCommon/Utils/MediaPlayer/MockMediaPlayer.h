@@ -107,7 +107,8 @@ public:
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const SourceConfig& config = emptySourceConfig(),
-        bool repeat = false) /*override*/;
+        bool repeat = false,
+        const PlaybackContext& playbackContext = PlaybackContext()) /* override */;
     SourceId setSource(
         std::shared_ptr<std::istream> stream,
         bool repeat = false,
@@ -120,7 +121,9 @@ public:
     MOCK_METHOD1(play, bool(SourceId));
     MOCK_METHOD1(pause, bool(SourceId));
     MOCK_METHOD1(resume, bool(SourceId));
+    MOCK_METHOD3(seekTo, bool(SourceId, std::chrono::milliseconds location, bool fromStart));
     MOCK_METHOD1(stop, bool(SourceId));
+    MOCK_METHOD2(stop, bool(SourceId, std::chrono::seconds));
     MOCK_METHOD1(getOffset, std::chrono::milliseconds(SourceId));
     MOCK_METHOD0(getNumBytesBuffered, uint64_t());
     MOCK_METHOD1(
@@ -176,6 +179,12 @@ public:
      * @return Whether the operation was successful.
      */
     bool mockStop(SourceId sourceId);
+    /**
+     * This is a mock method which will send the @c onPlaybackStopped() notification to the observer.
+     *
+     * @return Whether the operation was successful.
+     */
+    bool mockStop2(SourceId sourceId, std::chrono::seconds closePipleineTime);
 
     /**
      * This is a mock method which will send the @c onPlaybackFinished() notification to the observer.
@@ -205,6 +214,13 @@ public:
      * This is a mock method which gives the @c sourceId and the offset through @c getOffset()
      */
     avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> mockGetState(SourceId id);
+
+    /**
+     * This is a mock method which will send a @c onPlaybackStarted() notification to the observer, with updated offset
+     *
+     * @return Whether the operation was successful.
+     */
+    bool mockSeek(SourceId sourceId, std::chrono::milliseconds location, bool fromStart);
 
     /**
      * Reset the timer used in the following waitXXX methods.
@@ -282,6 +298,14 @@ public:
     bool waitUntilPlaybackError(const std::chrono::milliseconds timeout = std::chrono::milliseconds(DEFAULT_TIME));
 
     /**
+     * Waits for the current source to reach the seek complete state.
+     *
+     * @param timeout The maximum time to wait.
+     * @return @c true if the state was reached within @c timeout milliseconds else @c false.
+     */
+    bool waitUntilSeeked(const std::chrono::milliseconds timeout = std::chrono::milliseconds(DEFAULT_TIME));
+
+    /**
      * Get the SourceId for the media MockMediaPlayer is currently playing.
      *
      * @return The SourceId for the media MockMediaPlayer is currently playing.
@@ -340,7 +364,7 @@ private:
          * Trigger the transition to reaching this state.
          * @note This method returns immediately (possibly before the notification has been delivered).
          */
-        void trigger();
+        void trigger(const MediaPlayerState = MediaPlayerState(DEFAULT_TIME));
 
         /**
          * Wait until this state is reached.
@@ -365,7 +389,8 @@ private:
          */
         void notify(
             const std::unordered_set<std::shared_ptr<MediaPlayerObserverInterface>>& observer,
-            std::chrono::milliseconds timeout);
+            std::chrono::milliseconds timeout,
+            const MediaPlayerState state);
 
         /// The source whose state we are tracking.
         Source* m_source;
@@ -428,6 +453,9 @@ private:
 
         /// Tracks if playbackFinished state has been reached.
         SourceState finished;
+
+        /// Tracks if seekComplete state has been reached.
+        SourceState seekComplete;
 
         /// Tracks if playbackError state has been reached.
         SourceState error;

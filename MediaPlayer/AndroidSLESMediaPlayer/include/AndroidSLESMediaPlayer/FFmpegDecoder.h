@@ -115,12 +115,13 @@ private:
     /**
      * This enumeration represents the states that the decoder can be in. The possible transitions are:
      *
-     * INITIALIZING -> {DECODING, INVALID}
+     * INITIALIZING -> {DECODING, FINISHED, INVALID}
      * DECODING -> {INITIALIZING, FLUSHING_DECODER, INVALID}
      * FLUSHING_DECODER -> {FLUSHING_RESAMPLER, INVALID}
      * FLUSHING_RESAMPLER -> {FINISHED, INVALID}
      *
      * The transition from DECODING to INITIALIZING happens when input controller has next track.
+     * The transition from INITIALIZING to FINISHED happens when the input to be decoded is empty.
      *
      * @note: The order of states matter since we use less than comparisons.
      */

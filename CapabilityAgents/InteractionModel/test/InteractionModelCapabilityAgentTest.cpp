@@ -99,6 +99,20 @@ static const std::string INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_3 = 
             }
         }
     })delim";
+/// An invalid NewDialogRequest with empty dialogRequestID format
+static const std::string INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_4 = R"delim(
+    {
+        "directive": {
+            "header": {
+                "namespace": "InteractionModel",
+                "name": "NewDialogRequest",
+                "messageId": "12345"
+            },
+            "payload": {
+                "dialogRequestId": ""
+            }
+        }
+    })delim";
 
 /// A sample RPS Directive JSON string for the purposes of creating an AVSDirective object.
 static const std::string RPS_DIRECTIVE_JSON_STRING = R"delim(
@@ -258,11 +272,14 @@ TEST_F(InteractionModelCapabilityAgentTest, test_processInvalidDirective) {
         AVSDirective::create(INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_2, nullptr, "").first;
     std::shared_ptr<AVSDirective> directive3 =
         AVSDirective::create(INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_3, nullptr, "").first;
+    std::shared_ptr<AVSDirective> directive4 =
+        AVSDirective::create(INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_4, nullptr, "").first;
 
-    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(3);
+    EXPECT_CALL(*m_mockExceptionEncounteredSender, sendExceptionEncountered(_, _, _)).Times(4);
     m_interactionModelCA->handleDirectiveImmediately(directive1);
     m_interactionModelCA->handleDirectiveImmediately(directive2);
     m_interactionModelCA->handleDirectiveImmediately(directive3);
+    m_interactionModelCA->handleDirectiveImmediately(directive4);
     ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
 }
 

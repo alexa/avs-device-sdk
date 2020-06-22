@@ -29,9 +29,7 @@ namespace test {
 class MockPostConnectOperation : public avsCommon::sdkInterfaces::PostConnectOperationInterface {
 public:
     MOCK_METHOD0(getOperationPriority, unsigned int());
-    MOCK_METHOD1(
-        performOperation,
-        bool(const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>&));
+    MOCK_METHOD1(performOperation, bool(const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>&));
     MOCK_METHOD0(abortOperation, void());
 };
 

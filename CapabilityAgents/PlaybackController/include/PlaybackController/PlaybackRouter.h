@@ -47,8 +47,14 @@ public:
     /// @{
     virtual void buttonPressed(avsCommon::avs::PlaybackButton button) override;
     virtual void togglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) override;
-    virtual void setHandler(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler) override;
     virtual void switchToDefaultHandler() override;
+    virtual void setHandler(
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler = nullptr) override;
+    virtual void useDefaultHandlerWith(
+        std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler) override;
+    virtual bool localOperation(avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface::PlaybackOperation op) override;
+    virtual bool localSeekTo(std::chrono::milliseconds location, bool fromStart) override;
     /// @}
 
 private:
@@ -64,6 +70,9 @@ private:
 
     /// The active button press handler.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> m_handler;
+
+    /// The activelocal handler.
+    std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> m_localHandler;
 
     /// The default handler to be used after @c switchToDefaultHandler has been called.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> m_defaultHandler;

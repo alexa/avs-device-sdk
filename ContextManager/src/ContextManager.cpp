@@ -47,6 +47,17 @@ static const ContextRequestToken EMPTY_TOKEN = 0;
 
 static const std::string STATE_PROVIDER_TIMEOUT_METRIC_PREFIX = "ERROR.StateProviderTimeout.";
 
+std::shared_ptr<ContextManagerInterface> ContextManager::createContextManagerInterface(
+    const std::shared_ptr<DeviceInfo>& deviceInfo,
+    const std::shared_ptr<avsCommon::utils::timing::MultiTimer>& multiTimer,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder) {
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullDeviceInfo"));
+        return nullptr;
+    }
+    return create(*deviceInfo, multiTimer, metricRecorder);
+}
+
 std::shared_ptr<ContextManager> ContextManager::create(
     const DeviceInfo& deviceInfo,
     std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer,
@@ -74,6 +85,21 @@ ContextManager::~ContextManager() {
  */
 static void NoopCallback() {
     // No-op
+}
+
+ContextManager::RequestTracker::RequestTracker() :
+        timerToken{0},
+        contextRequester{nullptr},
+        skipReportableStateProperties{false} {
+}
+
+ContextManager::RequestTracker::RequestTracker(
+    avsCommon::utils::timing::MultiTimer::Token timerToken,
+    std::shared_ptr<ContextRequesterInterface> contextRequester,
+    bool skipReportableProperties) :
+        timerToken{timerToken},
+        contextRequester{contextRequester},
+        skipReportableStateProperties{skipReportableProperties} {
 }
 
 void ContextManager::setStateProvider(
@@ -316,9 +342,26 @@ ContextRequestToken ContextManager::getContext(
     std::shared_ptr<ContextRequesterInterface> contextRequester,
     const std::string& endpointId,
     const std::chrono::milliseconds& timeout) {
+    ACSDK_DEBUG5(LX(__func__));
+    return getContextInternal(contextRequester, endpointId, timeout, false);
+}
+
+ContextRequestToken ContextManager::getContextWithoutReportableStateProperties(
+    std::shared_ptr<ContextRequesterInterface> contextRequester,
+    const std::string& endpointId,
+    const std::chrono::milliseconds& timeout) {
+    ACSDK_DEBUG5(LX(__func__));
+    return getContextInternal(contextRequester, endpointId, timeout, true);
+}
+
+ContextRequestToken ContextManager::getContextInternal(
+    std::shared_ptr<ContextRequesterInterface> contextRequester,
+    const std::string& endpointId,
+    const std::chrono::milliseconds& timeout,
+    bool bSkipReportableStateProperties) {
     ACSDK_DEBUG5(LX(__func__).sensitive("endpointId", endpointId));
     auto token = generateToken();
-    m_executor.submit([this, contextRequester, endpointId, token, timeout] {
+    m_executor.submit([this, contextRequester, endpointId, token, timeout, bSkipReportableStateProperties] {
         auto timerToken = m_multiTimer->submitTask(timeout, [this, token] {
             // Cancel request after timeout.
             m_executor.submit([this, token] {
@@ -334,17 +377,34 @@ ContextRequestToken ContextManager::getContext(
 
         std::lock_guard<std::mutex> requestsLock{m_requestsMutex};
         auto& requestEndpointId = endpointId.empty() ? m_defaultEndpointId : endpointId;
-        m_pendingRequests.emplace(token, RequestTracker{timerToken, contextRequester});
+        m_pendingRequests.emplace(token, RequestTracker(timerToken, contextRequester, bSkipReportableStateProperties));
 
         std::function<void()> contextAvailableCallback = NoopCallback;
         {
             std::lock_guard<std::mutex> statesLock{m_endpointsStateMutex};
             for (auto& capability : m_endpointsState[requestEndpointId]) {
-                if (capability.second.stateProvider &&
-                    (capability.second.legacyCapability ? capability.second.refreshPolicy != StateRefreshPolicy::NEVER
-                                                        : capability.second.stateProvider->canStateBeRetrieved())) {
-                    capability.second.stateProvider->provideState(capability.first, token);
-                    m_pendingStateRequest[token].emplace(capability.first);
+                auto stateInfo = capability.second;
+                auto stateProvider = capability.second.stateProvider;
+
+                if (stateProvider) {
+                    bool requestState = false;
+                    if (stateInfo.legacyCapability && stateInfo.refreshPolicy != StateRefreshPolicy::NEVER) {
+                        requestState = true;
+                    } else if (!stateInfo.legacyCapability && stateProvider->canStateBeRetrieved()) {
+                        if (stateProvider->hasReportableStateProperties()) {
+                            /// Check if the reportable state properties should be skipped.
+                            if (!bSkipReportableStateProperties) {
+                                requestState = true;
+                            }
+                        } else {
+                            requestState = true;
+                        }
+                    }
+
+                    if (requestState) {
+                        stateProvider->provideState(capability.first, token);
+                        m_pendingStateRequest[token].emplace(capability.first);
+                    }
                 }
             }
 
@@ -424,16 +484,33 @@ std::function<void()> ContextManager::getContextAvailableCallbackIfReadyLocked(
     AVSContext context;
     auto& requestEndpointId = endpointId.empty() ? m_defaultEndpointId : endpointId;
     for (auto& capability : m_endpointsState[requestEndpointId]) {
-        if (capability.second.legacyCapability ||
-            (capability.second.stateProvider && capability.second.stateProvider->canStateBeRetrieved())) {
+        auto stateProvider = capability.second.stateProvider;
+        auto stateInfo = capability.second;
+        bool addState = false;
+
+        if (stateInfo.legacyCapability) {
             // Ignore if the state is not available for legacy SOMETIMES refresh policy.
-            if (capability.second.refreshPolicy == StateRefreshPolicy::SOMETIMES &&
-                !capability.second.capabilityState.hasValue()) {
-                ACSDK_DEBUG5(LX(__func__).d("skipping state for capabilityIdentifier", capability.first));
+            if ((stateInfo.refreshPolicy == StateRefreshPolicy::SOMETIMES) && !stateInfo.capabilityState.hasValue()) {
+                ACSDK_DEBUG5(LX(__func__).d("skipping state for legacy capabilityIdentifier", capability.first));
             } else {
-                ACSDK_DEBUG5(LX(__func__).sensitive("addState", capability.first));
-                context.addState(capability.first, capability.second.capabilityState.value());
+                addState = true;
             }
+        } else {
+            if (stateProvider && stateProvider->canStateBeRetrieved()) {
+                /// Check if the reportable state properties should be skipped.
+                if (stateProvider->hasReportableStateProperties()) {
+                    if (!request.skipReportableStateProperties) {
+                        addState = true;
+                    }
+                } else {
+                    addState = true;
+                }
+            }
+        }
+
+        if (addState) {
+            ACSDK_DEBUG5(LX(__func__).sensitive("addState", capability.first));
+            context.addState(capability.first, stateInfo.capabilityState.value());
         }
     }
     auto contextRequester = request.contextRequester;

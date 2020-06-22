@@ -92,6 +92,13 @@ private:
      */
     static int feedBuffer(void* userData, uint8_t* buffer, int bufferSize);
 
+    /*
+     * Whether the data input has encountered EOF. This is needed in order to know whether to ignore
+     * ffmpeg errors when ffmpeg probes the header for format; sometimes the entire attachment is empty,
+     * so ffmpeg cannot determine the format.
+     */
+    bool m_reachedEOF;
+
     /// Pointer to the data input.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
 

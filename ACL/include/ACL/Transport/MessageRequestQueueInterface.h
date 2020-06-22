@@ -28,8 +28,7 @@ namespace alexaClientSDK {
 namespace acl {
 
 /**
- * An interface that abstracts the operations of a @c MessageRequestQueuesMap between the standard version
- * and the synchronized implementation.
+ * An interface that abstracts queueing @c MessageRequests.
  */
 class MessageRequestQueueInterface {
 public:
@@ -39,8 +38,7 @@ public:
     virtual ~MessageRequestQueueInterface() = default;
 
     /**
-     * Enqueues the @c MessageRequest to the corresponding send queue based on the send queue type.
-     * If send queue type is not present, a new queue is created before enqueuing the request.
+     * Enqueues a @c MessageRequest.
      */
     virtual void enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest) = 0;
 
@@ -52,14 +50,21 @@ public:
     virtual avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>> peekRequestTime() = 0;
 
     /**
-     * Dequeues the next available @c MessageRequest by taking into account if the queue is waiting for
-     * a response. This method keeps track of the queue being processed and once a request from the queue
-     * is dequeued moves it to the next queue. It also loops back to the starting queue at the end and exits
-     * the loop if a valid MessageRequest is found or if it reaches the place it started.
+     * Dequeues the oldest @c MessageRequest regardless of whether or not the queue is waiting for
+     * a response.
      *
-     * @return @c MessageRequest if an available, else return nullptr.
+     * @return @c MessageRequest if available, else return nullptr.
      */
-    virtual std::shared_ptr<avsCommon::avs::MessageRequest> dequeueRequest() = 0;
+    virtual std::shared_ptr<avsCommon::avs::MessageRequest> dequeueOldestRequest() = 0;
+
+    /**
+     * Dequeues the next available @c MessageRequest taking into account if the queue is waiting for
+     * a response to a previously sent message and if any messages that do not care about sequencing
+     * are in the queue.
+     *
+     * @return @c MessageRequest if available, else return nullptr.
+     */
+    virtual std::shared_ptr<avsCommon::avs::MessageRequest> dequeueSendableRequest() = 0;
 
     /**
      * This method checks if there is a @c MessageRequest available to be sent.
@@ -69,28 +74,24 @@ public:
     virtual bool isMessageRequestAvailable() const = 0;
 
     /**
-     * Sets the waiting flag for the queue specified by the given send queue type.
-     *
-     * @param sendQueueType the send queue type of the queue to set the waiting flag on.
+     * Sets the flag indicating that the queue is waiting for a send to be acknowledged.
      */
-    virtual void setWaitingFlagForQueue() = 0;
+    virtual void setWaitingForSendAcknowledgement() = 0;
 
     /**
-     * Clear the waiting flag for the queue specified by the given send queue type.
-     *
-     * @param sendQueueType the send queue type of the queue to clear the waiting flag on.
+     * Clear the flag indicating that the queue is waiting for a send to be acknowledged.
      */
-    virtual void clearWaitingFlagForQueue() = 0;
+    virtual void clearWaitingForSendAcknowledgement() = 0;
 
     /**
-     * Checks if there are any @c MessageRequests.
+     * Checks if there are any queued @c MessageRequests.
      *
      * @return true if there are no messageRequests in the queue, else false.
      */
     virtual bool empty() const = 0;
 
     /**
-     * Clears all the @c MessageRequests along with the corresponding queues.
+     * Clears all queue of @c MessageRequests.
      */
     virtual void clear() = 0;
 };

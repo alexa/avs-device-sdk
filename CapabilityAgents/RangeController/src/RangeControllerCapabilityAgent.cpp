@@ -322,6 +322,11 @@ bool RangeControllerCapabilityAgent::canStateBeRetrieved() {
     return m_isRetrievable;
 }
 
+bool RangeControllerCapabilityAgent::hasReportableStateProperties() {
+    ACSDK_DEBUG5(LX(__func__));
+    return (m_isRetrievable || m_isProactivelyReported);
+}
+
 void RangeControllerCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
     if (!info || !info->directive) {

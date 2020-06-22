@@ -1965,7 +1965,7 @@ TEST_F(ExternalMediaPlayerTest, testReportDiscoveredPlayers) {
 /**
  * Test successful AuthorizeDiscoveredPlayers directive processing.
  */
-TEST_F(ExternalMediaPlayerTest, testAuthorizeDiscoveredPlayersSuccess) {
+TEST_F(ExternalMediaPlayerTest, testTimer_AuthorizeDiscoveredPlayersSuccess) {
     std::promise<void> authorizationCompletePromise;
     std::future<void> authorizationCompleteFuture = authorizationCompletePromise.get_future();
 

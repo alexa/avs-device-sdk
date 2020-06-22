@@ -78,6 +78,14 @@ public:
      * @note In future versions, this method will be made pure virtual.
      */
     virtual bool canStateBeRetrieved();
+
+    /**
+     * Returns whether the provider has Reportable State Properties.
+     * @see https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/reportable-state-properties.html
+     *
+     * @return Whether this provider has reportable state properties.
+     */
+    virtual bool hasReportableStateProperties();
 };
 
 inline void StateProviderInterface::provideState(
@@ -95,6 +103,10 @@ inline void StateProviderInterface::provideState(
 
 inline bool StateProviderInterface::canStateBeRetrieved() {
     return true;
+}
+
+inline bool StateProviderInterface::hasReportableStateProperties() {
+    return false;
 }
 
 }  // namespace sdkInterfaces

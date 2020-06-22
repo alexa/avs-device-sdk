@@ -17,6 +17,7 @@
 
 #include "RegistrationManager/CustomerDataManager.h"
 #include "SampleApp/InteractionManager.h"
+#include "Endpoints/Endpoint.h"
 
 #ifdef ENABLE_PCC
 #include <SampleApp/PhoneCaller.h>
@@ -60,16 +61,16 @@ InteractionManager::InteractionManager(
     capabilityAgents::aip::AudioProvider wakeWordAudioProvider,
 
 #ifdef POWER_CONTROLLER
-    std::shared_ptr<PowerControllerHandler> powerControllerHandler,
+    std::shared_ptr<PeripheralEndpointPowerControllerHandler> powerControllerHandler,
 #endif
 #ifdef TOGGLE_CONTROLLER
-    std::shared_ptr<ToggleControllerHandler> toggleControllerHandler,
+    std::shared_ptr<PeripheralEndpointToggleControllerHandler> toggleControllerHandler,
 #endif
 #ifdef RANGE_CONTROLLER
-    std::shared_ptr<RangeControllerHandler> rangeControllerHandler,
+    std::shared_ptr<PeripheralEndpointRangeControllerHandler> rangeControllerHandler,
 #endif
 #ifdef MODE_CONTROLLER
-    std::shared_ptr<ModeControllerHandler> modeControllerHandler,
+    std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler,
 #endif
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) :
@@ -105,6 +106,9 @@ InteractionManager::InteractionManager(
         m_isTapOccurring{false},
         m_isCallConnected{false},
         m_isMicOn{true},
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+        m_friendlyNameToggle{true},
+#endif
         m_diagnostics{diagnostics} {
     if (m_wakeWordAudioProvider) {
         m_micWrapper->startStreamingMicrophoneData();
@@ -133,7 +137,111 @@ void InteractionManager::settings() {
     m_executor.submit([this]() { m_userInterface->printSettingsScreen(); });
 }
 
-#if ENABLE_ENDPOINT_CONTROLLERS_MENU
+void InteractionManager::clearCachedEndpointIdentifiers(
+    const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) {
+    m_executor.submit([this, deletedEndpoints]() {
+        if (m_dynamicEndpointId.hasValue() &&
+            (deletedEndpoints.end() !=
+             std::find(deletedEndpoints.begin(), deletedEndpoints.end(), m_dynamicEndpointId.value()))) {
+            m_dynamicEndpointId.reset();
+        }
+    });
+}
+
+#if ENABLE_ENDPOINT_CONTROLLERS
+void InteractionManager::endpointModification() {
+    m_executor.submit([this]() { m_userInterface->printEndpointModificationScreen(); });
+}
+
+bool InteractionManager::addEndpoint(const std::string& friendlyName) {
+    auto dynamicEndpointBuilder = m_client->createEndpointBuilder();
+    if (!dynamicEndpointBuilder) {
+        m_userInterface->printEndpointModificationError("Create endpoint builder failed!");
+        return false;
+    }
+
+    auto derivedEndpointId = "dynamic";
+    dynamicEndpointBuilder->withDerivedEndpointId(derivedEndpointId)
+        .withDescription("dynamic light endpoint")
+        .withFriendlyName(friendlyName)
+        .withManufacturerName("Amazon.com")
+        .withDisplayCategory({"OTHER"});
+
+#ifdef POWER_CONTROLLER
+    auto powerHandler = PeripheralEndpointPowerControllerHandler::create(derivedEndpointId);
+    if (!powerHandler) {
+        m_userInterface->printEndpointModificationError("Create endpoint power controller handler failed!");
+        return false;
+    }
+    dynamicEndpointBuilder->withPowerController(powerHandler, true, true);
+#endif
+
+    auto endpoint = dynamicEndpointBuilder->build();
+    if (!endpoint) {
+        m_userInterface->printEndpointModificationError("Dynamic endpoint build failed.");
+        return false;
+    }
+
+    m_dynamicEndpointId.set(endpoint->getEndpointId());
+    auto result = m_client->registerEndpoint(std::move(endpoint));
+
+    if (result.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) {
+        if (result.get() != alexaClientSDK::endpoints::EndpointRegistrationManager::RegistrationResult::SUCCEEDED) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void InteractionManager::addDynamicEndpoint() {
+    m_executor.submit([this]() {
+        if (m_dynamicEndpointId.hasValue()) {
+            m_userInterface->printEndpointModificationError("Dynamic endpoint already added.");
+        } else if (!addEndpoint("light")) {
+            m_userInterface->printEndpointModificationError("Failed to register dynamic endpoint!");
+        }
+    });
+}
+
+void InteractionManager::modifyDynamicEndpoint() {
+    m_executor.submit([this]() {
+        if (!m_dynamicEndpointId.hasValue()) {
+            m_userInterface->printEndpointModificationError("Dynamic endpoint not added yet.");
+        } else {
+            bool result = false;
+
+            if (m_friendlyNameToggle) {
+                result = addEndpoint("lamp");
+            } else {
+                result = addEndpoint("light");
+            }
+
+            if (!result) {
+                m_userInterface->printEndpointModificationError("Failed to modify dynamic endpoint!");
+            } else {
+                m_friendlyNameToggle = !m_friendlyNameToggle;
+            }
+        }
+    });
+}
+
+void InteractionManager::deleteDynamicEndpoint() {
+    m_executor.submit([this]() {
+        if (!m_dynamicEndpointId.hasValue()) {
+            m_userInterface->printEndpointModificationError("Dynamic endpoint not added yet.");
+        } else {
+            auto result = m_client->deregisterEndpoint(m_dynamicEndpointId.value());
+            if (result.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) {
+                if (result.get() !=
+                    alexaClientSDK::endpoints::EndpointRegistrationManager::DeregistrationResult::SUCCEEDED) {
+                    m_userInterface->printEndpointModificationError("Failed to delete dynamic endpoint!");
+                }
+            }
+        }
+    });
+}
+
 void InteractionManager::endpointController() {
     m_executor.submit([this]() { m_userInterface->printEndpointControllerScreen(); });
 }

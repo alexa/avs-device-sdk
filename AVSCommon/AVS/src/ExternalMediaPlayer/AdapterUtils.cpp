@@ -35,12 +35,12 @@ using namespace avsCommon::sdkInterfaces::externalMediaPlayer;
  * an interval of less than 800 milliseconds.
  */
 const std::vector<int> SESSION_RETRY_TABLE = {
-    1600,   // Retry 1:  1.6s -> .8s to 2.4s
-    2000,   // Retry 2:  2.0s -> 1.0s to 3s
-    3000,   // Retry 3:  3.00s
-    5000,   // Retry 4:  5.00s
-    10000,  // Retry 5: 10.00s
-    20000,  // Retry 6: 20.00s
+    1000 * 60,   // Retry 1:  1.0mins
+    5000 * 60,   // Retry 2:  5.0mins
+    15000 * 60,  // Retry 3:  15.00mins
+    20000 * 60,  // Retry 4:  20.00mins
+    30000 * 60,  // Retry 5:  30.00mins
+    60000 * 60,  // Retry 6:  60.00mins
 };
 
 avsCommon::utils::RetryTimer SESSION_RETRY_TIMER(SESSION_RETRY_TABLE);

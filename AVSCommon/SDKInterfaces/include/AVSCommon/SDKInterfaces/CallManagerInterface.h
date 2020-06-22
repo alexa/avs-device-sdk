@@ -19,8 +19,10 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/SoftwareInfoSenderObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include "AVSCommon/Utils/RequiresShutdown.h"
 
@@ -34,7 +36,9 @@ namespace sdkInterfaces {
 class CallManagerInterface
         : public utils::RequiresShutdown
         , public avsCommon::avs::CapabilityAgent
-        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
+        , public avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface
+        , public avsCommon::sdkInterfaces::AVSGatewayObserverInterface {
 public:
     /**
      * Constructor.

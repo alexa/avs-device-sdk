@@ -69,18 +69,18 @@ public:
      * by it. ChannelVolumeInterfaces will be grouped by @c ChannelVolumeInterface::Type.
      *
      * @param volumeInterfaces The @c ChannelVolumeInterfaces to register.
-     * @param metricRecorder The metric recorder.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
      * directive processing exceptions to AVS.
+     * @param metricRecorder The metric recorder.
      */
     static std::shared_ptr<SpeakerManager> create(
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& volumeInterfaces,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -153,20 +153,20 @@ private:
      * Constructor. Called after validation has occurred on parameters.
      *
      * @param groupVolumeInterfaces The @c ChannelVolumeInterfaces to register.
-     * @param metricRecorder The metric recorder.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send.
      * directive processing exceptions to AVS.
      * @param minUnmuteVolume The volume level to increase to when unmuting.
+     * @param metricRecorder The metric recorder.
      */
     SpeakerManager(
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        const int minUnmuteVolume);
+        const int minUnmuteVolume,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Parses the payload from a string into a rapidjson document.

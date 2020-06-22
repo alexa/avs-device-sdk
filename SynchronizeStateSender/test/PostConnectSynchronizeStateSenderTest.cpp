@@ -20,7 +20,7 @@
 #include <gmock/gmock.h>
 
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
-#include <AVSCommon/SDKInterfaces/MockPostConnectSendMessage.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <SynchronizeStateSender/PostConnectSynchronizeStateSender.h>
 
@@ -67,7 +67,7 @@ protected:
     std::shared_ptr<MockContextManager> m_mockContextManager;
 
     /// The mock @c PostConnectSendMessage used to test.
-    std::shared_ptr<MockPostConnectSendMessage> m_mockPostConnectSendMessage;
+    std::shared_ptr<MockMessageSender> m_mockPostConnectSendMessage;
 
     /// The mock @c ContextManager used to test.
     std::thread m_mockContextManagerThread;
@@ -130,7 +130,7 @@ bool validateEvent(const std::string& eventJson) {
 
 void PostConnectSynchronizeStateSenderTest::SetUp() {
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
-    m_mockPostConnectSendMessage = std::make_shared<NiceMock<MockPostConnectSendMessage>>();
+    m_mockPostConnectSendMessage = std::make_shared<NiceMock<MockMessageSender>>();
 
     m_postConnectSynchronizeStateSender = PostConnectSynchronizeStateSender::create(m_mockContextManager);
 }
@@ -189,7 +189,7 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_perfromOperationSendsSynchron
             request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillOnce(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillOnce(Invoke(sendMessageLambda));
 
     ASSERT_TRUE(m_postConnectSynchronizeStateSender->performOperation(m_mockPostConnectSendMessage));
 }
@@ -220,7 +220,7 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_performOperationRetriesOnCont
     };
     EXPECT_CALL(*m_mockContextManager, getContext(_, _, _)).WillRepeatedly(Invoke(getContextLambda));
     /// Synchronize State event not sent.
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).Times(0);
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).Times(0);
     /// Abort after 3 retries.
     EXPECT_FALSE(m_postConnectSynchronizeStateSender->performOperation(m_mockPostConnectSendMessage));
     EXPECT_EQ(retryCountPromise.get_future().get(), TEST_RETRY_COUNT);
@@ -265,7 +265,7 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_testPerfromOperationRetriesOn
             }
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));
     /// Abort after 3 retries.
     EXPECT_FALSE(m_postConnectSynchronizeStateSender->performOperation(m_mockPostConnectSendMessage));
     EXPECT_EQ(retryCountPromise.get_future().get(), TEST_RETRY_COUNT);
@@ -293,7 +293,7 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_abortOperationWhenContextRequ
         return MOCK_CONTEXT_REQUEST_TOKEN;
     };
     EXPECT_CALL(*m_mockContextManager, getContext(_, _, _)).WillRepeatedly(Invoke(getContextLambda));
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).Times(0);
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).Times(0);
 
     EXPECT_FALSE(m_postConnectSynchronizeStateSender->performOperation(m_mockPostConnectSendMessage));
 }
@@ -329,7 +329,7 @@ TEST_F(PostConnectSynchronizeStateSenderTest, test_abortOperationWhenSendMessage
             }
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillOnce(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillOnce(Invoke(sendMessageLambda));
     EXPECT_FALSE(m_postConnectSynchronizeStateSender->performOperation(m_mockPostConnectSendMessage));
 }
 

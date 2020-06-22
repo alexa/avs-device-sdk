@@ -36,6 +36,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
+#include <AVSCommon/Utils/AudioAnalyzer/AudioAnalyzerState.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
@@ -203,6 +204,9 @@ private:
 
         /// The caption content that goes with the speech.
         captions::CaptionData captionData;
+
+        /// The audio analyzer states for the speech.
+        std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState> analyzersData;
     };
 
     /**
@@ -441,12 +445,22 @@ private:
     /**
      * Send ExceptionEncountered because a required property was not in the @c AVSDirective's payload.
      *
-     * @param info The @c AVSDirective that that was missing the property.
+     * @param info The @c AVSDirective that was missing the property.
      * @param missingProperty The name of the missing property.
      */
     void sendExceptionEncounteredAndReportMissingProperty(
         std::shared_ptr<SpeakDirectiveInfo> info,
         const std::string& missingProperty);
+
+    /**
+     * Send ExceptionEncountered because a required property was an unexpected type in the @c AVSDirective's payload.
+     *
+     * @param info The @c AVSDirective that has the unexpected property type.
+     * @param unexpectedProperty The name of the property with the unexpected type.
+     */
+    void sendExceptionEncounteredAndReportUnexpectedPropertyType(
+        std::shared_ptr<SpeakDirectiveInfo> info,
+        const std::string& unexpectedProperty);
 
     /**
      * Release the @c FOREGROUND focus (if we have it).

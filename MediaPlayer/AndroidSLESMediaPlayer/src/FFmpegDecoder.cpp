@@ -214,8 +214,14 @@ void FFmpegDecoder::initialize() {
     std::tie(result, m_formatContext, initialPosition) = m_inputController->getCurrentFormatContext();
     if (!m_formatContext) {
         if (FFmpegInputControllerInterface::Result::TRY_AGAIN == result) {
-            ACSDK_DEBUG(LX("initializedFailed").d("reason", "Data unavailable. Try again."));
+            ACSDK_DEBUG(LX("initializeFailed").d("reason", "Data unavailable. Try again."));
             sleep();
+            return;
+        }
+
+        if (FFmpegInputControllerInterface::Result::OK_EMPTY == result) {
+            ACSDK_DEBUG(LX("finishedEarly").d("reason", "Empty data."));
+            setState(DecodingState::FINISHED);
             return;
         }
 
@@ -531,8 +537,21 @@ void FFmpegDecoder::setState(FFmpegDecoder::DecodingState nextState) {
             expectedState = DecodingState::FLUSHING_DECODER;
             break;
         case DecodingState::FINISHED:
+            // Transitions to FINISHED are possible from INITIALIZED or FLUSHING_RESAMPLER only.
             expectedState = DecodingState::FLUSHING_RESAMPLER;
-            break;
+            if (m_state.compare_exchange_strong(expectedState, nextState)) {
+                ACSDK_DEBUG5(LX("setState").d("from", expectedState).d("to", nextState));
+                return;
+            }
+
+            expectedState = DecodingState::INITIALIZING;
+            if (m_state.compare_exchange_strong(expectedState, nextState)) {
+                ACSDK_DEBUG5(LX("setState").d("from", expectedState).d("to", nextState));
+                return;
+            }
+
+            ACSDK_ERROR(LX("InvalidTransition").d("from", m_state).d("to", nextState));
+            return;
         case DecodingState::INVALID:
             // All transitions to invalid are possible.
             ACSDK_DEBUG5(LX("setState").d("from", m_state).d("to", DecodingState::INVALID));

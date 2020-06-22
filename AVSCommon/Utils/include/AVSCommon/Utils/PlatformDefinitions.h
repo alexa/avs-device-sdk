@@ -26,8 +26,12 @@ future operating system helper macros should be placed here.
 typedef SSIZE_T ssize_t;
 #endif
 
-#if defined(_MSC_VER) && !defined(IN_AVSCOMMON)
+#if defined(_MSC_VER)
+#if defined(IN_AVSCOMMON)
+#define avscommon_EXPORT __declspec(dllexport)
+#else
 #define avscommon_EXPORT __declspec(dllimport)
+#endif
 #else
 #define avscommon_EXPORT
 #endif

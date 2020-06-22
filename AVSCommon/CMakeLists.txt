@@ -24,6 +24,7 @@ add_library(AVSCommon SHARED
     AVS/src/CapabilityAgent.cpp
     AVS/src/CapabilityConfiguration.cpp
     AVS/src/CapabilityTag.cpp
+    AVS/src/ComponentConfiguration.cpp
     AVS/src/DialogUXStateAggregator.cpp
     AVS/src/DirectiveRoutingRule.cpp
     AVS/src/EventBuilder.cpp
@@ -32,7 +33,7 @@ add_library(AVSCommon SHARED
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
-    AVS/src/PostConnectMessageRequest.cpp
+    AVS/src/WaitableMessageRequest.cpp
     Utils/src/Bluetooth/SDPRecords.cpp
     Utils/src/BluetoothEventBus.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
@@ -71,6 +72,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/MacAddressString.cpp
     Utils/src/MediaPlayer/PooledMediaPlayerFactory.cpp
+    Utils/src/MediaPlayer/PlaybackContext.cpp
     Utils/src/Metrics.cpp
     Utils/src/Metrics/DataPoint.cpp
     Utils/src/Metrics/DataPointCounterBuilder.cpp
@@ -87,6 +89,7 @@ add_library(AVSCommon SHARED
     Utils/src/Stream/StreamFunctions.cpp
     Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp
+    Utils/src/SystemClockMonitor.cpp
     Utils/src/TaskThread.cpp
     Utils/src/ThreadPool.cpp
     Utils/src/TimePoint.cpp

@@ -139,7 +139,8 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
     const avsCommon::utils::mediaPlayer::SourceConfig& config,
-    bool repeat) {
+    bool repeat,
+    const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext) {
     std::shared_ptr<playlistParser::IterativePlaylistParser> playlistParser =
         playlistParser::IterativePlaylistParser::create(m_contentFetcherFactory);
     auto input = FFmpegUrlInputController::create(playlistParser, url, offset, repeat);

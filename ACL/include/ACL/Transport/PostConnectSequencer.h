@@ -69,7 +69,7 @@ public:
     /// @name PostConnectInterface methods
     /// @{
     bool doPostConnect(
-        std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
         std::shared_ptr<PostConnectObserverInterface> postConnectObserver) override;
     void onDisconnect() override;
     ///@}
@@ -84,12 +84,12 @@ private:
     /**
      * Loop to iterate through the @c PostConnectOperationsSet and execute them in sequence.
      *
-     * @param postConnectSender The @c PostConnectSendMessageInterface to send post connect messages.
+     * @param postConnectSender The @c MessageSenderInterface to send post connect messages.
      * @param postConnectObserver The @c PostConnectObserverInterface to get notified on successful completion of the
      * post connect action.
      */
     void mainLoop(
-        std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
         std::shared_ptr<PostConnectObserverInterface> postConnectObserver);
 
     /**
