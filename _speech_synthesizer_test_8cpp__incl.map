@@ -1,52 +1,36 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2303,5,2492,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="458,639,520,664"/>
-<area shape="rect" id="node3" title=" " alt="" coords="2091,385,2146,411"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1536,472,1605,497"/>
-<area shape="rect" id="node5" title=" " alt="" coords="3261,212,3376,237"/>
-<area shape="rect" id="node6" title=" " alt="" coords="3698,212,3792,237"/>
-<area shape="rect" id="node7" href="$_mock_exception_encountered_sender_8h.html" title=" " alt="" coords="2510,119,2754,157"/>
-<area shape="rect" id="node9" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="53,379,261,417"/>
-<area shape="rect" id="node15" href="$_mock_context_manager_8h.html" title=" " alt="" coords="3283,119,3474,157"/>
-<area shape="rect" id="node17" href="$_mock_focus_manager_8h.html" title=" " alt="" coords="2094,119,2285,157"/>
-<area shape="rect" id="node20" href="$_mock_message_sender_8h.html" title=" " alt="" coords="2778,119,2969,157"/>
-<area shape="rect" id="node22" href="$_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title=" " alt="" coords="1879,119,2070,157"/>
-<area shape="rect" id="node26" href="$_mock_directive_handler_result_8h.html" title=" " alt="" coords="3498,119,3702,157"/>
-<area shape="rect" id="node28" href="$_mock_power_resource_manager_8h.html" title=" " alt="" coords="2993,119,3207,157"/>
-<area shape="rect" id="node30" href="$_attachment_manager_8h.html" title=" " alt="" coords="110,205,311,244"/>
-<area shape="rect" id="node32" href="$_mock_media_player_8h.html" title=" " alt="" coords="812,119,1020,157"/>
-<area shape="rect" id="node39" href="$_mock_metric_recorder_8h.html" title=" " alt="" coords="2309,119,2486,157"/>
-<area shape="rect" id="node41" href="$_j_s_o_n_generator_8h.html" title=" " alt="" coords="3699,292,3869,331"/>
-<area shape="rect" id="node45" href="$_mock_caption_manager_8h.html" title=" " alt="" coords="1063,125,1225,151"/>
-<area shape="rect" id="node48" href="$_speech_synthesizer_8h.html" title=" " alt="" coords="1670,119,1855,157"/>
-<area shape="rect" id="node8" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2498,205,2763,244"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1976,559,2030,584"/>
-<area shape="rect" id="node11" href="$_attachment_8h.html" title=" " alt="" coords="246,465,447,504"/>
-<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title=" " alt="" coords="319,552,521,591"/>
-<area shape="rect" id="node14" href="$_attachment_writer_8h.html" title=" " alt="" coords="94,552,295,591"/>
-<area shape="rect" id="node12" title=" " alt="" coords="771,559,829,584"/>
-<area shape="rect" id="node16" href="$_context_manager_interface_8h.html" title=" " alt="" coords="2475,379,2666,417"/>
-<area shape="rect" id="node18" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="1927,205,2118,244"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1486,299,1543,324"/>
-<area shape="rect" id="node21" href="$_message_sender_interface_8h.html" title=" " alt="" coords="2787,205,2978,244"/>
-<area shape="rect" id="node23" href="$_directive_sequencer_interface_8h.html" title=" " alt="" coords="1699,205,1904,244"/>
-<area shape="rect" id="node24" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="1721,299,1943,324"/>
-<area shape="rect" id="node25" href="$_requires_shutdown_8h.html" title=" " alt="" coords="1274,292,1462,331"/>
-<area shape="rect" id="node27" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="3400,205,3624,244"/>
-<area shape="rect" id="node29" href="$_power_resource_manager_interface_8h.html" title=" " alt="" coords="3002,205,3238,244"/>
-<area shape="rect" id="node31" title=" " alt="" coords="488,299,603,324"/>
-<area shape="rect" id="node33" title=" " alt="" coords="1181,212,1288,237"/>
-<area shape="rect" id="node34" href="$_media_player_interface_8h.html" title=" " alt="" coords="728,292,936,331"/>
-<area shape="rect" id="node36" href="$_source_config_8h.html" title=" " alt="" coords="488,379,696,417"/>
-<area shape="rect" id="node37" href="$_media_player_observer_interface_8h.html" title=" " alt="" coords="789,205,1006,244"/>
-<area shape="rect" id="node38" href="$_stopwatch_8h.html" title=" " alt="" coords="472,465,646,504"/>
-<area shape="rect" id="node35" title=" " alt="" coords="2221,385,2281,411"/>
-<area shape="rect" id="node40" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="2294,205,2474,244"/>
-<area shape="rect" id="node42" title=" " alt="" coords="3743,385,3825,411"/>
-<area shape="rect" id="node43" title=" " alt="" coords="3850,385,4006,411"/>
-<area shape="rect" id="node44" title=" " alt="" coords="3596,385,3718,411"/>
-<area shape="rect" id="node46" href="$_caption_manager_8h.html" title=" " alt="" coords="579,212,765,237"/>
-<area shape="rect" id="node47" href="$_caption_manager_interface_8h.html" title=" " alt="" coords="1011,299,1250,324"/>
-<area shape="rect" id="node49" title=" " alt="" coords="1565,212,1624,237"/>
-<area shape="rect" id="node50" href="$_play_behavior_8h.html" title=" " alt="" coords="2272,472,2496,497"/>
+<area shape="rect" id="node7" href="$_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="2506,124,2747,165"/>
+<area shape="rect" id="node9" href="$_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="55,392,260,433"/>
+<area shape="rect" id="node15" href="$_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="3275,124,3467,165"/>
+<area shape="rect" id="node17" href="$_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2085,124,2277,165"/>
+<area shape="rect" id="node20" href="$_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2772,124,2964,165"/>
+<area shape="rect" id="node22" href="$_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="1869,124,2061,165"/>
+<area shape="rect" id="node26" href="$_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3491,124,3695,165"/>
+<area shape="rect" id="node28" href="$_mock_power_resource_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockPowerResourceManager.h" alt="" coords="2989,124,3201,165"/>
+<area shape="rect" id="node30" href="$_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="106,213,310,255"/>
+<area shape="rect" id="node32" href="$_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="811,124,1021,165"/>
+<area shape="rect" id="node39" href="$_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="2302,124,2482,165"/>
+<area shape="rect" id="node41" href="$_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="3688,303,3861,344"/>
+<area shape="rect" id="node45" href="$_mock_caption_manager_8h.html" title="MockCaptionManager.h" alt="" coords="1064,131,1224,158"/>
+<area shape="rect" id="node48" href="$_speech_synthesizer_8h.html" title="SpeechSynthesizer/Speech\lSynthesizer.h" alt="" coords="1662,124,1845,165"/>
+<area shape="rect" id="node8" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2495,213,2755,255"/>
+<area shape="rect" id="node11" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="246,481,450,523"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="322,571,526,612"/>
+<area shape="rect" id="node14" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="94,571,298,612"/>
+<area shape="rect" id="node16" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2473,392,2665,433"/>
+<area shape="rect" id="node18" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1923,213,2115,255"/>
+<area shape="rect" id="node21" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2780,213,2972,255"/>
+<area shape="rect" id="node23" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1696,213,1899,255"/>
+<area shape="rect" id="node24" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1716,310,1943,337"/>
+<area shape="rect" id="node25" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1268,303,1457,344"/>
+<area shape="rect" id="node27" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3391,213,3614,255"/>
+<area shape="rect" id="node29" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2997,213,3227,255"/>
+<area shape="rect" id="node34" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="725,303,934,344"/>
+<area shape="rect" id="node36" href="$_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="491,392,701,433"/>
+<area shape="rect" id="node37" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="792,213,1005,255"/>
+<area shape="rect" id="node38" href="$_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="475,481,651,523"/>
+<area shape="rect" id="node40" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2291,213,2471,255"/>
+<area shape="rect" id="node46" href="$_caption_manager_8h.html" title="Captions/CaptionManager.h" alt="" coords="584,221,768,247"/>
+<area shape="rect" id="node47" href="$_caption_manager_interface_8h.html" title="Captions/CaptionManagerInterface.h" alt="" coords="1009,310,1244,337"/>
+<area shape="rect" id="node50" href="$_play_behavior_8h.html" title="AVSCommon/AVS/PlayBehavior.h" alt="" coords="2270,489,2495,515"/>
 </map>

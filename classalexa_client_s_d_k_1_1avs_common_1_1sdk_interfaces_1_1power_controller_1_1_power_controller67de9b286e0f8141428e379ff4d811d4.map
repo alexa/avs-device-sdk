@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,236,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html" title=" " alt="" coords="284,5,502,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html" title="alexaClientSDK::capability\lAgents::powerController\l::PowerControllerCapabilityAgent" alt="" coords="280,5,495,61"/>
 </map>

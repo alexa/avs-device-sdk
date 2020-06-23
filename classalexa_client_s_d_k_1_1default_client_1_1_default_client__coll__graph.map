@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::defaultClient::DefaultClient" name="alexaClientSDK::defaultClient::DefaultClient">
-<area shape="rect" id="node1" title=" " alt="" coords="19,105,215,144"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html" title=" " alt="" coords="5,5,228,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeechInteraction\lHandlerInterface" alt="" coords="5,5,228,61"/>
 </map>

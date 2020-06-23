@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::modeController
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mock_mode_controller_interface.html" title="alexaClientSDK::capability\lAgents::modeController\l::test::MockModeControllerInterface" alt="" coords="259,5,489,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_mode_controller_handler.html" title="alexaClientSDK::sampleApp\l::DefaultEndpointModeController\lHandler" alt="" coords="269,85,479,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_mode_controller_handler.html" title="alexaClientSDK::sampleApp\l::PeripheralEndpointModeController\lHandler" alt="" coords="261,165,487,221"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -250,7 +253,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair of <code>AlexaResponseType</code> and string. For the successful operation, the controller should return a pair of <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> with an empty string, otherwise it returns pair with the appropriate reason from <code>AlexaResponseType</code> and a description of the error. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_mode_controller_handler.html#a7338a3d60ae722315f38197ababfc824">alexaClientSDK::sampleApp::ModeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_mode_controller_handler.html#a1eeb7175064cbaf471d6f3f32a63547b">alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_mode_controller_handler.html#a9725b6d5538aa67f38122799896d7e40">alexaClientSDK::sampleApp::PeripheralEndpointModeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -279,7 +282,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets the controller configuration as defined <code>ModeControllerConfiguration</code> </p>
 <dl class="section return"><dt>Returns</dt><dd><code>ModeControllerConfiguration</code> </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_mode_controller_handler.html#ad0a149fd7eb4115f6ec0ea820c461e28">alexaClientSDK::sampleApp::ModeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_mode_controller_handler.html#a29f5af5be1cc48105437ba4470175c35">alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_mode_controller_handler.html#a53d020071b59206874c3225d8a63e427">alexaClientSDK::sampleApp::PeripheralEndpointModeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -308,7 +311,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets the current mode of the instance.</p>
 <dl class="section return"><dt>Returns</dt><dd>On successful, the instance to return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> and <code>ModeState</code> otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and an empty <code>ModeState</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_mode_controller_handler.html#ab91f88522fd758ca9c2f09db88f8f6c9">alexaClientSDK::sampleApp::ModeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_mode_controller_handler.html#a6f4e1c12149493641349a7d9c1c2d7f2">alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_mode_controller_handler.html#a8e7bab4ff97956f82d54c55eb2c2d43e">alexaClientSDK::sampleApp::PeripheralEndpointModeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -388,18 +391,18 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair of <code>AlexaResponseType</code> and string. For the successful operation, the controller should return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> with an empty string, otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a description of the error. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_mode_controller_handler.html#a4f9fb536a7ee8c4f55587de91652ab13">alexaClientSDK::sampleApp::ModeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_mode_controller_handler.html#a2102e423a0dd051dceeb169f10b33754">alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_mode_controller_handler.html#a92d3fc174b72e4a2cc5e5fabca07e101">alexaClientSDK::sampleApp::PeripheralEndpointModeControllerHandler</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ModeController/<a class="el" href="_mode_controller_interface_8h_source.html">ModeControllerInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ModeController/<a class="el" href="_mode_controller_interface_8h_source.html">ModeControllerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

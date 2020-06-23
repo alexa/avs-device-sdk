@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,8 +80,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2958d5c870484b3d78b74fa041b54372"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a2958d5c870484b3d78b74fa041b54372">MediaPlayerState</a> ()</td></tr>
 <tr class="separator:a2958d5c870484b3d78b74fa041b54372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aae624248e4cf5bc5395ff7409bfb2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a8aae624248e4cf5bc5395ff7409bfb2d">MediaPlayerState</a> (std::chrono::milliseconds offsetInMs)</td></tr>
-<tr class="separator:a8aae624248e4cf5bc5395ff7409bfb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba62c770cd38900e5be2627fe5e67c89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#aba62c770cd38900e5be2627fe5e67c89">MediaPlayerState</a> (std::chrono::milliseconds offsetInMs, std::chrono::milliseconds duration_=<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#af3ac55618bca61fe9b9f82fb024c576a">DURATION_UNKNOWN</a>)</td></tr>
+<tr class="separator:aba62c770cd38900e5be2627fe5e67c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c0aa9bb344234d3ae5ef64b0c147d1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a0c0aa9bb344234d3ae5ef64b0c147d1c">operator==</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a> &amp;other) const</td></tr>
 <tr class="separator:a0c0aa9bb344234d3ae5ef64b0c147d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -90,6 +90,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a796edf60821144142baab7bd6dd68a92"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a796edf60821144142baab7bd6dd68a92">offset</a></td></tr>
 <tr class="memdesc:a796edf60821144142baab7bd6dd68a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset in milliseconds.  <a href="#a796edf60821144142baab7bd6dd68a92">More...</a><br /></td></tr>
 <tr class="separator:a796edf60821144142baab7bd6dd68a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4115c02c402ed9088b2e6c9f99dffc72"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a4115c02c402ed9088b2e6c9f99dffc72">duration</a></td></tr>
+<tr class="memdesc:a4115c02c402ed9088b2e6c9f99dffc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duration.  <a href="#a4115c02c402ed9088b2e6c9f99dffc72">More...</a><br /></td></tr>
+<tr class="separator:a4115c02c402ed9088b2e6c9f99dffc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure to hold metadata about the <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a> </p>
@@ -120,8 +123,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8aae624248e4cf5bc5395ff7409bfb2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aae624248e4cf5bc5395ff7409bfb2d">&#9670;&nbsp;</a></span>MediaPlayerState() <span class="overload">[2/2]</span></h2>
+<a id="aba62c770cd38900e5be2627fe5e67c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba62c770cd38900e5be2627fe5e67c89">&#9670;&nbsp;</a></span>MediaPlayerState() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,8 +136,18 @@ Public Attributes</h2></td></tr>
           <td class="memname">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerState::MediaPlayerState </td>
           <td>(</td>
           <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>offsetInMs</em></td><td>)</td>
+          <td class="paramname"><em>offsetInMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>duration_</em> = <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#af3ac55618bca61fe9b9f82fb024c576a">DURATION_UNKNOWN</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -183,6 +196,22 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4115c02c402ed9088b2e6c9f99dffc72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4115c02c402ed9088b2e6c9f99dffc72">&#9670;&nbsp;</a></span>duration</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerState::duration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Duration. </p>
+
+</div>
+</div>
 <a id="a796edf60821144142baab7bd6dd68a92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a796edf60821144142baab7bd6dd68a92">&#9670;&nbsp;</a></span>offset</h2>
 
@@ -200,13 +229,13 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_state_8h_source.html">MediaPlayerState.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_state_8h_source.html">MediaPlayerState.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

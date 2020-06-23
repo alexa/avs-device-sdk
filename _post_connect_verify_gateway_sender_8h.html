@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/PostConnectVerifyGatewaySender.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/PostConnectVerifyGatewaySender.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,21 +76,33 @@ $(function() {
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;<a class="el" href="_post_connect_operation_interface_8h_source.html">AVSCommon/SDKInterfaces/PostConnectOperationInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_post_connect_message_request_8h_source.html">AVSCommon/AVS/PostConnectMessageRequest.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_waitable_message_request_8h_source.html">AVSCommon/AVS/WaitableMessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_wait_event_8h_source.html">AVSCommon/Utils/WaitEvent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_gateway_verify_state_8h_source.html">AVSGatewayManager/GatewayVerifyState.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PostConnectVerifyGatewaySender.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_verify_gateway_sender_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h">
+<div class="center"><img src="_post_connect_verify_gateway_sender_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8h">
+<area shape="rect" id="node5" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="271,124,491,165"/>
+<area shape="rect" id="node19" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="502,213,743,255"/>
+<area shape="rect" id="node21" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="767,221,977,247"/>
+<area shape="rect" id="node22" href="_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="1103,303,1310,344"/>
+<area shape="rect" id="node6" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="285,213,477,255"/>
+<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="340,310,591,337"/>
+<area shape="rect" id="node12" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="99,392,303,433"/>
+<area shape="rect" id="node17" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="623,392,865,433"/>
+<area shape="rect" id="node16" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="119,481,284,523"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_verify_gateway_sender_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep">
+<div class="center"><img src="_post_connect_verify_gateway_sender_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep" id="_2workplace_2avs-device-sdk_2_a_v_s_gateway_manager_2include_2_a_v_s_gateway_manager_2_post_connect_verify_gateway_sender_8hdep">
+<area shape="rect" id="node2" href="_a_v_s_gateway_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp" alt="" coords="5,131,208,187"/>
+<area shape="rect" id="node3" href="_post_connect_verify_gateway_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/PostConnectVerifyGatewaySender.cpp" alt="" coords="233,131,509,187"/>
+<area shape="rect" id="node4" href="_post_connect_verify_gateway_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/PostConnectVerifyGateway\lSenderTest.cpp" alt="" coords="533,124,747,195"/>
 </map>
 </div>
 </div>
@@ -113,7 +125,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

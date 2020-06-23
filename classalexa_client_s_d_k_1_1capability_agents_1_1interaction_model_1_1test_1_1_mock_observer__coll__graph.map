@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::capabilityAgents::interactionModel::test::MockObserver" name="alexaClientSDK::capabilityAgents::interactionModel::test::MockObserver">
-<area shape="rect" id="node1" title=" " alt="" coords="297,5,475,57"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_interaction_model_request_processing_observer_interface.html" title="A directive observer for an InteractionModelCapabilityAgent." alt="" coords="5,5,249,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_interaction_model_request_processing_observer_interface.html" title="A directive observer for an InteractionModelCapabilityAgent. " alt="" coords="5,5,245,61"/>
 </map>

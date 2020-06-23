@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -112,6 +112,10 @@ Functions</h2></td></tr>
 <tr class="separator:a1629b3ba31bdae7246b0454fe126e361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab77a936886a58a9059354656139b9d4"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#aab77a936886a58a9059354656139b9d4">retrieveStringMap</a> (const rapidjson::Value &amp;value, const std::string &amp;key)</td></tr>
 <tr class="separator:aab77a936886a58a9059354656139b9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ff7fbc5739b73d50026208180411009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a7ff7fbc5739b73d50026208180411009">retrieveStringMapFromArray</a> (const rapidjson::Value &amp;value, const std::string &amp;key, std::map&lt; std::string, std::string &gt; &amp;elements)</td></tr>
+<tr class="separator:a7ff7fbc5739b73d50026208180411009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b1dafda0e101d8fa3b0ff240ab420c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a3b1dafda0e101d8fa3b0ff240ab420c7">retrieveArrayOfStringMapFromArray</a> (const rapidjson::Value &amp;value, const std::string &amp;key, std::vector&lt; std::map&lt; std::string, std::string &gt;&gt; &amp;elements)</td></tr>
+<tr class="separator:a3b1dafda0e101d8fa3b0ff240ab420c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a597416618073ec0d86017e75bee79034"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:a597416618073ec0d86017e75bee79034"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a597416618073ec0d86017e75bee79034">retrieveStringArray&lt; std::vector&lt; std::string &gt; &gt;</a> (const std::string &amp;jsonString, const std::string &amp;key)</td></tr>
 <tr class="separator:a597416618073ec0d86017e75bee79034"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -564,6 +568,50 @@ template&lt;&gt; </div>
 
 </div>
 </div>
+<a id="a3b1dafda0e101d8fa3b0ff240ab420c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b1dafda0e101d8fa3b0ff240ab420c7">&#9670;&nbsp;</a></span>retrieveArrayOfStringMapFromArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::json::jsonUtils::retrieveArrayOfStringMapFromArray </td>
+          <td>(</td>
+          <td class="paramtype">const rapidjson::Value &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::map&lt; std::string, std::string &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>elements</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieve array of string map from array of a <code>rapidjson</code> value with the given key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>A <code>Value</code> that represents a array of string map. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the array being looked for. </td></tr>
+    <tr><td class="paramname">elements</td><td>The output collection which will contain all extracted elements.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bool indicating success or failure retrieving elements </dd></dl>
+
+</div>
+</div>
 <a id="a991ece9933b81367f8a5ed4610ececbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a991ece9933b81367f8a5ed4610ececbe">&#9670;&nbsp;</a></span>retrieveStringArray() <span class="overload">[1/3]</span></h2>
 
@@ -773,6 +821,49 @@ template&lt;&gt; </div>
 
 </div>
 </div>
+<a id="a7ff7fbc5739b73d50026208180411009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ff7fbc5739b73d50026208180411009">&#9670;&nbsp;</a></span>retrieveStringMapFromArray()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::avsCommon::utils::json::jsonUtils::retrieveStringMapFromArray </td>
+          <td>(</td>
+          <td class="paramtype">const rapidjson::Value &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>elements</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieve string map from array of a <code>rapidjson</code> value with the given key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>A <code>Value</code> that represents a array of string map. </td></tr>
+    <tr><td class="paramname">key</td><td>The name of the array being looked for. </td></tr>
+    <tr><td class="paramname">elements</td><td>The output collection which will contain all extracted elements. An empty collection if value contains non-string elements or if the key was not found. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af8fee520868204e654e46ccc3887651d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af8fee520868204e654e46ccc3887651d">&#9670;&nbsp;</a></span>retrieveValue() <span class="overload">[1/2]</span></h2>
 
@@ -941,7 +1032,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

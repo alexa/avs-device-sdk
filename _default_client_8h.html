@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/DefaultClient.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/DefaultClient.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,12 +74,21 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_a_v_s_connection_manager_8h_source.html">ACL/AVSConnectionManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_message_router_8h_source.html">ACL/Transport/MessageRouter.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_message_router_factory_8h_source.html">ACL/Transport/MessageRouterFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_directive_sequencer_8h_source.html">ADSL/DirectiveSequencer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_activity_tracker_8h_source.html">AFML/AudioActivityTracker.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_focus_manager_8h_source.html">AFML/FocusManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_visual_activity_tracker_8h_source.html">AFML/VisualActivityTracker.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_input_processor_8h_source.html">AIP/AudioInputProcessor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_provider_8h_source.html">AIP/AudioProvider.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alerts_capability_agent_8h_source.html">acsdkAlerts/AlertsCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_renderer_8h_source.html">acsdkAlerts/Renderer/Renderer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alert_storage_interface_8h_source.html">acsdkAlerts/Storage/AlertStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alexa_interface_capability_agent_8h_source.html">Alexa/AlexaInterfaceCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alexa_interface_message_sender_8h_source.html">Alexa/AlexaInterfaceMessageSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_api_gateway_capability_agent_8h_source.html">ApiGateway/ApiGatewayCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_player_8h_source.html">acsdkAudioPlayer/AudioPlayer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_player_observer_interface_8h_source.html">acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_discovery_endpoint_attributes_8h_source.html">AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_dialog_u_x_state_aggregator_8h_source.html">AVSCommon/AVS/DialogUXStateAggregator.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_exception_encountered_sender_8h_source.html">AVSCommon/AVS/ExceptionEncounteredSender.h</a>&gt;</code><br />
@@ -88,7 +97,6 @@ $(function() {
 <code>#include &lt;<a class="el" href="_equalizer_configuration_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerConfigurationInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_equalizer_mode_controller_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_equalizer_storage_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_audio_player_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_auth_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthDelegateInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_bluetooth_device_connection_rule_interface_8h_source.html">AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_call_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/CallManagerInterface.h</a>&gt;</code><br />
@@ -98,6 +106,8 @@ $(function() {
 <code>#include &lt;<a class="el" href="_diagnostics_interface_8h_source.html">AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_dialog_u_x_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_builder_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_identifier_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_internet_connection_monitor_interface_8h_source.html">AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_locale_assets_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_power_resource_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h</a>&gt;</code><br />
@@ -112,34 +122,29 @@ $(function() {
 <code>#include &lt;<a class="el" href="_media_player_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_optional_8h_source.html">AVSCommon/Utils/Optional.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_alerts_capability_agent_8h_source.html">Alerts/AlertsCapabilityAgent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_renderer_8h_source.html">Alerts/Renderer/Renderer.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_alert_storage_interface_8h_source.html">Alerts/Storage/AlertStorageInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_alexa_interface_capability_agent_8h_source.html">Alexa/AlexaInterfaceCapabilityAgent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_alexa_interface_message_sender_8h_source.html">Alexa/AlexaInterfaceMessageSender.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_api_gateway_capability_agent_8h_source.html">ApiGateway/ApiGatewayCapabilityAgent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_audio_player_8h_source.html">AudioPlayer/AudioPlayer.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_bluetooth_8h_source.html">Bluetooth/Bluetooth.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_bluetooth_storage_interface_8h_source.html">Bluetooth/BluetoothStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_system_clock_monitor_8h_source.html">AVSCommon/Utils/Timing/SystemClockMonitor.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_bluetooth_8h_source.html">acsdkBluetooth/Bluetooth.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_bluetooth_storage_interface_8h_source.html">acsdkBluetooth/BluetoothStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notification_renderer_8h_source.html">acsdkNotifications/NotificationRenderer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notifications_capability_agent_8h_source.html">acsdkNotifications/NotificationsCapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_caption_presenter_interface_8h_source.html">Captions/CaptionPresenterInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_certified_sender_8h_source.html">CertifiedSender/CertifiedSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_s_q_lite_message_storage_8h_source.html">CertifiedSender/SQLiteMessageStorage.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_do_not_disturb_capability_agent_8h_source.html">DoNotDisturbCA/DoNotDisturbCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_do_not_disturb_capability_agent_8h_source.html">acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_builder_8h_source.html">Endpoints/EndpointBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_registration_manager_8h_source.html">Endpoints/EndpointRegistrationManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_equalizer_capability_agent_8h_source.html">Equalizer/EqualizerCapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_equalizer_controller_8h_source.html">EqualizerImplementations/EqualizerController.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_external_media_player_8h_source.html">ExternalMediaPlayer/ExternalMediaPlayer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_interaction_model_capability_agent_8h_source.html">InteractionModel/InteractionModelCapabilityAgent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_m_r_m_capability_agent_8h_source.html">MRM/MRMCapabilityAgent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_notification_renderer_8h_source.html">Notifications/NotificationRenderer.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_notifications_capability_agent_8h_source.html">Notifications/NotificationsCapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_system_sound_player_interface_8h_source.html">AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_8h_source.html">Endpoints/Endpoint.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_playback_controller_8h_source.html">PlaybackController/PlaybackController.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_playback_router_8h_source.html">PlaybackController/PlaybackRouter.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_registration_manager_8h_source.html">RegistrationManager/RegistrationManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_settings_manager_8h_source.html">Settings/DeviceSettingsManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_setting_storage_interface_8h_source.html">Settings/Storage/DeviceSettingStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_software_component_reporter_capability_agent_8h_source.html">SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_default_channel_volume_factory_8h_source.html">SpeakerManager/DefaultChannelVolumeFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_manager_8h_source.html">SpeakerManager/SpeakerManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speech_synthesizer_8h_source.html">SpeechSynthesizer/SpeechSynthesizer.h</a>&gt;</code><br />
@@ -152,8 +157,18 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_default_client_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep">
+<div class="center"><img src="_default_client_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep" id="_2workplace_2avs-device-sdk_2_application_utilities_2_default_client_2include_2_default_client_2_default_client_8hdep">
+<area shape="rect" id="node2" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,124,305,180"/>
+<area shape="rect" id="node3" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,228,451,284"/>
+<area shape="rect" id="node10" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,124,593,180"/>
+<area shape="rect" id="node4" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,332,221,388"/>
+<area shape="rect" id="node9" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,332,451,388"/>
+<area shape="rect" id="node5" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,436,221,492"/>
+<area shape="rect" id="node8" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,436,447,492"/>
+<area shape="rect" id="node6" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,540,212,581"/>
+<area shape="rect" id="node7" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,540,569,581"/>
+<area shape="rect" id="node11" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,235,799,277"/>
 </map>
 </div>
 </div>
@@ -176,7 +191,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

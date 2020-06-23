@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="5,5,202,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::LocaleAssetsManager\lInterface" alt="" coords="5,43,252,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_locale_assets_manager.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockLocaleAssetsManager" alt="" coords="300,5,497,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html" title="alexaClientSDK::sampleApp\l::LocaleAssetsManager" alt="" coords="305,86,493,127"/>
 </map>

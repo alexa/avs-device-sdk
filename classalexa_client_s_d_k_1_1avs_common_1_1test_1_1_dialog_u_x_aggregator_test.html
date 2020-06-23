@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,7 @@ Inheritance diagram for alexaClientSDK::avsCommon::test::DialogUXAggregatorTest:
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_inherit__map">
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html" title="Manages testing state changes. " alt="" coords="83,5,280,47"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -88,6 +89,8 @@ Collaboration diagram for alexaClientSDK::avsCommon::test::DialogUXAggregatorTes
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_coll__map" id="alexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test_coll__map">
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html" title="Manages testing state changes. " alt="" coords="29,57,227,98"/>
+<area shape="rect" id="node4" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayerState" alt="" coords="5,122,251,163"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -110,6 +113,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aa6252df6033f34be07d2f631bc83e05f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test.html#aa6252df6033f34be07d2f631bc83e05f">m_testMediaPlayerState</a></td></tr>
 <tr class="memdesc:aa6252df6033f34be07d2f631bc83e05f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A MediaPlayerState object passed to onStateChange by SpeechSynthesizer.  <a href="#aa6252df6033f34be07d2f631bc83e05f">More...</a><br /></td></tr>
 <tr class="separator:aa6252df6033f34be07d2f631bc83e05f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964dd926ca1f16063f8a3c953d59c3dd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1audio_analyzer_1_1_audio_analyzer_state.html">avsCommon::utils::audioAnalyzer::AudioAnalyzerState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_dialog_u_x_aggregator_test.html#a964dd926ca1f16063f8a3c953d59c3dd">m_testAudioAnalyzerState</a></td></tr>
+<tr class="memdesc:a964dd926ca1f16063f8a3c953d59c3dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A vector of AudioAnalyzerState objects passed to onStateChanged by SpeechSynthesizer.  <a href="#a964dd926ca1f16063f8a3c953d59c3dd">More...</a><br /></td></tr>
+<tr class="separator:a964dd926ca1f16063f8a3c953d59c3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -196,6 +202,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a964dd926ca1f16063f8a3c953d59c3dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a964dd926ca1f16063f8a3c953d59c3dd">&#9670;&nbsp;</a></span>m_testAudioAnalyzerState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1audio_analyzer_1_1_audio_analyzer_state.html">avsCommon::utils::audioAnalyzer::AudioAnalyzerState</a>&gt; alexaClientSDK::avsCommon::test::DialogUXAggregatorTest::m_testAudioAnalyzerState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A vector of AudioAnalyzerState objects passed to onStateChanged by SpeechSynthesizer. </p>
+
+</div>
+</div>
 <a id="aa6252df6033f34be07d2f631bc83e05f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa6252df6033f34be07d2f631bc83e05f">&#9670;&nbsp;</a></span>m_testMediaPlayerState</h2>
 
@@ -245,13 +275,13 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/AVS/test/<a class="el" href="_dialog_u_x_state_aggregator_test_8cpp.html">DialogUXStateAggregatorTest.cpp</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/AVS/test/<a class="el" href="_dialog_u_x_state_aggregator_test_8cpp.html">DialogUXStateAggregatorTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

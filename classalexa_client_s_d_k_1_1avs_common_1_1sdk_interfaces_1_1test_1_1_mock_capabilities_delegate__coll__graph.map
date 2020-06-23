@@ -1,6 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilitiesDelegate" name="alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilitiesDelegate">
-<area shape="rect" id="node1" title="Mock class that implements the CapabilitiesDelegateInterface." alt="" coords="588,44,785,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title=" " alt="" coords="302,44,540,96"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="7,5,253,57"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html" title=" " alt="" coords="5,81,254,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lInterface" alt="" coords="303,85,540,141"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaEventProcessed\lObserverInterface" alt="" coords="7,5,253,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSGatewayObserver\lInterface" alt="" coords="5,85,255,141"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="19,165,241,221"/>
 </map>

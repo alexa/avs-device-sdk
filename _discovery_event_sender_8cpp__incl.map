@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/src/DiscoveryEventSender.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/src/DiscoveryEventSender.cpp">
+<area shape="rect" id="node2" href="$_discovery_event_sender_8h.html" title="CapabilitiesDelegate\l/DiscoveryEventSender.h" alt="" coords="717,363,888,404"/>
+<area shape="rect" id="node27" href="$_discovery_utils_8h.html" title="CapabilitiesDelegate\l/Utils/DiscoveryUtils.h" alt="" coords="1684,109,1839,151"/>
+<area shape="rect" id="node34" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2344,459,2520,501"/>
+<area shape="rect" id="node50" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="2661,742,2875,769"/>
+<area shape="rect" id="node8" href="$_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="334,556,575,597"/>
+<area shape="rect" id="node20" href="$_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="865,452,1073,508"/>
+<area shape="rect" id="node21" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="84,645,276,687"/>
+<area shape="rect" id="node22" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="5,735,197,776"/>
+<area shape="rect" id="node23" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="117,556,309,597"/>
+<area shape="rect" id="node24" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="702,563,911,590"/>
+<area shape="rect" id="node25" href="$_discovery_event_sender_interface_8h.html" title="DiscoveryEventSenderInterface.h" alt="" coords="521,467,740,493"/>
+<area shape="rect" id="node26" href="$_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="936,563,1171,590"/>
+<area shape="rect" id="node9" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="323,653,573,679"/>
+<area shape="rect" id="node18" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="816,735,1059,776"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="222,735,426,776"/>
+<area shape="rect" id="node17" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="312,824,477,865"/>
+<area shape="rect" id="node30" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="1502,199,1725,240"/>
+<area shape="rect" id="node49" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1829,199,2024,240"/>
+<area shape="rect" id="node31" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1549,363,1749,404"/>
+<area shape="rect" id="node32" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1722,288,1918,315"/>
+<area shape="rect" id="node33" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2168,363,2344,404"/>
+<area shape="rect" id="node37" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2003,645,2218,687"/>
+<area shape="rect" id="node40" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1752,645,1928,687"/>
+<area shape="rect" id="node41" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2395,556,2571,597"/>
+<area shape="rect" id="node47" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2015,556,2209,597"/>
+<area shape="rect" id="node48" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1711,556,1887,597"/>
+<area shape="rect" id="node44" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2293,645,2469,687"/>
+<area shape="rect" id="node45" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2360,735,2536,776"/>
+</map>

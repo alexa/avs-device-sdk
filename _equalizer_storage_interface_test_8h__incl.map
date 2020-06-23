@@ -1,16 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterfaceTest.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterfaceTest.h">
-<area shape="rect" id="node1" title=" " alt="" coords="31,5,284,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,125,120,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="163,205,232,231"/>
-<area shape="rect" id="node4" href="$_equalizer_storage_interface_8h.html" title=" " alt="" coords="195,119,423,157"/>
-<area shape="rect" id="node5" href="$_success_result_8h.html" title=" " alt="" coords="191,279,355,317"/>
-<area shape="rect" id="node7" href="$_equalizer_types_8h.html" title=" " alt="" coords="382,205,506,231"/>
-<area shape="rect" id="node6" href="$_result_8h.html" title=" " alt="" coords="238,365,308,391"/>
-<area shape="rect" id="node8" title=" " alt="" coords="379,285,431,311"/>
-<area shape="rect" id="node9" title=" " alt="" coords="456,285,510,311"/>
-<area shape="rect" id="node10" title=" " alt="" coords="534,285,650,311"/>
-<area shape="rect" id="node11" href="$hash_8h.html" title=" " alt="" coords="674,279,865,317"/>
-<area shape="rect" id="node12" title=" " alt="" coords="657,365,716,391"/>
-<area shape="rect" id="node13" title=" " alt="" coords="740,365,799,391"/>
-<area shape="rect" id="node14" title=" " alt="" coords="822,365,901,391"/>
+<area shape="rect" id="node4" href="$_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="195,124,419,165"/>
+<area shape="rect" id="node5" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="188,288,353,329"/>
+<area shape="rect" id="node7" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="380,213,503,240"/>
+<area shape="rect" id="node6" href="$_result_8h.html" title="Result.h" alt="" coords="235,377,306,404"/>
+<area shape="rect" id="node11" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="666,288,859,329"/>
 </map>

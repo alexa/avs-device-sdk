@@ -1,7 +1,7 @@
 <map id="alexaClientSDK::avsCommon::avs::attachment::AttachmentReader" name="alexaClientSDK::avsCommon::avs::attachment::AttachmentReader">
-<area shape="rect" id="node1" title=" " alt="" coords="5,164,247,203"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_default_attachment_reader.html" title=" " alt="" coords="303,5,543,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html" title=" " alt="" coords="295,81,552,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_attachment_reader.html" title="This class mocks an attachment reader that reads from the INPUT_CSTR." alt="" coords="319,157,528,209"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html" title=" " alt="" coords="323,233,524,272"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_default_attachment_reader.html" title="alexaClientSDK::avsCommon\l::avs::attachment::DefaultAttachment\lReader\&lt; SDSType \&gt;" alt="" coords="303,5,545,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html" title="alexaClientSDK::avsCommon\l::avs::attachment::InProcessAttachment\lReader" alt="" coords="295,85,553,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_attachment_reader.html" title="This class mocks an attachment reader that reads from the INPUT_CSTR. " alt="" coords="319,165,529,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_empty_attachment_reader.html" title="A mock AttachmentReader that mocks reading from an empty attachment (immediate EOF). " alt="" coords="301,245,547,301"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html" title="alexaClientSDK::mediaPlayer\l::test::MockAttachmentReader" alt="" coords="323,326,525,367"/>
 </map>

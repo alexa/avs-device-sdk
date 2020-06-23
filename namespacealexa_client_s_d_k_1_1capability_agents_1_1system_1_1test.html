@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -308,7 +308,7 @@ Variables</h2></td></tr>
 <tr class="separator:ac3169b7eff770f3217732bddb44d4689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0bf8c78c569abf9751743a71c8ab62"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#afe0bf8c78c569abf9751743a71c8ab62">USER_INACTIVITY_PAYLOAD_KEY</a> = &quot;inactiveTimeInSeconds&quot;</td></tr>
 <tr class="separator:afe0bf8c78c569abf9751743a71c8ab62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#adf6cd2862d47c94e6a9d9468c95fbec3">USER_INACTIVITY_REPORT_PERIOD</a> {20}</td></tr>
+<tr class="memitem:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#adf6cd2862d47c94e6a9d9468c95fbec3">USER_INACTIVITY_REPORT_PERIOD</a> {100}</td></tr>
 <tr class="separator:adf6cd2862d47c94e6a9d9468c95fbec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -977,7 +977,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Verify that providing an invalid firmware version will cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a> to fail. </p>
+<p>Verify that providing an invalid firmware version will cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a> to fail. </p>
 
 </div>
 </div>
@@ -1010,37 +1010,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a97e5fbb9757d46330b087477b111a4cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97e5fbb9757d46330b087477b111a4cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/39]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_software_info_sender_test.html">SoftwareInfoSenderTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_createSuccessWithsendSoftwareInfoUponConnectFalse&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Verify that passing false for sendSoftwareInfoUponConnect will NOT cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a> to fail. </p>
-
-</div>
-</div>
 <a id="a064db7da734d18e6bd887820ea5f604f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a064db7da734d18e6bd887820ea5f604f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/39]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a064db7da734d18e6bd887820ea5f604f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/39]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1065,6 +1036,35 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>This case tests if multiple requests are being sent up to AVS. </p>
+
+</div>
+</div>
+<a id="a97e5fbb9757d46330b087477b111a4cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97e5fbb9757d46330b087477b111a4cb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/39]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_software_info_sender_test.html">SoftwareInfoSenderTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_createSuccessWithsendSoftwareInfoUponConnectFalse&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verify that passing false for sendSoftwareInfoUponConnect will NOT cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a> to fail. </p>
 
 </div>
 </div>
@@ -1122,7 +1122,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Verify that passing nullptr for observer will NOT cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a> to fail. </p>
+<p>Verify that passing empty set for observers will NOT cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a> to fail. </p>
 
 </div>
 </div>
@@ -1180,7 +1180,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Verify that passing nullptr for connection will cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a> to fail. </p>
+<p>Verify that passing nullptr for connection will cause <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a> to fail. </p>
 
 </div>
 </div>
@@ -1238,7 +1238,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Verify that not providing a <code>MessageSender</code> will cause <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a></code> to fail. </p>
+<p>Verify that not providing a <code>MessageSender</code> will cause <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a></code> to fail. </p>
 
 </div>
 </div>
@@ -1271,37 +1271,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a4241531521aa7d1fa441a2f239338292"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4241531521aa7d1fa441a2f239338292">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/39]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_software_info_sender_test.html">SoftwareInfoSenderTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_createFailedExceptionEncounteredSenderNull&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Verify that not providing a <code>MessageSender</code> will cause <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#ad4ce9189b8b155a6223a7e6b673ffa80">SoftwareInfoSender::create()</a></code> to fail. </p>
-
-</div>
-</div>
 <a id="ad5b2550f613a834f73a1dc3c895d382d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5b2550f613a834f73a1dc3c895d382d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/39]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5b2550f613a834f73a1dc3c895d382d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/39]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1326,6 +1297,35 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Test to verify the addObserver method successfully ignores <code>nullptr</code> inputs. </p>
+
+</div>
+</div>
+<a id="a4241531521aa7d1fa441a2f239338292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4241531521aa7d1fa441a2f239338292">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/39]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::capabilityAgents::system::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_software_info_sender_test.html">SoftwareInfoSenderTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_createFailedExceptionEncounteredSenderNull&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verify that not providing a <code>MessageSender</code> will cause <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html#a28165d6f197358e6d69e724832a5b090">SoftwareInfoSender::create()</a></code> to fail. </p>
 
 </div>
 </div>
@@ -1528,7 +1528,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Verify that notification that the firmware version was accepted by <code>AVS</code> is only sent once. </p>
+<p>Verify that notification that the firmware version was accepted by <code>AVS</code> is sent each time. </p>
 
 </div>
 </div>
@@ -1990,10 +1990,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::make_shared&lt;AVSMessageHeader&gt;(<a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a68984a0529be2847d7119fe42c035c92">NAMESPACE_SYSTEM</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aac13a9a1e9eeb0e0b38862be81720884">NAME_REPORT_SOFTWARE_INFO</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#af71a70d4f0c8fa07b82378706a62dd34">MESSAGE_ID</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a1add0925f7f848342261752b56ad398c">DIALOG_REQUEST_ID</a>)</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_html_a1add0925f7f848342261752b56ad398c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a1add0925f7f848342261752b56ad398c">alexaClientSDK::capabilityAgents::system::test::DIALOG_REQUEST_ID</a></div><div class="ttdeci">static const std::string DIALOG_REQUEST_ID</div><div class="ttdoc">Empty dialogRequestId with which to mock receiving a directive. </div><div class="ttdef"><b>Definition:</b> SoftwareInfoTest.cpp:57</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::make_shared&lt;AVSMessageHeader&gt;(<a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a68984a0529be2847d7119fe42c035c92">NAMESPACE_SYSTEM</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aac13a9a1e9eeb0e0b38862be81720884">NAME_REPORT_SOFTWARE_INFO</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae51cf627644813207cc8c009a8788071">MESSAGE_ID</a>, <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a1add0925f7f848342261752b56ad398c">DIALOG_REQUEST_ID</a>)</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_html_a1add0925f7f848342261752b56ad398c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a1add0925f7f848342261752b56ad398c">alexaClientSDK::capabilityAgents::system::test::DIALOG_REQUEST_ID</a></div><div class="ttdeci">static const std::string DIALOG_REQUEST_ID</div><div class="ttdoc">Empty dialogRequestId with which to mock receiving a directive. </div><div class="ttdef"><b>Definition:</b> SoftwareInfoTest.cpp:57</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_html_aac13a9a1e9eeb0e0b38862be81720884"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#aac13a9a1e9eeb0e0b38862be81720884">alexaClientSDK::capabilityAgents::system::test::NAME_REPORT_SOFTWARE_INFO</a></div><div class="ttdeci">static const std::string NAME_REPORT_SOFTWARE_INFO</div><div class="ttdoc">This is a string for the name of the System.ReportSoftwareInfo directive. </div><div class="ttdef"><b>Definition:</b> SoftwareInfoTest.cpp:51</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_ae51cf627644813207cc8c009a8788071"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae51cf627644813207cc8c009a8788071">alexaClientSDK::acsdkAlerts::test::MESSAGE_ID</a></div><div class="ttdeci">constexpr char MESSAGE_ID[]</div><div class="ttdoc">Crafted message ID. </div><div class="ttdef"><b>Definition:</b> AlertsCapabilityAgentTest.cpp:77</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_html_a68984a0529be2847d7119fe42c035c92"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#a68984a0529be2847d7119fe42c035c92">alexaClientSDK::capabilityAgents::system::test::NAMESPACE_SYSTEM</a></div><div class="ttdeci">static const std::string NAMESPACE_SYSTEM</div><div class="ttdoc">This is a string for the namespace we are testing for. </div><div class="ttdef"><b>Definition:</b> SoftwareInfoTest.cpp:45</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_html_af71a70d4f0c8fa07b82378706a62dd34"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#af71a70d4f0c8fa07b82378706a62dd34">alexaClientSDK::capabilityAgents::alerts::test::MESSAGE_ID</a></div><div class="ttdeci">constexpr char MESSAGE_ID[]</div><div class="ttdoc">Crafted message ID. </div><div class="ttdef"><b>Definition:</b> AlertsCapabilityAgentTest.cpp:77</div></div>
 </div><!-- fragment -->
 <p>Header of ReportSoftwareInfo directive. </p>
 
@@ -2500,7 +2500,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::chrono::milliseconds alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_REPORT_PERIOD {20}</td>
+          <td class="memname">const std::chrono::milliseconds alexaClientSDK::capabilityAgents::system::test::USER_INACTIVITY_REPORT_PERIOD {100}</td>
         </tr>
       </table>
   </td>
@@ -2564,7 +2564,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

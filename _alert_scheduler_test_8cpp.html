@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Alerts/test/AlertSchedulerTest.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/test/AlertSchedulerTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_579390d8ffdcec981a107f091315ddee.html">test</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_092564aa71f3dfc32ed64d9c9668be3d.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_705967d9221232f6c8251613ef4000f2.html">acsdkAlerts</a></li><li class="navelem"><a class="el" href="dir_d920aa2920a1fcf64612324471de4493.html">test</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -77,29 +77,60 @@ $(function() {
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gmock/gmock-actions.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_metric_recorder_8h_source.html">AVSCommon/Utils/Metrics/MockMetricRecorder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_settings_manager_8h_source.html">Settings/DeviceSettingsManager.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">Alerts/AlertScheduler.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">acsdkAlerts/AlertScheduler.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlertSchedulerTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alert_scheduler_test_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2test_2_alert_scheduler_test_8cpp">
+<div class="center"><img src="_alert_scheduler_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2test_2_alert_scheduler_test_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2test_2_alert_scheduler_test_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2test_2_alert_scheduler_test_8cpp">
+<area shape="rect" id="node5" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="700,213,880,255"/>
+<area shape="rect" id="node15" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="751,124,931,165"/>
+<area shape="rect" id="node16" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="99,467,275,508"/>
+<area shape="rect" id="node22" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="576,556,748,597"/>
+<area shape="rect" id="node26" href="_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="2818,385,3042,411"/>
+<area shape="rect" id="node46" href="_alert_scheduler_8h.html" title="acsdkAlerts/AlertScheduler.h" alt="" coords="2835,131,3025,158"/>
+<area shape="rect" id="node6" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1155,467,1335,508"/>
+<area shape="rect" id="node9" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="1129,556,1309,597"/>
+<area shape="rect" id="node11" href="_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="925,556,1105,597"/>
+<area shape="rect" id="node12" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1876,563,2072,590"/>
+<area shape="rect" id="node13" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1733,645,1909,687"/>
+<area shape="rect" id="node18" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="287,563,501,590"/>
+<area shape="rect" id="node19" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="37,556,213,597"/>
+<area shape="rect" id="node25" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="577,645,744,687"/>
+<area shape="rect" id="node29" href="_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="2692,563,2869,590"/>
+<area shape="rect" id="node37" href="_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="2371,474,2553,501"/>
+<area shape="rect" id="node41" href="_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="4234,645,4426,687"/>
+<area shape="rect" id="node43" href="_alarm_volume_ramp_types_8h.html" title="Settings/Types/AlarmVolume\lRampTypes.h" alt="" coords="3781,645,3973,687"/>
+<area shape="rect" id="node44" href="_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="3256,474,3452,501"/>
+<area shape="rect" id="node45" href="_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="3997,645,4210,687"/>
+<area shape="rect" id="node32" href="_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="2384,653,2615,679"/>
+<area shape="rect" id="node33" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3018,645,3194,687"/>
+<area shape="rect" id="node34" href="_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="3269,653,3453,679"/>
+<area shape="rect" id="node36" href="_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="2639,645,2807,687"/>
+<area shape="rect" id="node40" href="_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2198,563,2425,590"/>
+<area shape="rect" id="node47" href="_alert_storage_interface_8h.html" title="acsdkAlerts/Storage\l/AlertStorageInterface.h" alt="" coords="1594,213,1754,255"/>
+<area shape="rect" id="node49" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="3440,385,3655,411"/>
+<area shape="rect" id="node50" href="_alert_observer_interface_8h.html" title="acsdkAlertsInterfaces\l/AlertObserverInterface.h" alt="" coords="3247,377,3415,419"/>
+<area shape="rect" id="node48" href="_alert_8h.html" title="acsdkAlerts/Alert.h" alt="" coords="1607,303,1741,329"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_renderer.html">alexaClientSDK::capabilityAgents::alerts::test::MockRenderer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_renderer.html">alexaClientSDK::acsdkAlerts::test::MockRenderer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_test_alert.html">alexaClientSDK::capabilityAgents::alerts::test::TestAlert</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert.html">alexaClientSDK::acsdkAlerts::test::TestAlert</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_mock_alert_storage.html">alexaClientSDK::capabilityAgents::alerts::test::MockAlertStorage</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_test_alert_observer.html">alexaClientSDK::capabilityAgents::alerts::test::TestAlertObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html">alexaClientSDK::acsdkAlerts::test::TestAlertObserver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test_1_1_alert_scheduler_test.html">alexaClientSDK::capabilityAgents::alerts::test::AlertSchedulerTest</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_scheduler_test.html">alexaClientSDK::acsdkAlerts::test::AlertSchedulerTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -107,106 +138,110 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html">alexaClientSDK::acsdkAlerts</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html">alexaClientSDK::capabilityAgents::alerts</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html">alexaClientSDK::capabilityAgents::alerts::test</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html">alexaClientSDK::acsdkAlerts::test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2b01ea8f785fa2832d56b933597ca374"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a2b01ea8f785fa2832d56b933597ca374">alexaClientSDK::capabilityAgents::alerts::test::getFutureInstant</a> (int yearsPlus)</td></tr>
-<tr class="separator:a2b01ea8f785fa2832d56b933597ca374"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a332cc4b285275ba81e95989e386909dc"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a332cc4b285275ba81e95989e386909dc">alexaClientSDK::capabilityAgents::alerts::test::getTimeNow</a> ()</td></tr>
-<tr class="separator:a332cc4b285275ba81e95989e386909dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab841ce6da742fc6c150b2258cf1d8b83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ab841ce6da742fc6c150b2258cf1d8b83">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_initialize)</td></tr>
-<tr class="separator:ab841ce6da742fc6c150b2258cf1d8b83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf489e57960ee56c6b199b9906b397bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#acf489e57960ee56c6b199b9906b397bf">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_updateGetFocus)</td></tr>
-<tr class="separator:acf489e57960ee56c6b199b9906b397bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab18d09fb9888fb66ea128f31a21ae961"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ab18d09fb9888fb66ea128f31a21ae961">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_scheduleAlert)</td></tr>
-<tr class="separator:ab18d09fb9888fb66ea128f31a21ae961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a945bc7a0a8033f980bf3df99a0762519"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a945bc7a0a8033f980bf3df99a0762519">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_rescheduleAlert)</td></tr>
-<tr class="separator:a945bc7a0a8033f980bf3df99a0762519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0587c3c3b1e71c356cadce00077e4599"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a0587c3c3b1e71c356cadce00077e4599">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_rescheduleAlertNow)</td></tr>
-<tr class="separator:a0587c3c3b1e71c356cadce00077e4599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c88a48310ac6be71cf9d1be43e8f9ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a8c88a48310ac6be71cf9d1be43e8f9ae">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_rescheduleAlertFails)</td></tr>
-<tr class="separator:a8c88a48310ac6be71cf9d1be43e8f9ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa58d1e118dcb8e742cefb15559f7f0be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#aa58d1e118dcb8e742cefb15559f7f0be">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_snoozeAlert)</td></tr>
-<tr class="separator:aa58d1e118dcb8e742cefb15559f7f0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d81681f18bba7ea85d90f8ef7bb6c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a74d81681f18bba7ea85d90f8ef7bb6c9">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_deleteAlertSingle)</td></tr>
-<tr class="separator:a74d81681f18bba7ea85d90f8ef7bb6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb7c5d470f29f0802cd57158487bd15e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#acb7c5d470f29f0802cd57158487bd15e">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsSingle)</td></tr>
-<tr class="separator:acb7c5d470f29f0802cd57158487bd15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ae81294f91310ea18611118f076e73a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a3ae81294f91310ea18611118f076e73a">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleExisting)</td></tr>
-<tr class="separator:a3ae81294f91310ea18611118f076e73a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fd994baedd78cbd80f7a7d88ffa0561"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a8fd994baedd78cbd80f7a7d88ffa0561">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleMixed)</td></tr>
-<tr class="separator:a8fd994baedd78cbd80f7a7d88ffa0561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77d6ec1952e6085dee935cd1b49afadd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a77d6ec1952e6085dee935cd1b49afadd">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleMissing)</td></tr>
-<tr class="separator:a77d6ec1952e6085dee935cd1b49afadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74dbb170890e2a50cb2649659ce13e4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a74dbb170890e2a50cb2649659ce13e4a">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleSame)</td></tr>
-<tr class="separator:a74dbb170890e2a50cb2649659ce13e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add8d9bf59d0b306ac6d7b8b6a70aba0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#add8d9bf59d0b306ac6d7b8b6a70aba0c">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleEmpty)</td></tr>
-<tr class="separator:add8d9bf59d0b306ac6d7b8b6a70aba0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aa3104bb16a0ab3cab062733d2fbd2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a1aa3104bb16a0ab3cab062733d2fbd2f">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_isAlertActive)</td></tr>
-<tr class="separator:a1aa3104bb16a0ab3cab062733d2fbd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbe7d98d9bc3abc89e8a8aee2b8ab219"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#afbe7d98d9bc3abc89e8a8aee2b8ab219">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_getContextInfo)</td></tr>
-<tr class="separator:afbe7d98d9bc3abc89e8a8aee2b8ab219"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d9812eb26d8ed6d4a989b0e1c3b1926"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a7d9812eb26d8ed6d4a989b0e1c3b1926">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onLocalStop)</td></tr>
-<tr class="separator:a7d9812eb26d8ed6d4a989b0e1c3b1926"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a773f248f9cb13e6be6c6c936e7ecbcd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a773f248f9cb13e6be6c6c936e7ecbcd8">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_clearData)</td></tr>
-<tr class="separator:a773f248f9cb13e6be6c6c936e7ecbcd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad48440d2cce2ba485d655771e134981e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ad48440d2cce2ba485d655771e134981e">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_clearDataLogout)</td></tr>
-<tr class="separator:ad48440d2cce2ba485d655771e134981e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ee0c38683d0b5624eae45c17d4a07ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a9ee0c38683d0b5624eae45c17d4a07ed">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_shutdown)</td></tr>
-<tr class="separator:a9ee0c38683d0b5624eae45c17d4a07ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af02a8578b2a7bb22d2b661fc81249550"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#af02a8578b2a7bb22d2b661fc81249550">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStartedInactiveAlert)</td></tr>
-<tr class="separator:af02a8578b2a7bb22d2b661fc81249550"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add6955b74eea040c640d3ef9e2f7e238"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#add6955b74eea040c640d3ef9e2f7e238">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStartedActiveAlert)</td></tr>
-<tr class="separator:add6955b74eea040c640d3ef9e2f7e238"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a67aa311f84df65bb788dde22f6380e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a6a67aa311f84df65bb788dde22f6380e">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStopped)</td></tr>
-<tr class="separator:a6a67aa311f84df65bb788dde22f6380e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24620b23fc474edb91208ae23fa5501c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a24620b23fc474edb91208ae23fa5501c">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeCompleted)</td></tr>
-<tr class="separator:a24620b23fc474edb91208ae23fa5501c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7653ca10e1e60b30f556e6eddd8bafdf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a7653ca10e1e60b30f556e6eddd8bafdf">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeSnoozed)</td></tr>
-<tr class="separator:a7653ca10e1e60b30f556e6eddd8bafdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5356e72ab5a9de75f58d584632cb5eb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a5356e72ab5a9de75f58d584632cb5eb8">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeErrorActiveAlert)</td></tr>
-<tr class="separator:a5356e72ab5a9de75f58d584632cb5eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a162900408687c112099d61f18c4b992f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a162900408687c112099d61f18c4b992f">alexaClientSDK::capabilityAgents::alerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeErrorInactiveAlert)</td></tr>
-<tr class="separator:a162900408687c112099d61f18c4b992f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94e60e4ed50773d4721267c8dd9d7405"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a94e60e4ed50773d4721267c8dd9d7405">alexaClientSDK::acsdkAlerts::test::getFutureInstant</a> (int yearsPlus)</td></tr>
+<tr class="separator:a94e60e4ed50773d4721267c8dd9d7405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a96a9452402695c59d1c12421eb4e9d"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a6a96a9452402695c59d1c12421eb4e9d">alexaClientSDK::acsdkAlerts::test::getTimeNow</a> ()</td></tr>
+<tr class="separator:a6a96a9452402695c59d1c12421eb4e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729fcffa66a3e16af31bbdb84a9296a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a729fcffa66a3e16af31bbdb84a9296a6">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_initialize)</td></tr>
+<tr class="separator:a729fcffa66a3e16af31bbdb84a9296a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacad2ead4a5bd3f410280c4ad656b212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aacad2ead4a5bd3f410280c4ad656b212">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_updateGetFocus)</td></tr>
+<tr class="separator:aacad2ead4a5bd3f410280c4ad656b212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08bc7434bc4f3012d060262fa837747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ac08bc7434bc4f3012d060262fa837747">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, DISABLED_test_scheduleAlert)</td></tr>
+<tr class="separator:ac08bc7434bc4f3012d060262fa837747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ff6b7a188a52d3a73f05fe3804ea71"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a59ff6b7a188a52d3a73f05fe3804ea71">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, DISABLED_test_reloadAlertsFromDatabaseWithScheduling)</td></tr>
+<tr class="separator:a59ff6b7a188a52d3a73f05fe3804ea71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d7f7207ef2a74a7fbf8357f7b42d099"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a7d7f7207ef2a74a7fbf8357f7b42d099">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_reloadAlertsFromDatabaseWithoutScheduling)</td></tr>
+<tr class="separator:a7d7f7207ef2a74a7fbf8357f7b42d099"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a445995c5555d86b77a17026afdcbb13a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a445995c5555d86b77a17026afdcbb13a">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_updateAlertTime)</td></tr>
+<tr class="separator:a445995c5555d86b77a17026afdcbb13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9617e0d8c0c25c301dd44dd74c4729f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a9617e0d8c0c25c301dd44dd74c4729f8">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_updateAlertAssets)</td></tr>
+<tr class="separator:a9617e0d8c0c25c301dd44dd74c4729f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0609054f84386b5dac019c7f927664d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0609054f84386b5dac019c7f927664d2">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_rescheduleAlertNow)</td></tr>
+<tr class="separator:a0609054f84386b5dac019c7f927664d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96f1e7f88269f8b4f3e303419f80a353"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a96f1e7f88269f8b4f3e303419f80a353">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_rescheduleAlertFails)</td></tr>
+<tr class="separator:a96f1e7f88269f8b4f3e303419f80a353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2974e3ba5d6b277d0c6a411b2ec23de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab2974e3ba5d6b277d0c6a411b2ec23de">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_snoozeAlert)</td></tr>
+<tr class="separator:ab2974e3ba5d6b277d0c6a411b2ec23de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c8e4231bc294f2ac86ef12f5a1d1141"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4c8e4231bc294f2ac86ef12f5a1d1141">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_deleteAlertSingle)</td></tr>
+<tr class="separator:a4c8e4231bc294f2ac86ef12f5a1d1141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cc895a6bea04c3799f58a815ae0b9d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a5cc895a6bea04c3799f58a815ae0b9d8">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsSingle)</td></tr>
+<tr class="separator:a5cc895a6bea04c3799f58a815ae0b9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8a6dd38762dfa7829dc1df981d4dac7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#af8a6dd38762dfa7829dc1df981d4dac7">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleExisting)</td></tr>
+<tr class="separator:af8a6dd38762dfa7829dc1df981d4dac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28cad39ab2e794d27c02510fb709dc52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a28cad39ab2e794d27c02510fb709dc52">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleMixed)</td></tr>
+<tr class="separator:a28cad39ab2e794d27c02510fb709dc52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bb8235b93ae6b7f9b39b81a9e61d546"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0bb8235b93ae6b7f9b39b81a9e61d546">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleMissing)</td></tr>
+<tr class="separator:a0bb8235b93ae6b7f9b39b81a9e61d546"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a362c5b743592b01b04050998afbb9e2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a362c5b743592b01b04050998afbb9e2d">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleSame)</td></tr>
+<tr class="separator:a362c5b743592b01b04050998afbb9e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43650081d7e4170200365d86b037a12e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a43650081d7e4170200365d86b037a12e">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_bulkDeleteAlertsMultipleEmpty)</td></tr>
+<tr class="separator:a43650081d7e4170200365d86b037a12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0bbdf08bea26fa8d6ec5ad7e5540b4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ad0bbdf08bea26fa8d6ec5ad7e5540b4b">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_isAlertActive)</td></tr>
+<tr class="separator:ad0bbdf08bea26fa8d6ec5ad7e5540b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83c2341545bb26df8be7d9bdf560d006"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a83c2341545bb26df8be7d9bdf560d006">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_getContextInfo)</td></tr>
+<tr class="separator:a83c2341545bb26df8be7d9bdf560d006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c9dfd2649e9e245af943db9552ca9af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a3c9dfd2649e9e245af943db9552ca9af">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onLocalStop)</td></tr>
+<tr class="separator:a3c9dfd2649e9e245af943db9552ca9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59befdcd3768bc8c476736489cdcc5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae59befdcd3768bc8c476736489cdcc5c">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_clearData)</td></tr>
+<tr class="separator:ae59befdcd3768bc8c476736489cdcc5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a991335b1f37457b33246cab11762827c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a991335b1f37457b33246cab11762827c">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_clearDataLogout)</td></tr>
+<tr class="separator:a991335b1f37457b33246cab11762827c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098b8ad3aff3138ca72a036f1ef9afb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a098b8ad3aff3138ca72a036f1ef9afb4">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_shutdown)</td></tr>
+<tr class="separator:a098b8ad3aff3138ca72a036f1ef9afb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d4ec40951ada376458e4999149a1a08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a3d4ec40951ada376458e4999149a1a08">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStartedInactiveAlert)</td></tr>
+<tr class="separator:a3d4ec40951ada376458e4999149a1a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a861f4f527a020058fa93009728c81645"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a861f4f527a020058fa93009728c81645">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStartedActiveAlert)</td></tr>
+<tr class="separator:a861f4f527a020058fa93009728c81645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affdbeb2d4758b56a4a608bb2b975b523"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#affdbeb2d4758b56a4a608bb2b975b523">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeStopped)</td></tr>
+<tr class="separator:affdbeb2d4758b56a4a608bb2b975b523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf1dbcb06bb302b675ca1a270598257b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#abf1dbcb06bb302b675ca1a270598257b">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeCompleted)</td></tr>
+<tr class="separator:abf1dbcb06bb302b675ca1a270598257b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa21b686128e464cf82b28de72f2861b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aa21b686128e464cf82b28de72f2861b7">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeSnoozed)</td></tr>
+<tr class="separator:aa21b686128e464cf82b28de72f2861b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6157aa57b6a3fc81b838eb2276bd4c89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a6157aa57b6a3fc81b838eb2276bd4c89">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeErrorActiveAlert)</td></tr>
+<tr class="separator:a6157aa57b6a3fc81b838eb2276bd4c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1660348a7283eeeedbbb6bbb29b1a6fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1660348a7283eeeedbbb6bbb29b1a6fe">alexaClientSDK::acsdkAlerts::test::TEST_F</a> (AlertSchedulerTest, test_onAlertStateChangeErrorInactiveAlert)</td></tr>
+<tr class="separator:a1660348a7283eeeedbbb6bbb29b1a6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a70454813f5020a94d39adb0ff6a828b8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a70454813f5020a94d39adb0ff6a828b8">alexaClientSDK::capabilityAgents::alerts::test::ALERT1_TOKEN</a> = &quot;token1&quot;</td></tr>
-<tr class="memdesc:a70454813f5020a94d39adb0ff6a828b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tokens for alerts.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a70454813f5020a94d39adb0ff6a828b8">More...</a><br /></td></tr>
-<tr class="separator:a70454813f5020a94d39adb0ff6a828b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14729df14f6fefadf95e2fe37df8b81b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a14729df14f6fefadf95e2fe37df8b81b">alexaClientSDK::capabilityAgents::alerts::test::ALERT2_TOKEN</a> = &quot;token2&quot;</td></tr>
-<tr class="separator:a14729df14f6fefadf95e2fe37df8b81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4034e25c7d9b062bb1776a801aa38c64"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a4034e25c7d9b062bb1776a801aa38c64">alexaClientSDK::capabilityAgents::alerts::test::ALERT3_TOKEN</a> = &quot;token3&quot;</td></tr>
-<tr class="separator:a4034e25c7d9b062bb1776a801aa38c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88e28a213cc293def059241154baa90f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a88e28a213cc293def059241154baa90f">alexaClientSDK::capabilityAgents::alerts::test::ALERT4_TOKEN</a> = &quot;token4&quot;</td></tr>
-<tr class="separator:a88e28a213cc293def059241154baa90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6fac760a2822063ac996ac92b31b86"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a6a6fac760a2822063ac996ac92b31b86">alexaClientSDK::capabilityAgents::alerts::test::ALERT_TYPE</a> = &quot;TEST_ALERT_TYPE&quot;</td></tr>
-<tr class="memdesc:a6a6fac760a2822063ac996ac92b31b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test alert type.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a6a6fac760a2822063ac996ac92b31b86">More...</a><br /></td></tr>
-<tr class="separator:a6a6fac760a2822063ac996ac92b31b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e6b5fc1606a18e36ade1262cdef8381"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a4e6b5fc1606a18e36ade1262cdef8381">alexaClientSDK::capabilityAgents::alerts::test::PAST_INSTANT</a> = &quot;2000-01-01T12:34:56+0000&quot;</td></tr>
-<tr class="memdesc:a4e6b5fc1606a18e36ade1262cdef8381"><td class="mdescLeft">&#160;</td><td class="mdescRight">A schedule instant in the past for alerts.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#a4e6b5fc1606a18e36ade1262cdef8381">More...</a><br /></td></tr>
-<tr class="separator:a4e6b5fc1606a18e36ade1262cdef8381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4bce656d44e97af852a3da273cdc13b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#aa4bce656d44e97af852a3da273cdc13b">alexaClientSDK::capabilityAgents::alerts::test::FUTURE_INSTANT_SUFFIX</a> = &quot;-01-01T12:34:56+0000&quot;</td></tr>
-<tr class="memdesc:aa4bce656d44e97af852a3da273cdc13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A schedule instant in the future for alerts.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#aa4bce656d44e97af852a3da273cdc13b">More...</a><br /></td></tr>
-<tr class="separator:aa4bce656d44e97af852a3da273cdc13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac604ab0beeadebf3b3d5f06979cb820b"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ac604ab0beeadebf3b3d5f06979cb820b">alexaClientSDK::capabilityAgents::alerts::test::TEST_TIMEOUT</a> {100}</td></tr>
-<tr class="memdesc:ac604ab0beeadebf3b3d5f06979cb820b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Amount of time that the alert observer should wait for a task to finish.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ac604ab0beeadebf3b3d5f06979cb820b">More...</a><br /></td></tr>
-<tr class="separator:ac604ab0beeadebf3b3d5f06979cb820b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace629a7d9e147584ac1d061ac3332540"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ace629a7d9e147584ac1d061ac3332540">alexaClientSDK::capabilityAgents::alerts::test::ALERT_PAST_DUE_TIME_LIMIT</a> {10}</td></tr>
-<tr class="memdesc:ace629a7d9e147584ac1d061ac3332540"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert.html">Alert</a> past due time limit.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#ace629a7d9e147584ac1d061ac3332540">More...</a><br /></td></tr>
-<tr class="separator:ace629a7d9e147584ac1d061ac3332540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1847359bec821ceca8843c7a20b217d7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1847359bec821ceca8843c7a20b217d7">alexaClientSDK::acsdkAlerts::test::ALERT1_TOKEN</a> = &quot;token1&quot;</td></tr>
+<tr class="memdesc:a1847359bec821ceca8843c7a20b217d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tokens for alerts.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1847359bec821ceca8843c7a20b217d7">More...</a><br /></td></tr>
+<tr class="separator:a1847359bec821ceca8843c7a20b217d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3db720fd92dc65d86d157a7640beee0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae3db720fd92dc65d86d157a7640beee0">alexaClientSDK::acsdkAlerts::test::ALERT2_TOKEN</a> = &quot;token2&quot;</td></tr>
+<tr class="separator:ae3db720fd92dc65d86d157a7640beee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0718fe00b8b6e92c07d30f4b546eedd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab0718fe00b8b6e92c07d30f4b546eedd">alexaClientSDK::acsdkAlerts::test::ALERT3_TOKEN</a> = &quot;token3&quot;</td></tr>
+<tr class="separator:ab0718fe00b8b6e92c07d30f4b546eedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94ad252cc2cf8ec29edfe03372b67a35"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a94ad252cc2cf8ec29edfe03372b67a35">alexaClientSDK::acsdkAlerts::test::ALERT4_TOKEN</a> = &quot;token4&quot;</td></tr>
+<tr class="separator:a94ad252cc2cf8ec29edfe03372b67a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a892a9072d4816875b8f3ff36e265834b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a892a9072d4816875b8f3ff36e265834b">alexaClientSDK::acsdkAlerts::test::ALERT_TYPE</a> = &quot;TEST_ALERT_TYPE&quot;</td></tr>
+<tr class="memdesc:a892a9072d4816875b8f3ff36e265834b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test alert type.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a892a9072d4816875b8f3ff36e265834b">More...</a><br /></td></tr>
+<tr class="separator:a892a9072d4816875b8f3ff36e265834b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1dee7777600f017ad9af60c7b2c11b5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae1dee7777600f017ad9af60c7b2c11b5">alexaClientSDK::acsdkAlerts::test::PAST_INSTANT</a> = &quot;2000-01-01T12:34:56+0000&quot;</td></tr>
+<tr class="memdesc:ae1dee7777600f017ad9af60c7b2c11b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A schedule instant in the past for alerts.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae1dee7777600f017ad9af60c7b2c11b5">More...</a><br /></td></tr>
+<tr class="separator:ae1dee7777600f017ad9af60c7b2c11b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80b22243a579f8b3c0e1ff2cf300a5ad"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a80b22243a579f8b3c0e1ff2cf300a5ad">alexaClientSDK::acsdkAlerts::test::FUTURE_INSTANT_SUFFIX</a> = &quot;-01-01T12:34:56+0000&quot;</td></tr>
+<tr class="memdesc:a80b22243a579f8b3c0e1ff2cf300a5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">A schedule instant in the future for alerts.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a80b22243a579f8b3c0e1ff2cf300a5ad">More...</a><br /></td></tr>
+<tr class="separator:a80b22243a579f8b3c0e1ff2cf300a5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32625c34d43fd82d88b26f3e0b722f6"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#af32625c34d43fd82d88b26f3e0b722f6">alexaClientSDK::acsdkAlerts::test::TEST_TIMEOUT</a> {100}</td></tr>
+<tr class="memdesc:af32625c34d43fd82d88b26f3e0b722f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Amount of time that the alert observer should wait for a task to finish.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#af32625c34d43fd82d88b26f3e0b722f6">More...</a><br /></td></tr>
+<tr class="separator:af32625c34d43fd82d88b26f3e0b722f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ae7445e05ab8bfea44073c2d4518fc9"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ae7445e05ab8bfea44073c2d4518fc9">alexaClientSDK::acsdkAlerts::test::ALERT_PAST_DUE_TIME_LIMIT</a> {10}</td></tr>
+<tr class="memdesc:a0ae7445e05ab8bfea44073c2d4518fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> past due time limit.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ae7445e05ab8bfea44073c2d4518fc9">More...</a><br /></td></tr>
+<tr class="separator:a0ae7445e05ab8bfea44073c2d4518fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

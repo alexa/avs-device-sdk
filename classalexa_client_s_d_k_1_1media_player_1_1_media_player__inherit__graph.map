@@ -1,12 +1,10 @@
 <map id="alexaClientSDK::mediaPlayer::MediaPlayer" name="alexaClientSDK::mediaPlayer::MediaPlayer">
-<area shape="rect" id="node1" title=" " alt="" coords="335,276,531,315"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="48,5,245,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title=" " alt="" coords="39,68,254,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title=" " alt="" coords="38,144,255,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title=" " alt="" coords="48,207,244,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_interface.html" title=" " alt="" coords="48,269,245,321"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_error_observer_interface.html" title="Class to observe errors that arise from converting a URL to to an Attachment." alt="" coords="34,345,258,397"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_write_complete_observer_interface.html" title="Class to allow notification when writing to the attachment is complete." alt="" coords="5,421,287,473"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html" title=" " alt="" coords="48,497,244,536"/>
-<area shape="rect" id="node10" title=" " alt="" coords="56,560,237,599"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="46,5,243,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="37,71,252,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface" alt="" coords="37,152,253,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_pipeline_interface.html" title="alexaClientSDK::mediaPlayer\l::PipelineInterface" alt="" coords="47,217,242,259"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::EqualizerInterface" alt="" coords="46,283,243,339"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_error_observer_interface.html" title="Class to observe errors that arise from converting a URL to to an Attachment. " alt="" coords="35,363,254,419"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1_url_content_to_attachment_converter_1_1_write_complete_observer_interface.html" title="Class to allow notification when writing to the attachment is complete. " alt="" coords="5,443,284,499"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1media_player_1_1_source_observer_interface.html" title="alexaClientSDK::mediaPlayer\l::SourceObserverInterface" alt="" coords="47,524,242,565"/>
 </map>

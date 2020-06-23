@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Integration/src/AuthDelegateTestContext.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/Integration/src/AuthDelegateTestContext.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,14 +72,48 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_device_info_8h_source.html">AVSCommon/Utils/DeviceInfo.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_http_post_8h_source.html">AVSCommon/Utils/LibcurlUtils/HttpPost.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_c_b_l_auth_delegate_8h_source.html">CBLAuthDelegate/CBLAuthDelegate.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_s_q_lite_c_b_l_auth_delegate_storage_8h_source.html">CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_auth_delegate_test_context_8h_source.html">Integration/AuthDelegateTestContext.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AuthDelegateTestContext.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_auth_delegate_test_context_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp">
+<div class="center"><img src="_auth_delegate_test_context_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp" id="_2workplace_2avs-device-sdk_2_integration_2src_2_auth_delegate_test_context_8cpp">
+<area shape="rect" id="node3" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1601,295,1811,322"/>
+<area shape="rect" id="node15" href="_http_post_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPost.h" alt="" coords="643,199,846,240"/>
+<area shape="rect" id="node23" href="_c_b_l_auth_delegate_8h.html" title="CBLAuthDelegate/CBLAuthDelegate.h" alt="" coords="1847,206,2093,233"/>
+<area shape="rect" id="node35" href="_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="CBLAuthDelegate/SQLiteCBLAuth\lDelegateStorage.h" alt="" coords="2514,199,2738,240"/>
+<area shape="rect" id="node39" href="_auth_delegate_test_context_8h.html" title="Integration/AuthDelegate\lTestContext.h" alt="" coords="3491,109,3657,151"/>
+<area shape="rect" id="node5" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1817,377,2017,419"/>
+<area shape="rect" id="node6" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1121,377,1336,419"/>
+<area shape="rect" id="node17" href="_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="153,288,355,329"/>
+<area shape="rect" id="node20" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1241,288,1443,329"/>
+<area shape="rect" id="node18" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="531,377,707,419"/>
+<area shape="rect" id="node19" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="179,377,355,419"/>
+<area shape="rect" id="node22" href="_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1463,385,1589,411"/>
+<area shape="rect" id="node27" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="3269,288,3461,329"/>
+<area shape="rect" id="node28" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2742,377,2934,419"/>
+<area shape="rect" id="node30" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="833,385,1046,411"/>
+<area shape="rect" id="node31" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="5129,377,5296,419"/>
+<area shape="rect" id="node32" href="_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="980,288,1216,329"/>
+<area shape="rect" id="node33" href="_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="2104,288,2340,329"/>
+<area shape="rect" id="node34" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="1836,288,2080,329"/>
+<area shape="rect" id="node37" href="_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="2566,295,2785,322"/>
+<area shape="rect" id="node38" href="_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="2395,385,2617,411"/>
+<area shape="rect" id="node40" href="_message_router_8h.html" title="ACL/Transport/MessageRouter.h" alt="" coords="3904,206,4119,233"/>
+<area shape="rect" id="node42" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="3688,288,3892,329"/>
+<area shape="rect" id="node47" href="_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="4535,206,4765,233"/>
+<area shape="rect" id="node48" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="5327,288,5499,329"/>
+<area shape="rect" id="node49" href="_connection_status_observer_8h.html" title="Integration/ConnectionStatus\lObserver.h" alt="" coords="3009,377,3200,419"/>
+<area shape="rect" id="node50" href="_s_d_k_test_context_8h.html" title="Integration/SDKTestContext.h" alt="" coords="3528,385,3727,411"/>
+<area shape="rect" id="node41" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4054,377,4249,419"/>
+<area shape="rect" id="node43" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="4273,385,4523,411"/>
+<area shape="rect" id="node44" href="_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="4653,288,4877,329"/>
+<area shape="rect" id="node45" href="_message_router_interface_8h.html" title="ACL/Transport/MessageRouter\lInterface.h" alt="" coords="4297,288,4499,329"/>
+<area shape="rect" id="node46" href="_message_router_observer_interface_8h.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="4699,377,4902,419"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -97,7 +131,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

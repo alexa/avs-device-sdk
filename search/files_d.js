@@ -26,5 +26,6 @@ var searchData=
   ['notificationscapabilityagenttest_2ecpp',['NotificationsCapabilityAgentTest.cpp',['../_notifications_capability_agent_test_8cpp.html',1,'']]],
   ['notificationsobserverinterface_2eh',['NotificationsObserverInterface.h',['../_notifications_observer_interface_8h.html',1,'']]],
   ['notificationsstorageinterface_2eh',['NotificationsStorageInterface.h',['../_notifications_storage_interface_8h.html',1,'']]],
-  ['notificationsstoragetest_2ecpp',['NotificationsStorageTest.cpp',['../_notifications_storage_test_8cpp.html',1,'']]]
+  ['notificationsstoragetest_2ecpp',['NotificationsStorageTest.cpp',['../_notifications_storage_test_8cpp.html',1,'']]],
+  ['nullmetricrecorder_2eh',['NullMetricRecorder.h',['../_null_metric_recorder_8h.html',1,'']]]
 ];

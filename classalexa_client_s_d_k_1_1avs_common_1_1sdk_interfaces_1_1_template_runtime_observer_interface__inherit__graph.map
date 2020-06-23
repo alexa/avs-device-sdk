@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,40,225,92"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html" title=" " alt="" coords="278,5,456,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html" title=" " alt="" coords="273,81,461,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockGui" alt="" coords="278,5,457,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html" title="alexaClientSDK::sampleApp\l::GuiRenderer" alt="" coords="273,86,461,127"/>
 </map>

@@ -1,0 +1,9 @@
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/MockDiscoveryEventSender.h" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/test/MockDiscoveryEventSender.h">
+<area shape="rect" id="node2" href="$_discovery_event_sender_interface_8h.html" title="CapabilitiesDelegate\l/DiscoveryEventSenderInterface.h" alt="" coords="551,109,774,151"/>
+<area shape="rect" id="node3" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="500,199,692,240"/>
+<area shape="rect" id="node18" href="$_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="797,288,1032,315"/>
+<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="372,288,623,315"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="395,363,599,404"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="707,363,949,404"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="345,452,511,493"/>
+</map>

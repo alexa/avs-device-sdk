@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::metrics::implementations::MetricRecorder Class Reference</div>  </div>
@@ -79,6 +80,7 @@ Inheritance diagram for alexaClientSDK::metrics::implementations::MetricRecorder
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_inherit__map" id="alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html" title="alexaClientSDK::avsCommon\l::utils::metrics::MetricRecorder\lInterface" alt="" coords="15,5,218,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -86,6 +88,7 @@ Collaboration diagram for alexaClientSDK::metrics::implementations::MetricRecord
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_coll__map" id="alexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html" title="alexaClientSDK::avsCommon\l::utils::metrics::MetricRecorder\lInterface" alt="" coords="15,5,218,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -103,6 +106,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaa569d178c1cc85b1c6762f490c18794 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa38d1c652fb0af6e33fc0739d948d4af inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html#aa38d1c652fb0af6e33fc0739d948d4af">recordMetric</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_event.html">MetricEvent</a> &gt; metricEvent)=0</td></tr>
 <tr class="separator:aa38d1c652fb0af6e33fc0739d948d4af inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aa681bc4f6d1ef831099c55daedb65e8d"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html#aa681bc4f6d1ef831099c55daedb65e8d">createMetricRecorderInterface</a> (std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_sink_interface.html">alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface</a> &gt; sink)</td></tr>
+<tr class="separator:aa681bc4f6d1ef831099c55daedb65e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements the interface for recording metrics to sinks. </p>
@@ -160,6 +168,40 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa681bc4f6d1ef831099c55daedb65e8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa681bc4f6d1ef831099c55daedb65e8d">&#9670;&nbsp;</a></span>createMetricRecorderInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; alexaClientSDK::metrics::implementations::MetricRecorder::createMetricRecorderInterface </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_sink_interface.html">alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>sink</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create a <a class="el" href="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html">MetricRecorder</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sink</td><td>A sink to send metrics to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <code><a class="el" href="classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html">MetricRecorder</a></code> instance. </dd></dl>
+
+</div>
+</div>
 <a id="a2f12a9fcc1ab384ecd5353d2e0e819ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f12a9fcc1ab384ecd5353d2e0e819ec">&#9670;&nbsp;</a></span>recordMetric()</h2>
 
@@ -187,14 +229,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Metrics/MetricRecorder/include/Metrics/<a class="el" href="_metric_recorder_8h_source.html">MetricRecorder.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Metrics/MetricRecorder/src/<a class="el" href="_metric_recorder_8cpp.html">MetricRecorder.cpp</a></li>
+<li>/workplace/avs-device-sdk/Metrics/MetricRecorder/include/Metrics/<a class="el" href="_metric_recorder_8h_source.html">MetricRecorder.h</a></li>
+<li>/workplace/avs-device-sdk/Metrics/MetricRecorder/src/<a class="el" href="_metric_recorder_8cpp.html">MetricRecorder.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,6 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2GetMimeHeadersResult.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2GetMimeHeadersResult.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,272,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="32,125,86,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="110,125,167,151"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_send_status_8h.html" title=" " alt="" coords="192,119,368,157"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="167,124,346,165"/>
+<area shape="rect" id="node5" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="370,124,557,165"/>
 </map>

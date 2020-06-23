@@ -1,6 +1,4 @@
 <map id="alexaClientSDK::synchronizeStateSender::PostConnectSynchronizeStateSender" name="alexaClientSDK::synchronizeStateSender::PostConnectSynchronizeStateSender">
-<area shape="rect" id="node1" title=" " alt="" coords="304,81,556,133"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title=" " alt="" coords="19,5,242,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_interface.html" title=" " alt="" coords="5,81,256,133"/>
-<area shape="rect" id="node4" title=" " alt="" coords="8,157,253,209"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="19,5,241,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PostConnectOperation\lInterface" alt="" coords="5,85,255,141"/>
 </map>

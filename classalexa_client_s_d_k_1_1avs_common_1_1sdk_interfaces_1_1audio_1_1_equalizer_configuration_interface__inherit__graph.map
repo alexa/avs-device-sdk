@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerConfigurationInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerConfigurationInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,51,221,103"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_configuration_interface.html" title=" " alt="" coords="269,5,493,71"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html" title=" " alt="" coords="270,95,493,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1equalizer_1_1_s_d_k_config_equalizer_configuration.html" title=" " alt="" coords="541,95,771,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::test::MockEqualizerConfiguration\lInterface" alt="" coords="265,5,488,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html" title="alexaClientSDK::equalizer\l::InMemoryEqualizerConfiguration" alt="" coords="267,100,486,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1equalizer_1_1_s_d_k_config_equalizer_configuration.html" title="alexaClientSDK::equalizer\l::SDKConfigEqualizerConfiguration" alt="" coords="536,100,763,141"/>
 </map>

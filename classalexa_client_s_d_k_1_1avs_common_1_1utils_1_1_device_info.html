@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -105,6 +105,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a023ff4b09d83f04656e9de815360f07b"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html#a023ff4b09d83f04656e9de815360f07b">createFromConfiguration</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;configurationRoot)</td></tr>
+<tr class="separator:a023ff4b09d83f04656e9de815360f07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67eb1f7802bca32000e90226e3d01eb1"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html#a67eb1f7802bca32000e90226e3d01eb1">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</td></tr>
 <tr class="separator:a67eb1f7802bca32000e90226e3d01eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8664a80dbe66f6f55cfd9e356b0ba29c"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html#a8664a80dbe66f6f55cfd9e356b0ba29c">create</a> (const std::string &amp;clientId, const std::string &amp;productId, const std::string &amp;deviceSerialNumber, const std::string &amp;manufacturerName, const std::string &amp;description, const std::string &amp;friendlyName=&quot;&quot;, const std::string &amp;deviceType=&quot;&quot;, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &amp;endpointId=&quot;&quot;, const std::string &amp;registrationKey=&quot;&quot;, const std::string &amp;productIdKey=&quot;&quot;)</td></tr>
@@ -137,6 +139,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Create a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000013">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">configurationRoot</td><td>The global config object. </td></tr>
@@ -240,6 +243,40 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">deviceType</td><td>The device type. </td></tr>
     <tr><td class="paramname">registrationKey</td><td>The Registration key value. </td></tr>
     <tr><td class="paramname">productIdKey</td><td>The Product Id Key value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If successful, returns a new <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a>, otherwise <code>nullptr</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a023ff4b09d83f04656e9de815360f07b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a023ff4b09d83f04656e9de815360f07b">&#9670;&nbsp;</a></span>createFromConfiguration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a> &gt; alexaClientSDK::avsCommon::utils::DeviceInfo::createFromConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>configurationRoot</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create a <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">DeviceInfo</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configurationRoot</td><td>The <code>ConfiguratioNode</code> to read device info from. </td></tr>
   </table>
   </dd>
 </dl>
@@ -514,14 +551,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_device_info_8h_source.html">DeviceInfo.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/src/<a class="el" href="_device_info_8cpp.html">DeviceInfo.cpp</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/<a class="el" href="_device_info_8h_source.html">DeviceInfo.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/src/<a class="el" href="_device_info_8cpp.html">DeviceInfo.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

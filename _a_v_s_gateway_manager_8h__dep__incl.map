@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="245,5,447,71"/>
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8cpp.html" title=" " alt="" coords="5,119,207,171"/>
-<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_test_8cpp.html" title=" " alt="" coords="231,119,462,171"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title=" " alt="" coords="486,125,766,164"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp" alt="" coords="5,124,208,180"/>
+<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp" alt="" coords="232,124,464,180"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="488,131,765,173"/>
 </map>

@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/BlockingPolicyTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/BlockingPolicyTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="98,5,283,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,105,120,131"/>
-<area shape="rect" id="node3" title=" " alt="" coords="144,105,238,131"/>
-<area shape="rect" id="node4" href="$_blocking_policy_8h.html" title=" " alt="" coords="262,105,493,131"/>
-<area shape="rect" id="node5" title=" " alt="" coords="307,179,360,204"/>
-<area shape="rect" id="node6" title=" " alt="" coords="384,179,456,204"/>
+<area shape="rect" id="node4" href="$_blocking_policy_8h.html" title="AVSCommon/AVS/BlockingPolicy.h" alt="" coords="264,109,499,136"/>
+<area shape="rect" id="node7" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="441,184,628,225"/>
 </map>

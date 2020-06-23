@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ Inheritance diagram for alexaClientSDK::sampleApp::InteractionManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map" id="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="15,5,219,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,85,229,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,166,216,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -86,6 +89,9 @@ Collaboration diagram for alexaClientSDK::sampleApp::InteractionManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map" id="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="15,5,219,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,85,229,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,166,216,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -139,6 +145,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac4eebdfd82c1af2cf096919e552197c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd0202ff30ed270b9757246702735d95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#acd0202ff30ed270b9757246702735d95">locale</a> ()</td></tr>
 <tr class="separator:acd0202ff30ed270b9757246702735d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae29f550be6fe16cf99b070ee7be78ab3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ae29f550be6fe16cf99b070ee7be78ab3">clearCachedEndpointIdentifiers</a> (const std::vector&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &gt; &amp;deletedEndpoints)</td></tr>
+<tr class="separator:ae29f550be6fe16cf99b070ee7be78ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0456ff24e0d927dc9440d92c3396f99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#ab0456ff24e0d927dc9440d92c3396f99">timeZone</a> ()</td></tr>
 <tr class="separator:ab0456ff24e0d927dc9440d92c3396f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20635ea9eb07765a7ee99dea3b9ebbd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a20635ea9eb07765a7ee99dea3b9ebbd7">networkInfo</a> ()</td></tr>
@@ -434,6 +442,25 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Begins the interaction between the Sample App and the user. This should only be called at startup. </p>
+
+</div>
+</div>
+<a id="ae29f550be6fe16cf99b070ee7be78ab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae29f550be6fe16cf99b070ee7be78ab3">&#9670;&nbsp;</a></span>clearCachedEndpointIdentifiers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::clearCachedEndpointIdentifiers </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deletedEndpoints</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resets cached endpoint identifiers. </p>
 
 </div>
 </div>
@@ -1595,14 +1622,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SampleApp/include/SampleApp/<a class="el" href="_interaction_manager_8h_source.html">InteractionManager.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SampleApp/src/<a class="el" href="_interaction_manager_8cpp.html">InteractionManager.cpp</a></li>
+<li>/workplace/avs-device-sdk/SampleApp/include/SampleApp/<a class="el" href="_interaction_manager_8h_source.html">InteractionManager.h</a></li>
+<li>/workplace/avs-device-sdk/SampleApp/src/<a class="el" href="_interaction_manager_8cpp.html">InteractionManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

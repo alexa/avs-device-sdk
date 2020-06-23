@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilitiesDelegate/src/CapabilitiesDelegate.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilitiesDelegate/src/CapabilitiesDelegate.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,15 +75,49 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;functional&gt;</code><br />
 <code>#include &quot;<a class="el" href="_capabilities_delegate_8h_source.html">CapabilitiesDelegate/CapabilitiesDelegate.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_discovery_event_sender_interface_8h_source.html">CapabilitiesDelegate/DiscoveryEventSenderInterface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_discovery_event_sender_8h_source.html">CapabilitiesDelegate/DiscoveryEventSender.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_post_connect_capabilities_publisher_8h_source.html">CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_discovery_utils_8h_source.html">CapabilitiesDelegate/Utils/DiscoveryUtils.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CapabilitiesDelegate.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_capabilities_delegate_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp">
+<div class="center"><img src="_capabilities_delegate_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp" id="_2workplace_2avs-device-sdk_2_capabilities_delegate_2src_2_capabilities_delegate_8cpp">
+<area shape="rect" id="node3" href="_capabilities_delegate_8h.html" title="CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="1794,109,1951,151"/>
+<area shape="rect" id="node8" href="_discovery_event_sender_8h.html" title="CapabilitiesDelegate\l/DiscoveryEventSender.h" alt="" coords="3539,206,3710,247"/>
+<area shape="rect" id="node42" href="_post_connect_capabilities_publisher_8h.html" title="CapabilitiesDelegate\l/PostConnectCapabilitiesPublisher.h" alt="" coords="3273,206,3507,247"/>
+<area shape="rect" id="node43" href="_discovery_utils_8h.html" title="CapabilitiesDelegate\l/Utils/DiscoveryUtils.h" alt="" coords="21,206,175,247"/>
+<area shape="rect" id="node44" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="4534,206,4710,247"/>
+<area shape="rect" id="node12" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2025,310,2217,351"/>
+<area shape="rect" id="node20" href="_capabilities_delegate_storage_interface_8h.html" title="CapabilitiesDelegate\l/Storage/CapabilitiesDelegate\lStorageInterface.h" alt="" coords="5397,407,5591,463"/>
+<area shape="rect" id="node21" href="_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="243,310,465,351"/>
+<area shape="rect" id="node24" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="742,414,942,455"/>
+<area shape="rect" id="node26" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="257,414,451,455"/>
+<area shape="rect" id="node27" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="987,310,1209,351"/>
+<area shape="rect" id="node29" href="_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="994,206,1202,247"/>
+<area shape="rect" id="node31" href="_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="967,414,1176,455"/>
+<area shape="rect" id="node32" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="5695,310,5941,351"/>
+<area shape="rect" id="node35" href="_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="1685,199,1892,255"/>
+<area shape="rect" id="node36" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2593,310,2782,351"/>
+<area shape="rect" id="node38" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2907,310,3102,351"/>
+<area shape="rect" id="node40" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1436,310,1603,351"/>
+<area shape="rect" id="node41" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1437,206,1609,247"/>
+<area shape="rect" id="node10" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="3956,310,4197,351"/>
+<area shape="rect" id="node11" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="3278,303,3486,359"/>
+<area shape="rect" id="node13" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2158,414,2350,455"/>
+<area shape="rect" id="node15" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3611,414,3803,455"/>
+<area shape="rect" id="node16" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="4324,317,4533,344"/>
+<area shape="rect" id="node18" href="_discovery_event_sender_interface_8h.html" title="DiscoveryEventSenderInterface.h" alt="" coords="3713,317,3931,344"/>
+<area shape="rect" id="node19" href="_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="4665,421,4899,448"/>
+<area shape="rect" id="node25" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="189,511,385,537"/>
+<area shape="rect" id="node30" href="_a_v_s_gateway_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayObserverInterface.h" alt="" coords="743,310,963,351"/>
+<area shape="rect" id="node34" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="1679,310,1899,351"/>
+<area shape="rect" id="node46" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="4660,310,4875,351"/>
+<area shape="rect" id="node47" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="5197,414,5373,455"/>
+<area shape="rect" id="node48" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="5001,310,5177,351"/>
+<area shape="rect" id="node49" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="5353,310,5547,351"/>
+<area shape="rect" id="node50" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2342,310,2518,351"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -105,6 +139,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a7994b69b92600496f1bcfd259b7df51e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate.html#a7994b69b92600496f1bcfd259b7df51e">alexaClientSDK::capabilitiesDelegate::TAG</a> (&quot;CapabilitiesDelegate&quot;)</td></tr>
 <tr class="memdesc:a7994b69b92600496f1bcfd259b7df51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate.html#a7994b69b92600496f1bcfd259b7df51e">More...</a><br /></td></tr>
 <tr class="separator:a7994b69b92600496f1bcfd259b7df51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b76d18f740b31ee8374144748f8d64"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; EndpointIdentifier &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate.html#a10b76d18f740b31ee8374144748f8d64">alexaClientSDK::capabilitiesDelegate::getEndpointIdentifiers</a> (const std::unordered_map&lt; std::string, std::string &gt; &amp;endpoints)</td></tr>
+<tr class="separator:a10b76d18f740b31ee8374144748f8d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -136,7 +172,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -110,6 +110,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa93223db0209647b2821dc514220b013"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac420717771f55bef65c59510f93491bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#ac420717771f55bef65c59510f93491bc">m</a> (const std::string &amp;message)</td></tr>
 <tr class="separator:ac420717771f55bef65c59510f93491bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72d18d80a906dcc37bf2ae3ec147d9c"><td class="memTemplParams" colspan="2">template&lt;typename PtrType &gt; </td></tr>
+<tr class="memitem:ab72d18d80a906dcc37bf2ae3ec147d9c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#ab72d18d80a906dcc37bf2ae3ec147d9c">p</a> (const char *key, const std::shared_ptr&lt; PtrType &gt; &amp;ptr)</td></tr>
+<tr class="separator:ab72d18d80a906dcc37bf2ae3ec147d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0831b4a7ca1cddf639f5b08bc18b34e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#a0831b4a7ca1cddf639f5b08bc18b34e2">p</a> (const char *key, void *ptr)</td></tr>
+<tr class="separator:a0831b4a7ca1cddf639f5b08bc18b34e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7adcc5f4d19c41cdc72dca79cb273ae4"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#a7adcc5f4d19c41cdc72dca79cb273ae4">c_str</a> () const</td></tr>
 <tr class="separator:a7adcc5f4d19c41cdc72dca79cb273ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -610,6 +615,82 @@ template&lt;typename ValueType &gt; </div>
 
 </div>
 </div>
+<a id="ab72d18d80a906dcc37bf2ae3ec147d9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab72d18d80a906dcc37bf2ae3ec147d9c">&#9670;&nbsp;</a></span>p() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename PtrType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp; alexaClientSDK::avsCommon::utils::logger::LogEntry::p </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; PtrType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add pointer (hence the name 'p') in the form of a <code>key</code>, address of the object pointed to by the shared_ptr <code>ptr</code> to the metadata of this log entry.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key identifying the value to add to this <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. ">LogEntry</a>. </td></tr>
+    <tr><td class="paramname">ptr</td><td>The shared_ptr of the object to add to this <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. ">LogEntry</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This instance to facilitate adding more information to this log entry. </dd></dl>
+
+</div>
+</div>
+<a id="a0831b4a7ca1cddf639f5b08bc18b34e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0831b4a7ca1cddf639f5b08bc18b34e2">&#9670;&nbsp;</a></span>p() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">LogEntry</a> &amp; alexaClientSDK::avsCommon::utils::logger::LogEntry::p </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>ptr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add pointer (hence the name 'p') in the form of a <code>key</code>, address of the raw <code>ptr</code> to the metadata of this log entry.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key identifying the value to add to this <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. ">LogEntry</a>. </td></tr>
+    <tr><td class="paramname">ptr</td><td>The raw pointer of the object to add to this <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. ">LogEntry</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This instance to facilitate adding more information to this log entry. </dd></dl>
+
+</div>
+</div>
 <a id="ae7d0468a3ca6a1c2cfb814304da16e7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7d0468a3ca6a1c2cfb814304da16e7f">&#9670;&nbsp;</a></span>sensitive()</h2>
 
@@ -658,14 +739,14 @@ template&lt;typename ValueType &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/<a class="el" href="_log_entry_8h_source.html">LogEntry.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/src/Logger/<a class="el" href="_log_entry_8cpp.html">LogEntry.cpp</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/<a class="el" href="_log_entry_8h_source.html">LogEntry.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/src/Logger/<a class="el" href="_log_entry_8cpp.html">LogEntry.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

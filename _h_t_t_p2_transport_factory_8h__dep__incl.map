@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h">
-<area shape="rect" id="node1" title=" " alt="" coords="277,5,516,57"/>
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8cpp.html" title=" " alt="" coords="5,112,198,164"/>
-<area shape="rect" id="node3" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="221,112,374,164"/>
-<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="398,105,592,171"/>
-<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title=" " alt="" coords="615,119,895,157"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="5,117,197,173"/>
+<area shape="rect" id="node3" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="221,117,373,173"/>
+<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="398,109,589,180"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="613,124,891,165"/>
 </map>

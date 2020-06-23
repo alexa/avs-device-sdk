@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData">
-<area shape="rect" id="node1" title=" " alt="" coords="366,35,563,100"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="5,5,202,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="5,83,202,121"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::string \&gt;" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; int \&gt;" alt="" coords="5,87,203,129"/>
 </map>

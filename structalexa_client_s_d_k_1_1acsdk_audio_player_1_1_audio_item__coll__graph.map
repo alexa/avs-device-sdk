@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::acsdkAudioPlayer::AudioItem" name="alexaClientSDK::acsdkAudioPlayer::AudioItem">
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream.html" title="Contains the parameters of the stream. " alt="" coords="341,13,531,54"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html" title="Contains values for progress reports. " alt="" coords="5,5,196,61"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_context.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::Playback\lContext" alt="" coords="337,79,535,135"/>
+<area shape="rect" id="node5" href="$structalexa_client_s_d_k_1_1captions_1_1_caption_data.html" title="alexaClientSDK::captions\l::CaptionData" alt="" coords="350,159,522,201"/>
+</map>

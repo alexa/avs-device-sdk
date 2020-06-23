@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::MediaPropertie
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title="alexaClientSDK::acsdkAudio\lPlayer::AudioPlayer" alt="" coords="284,5,475,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="285,71,474,127"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_media_properties_fetcher.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockMediaPropertiesFetcher" alt="" coords="264,151,495,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -88,6 +91,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a784ee9de3a0e2007a48d6376032ce76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4bebb79b62dcb4987d611b75f78a64"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface.html#a0a4bebb79b62dcb4987d611b75f78a64">getAudioItemOffset</a> ()=0</td></tr>
 <tr class="separator:a0a4bebb79b62dcb4987d611b75f78a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8330609541efda6dbe6153add5ff97d0"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface.html#a8330609541efda6dbe6153add5ff97d0">getAudioItemDuration</a> ()</td></tr>
+<tr class="separator:a8330609541efda6dbe6153add5ff97d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class provides an interface to query the properties of a media from a player. </p>
@@ -119,6 +124,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8330609541efda6dbe6153add5ff97d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8330609541efda6dbe6153add5ff97d0">&#9670;&nbsp;</a></span>getAudioItemDuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::chrono::milliseconds alexaClientSDK::avsCommon::sdkInterfaces::MediaPropertiesInterface::getAudioItemDuration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the duration of the current AudioItem the player is handling.</p>
+<dl class="section return"><dt>Returns</dt><dd>returns the duration. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a556082409e30c9e9518d3b19fcb166f9">alexaClientSDK::acsdkAudioPlayer::AudioPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#ac76f65c8185f4f88e800b151ecb5a489">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>.</p>
+
+</div>
+</div>
 <a id="a0a4bebb79b62dcb4987d611b75f78a64"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0a4bebb79b62dcb4987d611b75f78a64">&#9670;&nbsp;</a></span>getAudioItemOffset()</h2>
 
@@ -144,18 +178,18 @@ Public Member Functions</h2></td></tr>
 <p>This function retrieves the offset of the current AudioItem the player is handling.</p>
 <dl class="section return"><dt>Returns</dt><dd>This returns the offset in milliseconds. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_player.html#a5d1cd0acdd69e3e1549993a5b0ed76b9">alexaClientSDK::capabilityAgents::audioPlayer::AudioPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#ab4086ed7fa66a8b0e003c31b14d9a910">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a6864be6b7385da0d7639d75dec16df0f">alexaClientSDK::acsdkAudioPlayer::AudioPlayer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html#ab4086ed7fa66a8b0e003c31b14d9a910">alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_media_properties_interface_8h_source.html">MediaPropertiesInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_media_properties_interface_8h_source.html">MediaPropertiesInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::PlaybackRouter
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_mock_playback_router.html" title="alexaClientSDK::acsdkBluetooth\l::test::MockPlaybackRouter" alt="" coords="264,5,477,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_router.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockPlaybackRouter" alt="" coords="272,71,469,127"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackRouter" alt="" coords="281,151,460,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -90,10 +93,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adddcad41e49e64f27d0703db3b557996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6531203d69a4702534354b693224e1e4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#a6531203d69a4702534354b693224e1e4">togglePressed</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad9f7d4000e3b111db271f73d9e34604b">avsCommon::avs::PlaybackToggle</a> toggle, bool action)=0</td></tr>
 <tr class="separator:a6531203d69a4702534354b693224e1e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac74294f5ef3271bb40e9cc1e49695e9a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#ac74294f5ef3271bb40e9cc1e49695e9a">setHandler</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">PlaybackHandlerInterface</a> &gt; handler)=0</td></tr>
-<tr class="separator:ac74294f5ef3271bb40e9cc1e49695e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79ee52873a9ef1564fcb8ae5a6c4a9ee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#a79ee52873a9ef1564fcb8ae5a6c4a9ee">setHandler</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">PlaybackHandlerInterface</a> &gt; handler, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html">LocalPlaybackHandlerInterface</a> &gt; localHandler=nullptr)=0</td></tr>
+<tr class="separator:a79ee52873a9ef1564fcb8ae5a6c4a9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef05df81b95d214444b9c4cfd45bc13d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#aef05df81b95d214444b9c4cfd45bc13d">switchToDefaultHandler</a> ()=0</td></tr>
 <tr class="separator:aef05df81b95d214444b9c4cfd45bc13d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3635270a484b23e61b26f788e7dea1a2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#a3635270a484b23e61b26f788e7dea1a2">useDefaultHandlerWith</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html">LocalPlaybackHandlerInterface</a> &gt; localHandler)</td></tr>
+<tr class="separator:a3635270a484b23e61b26f788e7dea1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6850f71b63b45f00615b9293fb218cec"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#a6850f71b63b45f00615b9293fb218cec">localOperation</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6">LocalPlaybackHandlerInterface::PlaybackOperation</a> op)</td></tr>
+<tr class="separator:a6850f71b63b45f00615b9293fb218cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82ba2d91acdd8000955daf975a45aae0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html#a82ba2d91acdd8000955daf975a45aae0">localSeekTo</a> (std::chrono::milliseconds location, bool fromStart)</td></tr>
+<tr class="separator:a82ba2d91acdd8000955daf975a45aae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">PlaybackRouterInterface</a></code> used to get a playback button press and send it it to the current handler. </p>
@@ -148,7 +157,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This method can be called by the client when a Button is pressed on a physical button or on the GUI. A ButtonCommandIssued event message will be sent to the observer.</p>
+<p>This method can be called by the client when a Button is pressed on a physical button or on the GUI. A ButtonCommandIssued event message will be sent to the observer. NOTE: Instances may attempt to handle button locally first.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">button</td><td>The PlaybackButton type being pressed </td></tr>
@@ -160,8 +169,91 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac74294f5ef3271bb40e9cc1e49695e9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac74294f5ef3271bb40e9cc1e49695e9a">&#9670;&nbsp;</a></span>setHandler()</h2>
+<a id="a6850f71b63b45f00615b9293fb218cec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6850f71b63b45f00615b9293fb218cec">&#9670;&nbsp;</a></span>localOperation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::sdkInterfaces::PlaybackRouterInterface::localOperation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6">LocalPlaybackHandlerInterface::PlaybackOperation</a>&#160;</td>
+          <td class="paramname"><em>op</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Request the handler to perform a local playback operation. NOTE: If local operation is not possable, Instances may fall back on <code>ButtonPressed</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">op</td><td>Operation to request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful, false if the operation cannot be performed locally. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html#a93547bffe5e0093d7cce35648936bcda">alexaClientSDK::capabilityAgents::playbackController::PlaybackRouter</a>.</p>
+
+</div>
+</div>
+<a id="a82ba2d91acdd8000955daf975a45aae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82ba2d91acdd8000955daf975a45aae0">&#9670;&nbsp;</a></span>localSeekTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::sdkInterfaces::PlaybackRouterInterface::localSeekTo </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>location</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fromStart</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Request the handler to perform a local seek operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">location</td><td>Position to seek to </td></tr>
+    <tr><td class="paramname">fromStart</td><td>true to seek to absolute location, false to seek reletive to current location. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful, false if the operation cannot be performed locally. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html#a5621f0b004540608dffd567cfaee5be6">alexaClientSDK::capabilityAgents::playbackController::PlaybackRouter</a>.</p>
+
+</div>
+</div>
+<a id="a79ee52873a9ef1564fcb8ae5a6c4a9ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79ee52873a9ef1564fcb8ae5a6c4a9ee">&#9670;&nbsp;</a></span>setHandler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,8 +265,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::PlaybackRouterInterface::setHandler </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">PlaybackHandlerInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>handler</em></td><td>)</td>
+          <td class="paramname"><em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html">LocalPlaybackHandlerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>localHandler</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -187,6 +289,7 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handler</td><td>- The handler to call on future playback button presses. </td></tr>
+    <tr><td class="paramname">localHandler</td><td>The handler to use for local requests. nullptr to disable local requests </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,14 +370,41 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3635270a484b23e61b26f788e7dea1a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3635270a484b23e61b26f788e7dea1a2">&#9670;&nbsp;</a></span>useDefaultHandlerWith()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::PlaybackRouterInterface::useDefaultHandlerWith </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html">LocalPlaybackHandlerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>localHandler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This method switches playback button pressess handling to the default handler, and enables the given local Handler. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_playback_router_interface_8h_source.html">PlaybackRouterInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_playback_router_interface_8h_source.html">PlaybackRouterInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

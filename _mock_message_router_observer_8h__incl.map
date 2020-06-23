@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMessageRouterObserver.h" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMessageRouterObserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="72,5,288,57"/>
-<area shape="rect" id="node2" href="$_message_router_observer_interface_8h.html" title=" " alt="" coords="77,105,283,144"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,199,75,224"/>
-<area shape="rect" id="node6" title=" " alt="" coords="307,112,421,137"/>
-<area shape="rect" id="node4" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="99,192,347,231"/>
-<area shape="rect" id="node5" title=" " alt="" coords="187,279,259,304"/>
+<area shape="rect" id="node2" href="$_message_router_observer_interface_8h.html" title="ACL/Transport/MessageRouter\lObserverInterface.h" alt="" coords="77,109,280,151"/>
+<area shape="rect" id="node4" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="99,199,344,240"/>
 </map>

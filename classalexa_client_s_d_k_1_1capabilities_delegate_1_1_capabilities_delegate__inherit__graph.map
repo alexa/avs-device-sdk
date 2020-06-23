@@ -1,11 +1,10 @@
 <map id="alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate" name="alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate">
-<area shape="rect" id="node1" title=" " alt="" coords="600,227,805,265"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title=" " alt="" coords="308,43,546,95"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="7,5,253,57"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html" title=" " alt="" coords="5,81,254,133"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="329,119,526,157"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html" title=" " alt="" coords="302,181,552,233"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_status_observer_interface.html" title=" " alt="" coords="310,257,544,309"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title=" " alt="" coords="320,333,534,372"/>
-<area shape="rect" id="node9" title=" " alt="" coords="313,396,542,435"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lInterface" alt="" coords="309,85,546,141"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaEventProcessed\lObserverInterface" alt="" coords="7,5,253,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSGatewayObserver\lInterface" alt="" coords="5,85,255,141"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="19,165,241,221"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="329,166,526,207"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PostConnectOperation\lProviderInterface" alt="" coords="303,232,552,288"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_status_observer_interface.html" title="alexaClientSDK::capabilities\lDelegate::DiscoveryStatusObserver\lInterface" alt="" coords="311,312,543,368"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title="alexaClientSDK::registration\lManager::CustomerDataHandler" alt="" coords="322,393,533,434"/>
 </map>

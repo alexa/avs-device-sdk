@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::acl::transport::test::TestMessageRequestObserver" name="alexaClientSDK::acl::transport::test::TestMessageRequestObserver">
-<area shape="rect" id="node1" title=" " alt="" coords="376,88,572,140"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title=" " alt="" coords="17,5,237,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title=" " alt="" coords="5,81,249,147"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title=" " alt="" coords="29,171,225,223"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="16,5,235,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; MessageRequestObserverInterface\l::Status \&gt;" alt="" coords="5,86,245,157"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; std::string \&gt;" alt="" coords="27,181,224,237"/>
 </map>

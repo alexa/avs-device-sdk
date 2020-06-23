@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::mediaPlayer::android::AndroidSLESMediaPlayer" name="alexaClientSDK::mediaPlayer::android::AndroidSLESMediaPlayer">
-<area shape="rect" id="node1" title=" " alt="" coords="269,88,504,127"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title=" " alt="" coords="5,5,221,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_interface.html" title=" " alt="" coords="15,81,212,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="15,157,212,196"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::EqualizerInterface" alt="" coords="14,85,211,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="14,166,211,207"/>
 </map>

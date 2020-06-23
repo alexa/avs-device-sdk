@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -105,6 +105,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html">MessageRequestQueueInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_factory.html">MessageRouterFactory</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_factory_interface.html">MessageRouterFactoryInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html">MessageRouterInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -254,8 +258,13 @@ Variables</h2></td></tr>
 <tr class="memitem:a72ffca4e566bfdad41d9631d274d426f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a72ffca4e566bfdad41d9631d274d426f">SEND_COMPLETED</a> = &quot;SEND_COMPLETED&quot;</td></tr>
 <tr class="memdesc:a72ffca4e566bfdad41d9631d274d426f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send completed.  <a href="#a72ffca4e566bfdad41d9631d274d426f">More...</a><br /></td></tr>
 <tr class="separator:a72ffca4e566bfdad41d9631d274d426f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46d5118148067e292f252633b3919477"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a46d5118148067e292f252633b3919477">HTTP_KEY_VALUE_SEPARATOR</a> = &quot;: &quot;</td></tr>
+<tr class="separator:a46d5118148067e292f252633b3919477"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76e81166c0156ad3da073320ec94b37"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac76e81166c0156ad3da073320ec94b37">EMPTY_QUEUE_NAME</a> = &quot;&quot;</td></tr>
 <tr class="separator:ac76e81166c0156ad3da073320ec94b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f2a89e324c5932e232f7325ef2e287d"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a2f2a89e324c5932e232f7325ef2e287d">KEY_SIZEOF_TRANSPORTS</a> = &quot;sizeOf m_transports&quot;</td></tr>
+<tr class="memdesc:a2f2a89e324c5932e232f7325ef2e287d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String for logging purpose as the key for the size of m_transports.  <a href="#a2f2a89e324c5932e232f7325ef2e287d">More...</a><br /></td></tr>
+<tr class="separator:a2f2a89e324c5932e232f7325ef2e287d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95e03383846e9fe3372619d7976b99ee"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a95e03383846e9fe3372619d7976b99ee">X_AMZN_REQUESTID_PREFIX</a> = &quot;x-amzn-requestid:&quot;</td></tr>
 <tr class="memdesc:a95e03383846e9fe3372619d7976b99ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prefix of request IDs passed back in the header of AVS replies.  <a href="#a95e03383846e9fe3372619d7976b99ee">More...</a><br /></td></tr>
 <tr class="separator:a95e03383846e9fe3372619d7976b99ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1083,6 +1092,28 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a46d5118148067e292f252633b3919477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46d5118148067e292f252633b3919477">&#9670;&nbsp;</a></span>HTTP_KEY_VALUE_SEPARATOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acl::HTTP_KEY_VALUE_SEPARATOR = &quot;: &quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7a6592c43f3fe5f0703fec4f906dde09"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7a6592c43f3fe5f0703fec4f906dde09">&#9670;&nbsp;</a></span>INACTIVITY_TIMEOUT</h2>
 
@@ -1128,6 +1159,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    <span class="stringliteral">&quot;Content-Disposition: form-data; name=\&quot;metadata\&quot;&quot;</span>,</div><div class="line">    <span class="stringliteral">&quot;Content-Type: application/json&quot;</span>}</div></div><!-- fragment -->
 <p>Mime header strings for mime parts containing json payloads. </p>
+
+</div>
+</div>
+<a id="a2f2a89e324c5932e232f7325ef2e287d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f2a89e324c5932e232f7325ef2e287d">&#9670;&nbsp;</a></span>KEY_SIZEOF_TRANSPORTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* alexaClientSDK::acl::KEY_SIZEOF_TRANSPORTS = &quot;sizeOf m_transports&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String for logging purpose as the key for the size of m_transports. </p>
 
 </div>
 </div>
@@ -1542,7 +1597,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

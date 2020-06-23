@@ -1,15 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Threading/Executor.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Threading/Executor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="477,5,658,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,205,66,231"/>
-<area shape="rect" id="node3" title=" " alt="" coords="342,125,471,151"/>
-<area shape="rect" id="node4" title=" " alt="" coords="495,125,557,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="581,125,640,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="90,205,168,231"/>
-<area shape="rect" id="node7" title=" " alt="" coords="664,125,719,151"/>
-<area shape="rect" id="node8" title=" " alt="" coords="744,125,813,151"/>
-<area shape="rect" id="node9" title=" " alt="" coords="837,125,895,151"/>
-<area shape="rect" id="node10" title=" " alt="" coords="919,125,971,151"/>
-<area shape="rect" id="node11" href="$_task_thread_8h.html" title=" " alt="" coords="124,119,318,157"/>
-<area shape="rect" id="node12" title=" " alt="" coords="193,205,247,231"/>
-<area shape="rect" id="node13" title=" " alt="" coords="270,205,329,231"/>
+<area shape="rect" id="node11" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="217,124,412,165"/>
+<area shape="rect" id="node14" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="309,213,408,240"/>
+<area shape="rect" id="node16" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="215,288,329,315"/>
 </map>

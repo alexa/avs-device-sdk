@@ -1,0 +1,21 @@
+<map id="/workplace/avs&#45;device&#45;sdk/Diagnostics/src/FileBasedAudioInjector.cpp" name="/workplace/avs&#45;device&#45;sdk/Diagnostics/src/FileBasedAudioInjector.cpp">
+<area shape="rect" id="node2" href="$_file_based_audio_injector_8h.html" title="Diagnostics/FileBasedAudio\lInjector.h" alt="" coords="1173,109,1360,151"/>
+<area shape="rect" id="node3" href="$_audio_injector_microphone_8h.html" title="Diagnostics/AudioInjector\lMicrophone.h" alt="" coords="1565,199,1736,240"/>
+<area shape="rect" id="node7" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="997,288,1195,329"/>
+<area shape="rect" id="node37" href="$_microphone_interface_8h.html" title="Audio/MicrophoneInterface.h" alt="" coords="1219,295,1407,322"/>
+<area shape="rect" id="node38" href="$_diagnostics_utils_8h.html" title="Diagnostics/DiagnosticsUtils.h" alt="" coords="43,653,245,679"/>
+<area shape="rect" id="node39" href="$_audio_injector_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/AudioInjectorInterface.h" alt="" coords="1264,199,1501,240"/>
+<area shape="rect" id="node34" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1431,295,1654,322"/>
+<area shape="rect" id="node35" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="1551,377,1727,419"/>
+<area shape="rect" id="node8" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="997,467,1163,508"/>
+<area shape="rect" id="node32" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1117,377,1283,419"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1259,556,1435,597"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1237,645,1413,687"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1218,735,1433,776"/>
+<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="857,824,1033,865"/>
+<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="699,735,875,776"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1001,735,1194,776"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1695,913,1871,955"/>
+<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1209,824,1385,865"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1209,913,1385,955"/>
+</map>

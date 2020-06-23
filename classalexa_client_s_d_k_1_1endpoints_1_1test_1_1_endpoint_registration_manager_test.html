@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,6 +96,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a7b7f846583b8bee7108ccd9fa00fa971"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1test_1_1_endpoint_registration_manager_test.html#a7b7f846583b8bee7108ccd9fa00fa971">TearDown</a> () override</td></tr>
 <tr class="memdesc:a7b7f846583b8bee7108ccd9fa00fa971"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tear down method run after every test.  <a href="#a7b7f846583b8bee7108ccd9fa00fa971">More...</a><br /></td></tr>
 <tr class="separator:a7b7f846583b8bee7108ccd9fa00fa971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb744e5ee0ac681f0247e56a5f460080"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1test_1_1_endpoint_registration_manager_test.html#aeb744e5ee0ac681f0247e56a5f460080">validateEndpointConfiguration</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint.html">MockEndpoint</a> &gt; &amp;endpoint, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> endpointId, std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a> &gt; configurations=std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a> &gt;{<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>{&quot;Type&quot;, &quot;InterfaceName&quot;, &quot;1.0&quot;}}, std::unordered_map&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html">DirectiveHandlerInterface</a> &gt;&gt; capabilities=std::unordered_map&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html">DirectiveHandlerInterface</a> &gt;&gt;{})</td></tr>
+<tr class="separator:aeb744e5ee0ac681f0247e56a5f460080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -164,6 +166,54 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The tear down method run after every test. </p>
+
+</div>
+</div>
+<a id="aeb744e5ee0ac681f0247e56a5f460080"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb744e5ee0ac681f0247e56a5f460080">&#9670;&nbsp;</a></span>validateEndpointConfiguration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::endpoints::test::EndpointRegistrationManagerTest::validateEndpointConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint.html">MockEndpoint</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>endpoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a>&#160;</td>
+          <td class="paramname"><em>endpointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a> &gt;&#160;</td>
+          <td class="paramname"><em>configurations</em> = <code>std::vector&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>&gt;{<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>{&quot;Type&quot;,&#160;&quot;InterfaceName&quot;,&#160;&quot;1.0&quot;}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_map&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html">DirectiveHandlerInterface</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>capabilities</em> = <code>std::unordered_map&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>,&#160;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html">DirectiveHandlerInterface</a>&gt;&gt;{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -279,13 +329,13 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Endpoints/test/<a class="el" href="_endpoint_registration_manager_test_8cpp.html">EndpointRegistrationManagerTest.cpp</a></li>
+<li>/workplace/avs-device-sdk/Endpoints/test/<a class="el" href="_endpoint_registration_manager_test_8cpp.html">EndpointRegistrationManagerTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilitiesDelegate/test/PostConnectCapabilitiesPublisherTest.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilitiesDelegate/test/PostConnectCapabilitiesPublisherTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,8 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">PostConnectCapabilitiesPublisherTest.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -77,26 +76,49 @@ $(function() {
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="_mock_post_connect_send_message_8h_source.html">AVSCommon/SDKInterfaces/MockPostConnectSendMessage.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_message_sender_8h_source.html">AVSCommon/SDKInterfaces/MockMessageSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_post_connect_operation_interface_8h_source.html">AVSCommon/SDKInterfaces/PostConnectOperationInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_promise_future_pair_8h_source.html">AVSCommon/Utils/PromiseFuturePair.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_post_connect_capabilities_publisher_8h_source.html">CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_capabilities_delegate_2test_2_mock_auth_delegate_8h_source.html">MockAuthDelegate.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_mock_discovery_event_sender_8h_source.html">MockDiscoveryEventSender.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PostConnectCapabilitiesPublisherTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_capabilities_publisher_test_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp">
+<div class="center"><img src="_post_connect_capabilities_publisher_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp" id="_2workplace_2avs-device-sdk_2_capabilities_delegate_2test_2_post_connect_capabilities_publisher_test_8cpp">
+<area shape="rect" id="node5" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="1106,124,1298,165"/>
+<area shape="rect" id="node20" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="979,310,1199,351"/>
+<area shape="rect" id="node21" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2507,124,2681,165"/>
+<area shape="rect" id="node39" href="_post_connect_capabilities_publisher_8h.html" title="CapabilitiesDelegate\l/PostConnectCapabilitiesPublisher.h" alt="" coords="642,213,877,255"/>
+<area shape="rect" id="node49" href="_capabilities_delegate_2test_2_mock_auth_delegate_8h.html" title="MockAuthDelegate.h" alt="" coords="1453,414,1597,441"/>
+<area shape="rect" id="node50" href="_mock_discovery_event_sender_8h.html" title="MockDiscoveryEventSender.h" alt="" coords="1323,131,1521,158"/>
+<area shape="rect" id="node6" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="978,407,1170,448"/>
+<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="626,503,877,530"/>
+<area shape="rect" id="node13" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="700,585,904,627"/>
+<area shape="rect" id="node18" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1030,585,1273,627"/>
+<area shape="rect" id="node17" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="649,675,814,716"/>
+<area shape="rect" id="node25" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2185,213,2361,255"/>
+<area shape="rect" id="node26" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2185,310,2361,351"/>
+<area shape="rect" id="node29" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2112,496,2327,537"/>
+<area shape="rect" id="node31" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1861,496,2037,537"/>
+<area shape="rect" id="node32" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2467,407,2643,448"/>
+<area shape="rect" id="node37" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2109,407,2303,448"/>
+<area shape="rect" id="node38" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1773,407,1949,448"/>
+<area shape="rect" id="node35" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2351,496,2527,537"/>
+<area shape="rect" id="node36" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2485,585,2661,627"/>
+<area shape="rect" id="node41" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="509,407,751,448"/>
+<area shape="rect" id="node43" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="361,303,569,359"/>
+<area shape="rect" id="node44" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1189,496,1381,537"/>
+<area shape="rect" id="node45" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="46,585,238,627"/>
+<area shape="rect" id="node46" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="276,414,485,441"/>
+<area shape="rect" id="node47" href="_discovery_event_sender_interface_8h.html" title="CapabilitiesDelegate\l/DiscoveryEventSenderInterface.h" alt="" coords="1273,310,1496,351"/>
+<area shape="rect" id="node48" href="_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="1194,414,1429,441"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_event_data.html">alexaClientSDK::capabilitiesDelegate::test::EventData</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_status_observer.html">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryStatusObserver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_post_connect_capabilities_publisher_test.html">alexaClientSDK::capabilitiesDelegate::test::PostConnectCapabilitiesPublisherTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -112,14 +134,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7c94cfe1449723089522cc42d8dd2662"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a7c94cfe1449723089522cc42d8dd2662">alexaClientSDK::capabilitiesDelegate::test::parseAuthToken</a> (const std::string &amp;payloadString, EventData *eventData)</td></tr>
-<tr class="separator:a7c94cfe1449723089522cc42d8dd2662"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42d1c9e74dbcf65889fb4b9ce4e3f39d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a42d1c9e74dbcf65889fb4b9ce4e3f39d">alexaClientSDK::capabilitiesDelegate::test::parseEndpointsIds</a> (const std::string &amp;payloadString, EventData *eventData)</td></tr>
-<tr class="separator:a42d1c9e74dbcf65889fb4b9ce4e3f39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accc25ee9795764020c8c12f20e821e42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#accc25ee9795764020c8c12f20e821e42">alexaClientSDK::capabilitiesDelegate::test::parseEventJson</a> (const std::string &amp;eventJson, EventData *eventData)</td></tr>
-<tr class="separator:accc25ee9795764020c8c12f20e821e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb8a418458f4e16df39f0789dbda081"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a6fb8a418458f4e16df39f0789dbda081">alexaClientSDK::capabilitiesDelegate::test::validateDiscoveryEvent</a> (const EventData &amp;eventData, const std::string &amp;eventName, const std::vector&lt; std::string &gt; &amp;endpointIds=std::vector&lt; std::string &gt;())</td></tr>
-<tr class="separator:a6fb8a418458f4e16df39f0789dbda081"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ae5995546314e99cdcab3dd7d3ec9ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a5ae5995546314e99cdcab3dd7d3ec9ad">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_createWithInvalidParams)</td></tr>
 <tr class="separator:a5ae5995546314e99cdcab3dd7d3ec9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8e93dadcccf4b437643d2ec7005c7df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ac8e93dadcccf4b437643d2ec7005c7df">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_getPostConnectOperationPriority)</td></tr>
@@ -130,120 +144,16 @@ Functions</h2></td></tr>
 <tr class="separator:a1574f77d432a8340ce1159382f55d6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1532decde9ec2bdf15ff409cabd3f76d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a1532decde9ec2bdf15ff409cabd3f76d">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_performOperationFailsWhenCalledTwice)</td></tr>
 <tr class="separator:a1532decde9ec2bdf15ff409cabd3f76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a415558b8d6bbf6a654ad0328684c63b1"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a415558b8d6bbf6a654ad0328684c63b1">alexaClientSDK::capabilitiesDelegate::test::getExpecetedNumberOfDiscoveryEvents</a> (int numEndpoints)</td></tr>
-<tr class="separator:a415558b8d6bbf6a654ad0328684c63b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b8af3d80ecfa8d4d014a4e06d9d7a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a0b8af3d80ecfa8d4d014a4e06d9d7a91">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_performOperationSplitsEventsWithMaxEndpoints)</td></tr>
-<tr class="separator:a0b8af3d80ecfa8d4d014a4e06d9d7a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad71c08da6146f2e8e5cb1bbe4aaad9d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ad71c08da6146f2e8e5cb1bbe4aaad9d4">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_deleteReportEventReceives4xxResponse)</td></tr>
-<tr class="separator:ad71c08da6146f2e8e5cb1bbe4aaad9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c43f54be1a2c2b263996472f121ff12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a0c43f54be1a2c2b263996472f121ff12">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_addOrUpdateReportReceives4xxResponse)</td></tr>
-<tr class="separator:a0c43f54be1a2c2b263996472f121ff12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99071efc1b1bd717115878c44409442a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a99071efc1b1bd717115878c44409442a">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_retriesWhenAddOrUpdateReportReceives5xxResponse)</td></tr>
-<tr class="separator:a99071efc1b1bd717115878c44409442a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a041d3d5207d790943a99fb193aae7ae5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a041d3d5207d790943a99fb193aae7ae5">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_addOrUpdateRetriesThenSuccessfulResponse)</td></tr>
-<tr class="separator:a041d3d5207d790943a99fb193aae7ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d02cd9f8cdfea1a567005391c84179e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a3d02cd9f8cdfea1a567005391c84179e">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_deleteReportRetriesThenSuccessfulResponse)</td></tr>
-<tr class="separator:a3d02cd9f8cdfea1a567005391c84179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca0a94a70f92a63d40450ba891af34d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#aca0a94a70f92a63d40450ba891af34d5">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_retriesWhenEventProcessedDirectiveIsNotReceived)</td></tr>
-<tr class="separator:aca0a94a70f92a63d40450ba891af34d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9d510dfc1a96d2a57e889d53b791fc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ae9d510dfc1a96d2a57e889d53b791fc1">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_abortWhenWaitingOnEventProcessedDirective)</td></tr>
-<tr class="separator:ae9d510dfc1a96d2a57e889d53b791fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afecb7d6f4d5f1b76c75bca30c02c63cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#afecb7d6f4d5f1b76c75bca30c02c63cd">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_retriesWhenInvalidEventProcessedDirectiveIsReceived)</td></tr>
-<tr class="separator:afecb7d6f4d5f1b76c75bca30c02c63cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a185a223f341f7366d117fcd8ff48875e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a185a223f341f7366d117fcd8ff48875e">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_performOperationWhenAuthTokenIsEmpty)</td></tr>
-<tr class="separator:a185a223f341f7366d117fcd8ff48875e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6639701eb0259f9d53e9964e76fc0beb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a6639701eb0259f9d53e9964e76fc0beb">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_abortOperationWhenAuthTokenIsRequested)</td></tr>
-<tr class="separator:a6639701eb0259f9d53e9964e76fc0beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ab97d13b968a8f8e135dccd52b405ebc8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ab97d13b968a8f8e135dccd52b405ebc8">alexaClientSDK::capabilitiesDelegate::test::DISCOVERY_NAMESPACE</a> = &quot;Alexa.Discovery&quot;</td></tr>
-<tr class="memdesc:ab97d13b968a8f8e135dccd52b405ebc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Discovery event Namsepace.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ab97d13b968a8f8e135dccd52b405ebc8">More...</a><br /></td></tr>
-<tr class="separator:ab97d13b968a8f8e135dccd52b405ebc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a335be15ff85970cb07dfdd630b974df6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a335be15ff85970cb07dfdd630b974df6">alexaClientSDK::capabilitiesDelegate::test::ADD_OR_UPDATE_REPORT_NAME</a> = &quot;AddOrUpdateReport&quot;</td></tr>
-<tr class="memdesc:a335be15ff85970cb07dfdd630b974df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The AddOrUpdateReport Namespace.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a335be15ff85970cb07dfdd630b974df6">More...</a><br /></td></tr>
-<tr class="separator:a335be15ff85970cb07dfdd630b974df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a043b52f84b75e9d9812a7b5a03313cec"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a043b52f84b75e9d9812a7b5a03313cec">alexaClientSDK::capabilitiesDelegate::test::DELETE_REPORT_NAME</a> = &quot;DeleteReport&quot;</td></tr>
-<tr class="memdesc:a043b52f84b75e9d9812a7b5a03313cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DeleteReport Namespace.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a043b52f84b75e9d9812a7b5a03313cec">More...</a><br /></td></tr>
-<tr class="separator:a043b52f84b75e9d9812a7b5a03313cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63d3048308ffee28004f63f6d54e452e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63d3048308ffee28004f63f6d54e452e">alexaClientSDK::capabilitiesDelegate::test::DISCOVERY_PAYLOAD_VERSION</a> = &quot;3&quot;</td></tr>
-<tr class="memdesc:a63d3048308ffee28004f63f6d54e452e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The payload version of the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63d3048308ffee28004f63f6d54e452e">More...</a><br /></td></tr>
-<tr class="separator:a63d3048308ffee28004f63f6d54e452e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9586da569ec7ece63f8587587362a9de"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a9586da569ec7ece63f8587587362a9de">alexaClientSDK::capabilitiesDelegate::test::SCOPE_KEY</a> = &quot;scope&quot;</td></tr>
-<tr class="memdesc:a9586da569ec7ece63f8587587362a9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a9586da569ec7ece63f8587587362a9de">More...</a><br /></td></tr>
-<tr class="separator:a9586da569ec7ece63f8587587362a9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71833d5d25293b4c23745c976c48a3ff"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a71833d5d25293b4c23745c976c48a3ff">alexaClientSDK::capabilitiesDelegate::test::TYPE_KEY</a> = &quot;type&quot;</td></tr>
-<tr class="memdesc:a71833d5d25293b4c23745c976c48a3ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a71833d5d25293b4c23745c976c48a3ff">More...</a><br /></td></tr>
-<tr class="separator:a71833d5d25293b4c23745c976c48a3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82c6835133ca5d161a665d61de79738e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a82c6835133ca5d161a665d61de79738e">alexaClientSDK::capabilitiesDelegate::test::BEARER_TOKEN_KEY</a> = &quot;bearerToken&quot;</td></tr>
-<tr class="memdesc:a82c6835133ca5d161a665d61de79738e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a82c6835133ca5d161a665d61de79738e">More...</a><br /></td></tr>
-<tr class="separator:a82c6835133ca5d161a665d61de79738e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49a64a97f1926ca13043c532dd0cdeb7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a49a64a97f1926ca13043c532dd0cdeb7">alexaClientSDK::capabilitiesDelegate::test::TOKEN_KEY</a> = &quot;token&quot;</td></tr>
-<tr class="memdesc:a49a64a97f1926ca13043c532dd0cdeb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a49a64a97f1926ca13043c532dd0cdeb7">More...</a><br /></td></tr>
-<tr class="separator:a49a64a97f1926ca13043c532dd0cdeb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70b36581852fe0b4856205b9f3db9b05"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a70b36581852fe0b4856205b9f3db9b05">alexaClientSDK::capabilitiesDelegate::test::ENDPOINTS_KEY</a> = &quot;endpoints&quot;</td></tr>
-<tr class="memdesc:a70b36581852fe0b4856205b9f3db9b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a70b36581852fe0b4856205b9f3db9b05">More...</a><br /></td></tr>
-<tr class="separator:a70b36581852fe0b4856205b9f3db9b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d24dcee2c13b266d876c905c23c59a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#af2d24dcee2c13b266d876c905c23c59a">alexaClientSDK::capabilitiesDelegate::test::ENDPOINTID_KEY</a> = &quot;endpointId&quot;</td></tr>
-<tr class="memdesc:af2d24dcee2c13b266d876c905c23c59a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#af2d24dcee2c13b266d876c905c23c59a">More...</a><br /></td></tr>
-<tr class="separator:af2d24dcee2c13b266d876c905c23c59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaefa0278e64c5d28bb96621e8ffadc4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#acaefa0278e64c5d28bb96621e8ffadc4">alexaClientSDK::capabilitiesDelegate::test::EVENT_KEY</a> = &quot;event&quot;</td></tr>
-<tr class="memdesc:acaefa0278e64c5d28bb96621e8ffadc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#acaefa0278e64c5d28bb96621e8ffadc4">More...</a><br /></td></tr>
-<tr class="separator:acaefa0278e64c5d28bb96621e8ffadc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63b09e077ff1b762ab844fa667a45019"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019">alexaClientSDK::capabilitiesDelegate::test::HEADER_KEY</a> = &quot;header&quot;</td></tr>
-<tr class="memdesc:a63b09e077ff1b762ab844fa667a45019"><td class="mdescLeft">&#160;</td><td class="mdescRight">The header key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019">More...</a><br /></td></tr>
-<tr class="separator:a63b09e077ff1b762ab844fa667a45019"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f8b87c00e0e95cd7796784d940bb26d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a1f8b87c00e0e95cd7796784d940bb26d">alexaClientSDK::capabilitiesDelegate::test::NAMESPACE_KEY</a> = &quot;namespace&quot;</td></tr>
-<tr class="memdesc:a1f8b87c00e0e95cd7796784d940bb26d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a1f8b87c00e0e95cd7796784d940bb26d">More...</a><br /></td></tr>
-<tr class="separator:a1f8b87c00e0e95cd7796784d940bb26d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bb4483d3a772e91934cb0f58f9e0d13"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a8bb4483d3a772e91934cb0f58f9e0d13">alexaClientSDK::capabilitiesDelegate::test::NAME_KEY</a> = &quot;name&quot;</td></tr>
-<tr class="memdesc:a8bb4483d3a772e91934cb0f58f9e0d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a8bb4483d3a772e91934cb0f58f9e0d13">More...</a><br /></td></tr>
-<tr class="separator:a8bb4483d3a772e91934cb0f58f9e0d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae80fd3c5f15426c8e58a2a43a96d27d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#aae80fd3c5f15426c8e58a2a43a96d27d">alexaClientSDK::capabilitiesDelegate::test::PAYLOAD_VERSION_KEY</a> = &quot;payloadVersion&quot;</td></tr>
-<tr class="memdesc:aae80fd3c5f15426c8e58a2a43a96d27d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The payload version key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#aae80fd3c5f15426c8e58a2a43a96d27d">More...</a><br /></td></tr>
-<tr class="separator:aae80fd3c5f15426c8e58a2a43a96d27d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4821e172d2a267f40309e978cda0a59"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#af4821e172d2a267f40309e978cda0a59">alexaClientSDK::capabilitiesDelegate::test::EVENT_CORRELATION_TOKEN_KEY</a> = &quot;eventCorrelationToken&quot;</td></tr>
-<tr class="memdesc:af4821e172d2a267f40309e978cda0a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eventCorrelationToken key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#af4821e172d2a267f40309e978cda0a59">More...</a><br /></td></tr>
-<tr class="separator:af4821e172d2a267f40309e978cda0a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2651411811fd35ad815561adaa7f358f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a2651411811fd35ad815561adaa7f358f">alexaClientSDK::capabilitiesDelegate::test::PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
-<tr class="memdesc:a2651411811fd35ad815561adaa7f358f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The payload key in the discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a2651411811fd35ad815561adaa7f358f">More...</a><br /></td></tr>
-<tr class="separator:a2651411811fd35ad815561adaa7f358f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18256b9a20dc395ff1cf73d0131be302"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a18256b9a20dc395ff1cf73d0131be302">alexaClientSDK::capabilitiesDelegate::test::TEST_AUTH_TOKEN</a> = &quot;TEST_AUTH_TOKEN&quot;</td></tr>
-<tr class="memdesc:a18256b9a20dc395ff1cf73d0131be302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test string for auth token.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a18256b9a20dc395ff1cf73d0131be302">More...</a><br /></td></tr>
-<tr class="separator:a18256b9a20dc395ff1cf73d0131be302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef21bd9598b85eac0791c3625d2373fe"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#aef21bd9598b85eac0791c3625d2373fe">alexaClientSDK::capabilitiesDelegate::test::TEST_ENDPOINT_ID_1</a> = &quot;1&quot;</td></tr>
-<tr class="memdesc:aef21bd9598b85eac0791c3625d2373fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test string for endpointID 1.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#aef21bd9598b85eac0791c3625d2373fe">More...</a><br /></td></tr>
-<tr class="separator:aef21bd9598b85eac0791c3625d2373fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adaa1ccf2408aec88df84663737e9ec05"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#adaa1ccf2408aec88df84663737e9ec05">alexaClientSDK::capabilitiesDelegate::test::TEST_ENDPOINT_ID_2</a> = &quot;2&quot;</td></tr>
-<tr class="memdesc:adaa1ccf2408aec88df84663737e9ec05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test string for endpointId 2.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#adaa1ccf2408aec88df84663737e9ec05">More...</a><br /></td></tr>
-<tr class="separator:adaa1ccf2408aec88df84663737e9ec05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80409abac211c852509dd09b65a98d13"><td class="memItemLeft" align="right" valign="top">static const std::unordered_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a80409abac211c852509dd09b65a98d13">alexaClientSDK::capabilitiesDelegate::test::TEST_ADD_OR_UPDATE_ENDPOINTS</a></td></tr>
-<tr class="memdesc:a80409abac211c852509dd09b65a98d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">The test endpointId to endpointConfig map AddOrUpdateReport event endpoints.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a80409abac211c852509dd09b65a98d13">More...</a><br /></td></tr>
-<tr class="separator:a80409abac211c852509dd09b65a98d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76238b2b61e65bfcaf53d75467b370f4"><td class="memItemLeft" align="right" valign="top">static const std::unordered_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a76238b2b61e65bfcaf53d75467b370f4">alexaClientSDK::capabilitiesDelegate::test::TEST_DELETE_ENDPOINTS</a></td></tr>
-<tr class="memdesc:a76238b2b61e65bfcaf53d75467b370f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The test endpointId to endpointConfig map DeleteReport event endpoints.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a76238b2b61e65bfcaf53d75467b370f4">More...</a><br /></td></tr>
-<tr class="separator:a76238b2b61e65bfcaf53d75467b370f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5c4c9a16d5fdced01b5a90143f52ce5"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ad5c4c9a16d5fdced01b5a90143f52ce5">alexaClientSDK::capabilitiesDelegate::test::EXPECTED_ADD_OR_UPDATE_ENDPOINT_IDS</a> = {TEST_ENDPOINT_ID_1}</td></tr>
-<tr class="memdesc:ad5c4c9a16d5fdced01b5a90143f52ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected AddOrUpdateReport endpoint Ids.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ad5c4c9a16d5fdced01b5a90143f52ce5">More...</a><br /></td></tr>
-<tr class="separator:ad5c4c9a16d5fdced01b5a90143f52ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99497f2e8604933c00b9cc2f52213d3f"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a99497f2e8604933c00b9cc2f52213d3f">alexaClientSDK::capabilitiesDelegate::test::EXPECTED_DELETE_ENDPOINT_IDS</a> = {TEST_ENDPOINT_ID_2}</td></tr>
-<tr class="memdesc:a99497f2e8604933c00b9cc2f52213d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The expected DeleteReport endpoint Ids.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a99497f2e8604933c00b9cc2f52213d3f">More...</a><br /></td></tr>
-<tr class="separator:a99497f2e8604933c00b9cc2f52213d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdc55ca06e41c106b146b3cf287456f6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#afdc55ca06e41c106b146b3cf287456f6">alexaClientSDK::capabilitiesDelegate::test::TEST_EVENT_CORRELATION_TOKEN</a> = &quot;TEST_EVENT_CORRELATION_TOKEN&quot;</td></tr>
-<tr class="memdesc:afdc55ca06e41c106b146b3cf287456f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The test string for eventCorrelationToken sent in headers.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#afdc55ca06e41c106b146b3cf287456f6">More...</a><br /></td></tr>
-<tr class="separator:afdc55ca06e41c106b146b3cf287456f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea244ba7be03912fc9879102289e253"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a3ea244ba7be03912fc9879102289e253">alexaClientSDK::capabilitiesDelegate::test::TEST_RETRY_COUNT</a> = 2</td></tr>
-<tr class="memdesc:a3ea244ba7be03912fc9879102289e253"><td class="mdescLeft">&#160;</td><td class="mdescRight">The test retry count.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a3ea244ba7be03912fc9879102289e253">More...</a><br /></td></tr>
-<tr class="separator:a3ea244ba7be03912fc9879102289e253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a251f7112baa0b4870c7df6ebbdb9889d"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a251f7112baa0b4870c7df6ebbdb9889d">alexaClientSDK::capabilitiesDelegate::test::MAX_ENDPOINTS_PER_EVENT</a> = 300</td></tr>
-<tr class="memdesc:a251f7112baa0b4870c7df6ebbdb9889d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of endpoints that can be sent in a Discovery event.  <a href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a251f7112baa0b4870c7df6ebbdb9889d">More...</a><br /></td></tr>
-<tr class="separator:a251f7112baa0b4870c7df6ebbdb9889d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7668b2290b6aee6f8feee4493046166"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#ae7668b2290b6aee6f8feee4493046166">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_performOperationFailsWhenSendDiscoveryEventsFails)</td></tr>
+<tr class="separator:ae7668b2290b6aee6f8feee4493046166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aba3c9d9d1379a338111ebde0f7b4f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a5aba3c9d9d1379a338111ebde0f7b4f8">alexaClientSDK::capabilitiesDelegate::test::TEST_F</a> (PostConnectCapabilitiesPublisherTest, test_abortStopsSendDiscoveryEvents)</td></tr>
+<tr class="separator:a5aba3c9d9d1379a338111ebde0f7b4f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

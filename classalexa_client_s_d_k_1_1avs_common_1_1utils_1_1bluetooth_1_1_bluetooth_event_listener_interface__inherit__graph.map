@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::utils::bluetooth::BluetoothEventListenerInterface" name="alexaClientSDK::avsCommon::utils::bluetooth::BluetoothEventListenerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,116,218,168"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html" title=" " alt="" coords="276,5,481,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_listener.html" title="A mock listener for the BluetoothEventBus." alt="" coords="290,81,467,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth.html" title=" " alt="" coords="284,157,473,196"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1_bluetooth_media_input_transformer.html" title=" " alt="" coords="266,220,491,272"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html" title="alexaClientSDK::acsdkBluetooth\l::Bluetooth" alt="" coords="268,5,481,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth_media_input_transformer.html" title="alexaClientSDK::acsdkBluetooth\l::BluetoothMediaInputTransformer" alt="" coords="265,71,484,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::PulseAudioBluetoothInitializer" alt="" coords="273,137,476,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_listener.html" title="A mock listener for the BluetoothEventBus. " alt="" coords="287,217,463,273"/>
 </map>

@@ -24,6 +24,7 @@ var searchData=
   ['localewakewordssetting_2ecpp',['LocaleWakeWordsSetting.cpp',['../_locale_wake_words_setting_8cpp.html',1,'']]],
   ['localewakewordssetting_2eh',['LocaleWakeWordsSetting.h',['../_locale_wake_words_setting_8h.html',1,'']]],
   ['localewakewordssettingtest_2ecpp',['LocaleWakeWordsSettingTest.cpp',['../_locale_wake_words_setting_test_8cpp.html',1,'']]],
+  ['localplaybackhandlerinterface_2eh',['LocalPlaybackHandlerInterface.h',['../_local_playback_handler_interface_8h.html',1,'']]],
   ['logentry_2ecpp',['LogEntry.cpp',['../_log_entry_8cpp.html',1,'']]],
   ['logentry_2eh',['LogEntry.h',['../_log_entry_8h.html',1,'']]],
   ['logentrybuffer_2ecpp',['LogEntryBuffer.cpp',['../_log_entry_buffer_8cpp.html',1,'']]],

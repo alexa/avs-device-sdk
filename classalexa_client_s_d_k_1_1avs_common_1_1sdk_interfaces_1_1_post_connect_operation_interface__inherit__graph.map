@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::PostConnectOperationInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::PostConnectOperationInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,120,256,172"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_post_connect_operation.html" title=" " alt="" coords="342,5,518,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_post_connect_verify_gateway_sender.html" title=" " alt="" coords="308,81,552,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_post_connect_capabilities_publisher.html" title=" " alt="" coords="316,157,544,209"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_post_connect_synchronize_state_sender.html" title=" " alt="" coords="304,233,556,285"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_post_connect_operation.html" title="alexaClientSDK::acl\l::transport::test::MockPost\lConnectOperation" alt="" coords="339,5,517,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_post_connect_verify_gateway_sender.html" title="alexaClientSDK::avsGateway\lManager::PostConnectVerifyGateway\lSender" alt="" coords="307,85,549,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_post_connect_capabilities_publisher.html" title="alexaClientSDK::capabilities\lDelegate::PostConnectCapabilities\lPublisher" alt="" coords="315,165,541,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_post_connect_synchronize_state_sender.html" title="alexaClientSDK::synchronize\lStateSender::PostConnectSynchronize\lStateSender" alt="" coords="303,245,553,301"/>
 </map>

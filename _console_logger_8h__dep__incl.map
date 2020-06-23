@@ -1,7 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ConsoleLogger.h">
-<area shape="rect" id="node1" title=" " alt="" coords="356,5,536,71"/>
-<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title=" " alt="" coords="5,125,212,177"/>
-<area shape="rect" id="node3" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="236,119,434,184"/>
-<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="458,119,656,184"/>
-<area shape="rect" id="node5" href="$_notifications_capability_agent_test_8cpp.html" title=" " alt="" coords="680,119,879,184"/>
+<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ConsoleLogger.cpp" alt="" coords="5,131,208,187"/>
+<area shape="rect" id="node3" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="232,124,469,195"/>
+<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="493,124,691,195"/>
 </map>

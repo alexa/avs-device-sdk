@@ -1,49 +1,26 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AFML/src/FocusManager.cpp" name="/workplace/avs&#45;device&#45;sdk/AFML/src/FocusManager.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2550,5,2774,44"/>
-<area shape="rect" id="node2" title=" " alt="" coords="2683,665,2759,691"/>
-<area shape="rect" id="node3" href="$_focus_manager_8h.html" title=" " alt="" coords="2009,92,2169,117"/>
-<area shape="rect" id="node28" href="$_logger_8h.html" title=" " alt="" coords="1744,485,1920,524"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,492,53,517"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1612,665,1670,691"/>
-<area shape="rect" id="node6" title=" " alt="" coords="1408,665,1447,691"/>
-<area shape="rect" id="node7" title=" " alt="" coords="2197,165,2312,191"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2518,165,2625,191"/>
-<area shape="rect" id="node9" title=" " alt="" coords="2275,832,2332,857"/>
-<area shape="rect" id="node10" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="575,485,768,524"/>
-<area shape="rect" id="node15" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="912,399,1103,437"/>
-<area shape="rect" id="node20" href="$_channel_8h.html" title=" " alt="" coords="1070,239,1191,264"/>
-<area shape="rect" id="node42" href="$_activity_tracker_interface_8h.html" title=" " alt="" coords="1912,165,2122,191"/>
-<area shape="rect" id="node43" href="$_executor_8h.html" title=" " alt="" coords="2417,399,2612,437"/>
-<area shape="rect" id="node47" href="$_interrupt_model_8h.html" title=" " alt="" coords="127,399,288,437"/>
-<area shape="rect" id="node11" href="$_focus_state_8h.html" title=" " alt="" coords="723,579,935,604"/>
-<area shape="rect" id="node14" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="178,579,414,604"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1984,665,2053,691"/>
-<area shape="rect" id="node13" title=" " alt="" coords="802,752,856,777"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1451,492,1506,517"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1234,832,1304,857"/>
-<area shape="rect" id="node18" href="$_content_type_8h.html" title=" " alt="" coords="330,492,551,517"/>
-<area shape="rect" id="node19" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="894,492,1122,517"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1471,665,1533,691"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1083,319,1122,344"/>
-<area shape="rect" id="node23" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="1591,312,1765,351"/>
-<area shape="rect" id="node24" title=" " alt="" coords="2095,492,2224,517"/>
-<area shape="rect" id="node25" title=" " alt="" coords="2514,665,2592,691"/>
-<area shape="rect" id="node26" title=" " alt="" coords="2666,579,2725,604"/>
-<area shape="rect" id="node27" href="$_logger_utils_8h.html" title=" " alt="" coords="1653,399,1829,437"/>
-<area shape="rect" id="node29" title=" " alt="" coords="2581,579,2642,604"/>
-<area shape="rect" id="node30" href="$_configuration_node_8h.html" title=" " alt="" coords="1010,572,1224,611"/>
-<area shape="rect" id="node34" href="$_level_8h.html" title=" " alt="" coords="1713,659,1889,697"/>
-<area shape="rect" id="node35" href="$_log_entry_8h.html" title=" " alt="" coords="2178,572,2354,611"/>
-<area shape="rect" id="node40" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1856,572,2053,611"/>
-<area shape="rect" id="node41" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1741,745,1917,784"/>
-<area shape="rect" id="node31" title=" " alt="" coords="1167,665,1232,691"/>
-<area shape="rect" id="node32" title=" " alt="" coords="1462,752,1535,777"/>
-<area shape="rect" id="node33" title=" " alt="" coords="995,665,1143,691"/>
-<area shape="rect" id="node36" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2178,659,2354,697"/>
-<area shape="rect" id="node37" title=" " alt="" coords="2233,752,2302,777"/>
-<area shape="rect" id="node38" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="2033,745,2209,784"/>
-<area shape="rect" id="node39" title=" " alt="" coords="2081,832,2161,857"/>
-<area shape="rect" id="node44" title=" " alt="" coords="2794,492,2853,517"/>
-<area shape="rect" id="node45" title=" " alt="" coords="2876,492,2928,517"/>
-<area shape="rect" id="node46" href="$_task_thread_8h.html" title=" " alt="" coords="2474,485,2669,524"/>
+<area shape="rect" id="node3" href="$_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="1303,95,1462,121"/>
+<area shape="rect" id="node28" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2244,497,2420,539"/>
+<area shape="rect" id="node10" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="608,497,800,539"/>
+<area shape="rect" id="node15" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="893,408,1085,449"/>
+<area shape="rect" id="node20" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="1176,244,1296,271"/>
+<area shape="rect" id="node42" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="1960,169,2171,196"/>
+<area shape="rect" id="node43" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3211,408,3405,449"/>
+<area shape="rect" id="node49" href="$_interrupt_model_8h.html" title="InterruptModel/Interrupt\lModel.h" alt="" coords="156,408,313,449"/>
+<area shape="rect" id="node11" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="977,594,1191,621"/>
+<area shape="rect" id="node14" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="512,594,749,621"/>
+<area shape="rect" id="node18" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="361,505,583,531"/>
+<area shape="rect" id="node19" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="975,505,1198,531"/>
+<area shape="rect" id="node23" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2489,319,2665,360"/>
+<area shape="rect" id="node27" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2408,408,2584,449"/>
+<area shape="rect" id="node30" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1670,587,1885,628"/>
+<area shape="rect" id="node34" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2041,676,2217,717"/>
+<area shape="rect" id="node35" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2787,587,2963,628"/>
+<area shape="rect" id="node40" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2062,587,2255,628"/>
+<area shape="rect" id="node41" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1469,587,1645,628"/>
+<area shape="rect" id="node36" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2787,676,2963,717"/>
+<area shape="rect" id="node38" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2656,765,2832,807"/>
+<area shape="rect" id="node46" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="3392,497,3587,539"/>
+<area shape="rect" id="node47" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="3392,594,3491,621"/>
+<area shape="rect" id="node48" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="3443,683,3557,710"/>
 </map>

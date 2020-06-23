@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::capabilityAgents::mrm::test::WaitableExceptionEncounteredSender" name="alexaClientSDK::capabilityAgents::mrm::test::WaitableExceptionEncounteredSender">
-<area shape="rect" id="node1" title=" " alt="" coords="9,105,252,157"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html" title=" " alt="" coords="5,5,255,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ExceptionEncountered\lSenderInterface" alt="" coords="5,5,253,61"/>
 </map>

@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleApplicationReturnCodes.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleApplicationReturnCodes.h">
-<area shape="rect" id="node1" title=" " alt="" coords="79,5,327,71"/>
-<area shape="rect" id="node2" href="$_sample_application_8h.html" title=" " alt="" coords="142,219,361,271"/>
-<area shape="rect" id="node3" href="$main_8cpp.html" title=" " alt="" coords="5,319,204,357"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="241,119,459,171"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title=" " alt="" coords="227,319,507,357"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="385,219,587,271"/>
+<area shape="rect" id="node2" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="141,228,357,284"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="5,332,203,373"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="239,124,454,180"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="227,332,504,373"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="382,228,583,284"/>
 </map>

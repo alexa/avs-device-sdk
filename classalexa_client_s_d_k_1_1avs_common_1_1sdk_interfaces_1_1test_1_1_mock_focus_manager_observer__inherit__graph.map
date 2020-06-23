@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver" name="alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver">
-<area shape="rect" id="node1" title="Mock class that implements the FocusManagerObserver." alt="" coords="36,105,233,157"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html" title="An interface that clients can extend to register to observe focus changes." alt="" coords="5,5,265,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_observer_interface.html" title="An interface that clients can extend to register to observe focus changes. " alt="" coords="5,5,261,61"/>
 </map>

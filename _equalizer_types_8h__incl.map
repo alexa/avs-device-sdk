@@ -1,12 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/EqualizerTypes.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/EqualizerTypes.h">
-<area shape="rect" id="node1" title=" " alt="" coords="98,5,338,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,125,57,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="82,125,135,151"/>
-<area shape="rect" id="node4" title=" " alt="" coords="160,125,276,151"/>
-<area shape="rect" id="node5" href="$hash_8h.html" title=" " alt="" coords="299,119,491,157"/>
-<area shape="rect" id="node9" href="$_success_result_8h.html" title=" " alt="" coords="514,119,679,157"/>
-<area shape="rect" id="node6" title=" " alt="" coords="283,205,342,231"/>
-<area shape="rect" id="node7" title=" " alt="" coords="366,205,424,231"/>
-<area shape="rect" id="node8" title=" " alt="" coords="448,205,526,231"/>
-<area shape="rect" id="node10" href="$_result_8h.html" title=" " alt="" coords="561,205,632,231"/>
+<area shape="rect" id="node5" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="294,124,487,165"/>
+<area shape="rect" id="node9" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="512,124,677,165"/>
+<area shape="rect" id="node10" href="$_result_8h.html" title="Result.h" alt="" coords="559,213,630,240"/>
 </map>

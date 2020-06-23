@@ -1,6 +1,3 @@
 <map id="alexaClientSDK::avsCommon::utils::logger::LogEntryStream" name="alexaClientSDK::avsCommon::utils::logger::LogEntryStream">
-<area shape="rect" id="node1" title=" " alt="" coords="87,165,288,204"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title=" " alt="" coords="5,79,202,117"/>
-<area shape="rect" id="node3" title=" " alt="" coords="51,5,157,31"/>
-<area shape="rect" id="node4" title=" " alt="" coords="226,85,320,111"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryBuffer" alt="" coords="5,80,203,121"/>
 </map>

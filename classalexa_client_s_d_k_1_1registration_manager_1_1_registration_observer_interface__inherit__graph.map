@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::registrationManager::RegistrationObserverInterface" name="alexaClientSDK::registrationManager::RegistrationObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,47,265,85"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_registration_observer.html" title=" " alt="" coords="313,5,526,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions." alt="" coords="325,81,514,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_registration_observer.html" title="alexaClientSDK::registration\lManager::test::MockRegistration\lObserver" alt="" coords="308,5,520,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..." alt="" coords="320,86,508,127"/>
 </map>

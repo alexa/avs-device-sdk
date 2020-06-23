@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alert_1_1_dynamic_data.html" title=" " alt="" coords="5,5,183,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lFactoryInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html" title="alexaClientSDK::mediaPlayer\l::PooledMediaPlayerFactory" alt="" coords="268,13,463,54"/>
 </map>

@@ -1,7 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/include/Audio/NotificationsAudioFactory.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/include/Audio/NotificationsAudioFactory.h">
-<area shape="rect" id="node1" title=" " alt="" coords="22,5,246,71"/>
-<area shape="rect" id="node2" href="$_notifications_audio_factory_interface_8h.html" title=" " alt="" coords="27,119,241,171"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,219,70,244"/>
-<area shape="rect" id="node4" title=" " alt="" coords="95,219,173,244"/>
-<area shape="rect" id="node5" title=" " alt="" coords="196,219,266,244"/>
+<area shape="rect" id="node2" href="$_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="126,124,339,180"/>
+<area shape="rect" id="node7" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="368,228,580,255"/>
 </map>

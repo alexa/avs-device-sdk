@@ -1,29 +1,13 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/NamespaceAndName.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/NamespaceAndName.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1316,5,1596,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="1326,619,1380,644"/>
-<area shape="rect" id="node3" href="$_capability_tag_8h.html" title=" " alt="" coords="1293,105,1486,144"/>
-<area shape="rect" id="node4" title=" " alt="" coords="57,619,127,644"/>
-<area shape="rect" id="node5" href="$_optional_8h.html" title=" " alt="" coords="1114,192,1310,217"/>
-<area shape="rect" id="node6" href="$_logger_utils_8h.html" title=" " alt="" coords="904,265,1080,304"/>
-<area shape="rect" id="node7" title=" " alt="" coords="42,532,104,557"/>
-<area shape="rect" id="node8" href="$_logger_8h.html" title=" " alt="" coords="904,352,1080,391"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1098,445,1158,471"/>
-<area shape="rect" id="node10" title=" " alt="" coords="855,532,913,557"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1391,532,1460,557"/>
-<area shape="rect" id="node12" title=" " alt="" coords="201,699,258,724"/>
-<area shape="rect" id="node13" href="$_configuration_node_8h.html" title=" " alt="" coords="452,439,666,477"/>
-<area shape="rect" id="node19" href="$_level_8h.html" title=" " alt="" coords="937,525,1113,564"/>
-<area shape="rect" id="node20" href="$_log_entry_8h.html" title=" " alt="" coords="1183,439,1359,477"/>
-<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="826,439,1022,477"/>
-<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1457,612,1633,651"/>
-<area shape="rect" id="node14" title=" " alt="" coords="128,532,192,557"/>
-<area shape="rect" id="node15" title=" " alt="" coords="872,619,944,644"/>
-<area shape="rect" id="node16" title=" " alt="" coords="681,699,751,724"/>
-<area shape="rect" id="node17" title=" " alt="" coords="267,532,306,557"/>
-<area shape="rect" id="node18" title=" " alt="" coords="330,532,478,557"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1138,532,1214,557"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1238,532,1317,557"/>
-<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title=" " alt="" coords="503,525,679,564"/>
-<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="503,612,679,651"/>
-<area shape="rect" id="node25" title=" " alt="" coords="550,699,631,724"/>
+<area shape="rect" id="node3" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="1292,109,1487,151"/>
+<area shape="rect" id="node5" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1114,199,1310,225"/>
+<area shape="rect" id="node6" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="907,273,1083,315"/>
+<area shape="rect" id="node8" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="907,363,1083,404"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="454,452,669,493"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="939,541,1115,583"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1184,452,1360,493"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="830,452,1023,493"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1459,631,1635,672"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="504,541,680,583"/>
+<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="504,631,680,672"/>
 </map>

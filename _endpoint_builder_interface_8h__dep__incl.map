@@ -1,17 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="295,5,540,71"/>
-<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="229,232,457,297"/>
-<area shape="rect" id="node13" href="$_mock_endpoint_builder_8h.html" title=" " alt="" coords="305,119,530,184"/>
-<area shape="rect" id="node14" href="$_endpoint_builder_8h.html" title=" " alt="" coords="553,125,746,177"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="77,345,305,397"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="230,445,453,497"/>
-<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title=" " alt="" coords="382,345,597,397"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="6,545,224,597"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="248,545,454,597"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title=" " alt="" coords="5,645,225,697"/>
-<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="249,645,451,697"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title=" " alt="" coords="16,745,214,784"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title=" " alt="" coords="294,745,574,784"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="528,452,803,491"/>
-<area shape="rect" id="node15" href="$_endpoint_builder_8cpp.html" title=" " alt="" coords="556,239,743,291"/>
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="179,243,405,313"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="421,777,699,819"/>
+<area shape="rect" id="node13" href="$_mock_endpoint_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/Endpoints/MockEndpointBuilder.h" alt="" coords="691,124,914,195"/>
+<area shape="rect" id="node14" href="$_endpoint_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointBuilder.h" alt="" coords="426,131,617,187"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="388,361,617,417"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="5,465,224,521"/>
+<area shape="rect" id="node11" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="151,361,363,417"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="7,569,222,625"/>
+<area shape="rect" id="node10" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="247,569,452,625"/>
+<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="7,673,223,729"/>
+<area shape="rect" id="node9" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="247,673,449,729"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="16,777,213,819"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="249,473,522,514"/>
+<area shape="rect" id="node15" href="$_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lBuilder.cpp" alt="" coords="429,250,616,306"/>
 </map>

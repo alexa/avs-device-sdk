@@ -1,15 +1,19 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,371,226,423"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_connection_status_observer.html" title="This class allows us to test ConnectionStatusObserver interaction." alt="" coords="298,5,493,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title=" " alt="" coords="290,81,501,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title=" " alt="" coords="274,144,517,183"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html" title=" " alt="" coords="277,207,514,245"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title=" " alt="" coords="278,269,513,321"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title=" " alt="" coords="277,345,514,384"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title=" " alt="" coords="311,408,480,447"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title=" " alt="" coords="301,471,490,509"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title=" " alt="" coords="301,533,490,572"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="301,596,490,635"/>
-<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_connection_observer.html" title=" " alt="" coords="299,659,492,697"/>
-<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1settings_1_1types_1_1_locale_wake_words_setting.html" title=" " alt="" coords="285,721,506,760"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_connection_status_observer.html" title="This class allows us to test ConnectionStatusObserver interaction. " alt="" coords="297,5,493,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="299,86,491,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="291,151,500,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallManagerInterface" alt="" coords="275,217,516,258"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lInterface" alt="" coords="277,283,514,339"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="278,363,513,419"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_do_not_disturb_capability_agent.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DoNotDisturb\lCapabilityAgent" alt="" coords="277,443,513,499"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="277,523,514,565"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="311,589,480,630"/>
+<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1integration_1_1_connection_status_observer.html" title="alexaClientSDK::integration\l::ConnectionStatusObserver" alt="" coords="302,654,489,695"/>
+<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1sample_app_1_1_connection_observer.html" title="alexaClientSDK::sampleApp\l::ConnectionObserver" alt="" coords="301,719,489,761"/>
+<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="301,785,489,826"/>
+<area shape="rect" id="node17" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_connection_observer.html" title="alexaClientSDK::settings\l::SettingConnectionObserver" alt="" coords="300,850,491,891"/>
+<area shape="rect" id="node18" href="$classalexa_client_s_d_k_1_1settings_1_1types_1_1_locale_wake_words_setting.html" title="alexaClientSDK::settings\l::types::LocaleWakeWordsSetting" alt="" coords="285,915,506,957"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html" title="Mock class that implements the CapabilitiesDelegateInterface. " alt="" coords="567,217,764,273"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title="alexaClientSDK::capabilities\lDelegate::CapabilitiesDelegate" alt="" coords="564,298,767,339"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="571,370,760,411"/>
 </map>

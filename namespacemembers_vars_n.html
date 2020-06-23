@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -103,9 +103,9 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a45b0743e76c4250bc8c5e1512115fd5b">alexaClientSDK::integration::test</a>
 </li>
 <li>NAME_KEY
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a8bb4483d3a772e91934cb0f58f9e0d13">alexaClientSDK::capabilitiesDelegate::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a76e69531b96db32f127b8e5710809c63">alexaClientSDK::capabilityAgents::audioPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a0aff1463c7e07f7bb78aa458bdef3b02">alexaClientSDK::capabilityAgents::bluetooth</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a35546adb6d1e4840ee18538c7db4b4ec">alexaClientSDK::acsdkAudioPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a783d06d85a3ae2c8e12fbd3d1d68e357">alexaClientSDK::acsdkBluetooth</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a8bb4483d3a772e91934cb0f58f9e0d13">alexaClientSDK::capabilitiesDelegate::test</a>
 </li>
 <li>NAME_KEY_STRING
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1constants.html#a76610caf3f39c81063749a6c017479f1">alexaClientSDK::avsCommon::avs::constants</a>
@@ -196,23 +196,23 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ad46809aab5261f6a7841764c4e9e2df9">alexaClientSDK::integration::test</a>
 </li>
 <li>NAMESPACE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae0369d542c740afe71d4e8c3a3b10a56">alexaClientSDK::avsCommon::avs</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ad37a0fb4f11d422e38fdc64817cdd73a">alexaClientSDK::acsdkAlerts</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5f565fd5039c750f309b8221c6892fd0">alexaClientSDK::acsdkAudioPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a94f05821dfdf724fac4aa87cb4da131b">alexaClientSDK::acsdkBluetooth</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a8db4c3ac5118cc15ffff54c3c7123281">alexaClientSDK::acsdkNotifications</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae0369d542c740afe71d4e8c3a3b10a56">alexaClientSDK::avsCommon::avs</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a0a44abd9176d4f212a6b8a66bc18dd4b">alexaClientSDK::avsCommon::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab9d845bb12871df7e7c25ab3eefbaec4">alexaClientSDK::capabilityAgents::aip</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#afcb8fbac2534f35d79a250640c8587c5">alexaClientSDK::capabilityAgents::aip::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a445ecf8797b8ccd4c8e2056ee8ef6fee">alexaClientSDK::capabilityAgents::alerts</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alexa.html#ae1d73d61ea0a31091a5ded269f6350f6">alexaClientSDK::capabilityAgents::alexa</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test.html#a00c09b729d2e16f3aafc4a81a3a0d130">alexaClientSDK::capabilityAgents::alexa::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1api_gateway.html#a2a7f8411babd847c34b68460f5255e3f">alexaClientSDK::capabilityAgents::apiGateway</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1api_gateway_1_1test.html#a8a6bed8b716027b627e81484c2d3e4c9">alexaClientSDK::capabilityAgents::apiGateway::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player.html#a26c4af53698c9812d5b34eb80124ed57">alexaClientSDK::capabilityAgents::audioPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a2fbf116017fdef67fe88e2407a63f66d">alexaClientSDK::capabilityAgents::bluetooth</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a6b47b726e208a9264c916764dc9b75de">alexaClientSDK::capabilityAgents::doNotDisturb</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1equalizer.html#a0bfd739776515eff4790ab22970f8e41">alexaClientSDK::capabilityAgents::equalizer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5c781bb98176fc9f24d9aa89b2cd94cd">alexaClientSDK::capabilityAgents::interactionModel</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mode_controller.html#a1ee01b2b1c607231c795c23c83314e03">alexaClientSDK::capabilityAgents::modeController</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test.html#a38fdf37806e35270af421d0eac079b5f">alexaClientSDK::capabilityAgents::modeController::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a13ca861f554bba3a2d5acac936585312">alexaClientSDK::capabilityAgents::notifications</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1power_controller.html#ac0361d8598fddd29e4b2efbbf867535f">alexaClientSDK::capabilityAgents::powerController</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1test.html#a2fba8454364d7ff567a8640b34a95d19">alexaClientSDK::capabilityAgents::powerController::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1range_controller.html#ad12edcb2c06c3b71c73c62b222adf39d">alexaClientSDK::capabilityAgents::rangeController</a>
@@ -229,10 +229,10 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a0346c4db57fed4601a62de701036f001">alexaClientSDK::integration::test</a>
 </li>
 <li>NAMESPACE_AND_NAME_INDICATOR_STATE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a45497b787e237fc72d98aed96ea30e91">alexaClientSDK::capabilityAgents::notifications::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a78905c7484c826ba6eb1536ec6110391">alexaClientSDK::acsdkNotifications::test</a>
 </li>
 <li>NAMESPACE_AND_NAME_PLAYBACK_STATE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1test.html#af4dfe4c022767c74abcc111cfb0fc276">alexaClientSDK::capabilityAgents::audioPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4ed04e099ee46133c4de50e999e74e76">alexaClientSDK::acsdkAudioPlayer::test</a>
 </li>
 <li>NAMESPACE_AND_NAME_SPEECH_STATE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a1414b3f5094d108ae929afdb26d12838">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
@@ -244,7 +244,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ad1c737a524372b21beb7a1991c86a03e">alexaClientSDK::integration::test</a>
 </li>
 <li>NAMESPACE_BLUETOOTH
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth_1_1test.html#a7fcf0d84a1dcf17682122e0669e50828">alexaClientSDK::capabilityAgents::bluetooth::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a57f31e7998f5919c0f5431a2afab1107">alexaClientSDK::acsdkBluetooth::test</a>
 </li>
 <li>NAMESPACE_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a1f8b87c00e0e95cd7796784d940bb26d">alexaClientSDK::capabilitiesDelegate::test</a>
@@ -339,7 +339,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1test.html#a101fb2af39f2e9a5b97b7d37fff7751f">alexaClientSDK::settings::test</a>
 </li>
 <li>NEXT
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1bluetooth.html#a7a2883ac94c0380ee560e13ee14c5766">alexaClientSDK::capabilityAgents::bluetooth</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a27d839fad798c77488c4949ce1a11ed5">alexaClientSDK::acsdkBluetooth</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a8cb5ca537ce0862390eca6c15e427772">alexaClientSDK::sampleApp</a>
 </li>
 <li>NEXT_CMD
@@ -413,31 +413,31 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#af1c07a3eb82118fc5d01a42e5488f1e2">alexaClientSDK::avsCommon::test</a>
 </li>
 <li>NOTIFICATION_INDICATOR_SEED
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#aafe2f9800582019c5cc89cb08f6abdfd">alexaClientSDK::capabilityAgents::notifications::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#abfe55ee9f0e516054c5c04b1d7b0785c">alexaClientSDK::acsdkNotifications::test</a>
 </li>
 <li>NOTIFICATION_INDICATOR_TABLE_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a9876876bd0c30eb48c422df08a9cf1c2">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a7a18068e4b81f785f0fec1c2dd81c082">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATION_METRIC_SOURCE_PREFIX
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0e343449108711c9324d4e67bdb3d78b">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a655e77ae5d2d12fe0e351326d73654b9">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATIONS_CAPABILITY_INTERFACE_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6fef378c8df5fc5b4a2b1f0ba729d05a">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a2dd8eb02062e07d7f2fbe907ffc8f654">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATIONS_CAPABILITY_INTERFACE_TYPE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0440aa524c87505ac3caae9e9e1f706a">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a850ab41de0da465261291cf8ba7e72d0">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATIONS_CAPABILITY_INTERFACE_VERSION
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a84ecc569ef1a58a6907928984d783f65">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a22e73f3a8b60730a526d854c50be1a87">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATIONS_CONFIG_JSON
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a7c4b8a7908f371074c42be76ff846026">alexaClientSDK::capabilityAgents::notifications::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afee7f5b1a3d5c220549fe24786d135a7">alexaClientSDK::acsdkNotifications::test</a>
 </li>
 <li>NOTIFICATIONS_CONFIGURATION_ROOT_KEY
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a61a68b833b971861506179cec9cfcd2a">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#aa63bcde7484819762584233ff8020d59">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NOTIFICATIONS_DB_FILE_PATH_KEY
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ac0f664fa963827eb4b438d156e2c9c06">alexaClientSDK::capabilityAgents::notifications</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a617d0c187ef5f14d5daac23f8d660be0">alexaClientSDK::acsdkNotifications</a>
 </li>
 <li>NUM_ALEXAS_IN_ALEXA_STOP_ALEXA_JOKE_AUDIO_FILE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a89c0345a29b9b5b1ba2ad7a5a0c0f4ea">alexaClientSDK::kwd::test</a>
@@ -446,7 +446,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a15d6a8e95c80fb57eeb45610247e840f">alexaClientSDK::kwd::test</a>
 </li>
 <li>NUM_ASSETS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1test.html#accdd9b96d322110accf7f6affee7b252">alexaClientSDK::capabilityAgents::alerts::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a258018c0846ce2eb4377104c95de8233">alexaClientSDK::acsdkAlerts::test</a>
 </li>
 <li>NUM_AUDIO_WRITE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1speechencoder_1_1test.html#ad8130c2a6a60e67c80793ceb7b686f0e">alexaClientSDK::speechencoder::test</a>
@@ -464,6 +464,9 @@ $(function() {
 <li>NUM_OF_AUDIO_CHANNELS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics_1_1utils.html#a0f5dfe2bb75251b65c084fdfb346b9e8">alexaClientSDK::diagnostics::utils</a>
 </li>
+<li>NUM_OF_CONTENT_READERS
+: <a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html#a435056e6164e37a3ccbe7b4cef924393">alexaClientSDK::mediaPlayer</a>
+</li>
 <li>NUM_OUTPUT_CHANNELS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a4f184755d73e1987f23ba56daf79c43a">alexaClientSDK::sampleApp</a>
 </li>
@@ -471,7 +474,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a71dfe4290890ad60dfd7f7687c18b748">alexaClientSDK::playlistParser::test</a>
 </li>
 <li>NUM_TEST_INDICATORS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#ac3b7e7f0b05f12f4bd927a7f8b98f93a">alexaClientSDK::capabilityAgents::notifications::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a681ca9913169b28d11e79e3b10aa740c">alexaClientSDK::acsdkNotifications::test</a>
 </li>
 <li>NUMBER_OF_BUFFERS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test.html#a7fc1f6c44493cdeb85fed46caab4f571">alexaClientSDK::applicationUtilities::androidUtilities::test</a>
@@ -488,7 +491,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

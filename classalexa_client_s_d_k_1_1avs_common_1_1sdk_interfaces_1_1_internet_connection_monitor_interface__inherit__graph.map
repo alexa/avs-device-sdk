@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionMonitorInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionMonitorInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,44,233,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1_internet_connection_monitor.html" title=" " alt="" coords="281,5,508,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1test_1_1_mock_internet_connection_monitor.html" title=" " alt="" coords="286,81,504,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1_internet_connection_monitor.html" title="alexaClientSDK::avsCommon\l::utils::network::InternetConnection\lMonitor" alt="" coords="280,5,507,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1test_1_1_mock_internet_connection_monitor.html" title="alexaClientSDK::avsCommon\l::utils::network::test\l::MockInternetConnectionMonitor" alt="" coords="286,85,501,141"/>
 </map>

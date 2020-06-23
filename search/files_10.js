@@ -7,8 +7,6 @@ var searchData=
   ['rangecontrollercapabilityagent_2ecpp',['RangeControllerCapabilityAgent.cpp',['../_range_controller_capability_agent_8cpp.html',1,'']]],
   ['rangecontrollercapabilityagent_2eh',['RangeControllerCapabilityAgent.h',['../_range_controller_capability_agent_8h.html',1,'']]],
   ['rangecontrollercapabilityagenttest_2ecpp',['RangeControllerCapabilityAgentTest.cpp',['../_range_controller_capability_agent_test_8cpp.html',1,'']]],
-  ['rangecontrollerhandler_2ecpp',['RangeControllerHandler.cpp',['../_range_controller_handler_8cpp.html',1,'']]],
-  ['rangecontrollerhandler_2eh',['RangeControllerHandler.h',['../_range_controller_handler_8h.html',1,'']]],
   ['rangecontrollerinterface_2eh',['RangeControllerInterface.h',['../_range_controller_interface_8h.html',1,'']]],
   ['rangecontrollerobserverinterface_2eh',['RangeControllerObserverInterface.h',['../_range_controller_observer_interface_8h.html',1,'']]],
   ['reader_2eh',['Reader.h',['../_reader_8h.html',1,'']]],
@@ -43,5 +41,7 @@ var searchData=
   ['revokeauthorizationhandlertest_2ecpp',['RevokeAuthorizationHandlerTest.cpp',['../_revoke_authorization_handler_test_8cpp.html',1,'']]],
   ['revokeauthorizationobserver_2ecpp',['RevokeAuthorizationObserver.cpp',['../_revoke_authorization_observer_8cpp.html',1,'']]],
   ['revokeauthorizationobserver_2eh',['RevokeAuthorizationObserver.h',['../_revoke_authorization_observer_8h.html',1,'']]],
-  ['revokeauthorizationobserverinterface_2eh',['RevokeAuthorizationObserverInterface.h',['../_revoke_authorization_observer_interface_8h.html',1,'']]]
+  ['revokeauthorizationobserverinterface_2eh',['RevokeAuthorizationObserverInterface.h',['../_revoke_authorization_observer_interface_8h.html',1,'']]],
+  ['runtimemanufactory_2eh',['RuntimeManufactory.h',['../_runtime_manufactory_8h.html',1,'']]],
+  ['runtimemanufactory_5fimp_2eh',['RuntimeManufactory_imp.h',['../_runtime_manufactory__imp_8h.html',1,'']]]
 ];

@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::settings::types::LocaleWakeWordsSetting" name="alexaClientSDK::settings::types::LocaleWakeWordsSetting">
-<area shape="rect" id="node1" title=" " alt="" coords="274,48,495,87"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html" title=" " alt="" coords="61,5,170,31"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html" title=" " alt="" coords="48,55,183,80"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title=" " alt="" coords="5,104,226,156"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html" title="LocalesSetting" alt="" coords="62,5,170,32"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html" title="WakeWordsSetting" alt="" coords="49,56,183,83"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="5,107,227,163"/>
 </map>

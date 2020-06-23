@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,7 @@ Inheritance diagram for alexaClientSDK::contextManager::ContextManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1context_manager_1_1_context_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1context_manager_1_1_context_manager_inherit__map" id="alexa_client_s_d_k_1_1context_manager_1_1_context_manager_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextManager\lInterface" alt="" coords="7,5,220,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -88,6 +89,7 @@ Collaboration diagram for alexaClientSDK::contextManager::ContextManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1context_manager_1_1_context_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1context_manager_1_1_context_manager_coll__map" id="alexa_client_s_d_k_1_1context_manager_1_1_context_manager_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextManager\lInterface" alt="" coords="7,5,220,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -107,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaa7035372ca371c380da4d387b11e040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e50fa167e226ae5a9992e4fae859d47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">avsCommon::sdkInterfaces::ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#a8e50fa167e226ae5a9992e4fae859d47">getContext</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">avsCommon::sdkInterfaces::ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId, const std::chrono::milliseconds &amp;timeout) override</td></tr>
 <tr class="separator:a8e50fa167e226ae5a9992e4fae859d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a003e77f74b7a574f2df9f7b886f5e2bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">avsCommon::sdkInterfaces::ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#a003e77f74b7a574f2df9f7b886f5e2bd">getContextWithoutReportableStateProperties</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">avsCommon::sdkInterfaces::ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId, const std::chrono::milliseconds &amp;timeout) override</td></tr>
+<tr class="separator:a003e77f74b7a574f2df9f7b886f5e2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42fcc86a48079d837d0c29696ab140eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#a42fcc86a48079d837d0c29696ab140eb">reportStateChange</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">avsCommon::avs::CapabilityTag</a> &amp;capabilityIdentifier, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_state.html">avsCommon::avs::CapabilityState</a> &amp;capabilityState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a389764b4196f860c311e928929519112">avsCommon::sdkInterfaces::AlexaStateChangeCauseType</a> cause) override</td></tr>
 <tr class="separator:a42fcc86a48079d837d0c29696ab140eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6ccf9d579b366e42ab8459efd88da9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#aa6ccf9d579b366e42ab8459efd88da9c">provideStateResponse</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">avsCommon::avs::CapabilityTag</a> &amp;capabilityIdentifier, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_state.html">avsCommon::avs::CapabilityState</a> &amp;capabilityState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">avsCommon::sdkInterfaces::ContextRequestToken</a> stateRequestToken) override</td></tr>
@@ -124,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af50f9f5f14fc05a973ee37b254e336fb inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a098071f65990c02118d5e7e5375c7fc1 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a098071f65990c02118d5e7e5375c7fc1">getContext</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId=&quot;&quot;, const std::chrono::milliseconds &amp;timeout=std::chrono::seconds(2))=0</td></tr>
 <tr class="separator:a098071f65990c02118d5e7e5375c7fc1 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1caeb081e9eba61516039e5a96a1e689 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a1caeb081e9eba61516039e5a96a1e689">getContextWithoutReportableStateProperties</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId=&quot;&quot;, const std::chrono::milliseconds &amp;timeout=std::chrono::seconds(2))=0</td></tr>
+<tr class="separator:a1caeb081e9eba61516039e5a96a1e689 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62570c6d64e37b19548dac4c8efa8f3a inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a62570c6d64e37b19548dac4c8efa8f3a">addContextManagerObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html">ContextManagerObserverInterface</a> &gt; observer)=0</td></tr>
 <tr class="separator:a62570c6d64e37b19548dac4c8efa8f3a inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05344dec25e9a7717e446ecc3243cb72 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a05344dec25e9a7717e446ecc3243cb72">removeContextManagerObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html">ContextManagerObserverInterface</a> &gt; &amp;observer)=0</td></tr>
@@ -131,6 +137,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a22e33bafaac6d45ef4a5b91a4b056cc8"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">ContextManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#a22e33bafaac6d45ef4a5b91a4b056cc8">createContextManagerInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;deviceInfo, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a> &gt; &amp;multiTimer=std::make_shared&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a> &gt;(), const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder=nullptr)</td></tr>
+<tr class="separator:a22e33bafaac6d45ef4a5b91a4b056cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5f46d133373030af9717ae722e135cf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#ab5f46d133373030af9717ae722e135cf">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &amp;deviceInfo, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a> &gt; multiTimer=std::make_shared&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a> &gt;(), std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
 <tr class="separator:ab5f46d133373030af9717ae722e135cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -277,6 +285,59 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Create a new <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> instance.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000018">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deviceInfo</td><td>Structure used to retrieve the default endpoint id. </td></tr>
+    <tr><td class="paramname">multiTimer</td><td>Object used to schedule request timeout. </td></tr>
+    <tr><td class="paramname">metricRecorder</td><td>The metric recorder. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns a new <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a22e33bafaac6d45ef4a5b91a4b056cc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e33bafaac6d45ef4a5b91a4b056cc8">&#9670;&nbsp;</a></span>createContextManagerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">ContextManagerInterface</a> &gt; alexaClientSDK::contextManager::ContextManager::createContextManagerInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deviceInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>multiTimer</em> = <code>std::make_shared&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html">avsCommon::utils::timing::MultiTimer</a>&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create a new <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceInfo</td><td>Structure used to retrieve the default endpoint id. </td></tr>
@@ -328,7 +389,48 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Callback method should be called outside the lock. </p>
+
+</div>
+</div>
+<a id="a003e77f74b7a574f2df9f7b886f5e2bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a003e77f74b7a574f2df9f7b886f5e2bd">&#9670;&nbsp;</a></span>getContextWithoutReportableStateProperties()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a> alexaClientSDK::contextManager::ContextManager::getContextWithoutReportableStateProperties </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">avsCommon::sdkInterfaces::ContextRequesterInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contextRequester</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>endpointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -603,7 +705,7 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sets the state information. The refresh policy indicates to the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> whether on a <code>getContext</code> request the state needs to be updated. If the <code>refreshPolicy</code> is <code>ALWAYS</code>, then the <code>StateProviderInterface</code> needs to be registered with the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>, else <code>setState</code> returns an error.</p>
 <p>For the states for which the refresh policy is <code>ALWAYS</code>, the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> requests for <code>provideStates</code> from the <code>StateProviderInterfaces</code>. When a <code>provideState</code> request is sent to a <code>StateProviderInterface</code>, the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> will provide a <code>stateRequestToken</code>. The same token needs to be sent on a <code>setState</code> in response to the <code>provideState</code>. If the token sent in the <code>setState</code> request does not match the token in the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>, <code>setState</code> will return an error.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>onStateChanged</code> to proactively report to the <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> that the state has changed.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> that the state has changed.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Token needs to be set only if the <code>setState</code> is in response to a <code>provideState</code> request. Setting the token to 0 is equivalent to no token.</dd></dl>
 <p>The <code>jsonState</code> is the json value that is associated with the key "payload".</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -660,14 +762,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ContextManager/include/ContextManager/<a class="el" href="_context_manager_8h_source.html">ContextManager.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ContextManager/src/<a class="el" href="_context_manager_8cpp.html">ContextManager.cpp</a></li>
+<li>/workplace/avs-device-sdk/ContextManager/include/ContextManager/<a class="el" href="_context_manager_8h_source.html">ContextManager.h</a></li>
+<li>/workplace/avs-device-sdk/ContextManager/src/<a class="el" href="_context_manager_8cpp.html">ContextManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

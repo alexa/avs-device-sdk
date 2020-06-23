@@ -1,0 +1,19 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/test" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/test">
+<area shape="rect" id="node1" href="dir_2abd5a21d4e4e8fca29fb6c6c416ca25.html" title="test" alt="" coords="201,52,273,100"/>
+<area shape="rect" id="node2" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="71,148,174,196"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000211_000017.html" title="16" alt="" coords="164,135,178,150"/>
+<area shape="rect" id="node3" href="dir_b14333b5607b47fe7356eaa790107bd3.html" title="RegistrationManager" alt="" coords="59,436,202,484"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000211_000407.html" title="1" alt="" coords="172,422,180,436"/>
+<area shape="rect" id="node4" href="dir_32457a92ec50e6583d325bd5e2d9f88d.html" title="acsdkNotificationsInterfaces" alt="" coords="37,244,225,292"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000211_000212.html" title="2" alt="" coords="165,227,173,242"/>
+<area shape="rect" id="node5" href="dir_09c3178ac86c6d0f942bd1f815522eaa.html" title="include" alt="" coords="95,340,167,388"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000211_000069.html" title="5" alt="" coords="183,342,191,357"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000017_000212.html" title="1" alt="" coords="122,217,130,232"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000407_000017.html" title="9" alt="" coords="47,186,55,201"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000212_000017.html" title="2" alt="" coords="123,208,131,223"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000212_000069.html" title="1" alt="" coords="126,313,134,328"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000069_000017.html" title="16" alt="" coords="45,192,59,207"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000069_000407.html" title="1" alt="" coords="135,410,143,425"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000069_000212.html" title="6" alt="" coords="127,304,135,318"/>
+<area shape="rect" id="clust1" href="dir_c561697a2a7f13e0483afc1a192409a3.html" title="acsdkNotifications" alt="" coords="172,16,303,111"/>
+</map>

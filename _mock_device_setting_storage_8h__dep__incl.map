@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockDeviceSettingStorage.h" name="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockDeviceSettingStorage.h">
-<area shape="rect" id="node1" title=" " alt="" coords="485,5,682,57"/>
-<area shape="rect" id="node2" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="5,105,205,171"/>
-<area shape="rect" id="node3" href="$_do_not_disturb_capability_agent_test_8cpp.html" title=" " alt="" coords="229,105,443,171"/>
-<area shape="rect" id="node4" href="$_locale_handler_test_8cpp.html" title=" " alt="" coords="467,112,701,164"/>
-<area shape="rect" id="node5" href="$_locale_wake_words_setting_test_8cpp.html" title=" " alt="" coords="725,112,925,164"/>
-<area shape="rect" id="node6" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title=" " alt="" coords="949,112,1186,164"/>
+<area shape="rect" id="node2" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="5,109,256,180"/>
+<area shape="rect" id="node3" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="281,109,479,180"/>
+<area shape="rect" id="node4" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="503,117,737,173"/>
+<area shape="rect" id="node5" href="$_locale_wake_words_setting_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/LocaleWake\lWordsSettingTest.cpp" alt="" coords="762,117,963,173"/>
+<area shape="rect" id="node6" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SharedAVSSetting\lProtocolTest.cpp" alt="" coords="987,117,1226,173"/>
 </map>

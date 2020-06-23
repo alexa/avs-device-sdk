@@ -1,49 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRequestQueueInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRequestQueueInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1499,5,1728,71"/>
-<area shape="rect" id="node2" href="$_message_request_queue_8h.html" title=" " alt="" coords="1572,119,1812,171"/>
-<area shape="rect" id="node3" href="$_synchronized_message_request_queue_8h.html" title=" " alt="" coords="1425,219,1645,284"/>
-<area shape="rect" id="node47" href="$_message_request_queue_8cpp.html" title=" " alt="" coords="1669,225,1863,277"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8h.html" title=" " alt="" coords="624,332,819,384"/>
-<area shape="rect" id="node15" href="$_h_t_t_p2_transport_test_8cpp.html" title=" " alt="" coords="1286,432,1459,484"/>
-<area shape="rect" id="node16" href="$_message_router_8h.html" title=" " alt="" coords="1628,432,1818,484"/>
-<area shape="rect" id="node44" href="$_transport_factory_interface_8h.html" title=" " alt="" coords="1410,332,1660,384"/>
-<area shape="rect" id="node46" href="$_synchronized_message_request_queue_8cpp.html" title=" " alt="" coords="1735,332,2010,384"/>
-<area shape="rect" id="node5" href="$_post_connect_sequencer_8h.html" title=" " alt="" coords="825,432,1061,484"/>
-<area shape="rect" id="node9" href="$_downchannel_handler_8cpp.html" title=" " alt="" coords="1085,432,1262,484"/>
-<area shape="rect" id="node10" href="$_exchange_handler_8cpp.html" title=" " alt="" coords="5,432,163,484"/>
-<area shape="rect" id="node11" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="187,432,345,484"/>
-<area shape="rect" id="node12" href="$_h_t_t_p2_transport_factory_8cpp.html" title=" " alt="" coords="361,652,554,704"/>
-<area shape="rect" id="node13" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="419,432,619,484"/>
-<area shape="rect" id="node14" href="$_ping_handler_8cpp.html" title=" " alt="" coords="643,432,801,484"/>
-<area shape="rect" id="node6" href="$_post_connect_sequencer_8cpp.html" title=" " alt="" coords="658,539,849,591"/>
-<area shape="rect" id="node7" href="$_post_connect_sequencer_factory_8cpp.html" title=" " alt="" coords="872,539,1107,591"/>
-<area shape="rect" id="node8" href="$_post_connect_sequencer_test_8cpp.html" title=" " alt="" coords="419,539,635,591"/>
-<area shape="rect" id="node17" href="$_message_router_8cpp.html" title=" " alt="" coords="1644,539,1802,591"/>
-<area shape="rect" id="node18" href="$_message_router_test_8h.html" title=" " alt="" coords="1826,539,1988,591"/>
-<area shape="rect" id="node20" href="$_default_client_8h.html" title=" " alt="" coords="1393,532,1621,597"/>
-<area shape="rect" id="node31" href="$_a_c_l_test_context_8h.html" title=" " alt="" coords="2036,652,2234,704"/>
-<area shape="rect" id="node40" href="$_auth_delegate_test_context_8h.html" title=" " alt="" coords="2063,539,2317,591"/>
-<area shape="rect" id="node19" href="$_message_router_test_8cpp.html" title=" " alt="" coords="1823,652,1991,704"/>
-<area shape="rect" id="node21" href="$_default_client_8cpp.html" title=" " alt="" coords="1393,652,1621,704"/>
-<area shape="rect" id="node22" href="$_interaction_manager_8h.html" title=" " alt="" coords="1105,765,1328,817"/>
-<area shape="rect" id="node29" href="$_keyword_observer_8h.html" title=" " alt="" coords="846,652,1061,704"/>
-<area shape="rect" id="node23" href="$_user_input_manager_8h.html" title=" " alt="" coords="1107,872,1326,924"/>
-<area shape="rect" id="node28" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="877,872,1084,924"/>
-<area shape="rect" id="node24" href="$_sample_application_8h.html" title=" " alt="" coords="1107,972,1326,1024"/>
-<area shape="rect" id="node27" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="881,972,1083,1024"/>
-<area shape="rect" id="node25" href="$main_8cpp.html" title=" " alt="" coords="1117,1072,1316,1111"/>
-<area shape="rect" id="node26" href="$_sample_application_8cpp.html" title=" " alt="" coords="628,1072,908,1111"/>
-<area shape="rect" id="node30" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="805,772,1081,811"/>
-<area shape="rect" id="node32" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="1352,765,1505,817"/>
-<area shape="rect" id="node33" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2954,765,3126,817"/>
-<area shape="rect" id="node34" href="$_alexa_communications_library_test_8cpp.html" title=" " alt="" coords="1528,765,1776,817"/>
-<area shape="rect" id="node35" href="$_alexa_directive_sequencer_library_test_8cpp.html" title=" " alt="" coords="1801,759,2016,824"/>
-<area shape="rect" id="node36" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="2040,759,2252,824"/>
-<area shape="rect" id="node37" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2275,765,2485,817"/>
-<area shape="rect" id="node38" href="$_network_integration_tests_8cpp.html" title=" " alt="" coords="2509,765,2702,817"/>
-<area shape="rect" id="node39" href="$_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="2727,759,2930,824"/>
-<area shape="rect" id="node41" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="2521,652,2722,704"/>
-<area shape="rect" id="node42" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="2258,652,2497,704"/>
-<area shape="rect" id="node43" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="1176,645,1369,711"/>
-<area shape="rect" id="node45" href="$_h_t_t_p2_transport_factory_8h.html" title=" " alt="" coords="1130,539,1369,591"/>
+<area shape="rect" id="node2" href="$_message_request_queue_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestQueue.h" alt="" coords="1716,124,1952,180"/>
+<area shape="rect" id="node3" href="$_synchronized_message_request_queue_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/SynchronizedMessage\lRequestQueue.h" alt="" coords="1571,228,1788,299"/>
+<area shape="rect" id="node50" href="$_message_request_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestQueue.cpp" alt="" coords="1812,235,2003,291"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="623,347,816,403"/>
+<area shape="rect" id="node15" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1288,458,1463,514"/>
+<area shape="rect" id="node16" href="$_message_router_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouter.h" alt="" coords="1841,458,2029,514"/>
+<area shape="rect" id="node46" href="$_transport_factory_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/TransportFactoryInterface.h" alt="" coords="1556,347,1803,403"/>
+<area shape="rect" id="node49" href="$_synchronized_message_request_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/SynchronizedMessageRequestQueue.cpp" alt="" coords="1877,347,2148,403"/>
+<area shape="rect" id="node5" href="$_post_connect_sequencer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PostConnectSequencer.h" alt="" coords="1026,458,1261,514"/>
+<area shape="rect" id="node9" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="5,458,180,514"/>
+<area shape="rect" id="node10" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="204,458,363,514"/>
+<area shape="rect" id="node11" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="387,458,545,514"/>
+<area shape="rect" id="node12" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="698,681,890,737"/>
+<area shape="rect" id="node13" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="620,458,819,514"/>
+<area shape="rect" id="node14" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="843,458,1001,514"/>
+<area shape="rect" id="node6" href="$_post_connect_sequencer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSequencer.cpp" alt="" coords="1118,569,1307,625"/>
+<area shape="rect" id="node7" href="$_post_connect_sequencer_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSequencerFactory.cpp" alt="" coords="621,569,855,625"/>
+<area shape="rect" id="node8" href="$_post_connect_sequencer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/PostConnectSequencerTest.cpp" alt="" coords="879,569,1093,625"/>
+<area shape="rect" id="node17" href="$_message_router_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouterFactory.h" alt="" coords="1331,569,1563,625"/>
+<area shape="rect" id="node19" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="1334,673,1561,744"/>
+<area shape="rect" id="node30" href="$_message_router_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRouter.cpp" alt="" coords="2445,569,2604,625"/>
+<area shape="rect" id="node31" href="$_message_router_test_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MessageRouterTest.h" alt="" coords="1899,569,2062,625"/>
+<area shape="rect" id="node33" href="$_a_c_l_test_context_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/ACLTestContext.h" alt="" coords="2203,681,2403,737"/>
+<area shape="rect" id="node42" href="$_auth_delegate_test_context_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/AuthDelegateTestContext.h" alt="" coords="2167,569,2421,625"/>
+<area shape="rect" id="node18" href="$_message_router_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRouterFactory.cpp" alt="" coords="1123,681,1310,737"/>
+<area shape="rect" id="node20" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1038,799,1267,855"/>
+<area shape="rect" id="node21" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1053,911,1271,967"/>
+<area shape="rect" id="node28" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="1341,799,1553,855"/>
+<area shape="rect" id="node22" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1264,1015,1479,1071"/>
+<area shape="rect" id="node27" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1034,1015,1239,1071"/>
+<area shape="rect" id="node23" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1282,1119,1498,1175"/>
+<area shape="rect" id="node26" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1056,1119,1257,1175"/>
+<area shape="rect" id="node24" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1279,1223,1477,1264"/>
+<area shape="rect" id="node25" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1501,1223,1778,1264"/>
+<area shape="rect" id="node29" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="1296,918,1569,959"/>
+<area shape="rect" id="node32" href="$_message_router_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MessageRouterTest.cpp" alt="" coords="1795,681,1964,737"/>
+<area shape="rect" id="node34" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="1695,799,1847,855"/>
+<area shape="rect" id="node35" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="2779,799,2951,855"/>
+<area shape="rect" id="node36" href="$_alexa_communications_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaCommunicationsLibraryTest.cpp" alt="" coords="2975,799,3221,855"/>
+<area shape="rect" id="node37" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="3245,792,3457,863"/>
+<area shape="rect" id="node38" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1871,792,2079,863"/>
+<area shape="rect" id="node39" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="2103,799,2311,855"/>
+<area shape="rect" id="node40" href="$_network_integration_tests_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/NetworkIntegrationTests.cpp" alt="" coords="2335,799,2530,855"/>
+<area shape="rect" id="node41" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="2554,792,2754,863"/>
+<area shape="rect" id="node43" href="$_auth_delegate_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="2427,681,2630,737"/>
+<area shape="rect" id="node44" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="2655,681,2893,737"/>
+<area shape="rect" id="node45" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="1988,673,2179,744"/>
+<area shape="rect" id="node47" href="$_h_t_t_p2_transport_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h" alt="" coords="1638,569,1875,625"/>
+<area shape="rect" id="node48" href="$_message_router_factory_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouterFactory\lInterface.h" alt="" coords="1494,451,1715,521"/>
 </map>

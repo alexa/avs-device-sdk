@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h" name="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h">
-<area shape="rect" id="node1" title=" " alt="" coords="285,5,544,57"/>
-<area shape="rect" id="node2" href="$_discovery_utils_8cpp.html" title=" " alt="" coords="5,105,191,157"/>
-<area shape="rect" id="node3" href="$_endpoint_attribute_validation_8cpp.html" title=" " alt="" coords="215,105,403,157"/>
-<area shape="rect" id="node4" href="$_endpoint_builder_8cpp.html" title=" " alt="" coords="427,105,615,157"/>
-<area shape="rect" id="node5" href="$_endpoint_attribute_validation_test_8cpp.html" title=" " alt="" coords="639,105,830,157"/>
+<area shape="rect" id="node2" href="$_discovery_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/Utils/DiscoveryUtils.cpp" alt="" coords="5,109,196,165"/>
+<area shape="rect" id="node3" href="$_endpoint_attribute_validation_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lAttributeValidation.cpp" alt="" coords="221,109,407,165"/>
+<area shape="rect" id="node4" href="$_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lBuilder.cpp" alt="" coords="431,109,618,165"/>
+<area shape="rect" id="node5" href="$_endpoint_attribute_validation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lAttributeValidationTest.cpp" alt="" coords="643,109,833,165"/>
 </map>

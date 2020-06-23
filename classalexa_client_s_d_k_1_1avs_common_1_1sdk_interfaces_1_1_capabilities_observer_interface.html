@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesOb
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_observer.html" title="alexaClientSDK::capabilities\lDelegate::test::MockCapabilities\lObserver" alt="" coords="292,5,504,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="304,86,492,127"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..." alt="" coords="304,151,492,193"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -96,9 +99,10 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8add652546039b18970b8dcf2cff824268">Error::UNINITIALIZED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8ad0749aaba8b833466dfcbb0428e4f89c">Error::SUCCESS</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a9a10f345b0f755d461a8673a5e9ef6b4">Error::UNKNOWN_ERROR</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a4a76a6ecac6e4077588fd966db329fa3">Error::FORBIDDEN</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8ad4539bffb6062bdcbd7e7cc1b1228926">Error::CANCELED</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a6a701b3f16c45b9d96fec4ac97805d9c">Error::SERVER_INTERNAL_ERROR</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a4a76a6ecac6e4077588fd966db329fa3">Error::FORBIDDEN</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a6a701b3f16c45b9d96fec4ac97805d9c">Error::SERVER_INTERNAL_ERROR</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8a0bbffe9eb8bbfc49246e867fccaefb73">Error::BAD_REQUEST</a>
 <br />
  }<tr class="memdesc:ac5355f9a98b5f65b3a5fa3603b1035a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enum Error encodes possible errors which may occur when changing state.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8">More...</a><br /></td></tr>
@@ -109,8 +113,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7a676d3b89145fb0c4f955930c652fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#a7a676d3b89145fb0c4f955930c652fe1">~CapabilitiesObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a7a676d3b89145fb0c4f955930c652fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe24d68918bbf1103bd46eeb6077e8cf"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#abe24d68918bbf1103bd46eeb6077e8cf">onCapabilitiesStateChange</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#a0638b7e7b3ae7d69b2e142eae333d1f8">State</a> newState, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8">Error</a> newError)=0</td></tr>
-<tr class="separator:abe24d68918bbf1103bd46eeb6077e8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16049c5989bf8296e0b6774039589a62"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#a16049c5989bf8296e0b6774039589a62">onCapabilitiesStateChange</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#a0638b7e7b3ae7d69b2e142eae333d1f8">State</a> newState, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8">Error</a> newError, const std::vector&lt; std::string &gt; &amp;addedOrUpdatedEndpointIds, const std::vector&lt; std::string &gt; &amp;deletedEndpointIds)=0</td></tr>
+<tr class="separator:a16049c5989bf8296e0b6774039589a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This interface is used to observe changes to the state of the CapabilitiesDelegate. </p>
@@ -142,6 +146,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ac5355f9a98b5f65b3a5fa3603b1035a8ad0749aaba8b833466dfcbb0428e4f89c"></a>SUCCESS&#160;</td><td class="fielddoc"><p>Success. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ac5355f9a98b5f65b3a5fa3603b1035a8a9a10f345b0f755d461a8673a5e9ef6b4"></a>UNKNOWN_ERROR&#160;</td><td class="fielddoc"><p>An unknown error occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac5355f9a98b5f65b3a5fa3603b1035a8ad4539bffb6062bdcbd7e7cc1b1228926"></a>CANCELED&#160;</td><td class="fielddoc"><p>The request was canceled. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ac5355f9a98b5f65b3a5fa3603b1035a8a4a76a6ecac6e4077588fd966db329fa3"></a>FORBIDDEN&#160;</td><td class="fielddoc"><p>The authorization failed. </p>
 </td></tr>
@@ -175,7 +181,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The enum State describes the state of the CapabilitiesDelegate. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0638b7e7b3ae7d69b2e142eae333d1f8add652546039b18970b8dcf2cff824268"></a>UNINITIALIZED&#160;</td><td class="fielddoc"><p>CapabilitiesDelegate not yet published. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0638b7e7b3ae7d69b2e142eae333d1f8add652546039b18970b8dcf2cff824268"></a>UNINITIALIZED&#160;</td><td class="fielddoc"><p>CapabilitiesDelegate is uninitialized. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a0638b7e7b3ae7d69b2e142eae333d1f8ad0749aaba8b833466dfcbb0428e4f89c"></a>SUCCESS&#160;</td><td class="fielddoc"><p>The Capabilities API message went through without issues. </p>
 </td></tr>
@@ -215,8 +221,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abe24d68918bbf1103bd46eeb6077e8cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe24d68918bbf1103bd46eeb6077e8cf">&#9670;&nbsp;</a></span>onCapabilitiesStateChange()</h2>
+<a id="a16049c5989bf8296e0b6774039589a62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16049c5989bf8296e0b6774039589a62">&#9670;&nbsp;</a></span>onCapabilitiesStateChange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +240,19 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html#ac5355f9a98b5f65b3a5fa3603b1035a8">Error</a>&#160;</td>
-          <td class="paramname"><em>newError</em>&#160;</td>
+          <td class="paramname"><em>newError</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>addedOrUpdatedEndpointIds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deletedEndpointIds</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -254,22 +272,22 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">newState</td><td>The new state of the CapabilitiesDelegate. </td></tr>
     <tr><td class="paramname">newError</td><td>The error associated to the state change. </td></tr>
+    <tr><td class="paramname">addedOrUpdatedEndpointIds</td><td>The endpoint identifiers of endpoints sent in the addOrUpdateReport. </td></tr>
+    <tr><td class="paramname">deletedEndpointIds</td><td>The endpoint identifiers of endpoints sent in the deleteReport. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#ac9e00f45d5e5a982bb04902a8aae4d26">alexaClientSDK::sampleApp::UIManager</a>.</p>
-
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_capabilities_observer_interface_8h_source.html">CapabilitiesObserverInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_capabilities_observer_interface_8h_source.html">CapabilitiesObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

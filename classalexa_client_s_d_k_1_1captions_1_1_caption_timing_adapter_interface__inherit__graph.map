@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::captions::CaptionTimingAdapterInterface" name="alexaClientSDK::captions::CaptionTimingAdapterInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,37,218,76"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_timing_adapter.html" title=" " alt="" coords="291,5,463,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_timing_adapter.html" title=" " alt="" coords="266,68,488,107"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_timing_adapter.html" title="alexaClientSDK::captions\l::CaptionTimingAdapter" alt="" coords="289,5,461,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_timing_adapter.html" title="alexaClientSDK::captions\l::test::MockCaptionTimingAdapter" alt="" coords="264,71,485,112"/>
 </map>

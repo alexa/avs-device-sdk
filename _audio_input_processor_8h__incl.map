@@ -1,52 +1,43 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="3179,5,3435,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="3204,299,3266,324"/>
-<area shape="rect" id="node3" title=" " alt="" coords="174,299,221,324"/>
-<area shape="rect" id="node4" title=" " alt="" coords="3962,379,4031,404"/>
-<area shape="rect" id="node5" title=" " alt="" coords="887,205,994,231"/>
-<area shape="rect" id="node6" title=" " alt="" coords="754,299,812,324"/>
-<area shape="rect" id="node7" href="$_in_process_attachment_reader_8h.html" title=" " alt="" coords="1524,105,1730,144"/>
-<area shape="rect" id="node13" href="$_capability_agent_8h.html" title=" " alt="" coords="4869,105,5062,144"/>
-<area shape="rect" id="node16" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="5437,199,5702,237"/>
-<area shape="rect" id="node17" href="$_exception_error_type_8h.html" title=" " alt="" coords="5577,292,5800,331"/>
-<area shape="rect" id="node18" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="5171,199,5363,237"/>
-<area shape="rect" id="node22" href="$_directive_handler_configuration_8h.html" title=" " alt="" coords="5171,292,5403,331"/>
-<area shape="rect" id="node24" href="$_capability_configuration_8h.html" title=" " alt="" coords="320,199,513,237"/>
-<area shape="rect" id="node26" href="$_dialog_u_x_state_aggregator_8h.html" title=" " alt="" coords="2489,105,2711,144"/>
-<area shape="rect" id="node27" href="$_audio_input_processor_observer_interface_8h.html" title=" " alt="" coords="2015,192,2218,244"/>
-<area shape="rect" id="node29" href="$_dialog_u_x_state_observer_interface_8h.html" title=" " alt="" coords="1204,199,1434,237"/>
-<area shape="rect" id="node32" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="1811,199,1990,237"/>
-<area shape="rect" id="node33" href="$_executor_8h.html" title=" " alt="" coords="3279,199,3474,237"/>
-<area shape="rect" id="node34" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="2929,199,3103,237"/>
-<area shape="rect" id="node35" href="$_capability_configuration_interface_8h.html" title=" " alt="" coords="837,105,1063,144"/>
-<area shape="rect" id="node36" href="$_context_manager_interface_8h.html" title=" " alt="" coords="3618,105,3809,144"/>
-<area shape="rect" id="node37" href="$_directive_sequencer_interface_8h.html" title=" " alt="" coords="4245,105,4449,144"/>
-<area shape="rect" id="node38" href="$_requires_shutdown_8h.html" title=" " alt="" coords="3902,199,4090,237"/>
-<area shape="rect" id="node39" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="3833,105,4024,144"/>
-<area shape="rect" id="node40" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="26,199,246,237"/>
-<area shape="rect" id="node41" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="5826,105,6073,144"/>
-<area shape="rect" id="node42" href="$_message_sender_interface_8h.html" title=" " alt="" coords="6097,105,6288,144"/>
-<area shape="rect" id="node43" href="$_power_resource_manager_interface_8h.html" title=" " alt="" coords="6312,105,6547,144"/>
-<area shape="rect" id="node44" href="$_system_sound_player_interface_8h.html" title=" " alt="" coords="6572,105,6781,144"/>
-<area shape="rect" id="node45" href="$_user_inactivity_monitor_interface_8h.html" title=" " alt="" coords="3031,105,3244,144"/>
-<area shape="rect" id="node46" href="$_device_settings_manager_8h.html" title=" " alt="" coords="537,205,762,231"/>
-<area shape="rect" id="node47" href="$_setting_event_metadata_8h.html" title=" " alt="" coords="2965,299,3180,324"/>
-<area shape="rect" id="node48" href="$_speech_encoder_8h.html" title=" " alt="" coords="3369,112,3594,137"/>
-<area shape="rect" id="node49" href="$_audio_provider_8h.html" title=" " alt="" coords="6805,112,6921,137"/>
-<area shape="rect" id="node50" href="$_initiator_8h.html" title=" " alt="" coords="265,299,341,324"/>
-<area shape="rect" id="node8" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="1458,199,1620,237"/>
-<area shape="rect" id="node11" href="$_reader_8h.html" title=" " alt="" coords="1018,199,1180,237"/>
-<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title=" " alt="" coords="1644,205,1786,231"/>
-<area shape="rect" id="node9" title=" " alt="" coords="3451,299,3512,324"/>
-<area shape="rect" id="node10" title=" " alt="" coords="2931,379,2985,404"/>
-<area shape="rect" id="node14" title=" " alt="" coords="5229,379,5345,404"/>
-<area shape="rect" id="node15" href="$_namespace_and_name_8h.html" title=" " alt="" coords="4420,292,4650,331"/>
-<area shape="rect" id="node19" href="$_context_requester_interface_8h.html" title=" " alt="" coords="4115,199,4310,237"/>
-<area shape="rect" id="node20" href="$_state_provider_interface_8h.html" title=" " alt="" coords="4436,199,4626,237"/>
-<area shape="rect" id="node21" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="4804,199,4994,237"/>
-<area shape="rect" id="node23" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="4787,292,5011,331"/>
-<area shape="rect" id="node25" href="$_optional_8h.html" title=" " alt="" coords="433,299,629,324"/>
-<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="2556,199,2804,237"/>
-<area shape="rect" id="node30" href="$_interaction_model_request_processing_observer_interface_8h.html" title=" " alt="" coords="2242,192,2481,244"/>
-<area shape="rect" id="node31" href="$_message_observer_interface_8h.html" title=" " alt="" coords="2743,292,2940,331"/>
+<area shape="rect" id="node7" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="719,109,925,151"/>
+<area shape="rect" id="node13" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="4861,109,5055,151"/>
+<area shape="rect" id="node16" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="5563,206,5823,247"/>
+<area shape="rect" id="node17" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="5771,303,5993,344"/>
+<area shape="rect" id="node18" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="5195,206,5387,247"/>
+<area shape="rect" id="node22" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="5513,303,5747,344"/>
+<area shape="rect" id="node24" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3134,206,3329,247"/>
+<area shape="rect" id="node26" href="$_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="2145,109,2369,151"/>
+<area shape="rect" id="node27" href="$_audio_input_processor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AudioInputProcessorObserver\lInterface.h" alt="" coords="255,199,455,255"/>
+<area shape="rect" id="node29" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="2703,206,2931,247"/>
+<area shape="rect" id="node31" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2499,206,2679,247"/>
+<area shape="rect" id="node32" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3403,206,3598,247"/>
+<area shape="rect" id="node33" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="1075,206,1251,247"/>
+<area shape="rect" id="node34" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3048,109,3271,151"/>
+<area shape="rect" id="node35" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3641,109,3833,151"/>
+<area shape="rect" id="node36" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="4001,109,4203,151"/>
+<area shape="rect" id="node37" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3774,206,3963,247"/>
+<area shape="rect" id="node38" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="4561,109,4753,151"/>
+<area shape="rect" id="node39" href="$_internet_connection_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionObserverInterface.h" alt="" coords="5573,109,5823,151"/>
+<area shape="rect" id="node40" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="1327,206,1544,247"/>
+<area shape="rect" id="node41" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="5847,109,6090,151"/>
+<area shape="rect" id="node42" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="6114,109,6306,151"/>
+<area shape="rect" id="node43" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="6331,109,6561,151"/>
+<area shape="rect" id="node44" href="$_system_sound_player_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemSoundPlayerInterface.h" alt="" coords="6585,109,6792,151"/>
+<area shape="rect" id="node45" href="$_user_inactivity_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/UserInactivityMonitorInterface.h" alt="" coords="153,109,365,151"/>
+<area shape="rect" id="node46" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="2199,213,2423,240"/>
+<area shape="rect" id="node47" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="5,310,220,337"/>
+<area shape="rect" id="node48" href="$_speech_encoder_8h.html" title="SpeechEncoder/SpeechEncoder.h" alt="" coords="3395,117,3617,143"/>
+<area shape="rect" id="node49" href="$_audio_provider_8h.html" title="AudioProvider.h" alt="" coords="6817,117,6931,143"/>
+<area shape="rect" id="node50" href="$_initiator_8h.html" title="Initiator.h" alt="" coords="611,310,687,337"/>
+<area shape="rect" id="node8" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="646,206,811,247"/>
+<area shape="rect" id="node11" href="$_reader_8h.html" title="AVSCommon/Utils/SDS\l/Reader.h" alt="" coords="835,206,1001,247"/>
+<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AttachmentReader.h" alt="" coords="479,213,621,240"/>
+<area shape="rect" id="node15" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="4561,303,4792,344"/>
+<area shape="rect" id="node19" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="4139,206,4334,247"/>
+<area shape="rect" id="node20" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="4561,206,4753,247"/>
+<area shape="rect" id="node21" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="4929,206,5121,247"/>
+<area shape="rect" id="node23" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="4979,303,5201,344"/>
+<area shape="rect" id="node25" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3007,310,3203,337"/>
+<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1930,206,2175,247"/>
+<area shape="rect" id="node30" href="$_interaction_model_request_processing_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InteractionModelRequestProcessing\lObserverInterface.h" alt="" coords="1669,199,1905,255"/>
 </map>

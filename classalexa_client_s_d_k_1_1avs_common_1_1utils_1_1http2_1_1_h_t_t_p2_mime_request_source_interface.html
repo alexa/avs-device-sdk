@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::http2::HTTP2MimeReques
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_source_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_source_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_source_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_source_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html" title="alexaClientSDK::acl\l::MessageRequestHandler" alt="" coords="315,5,492,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html" title="alexaClientSDK::avsCommon\l::utils::http2::MockHTTP2MimeRequest\lEncodeSource" alt="" coords="276,71,531,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -149,7 +151,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Calls to this method may block network operations for the associated instance of <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_connection_interface.html">HTTP2ConnectionInterface</a>, so they should return quickly.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>An <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_get_mime_headers_result.html">HTTP2GetMimeHeadersResult</a></code> specifying the status of the operation and a vector of header lines if the status was CONTINUE. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#af459bc0d4da20338394093b80b1fc34d">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html#a6a191a984aef5a3d9afe8ba4033b2d6d">alexaClientSDK::acl::MessageRequestHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#af459bc0d4da20338394093b80b1fc34d">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
 
 </div>
 </div>
@@ -179,7 +181,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Calls to this method may block network operations for the associated instance of <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_connection_interface.html">HTTP2ConnectionInterface</a>, so they should return quickly.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The header lines that should be output with this request. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#a0b575b6ce35202357f576693e1610e67">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html#a0c8dcd11480f855989b9c0bb1e64efe1">alexaClientSDK::acl::MessageRequestHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#a0b575b6ce35202357f576693e1610e67">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
 
 </div>
 </div>
@@ -228,18 +230,18 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Result indicating the disposition of the operation and number of bytes copied. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd>HTTPSendMimePartDataResult. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#a0a01195692703378fc0963545e116ca4">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html#a7ba42911288b0c0aec4c3d37d9104185">alexaClientSDK::acl::MessageRequestHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_mock_h_t_t_p2_mime_request_encode_source.html#a0a01195692703378fc0963545e116ca4">alexaClientSDK::avsCommon::utils::http2::MockHTTP2MimeRequestEncodeSource</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/<a class="el" href="_h_t_t_p2_mime_request_source_interface_8h_source.html">HTTP2MimeRequestSourceInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/<a class="el" href="_h_t_t_p2_mime_request_source_interface_8h_source.html">HTTP2MimeRequestSourceInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

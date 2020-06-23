@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::mediaPlayer::test::MockContentFetcher" name="alexaClientSDK::mediaPlayer::test::MockContentFetcher">
-<area shape="rect" id="node1" title="A mock content fetcher." alt="" coords="28,105,225,144"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html" title=" " alt="" coords="5,5,247,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::HTTPContentFetcher\lInterface" alt="" coords="5,5,248,61"/>
 </map>

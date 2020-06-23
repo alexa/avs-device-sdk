@@ -1,11 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/KeywordObserver.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/KeywordObserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="384,5,598,57"/>
-<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title=" " alt="" coords="230,105,453,157"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title=" " alt="" coords="294,405,574,444"/>
-<area shape="rect" id="node9" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="528,112,803,151"/>
-<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title=" " alt="" coords="6,205,224,257"/>
-<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="248,205,454,257"/>
-<area shape="rect" id="node4" href="$_sample_application_8h.html" title=" " alt="" coords="5,305,225,357"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="249,305,451,357"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title=" " alt="" coords="16,405,214,444"/>
+<area shape="rect" id="node2" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,109,451,165"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,421,569,463"/>
+<area shape="rect" id="node9" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,117,799,158"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,213,221,269"/>
+<area shape="rect" id="node8" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,213,451,269"/>
+<area shape="rect" id="node4" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,317,221,373"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,317,447,373"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,421,212,463"/>
 </map>

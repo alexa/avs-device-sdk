@@ -1,12 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="157,5,437,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="240,232,309,257"/>
-<area shape="rect" id="node3" href="$_bluetooth_service_interface_8h.html" title=" " alt="" coords="63,119,259,171"/>
-<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_8h.html" title=" " alt="" coords="357,125,576,164"/>
-<area shape="rect" id="node4" href="$_s_d_p_record_interface_8h.html" title=" " alt="" coords="5,219,216,271"/>
-<area shape="rect" id="node5" title=" " alt="" coords="84,319,137,344"/>
-<area shape="rect" id="node7" title=" " alt="" coords="624,232,682,257"/>
-<area shape="rect" id="node8" href="$_audio_format_8h.html" title=" " alt="" coords="482,319,704,344"/>
-<area shape="rect" id="node10" href="$_formatted_audio_stream_adapter_listener_8h.html" title=" " alt="" coords="333,225,600,264"/>
-<area shape="rect" id="node9" title=" " alt="" coords="558,392,628,417"/>
+<area shape="rect" id="node3" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="65,124,260,180"/>
+<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="357,131,573,173"/>
+<area shape="rect" id="node4" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="5,228,216,284"/>
+<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="479,332,702,359"/>
+<area shape="rect" id="node10" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="334,235,597,277"/>
 </map>

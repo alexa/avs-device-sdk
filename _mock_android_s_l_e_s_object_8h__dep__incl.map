@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/test/AndroidUtilities/MockAndroidSLESObject.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/test/AndroidUtilities/MockAndroidSLESObject.h">
-<area shape="rect" id="node1" title=" " alt="" coords="319,5,550,71"/>
-<area shape="rect" id="node2" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title=" " alt="" coords="5,119,264,184"/>
-<area shape="rect" id="node3" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title=" " alt="" coords="287,125,582,177"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_speaker_test_8cpp.html" title=" " alt="" coords="606,125,873,177"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/test/AndroidSLESBuffer\lQueueTest.cpp" alt="" coords="5,124,263,195"/>
+<area shape="rect" id="node3" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp" alt="" coords="287,131,578,187"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_speaker_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESSpeakerTest.cpp" alt="" coords="602,131,869,187"/>
 </map>

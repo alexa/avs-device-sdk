@@ -16,6 +16,7 @@ var searchData=
   ['optional_3c_20alexaclientsdk_3a_3asettings_3a_3asettingeventmetadata_20_3e',['Optional&lt; alexaClientSDK::settings::SettingEventMetadata &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20avscommon_3a_3aavs_3a_3arequester_20_3e',['Optional&lt; avsCommon::avs::Requester &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20avscommon_3a_3aavs_3a_3aresources_3a_3aalexaunitofmeasure_20_3e',['Optional&lt; avsCommon::avs::resources::AlexaUnitOfMeasure &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['optional_3c_20avscommon_3a_3asdkinterfaces_3a_3aendpoints_3a_3aendpointidentifier_20_3e',['Optional&lt; avsCommon::sdkInterfaces::endpoints::EndpointIdentifier &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20bool_20_3e',['Optional&lt; bool &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20connectiontype_20_3e',['Optional&lt; ConnectionType &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20int_20_3e',['Optional&lt; int &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],

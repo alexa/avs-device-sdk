@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="3266,5,3506,71"/>
-<area shape="rect" id="node2" href="$_abstract_a_v_s_connection_manager_8h.html" title=" " alt="" coords="363,119,643,184"/>
-<area shape="rect" id="node9" href="$_software_info_sender_8h.html" title=" " alt="" coords="184,345,348,411"/>
-<area shape="rect" id="node16" href="$_mock_a_v_s_connection_manager_8h.html" title=" " alt="" coords="1999,119,2219,184"/>
-<area shape="rect" id="node25" href="$_report_state_handler_8h.html" title=" " alt="" coords="915,119,1079,184"/>
-<area shape="rect" id="node27" href="$_certified_sender_8h.html" title=" " alt="" coords="2720,119,2884,184"/>
-<area shape="rect" id="node32" href="$_endpoint_registration_manager_8h.html" title=" " alt="" coords="3280,119,3492,184"/>
-<area shape="rect" id="node35" href="$_registration_manager_8h.html" title=" " alt="" coords="3833,119,4028,184"/>
-<area shape="rect" id="node38" href="$_cloud_controlled_setting_protocol_8h.html" title=" " alt="" coords="5414,232,5628,297"/>
-<area shape="rect" id="node40" href="$_device_controlled_setting_protocol_8h.html" title=" " alt="" coords="5652,232,5872,297"/>
-<area shape="rect" id="node42" href="$_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="4725,125,4972,177"/>
-<area shape="rect" id="node47" href="$_locale_wake_words_setting_8h.html" title=" " alt="" coords="5952,119,6180,184"/>
-<area shape="rect" id="node3" href="$_a_v_s_connection_manager_8h.html" title=" " alt="" coords="176,239,357,291"/>
-<area shape="rect" id="node13" href="$_software_info_test_8cpp.html" title=" " alt="" coords="5,465,228,517"/>
-<area shape="rect" id="node14" href="$_abstract_a_v_s_connection_manager_8cpp.html" title=" " alt="" coords="381,239,626,291"/>
-<area shape="rect" id="node15" href="$_certified_sender_test_8cpp.html" title=" " alt="" coords="1201,239,1393,291"/>
-<area shape="rect" id="node4" href="$_a_v_s_connection_manager_8cpp.html" title=" " alt="" coords="372,359,643,397"/>
-<area shape="rect" id="node5" href="$_default_client_8h.html" title=" " alt="" coords="2811,459,3038,524"/>
-<area shape="rect" id="node7" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="5155,345,5382,411"/>
-<area shape="rect" id="node6" href="$_default_client_8cpp.html" title=" " alt="" coords="2811,579,3039,631"/>
-<area shape="rect" id="node8" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="5161,459,5377,524"/>
-<area shape="rect" id="node10" href="$_software_info_send_request_8h.html" title=" " alt="" coords="304,459,495,524"/>
-<area shape="rect" id="node11" href="$_software_info_sender_8cpp.html" title=" " alt="" coords="154,579,391,631"/>
-<area shape="rect" id="node12" href="$_software_info_send_request_8cpp.html" title=" " alt="" coords="420,572,621,637"/>
-<area shape="rect" id="node17" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="1644,232,1843,297"/>
-<area shape="rect" id="node18" href="$_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="2301,345,2482,411"/>
-<area shape="rect" id="node19" href="$_report_state_handler_test_8cpp.html" title=" " alt="" coords="961,232,1177,297"/>
-<area shape="rect" id="node20" href="$_time_zone_handler_test_8cpp.html" title=" " alt="" coords="1866,232,2071,297"/>
-<area shape="rect" id="node21" href="$_mock_certified_sender_8h.html" title=" " alt="" coords="2146,239,2331,291"/>
-<area shape="rect" id="node22" href="$_registration_manager_test_8cpp.html" title=" " alt="" coords="2354,239,2578,291"/>
-<area shape="rect" id="node23" href="$_setting_event_sender_test_8cpp.html" title=" " alt="" coords="1417,239,1620,291"/>
-<area shape="rect" id="node24" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title=" " alt="" coords="3558,239,3796,291"/>
-<area shape="rect" id="node26" href="$_report_state_handler_8cpp.html" title=" " alt="" coords="649,239,886,291"/>
-<area shape="rect" id="node28" href="$_alerts_capability_agent_8h.html" title=" " alt="" coords="2890,232,3053,297"/>
-<area shape="rect" id="node30" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2839,352,3011,404"/>
-<area shape="rect" id="node31" href="$_certified_sender_8cpp.html" title=" " alt="" coords="2602,239,2765,291"/>
-<area shape="rect" id="node29" href="$_alerts_capability_agent_8cpp.html" title=" " alt="" coords="4384,345,4561,411"/>
-<area shape="rect" id="node33" href="$_endpoint_registration_manager_8cpp.html" title=" " alt="" coords="3078,239,3265,291"/>
-<area shape="rect" id="node34" href="$_endpoint_registration_manager_test_8cpp.html" title=" " alt="" coords="3289,239,3483,291"/>
-<area shape="rect" id="node36" href="$_registration_manager_8cpp.html" title=" " alt="" coords="4065,239,4259,291"/>
-<area shape="rect" id="node37" href="$_revoke_authorization_observer_8h.html" title=" " alt="" coords="3820,232,4040,297"/>
-<area shape="rect" id="node39" href="$_cloud_controlled_setting_protocol_8cpp.html" title=" " alt="" coords="5406,352,5625,404"/>
-<area shape="rect" id="node41" href="$_device_controlled_setting_protocol_8cpp.html" title=" " alt="" coords="5650,352,5875,404"/>
-<area shape="rect" id="node43" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="4384,239,4604,291"/>
-<area shape="rect" id="node44" href="$_locale_handler_8cpp.html" title=" " alt="" coords="4628,239,4833,291"/>
-<area shape="rect" id="node45" href="$_time_zone_handler_8cpp.html" title=" " alt="" coords="4856,239,5081,291"/>
-<area shape="rect" id="node46" href="$_shared_a_v_s_setting_protocol_8cpp.html" title=" " alt="" coords="5105,239,5339,291"/>
-<area shape="rect" id="node48" href="$_locale_handler_test_8cpp.html" title=" " alt="" coords="5949,239,6183,291"/>
-<area shape="rect" id="node49" href="$_locale_wake_words_setting_8cpp.html" title=" " alt="" coords="6207,239,6410,291"/>
-<area shape="rect" id="node50" href="$_locale_wake_words_setting_test_8cpp.html" title=" " alt="" coords="6434,239,6634,291"/>
+<area shape="rect" id="node2" href="$_connection_retry_trigger_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ConnectionRetryTrigger.h" alt="" coords="1396,124,1623,195"/>
+<area shape="rect" id="node6" href="$_external_capabilities_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ExternalCapabilitiesBuilderInterface.h" alt="" coords="1227,376,1471,447"/>
+<area shape="rect" id="node8" href="$_abstract_a_v_s_connection_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AbstractAVSConnection\lManager.h" alt="" coords="357,124,640,195"/>
+<area shape="rect" id="node11" href="$_software_info_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/SoftwareInfoSender.h" alt="" coords="347,376,512,447"/>
+<area shape="rect" id="node18" href="$_mock_a_v_s_connection_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockAVSConnectionManager.h" alt="" coords="4646,124,4869,195"/>
+<area shape="rect" id="node27" href="$_report_state_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/ReportStateHandler.h" alt="" coords="751,124,916,195"/>
+<area shape="rect" id="node29" href="$_certified_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/include/CertifiedSender\l/CertifiedSender.h" alt="" coords="1907,124,2069,195"/>
+<area shape="rect" id="node35" href="$_endpoint_registration_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointRegistration\lManager.h" alt="" coords="6054,124,6263,195"/>
+<area shape="rect" id="node38" href="$_registration_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/RegistrationManager\l/include/RegistrationManager\l/RegistrationManager.h" alt="" coords="5551,124,5742,195"/>
+<area shape="rect" id="node41" href="$_cloud_controlled_setting_protocol_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/CloudControlledSetting\lProtocol.h" alt="" coords="2671,250,2883,321"/>
+<area shape="rect" id="node43" href="$_device_controlled_setting_protocol_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/DeviceControlledSetting\lProtocol.h" alt="" coords="2908,250,3127,321"/>
+<area shape="rect" id="node45" href="$_shared_a_v_s_setting_protocol_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SharedAVSSettingProtocol.h" alt="" coords="3257,131,3503,187"/>
+<area shape="rect" id="node50" href="$_locale_wake_words_setting_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/Types/LocaleWakeWords\lSetting.h" alt="" coords="6287,124,6515,195"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="1601,495,1828,565"/>
+<area shape="rect" id="node5" href="$_connection_retry_trigger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/ConnectionRetry\lTrigger.cpp" alt="" coords="1245,250,1472,321"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1600,621,1829,677"/>
+<area shape="rect" id="node7" href="$_external_capabilities_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h" alt="" coords="1243,495,1456,565"/>
+<area shape="rect" id="node9" href="$_a_v_s_connection_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/AVSConnectionManager.h" alt="" coords="409,257,589,313"/>
+<area shape="rect" id="node15" href="$_software_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SoftwareInfoTest.cpp" alt="" coords="5,502,232,558"/>
+<area shape="rect" id="node16" href="$_abstract_a_v_s_connection_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/AbstractAVSConnectionManager.cpp" alt="" coords="141,257,384,313"/>
+<area shape="rect" id="node17" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="977,257,1170,313"/>
+<area shape="rect" id="node10" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DeviceSettingsManagerBuilder.h" alt="" coords="2904,376,3131,447"/>
+<area shape="rect" id="node12" href="$_software_info_send_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/SoftwareInfoSendRequest.h" alt="" coords="334,495,525,565"/>
+<area shape="rect" id="node13" href="$_software_info_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSender.cpp" alt="" coords="433,621,671,677"/>
+<area shape="rect" id="node14" href="$_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="202,613,403,684"/>
+<area shape="rect" id="node19" href="$_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="3155,376,3373,447"/>
+<area shape="rect" id="node20" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="4658,250,4857,321"/>
+<area shape="rect" id="node21" href="$_report_state_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/ReportStateHandler\lTest.cpp" alt="" coords="2093,250,2309,321"/>
+<area shape="rect" id="node22" href="$_time_zone_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/TimeZoneHandler\lTest.cpp" alt="" coords="4881,250,5085,321"/>
+<area shape="rect" id="node23" href="$_mock_certified_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/MockCertifiedSender.h" alt="" coords="3875,257,4061,313"/>
+<area shape="rect" id="node24" href="$_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/RegistrationManager\l/test/RegistrationManagerTest.cpp" alt="" coords="5387,257,5610,313"/>
+<area shape="rect" id="node25" href="$_setting_event_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingEvent\lSenderTest.cpp" alt="" coords="5109,257,5313,313"/>
+<area shape="rect" id="node26" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SharedAVSSetting\lProtocolTest.cpp" alt="" coords="4395,257,4634,313"/>
+<area shape="rect" id="node28" href="$_report_state_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/ReportStateHandler.cpp" alt="" coords="715,257,952,313"/>
+<area shape="rect" id="node30" href="$_alerts_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/AlertsCapabilityAgent.h" alt="" coords="2384,250,2597,321"/>
+<area shape="rect" id="node32" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="2177,383,2349,439"/>
+<area shape="rect" id="node33" href="$_external_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/include\l/ExternalMediaPlayer/ExternalMedia\lPlayer.h" alt="" coords="1598,243,1831,328"/>
+<area shape="rect" id="node34" href="$_certified_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/src/CertifiedSender.cpp" alt="" coords="1907,257,2069,313"/>
+<area shape="rect" id="node31" href="$_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/AlertsCapability\lAgent.cpp" alt="" coords="2424,376,2637,447"/>
+<area shape="rect" id="node36" href="$_endpoint_registration_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lRegistrationManager.cpp" alt="" coords="6196,257,6383,313"/>
+<area shape="rect" id="node37" href="$_endpoint_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lRegistrationManagerTest.cpp" alt="" coords="6407,257,6601,313"/>
+<area shape="rect" id="node39" href="$_registration_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/RegistrationManager\l/src/RegistrationManager.cpp" alt="" coords="5927,257,6121,313"/>
+<area shape="rect" id="node40" href="$_revoke_authorization_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/RevokeAuthorization\lObserver.h" alt="" coords="5684,250,5903,321"/>
+<area shape="rect" id="node42" href="$_cloud_controlled_setting_protocol_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/CloudControlled\lSettingProtocol.cpp" alt="" coords="2661,383,2880,439"/>
+<area shape="rect" id="node44" href="$_device_controlled_setting_protocol_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/DeviceControlled\lSettingProtocol.cpp" alt="" coords="3397,383,3622,439"/>
+<area shape="rect" id="node46" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="3151,257,3371,313"/>
+<area shape="rect" id="node47" href="$_locale_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/LocaleHandler.cpp" alt="" coords="3396,257,3601,313"/>
+<area shape="rect" id="node48" href="$_time_zone_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/TimeZoneHandler.cpp" alt="" coords="3626,257,3851,313"/>
+<area shape="rect" id="node49" href="$_shared_a_v_s_setting_protocol_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/SharedAVSSetting\lProtocol.cpp" alt="" coords="4085,257,4320,313"/>
 </map>

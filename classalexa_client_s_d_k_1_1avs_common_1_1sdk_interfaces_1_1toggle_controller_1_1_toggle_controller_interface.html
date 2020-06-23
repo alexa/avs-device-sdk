@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::toggleControll
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html" title="alexaClientSDK::capability\lAgents::toggleController\l::test::MockToggleControllerInterface" alt="" coords="261,5,500,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html" title="alexaClientSDK::sampleApp\l::DefaultEndpointToggleController\lHandler" alt="" coords="271,85,490,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html" title="alexaClientSDK::sampleApp\l::PeripheralEndpointToggleController\lHandler" alt="" coords="263,165,498,221"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -211,7 +214,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets the current toggle state of an instance.</p>
 <dl class="section return"><dt>Returns</dt><dd>On successful, the instance to return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> and <code>ToggleState</code> otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a empty <code>ToggleState</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_toggle_controller_handler.html#ab38d1156b8888d4b8f89bcd62d7d977d">alexaClientSDK::sampleApp::ToggleControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html#a415dea6d27f783ea2f15e90b3a79ea59">alexaClientSDK::sampleApp::PeripheralEndpointToggleControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html#a9ffb9fb001b4ee086a4025e59ecddde2">alexaClientSDK::sampleApp::DefaultEndpointToggleControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -291,18 +294,18 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair of <code>AlexaResponseType</code> and string. For the successful operation, the controller should return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> with an empty string, otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a description of the error. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_toggle_controller_handler.html#a879e6c6e0630e00b2f89556a7ca2e89a">alexaClientSDK::sampleApp::ToggleControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html#af3b3f77482b94f2ba16e4620db4b5802">alexaClientSDK::sampleApp::PeripheralEndpointToggleControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html#a7f2064d7a0dbbb692e48415b7091f17b">alexaClientSDK::sampleApp::DefaultEndpointToggleControllerHandler</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/<a class="el" href="_toggle_controller_interface_8h_source.html">ToggleControllerInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/<a class="el" href="_toggle_controller_interface_8h_source.html">ToggleControllerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

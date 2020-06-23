@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Alerts/src/Renderer/Renderer.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/src/Renderer/Renderer.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_88b1bb53c337da1d62e70e0c33265813.html">src</a></li><li class="navelem"><a class="el" href="dir_73b2f3b3b0731c5b8c6a213d28d8a31c.html">Renderer</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_092564aa71f3dfc32ed64d9c9668be3d.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_705967d9221232f6c8251613ef4000f2.html">acsdkAlerts</a></li><li class="navelem"><a class="el" href="dir_d4c931f5af9ec6db4721ba1e8c33df3a.html">src</a></li><li class="navelem"><a class="el" href="dir_16b986533b8a3666388797f407d8c76c.html">Renderer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -79,12 +79,42 @@ $(function() {
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_renderer_8h_source.html">Alerts/Renderer/Renderer.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_renderer_8h_source.html">acsdkAlerts/Renderer/Renderer.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Renderer.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_renderer_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_renderer_2_renderer_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_renderer_2_renderer_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_renderer_2_renderer_8cpp">
+<div class="center"><img src="_renderer_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_renderer_2_renderer_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_renderer_2_renderer_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_renderer_2_renderer_8cpp">
+<area shape="rect" id="node5" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="3765,481,3957,523"/>
+<area shape="rect" id="node7" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="784,213,960,255"/>
+<area shape="rect" id="node25" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="1307,213,1487,255"/>
+<area shape="rect" id="node32" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="1380,124,1561,165"/>
+<area shape="rect" id="node33" href="_renderer_8h.html" title="acsdkAlerts/Renderer\l/Renderer.h" alt="" coords="2259,124,2407,165"/>
+<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="765,303,979,344"/>
+<area shape="rect" id="node19" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="76,392,252,433"/>
+<area shape="rect" id="node20" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="327,392,503,433"/>
+<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="94,303,287,344"/>
+<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2463,303,2639,344"/>
+<area shape="rect" id="node22" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1305,481,1481,523"/>
+<area shape="rect" id="node27" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="1138,392,1318,433"/>
+<area shape="rect" id="node29" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1469,303,1649,344"/>
+<area shape="rect" id="node28" href="_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="807,481,987,523"/>
+<area shape="rect" id="node30" href="_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="1477,392,1657,433"/>
+<area shape="rect" id="node31" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2135,399,2331,426"/>
+<area shape="rect" id="node34" href="_renderer_interface_8h.html" title="acsdkAlerts/Renderer\l/RendererInterface.h" alt="" coords="2290,303,2438,344"/>
+<area shape="rect" id="node35" href="_renderer_observer_interface_8h.html" title="acsdkAlerts/Renderer\l/RendererObserverInterface.h" alt="" coords="1865,392,2060,433"/>
+<area shape="rect" id="node36" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="2355,399,2567,426"/>
+<area shape="rect" id="node37" href="_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="3451,213,3643,255"/>
+<area shape="rect" id="node41" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3123,303,3317,344"/>
+<area shape="rect" id="node46" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2765,303,2974,344"/>
+<area shape="rect" id="node48" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="3402,392,3611,433"/>
+<area shape="rect" id="node49" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2371,213,2584,255"/>
+<area shape="rect" id="node50" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1511,213,1691,255"/>
+<area shape="rect" id="node39" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="3765,392,3957,433"/>
+<area shape="rect" id="node40" href="_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="3585,303,3823,344"/>
+<area shape="rect" id="node45" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2921,392,3116,433"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -93,11 +123,9 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html">alexaClientSDK::acsdkAlerts</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html">alexaClientSDK::capabilityAgents::alerts</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html">alexaClientSDK::capabilityAgents::alerts::renderer</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html">alexaClientSDK::acsdkAlerts::renderer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -107,17 +135,22 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac9b367f87a895213b91615bf5ab872d2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#ac9b367f87a895213b91615bf5ab872d2">alexaClientSDK::capabilityAgents::alerts::renderer::TAG</a> (&quot;Renderer&quot;)</td></tr>
-<tr class="memdesc:ac9b367f87a895213b91615bf5ab872d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#ac9b367f87a895213b91615bf5ab872d2">More...</a><br /></td></tr>
-<tr class="separator:ac9b367f87a895213b91615bf5ab872d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04bde67582c4181bc5daece6ed543734"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#a04bde67582c4181bc5daece6ed543734">alexaClientSDK::capabilityAgents::alerts::renderer::isSourceIdOk</a> (MediaPlayerInterface::SourceId sourceId)</td></tr>
-<tr class="separator:a04bde67582c4181bc5daece6ed543734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073f30d40fb4044f9f0eae6486d28222"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#a073f30d40fb4044f9f0eae6486d28222">alexaClientSDK::acsdkAlerts::renderer::TAG</a> (&quot;Renderer&quot;)</td></tr>
+<tr class="memdesc:a073f30d40fb4044f9f0eae6486d28222"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#a073f30d40fb4044f9f0eae6486d28222">More...</a><br /></td></tr>
+<tr class="separator:a073f30d40fb4044f9f0eae6486d28222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12615ef30f7092e05186355317152fb7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#a12615ef30f7092e05186355317152fb7">alexaClientSDK::acsdkAlerts::renderer::isSourceIdOk</a> (MediaPlayerInterface::SourceId sourceId)</td></tr>
+<tr class="separator:a12615ef30f7092e05186355317152fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac79e36faa0b8be8e750a20ea7296f5ab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#ac79e36faa0b8be8e750a20ea7296f5ab">alexaClientSDK::acsdkAlerts::renderer::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;eventName, int count)</td></tr>
+<tr class="separator:ac79e36faa0b8be8e750a20ea7296f5ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a83cd927553253466e8e2b59f5b502c3a"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#a83cd927553253466e8e2b59f5b502c3a">alexaClientSDK::capabilityAgents::alerts::renderer::ALARM_VOLUME_RAMP_TIME</a> = std::chrono::minutes(1)</td></tr>
-<tr class="memdesc:a83cd927553253466e8e2b59f5b502c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration of time for the alarm volume ramp to reach the alert volume sound.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1renderer.html#a83cd927553253466e8e2b59f5b502c3a">More...</a><br /></td></tr>
-<tr class="separator:a83cd927553253466e8e2b59f5b502c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56265354280f3622f29c012f375490dc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#a56265354280f3622f29c012f375490dc">alexaClientSDK::acsdkAlerts::renderer::ALERT_RENDERER_METRIC_SOURCE_PREFIX</a> = &quot;ALERT_RENDERER-&quot;</td></tr>
+<tr class="memdesc:a56265354280f3622f29c012f375490dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for ALERTS RENDERER metric source.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#a56265354280f3622f29c012f375490dc">More...</a><br /></td></tr>
+<tr class="separator:a56265354280f3622f29c012f375490dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc7b100ce08c73af86d5e211457cccd4"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#acc7b100ce08c73af86d5e211457cccd4">alexaClientSDK::acsdkAlerts::renderer::ALARM_VOLUME_RAMP_TIME</a> = std::chrono::minutes(1)</td></tr>
+<tr class="memdesc:acc7b100ce08c73af86d5e211457cccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration of time for the alarm volume ramp to reach the alert volume sound.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#acc7b100ce08c73af86d5e211457cccd4">More...</a><br /></td></tr>
+<tr class="separator:acc7b100ce08c73af86d5e211457cccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -149,7 +182,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

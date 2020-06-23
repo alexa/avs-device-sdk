@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Notifications/test/NotificationsCapabilityAgentTest.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Notifications/acsdkNotifications/test/NotificationsCapabilityAgentTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_51ceba3e0236022a3ce16bfbc638804e.html">Notifications</a></li><li class="navelem"><a class="el" href="dir_35f1e9d19ee9e871d448e65c4f9b1090.html">test</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_1b24651c7570ffe584d16a409aec5522.html">Notifications</a></li><li class="navelem"><a class="el" href="dir_c561697a2a7f13e0483afc1a192409a3.html">acsdkNotifications</a></li><li class="navelem"><a class="el" href="dir_2abd5a21d4e4e8fca29fb6c6c416ca25.html">test</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,46 +76,75 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;queue&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/MockAttachmentManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h_source.html">AVSCommon/AVS/IndicatorState.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_client_s_d_k_init_8h_source.html">AVSCommon/AVS/Initialization/AlexaClientSDKInit.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_notifications_audio_factory_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_context_manager_8h_source.html">AVSCommon/SDKInterfaces/MockContextManager.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveSequencer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_directive_handler_result_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveSequencer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_console_logger_8h_source.html">AVSCommon/Utils/Logger/ConsoleLogger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_metric_recorder_8h_source.html">AVSCommon/Utils/Metrics/MockMetricRecorder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_notifications_capability_agent_8h_source.html">Notifications/NotificationsCapabilityAgent.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_notification_indicator_8h_source.html">Notifications/NotificationIndicator.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_notification_renderer_interface_8h_source.html">Notifications/NotificationRendererInterface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_notification_renderer_observer_interface_8h_source.html">Notifications/NotificationRendererObserverInterface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_notification_indicator_8h_source.html">acsdkNotifications/NotificationIndicator.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_notifications_capability_agent_8h_source.html">acsdkNotifications/NotificationsCapabilityAgent.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_notification_renderer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notification_renderer_observer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for NotificationsCapabilityAgentTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_notifications_capability_agent_test_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2test_2_notifications_capability_agent_test_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2test_2_notifications_capability_agent_test_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2test_2_notifications_capability_agent_test_8cpp">
+<div class="center"><img src="_notifications_capability_agent_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2test_2_notifications_capability_agent_test_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2test_2_notifications_capability_agent_test_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2test_2_notifications_capability_agent_test_8cpp">
+<area shape="rect" id="node8" href="_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="2437,221,2641,262"/>
+<area shape="rect" id="node12" href="_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="693,131,922,158"/>
+<area shape="rect" id="node14" href="_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="4215,221,4421,262"/>
+<area shape="rect" id="node19" href="_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="1151,213,1365,269"/>
+<area shape="rect" id="node24" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="935,221,1127,262"/>
+<area shape="rect" id="node26" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="131,221,335,262"/>
+<area shape="rect" id="node28" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="719,221,911,262"/>
+<area shape="rect" id="node30" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="453,221,695,262"/>
+<area shape="rect" id="node32" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="3443,124,3617,165"/>
+<area shape="rect" id="node37" href="_console_logger_8h.html" title="AVSCommon/Utils/Logger\l/ConsoleLogger.h" alt="" coords="3863,124,4039,165"/>
+<area shape="rect" id="node39" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="2061,124,2241,165"/>
+<area shape="rect" id="node41" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="3028,124,3200,165"/>
+<area shape="rect" id="node45" href="_notification_indicator_8h.html" title="acsdkNotifications\l/NotificationIndicator.h" alt="" coords="2665,221,2819,262"/>
+<area shape="rect" id="node46" href="_notifications_capability_agent_8h.html" title="acsdkNotifications\l/NotificationsCapabilityAgent.h" alt="" coords="1834,124,2037,165"/>
+<area shape="rect" id="node49" href="_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="1389,221,1596,262"/>
+<area shape="rect" id="node50" href="_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="1399,317,1594,359"/>
+<area shape="rect" id="node11" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2750,317,2955,359"/>
+<area shape="rect" id="node17" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3863,317,4039,359"/>
+<area shape="rect" id="node23" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="1113,325,1325,351"/>
+<area shape="rect" id="node25" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2382,317,2574,359"/>
+<area shape="rect" id="node27" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="817,317,1040,359"/>
+<area shape="rect" id="node29" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1953,317,2155,359"/>
+<area shape="rect" id="node31" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1619,317,1879,359"/>
+<area shape="rect" id="node36" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3763,221,3939,262"/>
+<area shape="rect" id="node38" href="_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="3963,221,4139,262"/>
+<area shape="rect" id="node40" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2043,221,2223,262"/>
+<area shape="rect" id="node44" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2247,221,2413,262"/>
+<area shape="rect" id="node47" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1722,221,1917,262"/>
+<area shape="rect" id="node48" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2843,221,3038,262"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_audio_factory.html">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsAudioFactory</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_audio_factory.html">alexaClientSDK::acsdkNotifications::test::TestNotificationsAudioFactory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_observer.html">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_observer.html">alexaClientSDK::acsdkNotifications::test::TestNotificationsObserver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_test_notifications_storage.html">alexaClientSDK::capabilityAgents::notifications::test::TestNotificationsStorage</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_storage.html">alexaClientSDK::acsdkNotifications::test::TestNotificationsStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_mock_notification_renderer.html">alexaClientSDK::capabilityAgents::notifications::test::MockNotificationRenderer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer.html">alexaClientSDK::acsdkNotifications::test::MockNotificationRenderer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test_1_1_notifications_capability_agent_test.html">alexaClientSDK::capabilityAgents::notifications::test::NotificationsCapabilityAgentTest</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_notifications_capability_agent_test.html">alexaClientSDK::acsdkNotifications::test::NotificationsCapabilityAgentTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -123,11 +152,9 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_notifications"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html">alexaClientSDK::acsdkNotifications</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html">alexaClientSDK::capabilityAgents::notifications</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html">alexaClientSDK::capabilityAgents::notifications::test</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html">alexaClientSDK::acsdkNotifications::test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -137,83 +164,83 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a26ff26c946ed8eb89440a8d2e2f6dd69"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a26ff26c946ed8eb89440a8d2e2f6dd69">alexaClientSDK::capabilityAgents::notifications::test::MY_WAIT_TIMEOUT</a> (1000)</td></tr>
-<tr class="memdesc:a26ff26c946ed8eb89440a8d2e2f6dd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a26ff26c946ed8eb89440a8d2e2f6dd69">More...</a><br /></td></tr>
-<tr class="separator:a26ff26c946ed8eb89440a8d2e2f6dd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62e11916c76f0e74b9561c1a89839652"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a62e11916c76f0e74b9561c1a89839652">alexaClientSDK::capabilityAgents::notifications::test::RENDER_TIME</a> (10)</td></tr>
-<tr class="memdesc:a62e11916c76f0e74b9561c1a89839652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time to simulate a notification rendering.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a62e11916c76f0e74b9561c1a89839652">More...</a><br /></td></tr>
-<tr class="separator:a62e11916c76f0e74b9561c1a89839652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad09b4f1183f6545050fd6d25188d2fce"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#ad09b4f1183f6545050fd6d25188d2fce">alexaClientSDK::capabilityAgents::notifications::test::NAMESPACE_NOTIFICATIONS</a> (&quot;Notifications&quot;)</td></tr>
-<tr class="memdesc:ad09b4f1183f6545050fd6d25188d2fce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications namespace.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#ad09b4f1183f6545050fd6d25188d2fce">More...</a><br /></td></tr>
-<tr class="separator:ad09b4f1183f6545050fd6d25188d2fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72cca77e785edb6062cdb672133b4aef"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a72cca77e785edb6062cdb672133b4aef">alexaClientSDK::capabilityAgents::notifications::test::NAME_SET_INDICATOR</a> (&quot;SetIndicator&quot;)</td></tr>
-<tr class="memdesc:a72cca77e785edb6062cdb672133b4aef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for Notifications SetIndicator directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a72cca77e785edb6062cdb672133b4aef">More...</a><br /></td></tr>
-<tr class="separator:a72cca77e785edb6062cdb672133b4aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7bbde815c7b2ce93e2917b7b3edd4c7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#af7bbde815c7b2ce93e2917b7b3edd4c7">alexaClientSDK::capabilityAgents::notifications::test::NAME_CLEAR_INDICATOR</a> (&quot;ClearIndicator&quot;)</td></tr>
-<tr class="memdesc:af7bbde815c7b2ce93e2917b7b3edd4c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for Notifications ClearIndicator directive.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#af7bbde815c7b2ce93e2917b7b3edd4c7">More...</a><br /></td></tr>
-<tr class="separator:af7bbde815c7b2ce93e2917b7b3edd4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5845f95c8c1ee3aa048eea28e698b08f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a5845f95c8c1ee3aa048eea28e698b08f">alexaClientSDK::capabilityAgents::notifications::test::MESSAGE_ID_TEST</a> (&quot;MessageId_Test&quot;)</td></tr>
-<tr class="memdesc:a5845f95c8c1ee3aa048eea28e698b08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Id for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a5845f95c8c1ee3aa048eea28e698b08f">More...</a><br /></td></tr>
-<tr class="separator:a5845f95c8c1ee3aa048eea28e698b08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a166cb5aa754b85cf186026651ddfcdd6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a166cb5aa754b85cf186026651ddfcdd6">alexaClientSDK::capabilityAgents::notifications::test::MESSAGE_ID_TEST2</a> (&quot;MessageId_Test2&quot;)</td></tr>
-<tr class="separator:a166cb5aa754b85cf186026651ddfcdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a499638bedad4f98016da2a5fe2f63a33"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a499638bedad4f98016da2a5fe2f63a33">alexaClientSDK::capabilityAgents::notifications::test::CONTEXT_ID_TEST</a> (&quot;ContextId_Test&quot;)</td></tr>
-<tr class="memdesc:a499638bedad4f98016da2a5fe2f63a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a499638bedad4f98016da2a5fe2f63a33">More...</a><br /></td></tr>
-<tr class="separator:a499638bedad4f98016da2a5fe2f63a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d53c2b97c667e23e234ceefcd36b576"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a6d53c2b97c667e23e234ceefcd36b576">alexaClientSDK::capabilityAgents::notifications::test::ASSET_ID1</a> (&quot;assetId1&quot;)</td></tr>
-<tr class="memdesc:a6d53c2b97c667e23e234ceefcd36b576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test fields for payloads.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a6d53c2b97c667e23e234ceefcd36b576">More...</a><br /></td></tr>
-<tr class="separator:a6d53c2b97c667e23e234ceefcd36b576"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7db625bc8d5a8698b982d2827aa9e8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a5a7db625bc8d5a8698b982d2827aa9e8">alexaClientSDK::capabilityAgents::notifications::test::ASSET_ID2</a> (&quot;assetId2&quot;)</td></tr>
-<tr class="separator:a5a7db625bc8d5a8698b982d2827aa9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c38bc81f9de123334084c3bbccd1278"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a0c38bc81f9de123334084c3bbccd1278">alexaClientSDK::capabilityAgents::notifications::test::ASSET_URL1</a> (&quot;assetUrl1&quot;)</td></tr>
-<tr class="separator:a0c38bc81f9de123334084c3bbccd1278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51c8942727488aa5171558d01e0c7cf5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a51c8942727488aa5171558d01e0c7cf5">alexaClientSDK::capabilityAgents::notifications::test::ASSET_URL2</a> (&quot;assetUrl2&quot;)</td></tr>
-<tr class="separator:a51c8942727488aa5171558d01e0c7cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d288710375ed3314efba9807e61f0b4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a2d288710375ed3314efba9807e61f0b4">alexaClientSDK::capabilityAgents::notifications::test::TAG</a> (&quot;NotificationsCapabilityAgentTest&quot;)</td></tr>
-<tr class="memdesc:a2d288710375ed3314efba9807e61f0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a2d288710375ed3314efba9807e61f0b4">More...</a><br /></td></tr>
-<tr class="separator:a2d288710375ed3314efba9807e61f0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee92c8be83993a75e56de64fc2b6aaac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#aee92c8be83993a75e56de64fc2b6aaac">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_create)</td></tr>
-<tr class="separator:aee92c8be83993a75e56de64fc2b6aaac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784045e84b1ed2a93afc0da45dd7ab4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a784045e84b1ed2a93afc0da45dd7ab4d">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_nonEmptyStartupQueue)</td></tr>
-<tr class="separator:a784045e84b1ed2a93afc0da45dd7ab4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afee2d4aa5cf8937ceac77660eb749af0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#afee2d4aa5cf8937ceac77660eb749af0">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicator)</td></tr>
-<tr class="separator:afee2d4aa5cf8937ceac77660eb749af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a985ce6337287b2256954f0e433167a26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a985ce6337287b2256954f0e433167a26">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorIncreasesCount)</td></tr>
-<tr class="separator:a985ce6337287b2256954f0e433167a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77da8cf331f30e109202e87bd7dbb53a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a77da8cf331f30e109202e87bd7dbb53a">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreservedIncreasesCount)</td></tr>
-<tr class="separator:a77da8cf331f30e109202e87bd7dbb53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7f650eb36d918f420dc54b2f09706ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#ad7f650eb36d918f420dc54b2f09706ac">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorWithAudio)</td></tr>
-<tr class="separator:ad7f650eb36d918f420dc54b2f09706ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89b4274404310facd51e7e872f6656cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a89b4274404310facd51e7e872f6656cf">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorWithVisualIndicator)</td></tr>
-<tr class="separator:a89b4274404310facd51e7e872f6656cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a521a3cb991ff3e88ed32ad326d713d1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a521a3cb991ff3e88ed32ad326d713d1d">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sameAssetId)</td></tr>
-<tr class="separator:a521a3cb991ff3e88ed32ad326d713d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe05c5a30df03a1bd409436278c63de0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#abe05c5a30df03a1bd409436278c63de0">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreserved)</td></tr>
-<tr class="separator:abe05c5a30df03a1bd409436278c63de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92be5b9422d032f74182692a25008d60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a92be5b9422d032f74182692a25008d60">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueue)</td></tr>
-<tr class="separator:a92be5b9422d032f74182692a25008d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a657e408cf477a7c07b46308bf4e9260c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a657e408cf477a7c07b46308bf4e9260c">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueueAndIndicatorOn)</td></tr>
-<tr class="separator:a657e408cf477a7c07b46308bf4e9260c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99d053d429f3f9db8376ff57ce22364d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a99d053d429f3f9db8376ff57ce22364d">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, testSlow_clearIndicatorAfterMultipleSetIndicators)</td></tr>
-<tr class="separator:a99d053d429f3f9db8376ff57ce22364d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90fe15be13ceb45dfe368034e83606cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a90fe15be13ceb45dfe368034e83606cb">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_multipleSetIndicators)</td></tr>
-<tr class="separator:a90fe15be13ceb45dfe368034e83606cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ad165b77f031630fd3e40eb2e62d374"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a4ad165b77f031630fd3e40eb2e62d374">alexaClientSDK::capabilityAgents::notifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearData)</td></tr>
-<tr class="separator:a4ad165b77f031630fd3e40eb2e62d374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b495782f342bede596b2f03a1779d7d"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a1b495782f342bede596b2f03a1779d7d">alexaClientSDK::acsdkNotifications::test::MY_WAIT_TIMEOUT</a> (1000)</td></tr>
+<tr class="memdesc:a1b495782f342bede596b2f03a1779d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a1b495782f342bede596b2f03a1779d7d">More...</a><br /></td></tr>
+<tr class="separator:a1b495782f342bede596b2f03a1779d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa307e4a213a0adee2c462af7793d24f8"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#aa307e4a213a0adee2c462af7793d24f8">alexaClientSDK::acsdkNotifications::test::RENDER_TIME</a> (10)</td></tr>
+<tr class="memdesc:aa307e4a213a0adee2c462af7793d24f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time to simulate a notification rendering.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#aa307e4a213a0adee2c462af7793d24f8">More...</a><br /></td></tr>
+<tr class="separator:aa307e4a213a0adee2c462af7793d24f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc8efe4962410f3678149115d7916213"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afc8efe4962410f3678149115d7916213">alexaClientSDK::acsdkNotifications::test::NAMESPACE_NOTIFICATIONS</a> (&quot;Notifications&quot;)</td></tr>
+<tr class="memdesc:afc8efe4962410f3678149115d7916213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications namespace.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afc8efe4962410f3678149115d7916213">More...</a><br /></td></tr>
+<tr class="separator:afc8efe4962410f3678149115d7916213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb0af5284647e94346c5a6f1375bd523"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afb0af5284647e94346c5a6f1375bd523">alexaClientSDK::acsdkNotifications::test::NAME_SET_INDICATOR</a> (&quot;SetIndicator&quot;)</td></tr>
+<tr class="memdesc:afb0af5284647e94346c5a6f1375bd523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for Notifications SetIndicator directive.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afb0af5284647e94346c5a6f1375bd523">More...</a><br /></td></tr>
+<tr class="separator:afb0af5284647e94346c5a6f1375bd523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe565efe01faade9c56a2cf2ea57edf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3fe565efe01faade9c56a2cf2ea57edf">alexaClientSDK::acsdkNotifications::test::NAME_CLEAR_INDICATOR</a> (&quot;ClearIndicator&quot;)</td></tr>
+<tr class="memdesc:a3fe565efe01faade9c56a2cf2ea57edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name for Notifications ClearIndicator directive.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3fe565efe01faade9c56a2cf2ea57edf">More...</a><br /></td></tr>
+<tr class="separator:a3fe565efe01faade9c56a2cf2ea57edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad28513bb3869df655c967482ce9bbecf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#ad28513bb3869df655c967482ce9bbecf">alexaClientSDK::acsdkNotifications::test::MESSAGE_ID_TEST</a> (&quot;MessageId_Test&quot;)</td></tr>
+<tr class="memdesc:ad28513bb3869df655c967482ce9bbecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Id for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#ad28513bb3869df655c967482ce9bbecf">More...</a><br /></td></tr>
+<tr class="separator:ad28513bb3869df655c967482ce9bbecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0788a014114ca97ee8b7ad5d7abdeff2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a0788a014114ca97ee8b7ad5d7abdeff2">alexaClientSDK::acsdkNotifications::test::MESSAGE_ID_TEST2</a> (&quot;MessageId_Test2&quot;)</td></tr>
+<tr class="separator:a0788a014114ca97ee8b7ad5d7abdeff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6321e19ab7b2b198a5877bc55558232c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a6321e19ab7b2b198a5877bc55558232c">alexaClientSDK::acsdkNotifications::test::CONTEXT_ID_TEST</a> (&quot;ContextId_Test&quot;)</td></tr>
+<tr class="memdesc:a6321e19ab7b2b198a5877bc55558232c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context ID for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a6321e19ab7b2b198a5877bc55558232c">More...</a><br /></td></tr>
+<tr class="separator:a6321e19ab7b2b198a5877bc55558232c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92dcdbbaf63cf7dce3e5a2cf4f0e4265"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a92dcdbbaf63cf7dce3e5a2cf4f0e4265">alexaClientSDK::acsdkNotifications::test::ASSET_ID1</a> (&quot;assetId1&quot;)</td></tr>
+<tr class="memdesc:a92dcdbbaf63cf7dce3e5a2cf4f0e4265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test fields for payloads.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a92dcdbbaf63cf7dce3e5a2cf4f0e4265">More...</a><br /></td></tr>
+<tr class="separator:a92dcdbbaf63cf7dce3e5a2cf4f0e4265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae08756388766d2d742e452bc9214634a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#ae08756388766d2d742e452bc9214634a">alexaClientSDK::acsdkNotifications::test::ASSET_ID2</a> (&quot;assetId2&quot;)</td></tr>
+<tr class="separator:ae08756388766d2d742e452bc9214634a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d5648c5b4d5e6ea301d14c6348b90c5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3d5648c5b4d5e6ea301d14c6348b90c5">alexaClientSDK::acsdkNotifications::test::ASSET_URL1</a> (&quot;assetUrl1&quot;)</td></tr>
+<tr class="separator:a3d5648c5b4d5e6ea301d14c6348b90c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aced65b4de52ac459345f23224976ac9d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#aced65b4de52ac459345f23224976ac9d">alexaClientSDK::acsdkNotifications::test::ASSET_URL2</a> (&quot;assetUrl2&quot;)</td></tr>
+<tr class="separator:aced65b4de52ac459345f23224976ac9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb17b8424ac51fbe17d76ccb6331378f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#abb17b8424ac51fbe17d76ccb6331378f">alexaClientSDK::acsdkNotifications::test::TAG</a> (&quot;NotificationsCapabilityAgentTest&quot;)</td></tr>
+<tr class="memdesc:abb17b8424ac51fbe17d76ccb6331378f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#abb17b8424ac51fbe17d76ccb6331378f">More...</a><br /></td></tr>
+<tr class="separator:abb17b8424ac51fbe17d76ccb6331378f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dab8743b0357342196257b4483c8954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3dab8743b0357342196257b4483c8954">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_create)</td></tr>
+<tr class="separator:a3dab8743b0357342196257b4483c8954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26935fba0199730b7bf1641f9ddcce8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a26935fba0199730b7bf1641f9ddcce8b">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_nonEmptyStartupQueue)</td></tr>
+<tr class="separator:a26935fba0199730b7bf1641f9ddcce8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79fdb15a51b4c9e013c5e9375c0fcd4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a79fdb15a51b4c9e013c5e9375c0fcd4c">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicator)</td></tr>
+<tr class="separator:a79fdb15a51b4c9e013c5e9375c0fcd4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07f6520ea433f5ae3ae9e4ec8a718d7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a07f6520ea433f5ae3ae9e4ec8a718d7d">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorIncreasesCount)</td></tr>
+<tr class="separator:a07f6520ea433f5ae3ae9e4ec8a718d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5402edba1d1101c482094c7eeb46e845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a5402edba1d1101c482094c7eeb46e845">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreservedIncreasesCount)</td></tr>
+<tr class="separator:a5402edba1d1101c482094c7eeb46e845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022880cc955d9b8a7fc24ac5fa490611"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a022880cc955d9b8a7fc24ac5fa490611">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorWithAudio)</td></tr>
+<tr class="separator:a022880cc955d9b8a7fc24ac5fa490611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad581dc92236c9737b847aaa87a0ac67c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#ad581dc92236c9737b847aaa87a0ac67c">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sendSetIndicatorWithVisualIndicator)</td></tr>
+<tr class="separator:ad581dc92236c9737b847aaa87a0ac67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1e279bee15961f7e1daf81e2064ef1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3e1e279bee15961f7e1daf81e2064ef1">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_sameAssetId)</td></tr>
+<tr class="separator:a3e1e279bee15961f7e1daf81e2064ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aacde9140c5ff520b89b8affb799db1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a3aacde9140c5ff520b89b8affb799db1">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_persistVisualIndicatorPreserved)</td></tr>
+<tr class="separator:a3aacde9140c5ff520b89b8affb799db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eef0d3230a227082e1370be4e4ca43b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a2eef0d3230a227082e1370be4e4ca43b">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueue)</td></tr>
+<tr class="separator:a2eef0d3230a227082e1370be4e4ca43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd5ea99a54988ec1c028b9e885ad23d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a4dd5ea99a54988ec1c028b9e885ad23d">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearIndicatorWithEmptyQueueAndIndicatorOn)</td></tr>
+<tr class="separator:a4dd5ea99a54988ec1c028b9e885ad23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8753639945598061deea9d78aeba424"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#ac8753639945598061deea9d78aeba424">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, testSlow_clearIndicatorAfterMultipleSetIndicators)</td></tr>
+<tr class="separator:ac8753639945598061deea9d78aeba424"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbdfdcdac3be67168e4035bcb19b4cac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#abbdfdcdac3be67168e4035bcb19b4cac">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_multipleSetIndicators)</td></tr>
+<tr class="separator:abbdfdcdac3be67168e4035bcb19b4cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d0dd4ca55ce2241c70523babaea16b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a0d0dd4ca55ce2241c70523babaea16b7">alexaClientSDK::acsdkNotifications::test::TEST_F</a> (NotificationsCapabilityAgentTest, test_clearData)</td></tr>
+<tr class="separator:a0d0dd4ca55ce2241c70523babaea16b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_notifications_capability_agent_test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a45497b787e237fc72d98aed96ea30e91"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a45497b787e237fc72d98aed96ea30e91">alexaClientSDK::capabilityAgents::notifications::test::NAMESPACE_AND_NAME_INDICATOR_STATE</a> {NAMESPACE_NOTIFICATIONS, &quot;IndicatorState&quot;}</td></tr>
-<tr class="memdesc:a45497b787e237fc72d98aed96ea30e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>NamespaceAndName</code> to send to the <code>ContextManager</code>.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a45497b787e237fc72d98aed96ea30e91">More...</a><br /></td></tr>
-<tr class="separator:a45497b787e237fc72d98aed96ea30e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57a625ecd60606db38270691c640e019"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a57a625ecd60606db38270691c640e019">alexaClientSDK::capabilityAgents::notifications::test::DEFAULT_NOTIFICATION_AUDIO</a> {&quot;default notification audio&quot;}</td></tr>
-<tr class="memdesc:a57a625ecd60606db38270691c640e019"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default "audio" for testing.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a57a625ecd60606db38270691c640e019">More...</a><br /></td></tr>
-<tr class="separator:a57a625ecd60606db38270691c640e019"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c4b8a7908f371074c42be76ff846026"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a7c4b8a7908f371074c42be76ff846026">alexaClientSDK::capabilityAgents::notifications::test::NOTIFICATIONS_CONFIG_JSON</a></td></tr>
-<tr class="memdesc:a7c4b8a7908f371074c42be76ff846026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mocking the json config file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a7c4b8a7908f371074c42be76ff846026">More...</a><br /></td></tr>
-<tr class="separator:a7c4b8a7908f371074c42be76ff846026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78905c7484c826ba6eb1536ec6110391"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a78905c7484c826ba6eb1536ec6110391">alexaClientSDK::acsdkNotifications::test::NAMESPACE_AND_NAME_INDICATOR_STATE</a> {NAMESPACE_NOTIFICATIONS, &quot;IndicatorState&quot;}</td></tr>
+<tr class="memdesc:a78905c7484c826ba6eb1536ec6110391"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>NamespaceAndName</code> to send to the <code>ContextManager</code>.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#a78905c7484c826ba6eb1536ec6110391">More...</a><br /></td></tr>
+<tr class="separator:a78905c7484c826ba6eb1536ec6110391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af127670ed97d069323a1e19b51bf832b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#af127670ed97d069323a1e19b51bf832b">alexaClientSDK::acsdkNotifications::test::DEFAULT_NOTIFICATION_AUDIO</a> {&quot;default notification audio&quot;}</td></tr>
+<tr class="memdesc:af127670ed97d069323a1e19b51bf832b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default "audio" for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#af127670ed97d069323a1e19b51bf832b">More...</a><br /></td></tr>
+<tr class="separator:af127670ed97d069323a1e19b51bf832b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee7f5b1a3d5c220549fe24786d135a7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afee7f5b1a3d5c220549fe24786d135a7">alexaClientSDK::acsdkNotifications::test::NOTIFICATIONS_CONFIG_JSON</a></td></tr>
+<tr class="memdesc:afee7f5b1a3d5c220549fe24786d135a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mocking the json config file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afee7f5b1a3d5c220549fe24786d135a7">More...</a><br /></td></tr>
+<tr class="separator:afee7f5b1a3d5c220549fe24786d135a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -274,7 +301,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,23 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/EqualizerImplementations/test/MiscDBEqualizerStorageTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="283,5,531,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="217,212,331,237"/>
-<area shape="rect" id="node3" title=" " alt="" coords="748,119,842,144"/>
-<area shape="rect" id="node4" href="$_equalizer_storage_interface_test_8h.html" title=" " alt="" coords="299,105,516,157"/>
-<area shape="rect" id="node17" href="$_stub_misc_storage_8h.html" title=" " alt="" coords="19,112,209,151"/>
-<area shape="rect" id="node20" href="$_misc_d_b_equalizer_storage_8h.html" title=" " alt="" coords="541,112,725,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="410,299,479,324"/>
-<area shape="rect" id="node6" href="$_equalizer_storage_interface_8h.html" title=" " alt="" coords="508,205,736,244"/>
-<area shape="rect" id="node7" href="$_success_result_8h.html" title=" " alt="" coords="696,379,860,417"/>
-<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title=" " alt="" coords="510,299,633,324"/>
-<area shape="rect" id="node8" href="$_result_8h.html" title=" " alt="" coords="743,465,813,491"/>
-<area shape="rect" id="node10" title=" " alt="" coords="406,385,457,411"/>
-<area shape="rect" id="node11" title=" " alt="" coords="327,385,381,411"/>
-<area shape="rect" id="node12" title=" " alt="" coords="187,385,302,411"/>
-<area shape="rect" id="node13" href="$hash_8h.html" title=" " alt="" coords="481,379,672,417"/>
-<area shape="rect" id="node14" title=" " alt="" coords="464,465,524,491"/>
-<area shape="rect" id="node15" title=" " alt="" coords="548,465,606,491"/>
-<area shape="rect" id="node16" title=" " alt="" coords="629,465,708,491"/>
-<area shape="rect" id="node18" title=" " alt="" coords="35,212,142,237"/>
-<area shape="rect" id="node19" href="$_misc_storage_interface_8h.html" title=" " alt="" coords="161,292,374,331"/>
-<area shape="rect" id="node21" title=" " alt="" coords="760,212,818,237"/>
+<area shape="rect" id="node4" href="$_equalizer_storage_interface_test_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface\lTest.h" alt="" coords="298,109,512,165"/>
+<area shape="rect" id="node17" href="$_stub_misc_storage_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/StubMiscStorage.h" alt="" coords="17,117,209,158"/>
+<area shape="rect" id="node20" href="$_misc_d_b_equalizer_storage_8h.html" title="EqualizerImplementations\l/MiscDBEqualizerStorage.h" alt="" coords="536,117,719,158"/>
+<area shape="rect" id="node6" href="$_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="505,213,729,255"/>
+<area shape="rect" id="node7" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="696,392,861,433"/>
+<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="508,310,630,337"/>
+<area shape="rect" id="node8" href="$_result_8h.html" title="Result.h" alt="" coords="743,481,814,508"/>
+<area shape="rect" id="node13" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="478,392,671,433"/>
+<area shape="rect" id="node19" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="161,303,372,344"/>
 </map>

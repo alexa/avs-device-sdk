@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/src/SettingConnectionObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/src/SettingConnectionObserver.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="26,5,258,57"/>
-<area shape="rect" id="node2" href="$_setting_connection_observer_8h.html" title=" " alt="" coords="51,105,233,144"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,199,84,224"/>
-<area shape="rect" id="node4" title=" " alt="" coords="107,199,177,224"/>
-<area shape="rect" id="node5" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="200,192,449,231"/>
-<area shape="rect" id="node6" title=" " alt="" coords="288,279,361,304"/>
+<area shape="rect" id="node2" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="53,109,234,151"/>
+<area shape="rect" id="node5" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="202,199,447,240"/>
 </map>

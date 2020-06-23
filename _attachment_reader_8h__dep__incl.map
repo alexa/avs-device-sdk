@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentReader.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentReader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="4200,5,4405,71"/>
-<area shape="rect" id="node2" href="$_attachment_8h.html" title=" " alt="" coords="2245,119,2450,184"/>
-<area shape="rect" id="node3" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="1914,232,2123,297"/>
-<area shape="rect" id="node15" href="$_media_player_8cpp.html" title=" " alt="" coords="3282,465,3512,517"/>
-<area shape="rect" id="node17" href="$_attachment_utils_8h.html" title=" " alt="" coords="2529,119,2734,184"/>
-<area shape="rect" id="node21" href="$_default_attachment_reader_8h.html" title=" " alt="" coords="3304,119,3509,184"/>
-<area shape="rect" id="node23" href="$_in_process_attachment_reader_8h.html" title=" " alt="" coords="3921,119,4127,184"/>
-<area shape="rect" id="node30" href="$_message_request_8h.html" title=" " alt="" coords="839,125,1092,177"/>
-<area shape="rect" id="node42" href="$_media_player_interface_8h.html" title=" " alt="" coords="4261,119,4501,184"/>
-<area shape="rect" id="node43" href="$_audio_item_8h.html" title=" " alt="" coords="4525,119,4744,184"/>
-<area shape="rect" id="node44" href="$_f_fmpeg_attachment_input_controller_8h.html" title=" " alt="" coords="4819,119,5082,184"/>
-<area shape="rect" id="node45" href="$_f_fmpeg_attachment_input_controller_8cpp.html" title=" " alt="" coords="4794,239,5107,291"/>
-<area shape="rect" id="node46" href="$_f_fmpeg_attachment_input_controller_test_8cpp.html" title=" " alt="" coords="5131,232,5423,297"/>
-<area shape="rect" id="node47" href="$_attachment_reader_source_8cpp.html" title=" " alt="" coords="5158,125,5421,177"/>
-<area shape="rect" id="node48" href="$_base_stream_source_8cpp.html" title=" " alt="" coords="5445,125,5675,177"/>
-<area shape="rect" id="node49" href="$_i_stream_source_8cpp.html" title=" " alt="" coords="5698,125,5928,177"/>
-<area shape="rect" id="node50" href="$_playlist_parser_8h.html" title=" " alt="" coords="3541,239,3744,291"/>
-<area shape="rect" id="node12" href="$_in_process_attachment_8h.html" title=" " alt="" coords="2826,232,3032,297"/>
-<area shape="rect" id="node16" href="$_attachment_8cpp.html" title=" " alt="" coords="2197,239,2386,291"/>
-<area shape="rect" id="node4" href="$_attachment_manager_8h.html" title=" " alt="" coords="2138,345,2344,411"/>
-<area shape="rect" id="node8" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="1882,459,2080,524"/>
-<area shape="rect" id="node9" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="2205,459,2395,524"/>
-<area shape="rect" id="node10" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="1658,352,1885,404"/>
-<area shape="rect" id="node11" href="$_mock_attachment_manager_8h.html" title=" " alt="" coords="1909,345,2114,411"/>
-<area shape="rect" id="node5" href="$_message_request_handler_8h.html" title=" " alt="" coords="1613,465,1859,517"/>
-<area shape="rect" id="node6" href="$_message_router_8h.html" title=" " alt="" coords="1029,579,1219,631"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title=" " alt="" coords="2081,579,2255,631"/>
-<area shape="rect" id="node13" href="$_internet_connection_monitor_8h.html" title=" " alt="" coords="3549,345,3794,411"/>
-<area shape="rect" id="node14" href="$_url_content_to_attachment_converter_8h.html" title=" " alt="" coords="3269,345,3525,411"/>
-<area shape="rect" id="node18" href="$_attachment_utils_8cpp.html" title=" " alt="" coords="3056,239,3271,291"/>
-<area shape="rect" id="node19" href="$_attachment_utils_test_8cpp.html" title=" " alt="" coords="2512,239,2751,291"/>
-<area shape="rect" id="node20" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="2574,352,2794,404"/>
-<area shape="rect" id="node22" href="$_in_process_attachment_reader_8cpp.html" title=" " alt="" coords="3295,232,3518,297"/>
-<area shape="rect" id="node24" href="$_mime_utils_8cpp.html" title=" " alt="" coords="3869,239,4061,291"/>
-<area shape="rect" id="node25" href="$_audio_input_processor_8h.html" title=" " alt="" coords="4413,239,4669,291"/>
-<area shape="rect" id="node26" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="4295,352,4467,404"/>
-<area shape="rect" id="node27" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="4498,352,4707,404"/>
-<area shape="rect" id="node28" href="$_alexa_directive_sequencer_library_test_8cpp.html" title=" " alt="" coords="3001,572,3217,637"/>
-<area shape="rect" id="node29" href="$_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="4085,232,4288,297"/>
-<area shape="rect" id="node31" href="$_a_v_s_connection_manager_8h.html" title=" " alt="" coords="1408,465,1589,517"/>
-<area shape="rect" id="node32" href="$_message_request_queue_8h.html" title=" " alt="" coords="637,352,877,404"/>
-<area shape="rect" id="node33" href="$_synchronized_message_request_queue_8h.html" title=" " alt="" coords="843,459,1063,524"/>
-<area shape="rect" id="node34" href="$_synchronized_message_request_queue_8cpp.html" title=" " alt="" coords="302,579,577,631"/>
-<area shape="rect" id="node35" href="$_message_request_queue_8cpp.html" title=" " alt="" coords="600,465,794,517"/>
-<area shape="rect" id="node36" href="$_message_request_queue_interface_8h.html" title=" " alt="" coords="699,232,928,297"/>
-<area shape="rect" id="node37" href="$_message_router_interface_8h.html" title=" " alt="" coords="1003,352,1245,404"/>
-<area shape="rect" id="node38" href="$_transport_interface_8h.html" title=" " alt="" coords="1119,239,1324,291"/>
-<area shape="rect" id="node39" href="$_mock_transport_8h.html" title=" " alt="" coords="1320,352,1482,404"/>
-<area shape="rect" id="node40" href="$_mock_message_request_8h.html" title=" " alt="" coords="47,239,219,291"/>
-<area shape="rect" id="node41" href="$_post_connect_message_request_8h.html" title=" " alt="" coords="243,232,511,297"/>
+<area shape="rect" id="node2" href="$_attachment_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2442,124,2650,195"/>
+<area shape="rect" id="node3" href="$_attachment_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2045,243,2253,313"/>
+<area shape="rect" id="node17" href="$_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/MediaPlayer.cpp" alt="" coords="2703,487,2928,543"/>
+<area shape="rect" id="node19" href="$_attachment_utils_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/AttachmentUtils.h" alt="" coords="3178,124,3386,195"/>
+<area shape="rect" id="node23" href="$_default_attachment_reader_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/DefaultAttachmentReader.h" alt="" coords="3807,124,4015,195"/>
+<area shape="rect" id="node25" href="$_in_process_attachment_reader_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="4039,124,4247,195"/>
+<area shape="rect" id="node31" href="$_message_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/MessageRequest.h" alt="" coords="504,131,759,187"/>
+<area shape="rect" id="node42" href="$_media_player_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/MediaPlayerInterface.h" alt="" coords="4272,124,4508,195"/>
+<area shape="rect" id="node43" href="$_audio_item_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioItem.h" alt="" coords="4533,124,4738,195"/>
+<area shape="rect" id="node44" href="$_f_fmpeg_attachment_input_controller_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/FFmpegAttachmentInputController.h" alt="" coords="4813,124,5071,195"/>
+<area shape="rect" id="node45" href="$_f_fmpeg_attachment_input_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/FFmpegAttachmentInputController.cpp" alt="" coords="5015,250,5325,306"/>
+<area shape="rect" id="node46" href="$_f_fmpeg_attachment_input_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegAttachmentInputController\lTest.cpp" alt="" coords="5349,243,5639,313"/>
+<area shape="rect" id="node47" href="$_attachment_reader_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/AttachmentReaderSource.cpp" alt="" coords="5145,131,5405,187"/>
+<area shape="rect" id="node48" href="$_base_stream_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/BaseStreamSource.cpp" alt="" coords="5429,131,5655,187"/>
+<area shape="rect" id="node49" href="$_i_stream_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/IStreamSource.cpp" alt="" coords="5679,131,5904,187"/>
+<area shape="rect" id="node50" href="$_playlist_parser_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/include\l/PlaylistParser/PlaylistParser.h" alt="" coords="2725,250,2927,306"/>
+<area shape="rect" id="node14" href="$_in_process_attachment_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="3370,243,3578,313"/>
+<area shape="rect" id="node18" href="$_attachment_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Attachment/Attachment.cpp" alt="" coords="2451,250,2641,306"/>
+<area shape="rect" id="node4" href="$_attachment_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="1237,361,1445,432"/>
+<area shape="rect" id="node8" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1557,480,1748,551"/>
+<area shape="rect" id="node9" href="$_a_v_s_directive_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AVSDirective.h" alt="" coords="2315,369,2545,425"/>
+<area shape="rect" id="node10" href="$_mock_attachment_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="2570,361,2778,432"/>
+<area shape="rect" id="node11" href="$_diagnostics_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h" alt="" coords="1469,361,1711,432"/>
+<area shape="rect" id="node12" href="$_core_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/include\l/acsdkCore/CoreComponent.h" alt="" coords="1785,369,1984,425"/>
+<area shape="rect" id="node13" href="$_sample_application_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplicationComponent.h" alt="" coords="2007,369,2290,425"/>
+<area shape="rect" id="node5" href="$_message_request_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestHandler.h" alt="" coords="887,487,1130,543"/>
+<area shape="rect" id="node6" href="$_message_router_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouter.h" alt="" coords="705,606,893,662"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1336,606,1511,662"/>
+<area shape="rect" id="node15" href="$_internet_connection_monitor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Network/InternetConnectionMonitor.h" alt="" coords="3938,361,4181,432"/>
+<area shape="rect" id="node16" href="$_url_content_to_attachment_converter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/include\l/PlaylistParser/UrlContentToAttachment\lConverter.h" alt="" coords="3381,361,3637,432"/>
+<area shape="rect" id="node20" href="$_attachment_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Attachment/AttachmentUtils.cpp" alt="" coords="3602,250,3818,306"/>
+<area shape="rect" id="node21" href="$_attachment_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/Attachment/AttachmentUtilsTest.cpp" alt="" coords="3002,250,3245,306"/>
+<area shape="rect" id="node22" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="3136,369,3356,425"/>
+<area shape="rect" id="node24" href="$_in_process_attachment_reader_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Attachment/InProcessAttachment\lReader.cpp" alt="" coords="3843,243,4065,313"/>
+<area shape="rect" id="node26" href="$_mime_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MimeUtils.cpp" alt="" coords="4140,250,4333,306"/>
+<area shape="rect" id="node27" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="4409,250,4664,306"/>
+<area shape="rect" id="node28" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="4643,369,4815,425"/>
+<area shape="rect" id="node29" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="3203,599,3415,669"/>
+<area shape="rect" id="node30" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="4689,243,4889,313"/>
+<area shape="rect" id="node32" href="$_a_v_s_connection_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/AVSConnectionManager.h" alt="" coords="1155,487,1335,543"/>
+<area shape="rect" id="node33" href="$_exchange_handler_context_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/ExchangeHandlerContext\lInterface.h" alt="" coords="927,243,1162,313"/>
+<area shape="rect" id="node34" href="$_message_request_queue_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestQueue.h" alt="" coords="188,369,424,425"/>
+<area shape="rect" id="node35" href="$_synchronized_message_request_queue_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/SynchronizedMessage\lRequestQueue.h" alt="" coords="105,480,323,551"/>
+<area shape="rect" id="node36" href="$_synchronized_message_request_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/SynchronizedMessageRequestQueue.cpp" alt="" coords="5,606,276,662"/>
+<area shape="rect" id="node37" href="$_message_request_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestQueue.cpp" alt="" coords="356,487,547,543"/>
+<area shape="rect" id="node38" href="$_message_request_queue_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestQueue\lInterface.h" alt="" coords="148,243,373,313"/>
+<area shape="rect" id="node39" href="$_message_router_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouterInterface.h" alt="" coords="837,369,1076,425"/>
+<area shape="rect" id="node40" href="$_transport_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/TransportInterface.h" alt="" coords="599,250,802,306"/>
+<area shape="rect" id="node41" href="$_mock_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockTransport.h" alt="" coords="549,369,711,425"/>
 </map>

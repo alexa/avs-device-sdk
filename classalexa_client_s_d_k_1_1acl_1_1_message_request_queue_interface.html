@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::acl::MessageRequestQueueInterface:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface_inherit__map" id="alexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html" title="alexaClientSDK::acl\l::MessageRequestQueue" alt="" coords="295,5,465,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html" title="alexaClientSDK::acl\l::SynchronizedMessageRequest\lQueue" alt="" coords="275,71,485,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -90,21 +92,23 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac6536148bb1635ba177947488eae62b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41e6e75c4949de09c48610aacf340564"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; std::chrono::time_point&lt; std::chrono::steady_clock &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a41e6e75c4949de09c48610aacf340564">peekRequestTime</a> ()=0</td></tr>
 <tr class="separator:a41e6e75c4949de09c48610aacf340564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a403e8d59e4dfb3279c07d70706a37ac9"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a403e8d59e4dfb3279c07d70706a37ac9">dequeueRequest</a> ()=0</td></tr>
-<tr class="separator:a403e8d59e4dfb3279c07d70706a37ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad058bb1d7817b28fcfb2e8cede3fc80d"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#ad058bb1d7817b28fcfb2e8cede3fc80d">dequeueOldestRequest</a> ()=0</td></tr>
+<tr class="separator:ad058bb1d7817b28fcfb2e8cede3fc80d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d26bfd20310e2b5288a5d530f11649"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#ad7d26bfd20310e2b5288a5d530f11649">dequeueSendableRequest</a> ()=0</td></tr>
+<tr class="separator:ad7d26bfd20310e2b5288a5d530f11649"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54c8e587e941ad76b26ed9e6a592b217"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a54c8e587e941ad76b26ed9e6a592b217">isMessageRequestAvailable</a> () const =0</td></tr>
 <tr class="separator:a54c8e587e941ad76b26ed9e6a592b217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e6d6f46012f6bc3b2674fb86f2ae67"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a64e6d6f46012f6bc3b2674fb86f2ae67">setWaitingFlagForQueue</a> ()=0</td></tr>
-<tr class="separator:a64e6d6f46012f6bc3b2674fb86f2ae67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5000009860612e9d977fae68757721ac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a5000009860612e9d977fae68757721ac">clearWaitingFlagForQueue</a> ()=0</td></tr>
-<tr class="separator:a5000009860612e9d977fae68757721ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34873ebf5ee27ab31d05e315310b38ac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a34873ebf5ee27ab31d05e315310b38ac">setWaitingForSendAcknowledgement</a> ()=0</td></tr>
+<tr class="separator:a34873ebf5ee27ab31d05e315310b38ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad86ce0a6f0316415a16848ebc88481cc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#ad86ce0a6f0316415a16848ebc88481cc">clearWaitingForSendAcknowledgement</a> ()=0</td></tr>
+<tr class="separator:ad86ce0a6f0316415a16848ebc88481cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee595aa0b15ddf3e58fd23234b297cc6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#aee595aa0b15ddf3e58fd23234b297cc6">empty</a> () const =0</td></tr>
 <tr class="separator:aee595aa0b15ddf3e58fd23234b297cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05d11d8f7ccb5ac71a760a0465f7e134"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html#a05d11d8f7ccb5ac71a760a0465f7e134">clear</a> ()=0</td></tr>
 <tr class="separator:a05d11d8f7ccb5ac71a760a0465f7e134"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>An interface that abstracts the operations of a <code>MessageRequestQueuesMap</code> between the standard version and the synchronized implementation. </p>
+<div class="textblock"><p>An interface that abstracts queueing <code>MessageRequests</code>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aee498685fe855980a1fd41ee8e519674"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee498685fe855980a1fd41ee8e519674">&#9670;&nbsp;</a></span>~MessageRequestQueueInterface()</h2>
@@ -155,14 +159,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Clears all the <code>MessageRequests</code> along with the corresponding queues. </p>
+<p>Clears all queue of <code>MessageRequests</code>. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a2fab26921bae46eaa20c26adf2b951dc">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a96f89109d4d808961090749568d6b4bb">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a96f89109d4d808961090749568d6b4bb">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a2fab26921bae46eaa20c26adf2b951dc">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
-<a id="a5000009860612e9d977fae68757721ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5000009860612e9d977fae68757721ac">&#9670;&nbsp;</a></span>clearWaitingFlagForQueue()</h2>
+<a id="ad86ce0a6f0316415a16848ebc88481cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad86ce0a6f0316415a16848ebc88481cc">&#9670;&nbsp;</a></span>clearWaitingForSendAcknowledgement()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +175,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void alexaClientSDK::acl::MessageRequestQueueInterface::clearWaitingFlagForQueue </td>
+          <td class="memname">virtual void alexaClientSDK::acl::MessageRequestQueueInterface::clearWaitingForSendAcknowledgement </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -183,20 +187,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Clear the waiting flag for the queue specified by the given send queue type.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sendQueueType</td><td>the send queue type of the queue to clear the waiting flag on. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Clear the flag indicating that the queue is waiting for a send to be acknowledged. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#abefd30d3f127f5405461f47d0ede34ff">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#aca7a20591a3a51a208b60e00c6956698">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#ac53e865d976b2bcc2163c20aa6ec5848">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#aa000efd72c5806d8be2a0c2c32b505fb">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
-<a id="a403e8d59e4dfb3279c07d70706a37ac9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a403e8d59e4dfb3279c07d70706a37ac9">&#9670;&nbsp;</a></span>dequeueRequest()</h2>
+<a id="ad058bb1d7817b28fcfb2e8cede3fc80d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad058bb1d7817b28fcfb2e8cede3fc80d">&#9670;&nbsp;</a></span>dequeueOldestRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +203,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a>&gt; alexaClientSDK::acl::MessageRequestQueueInterface::dequeueRequest </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a>&gt; alexaClientSDK::acl::MessageRequestQueueInterface::dequeueOldestRequest </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -217,10 +215,39 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Dequeues the next available <code>MessageRequest</code> by taking into account if the queue is waiting for a response. This method keeps track of the queue being processed and once a request from the queue is dequeued moves it to the next queue. It also loops back to the starting queue at the end and exits the loop if a valid MessageRequest is found or if it reaches the place it started.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>MessageRequest</code> if an available, else return nullptr. </dd></dl>
+<p>Dequeues the oldest <code>MessageRequest</code> regardless of whether or not the queue is waiting for a response.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>MessageRequest</code> if available, else return nullptr. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a60d7ca7c2504157f7f2fc10dedb7c348">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a5dddf0dc7a3c7cff77a14cf3eaa25459">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a72787435598722d3211c2365b8c00e34">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a70831127d3a9036bbf94eb7ced52eca7">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
+
+</div>
+</div>
+<a id="ad7d26bfd20310e2b5288a5d530f11649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7d26bfd20310e2b5288a5d530f11649">&#9670;&nbsp;</a></span>dequeueSendableRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">avsCommon::avs::MessageRequest</a>&gt; alexaClientSDK::acl::MessageRequestQueueInterface::dequeueSendableRequest </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Dequeues the next available <code>MessageRequest</code> taking into account if the queue is waiting for a response to a previously sent message and if any messages that do not care about sequencing are in the queue.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>MessageRequest</code> if available, else return nullptr. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#afb7610579493e5e5834abf9b70a390c0">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a7795c355aea48db99bc32598357a4f07">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
@@ -246,10 +273,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Checks if there are any <code>MessageRequests</code>.</p>
+<p>Checks if there are any queued <code>MessageRequests</code>.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if there are no messageRequests in the queue, else false. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a2bc1620dd6e82175450c25cf8a0bf87f">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a66a12de950cb1e4cca4b7537afbfe663">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a66a12de950cb1e4cca4b7537afbfe663">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a2bc1620dd6e82175450c25cf8a0bf87f">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
@@ -276,9 +303,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Enqueues the <code>MessageRequest</code> to the corresponding send queue based on the send queue type. If send queue type is not present, a new queue is created before enqueuing the request. </p>
+<p>Enqueues a <code>MessageRequest</code>. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#ac2427e6bf235519997429e207596d528">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4828afae530033b09fd504a74b082555">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4828afae530033b09fd504a74b082555">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#ac2427e6bf235519997429e207596d528">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
@@ -307,7 +334,7 @@ Public Member Functions</h2></td></tr>
 <p>This method checks if there is a <code>MessageRequest</code> available to be sent.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if <code>MessageRequest</code> is available to be sent, else false. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a067ca44f150268f302973a34cad7c55d">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a33e49f4458cd4e5ee319650a719099bc">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a33e49f4458cd4e5ee319650a719099bc">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a067ca44f150268f302973a34cad7c55d">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
@@ -336,12 +363,12 @@ Public Member Functions</h2></td></tr>
 <p>Peek at the next item in the queue and retrieve the time that the request was queued.</p>
 <dl class="section return"><dt>Returns</dt><dd>The time that the next request (if any) was queued. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a5d100f1d0342e959f9a36a37a5f1c019">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4edbc2cd00a81d32ddfb4f68da2a9aa0">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4edbc2cd00a81d32ddfb4f68da2a9aa0">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a5d100f1d0342e959f9a36a37a5f1c019">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
-<a id="a64e6d6f46012f6bc3b2674fb86f2ae67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64e6d6f46012f6bc3b2674fb86f2ae67">&#9670;&nbsp;</a></span>setWaitingFlagForQueue()</h2>
+<a id="a34873ebf5ee27ab31d05e315310b38ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34873ebf5ee27ab31d05e315310b38ac">&#9670;&nbsp;</a></span>setWaitingForSendAcknowledgement()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,7 +377,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void alexaClientSDK::acl::MessageRequestQueueInterface::setWaitingFlagForQueue </td>
+          <td class="memname">virtual void alexaClientSDK::acl::MessageRequestQueueInterface::setWaitingForSendAcknowledgement </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -362,26 +389,20 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Sets the waiting flag for the queue specified by the given send queue type.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sendQueueType</td><td>the send queue type of the queue to set the waiting flag on. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Sets the flag indicating that the queue is waiting for a send to be acknowledged. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a40466ded74b9372cbac43ecf1d9f59fe">alexaClientSDK::acl::MessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a4fd98b59676e3c7831e15cb5a18df8b0">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html#a5b2a6448e9fe237b1eb8d701d7db6588">alexaClientSDK::acl::SynchronizedMessageRequestQueue</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html#a4298aabb18ffa34554190f46f7092930">alexaClientSDK::acl::MessageRequestQueue</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_request_queue_interface_8h_source.html">MessageRequestQueueInterface.h</a></li>
+<li>/workplace/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_request_queue_interface_8h_source.html">MessageRequestQueueInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

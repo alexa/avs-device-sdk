@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger_sink_manager.html" title=" " alt="" coords="5,5,230,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_notifications_audio_factory_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::NotificationsAudioFactoryInterface" alt="" coords="5,35,236,91"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_audio_factory.html" title="alexaClientSDK::acsdkNotifications\l::test::TestNotificationsAudioFactory" alt="" coords="284,5,520,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_notifications_audio_factory.html" title="alexaClientSDK::application\lUtilities::resources::audio\l::NotificationsAudioFactory" alt="" coords="309,71,495,127"/>
 </map>

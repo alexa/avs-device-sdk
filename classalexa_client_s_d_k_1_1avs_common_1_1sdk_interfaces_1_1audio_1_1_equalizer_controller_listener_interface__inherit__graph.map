@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerControllerListenerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerControllerListenerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,51,247,103"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_controller_listener_interface.html" title=" " alt="" coords="334,5,537,71"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html" title=" " alt="" coords="295,95,576,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_controller_listener_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::test::MockEqualizerController\lListenerInterface" alt="" coords="328,5,531,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1equalizer_1_1_equalizer_capability_agent.html" title="alexaClientSDK::capability\lAgents::equalizer::EqualizerCapabilityAgent" alt="" coords="291,100,568,141"/>
 </map>

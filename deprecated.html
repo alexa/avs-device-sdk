@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,6 +66,12 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
+<dt><a class="anchor" id="_deprecated000017"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html#a6d2f1c007114f9aa87d4d5a410518e2b">alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerInterface::stopPlayback</a>  ()=0</dt>
+<dd>Use <code>LocalPlayerControlInterface.playbackStop</code> instead  </dd>
+<dt><a class="anchor" id="_deprecated000024"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html#a35a3aab6219b7d1d3ffa50b21726a3e7">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthDelegate::create</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configuration, std::shared_ptr&lt; registrationManager::CustomerDataManager &gt; customerDataManager, std::shared_ptr&lt; CBLAuthDelegateStorageInterface &gt; storage, std::shared_ptr&lt; CBLAuthRequesterInterface &gt; authRequester, std::shared_ptr&lt; avsCommon::utils::libcurlUtils::HttpPostInterface &gt; httpPost=nullptr, std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt; deviceInfo=nullptr)</dt>
+<dd></dd>
+<dt><a class="anchor" id="_deprecated000025"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_s_q_lite_c_b_l_auth_delegate_storage.html#ac07c85aac68fdef44796a2245e7a0742">alexaClientSDK::authorization::cblAuthDelegate::SQLiteCBLAuthDelegateStorage::create</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</dt>
+<dd></dd>
 <dt><a class="anchor" id="_deprecated000002"></a>Member <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a5ffb3ba6f9657ec6092520aefd2b7380">alexaClientSDK::avsCommon::avs::buildJsonEventString</a>  (const std::string &amp;nameSpace, const std::string &amp;eventName, const std::string &amp;dialogRequestIdValue="", const std::string &amp;jsonPayloadValue="{}", const std::string &amp;jsonContext="")</dt>
 <dd>This method is being deprecated in favor of the method with Endpoint information. </dd>
 <dt><a class="anchor" id="_deprecated000001"></a>Member <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html#a8c0e9687b2ef42f565c75cb126889418">alexaClientSDK::avsCommon::avs::CapabilityConfiguration::CapabilityConfiguration</a>  (const std::unordered_map&lt; std::string, std::string &gt; &amp;capabilityConfigurationIn)</dt>
@@ -73,7 +79,7 @@ $(function() {
 <dt><a class="anchor" id="_deprecated000003"></a>Class <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">alexaClientSDK::avsCommon::avs::NamespaceAndName</a>  </dt>
 <dd>This structure is being deprecated. From now on, use <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">CapabilityTag</a></code> instead.  </dd>
 <dt><a class="anchor" id="_deprecated000006"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#aed602081efe0aae18558a1d2e222bbeb">alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface::setState</a>  (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">avs::CapabilityTag</a> &amp;capabilityIdentifier, const std::string &amp;jsonState, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a6dceaef43ef22e8f83382c0072f0cd7c">avs::StateRefreshPolicy</a> &amp;refreshPolicy, const ContextRequestToken stateRequestToken=0)=0</dt>
-<dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>onStateChanged</code> to proactively report to the ContextManager that the state has changed. </dd>
+<dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the ContextManager that the state has changed. </dd>
 <dt><a class="anchor" id="_deprecated000005"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#af50f9f5f14fc05a973ee37b254e336fb">alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface::setStateProvider</a>  (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag.html">avs::CapabilityTag</a> &amp;capabilityIdentifier, std::shared_ptr&lt; StateProviderInterface &gt; stateProvider)=0</dt>
 <dd>Use <code>addStateProvider</code> to add or replace the state provider and <code>removeStateProvider</code> to remove a state provider. </dd>
 <dt><a class="anchor" id="_deprecated000007"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html#a8f2d4ca1a6a5a58abf8bab7073fa383c">alexaClientSDK::avsCommon::sdkInterfaces::ContextRequesterInterface::onContextAvailable</a>  (const std::string &amp;jsonContext)</dt>
@@ -90,20 +96,30 @@ $(function() {
 <dd></dd>
 <dt><a class="anchor" id="_deprecated000012"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#ad7e749a95830d3bf65d44e873402f1b0">alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface::provideState</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">avs::NamespaceAndName</a> &amp;stateProviderName, const ContextRequestToken stateRequestToken)</dt>
 <dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead.  </dd>
-<dt><a class="anchor" id="_deprecated000014"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a9f1e46a268eebc25fb35f733752f3a72">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffset</a>  (SourceId id)=0</dt>
+<dt><a class="anchor" id="_deprecated000013"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html#a67eb1f7802bca32000e90226e3d01eb1">alexaClientSDK::avsCommon::utils::DeviceInfo::create</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</dt>
+<dd></dd>
+<dt><a class="anchor" id="_deprecated000014"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html#a4649f9557253571738e0fb225ac33e6e">alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPost::create</a>  ()</dt>
+<dd></dd>
+<dt><a class="anchor" id="_deprecated000016"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html#a9f1e46a268eebc25fb35f733752f3a72">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface::getOffset</a>  (SourceId id)=0</dt>
 <dd>Use <code>getMediaPlayerState</code> instead, which contains the offset  </dd>
-<dt><a class="anchor" id="_deprecated000018"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a1aa6769739e7b822674c6f225438adbb">alexaClientSDK::endpoints::EndpointBuilder::withCapability</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface, std::shared_ptr&lt; DirectiveHandlerInterface &gt; directiveHandler)</dt>
+<dt><a class="anchor" id="_deprecated000018"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#ab5f46d133373030af9717ae722e135cf">alexaClientSDK::contextManager::ContextManager::create</a>  (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &amp;deviceInfo, std::shared_ptr&lt; avsCommon::utils::timing::MultiTimer &gt; multiTimer=std::make_shared&lt; avsCommon::utils::timing::MultiTimer &gt;(), std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; metricRecorder=nullptr)</dt>
+<dd></dd>
+<dt><a class="anchor" id="_deprecated000022"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a1aa6769739e7b822674c6f225438adbb">alexaClientSDK::endpoints::EndpointBuilder::withCapability</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface, std::shared_ptr&lt; DirectiveHandlerInterface &gt; directiveHandler)</dt>
 <dd>CapabilityConfigurationInterface is deprecated.  </dd>
-<dt><a class="anchor" id="_deprecated000019"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a40a8455904ef5ae5b96303ebbd5ed02b">alexaClientSDK::endpoints::EndpointBuilder::withCapabilityConfiguration</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface)</dt>
+<dt><a class="anchor" id="_deprecated000023"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a40a8455904ef5ae5b96303ebbd5ed02b">alexaClientSDK::endpoints::EndpointBuilder::withCapabilityConfiguration</a>  (const std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilityConfigurationInterface &gt; &amp;configurationInterface)</dt>
 <dd>CapabilityConfigurationInterface is deprecated.  </dd>
-<dt><a class="anchor" id="_deprecated000013"></a>Member <a class="el" href="_http_response_codes_8h.html#a7c7e2e35af1fc43c26bd735151de06ea">HTTPResponseCode</a>  </dt>
+<dt><a class="anchor" id="_deprecated000026"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html#a968cdee43c3d97867b23a10bede5d409">alexaClientSDK::sampleApp::ConsolePrinter::ConsolePrinter</a>  ()</dt>
+<dd>(instances of <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html">ConsolePrinter</a> needlessly duplicate ConsoleLogger functionality.)  </dd>
+<dt><a class="anchor" id="_deprecated000027"></a>Member <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a0d3f41585d168011bc67c3447d4d59e0">alexaClientSDK::sampleApp::LocaleAssetsManager::create</a>  (bool enableWakeWord)</dt>
+<dd></dd>
+<dt><a class="anchor" id="_deprecated000015"></a>Member <a class="el" href="_http_response_codes_8h.html#a7c7e2e35af1fc43c26bd735151de06ea">HTTPResponseCode</a>  </dt>
 <dd>Use the <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893">alexaClientSDK::avsCommon::utils::http::HTTPResponseCode</a></code> instead. </dd>
 </dl>
 </div></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

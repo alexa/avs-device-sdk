@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::SystemSoundPlayerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SystemSoundPlayerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,44,242,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1system_sound_player_1_1_system_sound_player.html" title=" " alt="" coords="293,5,483,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_system_sound_player.html" title=" " alt="" coords="290,81,487,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1system_sound_player_1_1_system_sound_player.html" title="alexaClientSDK::application\lUtilities::systemSoundPlayer\l::SystemSoundPlayer" alt="" coords="293,5,483,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_system_sound_player.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockSystemSoundPlayer" alt="" coords="289,85,487,141"/>
 </map>

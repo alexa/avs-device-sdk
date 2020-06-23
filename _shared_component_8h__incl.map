@@ -1,0 +1,25 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h">
+<area shape="rect" id="node3" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2408,109,2619,136"/>
+<area shape="rect" id="node30" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1574,541,1789,583"/>
+<area shape="rect" id="node38" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1347,541,1549,583"/>
+<area shape="rect" id="node41" href="$_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="841,273,1017,315"/>
+<area shape="rect" id="node4" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2327,184,2502,225"/>
+<area shape="rect" id="node37" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="2526,184,2701,225"/>
+<area shape="rect" id="node10" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2124,459,2327,486"/>
+<area shape="rect" id="node11" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="3063,631,3238,672"/>
+<area shape="rect" id="node12" href="$_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="3063,541,3238,583"/>
+<area shape="rect" id="node13" href="$_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="2503,541,2678,583"/>
+<area shape="rect" id="node18" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="2018,273,2193,315"/>
+<area shape="rect" id="node16" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="2301,631,2475,672"/>
+<area shape="rect" id="node25" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1355,363,1531,404"/>
+<area shape="rect" id="node33" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="2466,363,2641,404"/>
+<area shape="rect" id="node35" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="3181,363,3355,404"/>
+<area shape="rect" id="node27" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1355,452,1531,493"/>
+<area shape="rect" id="node34" href="$_runtime_manufactory__imp_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory_imp.h" alt="" coords="2655,452,2841,493"/>
+<area shape="rect" id="node36" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="3177,459,3359,486"/>
+<area shape="rect" id="node40" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1315,638,1442,665"/>
+<area shape="rect" id="node44" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="731,363,925,404"/>
+<area shape="rect" id="node47" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="409,452,604,493"/>
+<area shape="rect" id="node49" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="464,549,563,575"/>
+<area shape="rect" id="node50" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="397,638,512,665"/>
+</map>

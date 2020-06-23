@@ -1,12 +1,11 @@
 <map id="alexaClientSDK::sampleApp::UIManager" name="alexaClientSDK::sampleApp::UIManager">
-<area shape="rect" id="node1" title=" " alt="" coords="303,303,492,341"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer." alt="" coords="29,5,232,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title=" " alt="" coords="5,81,255,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html" title=" " alt="" coords="11,144,250,196"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title=" " alt="" coords="20,220,240,272"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html" title=" " alt="" coords="32,296,229,348"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title=" " alt="" coords="21,372,239,424"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_notifications_observer_interface.html" title=" " alt="" coords="32,448,229,500"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_observer_interface.html" title=" " alt="" coords="14,524,246,576"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html" title=" " alt="" coords="6,600,255,652"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="36,5,240,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="14,86,262,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesObserver\lInterface" alt="" coords="19,152,257,208"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface" alt="" coords="27,232,249,288"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SingleSetting\lObserverInterface" alt="" coords="39,312,237,368"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface" alt="" coords="31,392,245,448"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_observer_interface.html" title="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationsObserverInterface" alt="" coords="5,473,271,514"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_device_observer_interface.html" title="alexaClientSDK::acsdkBluetooth\lInterfaces::BluetoothDeviceObserver\lInterface" alt="" coords="19,539,257,595"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthRequester\lInterface" alt="" coords="15,619,261,675"/>
 </map>

@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorage.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorage.h">
-<area shape="rect" id="node1" title=" " alt="" coords="240,5,505,71"/>
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_storage_8cpp.html" title=" " alt="" coords="5,119,233,184"/>
-<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title=" " alt="" coords="257,119,488,184"/>
-<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title=" " alt="" coords="513,132,793,171"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/Storage/AVSGatewayManager\lStorage.cpp" alt="" coords="5,124,232,195"/>
+<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/Storage/AVSGatewayManager\lStorageTest.cpp" alt="" coords="257,124,487,195"/>
+<area shape="rect" id="node4" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="512,139,789,180"/>
 </map>

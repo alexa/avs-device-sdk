@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/AuthObserver.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/AuthObserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="209,5,394,57"/>
-<area shape="rect" id="node2" href="$_auth_observer_8cpp.html" title=" " alt="" coords="5,112,158,164"/>
-<area shape="rect" id="node3" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="182,112,421,164"/>
-<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="445,105,638,171"/>
+<area shape="rect" id="node2" href="$_auth_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthObserver.cpp" alt="" coords="5,117,157,173"/>
+<area shape="rect" id="node3" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="182,117,421,173"/>
+<area shape="rect" id="node4" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="445,109,635,180"/>
 </map>

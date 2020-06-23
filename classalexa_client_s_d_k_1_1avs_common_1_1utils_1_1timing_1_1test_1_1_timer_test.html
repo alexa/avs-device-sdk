@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -118,9 +118,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aab37e9627d7c99514a559d6ccff01865"><td class="memItemLeft" align="right" valign="top">std::deque&lt; std::chrono::time_point&lt; std::chrono::steady_clock &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#aab37e9627d7c99514a559d6ccff01865">m_timestamps</a></td></tr>
 <tr class="memdesc:aab37e9627d7c99514a559d6ccff01865"><td class="mdescLeft">&#160;</td><td class="mdescRight">This deque accumulates timestamps from timer calls to <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#a9c606508728ed280d6dc4f3d2c3ffa97">simpleTask()</a>.  <a href="#aab37e9627d7c99514a559d6ccff01865">More...</a><br /></td></tr>
 <tr class="separator:aab37e9627d7c99514a559d6ccff01865"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8921517b1cccc05a4186fee01b6eaf77"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#a8921517b1cccc05a4186fee01b6eaf77">m_timer</a></td></tr>
-<tr class="memdesc:a8921517b1cccc05a4186fee01b6eaf77"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timer to use in the tests.  <a href="#a8921517b1cccc05a4186fee01b6eaf77">More...</a><br /></td></tr>
-<tr class="separator:a8921517b1cccc05a4186fee01b6eaf77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8228fb3f8faaf70017c9fed1d32bd7af"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_timer_test.html#a8228fb3f8faaf70017c9fed1d32bd7af">m_timer</a></td></tr>
+<tr class="memdesc:a8228fb3f8faaf70017c9fed1d32bd7af"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timer to use in the tests.  <a href="#a8228fb3f8faaf70017c9fed1d32bd7af">More...</a><br /></td></tr>
+<tr class="separator:a8228fb3f8faaf70017c9fed1d32bd7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Test harness for <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a> class. </p>
@@ -324,8 +324,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8921517b1cccc05a4186fee01b6eaf77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8921517b1cccc05a4186fee01b6eaf77">&#9670;&nbsp;</a></span>m_timer</h2>
+<a id="a8228fb3f8faaf70017c9fed1d32bd7af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8228fb3f8faaf70017c9fed1d32bd7af">&#9670;&nbsp;</a></span>m_timer</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,7 +334,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a>&gt; alexaClientSDK::avsCommon::utils::timing::test::TimerTest::m_timer</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html">Timer</a>&gt; alexaClientSDK::avsCommon::utils::timing::test::TimerTest::m_timer</td>
         </tr>
       </table>
   </td>
@@ -373,13 +373,13 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/test/<a class="el" href="_timer_test_8cpp.html">TimerTest.cpp</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/Utils/test/<a class="el" href="_timer_test_8cpp.html">TimerTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

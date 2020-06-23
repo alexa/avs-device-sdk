@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,8 +76,15 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="_alexa_client_s_d_k_init_8h_source.html">AlexaClientSDKInit.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9d22e2132835e2663f7fc2beb0ec8e45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#a9d22e2132835e2663f7fc2beb0ec8e45">~AlexaClientSDKInit</a> ()</td></tr>
+<tr class="separator:a9d22e2132835e2663f7fc2beb0ec8e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aae5ce42d7468e03a7a8082e160ce1e71"><td class="memItemLeft" align="right" valign="top">static std::function&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html">AlexaClientSDKInit</a> &gt;std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">utils::logger::Logger</a> &gt;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#aae5ce42d7468e03a7a8082e160ce1e71">getCreateAlexaClientSDKInit</a> (const std::vector&lt; std::shared_ptr&lt; std::istream &gt;&gt; &amp;jsonStreams)</td></tr>
+<tr class="separator:aae5ce42d7468e03a7a8082e160ce1e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4894e427b5ec58455aa981d8e8848c31"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#a4894e427b5ec58455aa981d8e8848c31">isInitialized</a> ()</td></tr>
 <tr class="separator:a4894e427b5ec58455aa981d8e8848c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a185a7b0c738fb29837e8c42e62ad0df1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#a185a7b0c738fb29837e8c42e62ad0df1">initialize</a> (const std::vector&lt; std::shared_ptr&lt; std::istream &gt;&gt; &amp;jsonStreams)</td></tr>
@@ -84,7 +92,62 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab3e4092a8f0c1ebb450bd3e26aacf268"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html#ab3e4092a8f0c1ebb450bd3e26aacf268">uninitialize</a> ()</td></tr>
 <tr class="separator:ab3e4092a8f0c1ebb450bd3e26aacf268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class encapsulating the lifetime of initialization of the Alexa Client SDK. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9d22e2132835e2663f7fc2beb0ec8e45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d22e2132835e2663f7fc2beb0ec8e45">&#9670;&nbsp;</a></span>~AlexaClientSDKInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit::~AlexaClientSDKInit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Destructor. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aae5ce42d7468e03a7a8082e160ce1e71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5ce42d7468e03a7a8082e160ce1e71">&#9670;&nbsp;</a></span>getCreateAlexaClientSDKInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html">AlexaClientSDKInit</a> &gt;std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html">utils::logger::Logger</a> &gt;)&gt; alexaClientSDK::avsCommon::avs::initialization::AlexaClientSDKInit::getCreateAlexaClientSDKInit </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; std::istream &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>jsonStreams</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get a function to create an instance of <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html">AlexaClientSDKInit</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jsonStreams</td><td>Vector of <code>istreams</code> containing JSON documents from which to parse configuration parameters. Streams are processed in the order they appear in the vector. When a value appears in more than one JSON stream the last processed stream's value overwrites the previous value (and a debug log entry will be created). This allows for specifying default settings (by providing them first) and specifying the configuration from multiple sources (e.g. a separate stream for each component). Documentation of the JSON configuration format and methods to access the resulting global configuration can be found here: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A function to create an instance of <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_alexa_client_s_d_k_init.html">AlexaClientSDKInit</a>. </dd></dl>
+
+</div>
+</div>
 <a id="a185a7b0c738fb29837e8c42e62ad0df1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a185a7b0c738fb29837e8c42e62ad0df1">&#9670;&nbsp;</a></span>initialize()</h2>
 
@@ -174,14 +237,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Initialization/<a class="el" href="_alexa_client_s_d_k_init_8h_source.html">AlexaClientSDKInit.h</a></li>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/AVS/src/<a class="el" href="_alexa_client_s_d_k_init_8cpp.html">AlexaClientSDKInit.cpp</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Initialization/<a class="el" href="_alexa_client_s_d_k_init_8h_source.html">AlexaClientSDKInit.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/AVS/src/<a class="el" href="_alexa_client_s_d_k_init_8cpp.html">AlexaClientSDKInit.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

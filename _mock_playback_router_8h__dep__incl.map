@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockPlaybackRouter.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockPlaybackRouter.h">
-<area shape="rect" id="node1" title=" " alt="" coords="330,5,550,71"/>
-<area shape="rect" id="node2" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="5,119,203,184"/>
-<area shape="rect" id="node3" href="$_bluetooth_media_input_transformer_test_8cpp.html" title=" " alt="" coords="227,119,430,184"/>
-<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="453,119,651,184"/>
-<area shape="rect" id="node5" href="$_playback_controller_test_8cpp.html" title=" " alt="" coords="675,119,861,184"/>
+<area shape="rect" id="node2" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="5,124,236,195"/>
+<area shape="rect" id="node3" href="$_bluetooth_media_input_transformer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothMedia\lInputTransformerTest.cpp" alt="" coords="260,124,496,195"/>
+<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="521,124,718,195"/>
+<area shape="rect" id="node5" href="$_playback_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/test\l/PlaybackControllerTest.cpp" alt="" coords="742,124,929,195"/>
 </map>

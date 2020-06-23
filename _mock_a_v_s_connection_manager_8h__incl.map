@@ -1,10 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="52,5,271,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,125,120,151"/>
-<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="144,119,378,157"/>
-<area shape="rect" id="node4" title=" " alt="" coords="44,212,113,237"/>
-<area shape="rect" id="node5" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="137,205,385,244"/>
-<area shape="rect" id="node7" href="$_message_observer_interface_8h.html" title=" " alt="" coords="410,205,607,244"/>
-<area shape="rect" id="node6" title=" " alt="" coords="225,292,298,317"/>
-<area shape="rect" id="node8" title=" " alt="" coords="481,292,535,317"/>
+<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="145,124,375,165"/>
+<area shape="rect" id="node5" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="137,213,383,255"/>
+<area shape="rect" id="node7" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="407,213,601,255"/>
 </map>

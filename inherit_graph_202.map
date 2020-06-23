@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,19,94,44"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_atomic_bool.html" title="An AtomicBool type with the minimum functionality required by SDS." alt="" coords="142,5,339,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_template_runtime_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::TemplateRuntime\lObserverInterface" alt="" coords="5,43,225,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockGui" alt="" coords="278,5,457,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_gui_renderer.html" title="alexaClientSDK::sampleApp\l::GuiRenderer" alt="" coords="273,86,461,127"/>
 </map>

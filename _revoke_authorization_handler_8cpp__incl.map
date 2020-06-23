@@ -1,52 +1,33 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/RevokeAuthorizationHandler.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/src/RevokeAuthorizationHandler.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2150,5,2368,71"/>
-<area shape="rect" id="node2" href="$_revoke_authorization_handler_8h.html" title=" " alt="" coords="2162,119,2355,157"/>
-<area shape="rect" id="node5" title=" " alt="" coords="712,1005,766,1031"/>
-<area shape="rect" id="node16" href="$_logger_8h.html" title=" " alt="" coords="1812,739,1988,777"/>
-<area shape="rect" id="node23" title=" " alt="" coords="2971,919,3120,944"/>
-<area shape="rect" id="node50" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1390,565,1560,604"/>
-<area shape="rect" id="node3" title=" " alt="" coords="2723,1085,2792,1111"/>
-<area shape="rect" id="node4" title=" " alt="" coords="2158,919,2215,944"/>
-<area shape="rect" id="node6" title=" " alt="" coords="2205,219,2312,244"/>
-<area shape="rect" id="node7" href="$_capability_agent_8h.html" title=" " alt="" coords="1988,212,2180,251"/>
-<area shape="rect" id="node32" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2439,305,2705,344"/>
-<area shape="rect" id="node49" href="$_revoke_authorization_observer_interface_8h.html" title=" " alt="" coords="1761,205,1964,257"/>
-<area shape="rect" id="node8" title=" " alt="" coords="1438,832,1498,857"/>
-<area shape="rect" id="node9" title=" " alt="" coords="2408,919,2523,944"/>
-<area shape="rect" id="node10" href="$_namespace_and_name_8h.html" title=" " alt="" coords="1232,392,1461,431"/>
-<area shape="rect" id="node34" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="1098,739,1291,777"/>
-<area shape="rect" id="node37" href="$_context_requester_interface_8h.html" title=" " alt="" coords="634,305,830,344"/>
-<area shape="rect" id="node44" href="$_state_provider_interface_8h.html" title=" " alt="" coords="1175,305,1366,344"/>
-<area shape="rect" id="node45" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="2662,739,2853,777"/>
-<area shape="rect" id="node48" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="2845,825,3070,864"/>
-<area shape="rect" id="node11" href="$_capability_tag_8h.html" title=" " alt="" coords="862,479,1055,517"/>
-<area shape="rect" id="node12" title=" " alt="" coords="72,1005,141,1031"/>
-<area shape="rect" id="node13" href="$_optional_8h.html" title=" " alt="" coords="910,572,1106,597"/>
-<area shape="rect" id="node14" href="$_logger_utils_8h.html" title=" " alt="" coords="1387,652,1563,691"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1466,919,1528,944"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1054,919,1122,944"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1689,1085,1746,1111"/>
-<area shape="rect" id="node19" href="$_configuration_node_8h.html" title=" " alt="" coords="1624,825,1838,864"/>
-<area shape="rect" id="node24" href="$_level_8h.html" title=" " alt="" coords="1957,912,2133,951"/>
-<area shape="rect" id="node25" href="$_log_entry_8h.html" title=" " alt="" coords="589,825,765,864"/>
-<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1963,825,2160,864"/>
-<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1995,999,2171,1037"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1717,919,1781,944"/>
-<area shape="rect" id="node21" title=" " alt="" coords="2194,1005,2267,1031"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1654,919,1693,944"/>
-<area shape="rect" id="node26" title=" " alt="" coords="651,919,727,944"/>
-<area shape="rect" id="node27" title=" " alt="" coords="549,919,627,944"/>
-<area shape="rect" id="node28" href="$_log_entry_stream_8h.html" title=" " alt="" coords="752,912,928,951"/>
-<area shape="rect" id="node29" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1403,999,1579,1037"/>
-<area shape="rect" id="node33" href="$_exception_error_type_8h.html" title=" " alt="" coords="2490,479,2713,517"/>
-<area shape="rect" id="node35" href="$_focus_state_8h.html" title=" " alt="" coords="840,832,1053,857"/>
-<area shape="rect" id="node36" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="1077,832,1313,857"/>
-<area shape="rect" id="node38" title=" " alt="" coords="625,659,685,684"/>
-<area shape="rect" id="node39" href="$_a_v_s_context_8h.html" title=" " alt="" coords="624,399,840,424"/>
-<area shape="rect" id="node42" href="$_context_request_token_8h.html" title=" " alt="" coords="966,392,1157,431"/>
-<area shape="rect" id="node43" href="$_endpoint_identifier_8h.html" title=" " alt="" coords="296,479,498,517"/>
-<area shape="rect" id="node40" title=" " alt="" coords="1264,659,1312,684"/>
-<area shape="rect" id="node41" href="$_capability_state_8h.html" title=" " alt="" coords="441,565,634,604"/>
-<area shape="rect" id="node46" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="2547,919,2770,944"/>
-<area shape="rect" id="node47" href="$_directive_handler_configuration_8h.html" title=" " alt="" coords="2488,825,2720,864"/>
+<area shape="rect" id="node2" href="$_revoke_authorization_handler_8h.html" title="System/RevokeAuthorization\lHandler.h" alt="" coords="2169,124,2361,165"/>
+<area shape="rect" id="node16" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1820,764,1996,805"/>
+<area shape="rect" id="node50" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1393,585,1567,627"/>
+<area shape="rect" id="node7" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1995,221,2189,262"/>
+<area shape="rect" id="node32" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2449,317,2709,359"/>
+<area shape="rect" id="node49" href="$_revoke_authorization_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RevokeAuthorizationObserver\lInterface.h" alt="" coords="1771,213,1971,269"/>
+<area shape="rect" id="node10" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1235,407,1466,448"/>
+<area shape="rect" id="node34" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1103,764,1295,805"/>
+<area shape="rect" id="node37" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="635,317,829,359"/>
+<area shape="rect" id="node44" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1177,317,1369,359"/>
+<area shape="rect" id="node45" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2669,764,2861,805"/>
+<area shape="rect" id="node48" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2853,853,3075,895"/>
+<area shape="rect" id="node11" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="872,496,1067,537"/>
+<area shape="rect" id="node13" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="921,593,1117,619"/>
+<area shape="rect" id="node14" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1392,675,1568,716"/>
+<area shape="rect" id="node19" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1630,853,1845,895"/>
+<area shape="rect" id="node24" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1964,943,2140,984"/>
+<area shape="rect" id="node25" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="589,853,765,895"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1971,853,2165,895"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2001,1032,2177,1073"/>
+<area shape="rect" id="node28" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="752,943,928,984"/>
+<area shape="rect" id="node29" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1407,1032,1583,1073"/>
+<area shape="rect" id="node33" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2499,496,2722,537"/>
+<area shape="rect" id="node35" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="841,861,1055,887"/>
+<area shape="rect" id="node36" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="1080,861,1317,887"/>
+<area shape="rect" id="node39" href="$_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="621,414,843,441"/>
+<area shape="rect" id="node42" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="968,407,1160,448"/>
+<area shape="rect" id="node43" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="296,496,496,537"/>
+<area shape="rect" id="node41" href="$_capability_state_8h.html" title="AVSCommon/AVS/Capability\lState.h" alt="" coords="448,585,643,627"/>
+<area shape="rect" id="node46" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2552,950,2779,977"/>
+<area shape="rect" id="node47" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2493,853,2728,895"/>
 </map>

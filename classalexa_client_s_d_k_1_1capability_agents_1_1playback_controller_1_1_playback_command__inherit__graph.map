@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::playbackController::PlaybackCommand" name="alexaClientSDK::capabilityAgents::playbackController::PlaybackCommand">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,186,133"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_button_command__v1__0.html" title=" " alt="" coords="234,5,415,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_button_command__v1__1.html" title=" " alt="" coords="234,81,415,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_toggle_command.html" title=" " alt="" coords="234,157,415,209"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_button_command__v1__0.html" title="alexaClientSDK::capability\lAgents::playbackController\l::ButtonCommand_v1_0" alt="" coords="232,5,411,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_button_command__v1__1.html" title="alexaClientSDK::capability\lAgents::playbackController\l::ButtonCommand_v1_1" alt="" coords="232,85,411,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_toggle_command.html" title="alexaClientSDK::capability\lAgents::playbackController\l::ToggleCommand" alt="" coords="232,165,411,221"/>
 </map>

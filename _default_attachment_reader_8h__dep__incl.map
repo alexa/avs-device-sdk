@@ -1,5 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/DefaultAttachmentReader.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/DefaultAttachmentReader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="137,5,342,71"/>
-<area shape="rect" id="node2" href="$_in_process_attachment_reader_8cpp.html" title=" " alt="" coords="5,119,228,184"/>
-<area shape="rect" id="node3" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="252,125,472,177"/>
+<area shape="rect" id="node2" href="$_in_process_attachment_reader_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Attachment/InProcessAttachment\lReader.cpp" alt="" coords="5,124,228,195"/>
+<area shape="rect" id="node3" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="252,131,472,187"/>
 </map>

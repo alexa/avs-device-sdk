@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -95,6 +96,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ababf31e7783f0dc499976951c3c3bc4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#ababf31e7783f0dc499976951c3c3bc4e">TearDown</a> () override</td></tr>
 <tr class="separator:ababf31e7783f0dc499976951c3c3bc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a9f98bf55d2b27320a23de620334a506d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a9f98bf55d2b27320a23de620334a506d">validateAuthDelegate</a> ()</td></tr>
+<tr class="memdesc:a9f98bf55d2b27320a23de620334a506d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates AuthDelegate calls.  <a href="#a9f98bf55d2b27320a23de620334a506d">More...</a><br /></td></tr>
+<tr class="separator:a9f98bf55d2b27320a23de620334a506d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38b8df24cd6d7da14914449a32819bea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a38b8df24cd6d7da14914449a32819bea">addEndpoint</a> (<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">AVSDiscoveryEndpointAttributes</a> attributes, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a> configuration)</td></tr>
+<tr class="memdesc:a38b8df24cd6d7da14914449a32819bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper that validates dynamically adding an endpoint. Used for testing dynamic delete.  <a href="#a38b8df24cd6d7da14914449a32819bea">More...</a><br /></td></tr>
+<tr class="separator:a38b8df24cd6d7da14914449a32819bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb1b97adaf004a2ed7b98b7d55a7e41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a7eb1b97adaf004a2ed7b98b7d55a7e41">getEventCorrelationTokenString</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt; request, std::string &amp;eventCorrelationTokenString)</td></tr>
+<tr class="separator:a7eb1b97adaf004a2ed7b98b7d55a7e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ae94f38f770e475004c35b36a6cff2641"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html">MockAuthDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#ae94f38f770e475004c35b36a6cff2641">m_mockAuthDelegate</a></td></tr>
@@ -109,6 +121,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a32f5b19405f36c46bc8367b5cb606afd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a32f5b19405f36c46bc8367b5cb606afd">m_dataManager</a></td></tr>
 <tr class="memdesc:a32f5b19405f36c46bc8367b5cb606afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The data manager required to build the base object.  <a href="#a32f5b19405f36c46bc8367b5cb606afd">More...</a><br /></td></tr>
 <tr class="separator:a32f5b19405f36c46bc8367b5cb606afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7fb67c26a3fb8bf89080dacdb3f58a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_message_sender.html">avsCommon::sdkInterfaces::test::MockMessageSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a5c7fb67c26a3fb8bf89080dacdb3f58a">m_mockMessageSender</a></td></tr>
+<tr class="memdesc:a5c7fb67c26a3fb8bf89080dacdb3f58a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mock <code>MessageSenderInterface</code> used in the tests.  <a href="#a5c7fb67c26a3fb8bf89080dacdb3f58a">More...</a><br /></td></tr>
+<tr class="separator:a5c7fb67c26a3fb8bf89080dacdb3f58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c6bd3800c5f220b3fa0a6703da5afbc"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_capabilities_delegate_test.html#a2c6bd3800c5f220b3fa0a6703da5afbc">m_capabilitiesDelegate</a></td></tr>
 <tr class="memdesc:a2c6bd3800c5f220b3fa0a6703da5afbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The instance of the <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate.html">capabilitiesDelegate</a> used in the tests.  <a href="#a2c6bd3800c5f220b3fa0a6703da5afbc">More...</a><br /></td></tr>
 <tr class="separator:a2c6bd3800c5f220b3fa0a6703da5afbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,6 +131,80 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a></code> class. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a38b8df24cd6d7da14914449a32819bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38b8df24cd6d7da14914449a32819bea">&#9670;&nbsp;</a></span>addEndpoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilitiesDelegate::test::CapabilitiesDelegateTest::addEndpoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">AVSDiscoveryEndpointAttributes</a>&#160;</td>
+          <td class="paramname"><em>attributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">CapabilityConfiguration</a>&#160;</td>
+          <td class="paramname"><em>configuration</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper that validates dynamically adding an endpoint. Used for testing dynamic delete. </p>
+
+</div>
+</div>
+<a id="a7eb1b97adaf004a2ed7b98b7d55a7e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eb1b97adaf004a2ed7b98b7d55a7e41">&#9670;&nbsp;</a></span>getEventCorrelationTokenString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilitiesDelegate::test::CapabilitiesDelegateTest::getEventCorrelationTokenString </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventCorrelationTokenString</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af4e2947aae6be109b3ed0e849dbe80b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4e2947aae6be109b3ed0e849dbe80b1">&#9670;&nbsp;</a></span>SetUp()</h2>
 
@@ -167,6 +256,33 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Tear down the test harness after running a test. </p>
+
+</div>
+</div>
+<a id="a9f98bf55d2b27320a23de620334a506d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f98bf55d2b27320a23de620334a506d">&#9670;&nbsp;</a></span>validateAuthDelegate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilitiesDelegate::test::CapabilitiesDelegateTest::validateAuthDelegate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Validates AuthDelegate calls. </p>
 
 </div>
 </div>
@@ -291,14 +407,38 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a5c7fb67c26a3fb8bf89080dacdb3f58a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c7fb67c26a3fb8bf89080dacdb3f58a">&#9670;&nbsp;</a></span>m_mockMessageSender</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_message_sender.html">avsCommon::sdkInterfaces::test::MockMessageSender</a>&gt; alexaClientSDK::capabilitiesDelegate::test::CapabilitiesDelegateTest::m_mockMessageSender</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The mock <code>MessageSenderInterface</code> used in the tests. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilitiesDelegate/test/<a class="el" href="_capabilities_delegate_test_8cpp.html">CapabilitiesDelegateTest.cpp</a></li>
+<li>/workplace/avs-device-sdk/CapabilitiesDelegate/test/<a class="el" href="_capabilities_delegate_test_8cpp.html">CapabilitiesDelegateTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

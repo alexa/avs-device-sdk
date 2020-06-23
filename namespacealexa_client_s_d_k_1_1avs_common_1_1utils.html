@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1audio_analyzer"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1audio_analyzer.html">audioAnalyzer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth.html">bluetooth</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration.html">configuration</a></td></tr>
@@ -195,6 +197,8 @@ Functions</h2></td></tr>
 <tr class="separator:afcab22c99d77dbc82469cf8a1eef46be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a241bf7b99d7428c635afc57025e8b8af"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a241bf7b99d7428c635afc57025e8b8af">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#a0415c3e88ef5a43e176055c88e554b21">AudioFormat::Endianness</a> &amp;endianness)</td></tr>
 <tr class="separator:a241bf7b99d7428c635afc57025e8b8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e785221934bab70fee9f3ef061046bf"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; std::mutex &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a3e785221934bab70fee9f3ef061046bf">getCoutMutex</a> ()</td></tr>
+<tr class="separator:a3e785221934bab70fee9f3ef061046bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab052edabd453887602b3051c5641d8f9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#ab052edabd453887602b3051c5641d8f9">littleEndianMachine</a> ()</td></tr>
 <tr class="memdesc:ab052edabd453887602b3051c5641d8f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function used to check the machine endianness.  <a href="#ab052edabd453887602b3051c5641d8f9">More...</a><br /></td></tr>
 <tr class="separator:ab052edabd453887602b3051c5641d8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -539,6 +543,33 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The generated number. </dd></dl>
 <p>Identifier to tell if the random number generated has been initialized</p>
 <p>Identifier to tell if the random number generated has been initialized </p>
+
+</div>
+</div>
+<a id="a3e785221934bab70fee9f3ef061046bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e785221934bab70fee9f3ef061046bf">&#9670;&nbsp;</a></span>getCoutMutex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;std::mutex&gt; alexaClientSDK::avsCommon::utils::getCoutMutex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the mutex used to serialize writing to <code>cout</code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The mutex used to serialize writing to <code>cout</code>. </dd></dl>
 
 </div>
 </div>
@@ -1689,7 +1720,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

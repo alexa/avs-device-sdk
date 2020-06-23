@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,6 +75,14 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="_external_capabilities_builder_interface_8h_source.html">ExternalCapabilitiesBuilderInterface.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface:</div>
+<div class="dyncontent">
+<div class="center"><img src="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_inherit__map" alt="Inheritance graph"/></div>
+<map name="alexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_inherit__map" id="alexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1sample_app_1_1_external_capabilities_builder.html" title="alexaClientSDK::sampleApp\l::ExternalCapabilitiesBuilder" alt="" coords="30,95,218,136"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -87,17 +95,23 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7190ce3757f1fd690e838849eda35464"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71aa215852ae7fb9c38a09994b607df8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a71aa215852ae7fb9c38a09994b607df8">withVisualFocusManager</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; visualFocusManager)=0</td></tr>
 <tr class="separator:a71aa215852ae7fb9c38a09994b607df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8a923a872cbfee20e5728cd1b724450"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ab8a923a872cbfee20e5728cd1b724450">withMRMCapabilityAgent</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html">capabilityAgents::mrm::MRMCapabilityAgent</a> &gt; mrmCapabilityAgent)=0</td></tr>
-<tr class="separator:ab8a923a872cbfee20e5728cd1b724450"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6f77dc97f5d30ee32d7069e75da8baa"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ac6f77dc97f5d30ee32d7069e75da8baa">withSettingsStorage</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">alexaClientSDK::settings::storage::DeviceSettingStorageInterface</a> &gt; settingStorage)=0</td></tr>
-<tr class="separator:ac6f77dc97f5d30ee32d7069e75da8baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b32dca3a791c22d579324dcff1ed1ed"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; std::list&lt; <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html">Capability</a> &gt;, std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">avsCommon::utils::RequiresShutdown</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a0b32dca3a791c22d579324dcff1ed1ed">buildCapabilities</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a> &gt; externalMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a> &gt; connectionManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_exception_encountered_sender.html">avsCommon::avs::ExceptionEncounteredSender</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html">certifiedSender::CertifiedSender</a> &gt; certifiedSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; audioFocusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; dataManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_report_state_handler.html">capabilityAgents::system::ReportStateHandler</a> &gt; stateReportHandler, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">capabilityAgents::aip::AudioInputProcessor</a> &gt; audioInputProcessor, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager)=0</td></tr>
-<tr class="separator:a0b32dca3a791c22d579324dcff1ed1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20f893e8bbb73e6294bd394ae2ee0565"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a20f893e8bbb73e6294bd394ae2ee0565">withSettingsStorage</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">settings::storage::DeviceSettingStorageInterface</a> &gt; settingStorage)=0</td></tr>
+<tr class="separator:a20f893e8bbb73e6294bd394ae2ee0565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e680437121f06c508c5bb775f8618f4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a5e680437121f06c508c5bb775f8618f4">withTemplateRunTime</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">capabilityAgents::templateRuntime::TemplateRuntime</a> &gt; templateRuntime)=0</td></tr>
+<tr class="separator:a5e680437121f06c508c5bb775f8618f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bcc0e7b057738696203bd43ed9f3095"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a0bcc0e7b057738696203bd43ed9f3095">getCallManager</a> ()=0</td></tr>
+<tr class="separator:a0bcc0e7b057738696203bd43ed9f3095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29d11ebedc68a844ea8245fe59fa7318"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a29d11ebedc68a844ea8245fe59fa7318">withInternetConnectionMonitor</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; internetConnectionMonitor)=0</td></tr>
+<tr class="separator:a29d11ebedc68a844ea8245fe59fa7318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1619c4ad8a3ab40d4c533ba38a4c04e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ab1619c4ad8a3ab40d4c533ba38a4c04e">withDialogUXStateAggregator</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a> &gt; dialogUXStateAggregator)=0</td></tr>
+<tr class="separator:ab1619c4ad8a3ab40d4c533ba38a4c04e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f02444ef06cb55e6beeb99593421ba"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; std::list&lt; <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html">Capability</a> &gt;, std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">avsCommon::utils::RequiresShutdown</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ae2f02444ef06cb55e6beeb99593421ba">buildCapabilities</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html">capabilityAgents::externalMediaPlayer::ExternalMediaPlayer</a> &gt; externalMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">avsCommon::sdkInterfaces::AVSConnectionManagerInterface</a> &gt; connectionManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_exception_encountered_sender.html">avsCommon::avs::ExceptionEncounteredSender</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html">certifiedSender::CertifiedSender</a> &gt; certifiedSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; audioFocusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; dataManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_report_state_handler.html">capabilityAgents::system::ReportStateHandler</a> &gt; stateReportHandler, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">capabilityAgents::aip::AudioInputProcessor</a> &gt; audioInputProcessor, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt; speakerManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt; directiveSequencer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html">capabilityAgents::system::UserInactivityMonitor</a> &gt; userInactivityMonitor, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt; avsGatewayManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; ringtoneMediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AudioFactoryInterface</a> &gt; audioFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt; ringtoneChannelVolumeInterface, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt; powerResourceManager)=0</td></tr>
+<tr class="separator:ae2f02444ef06cb55e6beeb99593421ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This interface provides a facility to add external capabilities to default client.</p>
 <p>Default client will provide its core components in the build call.</p>
-<dl class="section note"><dt>Note</dt><dd>Any object created during the buildCapabilities that keep a pointer to a core component should be added or managed by an object in the list of <code>RequiresShutdown</code> objects returned by <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a0b32dca3a791c22d579324dcff1ed1ed">buildCapabilities()</a>. This will ensure that these objects are shutdown during <code><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a></code> shutdown and before any core component is shutdown. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Any object created during the buildCapabilities that keep a pointer to a core component should be added or managed by an object in the list of <code>RequiresShutdown</code> objects returned by <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ae2f02444ef06cb55e6beeb99593421ba">buildCapabilities()</a>. This will ensure that these objects are shutdown during <code><a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a></code> shutdown and before any core component is shutdown. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7190ce3757f1fd690e838849eda35464"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7190ce3757f1fd690e838849eda35464">&#9670;&nbsp;</a></span>~ExternalCapabilitiesBuilderInterface()</h2>
@@ -126,8 +140,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0b32dca3a791c22d579324dcff1ed1ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b32dca3a791c22d579324dcff1ed1ed">&#9670;&nbsp;</a></span>buildCapabilities()</h2>
+<a id="ae2f02444ef06cb55e6beeb99593421ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2f02444ef06cb55e6beeb99593421ba">&#9670;&nbsp;</a></span>buildCapabilities()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,7 +207,55 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">avsCommon::sdkInterfaces::SpeakerManagerInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>speakerManager</em>&#160;</td>
+          <td class="paramname"><em>speakerManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>directiveSequencer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html">capabilityAgents::system::UserInactivityMonitor</a> &gt;&#160;</td>
+          <td class="paramname"><em>userInactivityMonitor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contextManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>avsGatewayManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>ringtoneMediaPlayer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_audio_factory_interface.html">avsCommon::sdkInterfaces::audio::AudioFactoryInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>audioFactory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>ringtoneChannelVolumeInterface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>powerResourceManager</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -215,10 +277,22 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">messageSender</td><td>Object that can be used to send events to AVS. </td></tr>
     <tr><td class="paramname">exceptionSender</td><td>Object that can be used to send exceptions to AVS. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1certified_sender.html">certifiedSender</a></td><td>Object that can be used to send events to AVS that require stronger guarantee. </td></tr>
+    <tr><td class="paramname">audioFocusManager</td><td>The focus manager for audio channels. </td></tr>
     <tr><td class="paramname">dataManager</td><td>Object used to manage objects that store customer data. </td></tr>
     <tr><td class="paramname">stateReportHandler</td><td>Object used to report the device state and its settings. </td></tr>
     <tr><td class="paramname">audioInputProcessor</td><td>Object used to recognize voice interactions. </td></tr>
     <tr><td class="paramname">speakerManager</td><td>Object used to manage all speaker instances that can be controlled by Alexa. </td></tr>
+    <tr><td class="paramname">directiveSequencer</td><td>Object used to sequence and handle a stream of <code>AVSDirective</code> instances. </td></tr>
+    <tr><td class="paramname">userInactivityMonitor</td><td>Object used to notify an implementation of the user activity. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>Object used to provide the context for various components. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_gateway_manager.html">avsGatewayManager</a></td><td>Object used to get the AVS gateway URL data. </td></tr>
+    <tr><td class="paramname">ringtoneMediaPlayer</td><td>The media player to play Comms ringtones. </td></tr>
+    <tr><td class="paramname">audioFactory</td><td>The audioFactory is a component the provides unique audio streams. </td></tr>
+    <tr><td class="paramname">ringtoneChannelVolumeInterface</td><td>The ChannelVolumeInterface used for ringtone channel volume attenuation. #ifdef ENABLE_COMMS_AUDIO_PROXY </td></tr>
+    <tr><td class="paramname">commsMediaPlayer</td><td>The media player to play Comms calling audio. </td></tr>
+    <tr><td class="paramname">commsSpeaker</td><td>The speaker to control volume of Comms calling audio. </td></tr>
+    <tr><td class="paramname">sharedDataStream</td><td>The stream to use which has the audio from microphone. #endif </td></tr>
+    <tr><td class="paramname">powerResourceManager</td><td>Object to manage power resource. </td></tr>
   </table>
   </dd>
 </dl>
@@ -226,8 +300,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab8a923a872cbfee20e5728cd1b724450"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8a923a872cbfee20e5728cd1b724450">&#9670;&nbsp;</a></span>withMRMCapabilityAgent()</h2>
+<a id="a0bcc0e7b057738696203bd43ed9f3095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bcc0e7b057738696203bd43ed9f3095">&#9670;&nbsp;</a></span>getCallManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,10 +310,9 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a>&amp; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::withMRMCapabilityAgent </td>
+          <td class="memname">virtual std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface</a>&gt; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::getCallManager </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html">capabilityAgents::mrm::MRMCapabilityAgent</a> &gt;&#160;</td>
-          <td class="paramname"><em>mrmCapabilityAgent</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -249,20 +322,81 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This method sets the MRM capability agent.</p>
-<p>This method will only get called if MRM support has been enabled.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mrmCapabilityAgent</td><td>The MRM capability agent. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this builder to allow nested function calls. </dd></dl>
+<p>Get the CallManager reference.</p>
+<dl class="section return"><dt>Returns</dt><dd>A reference of CallManager. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_external_capabilities_builder.html#ac9cb067c931b6a22bdb1b670cf8cbc11">alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder</a>.</p>
 
 </div>
 </div>
-<a id="ac6f77dc97f5d30ee32d7069e75da8baa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6f77dc97f5d30ee32d7069e75da8baa">&#9670;&nbsp;</a></span>withSettingsStorage()</h2>
+<a id="ab1619c4ad8a3ab40d4c533ba38a4c04e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1619c4ad8a3ab40d4c533ba38a4c04e">&#9670;&nbsp;</a></span>withDialogUXStateAggregator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a>&amp; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::withDialogUXStateAggregator </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a> &gt;&#160;</td>
+          <td class="paramname"><em>dialogUXStateAggregator</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This method sets the DialogUXStateAggregator for CallManager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dialogUXStateAggregator</td><td>The DialogUXStateAggregator object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a29d11ebedc68a844ea8245fe59fa7318"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29d11ebedc68a844ea8245fe59fa7318">&#9670;&nbsp;</a></span>withInternetConnectionMonitor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a>&amp; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::withInternetConnectionMonitor </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>internetConnectionMonitor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This method sets the InternetConnectionMonitor for CallManager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">internetConnectionMonitor</td><td>The InternetConnectionMonitor object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a20f893e8bbb73e6294bd394ae2ee0565"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20f893e8bbb73e6294bd394ae2ee0565">&#9670;&nbsp;</a></span>withSettingsStorage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,7 +407,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a>&amp; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::withSettingsStorage </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">alexaClientSDK::settings::storage::DeviceSettingStorageInterface</a> &gt;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html">settings::storage::DeviceSettingStorageInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>settingStorage</em></td><td>)</td>
           <td></td>
         </tr>
@@ -286,6 +420,40 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>This method sets the storage using for setting.</p>
 <dl class="section warning"><dt>Warning</dt><dd>The settings storage is opened and closed by <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> during creation and shutdown respectively. You can add your objects that use this storage inside the list of RequiresShutdown objects managed by <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html">DefaultClient</a> to ensure the storage usage will not be done after it closure. </dd></dl>
+
+</div>
+</div>
+<a id="a5e680437121f06c508c5bb775f8618f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e680437121f06c508c5bb775f8618f4">&#9670;&nbsp;</a></span>withTemplateRunTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html">ExternalCapabilitiesBuilderInterface</a>&amp; alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::withTemplateRunTime </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">capabilityAgents::templateRuntime::TemplateRuntime</a> &gt;&#160;</td>
+          <td class="paramname"><em>templateRuntime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This method sets the TemplateRuntime <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html">Capability</a> Agent for visual interactions.</p>
+<p>This method will only get called if GUI supports has been enabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">templateRuntime</td><td>The TemplateRuntime object. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -325,13 +493,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/<a class="el" href="_external_capabilities_builder_interface_8h_source.html">ExternalCapabilitiesBuilderInterface.h</a></li>
+<li>/workplace/avs-device-sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/<a class="el" href="_external_capabilities_builder_interface_8h_source.html">ExternalCapabilitiesBuilderInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,9 +78,9 @@ $(function() {
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#ab7a82d823f867c99f4533de8bf5c00d8">onDownchannelConnected</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a540bba50f52373a8cd7858124c2b0f2b">onDownchannelFinished</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a5a9422fd314f4703b4b45294c6796807">onForbidden</a>(const std::string &amp;authToken=&quot;&quot;)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a3451ff62aa2f383e390b6dc2bb34d9db">onMessageRequestAcknowledged</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#abb4a8b3b62cbc987109cf28365fbe2fc">onMessageRequestAcknowledged</a>(const std::shared_ptr&lt; avsCommon::avs::MessageRequest &gt; &amp;request)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a155c7f0e9d013cd86784a351f051bf1e">onMessageRequestFinished</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a39c7f4400cb76d52c3daf48dceda2447">onMessageRequestSent</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a334f32768292e0c408cda424c0942bd0">onMessageRequestSent</a>(const std::shared_ptr&lt; avsCommon::avs::MessageRequest &gt; &amp;request)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a4a3e76dec4268e3b5e288c0a0c1be716">onMessageRequestTimeout</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#a382d5e1015899d964ac7af0ea0d89c88">onPingRequestAcknowledged</a>(bool success)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html#aaa7e71de6d4408255987b919e78fc2a3">onPingTimeout</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html">alexaClientSDK::acl::ExchangeHandlerContextInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
@@ -89,7 +89,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

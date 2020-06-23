@@ -1,41 +1,49 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/AlertObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alerts/include/Alerts/AlertObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="2446,5,2616,71"/>
-<area shape="rect" id="node2" href="$_alert_8h.html" title=" " alt="" coords="1536,119,1688,184"/>
-<area shape="rect" id="node9" href="$_alerts_capability_agent_8h.html" title=" " alt="" coords="1900,459,2063,524"/>
-<area shape="rect" id="node23" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2545,579,2717,631"/>
-<area shape="rect" id="node28" href="$_alert_scheduler_8h.html" title=" " alt="" coords="2191,345,2343,411"/>
-<area shape="rect" id="node36" href="$_test_alert_observer_8h.html" title=" " alt="" coords="2657,125,2866,177"/>
-<area shape="rect" id="node38" href="$_u_i_manager_8h.html" title=" " alt="" coords="2891,125,3065,177"/>
-<area shape="rect" id="node3" href="$_alarm_8h.html" title=" " alt="" coords="463,232,615,297"/>
-<area shape="rect" id="node5" href="$_alert_8cpp.html" title=" " alt="" coords="5,352,158,404"/>
-<area shape="rect" id="node24" href="$_reminder_8h.html" title=" " alt="" coords="937,345,1090,411"/>
-<area shape="rect" id="node27" href="$_alert_storage_interface_8h.html" title=" " alt="" coords="1641,232,1853,297"/>
-<area shape="rect" id="node32" href="$_capability_agents_2_alerts_2include_2_alerts_2_timer_8h.html" title=" " alt="" coords="1423,345,1575,411"/>
-<area shape="rect" id="node35" href="$_alert_test_8cpp.html" title=" " alt="" coords="1951,239,2116,291"/>
-<area shape="rect" id="node4" href="$_alarm_8cpp.html" title=" " alt="" coords="405,352,558,404"/>
-<area shape="rect" id="node6" href="$_alerts_capability_agent_8cpp.html" title=" " alt="" coords="1040,572,1217,637"/>
-<area shape="rect" id="node7" href="$_s_q_lite_alert_storage_8cpp.html" title=" " alt="" coords="1121,459,1324,524"/>
-<area shape="rect" id="node8" href="$_alarm_alert_test_8cpp.html" title=" " alt="" coords="182,352,382,404"/>
-<area shape="rect" id="node10" href="$_default_client_8h.html" title=" " alt="" coords="1849,572,2077,637"/>
-<area shape="rect" id="node21" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="2306,572,2521,637"/>
-<area shape="rect" id="node22" href="$_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="2101,572,2281,637"/>
-<area shape="rect" id="node11" href="$_default_client_8cpp.html" title=" " alt="" coords="2106,685,2334,737"/>
-<area shape="rect" id="node12" href="$_interaction_manager_8h.html" title=" " alt="" coords="2261,785,2484,837"/>
-<area shape="rect" id="node19" href="$_keyword_observer_8h.html" title=" " alt="" coords="1868,685,2082,737"/>
-<area shape="rect" id="node13" href="$_user_input_manager_8h.html" title=" " alt="" coords="2236,885,2455,937"/>
-<area shape="rect" id="node18" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="2478,885,2685,937"/>
-<area shape="rect" id="node14" href="$_sample_application_8h.html" title=" " alt="" coords="2199,985,2418,1037"/>
-<area shape="rect" id="node17" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="2442,985,2644,1037"/>
-<area shape="rect" id="node15" href="$main_8cpp.html" title=" " alt="" coords="2266,1085,2465,1124"/>
-<area shape="rect" id="node16" href="$_sample_application_8cpp.html" title=" " alt="" coords="1963,1085,2243,1124"/>
-<area shape="rect" id="node20" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="1849,792,2125,831"/>
-<area shape="rect" id="node25" href="$_reminder_8cpp.html" title=" " alt="" coords="930,465,1097,517"/>
-<area shape="rect" id="node26" href="$_reminder_alert_test_8cpp.html" title=" " alt="" coords="633,465,856,517"/>
-<area shape="rect" id="node31" href="$_s_q_lite_alert_storage_8h.html" title=" " alt="" coords="1624,345,1825,411"/>
-<area shape="rect" id="node29" href="$_alert_scheduler_8cpp.html" title=" " alt="" coords="2386,465,2582,517"/>
-<area shape="rect" id="node30" href="$_alert_scheduler_test_8cpp.html" title=" " alt="" coords="2137,465,2362,517"/>
-<area shape="rect" id="node33" href="$_capability_agents_2_alerts_2src_2_timer_8cpp.html" title=" " alt="" coords="1623,465,1775,517"/>
-<area shape="rect" id="node34" href="$_timer_alert_test_8cpp.html" title=" " alt="" coords="1400,465,1598,517"/>
-<area shape="rect" id="node37" href="$_test_alert_observer_8cpp.html" title=" " alt="" coords="2709,239,2865,291"/>
-<area shape="rect" id="node39" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="2940,245,3175,284"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Alerts/acsdkAlertsInterfaces/include/acsdkAlertsInterfaces/AlertObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Alerts/acsdkAlertsInterfaces/include/acsdkAlertsInterfaces/AlertObserverInterface.h">
+<area shape="rect" id="node2" href="$_device_property_aggregator_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Diagnostics/DevicePropertyAggregatorInterface.h" alt="" coords="819,376,1134,447"/>
+<area shape="rect" id="node19" href="$_device_property_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/test\l/DevicePropertyAggregatorTest.cpp" alt="" coords="5,621,236,677"/>
+<area shape="rect" id="node20" href="$_alert_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Alert.h" alt="" coords="2118,139,2331,209"/>
+<area shape="rect" id="node27" href="$_alerts_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/AlertsCapabilityAgent.h" alt="" coords="1626,495,1839,565"/>
+<area shape="rect" id="node30" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="2876,621,3048,677"/>
+<area shape="rect" id="node35" href="$_alert_scheduler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/AlertScheduler.h" alt="" coords="1287,376,1501,447"/>
+<area shape="rect" id="node43" href="$_test_alert_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestAlertObserver.h" alt="" coords="3114,146,3322,202"/>
+<area shape="rect" id="node45" href="$_u_i_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UIManager.h" alt="" coords="851,732,1023,788"/>
+<area shape="rect" id="node3" href="$_diagnostics_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h" alt="" coords="820,495,1061,565"/>
+<area shape="rect" id="node17" href="$_device_property_aggregator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/include\l/Diagnostics/DevicePropertyAggregator.h" alt="" coords="345,502,608,558"/>
+<area shape="rect" id="node4" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="1390,613,1617,684"/>
+<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1385,836,1603,892"/>
+<area shape="rect" id="node8" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1033,1044,1249,1100"/>
+<area shape="rect" id="node15" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="489,621,694,677"/>
+<area shape="rect" id="node5" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1405,732,1634,788"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="1659,732,1871,788"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1553,940,1768,996"/>
+<area shape="rect" id="node12" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1323,940,1529,996"/>
+<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1560,1044,1761,1100"/>
+<area shape="rect" id="node9" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1042,1148,1239,1189"/>
+<area shape="rect" id="node10" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1565,1148,1842,1189"/>
+<area shape="rect" id="node14" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="1628,843,1901,885"/>
+<area shape="rect" id="node16" href="$_s_d_k_diagnostics_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SDKDiagnostics.cpp" alt="" coords="427,739,694,781"/>
+<area shape="rect" id="node18" href="$_device_property_aggregator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/src\l/DevicePropertyAggregator.cpp" alt="" coords="260,621,464,677"/>
+<area shape="rect" id="node21" href="$_alarm_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Alarm.h" alt="" coords="2373,257,2586,328"/>
+<area shape="rect" id="node23" href="$_alert_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Alert.cpp" alt="" coords="2906,383,3079,439"/>
+<area shape="rect" id="node31" href="$_reminder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Reminder.h" alt="" coords="1863,376,2077,447"/>
+<area shape="rect" id="node34" href="$_alert_storage_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Storage/AlertStorageInterface.h" alt="" coords="1575,257,1789,328"/>
+<area shape="rect" id="node39" href="$capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_timer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Timer.h" alt="" coords="3103,376,3317,447"/>
+<area shape="rect" id="node42" href="$_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertTest.cpp" alt="" coords="2610,265,2813,321"/>
+<area shape="rect" id="node22" href="$_alarm_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Alarm.cpp" alt="" coords="2389,383,2569,439"/>
+<area shape="rect" id="node24" href="$_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/AlertsCapability\lAgent.cpp" alt="" coords="2163,613,2377,684"/>
+<area shape="rect" id="node25" href="$_s_q_lite_alert_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Storage\l/SQLiteAlertStorage.cpp" alt="" coords="2619,495,2785,565"/>
+<area shape="rect" id="node26" href="$_alarm_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlarmAlertTest.cpp" alt="" coords="2594,383,2831,439"/>
+<area shape="rect" id="node28" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="1641,613,1859,684"/>
+<area shape="rect" id="node29" href="$_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="1883,613,2100,684"/>
+<area shape="rect" id="node32" href="$_reminder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Reminder.cpp" alt="" coords="1914,502,2117,558"/>
+<area shape="rect" id="node33" href="$_reminder_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/ReminderAlert\lTest.cpp" alt="" coords="2141,495,2349,565"/>
+<area shape="rect" id="node38" href="$_s_q_lite_alert_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Storage/SQLiteAlertStorage.h" alt="" coords="2151,376,2365,447"/>
+<area shape="rect" id="node36" href="$_alert_scheduler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/AlertScheduler.cpp" alt="" coords="1085,502,1316,558"/>
+<area shape="rect" id="node37" href="$_alert_scheduler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertScheduler\lTest.cpp" alt="" coords="1341,495,1551,565"/>
+<area shape="rect" id="node40" href="$capabilities_2_alerts_2acsdk_alerts_2src_2_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Timer.cpp" alt="" coords="3129,502,3307,558"/>
+<area shape="rect" id="node41" href="$_timer_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/TimerAlertTest.cpp" alt="" coords="2868,502,3104,558"/>
+<area shape="rect" id="node44" href="$_test_alert_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/TestAlertObserver.cpp" alt="" coords="3139,265,3297,321"/>
+<area shape="rect" id="node46" href="$_sample_application_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplicationComponent.h" alt="" coords="1078,836,1361,892"/>
+<area shape="rect" id="node47" href="$_sample_application_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication\lComponent.cpp" alt="" coords="916,940,1168,996"/>
+<area shape="rect" id="node48" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="820,843,1053,885"/>
 </map>

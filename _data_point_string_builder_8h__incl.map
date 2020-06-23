@@ -1,7 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/DataPointStringBuilder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/DataPointStringBuilder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,222,71"/>
-<area shape="rect" id="node2" href="$_data_point_8h.html" title=" " alt="" coords="25,119,203,157"/>
-<area shape="rect" id="node3" title=" " alt="" coords="18,212,71,237"/>
-<area shape="rect" id="node4" href="$_data_type_8h.html" title=" " alt="" coords="96,205,273,244"/>
-<area shape="rect" id="node5" title=" " alt="" coords="148,292,221,317"/>
+<area shape="rect" id="node2" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="23,124,203,165"/>
+<area shape="rect" id="node4" href="$_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="94,213,274,255"/>
 </map>

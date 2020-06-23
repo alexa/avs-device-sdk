@@ -1,52 +1,30 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/a4btest/RevokeAuthorizationHandlerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/System/a4btest/RevokeAuthorizationHandlerTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2251,5,2495,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="3173,892,3235,917"/>
-<area shape="rect" id="node3" title=" " alt="" coords="42,272,171,297"/>
-<area shape="rect" id="node4" title=" " alt="" coords="194,272,254,297"/>
-<area shape="rect" id="node5" title=" " alt="" coords="2069,119,2163,144"/>
-<area shape="rect" id="node6" title=" " alt="" coords="2187,119,2336,144"/>
-<area shape="rect" id="node7" href="$_directive_sequencer_8h.html" title=" " alt="" coords="1283,119,1469,144"/>
-<area shape="rect" id="node40" href="$_mock_attachment_manager_8h.html" title=" " alt="" coords="2961,539,3162,577"/>
-<area shape="rect" id="node42" href="$_message_request_8h.html" title=" " alt="" coords="2534,459,2783,484"/>
-<area shape="rect" id="node46" href="$_mock_exception_encountered_sender_8h.html" title=" " alt="" coords="2462,359,2706,397"/>
-<area shape="rect" id="node47" href="$_mock_revoke_authorization_observer_8h.html" title=" " alt="" coords="2857,265,3103,304"/>
-<area shape="rect" id="node49" href="$_revoke_authorization_handler_8h.html" title=" " alt="" coords="2172,265,2364,304"/>
-<area shape="rect" id="node8" title=" " alt="" coords="1347,272,1405,297"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1692,719,1761,744"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1507,805,1565,831"/>
-<area shape="rect" id="node11" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2006,452,2271,491"/>
-<area shape="rect" id="node14" href="$_directive_sequencer_interface_8h.html" title=" " alt="" coords="1552,359,1757,397"/>
-<area shape="rect" id="node28" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="1298,359,1478,397"/>
-<area shape="rect" id="node31" href="$_directive_processor_8h.html" title=" " alt="" coords="494,192,676,217"/>
-<area shape="rect" id="node35" href="$_directive_router_8h.html" title=" " alt="" coords="759,272,921,297"/>
-<area shape="rect" id="node12" href="$_exception_error_type_8h.html" title=" " alt="" coords="2027,539,2250,577"/>
-<area shape="rect" id="node13" title=" " alt="" coords="2102,632,2175,657"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1964,805,2018,831"/>
-<area shape="rect" id="node16" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="1343,545,1566,571"/>
-<area shape="rect" id="node24" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="1261,452,1451,491"/>
-<area shape="rect" id="node27" href="$_requires_shutdown_8h.html" title=" " alt="" coords="979,625,1167,664"/>
-<area shape="rect" id="node17" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="2828,625,3041,664"/>
-<area shape="rect" id="node18" href="$_attachment_8h.html" title=" " alt="" coords="2781,712,2982,751"/>
-<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title=" " alt="" coords="2739,799,2941,837"/>
-<area shape="rect" id="node23" href="$_attachment_writer_8h.html" title=" " alt="" coords="2965,799,3166,837"/>
-<area shape="rect" id="node22" href="$_reader_policy_8h.html" title=" " alt="" coords="2690,885,2852,924"/>
-<area shape="rect" id="node20" title=" " alt="" coords="2955,892,3019,917"/>
-<area shape="rect" id="node21" title=" " alt="" coords="2119,892,2188,917"/>
-<area shape="rect" id="node25" href="$_directive_handler_configuration_8h.html" title=" " alt="" coords="696,539,928,577"/>
-<area shape="rect" id="node26" title=" " alt="" coords="677,632,792,657"/>
-<area shape="rect" id="node29" href="$_metric_event_8h.html" title=" " alt="" coords="1007,452,1185,491"/>
-<area shape="rect" id="node30" title=" " alt="" coords="1895,545,1953,571"/>
-<area shape="rect" id="node32" title=" " alt="" coords="479,272,531,297"/>
-<area shape="rect" id="node33" title=" " alt="" coords="555,272,634,297"/>
-<area shape="rect" id="node34" title=" " alt="" coords="480,365,520,391"/>
-<area shape="rect" id="node36" title=" " alt="" coords="1227,365,1274,391"/>
-<area shape="rect" id="node37" href="$_capability_tag_8h.html" title=" " alt="" coords="570,712,763,751"/>
-<area shape="rect" id="node38" href="$_handler_and_policy_8h.html" title=" " alt="" coords="999,359,1204,397"/>
-<area shape="rect" id="node39" href="$_metric_event_builder_8h.html" title=" " alt="" coords="798,359,975,397"/>
-<area shape="rect" id="node41" title=" " alt="" coords="3219,632,3333,657"/>
-<area shape="rect" id="node43" title=" " alt="" coords="2826,545,2886,571"/>
-<area shape="rect" id="node44" title=" " alt="" coords="2324,545,2431,571"/>
-<area shape="rect" id="node45" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="2455,539,2702,577"/>
-<area shape="rect" id="node48" href="$_revoke_authorization_observer_interface_8h.html" title=" " alt="" coords="2868,352,3071,404"/>
-<area shape="rect" id="node50" href="$_capability_agent_8h.html" title=" " alt="" coords="1882,359,2075,397"/>
+<area shape="rect" id="node7" href="$_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="1288,124,1475,151"/>
+<area shape="rect" id="node40" href="$_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="2962,556,3166,597"/>
+<area shape="rect" id="node42" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2532,474,2783,501"/>
+<area shape="rect" id="node46" href="$_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="2477,370,2718,411"/>
+<area shape="rect" id="node47" href="$_mock_revoke_authorization_observer_8h.html" title="AVSCommon/SDKInterfaces\l/MockRevokeAuthorizationObserver.h" alt="" coords="2857,273,3100,315"/>
+<area shape="rect" id="node49" href="$_revoke_authorization_handler_8h.html" title="System/RevokeAuthorization\lHandler.h" alt="" coords="2193,273,2385,315"/>
+<area shape="rect" id="node11" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2014,467,2274,508"/>
+<area shape="rect" id="node14" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1559,370,1761,411"/>
+<area shape="rect" id="node28" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1303,370,1483,411"/>
+<area shape="rect" id="node31" href="$_directive_processor_8h.html" title="ADSL/DirectiveProcessor.h" alt="" coords="494,199,677,225"/>
+<area shape="rect" id="node35" href="$_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="760,281,923,307"/>
+<area shape="rect" id="node12" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2033,556,2255,597"/>
+<area shape="rect" id="node16" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1345,563,1572,590"/>
+<area shape="rect" id="node24" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1264,467,1456,508"/>
+<area shape="rect" id="node27" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="980,645,1169,687"/>
+<area shape="rect" id="node17" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="2833,645,3044,687"/>
+<area shape="rect" id="node18" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2783,735,2987,776"/>
+<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2739,824,2943,865"/>
+<area shape="rect" id="node23" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="2967,824,3171,865"/>
+<area shape="rect" id="node22" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2676,913,2841,955"/>
+<area shape="rect" id="node25" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="696,556,931,597"/>
+<area shape="rect" id="node29" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1009,467,1189,508"/>
+<area shape="rect" id="node37" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="571,735,765,776"/>
+<area shape="rect" id="node38" href="$_handler_and_policy_8h.html" title="AVSCommon/AVS/HandlerAnd\lPolicy.h" alt="" coords="1003,370,1208,411"/>
+<area shape="rect" id="node39" href="$_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="798,370,978,411"/>
+<area shape="rect" id="node45" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2457,556,2700,597"/>
+<area shape="rect" id="node48" href="$_revoke_authorization_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RevokeAuthorizationObserver\lInterface.h" alt="" coords="2868,363,3068,419"/>
+<area shape="rect" id="node50" href="$_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1887,370,2081,411"/>
 </map>

@@ -25,6 +25,7 @@ var searchData=
   ['acsdk_5fmetric_5fmsg',['ACSDK_METRIC_MSG',['../_metrics_8h.html#afd20822dff70cc0a7186a38b32894968',1,'Metrics.h']]],
   ['acsdk_5fplayback_5fbutton_5fto_5fstring',['ACSDK_PLAYBACK_BUTTON_TO_STRING',['../_playback_buttons_8h.html#a2b73ea1f4517c10caca2c90137df759d',1,'PlaybackButtons.h']]],
   ['acsdk_5fplayback_5ftoggle_5fto_5fstring',['ACSDK_PLAYBACK_TOGGLE_TO_STRING',['../_playback_buttons_8h.html#a1c0a314e49fc60a04b9d24d0d746b9ba',1,'PlaybackButtons.h']]],
+  ['acsdk_5fstatic_5fassert_5fis_5fsame',['ACSDK_STATIC_ASSERT_IS_SAME',['../_utils_8h.html#a0863044a5e7934c389b330b05c6a70cc',1,'Utils.h']]],
   ['acsdk_5fstringify',['ACSDK_STRINGIFY',['../_logger_8h.html#a25c4f632a13aad8bca23da0cedee26f6',1,'Logger.h']]],
   ['acsdk_5fstringify_5finner',['ACSDK_STRINGIFY_INNER',['../_logger_8h.html#a4f3ff6ca18640f57bac6c106572081c5',1,'Logger.h']]],
   ['acsdk_5fwarn',['ACSDK_WARN',['../_logger_8h.html#adc4fde7e853612078e9424c45794e18a',1,'Logger.h']]],

@@ -1,11 +1,5 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AudioPlayerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AudioPlayerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,246,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="32,205,94,231"/>
-<area shape="rect" id="node3" title=" " alt="" coords="91,125,160,151"/>
-<area shape="rect" id="node4" href="$_audio_player_observer_interface_8h.html" title=" " alt="" coords="185,119,400,157"/>
-<area shape="rect" id="node5" title=" " alt="" coords="189,279,243,304"/>
-<area shape="rect" id="node6" href="$_player_activity_8h.html" title=" " alt="" coords="432,205,656,231"/>
-<area shape="rect" id="node9" href="$_play_requestor_8h.html" title=" " alt="" coords="176,205,408,231"/>
-<area shape="rect" id="node7" title=" " alt="" coords="466,279,531,304"/>
-<area shape="rect" id="node8" title=" " alt="" coords="555,279,624,304"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/AudioPlayerInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/AudioPlayerInterface.h">
+<area shape="rect" id="node4" href="$_audio_player_observer_interface_8h.html" title="acsdkAudioPlayerInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="181,139,392,180"/>
+<area shape="rect" id="node6" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="428,228,657,255"/>
+<area shape="rect" id="node9" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="169,228,404,255"/>
 </map>

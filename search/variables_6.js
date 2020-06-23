@@ -44,7 +44,7 @@ var searchData=
   ['gateway_5furl_5fkey',['GATEWAY_URL_KEY',['../namespacealexa_client_s_d_k_1_1avs_gateway_manager_1_1storage.html#a5d2db5b6f029a8279000e0ae7a088434',1,'alexaClientSDK::avsGatewayManager::storage']]],
   ['generators',['generators',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_report_state_handler_test.html#aad867b549fd2f4baa423cfc48dfdee15',1,'alexaClientSDK::capabilityAgents::system::test::ReportStateHandlerTest']]],
   ['globaltimezone',['globalTimezone',['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#aec0e0f7fe4f376fbd10985f0e87b43f4',1,'alexaClientSDK::settings::test']]],
-  ['goodstreamfunction',['goodStreamFunction',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1test.html#a062816e135f9fcad8d6a9db54cf8d4a5',1,'alexaClientSDK::capabilityAgents::notifications::test']]],
+  ['goodstreamfunction',['goodStreamFunction',['../namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#afed45bddd76c037255473689f97f0bc7',1,'alexaClientSDK::acsdkNotifications::test']]],
   ['grace_5fperiod',['GRACE_PERIOD',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing.html#ad33acd5e5415680a8a7b98c0c607b8a7',1,'alexaClientSDK::avsCommon::utils::timing']]],
   ['gst_5fcontrol_5fvolume_5ffactor',['GST_CONTROL_VOLUME_FACTOR',['../namespacealexa_client_s_d_k_1_1media_player.html#aa73a2416d45a7a3758c62bd6837ed035',1,'alexaClientSDK::mediaPlayer']]],
   ['gst_5fset_5fvolume_5fmax',['GST_SET_VOLUME_MAX',['../namespacealexa_client_s_d_k_1_1media_player.html#a7c950875739ab43730e265208955027f',1,'alexaClientSDK::mediaPlayer']]],

@@ -1,39 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/src/Storage/AVSGatewayManagerStorage.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/src/Storage/AVSGatewayManagerStorage.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="955,5,1183,71"/>
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_storage_8h.html" title=" " alt="" coords="829,292,1043,331"/>
-<area shape="rect" id="node17" href="$_j_s_o_n_generator_8h.html" title=" " alt="" coords="318,119,488,157"/>
-<area shape="rect" id="node22" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1046,119,1216,157"/>
-<area shape="rect" id="node25" href="$_logger_8h.html" title=" " alt="" coords="1829,292,2005,331"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1499,639,1568,664"/>
-<area shape="rect" id="node4" href="$_misc_storage_interface_8h.html" title=" " alt="" coords="830,379,1042,417"/>
-<area shape="rect" id="node7" href="$_configuration_node_8h.html" title=" " alt="" coords="1268,379,1482,417"/>
-<area shape="rect" id="node15" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title=" " alt="" coords="541,379,806,417"/>
-<area shape="rect" id="node5" title=" " alt="" coords="969,559,1023,584"/>
-<area shape="rect" id="node6" title=" " alt="" coords="793,472,908,497"/>
-<area shape="rect" id="node8" title=" " alt="" coords="1644,472,1706,497"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1257,472,1322,497"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1460,559,1532,584"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1562,472,1620,497"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1346,472,1385,497"/>
-<area shape="rect" id="node13" title=" " alt="" coords="2226,639,2284,664"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1034,472,1182,497"/>
-<area shape="rect" id="node16" href="$_gateway_verify_state_8h.html" title=" " alt="" coords="560,465,768,504"/>
-<area shape="rect" id="node18" title=" " alt="" coords="701,212,761,237"/>
-<area shape="rect" id="node19" title=" " alt="" coords="5,212,88,237"/>
-<area shape="rect" id="node20" title=" " alt="" coords="113,212,269,237"/>
-<area shape="rect" id="node21" title=" " alt="" coords="292,212,414,237"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1168,212,1216,237"/>
-<area shape="rect" id="node24" href="$_logger_utils_8h.html" title=" " alt="" coords="1481,205,1657,244"/>
-<area shape="rect" id="node26" title=" " alt="" coords="1980,385,2041,411"/>
-<area shape="rect" id="node27" title=" " alt="" coords="1980,472,2049,497"/>
-<area shape="rect" id="node28" href="$_level_8h.html" title=" " alt="" coords="1729,465,1905,504"/>
-<area shape="rect" id="node29" href="$_log_entry_8h.html" title=" " alt="" coords="2116,379,2292,417"/>
-<area shape="rect" id="node36" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1658,379,1855,417"/>
-<area shape="rect" id="node37" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1556,552,1732,591"/>
-<area shape="rect" id="node30" title=" " alt="" coords="2125,472,2201,497"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2425,472,2503,497"/>
-<area shape="rect" id="node32" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2225,465,2401,504"/>
-<area shape="rect" id="node33" title=" " alt="" coords="2279,559,2348,584"/>
-<area shape="rect" id="node34" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1756,552,1932,591"/>
-<area shape="rect" id="node35" title=" " alt="" coords="1804,639,1884,664"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_storage_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorage.h" alt="" coords="827,303,1037,344"/>
+<area shape="rect" id="node17" href="$_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="315,124,488,165"/>
+<area shape="rect" id="node22" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1039,124,1212,165"/>
+<area shape="rect" id="node25" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1823,303,1999,344"/>
+<area shape="rect" id="node4" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="827,392,1037,433"/>
+<area shape="rect" id="node7" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1262,392,1477,433"/>
+<area shape="rect" id="node15" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorageInterface.h" alt="" coords="539,392,802,433"/>
+<area shape="rect" id="node16" href="$_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="559,481,766,523"/>
+<area shape="rect" id="node24" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1477,213,1653,255"/>
+<area shape="rect" id="node28" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1723,481,1899,523"/>
+<area shape="rect" id="node29" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2109,392,2285,433"/>
+<area shape="rect" id="node36" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1654,392,1847,433"/>
+<area shape="rect" id="node37" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1549,571,1725,612"/>
+<area shape="rect" id="node32" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2216,481,2392,523"/>
+<area shape="rect" id="node34" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1749,571,1925,612"/>
 </map>

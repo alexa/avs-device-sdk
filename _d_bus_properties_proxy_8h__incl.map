@@ -1,14 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusPropertiesProxy.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusPropertiesProxy.h">
-<area shape="rect" id="node1" title=" " alt="" coords="331,5,573,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="667,412,736,437"/>
-<area shape="rect" id="node3" title=" " alt="" coords="89,412,143,437"/>
-<area shape="rect" id="node4" href="$_d_bus_proxy_8h.html" title=" " alt="" coords="403,119,501,144"/>
-<area shape="rect" id="node5" href="$_blue_z_utils_8h.html" title=" " alt="" coords="343,192,436,217"/>
-<area shape="rect" id="node12" title=" " alt="" coords="459,192,573,217"/>
-<area shape="rect" id="node6" href="$_managed_g_variant_8h.html" title=" " alt="" coords="435,339,613,364"/>
-<area shape="rect" id="node8" href="$_managed_g_error_8h.html" title=" " alt="" coords="93,339,259,364"/>
-<area shape="rect" id="node9" href="$_g_variant_tuple_reader_8h.html" title=" " alt="" coords="415,265,614,291"/>
-<area shape="rect" id="node11" href="$_g_variant_map_reader_8h.html" title=" " alt="" coords="200,265,392,291"/>
-<area shape="rect" id="node7" title=" " alt="" coords="373,412,445,437"/>
-<area shape="rect" id="node10" title=" " alt="" coords="333,339,411,364"/>
+<area shape="rect" id="node4" href="$_d_bus_proxy_8h.html" title="DBusProxy.h" alt="" coords="398,124,498,151"/>
+<area shape="rect" id="node5" href="$_blue_z_utils_8h.html" title="BlueZUtils.h" alt="" coords="337,199,431,225"/>
+<area shape="rect" id="node6" href="$_managed_g_variant_8h.html" title="BlueZ/ManagedGVariant.h" alt="" coords="434,348,609,375"/>
+<area shape="rect" id="node8" href="$_managed_g_error_8h.html" title="BlueZ/ManagedGError.h" alt="" coords="93,348,256,375"/>
+<area shape="rect" id="node9" href="$_g_variant_tuple_reader_8h.html" title="BlueZ/GVariantTupleReader.h" alt="" coords="413,273,609,300"/>
+<area shape="rect" id="node11" href="$_g_variant_map_reader_8h.html" title="BlueZ/GVariantMapReader.h" alt="" coords="199,273,388,300"/>
 </map>

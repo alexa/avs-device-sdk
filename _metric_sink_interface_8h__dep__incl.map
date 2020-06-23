@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="142,5,339,71"/>
-<area shape="rect" id="node2" href="$_metric_recorder_8h.html" title=" " alt="" coords="5,119,225,171"/>
-<area shape="rect" id="node4" href="$_sample_metric_sink_8h.html" title=" " alt="" coords="249,119,485,171"/>
-<area shape="rect" id="node3" href="$_metric_recorder_8cpp.html" title=" " alt="" coords="21,219,209,271"/>
-<area shape="rect" id="node5" href="$_sample_metric_sink_8cpp.html" title=" " alt="" coords="265,219,469,271"/>
+<area shape="rect" id="node2" href="$_metric_recorder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/MetricRecorder\l/include/Metrics/MetricRecorder.h" alt="" coords="5,124,224,180"/>
+<area shape="rect" id="node4" href="$_sample_metric_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/SampleMetricSink\l/include/Metrics/SampleMetricSink.h" alt="" coords="248,124,483,180"/>
+<area shape="rect" id="node3" href="$_metric_recorder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/MetricRecorder\l/src/MetricRecorder.cpp" alt="" coords="21,228,208,284"/>
+<area shape="rect" id="node5" href="$_sample_metric_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/SampleMetricSink\l/src/SampleMetricSink.cpp" alt="" coords="263,228,467,284"/>
 </map>

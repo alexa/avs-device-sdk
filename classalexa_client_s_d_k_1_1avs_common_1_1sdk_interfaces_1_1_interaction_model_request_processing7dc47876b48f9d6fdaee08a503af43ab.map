@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::InteractionModelRequestProcessingObserverInterface">
-<area shape="rect" id="node1" title="A directive observer for an InteractionModelCapabilityAgent." alt="" coords="5,33,249,85"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title=" " alt="" coords="297,5,507,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_mock_observer.html" title=" " alt="" coords="313,68,491,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="293,5,503,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_mock_observer.html" title="alexaClientSDK::capability\lAgents::interactionModel\l::test::MockObserver" alt="" coords="309,71,487,127"/>
 </map>

@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,75,202,127"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_interface.html" title=" " alt="" coords="269,5,466,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_media_player.html" title=" " alt="" coords="250,81,485,120"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title=" " alt="" coords="270,144,466,183"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::test::MockEqualizerInterface" alt="" coords="267,5,465,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_media_player.html" title="alexaClientSDK::mediaPlayer\l::android::AndroidSLESMediaPlayer" alt="" coords="251,86,481,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="269,151,463,193"/>
 </map>

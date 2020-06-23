@@ -1,13 +1,11 @@
 <map id="alexaClientSDK::capabilityAgents::equalizer::EqualizerCapabilityAgent" name="alexaClientSDK::capabilityAgents::equalizer::EqualizerCapabilityAgent">
-<area shape="rect" id="node1" title=" " alt="" coords="578,192,858,231"/>
-<area shape="rect" id="node2" title=" " alt="" coords="298,5,508,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_controller_listener_interface.html" title=" " alt="" coords="282,81,524,133"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title=" " alt="" coords="304,157,501,196"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title=" " alt="" coords="10,37,224,89"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title=" " alt="" coords="7,113,227,165"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title=" " alt="" coords="18,189,215,241"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title=" " alt="" coords="5,265,228,317"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title=" " alt="" coords="276,220,530,272"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="304,296,501,335"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title=" " alt="" coords="296,359,510,397"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_controller_listener_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::EqualizerControllerListenerInterface" alt="" coords="283,85,521,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityAgent" alt="" coords="303,166,501,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::DirectiveHandler\lInterface" alt="" coords="9,39,224,95"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ChannelObserver\lInterface" alt="" coords="7,119,226,175"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,199,215,255"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,279,228,335"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="276,232,528,288"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="303,313,501,354"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html" title="alexaClientSDK::registration\lManager::CustomerDataHandler" alt="" coords="297,378,507,419"/>
 </map>

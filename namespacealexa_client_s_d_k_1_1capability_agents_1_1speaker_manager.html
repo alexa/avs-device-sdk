@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -162,6 +162,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a18b0fbb623c22765693c76224c360f83"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a18b0fbb623c22765693c76224c360f83">SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY</a> = &quot;minUnmuteVolume&quot;</td></tr>
 <tr class="memdesc:a18b0fbb623c22765693c76224c360f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the minUnmuteVolume value.  <a href="#a18b0fbb623c22765693c76224c360f83">More...</a><br /></td></tr>
 <tr class="separator:a18b0fbb623c22765693c76224c360f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a1fed8d0395ddbdd15fc8dcecad068d06">SPEAKER_MANAGER_METRIC_PREFIX</a> = &quot;SPEAKER_MANAGER-&quot;</td></tr>
+<tr class="memdesc:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="mdescLeft">&#160;</td><td class="mdescRight">prefix for metrics emitted from the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> CA  <a href="#a1fed8d0395ddbdd15fc8dcecad068d06">More...</a><br /></td></tr>
+<tr class="separator:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad1e5526da4f88815d1f97dea9529602c"></a>
@@ -230,6 +233,15 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Handles a Metric event by creating and recording it. Failure to create or record the event results in an early return.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The <code>MetricRecorderInterface</code> which records Metric events. </td></tr>
+    <tr><td class="paramname">eventName</td><td>The name of the Metric event. </td></tr>
+    <tr><td class="paramname">count</td><td>Count of the metric that is emitted. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -603,6 +615,30 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a id="a1fed8d0395ddbdd15fc8dcecad068d06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fed8d0395ddbdd15fc8dcecad068d06">&#9670;&nbsp;</a></span>SPEAKER_MANAGER_METRIC_PREFIX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::speakerManager::SPEAKER_MANAGER_METRIC_PREFIX = &quot;SPEAKER_MANAGER-&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>prefix for metrics emitted from the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> CA </p>
+
+</div>
+</div>
 <a id="a1f83881f9acd476313c652f53b57d7cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f83881f9acd476313c652f53b57d7cc">&#9670;&nbsp;</a></span>SPEAKERMANAGER_CONFIGURATION_ROOT_KEY</h2>
 
@@ -751,7 +787,7 @@ template&lt;class T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

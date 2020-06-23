@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,6 +98,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_decoder.html">MockDecoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mock decoder.  <a href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_decoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_empty_attachment_reader.html">MockEmptyAttachmentReader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A mock AttachmentReader that mocks reading from an empty attachment (immediate EOF).  <a href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_empty_attachment_reader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html">MockObserver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mocks the media player observer.  <a href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html#details">More...</a><br /></td></tr>
@@ -295,6 +298,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a590a91be5abbb654fd95b3ce85447890"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a590a91be5abbb654fd95b3ce85447890">TEST</a> (FFmpegAttachmentInputControllerTest, test_readOk)</td></tr>
 <tr class="memdesc:a590a91be5abbb654fd95b3ce85447890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test read from attachment reader.  <a href="#a590a91be5abbb654fd95b3ce85447890">More...</a><br /></td></tr>
 <tr class="separator:a590a91be5abbb654fd95b3ce85447890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada21914baae77128f8cffeff5f928bd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ada21914baae77128f8cffeff5f928bd6">TEST</a> (FFmpegAttachmentInputControllerTest, test_getCurrentFormatContextOnEmptyInput)</td></tr>
+<tr class="memdesc:ada21914baae77128f8cffeff5f928bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test opening empty input from attachment reader.  <a href="#ada21914baae77128f8cffeff5f928bd6">More...</a><br /></td></tr>
+<tr class="separator:ada21914baae77128f8cffeff5f928bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ae2cace873345e65a6c664724601d6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a3ae2cace873345e65a6c664724601d6c">TEST</a> (FFmpegAttachmentInputControllerTest, test_readEof)</td></tr>
 <tr class="memdesc:a3ae2cace873345e65a6c664724601d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test read from stream until the end.  <a href="#a3ae2cace873345e65a6c664724601d6c">More...</a><br /></td></tr>
 <tr class="separator:a3ae2cace873345e65a6c664724601d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -404,9 +410,15 @@ Variables</h2></td></tr>
 <tr class="memitem:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ab05c55a045dc9cdf42f47de9db5da9eb">RAW_INPUT_CSTR</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1data.html#aed119ad49a66aeff2c845d1d453efba2">applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short_wav</a></td></tr>
 <tr class="memdesc:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">An input buffer with an mp3 file.  <a href="#ab05c55a045dc9cdf42f47de9db5da9eb">More...</a><br /></td></tr>
 <tr class="separator:ab05c55a045dc9cdf42f47de9db5da9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add8edada2da3980393924f8619a041d1"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#add8edada2da3980393924f8619a041d1">RAW_INPUT_DURATION</a> {2177}</td></tr>
+<tr class="memdesc:add8edada2da3980393924f8619a041d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The raw input duration in milli seconds.  <a href="#add8edada2da3980393924f8619a041d1">More...</a><br /></td></tr>
+<tr class="separator:add8edada2da3980393924f8619a041d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae351979889b6e19f110a72d91c19e4ed"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ae351979889b6e19f110a72d91c19e4ed">DEFAULT_MEDIA_PLAYER_STATE</a> = {std::chrono::milliseconds(0)}</td></tr>
 <tr class="memdesc:ae351979889b6e19f110a72d91c19e4ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default media player state for reporting all playback offsets.  <a href="#ae351979889b6e19f110a72d91c19e4ed">More...</a><br /></td></tr>
 <tr class="separator:ae351979889b6e19f110a72d91c19e4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac62cd672717d4d1f37dc9833b261cd66"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ac62cd672717d4d1f37dc9833b261cd66">MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE</a> = {<a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ab958728a0ebe38b7ae6716af5a9c8bab">MP3_INPUT_DURATION</a>}</td></tr>
+<tr class="memdesc:ac62cd672717d4d1f37dc9833b261cd66"><td class="mdescLeft">&#160;</td><td class="mdescRight">The finished media player state.  <a href="#ac62cd672717d4d1f37dc9833b261cd66">More...</a><br /></td></tr>
+<tr class="separator:ac62cd672717d4d1f37dc9833b261cd66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8581c8997122771964fbff7f40c92da3"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#a8581c8997122771964fbff7f40c92da3">inputsDirPath</a></td></tr>
 <tr class="memdesc:a8581c8997122771964fbff7f40c92da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The path to the input Dir containing the test audio files.  <a href="#a8581c8997122771964fbff7f40c92da3">More...</a><br /></td></tr>
 <tr class="separator:a8581c8997122771964fbff7f40c92da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1213,7 +1225,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af691bf31d3fef8fd394655c0868f66d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af691bf31d3fef8fd394655c0868f66d8">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af691bf31d3fef8fd394655c0868f66d8">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1243,7 +1255,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa358b66511f09741ff491400b1de4641"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa358b66511f09741ff491400b1de4641">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa358b66511f09741ff491400b1de4641">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1273,7 +1285,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae309d608bc251622aa990baa69a5212c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae309d608bc251622aa990baa69a5212c">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae309d608bc251622aa990baa69a5212c">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1303,7 +1315,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7a4e7d8fe61dcda5b76147254339f7e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a4e7d8fe61dcda5b76147254339f7e6">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a4e7d8fe61dcda5b76147254339f7e6">&#9670;&nbsp;</a></span>TEST() <span class="overload">[4/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1332,8 +1344,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a38f66b2de50222fac2b461c33e2d47a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38f66b2de50222fac2b461c33e2d47a1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">FFmpegStreamInputControllerTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_readRepeat&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test read with repeat on from a stream. </p>
+
+</div>
+</div>
 <a id="a40633520310ca8c99b1a91f76419a76a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40633520310ca8c99b1a91f76419a76a">&#9670;&nbsp;</a></span>TEST() <span class="overload">[5/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a40633520310ca8c99b1a91f76419a76a">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1363,7 +1405,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a603e66e688e48ddc52e50d49a338ac30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a603e66e688e48ddc52e50d49a338ac30">&#9670;&nbsp;</a></span>TEST() <span class="overload">[6/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a603e66e688e48ddc52e50d49a338ac30">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1392,38 +1434,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a38f66b2de50222fac2b461c33e2d47a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38f66b2de50222fac2b461c33e2d47a1">&#9670;&nbsp;</a></span>TEST() <span class="overload">[7/9]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST </td>
-          <td>(</td>
-          <td class="paramtype">FFmpegStreamInputControllerTest&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_readRepeat&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test read with repeat on from a stream. </p>
-
-</div>
-</div>
 <a id="a590a91be5abbb654fd95b3ce85447890"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a590a91be5abbb654fd95b3ce85447890">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a590a91be5abbb654fd95b3ce85447890">&#9670;&nbsp;</a></span>TEST() <span class="overload">[8/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1452,8 +1464,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ada21914baae77128f8cffeff5f928bd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada21914baae77128f8cffeff5f928bd6">&#9670;&nbsp;</a></span>TEST() <span class="overload">[9/10]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST </td>
+          <td>(</td>
+          <td class="paramtype">FFmpegAttachmentInputControllerTest&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_getCurrentFormatContextOnEmptyInput&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test opening empty input from attachment reader. </p>
+
+</div>
+</div>
 <a id="a3ae2cace873345e65a6c664724601d6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ae2cace873345e65a6c664724601d6c">&#9670;&nbsp;</a></span>TEST() <span class="overload">[9/9]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ae2cace873345e65a6c664724601d6c">&#9670;&nbsp;</a></span>TEST() <span class="overload">[10/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2232,38 +2274,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="acd79ead3e43b9b27013ea210eb883198"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd79ead3e43b9b27013ea210eb883198">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/59]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_createNullFactory&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test create with null factory. </p>
-
-</div>
-</div>
 <a id="a37878fbe29a492af6c389f79f5d0a704"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37878fbe29a492af6c389f79f5d0a704">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a37878fbe29a492af6c389f79f5d0a704">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2293,7 +2305,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a814620c2ab50d5186bff9b615a6a331f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a814620c2ab50d5186bff9b615a6a331f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a814620c2ab50d5186bff9b615a6a331f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2322,8 +2334,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aa23ea8d0b1203954091b994a71eb5c3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa23ea8d0b1203954091b994a71eb5c3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/59]</span></h2>
+<a id="acd79ead3e43b9b27013ea210eb883198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd79ead3e43b9b27013ea210eb883198">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2337,7 +2349,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_createNullEngine&#160;</td>
+          <td class="paramtype">test_createNullFactory&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2348,12 +2360,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Test create with null engine. </p>
+<p>Test create with null factory. </p>
 
 </div>
 </div>
 <a id="a0757020880ed2a29f4d395a4dbddab35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0757020880ed2a29f4d395a4dbddab35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0757020880ed2a29f4d395a4dbddab35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2383,7 +2395,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac9cd7a9c0c2467d8023a7ad23c5714ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9cd7a9c0c2467d8023a7ad23c5714ae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9cd7a9c0c2467d8023a7ad23c5714ae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2412,8 +2424,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a38b18125454f05a052650dd3739040f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38b18125454f05a052650dd3739040f1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/59]</span></h2>
+<a id="aa23ea8d0b1203954091b994a71eb5c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23ea8d0b1203954091b994a71eb5c3f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2427,7 +2439,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_bQMediaPlayer&#160;</td>
+          <td class="paramtype">test_createNullEngine&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2438,12 +2450,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Test buffer queue with media player. </p>
+<p>Test create with null engine. </p>
 
 </div>
 </div>
 <a id="a8bf30c19c9417c499cfb5cc77e48bd09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bf30c19c9417c499cfb5cc77e48bd09">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bf30c19c9417c499cfb5cc77e48bd09">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2473,7 +2485,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a35e0b18168eaa536a8db55b3feb6631c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35e0b18168eaa536a8db55b3feb6631c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a35e0b18168eaa536a8db55b3feb6631c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2499,6 +2511,36 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check that read with a buffer that is too small fails. </p>
+
+</div>
+</div>
+<a id="a38b18125454f05a052650dd3739040f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38b18125454f05a052650dd3739040f1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/59]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_bQMediaPlayer&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test buffer queue with media player. </p>
 
 </div>
 </div>
@@ -2532,38 +2574,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8651c619de14d52bf0897e827bdec90a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8651c619de14d52bf0897e827bdec90a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/59]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_bQRawMediaPlayer&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test buffer queue with media player and raw file. </p>
-
-</div>
-</div>
 <a id="a14332a57aae4c2080119c2b194199eee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14332a57aae4c2080119c2b194199eee">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a14332a57aae4c2080119c2b194199eee">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2593,7 +2605,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0fd5c32ad94ec187b0a25a926182e470"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fd5c32ad94ec187b0a25a926182e470">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fd5c32ad94ec187b0a25a926182e470">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2619,6 +2631,36 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test that the conversion from avs volume to device volume. </p>
+
+</div>
+</div>
+<a id="a8651c619de14d52bf0897e827bdec90a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8651c619de14d52bf0897e827bdec90a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/59]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_bQRawMediaPlayer&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test buffer queue with media player and raw file. </p>
 
 </div>
 </div>
@@ -2652,38 +2694,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a52426aba66061108df66a29653cf3251"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52426aba66061108df66a29653cf3251">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/59]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_firstReadTimeout&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test that media is played correct even if a timeout happens in the first read. </p>
-
-</div>
-</div>
 <a id="a39f9607519cbeba2deb284bbc852f33a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39f9607519cbeba2deb284bbc852f33a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a39f9607519cbeba2deb284bbc852f33a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2713,7 +2725,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7c39ab2f9403981bbbc68e0eaeed8ce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c39ab2f9403981bbbc68e0eaeed8ce7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c39ab2f9403981bbbc68e0eaeed8ce7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2739,6 +2751,36 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check that create fail if the callback function is missing. </p>
+
+</div>
+</div>
+<a id="a52426aba66061108df66a29653cf3251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52426aba66061108df66a29653cf3251">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/59]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_firstReadTimeout&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test that media is played correct even if a timeout happens in the first read. </p>
 
 </div>
 </div>
@@ -2980,38 +3022,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="acb2b6d436077c5518f20d41b000a38e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb2b6d436077c5518f20d41b000a38e5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/59]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_resumeMediaPlayer&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test media player pause / resume. </p>
-
-</div>
-</div>
 <a id="a4b8a234131a5464ca6aef251a24fdee9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b8a234131a5464ca6aef251a24fdee9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/59]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b8a234131a5464ca6aef251a24fdee9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/59]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3037,6 +3049,36 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test that the buffer queue emits an error event when the decoder fails. </p>
+
+</div>
+</div>
+<a id="acb2b6d436077c5518f20d41b000a38e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb2b6d436077c5518f20d41b000a38e5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/59]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::mediaPlayer::android::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_android_s_l_e_s_media_player_test.html">AndroidSLESMediaPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_resumeMediaPlayer&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test media player pause / resume. </p>
 
 </div>
 </div>
@@ -3868,6 +3910,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ac62cd672717d4d1f37dc9833b261cd66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac62cd672717d4d1f37dc9833b261cd66">&#9670;&nbsp;</a></span>MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">MediaPlayerState</a> alexaClientSDK::mediaPlayer::android::test::MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE = {<a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android_1_1test.html#ab958728a0ebe38b7ae6716af5a9c8bab">MP3_INPUT_DURATION</a>}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The finished media player state. </p>
+
+</div>
+</div>
 <a id="a1386c2e62db0c7d92b7d7255a4ed54de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1386c2e62db0c7d92b7d7255a4ed54de">&#9670;&nbsp;</a></span>MP3_INPUT_SIZE</h2>
 
@@ -3989,6 +4055,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="add8edada2da3980393924f8619a041d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add8edada2da3980393924f8619a041d1">&#9670;&nbsp;</a></span>RAW_INPUT_DURATION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::chrono::milliseconds alexaClientSDK::mediaPlayer::android::test::RAW_INPUT_DURATION {2177}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The raw input duration in milli seconds. </p>
+
+</div>
+</div>
 <a id="a8ec6777f46a0fb925ac02c9a4b679a22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ec6777f46a0fb925ac02c9a4b679a22">&#9670;&nbsp;</a></span>RAW_INPUT_SIZE</h2>
 
@@ -4090,7 +4180,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

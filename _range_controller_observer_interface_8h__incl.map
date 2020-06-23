@@ -1,15 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RangeController/RangeControllerObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RangeController/RangeControllerObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="46,5,324,84"/>
-<area shape="rect" id="node2" href="$_alexa_state_change_cause_type_8h.html" title=" " alt="" coords="5,219,220,257"/>
-<area shape="rect" id="node4" href="$_time_point_8h.html" title=" " alt="" coords="171,132,345,171"/>
-<area shape="rect" id="node3" title=" " alt="" coords="116,312,170,337"/>
-<area shape="rect" id="node5" href="$_time_utils_8h.html" title=" " alt="" coords="295,219,469,257"/>
-<area shape="rect" id="node6" title=" " alt="" coords="206,392,268,417"/>
-<area shape="rect" id="node7" title=" " alt="" coords="582,392,635,417"/>
-<area shape="rect" id="node8" title=" " alt="" coords="479,312,560,337"/>
-<area shape="rect" id="node9" href="$_retry_timer_8h.html" title=" " alt="" coords="245,312,455,337"/>
-<area shape="rect" id="node11" href="$_safe_c_time_access_8h.html" title=" " alt="" coords="635,305,809,344"/>
-<area shape="rect" id="node10" title=" " alt="" coords="321,392,379,417"/>
-<area shape="rect" id="node12" title=" " alt="" coords="763,392,833,417"/>
-<area shape="rect" id="node13" title=" " alt="" coords="681,392,739,417"/>
+<area shape="rect" id="node2" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="5,228,219,269"/>
+<area shape="rect" id="node4" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="168,139,344,180"/>
+<area shape="rect" id="node5" href="$_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="293,228,469,269"/>
+<area shape="rect" id="node8" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="275,325,488,351"/>
+<area shape="rect" id="node10" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="563,317,739,359"/>
 </map>

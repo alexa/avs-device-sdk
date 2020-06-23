@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,25 +78,27 @@ Enumerations</h2></td></tr>
 <tr class="memitem:ac0bd21aabffbf134eb81295b65839893"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893">HTTPResponseCode</a> { <br />
 &#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a463a0b728cc6493c40e35f5b76140586">HTTP_RESPONSE_CODE_UNDEFINED</a> = 0, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893afaa07e0eaf611d0dd7840dd8f0916ea9">SUCCESS_OK</a> = 200, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aebb7d342c1c97b39b436a939c2dc79fb">SUCCESS_CREATED</a> = 201, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893ad6dab65966efb88b67b6f343e9a91eb6">SUCCESS_ACCEPTED</a> = 202, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a0643daa75744948ec070f2c562e19646">SUCCESS_NO_CONTENT</a> = 204, 
 <br />
-&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a9878ae465b32ca6266210d3590da9a5d">REDIRECTION_MULTIPLE_CHOICES</a> = 300, 
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a0643daa75744948ec070f2c562e19646">SUCCESS_NO_CONTENT</a> = 204, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aaa23aa1dbb63d5e6bba1d703fc83c167">SUCCESS_PARTIAL_CONTENT</a> = 206, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a9878ae465b32ca6266210d3590da9a5d">REDIRECTION_MULTIPLE_CHOICES</a> = 300, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893ae7e79700f6616a6cddf6cc8e3307cc79">REDIRECTION_MOVED_PERMANENTLY</a> = 301, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a570011c6ae6fa116348f4be73b1d37c9">REDIRECTION_FOUND</a> = 302, 
+<br />
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a570011c6ae6fa116348f4be73b1d37c9">REDIRECTION_FOUND</a> = 302, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a7808993bd0015e0c190e841dc1178117">REDIRECTION_SEE_ANOTHER</a> = 303, 
-<br />
-&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aa7daa9e9f239756c2379653ad032133f">REDIRECTION_TEMPORARY_REDIRECT</a> = 307, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aa7daa9e9f239756c2379653ad032133f">REDIRECTION_TEMPORARY_REDIRECT</a> = 307, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a1b05528c7f18fb59ba0e6d215ec61f07">REDIRECTION_PERMANENT_REDIRECT</a> = 308, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a954307fc3c2ca926752f3a67e789809c">CLIENT_ERROR_BAD_REQUEST</a> = 400, 
+<br />
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a954307fc3c2ca926752f3a67e789809c">CLIENT_ERROR_BAD_REQUEST</a> = 400, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893acf1db56f665e0d97ec9b357e1ea3492d">CLIENT_ERROR_FORBIDDEN</a> = 403, 
-<br />
-&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a3bc5ff2b23bc2011f811f2b6cc1ee4ef">SERVER_ERROR_INTERNAL</a> = 500, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a3bc5ff2b23bc2011f811f2b6cc1ee4ef">SERVER_ERROR_INTERNAL</a> = 500, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a576df1746698328b17c46cff0eaa2dbb">SERVER_ERROR_NOT_IMPLEMENTED</a> = 501, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a56bda4614e6390b35a7145348b030b1a">SUCCESS_START_CODE</a> = SUCCESS_OK, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a075fb3360ccb456b2421749664830f52">SUCCESS_END_CODE</a> = 299, 
 <br />
-&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aa07904509574c05019ca43d47ca92ebf">REDIRECTION_START_CODE</a> = REDIRECTION_MULTIPLE_CHOICES, 
+&#160;&#160;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a56bda4614e6390b35a7145348b030b1a">SUCCESS_START_CODE</a> = SUCCESS_OK, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a075fb3360ccb456b2421749664830f52">SUCCESS_END_CODE</a> = 299, 
+<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893aa07904509574c05019ca43d47ca92ebf">REDIRECTION_START_CODE</a> = REDIRECTION_MULTIPLE_CHOICES, 
 <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a5e76ae3d338ec98b33b450f905836d4e">REDIRECTION_END_CODE</a> = REDIRECTION_PERMANENT_REDIRECT
 <br />
  }</td></tr>
@@ -134,8 +136,12 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893afaa07e0eaf611d0dd7840dd8f0916ea9"></a>SUCCESS_OK&#160;</td><td class="fielddoc"><p>HTTP Success with response payload. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893aebb7d342c1c97b39b436a939c2dc79fb"></a>SUCCESS_CREATED&#160;</td><td class="fielddoc"><p>HTTP Success with new resource created. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893ad6dab65966efb88b67b6f343e9a91eb6"></a>SUCCESS_ACCEPTED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893a0643daa75744948ec070f2c562e19646"></a>SUCCESS_NO_CONTENT&#160;</td><td class="fielddoc"><p>HTTP Success with no response payload. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893aaa23aa1dbb63d5e6bba1d703fc83c167"></a>SUCCESS_PARTIAL_CONTENT&#160;</td><td class="fielddoc"><p>HTTP Success with partial content. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ac0bd21aabffbf134eb81295b65839893a9878ae465b32ca6266210d3590da9a5d"></a>REDIRECTION_MULTIPLE_CHOICES&#160;</td><td class="fielddoc"><p>Multiple redirection choices. </p>
 </td></tr>
@@ -389,7 +395,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

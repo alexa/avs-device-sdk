@@ -1,52 +1,35 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/test/SpeechSynthesizerIntegrationTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Integration/test/SpeechSynthesizerIntegrationTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2574,5,2777,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="1098,299,1160,324"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1756,299,1814,324"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1294,299,1359,324"/>
-<area shape="rect" id="node5" title=" " alt="" coords="2135,299,2190,324"/>
-<area shape="rect" id="node6" title=" " alt="" coords="4984,299,5056,324"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1674,299,1731,324"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2187,385,2241,411"/>
-<area shape="rect" id="node9" title=" " alt="" coords="3243,385,3359,411"/>
-<area shape="rect" id="node10" title=" " alt="" coords="5109,125,5224,151"/>
-<area shape="rect" id="node11" title=" " alt="" coords="5247,125,5341,151"/>
-<area shape="rect" id="node12" href="$_directive_sequencer_8h.html" title=" " alt="" coords="2734,125,2921,151"/>
-<area shape="rect" id="node18" href="$_directive_handler_interface_8h.html" title=" " alt="" coords="2942,292,3133,331"/>
-<area shape="rect" id="node19" href="$_directive_handler_result_interface_8h.html" title=" " alt="" coords="4177,379,4401,417"/>
-<area shape="rect" id="node25" href="$_message_interpreter_8h.html" title=" " alt="" coords="2452,125,2638,151"/>
-<area shape="rect" id="node27" href="$_focus_manager_8h.html" title=" " alt="" coords="4134,125,4294,151"/>
-<area shape="rect" id="node33" href="$_in_process_attachment_reader_8h.html" title=" " alt="" coords="5365,119,5571,157"/>
-<area shape="rect" id="node34" href="$_in_process_attachment_writer_8h.html" title=" " alt="" coords="5595,119,5797,157"/>
-<area shape="rect" id="node35" href="$_blocking_policy_8h.html" title=" " alt="" coords="4855,125,5086,151"/>
-<area shape="rect" id="node36" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1940,292,2110,331"/>
-<area shape="rect" id="node37" href="$_h_t_t_p_content_fetcher_factory_8h.html" title=" " alt="" coords="4703,292,4910,331"/>
-<area shape="rect" id="node38" href="$_log_entry_8h.html" title=" " alt="" coords="3390,119,3566,157"/>
-<area shape="rect" id="node39" href="$_mock_metric_recorder_8h.html" title=" " alt="" coords="4755,205,4932,244"/>
-<area shape="rect" id="node40" href="$_interaction_model_capability_agent_8h.html" title=" " alt="" coords="3843,119,4029,157"/>
-<area shape="rect" id="node41" href="$_speech_synthesizer_8h.html" title=" " alt="" coords="3182,119,3367,157"/>
-<area shape="rect" id="node42" href="$_a_c_l_test_context_8h.html" title=" " alt="" coords="127,125,321,151"/>
-<area shape="rect" id="node43" href="$_connection_status_observer_8h.html" title=" " alt="" coords="1032,205,1226,244"/>
-<area shape="rect" id="node44" href="$_client_message_handler_8h.html" title=" " alt="" coords="304,205,480,244"/>
-<area shape="rect" id="node45" href="$_observable_message_request_8h.html" title=" " alt="" coords="799,205,1009,244"/>
-<area shape="rect" id="node46" href="$_test_message_sender_8h.html" title=" " alt="" coords="504,212,724,237"/>
-<area shape="rect" id="node47" href="$_test_speech_synthesizer_observer_8h.html" title=" " alt="" coords="1299,205,1527,244"/>
-<area shape="rect" id="node48" href="$_test_directive_handler_8h.html" title=" " alt="" coords="1551,205,1715,244"/>
-<area shape="rect" id="node49" href="$_test_exception_encountered_sender_8h.html" title=" " alt="" coords="2044,205,2215,244"/>
-<area shape="rect" id="node50" href="$_test_media_player_8h.html" title=" " alt="" coords="2289,212,2486,237"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1383,299,1512,324"/>
-<area shape="rect" id="node14" title=" " alt="" coords="3404,465,3473,491"/>
-<area shape="rect" id="node15" title=" " alt="" coords="2656,299,2715,324"/>
-<area shape="rect" id="node16" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2366,292,2631,331"/>
-<area shape="rect" id="node17" href="$_directive_sequencer_interface_8h.html" title=" " alt="" coords="3172,205,3377,244"/>
-<area shape="rect" id="node20" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="3454,379,3633,417"/>
-<area shape="rect" id="node21" href="$_directive_processor_8h.html" title=" " alt="" coords="2915,212,3098,237"/>
-<area shape="rect" id="node23" href="$_directive_router_8h.html" title=" " alt="" coords="3309,299,3472,324"/>
-<area shape="rect" id="node22" title=" " alt="" coords="4114,385,4153,411"/>
-<area shape="rect" id="node24" title=" " alt="" coords="3383,385,3430,411"/>
-<area shape="rect" id="node26" href="$_message_observer_interface_8h.html" title=" " alt="" coords="405,292,602,331"/>
-<area shape="rect" id="node28" title=" " alt="" coords="3771,212,3847,237"/>
-<area shape="rect" id="node29" title=" " alt="" coords="3647,299,3755,324"/>
-<area shape="rect" id="node30" title=" " alt="" coords="4032,385,4090,411"/>
-<area shape="rect" id="node31" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="4082,292,4275,331"/>
-<area shape="rect" id="node32" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="4024,205,4215,244"/>
+<area shape="rect" id="node9" href="$_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="2643,221,2829,247"/>
+<area shape="rect" id="node15" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2792,392,2984,433"/>
+<area shape="rect" id="node22" href="$_message_interpreter_8h.html" title="ADSL/MessageInterpreter.h" alt="" coords="3093,221,3277,247"/>
+<area shape="rect" id="node24" href="$_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="4205,131,4363,158"/>
+<area shape="rect" id="node34" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1109,124,1315,165"/>
+<area shape="rect" id="node36" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="827,124,1031,165"/>
+<area shape="rect" id="node37" href="$_blocking_policy_8h.html" title="AVSCommon/AVS/BlockingPolicy.h" alt="" coords="4909,131,5144,158"/>
+<area shape="rect" id="node38" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="3635,392,3808,433"/>
+<area shape="rect" id="node39" href="$_h_t_t_p_content_fetcher_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HTTPContentFetcherFactory.h" alt="" coords="2326,392,2533,433"/>
+<area shape="rect" id="node40" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3595,303,3771,344"/>
+<area shape="rect" id="node41" href="$_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="4969,213,5149,255"/>
+<area shape="rect" id="node42" href="$_interaction_model_capability_agent_8h.html" title="InteractionModel/Interaction\lModelCapabilityAgent.h" alt="" coords="3642,213,3825,255"/>
+<area shape="rect" id="node43" href="$_speech_synthesizer_8h.html" title="SpeechSynthesizer/Speech\lSynthesizer.h" alt="" coords="2334,213,2517,255"/>
+<area shape="rect" id="node44" href="$_a_c_l_test_context_8h.html" title="Integration/ACLTestContext.h" alt="" coords="3161,399,3357,426"/>
+<area shape="rect" id="node45" href="$_observable_message_request_8h.html" title="Integration/ObservableMessage\lRequest.h" alt="" coords="297,303,503,344"/>
+<area shape="rect" id="node46" href="$_test_directive_handler_8h.html" title="Integration/TestDirective\lHandler.h" alt="" coords="1853,303,2019,344"/>
+<area shape="rect" id="node47" href="$_test_exception_encountered_sender_8h.html" title="Integration/TestException\lEncounteredSender.h" alt="" coords="2043,303,2213,344"/>
+<area shape="rect" id="node48" href="$_test_message_sender_8h.html" title="Integration/TestMessageSender.h" alt="" coords="968,310,1187,337"/>
+<area shape="rect" id="node49" href="$_test_speech_synthesizer_observer_8h.html" title="Integration/TestSpeechSynthesizer\lObserver.h" alt="" coords="528,303,755,344"/>
+<area shape="rect" id="node50" href="$_test_media_player_8h.html" title="Integration/TestMediaPlayer.h" alt="" coords="1633,310,1829,337"/>
+<area shape="rect" id="node13" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1991,392,2251,433"/>
+<area shape="rect" id="node14" href="$_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="3144,303,3347,344"/>
+<area shape="rect" id="node16" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="4493,481,4673,523"/>
+<area shape="rect" id="node17" href="$_directive_processor_8h.html" title="ADSL/DirectiveProcessor.h" alt="" coords="2745,310,2927,337"/>
+<area shape="rect" id="node20" href="$_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="4501,399,4664,426"/>
+<area shape="rect" id="node23" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1441,392,1636,433"/>
+<area shape="rect" id="node28" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="4939,481,5131,523"/>
+<area shape="rect" id="node29" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3933,392,4125,433"/>
+<area shape="rect" id="node30" href="$_channel_8h.html" title="AFML/Channel.h" alt="" coords="4153,310,4273,337"/>
+<area shape="rect" id="node31" href="$_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="4251,221,4461,247"/>
+<area shape="rect" id="node32" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1211,303,1405,344"/>
+<area shape="rect" id="node33" href="$_interrupt_model_8h.html" title="InterruptModel/Interrupt\lModel.h" alt="" coords="4789,392,4947,433"/>
+<area shape="rect" id="node35" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="779,303,944,344"/>
 </map>

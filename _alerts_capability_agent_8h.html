@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Alerts/include/Alerts/AlertsCapabilityAgent.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/AlertsCapabilityAgent.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_32ca2b1be26df65d1a152938de056228.html">include</a></li><li class="navelem"><a class="el" href="dir_0756d7cbdb43a6da05839251aad86022.html">Alerts</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_092564aa71f3dfc32ed64d9c9668be3d.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_705967d9221232f6c8251613ef4000f2.html">acsdkAlerts</a></li><li class="navelem"><a class="el" href="dir_b1dfbf978be24d96bb3d3044801c647a.html">include</a></li><li class="navelem"><a class="el" href="dir_9c8dbcc65ad6b311184f354b98b30a84.html">acsdkAlerts</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -73,9 +73,8 @@ $(function() {
 <div class="title">AlertsCapabilityAgent.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_alert_observer_interface_8h_source.html">Alerts/AlertObserverInterface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_alert_8h_source.html">Alerts/Alert.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">Alerts/AlertScheduler.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_alert_8h_source.html">acsdkAlerts/Alert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">acsdkAlerts/AlertScheduler.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_customer_data_handler_8h_source.html">RegistrationManager/CustomerDataHandler.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="_capability_agent_8h_source.html">AVSCommon/AVS/CapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_message_request_8h_source.html">AVSCommon/AVS/MessageRequest.h</a>&gt;</code><br />
@@ -91,12 +90,14 @@ $(function() {
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_executor_8h_source.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_system_clock_monitor_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/SystemClockMonitorObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h_source.html">AVSCommon/Utils/Timing/Timer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_certified_sender_8h_source.html">CertifiedSender/CertifiedSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_settings_manager_8h_source.html">Settings/DeviceSettingsManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_setting_8h_source.html">Settings/Setting.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_setting_event_metadata_8h_source.html">Settings/SettingEventMetadata.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alert_observer_interface_8h_source.html">acsdkAlertsInterfaces/AlertObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -104,15 +105,66 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlertsCapabilityAgent.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alerts_capability_agent_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8h" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8h">
+<div class="center"><img src="_alerts_capability_agent_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8h" id="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8h">
+<area shape="rect" id="node2" href="_alert_8h.html" title="acsdkAlerts/Alert.h" alt="" coords="2695,310,2829,337"/>
+<area shape="rect" id="node6" href="_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="2378,481,2570,523"/>
+<area shape="rect" id="node8" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4682,481,4877,523"/>
+<area shape="rect" id="node12" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2864,481,3044,523"/>
+<area shape="rect" id="node14" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1888,489,2103,515"/>
+<area shape="rect" id="node15" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="4901,481,5077,523"/>
+<area shape="rect" id="node17" href="_alert_observer_interface_8h.html" title="acsdkAlertsInterfaces\l/AlertObserverInterface.h" alt="" coords="1837,392,2005,433"/>
+<area shape="rect" id="node18" href="_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="3557,399,3781,426"/>
+<area shape="rect" id="node23" href="_alert_scheduler_8h.html" title="acsdkAlerts/AlertScheduler.h" alt="" coords="3180,131,3371,158"/>
+<area shape="rect" id="node26" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="4255,303,4421,344"/>
+<area shape="rect" id="node27" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1258,303,1453,344"/>
+<area shape="rect" id="node35" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="4598,310,4849,337"/>
+<area shape="rect" id="node38" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3363,303,3558,344"/>
+<area shape="rect" id="node39" href="_alerts_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AlertsAudioFactoryInterface.h" alt="" coords="3885,124,4121,165"/>
+<area shape="rect" id="node40" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3949,213,4172,255"/>
+<area shape="rect" id="node41" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="5014,213,5259,255"/>
+<area shape="rect" id="node42" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="381,303,573,344"/>
+<area shape="rect" id="node43" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3835,303,4027,344"/>
+<area shape="rect" id="node44" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="4595,213,4787,255"/>
+<area shape="rect" id="node45" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="4469,481,4658,523"/>
+<area shape="rect" id="node46" href="_system_clock_monitor_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SystemClockMonitorObserverInterface.h" alt="" coords="5537,124,5800,165"/>
+<area shape="rect" id="node47" href="_certified_sender_8h.html" title="CertifiedSender/Certified\lSender.h" alt="" coords="4742,124,4907,165"/>
+<area shape="rect" id="node48" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="4297,213,4469,255"/>
+<area shape="rect" id="node49" href="_setting_8h.html" title="Settings/Setting.h" alt="" coords="4165,489,4292,515"/>
+<area shape="rect" id="node50" href="_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="5,131,220,158"/>
+<area shape="rect" id="node3" href="_renderer_8h.html" title="acsdkAlerts/Renderer\l/Renderer.h" alt="" coords="2907,392,3055,433"/>
+<area shape="rect" id="node4" href="_renderer_observer_interface_8h.html" title="acsdkAlerts/Renderer\l/RendererObserverInterface.h" alt="" coords="2594,481,2789,523"/>
+<area shape="rect" id="node16" href="_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="2178,481,2354,523"/>
+<area shape="rect" id="node24" href="_alert_storage_interface_8h.html" title="acsdkAlerts/Storage\l/AlertStorageInterface.h" alt="" coords="3078,213,3238,255"/>
+<area shape="rect" id="node28" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1061,481,1292,523"/>
+<area shape="rect" id="node29" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="983,392,1243,433"/>
+<area shape="rect" id="node30" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2215,392,2407,433"/>
+<area shape="rect" id="node31" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="447,392,642,433"/>
+<area shape="rect" id="node32" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="666,392,858,433"/>
+<area shape="rect" id="node33" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1418,392,1610,433"/>
+<area shape="rect" id="node34" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1403,481,1625,523"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alerts_capability_agent_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8hdep" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2include_2_alerts_2_alerts_capability_agent_8hdep">
+<div class="center"><img src="_alerts_capability_agent_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8hdep" id="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2include_2acsdk_alerts_2_alerts_capability_agent_8hdep">
+<area shape="rect" id="node2" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,124,456,195"/>
+<area shape="rect" id="node13" href="_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DeviceSettings\lManagerBuilder.cpp" alt="" coords="481,124,698,195"/>
+<area shape="rect" id="node14" href="_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/AlertsCapability\lAgent.cpp" alt="" coords="723,124,936,195"/>
+<area shape="rect" id="node15" href="_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="961,124,1178,195"/>
+<area shape="rect" id="node16" href="_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1202,131,1374,187"/>
+<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,243,305,299"/>
+<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,347,451,403"/>
+<area shape="rect" id="node11" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,243,593,299"/>
+<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,451,221,507"/>
+<area shape="rect" id="node10" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,451,451,507"/>
+<area shape="rect" id="node6" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,555,221,611"/>
+<area shape="rect" id="node9" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,555,447,611"/>
+<area shape="rect" id="node7" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,659,212,700"/>
+<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,659,569,700"/>
+<area shape="rect" id="node12" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,354,799,395"/>
 </map>
 </div>
 </div>
@@ -120,7 +172,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alerts_1_1_alerts_capability_agent.html">alexaClientSDK::capabilityAgents::alerts::AlertsCapabilityAgent</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html">alexaClientSDK::acsdkAlerts::AlertsCapabilityAgent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -128,21 +180,19 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html">alexaClientSDK::capabilityAgents::alerts</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html">alexaClientSDK::acsdkAlerts</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a1267ac57476e7e9544b4f1c57a429896"><td class="memItemLeft" align="right" valign="top">static const std::chrono::minutes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a1267ac57476e7e9544b4f1c57a429896">alexaClientSDK::capabilityAgents::alerts::ALERT_PAST_DUE_CUTOFF_MINUTES</a> = std::chrono::minutes(30)</td></tr>
-<tr class="separator:a1267ac57476e7e9544b4f1c57a429896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fddad7027032bc143eaa84ddf86ef58"><td class="memItemLeft" align="right" valign="top">static const std::chrono::minutes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a9fddad7027032bc143eaa84ddf86ef58">alexaClientSDK::acsdkAlerts::ALERT_PAST_DUE_CUTOFF_MINUTES</a> = std::chrono::minutes(30)</td></tr>
+<tr class="separator:a9fddad7027032bc143eaa84ddf86ef58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

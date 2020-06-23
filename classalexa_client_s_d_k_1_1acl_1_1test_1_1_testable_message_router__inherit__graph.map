@@ -1,10 +1,8 @@
 <map id="alexaClientSDK::acl::test::TestableMessageRouter" name="alexaClientSDK::acl::test::TestableMessageRouter">
-<area shape="rect" id="node1" title=" " alt="" coords="702,141,903,180"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title=" " alt="" coords="515,141,654,180"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html" title=" " alt="" coords="279,47,454,85"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="5,5,218,57"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="13,81,210,120"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html" title=" " alt="" coords="270,109,462,148"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html" title=" " alt="" coords="268,172,464,211"/>
-<area shape="rect" id="node8" title=" " alt="" coords="266,235,467,273"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="511,147,651,189"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html" title="alexaClientSDK::acl\l::MessageRouterInterface" alt="" coords="277,49,450,90"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="12,86,209,127"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html" title="alexaClientSDK::acl\l::TransportObserverInterface" alt="" coords="269,114,458,155"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html" title="alexaClientSDK::acl\l::MessageConsumerInterface" alt="" coords="266,179,461,221"/>
 </map>

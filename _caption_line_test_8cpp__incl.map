@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Interface/test/CaptionLineTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Captions/Interface/test/CaptionLineTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="117,5,289,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,105,99,131"/>
-<area shape="rect" id="node3" href="$_caption_line_8h.html" title=" " alt="" coords="123,105,283,131"/>
-<area shape="rect" id="node6" href="$_text_style_8h.html" title=" " alt="" coords="272,179,358,204"/>
-<area shape="rect" id="node4" title=" " alt="" coords="101,179,155,204"/>
-<area shape="rect" id="node5" title=" " alt="" coords="179,179,237,204"/>
-<area shape="rect" id="node7" title=" " alt="" coords="240,252,300,277"/>
-<area shape="rect" id="node8" title=" " alt="" coords="324,252,397,277"/>
+<area shape="rect" id="node3" href="$_caption_line_8h.html" title="Captions/CaptionLine.h" alt="" coords="124,109,283,136"/>
+<area shape="rect" id="node6" href="$_text_style_8h.html" title="TextStyle.h" alt="" coords="272,184,361,211"/>
 </map>

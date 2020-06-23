@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::endpoints::End
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_builder.html" title="Mocks an endpoint builder. " alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html" title="alexaClientSDK::endpoints\l::EndpointBuilder" alt="" coords="260,86,439,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -112,12 +114,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a89857a79069baf67d738c7ef373fc68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb1b0e6f5e7e0f2f7955d908577257c1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#acb1b0e6f5e7e0f2f7955d908577257c1">withRangeController</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_interface.html">avsCommon::sdkInterfaces::rangeController::RangeControllerInterface</a> &gt; rangeController, const std::string &amp;instance, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attributes.html">avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes</a> &amp;rangeControllerAttributes, bool isProactivelyReported, bool isRetrievable, bool isNonControllable=false)=0</td></tr>
 <tr class="separator:acb1b0e6f5e7e0f2f7955d908577257c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b6468e54ab8615b2652a19d30d54f4e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a1b6468e54ab8615b2652a19d30d54f4e">build</a> ()=0</td></tr>
-<tr class="separator:a1b6468e54ab8615b2652a19d30d54f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e3d26fe0cabde6b141f12144af32fd"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_interface.html">EndpointInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#aa0e3d26fe0cabde6b141f12144af32fd">build</a> ()=0</td></tr>
+<tr class="separator:aa0e3d26fe0cabde6b141f12144af32fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for an endpoint builder.</p>
-<p>The builder is responsible for building an endpoint object and requesting its registration with the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_manager_interface.html">EndpointRegistrationManagerInterface</a></code>. Use the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html">EndpointRegistrationObserverInterface</a></code> to be notified about any changes to the endpoint registration.</p>
+<p>The builder is responsible for building an endpoint object. Use the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_manager_interface.html">EndpointRegistrationManagerInterface</a></code> to register the endpoint and <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html">EndpointRegistrationObserverInterface</a></code> to be notified about any changes to the endpoint registration.</p>
 <dl class="section note"><dt>Note</dt><dd>The following attributes are mandatory and the build will fail if they are missing:<ul>
 <li>EndpointId</li>
 <li>Manufacturer Name</li>
@@ -130,8 +132,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 Endpoints that represent part of this AVS device must generate their identifier by calling <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a786bbeafc8463d0ca32bcee3ce596af9">withDerivedEndpointId()</a></code> with a suffix that is unique across other parts of this device. The final endpoint identifier will be generated by combining the default endpoint identifier and the suffix provided.</dd>
 <dd>
-Endpoints that represent external devices connected to an AVS device must provide an identifier via <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ae1a8d09516ef0142e85ec3aef9211c4f">withEndpointId()</a></code>. The identifier must be unique across endpoints registered to the user and consistent for every build.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Currently the SDK only support endpoints to be built before the initial connection with AVS. </dd></dl>
+Endpoints that represent external devices connected to an AVS device must provide an identifier via <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ae1a8d09516ef0142e85ec3aef9211c4f">withEndpointId()</a></code>. The identifier must be unique across endpoints registered to the user and consistent for every build. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a55cb48b733e8dc72f2e5816aa1051333"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55cb48b733e8dc72f2e5816aa1051333">&#9670;&nbsp;</a></span>~EndpointBuilderInterface()</h2>
@@ -160,8 +161,8 @@ Endpoints that represent external devices connected to an AVS device must provid
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1b6468e54ab8615b2652a19d30d54f4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b6468e54ab8615b2652a19d30d54f4e">&#9670;&nbsp;</a></span>build()</h2>
+<a id="aa0e3d26fe0cabde6b141f12144af32fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0e3d26fe0cabde6b141f12144af32fd">&#9670;&nbsp;</a></span>build()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,7 +171,7 @@ Endpoints that represent external devices connected to an AVS device must provid
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a>&gt; alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface::build </td>
+          <td class="memname">virtual std::unique_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_interface.html">EndpointInterface</a>&gt; alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface::build </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -182,11 +183,11 @@ Endpoints that represent external devices connected to an AVS device must provid
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Builds a new endpoint with the configured properties / components.</p>
-<p>Build will fail if the identifier has been used to build another endpoint, if the format of any attribute is invalid or if a mandatory attribute is missing.</p>
-<dl class="section return"><dt>Returns</dt><dd>A unique endpointId if the build succeeds; otherwise, an empty endpointId object. </dd></dl>
+<p>Builds an endpoint with the configured properties / components.</p>
+<p>Build will fail iff the format of any attribute is invalid or if a mandatory attribute is missing.</p>
+<dl class="section return"><dt>Returns</dt><dd>A unique endpoint if the build succeeds; otherwise, nullptr. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a5ef0c00122711c08ab1de942211521ed">alexaClientSDK::endpoints::EndpointBuilder</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a8468e23cab084fac3e3cd3f0a2ed25a9">alexaClientSDK::endpoints::EndpointBuilder</a>.</p>
 
 </div>
 </div>
@@ -378,7 +379,7 @@ The suffix can contain letters or numbers, spaces, and the following special cha
 <dl class="section warning"><dt>Warning</dt><dd>Do not use this function if endpoint being created can be controlled by different AVS clients. The endpoint identifier must be consistent for every endpoint independently from the client that is controlling it.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">suffix</td><td>A suffix that should be unique for the given client. The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a1b6468e54ab8615b2652a19d30d54f4e">build()</a></code> function will fail if the given suffix has already been used to build a different endpoint or if it exceeds 10 characters. </td></tr>
+    <tr><td class="paramname">suffix</td><td>A suffix that should be unique for the given client. The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#aa0e3d26fe0cabde6b141f12144af32fd">build()</a></code> function fails if it exceeds 10 characters. If the suffix is not unique, the newly-built endpoint will replace the previous endpoint which had the same suffix when registered. </td></tr>
   </table>
   </dd>
 </dl>
@@ -494,7 +495,7 @@ The builder will fail if the displayCategories param is invalid.</dd></dl>
 <p>Configures builder to use the given identifier for the new endpoint.</p>
 <dl class="section note"><dt>Note</dt><dd>This will override any previous endpoint identifier configuration. </dd>
 <dd>
-The identifier must be unique across all devices for the user. In addition, the identifier must be consistent for all discovery requests for the same device. An identifier can contain letters or numbers, spaces, and the following special characters: _ - = # ; : ? @ &amp;. The identifier cannot exceed 256 characters. </dd>
+The identifier must be unique across all devices for the user. Registering an endpoint with the same identifier as an existing endpoint will replace the original endpoint. In addition, the identifier must be consistent for all discovery requests for the same device. An identifier can contain letters or numbers, spaces, and the following special characters: _ - = # ; : ? @ &amp;. The identifier cannot exceed 256 characters. </dd>
 <dd>
 The builder will fail if the endpointId param is invalid.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -872,13 +873,13 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/<a class="el" href="_endpoint_builder_interface_8h_source.html">EndpointBuilderInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/<a class="el" href="_endpoint_builder_interface_8h_source.html">EndpointBuilderInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

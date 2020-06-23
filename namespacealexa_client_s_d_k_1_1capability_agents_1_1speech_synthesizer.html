@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -163,6 +163,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a7f995aadf4826b463213c268fb1becc9"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a7f995aadf4826b463213c268fb1becc9">KEY_PLAYER_ACTIVITY</a> [] = &quot;playerActivity&quot;</td></tr>
 <tr class="memdesc:a7f995aadf4826b463213c268fb1becc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The "playerActivity" key used to build "SpeechState" string.  <a href="#a7f995aadf4826b463213c268fb1becc9">More...</a><br /></td></tr>
 <tr class="separator:a7f995aadf4826b463213c268fb1becc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52a27abf85cc69496188aa9550acec5e"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a52a27abf85cc69496188aa9550acec5e">KEY_ANALYZERS</a> [] = &quot;analyzers&quot;</td></tr>
+<tr class="memdesc:a52a27abf85cc69496188aa9550acec5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The "analyzers" key used to retrieve analyzer data from directive.  <a href="#a52a27abf85cc69496188aa9550acec5e">More...</a><br /></td></tr>
+<tr class="separator:a52a27abf85cc69496188aa9550acec5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfbd894410f4de4f28720a13c560e677"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#adfbd894410f4de4f28720a13c560e677">KEY_ANALYZERS_INTERFACE</a> [] = &quot;interface&quot;</td></tr>
+<tr class="memdesc:adfbd894410f4de4f28720a13c560e677"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to retrieve the audio analyzer name from directive.  <a href="#adfbd894410f4de4f28720a13c560e677">More...</a><br /></td></tr>
+<tr class="separator:adfbd894410f4de4f28720a13c560e677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3806cbfefde41bf83a541642eb2e7914"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a3806cbfefde41bf83a541642eb2e7914">KEY_ANALYZERS_ENABLED</a> [] = &quot;enabled&quot;</td></tr>
+<tr class="memdesc:a3806cbfefde41bf83a541642eb2e7914"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to retrieve the audio analyzer enabled state from directive.  <a href="#a3806cbfefde41bf83a541642eb2e7914">More...</a><br /></td></tr>
+<tr class="separator:a3806cbfefde41bf83a541642eb2e7914"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23f214dfda5bf8b19a5ede9f1b8e123c"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a23f214dfda5bf8b19a5ede9f1b8e123c">PLAYER_STATE_PLAYING</a> [] = &quot;PLAYING&quot;</td></tr>
 <tr class="memdesc:a23f214dfda5bf8b19a5ede9f1b8e123c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The player activity value used to build the "SpeechState" string.  <a href="#a23f214dfda5bf8b19a5ede9f1b8e123c">More...</a><br /></td></tr>
 <tr class="separator:a23f214dfda5bf8b19a5ede9f1b8e123c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -406,6 +415,78 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The expected format value in the directive payload. </p>
+
+</div>
+</div>
+<a id="a52a27abf85cc69496188aa9550acec5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52a27abf85cc69496188aa9550acec5e">&#9670;&nbsp;</a></span>KEY_ANALYZERS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char alexaClientSDK::capabilityAgents::speechSynthesizer::KEY_ANALYZERS[] = &quot;analyzers&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The "analyzers" key used to retrieve analyzer data from directive. </p>
+
+</div>
+</div>
+<a id="a3806cbfefde41bf83a541642eb2e7914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3806cbfefde41bf83a541642eb2e7914">&#9670;&nbsp;</a></span>KEY_ANALYZERS_ENABLED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char alexaClientSDK::capabilityAgents::speechSynthesizer::KEY_ANALYZERS_ENABLED[] = &quot;enabled&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The key used to retrieve the audio analyzer enabled state from directive. </p>
+
+</div>
+</div>
+<a id="adfbd894410f4de4f28720a13c560e677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfbd894410f4de4f28720a13c560e677">&#9670;&nbsp;</a></span>KEY_ANALYZERS_INTERFACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char alexaClientSDK::capabilityAgents::speechSynthesizer::KEY_ANALYZERS_INTERFACE[] = &quot;interface&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The key used to retrieve the audio analyzer name from directive. </p>
 
 </div>
 </div>
@@ -1036,7 +1117,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

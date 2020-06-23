@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::acl::ExchangeHandler" name="alexaClientSDK::acl::ExchangeHandler">
-<area shape="rect" id="node1" title=" " alt="" coords="5,68,144,107"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html" title=" " alt="" coords="204,5,360,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html" title=" " alt="" coords="192,68,372,107"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_ping_handler.html" title=" " alt="" coords="213,131,352,169"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html" title="alexaClientSDK::acl\l::DownchannelHandler" alt="" coords="205,5,359,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html" title="alexaClientSDK::acl\l::MessageRequestHandler" alt="" coords="193,71,371,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_ping_handler.html" title="alexaClientSDK::acl\l::PingHandler" alt="" coords="212,136,352,177"/>
 </map>

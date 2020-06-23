@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentUtils.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentUtils.h">
-<area shape="rect" id="node1" title=" " alt="" coords="25,5,231,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,119,75,144"/>
-<area shape="rect" id="node3" title=" " alt="" coords="99,119,157,144"/>
-<area shape="rect" id="node4" href="$_attachment_reader_8h.html" title=" " alt="" coords="181,119,324,144"/>
-<area shape="rect" id="node5" title=" " alt="" coords="89,199,151,224"/>
-<area shape="rect" id="node6" title=" " alt="" coords="175,199,239,224"/>
-<area shape="rect" id="node7" title=" " alt="" coords="263,199,332,224"/>
-<area shape="rect" id="node8" href="$_reader_policy_8h.html" title=" " alt="" coords="356,192,518,231"/>
+<area shape="rect" id="node4" href="$_attachment_reader_8h.html" title="AttachmentReader.h" alt="" coords="182,124,325,151"/>
+<area shape="rect" id="node8" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="357,199,523,240"/>
 </map>

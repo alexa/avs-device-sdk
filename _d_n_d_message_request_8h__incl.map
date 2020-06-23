@@ -1,18 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/DoNotDisturb/include/DoNotDisturbCA/DNDMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/DoNotDisturb/include/DoNotDisturbCA/DNDMessageRequest.h">
-<area shape="rect" id="node1" title=" " alt="" coords="125,5,396,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="87,119,143,144"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,199,59,224"/>
-<area shape="rect" id="node4" href="$_message_request_8h.html" title=" " alt="" coords="217,119,466,144"/>
-<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="780,192,1026,231"/>
-<area shape="rect" id="node5" title=" " alt="" coords="83,199,142,224"/>
-<area shape="rect" id="node6" title=" " alt="" coords="166,199,235,224"/>
-<area shape="rect" id="node7" title=" " alt="" coords="259,199,317,224"/>
-<area shape="rect" id="node8" title=" " alt="" coords="341,199,449,224"/>
-<area shape="rect" id="node9" title=" " alt="" coords="473,199,530,224"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title=" " alt="" coords="554,192,756,231"/>
-<area shape="rect" id="node11" title=" " alt="" coords="447,285,509,311"/>
-<area shape="rect" id="node12" title=" " alt="" coords="532,285,596,311"/>
-<area shape="rect" id="node13" title=" " alt="" coords="620,285,690,311"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title=" " alt="" coords="714,279,876,317"/>
-<area shape="rect" id="node16" title=" " alt="" coords="900,285,973,311"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h">
+<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="218,124,469,151"/>
+<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="785,199,1027,240"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="556,199,760,240"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="717,288,882,329"/>
 </map>

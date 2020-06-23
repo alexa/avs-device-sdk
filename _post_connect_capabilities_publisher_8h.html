@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,12 +72,11 @@ $(function() {
 <div class="title">PostConnectCapabilitiesPublisher.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;condition_variable&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &lt;<a class="el" href="_post_connect_message_request_8h_source.html">AVSCommon/AVS/PostConnectMessageRequest.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_waitable_message_request_8h_source.html">AVSCommon/AVS/WaitableMessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_event_processed_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_auth_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthDelegateInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_auth_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthObserverInterface.h</a>&gt;</code><br />
@@ -87,15 +86,32 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PostConnectCapabilitiesPublisher.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_capabilities_publisher_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h">
+<div class="center"><img src="_post_connect_capabilities_publisher_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h" id="_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8h">
+<area shape="rect" id="node6" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="676,228,917,269"/>
+<area shape="rect" id="node19" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="442,124,650,180"/>
+<area shape="rect" id="node20" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="23,317,215,359"/>
+<area shape="rect" id="node21" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="23,407,215,448"/>
+<area shape="rect" id="node22" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="675,131,895,173"/>
+<area shape="rect" id="node24" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="443,235,652,262"/>
+<area shape="rect" id="node25" href="_discovery_event_sender_interface_8h.html" title="CapabilitiesDelegate\l/DiscoveryEventSenderInterface.h" alt="" coords="1020,131,1243,173"/>
+<area shape="rect" id="node8" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="797,325,1047,351"/>
+<area shape="rect" id="node17" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1101,407,1343,448"/>
+<area shape="rect" id="node12" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="872,407,1076,448"/>
+<area shape="rect" id="node16" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="821,496,986,537"/>
+<area shape="rect" id="node23" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="942,228,1134,269"/>
+<area shape="rect" id="node26" href="_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="1158,235,1393,262"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_capabilities_publisher_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep">
+<div class="center"><img src="_post_connect_capabilities_publisher_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep" id="_2workplace_2avs-device-sdk_2_capabilities_delegate_2include_2_capabilities_delegate_2_post_connect_capabilities_publisher_8hdep">
+<area shape="rect" id="node2" href="_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="5,131,199,187"/>
+<area shape="rect" id="node3" href="_post_connect_capabilities_publisher_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/PostConnectCapabilitiesPublisher.cpp" alt="" coords="223,131,493,187"/>
+<area shape="rect" id="node4" href="_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="517,131,740,187"/>
+<area shape="rect" id="node5" href="_post_connect_capabilities_publisher_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/PostConnectCapabilitiesPublisher\lTest.cpp" alt="" coords="765,124,1015,195"/>
 </map>
 </div>
 </div>
@@ -118,7 +134,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

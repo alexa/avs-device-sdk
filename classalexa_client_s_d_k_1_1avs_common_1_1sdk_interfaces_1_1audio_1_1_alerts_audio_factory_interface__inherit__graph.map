@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,44,202,96"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_alerts_audio_factory.html" title=" " alt="" coords="258,5,444,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_alerts_audio_factory.html" title="Mock class that implements AlertsAudioFactoryInterface." alt="" coords="250,81,452,133"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_alerts_audio_factory.html" title="alexaClientSDK::application\lUtilities::resources::audio\l::AlertsAudioFactory" alt="" coords="259,5,445,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_alerts_audio_factory.html" title="Mock class that implements AlertsAudioFactoryInterface. " alt="" coords="251,85,453,141"/>
 </map>

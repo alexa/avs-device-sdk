@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::capabilityAgents::alexa::test::TestEventProcessedObserver" name="alexaClientSDK::capabilityAgents::alexa::test::TestEventProcessedObserver">
-<area shape="rect" id="node1" title="A test EventProcessedObserver." alt="" coords="30,105,227,157"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title=" " alt="" coords="5,5,251,57"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaEventProcessed\lObserverInterface" alt="" coords="5,5,252,61"/>
 </map>

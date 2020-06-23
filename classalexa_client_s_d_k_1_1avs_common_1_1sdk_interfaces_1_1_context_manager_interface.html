@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::ContextManager
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html" title="Mock class that implements the ContextManager. " alt="" coords="276,5,473,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html" title="alexaClientSDK::contextManager\l::ContextManager" alt="" coords="267,86,483,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -102,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a85fd17138b9dcd249c820d4de29be730"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a098071f65990c02118d5e7e5375c7fc1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a098071f65990c02118d5e7e5375c7fc1">getContext</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId=&quot;&quot;, const std::chrono::milliseconds &amp;timeout=std::chrono::seconds(2))=0</td></tr>
 <tr class="separator:a098071f65990c02118d5e7e5375c7fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1caeb081e9eba61516039e5a96a1e689"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a1caeb081e9eba61516039e5a96a1e689">getContextWithoutReportableStateProperties</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt; contextRequester, const std::string &amp;endpointId=&quot;&quot;, const std::chrono::milliseconds &amp;timeout=std::chrono::seconds(2))=0</td></tr>
+<tr class="separator:a1caeb081e9eba61516039e5a96a1e689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62570c6d64e37b19548dac4c8efa8f3a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a62570c6d64e37b19548dac4c8efa8f3a">addContextManagerObserver</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html">ContextManagerObserverInterface</a> &gt; observer)=0</td></tr>
 <tr class="separator:a62570c6d64e37b19548dac4c8efa8f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05344dec25e9a7717e446ecc3243cb72"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a05344dec25e9a7717e446ecc3243cb72">removeContextManagerObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html">ContextManagerObserverInterface</a> &gt; &amp;observer)=0</td></tr>
@@ -258,6 +262,65 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Request the <code>ContextManager</code> for context. If a request to the <code>StateProviderInterfaces</code> for updated states is not in progress, then requests will be sent to the <code>StateProviderInterfaces</code> via the <code>provideState</code> requests. If updated states have already been requested, this @ getContext request will be put on a queue and updated when the head of queue's request arrives. Once updated states are available, the context requester is informed via <code>onContextAvailable</code>. If any error is encountered while updating states, the context requester is informed via <code>onContextFailure</code> with the details of the error.</p>
 <dl class="section note"><dt>Note</dt><dd>If you are using RequestToken to track the context response, make sure that the access is synchronized with the <code>onContextAvailable</code> response.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contextRequester</td><td>The context requester asking for context. </td></tr>
+    <tr><td class="paramname">endpointId</td><td>The <code>endpointId</code> used to select which context is being requested. </td></tr>
+    <tr><td class="paramname">timeout</td><td>The maximum time this request should take. After the timeout, the context manager will abort the request. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A token that can be used to correlate this request with the context response.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>An empty endpointId will select the defaultEndpoint context for now. This argument will become required in future versions of the SDK. </dd></dl>
+
+</div>
+</div>
+<a id="a1caeb081e9eba61516039e5a96a1e689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1caeb081e9eba61516039e5a96a1e689">&#9670;&nbsp;</a></span>getContextWithoutReportableStateProperties()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a154304fbfbe58899b78c424cdf2ba92d">ContextRequestToken</a> alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface::getContextWithoutReportableStateProperties </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">ContextRequesterInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contextRequester</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>endpointId</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>std::chrono::seconds(2)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Request the <code>ContextManager</code> for context while skipping state from <code>StateProviders</code> which have reportable state properties.</p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/reportable-state-properties.html">https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/reportable-state-properties.html</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>An example use case of when this method can be is used is to get the Context sent in <code>SpeechRecognizer.Recognize</code> event. The reason being, sending all state information can make the context bloated which might adversely effect user perceived latency. Additionally, state from reportable state properties can be sent to the cloud either by using <code>StateReport</code> event or the <code>ChangeReport</code> event.</dd>
+<dd>
+This method is functionally similar to the <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#a098071f65990c02118d5e7e5375c7fc1">getContext()</a> method except that it skips state information of reportable state properties.</dd>
+<dd>
+If you are using RequestToken to track the context response, make sure that the access is synchronized with the <code>onContextAvailable</code> response.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">contextRequester</td><td>The context requester asking for context. </td></tr>
@@ -547,7 +610,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sets the state information. The refresh policy indicates to the <code>ContextManager</code> whether on a <code>getContext</code> request the state needs to be updated. If the <code>refreshPolicy</code> is <code>ALWAYS</code>, then the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> needs to be registered with the <code>ContextManager</code>, else <code>setState</code> returns an error.</p>
 <p>For the states for which the refresh policy is <code>ALWAYS</code>, the <code>ContextManager</code> requests for <code>provideStates</code> from the <code>StateProviderInterfaces</code>. When a <code>provideState</code> request is sent to a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code>, the <code>ContextManager</code> will provide a <code>stateRequestToken</code>. The same token needs to be sent on a <code>setState</code> in response to the <code>provideState</code>. If the token sent in the <code>setState</code> request does not match the token in the <code>ContextManager</code>, <code>setState</code> will return an error.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>onStateChanged</code> to proactively report to the ContextManager that the state has changed.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the ContextManager that the state has changed.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Token needs to be set only if the <code>setState</code> is in response to a <code>provideState</code> request. Setting the token to 0 is equivalent to no token.</dd></dl>
 <p>The <code>jsonState</code> is the json value that is associated with the key "payload".</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -612,13 +675,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_context_manager_interface_8h_source.html">ContextManagerInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_context_manager_interface_8h_source.html">ContextManagerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

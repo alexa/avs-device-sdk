@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::rangeControlle
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1test_1_1_mock_range_controller_interface.html" title="alexaClientSDK::capability\lAgents::rangeController\l::test::MockRangeControllerInterface" alt="" coords="259,5,496,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_range_controller_handler.html" title="alexaClientSDK::sampleApp\l::DefaultEndpointRangeController\lHandler" alt="" coords="269,85,486,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_range_controller_handler.html" title="alexaClientSDK::sampleApp\l::PeripheralEndpointRangeController\lHandler" alt="" coords="261,165,494,221"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -239,7 +242,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair of <code>AlexaResponseType</code> and string. For the successful operation, the controller should return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> with an empty string, otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a description of the error. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_range_controller_handler.html#a1f19745829d3e4f6728b39a3d4aec15f">alexaClientSDK::sampleApp::RangeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_range_controller_handler.html#a83b434947fb5be3b756242742a4d1d16">alexaClientSDK::sampleApp::PeripheralEndpointRangeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_range_controller_handler.html#a75356d4414a7424b9cbf6039ca37183f">alexaClientSDK::sampleApp::DefaultEndpointRangeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -268,7 +271,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets the controller configuration as defined in <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controlle4dab5a78d80b2ce74ea68f493039ca68.html">RangeControllerConfiguration</a></code> </p>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controlle4dab5a78d80b2ce74ea68f493039ca68.html">RangeControllerConfiguration</a></code> </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_range_controller_handler.html#aa15ff21c10246ee08248a8b41147f731">alexaClientSDK::sampleApp::RangeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_range_controller_handler.html#a8e877e24928c63b91e6b86c2424eb4a2">alexaClientSDK::sampleApp::PeripheralEndpointRangeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_range_controller_handler.html#ab8fadb8e7aceb8ce4085c08d9b75d41f">alexaClientSDK::sampleApp::DefaultEndpointRangeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -297,7 +300,7 @@ Public Member Functions</h2></td></tr>
 <p>Gets the current range state of the instance.</p>
 <dl class="section return"><dt>Returns</dt><dd>On successful, the instance to return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> and <code>RangeState</code> otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a empty <code>RangeState</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_range_controller_handler.html#a2c3f33dfba7f2e7f363e07e1c1d43b60">alexaClientSDK::sampleApp::RangeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_range_controller_handler.html#ae0d3d6a19b33d8720e38ba532cb8a4db">alexaClientSDK::sampleApp::PeripheralEndpointRangeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_range_controller_handler.html#a9fe3eda0166279086b55cce3319d8425">alexaClientSDK::sampleApp::DefaultEndpointRangeControllerHandler</a>.</p>
 
 </div>
 </div>
@@ -377,18 +380,18 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair of <code>AlexaResponseType</code> and string. For the successful operation, the controller should return a pair with <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdbad0749aaba8b833466dfcbb0428e4f89c" title="setState request was successful. ">AlexaResponseType::SUCCESS</a></code> with an empty string, otherwise returns a pair with the appropriate reason from <code>AlexaResponseType</code> and a description of the error. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_range_controller_handler.html#ac17c1dd6ef9df3dc28ff920590161def">alexaClientSDK::sampleApp::RangeControllerHandler</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_range_controller_handler.html#a5f71ef45234f64412083bdb1329c506c">alexaClientSDK::sampleApp::PeripheralEndpointRangeControllerHandler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_range_controller_handler.html#a3e823201c608235e61d7bfea54489039">alexaClientSDK::sampleApp::DefaultEndpointRangeControllerHandler</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RangeController/<a class="el" href="_range_controller_interface_8h_source.html">RangeControllerInterface.h</a></li>
+<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/RangeController/<a class="el" href="_range_controller_interface_8h_source.html">RangeControllerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

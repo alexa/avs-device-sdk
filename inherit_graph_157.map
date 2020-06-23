@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config.html" title=" " alt="" coords="5,5,228,44"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextManager\lInterface" alt="" coords="5,43,219,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html" title="Mock class that implements the ContextManager. " alt="" coords="276,5,473,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html" title="alexaClientSDK::contextManager\l::ContextManager" alt="" coords="267,86,483,127"/>
 </map>

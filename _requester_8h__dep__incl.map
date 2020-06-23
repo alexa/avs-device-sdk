@@ -1,19 +1,18 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Requester.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Requester.h">
-<area shape="rect" id="node1" title=" " alt="" coords="535,5,745,57"/>
-<area shape="rect" id="node2" href="$_bluetooth_8h.html" title=" " alt="" coords="481,219,669,284"/>
-<area shape="rect" id="node16" href="$_bluetooth_event_state_8h.html" title=" " alt="" coords="612,105,799,171"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title=" " alt="" coords="229,332,457,397"/>
-<area shape="rect" id="node14" href="$_bluetooth_8cpp.html" title=" " alt="" coords="481,339,669,391"/>
-<area shape="rect" id="node15" href="$_bluetooth_test_8cpp.html" title=" " alt="" coords="693,339,910,391"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title=" " alt="" coords="77,445,305,497"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title=" " alt="" coords="230,545,453,597"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title=" " alt="" coords="382,445,597,497"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title=" " alt="" coords="6,645,224,697"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="248,645,454,697"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title=" " alt="" coords="5,745,225,797"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="249,745,451,797"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title=" " alt="" coords="16,845,214,884"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title=" " alt="" coords="294,845,574,884"/>
-<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="528,552,803,591"/>
-<area shape="rect" id="node17" href="$_bluetooth_event_state_8cpp.html" title=" " alt="" coords="692,219,889,284"/>
+<area shape="rect" id="node2" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="465,228,719,299"/>
+<area shape="rect" id="node16" href="$_bluetooth_event_state_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothEventState.h" alt="" coords="630,109,885,180"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,347,456,417"/>
+<area shape="rect" id="node14" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="481,354,703,410"/>
+<area shape="rect" id="node15" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="727,354,979,410"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,465,305,521"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,569,451,625"/>
+<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,465,593,521"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,673,221,729"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,673,451,729"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,777,221,833"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,777,447,833"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,881,212,923"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,881,569,923"/>
+<area shape="rect" id="node13" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,577,799,618"/>
+<area shape="rect" id="node17" href="$_bluetooth_event_state_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothEvent\lState.cpp" alt="" coords="743,228,974,299"/>
 </map>

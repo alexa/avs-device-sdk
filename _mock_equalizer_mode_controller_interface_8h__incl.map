@@ -1,15 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/MockEqualizerModeControllerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/MockEqualizerModeControllerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,310,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="7,132,122,157"/>
-<area shape="rect" id="node3" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="146,119,356,171"/>
-<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title=" " alt="" coords="189,219,313,244"/>
-<area shape="rect" id="node5" title=" " alt="" coords="38,299,90,324"/>
-<area shape="rect" id="node6" title=" " alt="" coords="115,299,169,324"/>
-<area shape="rect" id="node7" title=" " alt="" coords="193,299,309,324"/>
-<area shape="rect" id="node8" href="$hash_8h.html" title=" " alt="" coords="332,292,524,331"/>
-<area shape="rect" id="node12" href="$_success_result_8h.html" title=" " alt="" coords="548,292,712,331"/>
-<area shape="rect" id="node9" title=" " alt="" coords="316,379,375,404"/>
-<area shape="rect" id="node10" title=" " alt="" coords="399,379,457,404"/>
-<area shape="rect" id="node11" title=" " alt="" coords="481,379,559,404"/>
-<area shape="rect" id="node13" href="$_result_8h.html" title=" " alt="" coords="594,379,665,404"/>
+<area shape="rect" id="node3" href="$_equalizer_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerModeController\lInterface.h" alt="" coords="144,124,349,180"/>
+<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="185,228,308,255"/>
+<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="326,303,519,344"/>
+<area shape="rect" id="node12" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="544,303,709,344"/>
+<area shape="rect" id="node13" href="$_result_8h.html" title="Result.h" alt="" coords="591,392,662,419"/>
 </map>

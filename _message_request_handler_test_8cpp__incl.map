@@ -1,0 +1,37 @@
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MessageRequestHandlerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MessageRequestHandlerTest.cpp">
+<area shape="rect" id="node3" href="$_message_request_handler_8h.html" title="ACL/Transport/MessageRequest\lHandler.h" alt="" coords="1521,109,1735,151"/>
+<area shape="rect" id="node48" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="1311,377,1489,419"/>
+<area shape="rect" id="node5" href="$_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2689,199,2893,240"/>
+<area shape="rect" id="node21" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="692,385,943,411"/>
+<area shape="rect" id="node26" href="$_event_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/EventTracerInterface.h" alt="" coords="2183,288,2375,329"/>
+<area shape="rect" id="node27" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="983,377,1235,419"/>
+<area shape="rect" id="node33" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1605,199,1785,240"/>
+<area shape="rect" id="node40" href="$_exchange_handler_8h.html" title="ACL/Transport/ExchangeHandler.h" alt="" coords="1287,206,1513,233"/>
+<area shape="rect" id="node49" href="$_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="5,199,229,240"/>
+<area shape="rect" id="node50" href="$_mime_response_status_handler_interface_8h.html" title="ACL/Transport/MimeResponse\lStatusHandlerInterface.h" alt="" coords="2292,467,2495,508"/>
+<area shape="rect" id="node8" href="$_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2836,288,3041,329"/>
+<area shape="rect" id="node11" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2837,377,3041,419"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="3783,467,3987,508"/>
+<area shape="rect" id="node17" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="3253,467,3457,508"/>
+<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="3865,556,4031,597"/>
+<area shape="rect" id="node18" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2569,467,2735,508"/>
+<area shape="rect" id="node20" href="$_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="3063,467,3228,508"/>
+<area shape="rect" id="node24" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="343,467,585,508"/>
+<area shape="rect" id="node29" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="916,467,1135,508"/>
+<area shape="rect" id="node32" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="965,556,1144,597"/>
+<area shape="rect" id="node30" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="973,645,1152,687"/>
+<area shape="rect" id="node31" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="763,645,949,687"/>
+<area shape="rect" id="node34" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1973,288,2153,329"/>
+<area shape="rect" id="node35" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="1514,377,1694,419"/>
+<area shape="rect" id="node37" href="$_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="1973,377,2153,419"/>
+<area shape="rect" id="node38" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3197,385,3393,411"/>
+<area shape="rect" id="node36" href="$_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="661,467,841,508"/>
+<area shape="rect" id="node39" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3532,467,3708,508"/>
+<area shape="rect" id="node41" href="$_exchange_handler_context_interface_8h.html" title="ACL/Transport/ExchangeHandler\lContextInterface.h" alt="" coords="1293,288,1507,329"/>
+<area shape="rect" id="node42" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="1719,377,1897,419"/>
+<area shape="rect" id="node43" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="2943,563,3097,590"/>
+<area shape="rect" id="node44" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="1361,474,1577,501"/>
+<area shape="rect" id="node45" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="1753,474,1964,501"/>
+<area shape="rect" id="node46" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="1762,556,1955,597"/>
+<area shape="rect" id="node47" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="2281,556,2506,597"/>
+</map>

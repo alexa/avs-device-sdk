@@ -1,8 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockSpeakerManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockSpeakerManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="375,5,595,71"/>
-<area shape="rect" id="node2" href="$_alerts_capability_agent_test_8cpp.html" title=" " alt="" coords="5,119,186,184"/>
-<area shape="rect" id="node3" href="$_renderer_test_8cpp.html" title=" " alt="" coords="210,119,363,184"/>
-<area shape="rect" id="node4" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="386,119,584,184"/>
-<area shape="rect" id="node5" href="$_m_r_m_capability_agent_test_8cpp.html" title=" " alt="" coords="607,119,818,184"/>
-<area shape="rect" id="node6" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="843,125,1015,177"/>
+<area shape="rect" id="node2" href="$_alerts_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertsCapability\lAgentTest.cpp" alt="" coords="5,124,223,195"/>
+<area shape="rect" id="node3" href="$_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/Renderer\l/RendererTest.cpp" alt="" coords="247,124,426,195"/>
+<area shape="rect" id="node4" href="$_m_r_m_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/MultiRoom\lMusic/acsdkMultiRoomMusic\l/test/MRMCapabilityAgentTest.cpp" alt="" coords="450,124,677,195"/>
+<area shape="rect" id="node5" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="701,124,898,195"/>
+<area shape="rect" id="node6" href="$_device_property_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/test\l/DevicePropertyAggregatorTest.cpp" alt="" coords="923,131,1153,187"/>
+<area shape="rect" id="node7" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1177,131,1349,187"/>
 </map>

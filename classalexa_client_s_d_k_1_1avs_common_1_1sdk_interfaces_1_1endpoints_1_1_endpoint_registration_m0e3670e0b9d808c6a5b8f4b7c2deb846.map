@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,40,262,92"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_manager.html" title="Mocks an endpoint registration manager." alt="" coords="310,5,576,57"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_registration_manager.html" title=" " alt="" coords="341,81,546,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_manager.html" title="Mocks an endpoint registration manager. " alt="" coords="305,5,568,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_registration_manager.html" title="alexaClientSDK::endpoints\l::EndpointRegistrationManager" alt="" coords="336,86,537,127"/>
 </map>

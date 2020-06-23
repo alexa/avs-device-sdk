@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Alerts/src/AlertScheduler.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/src/AlertScheduler.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,27 +61,62 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_6a3d888c77d91a2c06c3ff7a43c42895.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_88b1bb53c337da1d62e70e0c33265813.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_092564aa71f3dfc32ed64d9c9668be3d.html">Alerts</a></li><li class="navelem"><a class="el" href="dir_705967d9221232f6c8251613ef4000f2.html">acsdkAlerts</a></li><li class="navelem"><a class="el" href="dir_d4c931f5af9ec6db4721ba1e8c33df3a.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">AlertScheduler.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">Alerts/AlertScheduler.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_alert_scheduler_8h_source.html">acsdkAlerts/AlertScheduler.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="_finally_guard_8h_source.html">AVSCommon/Utils/Error/FinallyGuard.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlertScheduler.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alert_scheduler_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_alert_scheduler_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_alert_scheduler_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_alerts_2src_2_alert_scheduler_8cpp">
+<div class="center"><img src="_alert_scheduler_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_alert_scheduler_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_alert_scheduler_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_alerts_2acsdk_alerts_2src_2_alert_scheduler_8cpp">
+<area shape="rect" id="node2" href="_alert_scheduler_8h.html" title="acsdkAlerts/AlertScheduler.h" alt="" coords="1262,117,1453,143"/>
+<area shape="rect" id="node39" href="_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="3631,199,3796,240"/>
+<area shape="rect" id="node40" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3279,452,3455,493"/>
+<area shape="rect" id="node45" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="5,109,187,151"/>
+<area shape="rect" id="node46" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="153,452,333,493"/>
+<area shape="rect" id="node47" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="2820,452,2996,493"/>
+<area shape="rect" id="node3" href="_alert_storage_interface_8h.html" title="acsdkAlerts/Storage\l/AlertStorageInterface.h" alt="" coords="1395,199,1555,240"/>
+<area shape="rect" id="node6" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="963,452,1143,493"/>
+<area shape="rect" id="node18" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2470,370,2685,397"/>
+<area shape="rect" id="node20" href="_alert_observer_interface_8h.html" title="acsdkAlertsInterfaces\l/AlertObserverInterface.h" alt="" coords="1832,363,2000,404"/>
+<area shape="rect" id="node21" href="_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="1205,370,1429,397"/>
+<area shape="rect" id="node4" href="_alert_8h.html" title="acsdkAlerts/Alert.h" alt="" coords="1667,288,1800,315"/>
+<area shape="rect" id="node5" href="_renderer_8h.html" title="acsdkAlerts/Renderer\l/Renderer.h" alt="" coords="1659,363,1807,404"/>
+<area shape="rect" id="node7" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="713,541,893,583"/>
+<area shape="rect" id="node10" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="153,631,333,672"/>
+<area shape="rect" id="node14" href="_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="713,631,893,672"/>
+<area shape="rect" id="node15" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1071,638,1267,665"/>
+<area shape="rect" id="node12" href="_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="721,720,901,761"/>
+<area shape="rect" id="node24" href="_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="2014,549,2191,575"/>
+<area shape="rect" id="node31" href="_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="2161,459,2343,486"/>
+<area shape="rect" id="node33" href="_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="917,541,1109,583"/>
+<area shape="rect" id="node34" href="_alarm_volume_ramp_types_8h.html" title="Settings/Types/AlarmVolume\lRampTypes.h" alt="" coords="459,452,651,493"/>
+<area shape="rect" id="node35" href="_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="1134,549,1330,575"/>
+<area shape="rect" id="node36" href="_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="675,452,888,493"/>
+<area shape="rect" id="node27" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3449,631,3625,672"/>
+<area shape="rect" id="node30" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="3396,720,3572,761"/>
+<area shape="rect" id="node41" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3259,541,3474,583"/>
+<area shape="rect" id="node42" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3735,631,3911,672"/>
+<area shape="rect" id="node43" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3803,541,3997,583"/>
+<area shape="rect" id="node44" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="3059,541,3235,583"/>
+<area shape="rect" id="node49" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="2469,549,2683,575"/>
+<area shape="rect" id="node50" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="2757,541,2933,583"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -90,9 +125,7 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html">alexaClientSDK::capabilityAgents::alerts</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_alerts"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html">alexaClientSDK::acsdkAlerts</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -102,9 +135,24 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a08b245109b2ba92c45a0ae699340328c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a08b245109b2ba92c45a0ae699340328c">alexaClientSDK::capabilityAgents::alerts::TAG</a> (&quot;AlertScheduler&quot;)</td></tr>
-<tr class="memdesc:a08b245109b2ba92c45a0ae699340328c"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alerts.html#a08b245109b2ba92c45a0ae699340328c">More...</a><br /></td></tr>
-<tr class="separator:a08b245109b2ba92c45a0ae699340328c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a34ddabfcc5f9a603336a9ea7ecab23e3">alexaClientSDK::acsdkAlerts::TAG</a> (&quot;AlertScheduler&quot;)</td></tr>
+<tr class="memdesc:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a34ddabfcc5f9a603336a9ea7ecab23e3">More...</a><br /></td></tr>
+<tr class="separator:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31676ffdc60053e4fe87f08734cd0bfb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a31676ffdc60053e4fe87f08734cd0bfb">alexaClientSDK::acsdkAlerts::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;eventName, int count)</td></tr>
+<tr class="separator:a31676ffdc60053e4fe87f08734cd0bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a62bdfcfa644713a86f4e181ad03c7e00">alexaClientSDK::acsdkAlerts::ALERT_METRIC_SOURCE_PREFIX</a> = &quot;ALERT-&quot;</td></tr>
+<tr class="memdesc:a62bdfcfa644713a86f4e181ad03c7e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for ALERT metric source.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a62bdfcfa644713a86f4e181ad03c7e00">More...</a><br /></td></tr>
+<tr class="separator:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c6dd9e6698bf264e5cd50877dcb21cd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a3c6dd9e6698bf264e5cd50877dcb21cd">alexaClientSDK::acsdkAlerts::ALERT_SCHEDULING_FAILED</a> = &quot;alertSchedulingFailed&quot;</td></tr>
+<tr class="memdesc:a3c6dd9e6698bf264e5cd50877dcb21cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric constants related to Alerts.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a3c6dd9e6698bf264e5cd50877dcb21cd">More...</a><br /></td></tr>
+<tr class="separator:a3c6dd9e6698bf264e5cd50877dcb21cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3cebd211620657afea1f652dbdd31d0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ac3cebd211620657afea1f652dbdd31d0">alexaClientSDK::acsdkAlerts::ALERT_PAST_DUE_DURING_SCHEDULING</a> = &quot;alertpastDueWhileScheduling&quot;</td></tr>
+<tr class="separator:ac3cebd211620657afea1f652dbdd31d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fdd6a33388b2fe5c714cecaa94812c9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a5fdd6a33388b2fe5c714cecaa94812c9">alexaClientSDK::acsdkAlerts::ACTIVE_ALERT_RELOADED_DURING_SCHEDULING</a> = &quot;activeAlertReloadedDuringScheduling&quot;</td></tr>
+<tr class="separator:a5fdd6a33388b2fe5c714cecaa94812c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -136,7 +184,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

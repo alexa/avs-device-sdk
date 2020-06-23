@@ -1,7 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="198,5,267,31"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html" title=" " alt="" coords="379,27,580,65"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,93,86,119"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title=" " alt="" coords="134,55,331,93"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html" title=" " alt="" coords="134,117,331,156"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_equalizer_storage_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::EqualizerStorageInterface" alt="" coords="5,43,203,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_equalizer_storage_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::test::MockEqualizerStorageInterface" alt="" coords="251,5,493,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1equalizer_1_1_misc_d_b_equalizer_storage.html" title="alexaClientSDK::equalizer\l::MiscDBEqualizerStorage" alt="" coords="284,86,460,127"/>
 </map>

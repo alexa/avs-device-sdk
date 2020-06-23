@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/DataPointDurationBuilder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/DataPointDurationBuilder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,238,71"/>
-<area shape="rect" id="node2" title=" " alt="" coords="19,125,81,151"/>
-<area shape="rect" id="node3" href="$_data_point_8h.html" title=" " alt="" coords="105,119,282,157"/>
-<area shape="rect" id="node4" title=" " alt="" coords="97,212,151,237"/>
-<area shape="rect" id="node5" href="$_data_type_8h.html" title=" " alt="" coords="176,205,353,244"/>
-<area shape="rect" id="node6" title=" " alt="" coords="228,292,301,317"/>
+<area shape="rect" id="node3" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="104,124,284,165"/>
+<area shape="rect" id="node5" href="$_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="175,213,355,255"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::utils::TestMimePart" name="alexaClientSDK::avsCommon::utils::TestMimePart">
-<area shape="rect" id="node1" title=" " alt="" coords="5,37,202,76"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_test_mime_attachment_part.html" title=" " alt="" coords="250,5,459,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_test_mime_json_part.html" title=" " alt="" coords="256,68,453,107"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_test_mime_attachment_part.html" title="alexaClientSDK::avsCommon\l::utils::TestMimeAttachmentPart" alt="" coords="251,5,461,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_test_mime_json_part.html" title="alexaClientSDK::avsCommon\l::utils::TestMimeJsonPart" alt="" coords="257,71,455,112"/>
 </map>

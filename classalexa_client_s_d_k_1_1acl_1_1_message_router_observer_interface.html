@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::acl::MessageRouterObserverInterface:</di
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface_inherit__map" id="alexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="295,5,469,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_message_router_observer.html" title="alexaClientSDK::acl\l::transport::test::MockMessage\lRouterObserver" alt="" coords="280,71,484,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -86,6 +88,10 @@ Inheritance diagram for alexaClientSDK::acl::MessageRouterObserverInterface:</di
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c2f49a0eed39a512a38b69df9984c10"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#a2c2f49a0eed39a512a38b69df9984c10">~MessageRouterObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a2c2f49a0eed39a512a38b69df9984c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdc957e542bf8a0d3150768c79af6e91"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#afdc957e542bf8a0d3150768c79af6e91">onConnectionStatusChanged</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status</a> status, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11e">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason</a> reason)=0</td></tr>
+<tr class="separator:afdc957e542bf8a0d3150768c79af6e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfa767278dbe7c2c350d92db9679f5c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#adfa767278dbe7c2c350d92db9679f5c3">receive</a> (const std::string &amp;contextId, const std::string &amp;message)=0</td></tr>
+<tr class="separator:adfa767278dbe7c2c350d92db9679f5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This interface class allows notifications from a <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router.html">MessageRouter</a> object (or any derived class), while not adding to the observer's public interface. This is achieved by a friend relationship. The <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html">MessageRouterObserverInterface</a> will be notified when either the connection status changes, or when a message arrives from AVS. </p>
@@ -116,14 +122,103 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afdc957e542bf8a0d3150768c79af6e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdc957e542bf8a0d3150768c79af6e91">&#9670;&nbsp;</a></span>onConnectionStatusChanged()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::acl::MessageRouterObserverInterface::onConnectionStatusChanged </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status</a>&#160;</td>
+          <td class="paramname"><em>status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11e">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason</a>&#160;</td>
+          <td class="paramname"><em>reason</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will be called when the connection status changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The current status of the connection. </td></tr>
+    <tr><td class="paramname">reason</td><td>The reason the connection status changed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adfa767278dbe7c2c350d92db9679f5c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfa767278dbe7c2c350d92db9679f5c3">&#9670;&nbsp;</a></span>receive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::acl::MessageRouterObserverInterface::receive </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>contextId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will be called when a Message arrives from AVS.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contextId</td><td>The contextId of the AVS message, which is used when acquiring attachments. </td></tr>
+    <tr><td class="paramname">message</td><td>The AVS message that has been received. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_router_observer_interface_8h_source.html">MessageRouterObserverInterface.h</a></li>
+<li>/workplace/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_router_observer_interface_8h_source.html">MessageRouterObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Interface/include/Captions/CaptionLine.h" name="/workplace/avs&#45;device&#45;sdk/Captions/Interface/include/Captions/CaptionLine.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1399,5,1609,57"/>
-<area shape="rect" id="node2" href="$_caption_manager_8h.html" title=" " alt="" coords="386,552,622,604"/>
-<area shape="rect" id="node4" href="$_caption_manager_test_8cpp.html" title=" " alt="" coords="162,765,361,817"/>
-<area shape="rect" id="node9" href="$_libwebvtt_parser_adapter_8h.html" title=" " alt="" coords="816,439,1096,491"/>
-<area shape="rect" id="node11" href="$_caption_frame_8h.html" title=" " alt="" coords="930,105,1153,157"/>
-<area shape="rect" id="node43" href="$_caption_presenter_interface_8h.html" title=" " alt="" coords="1546,205,1777,271"/>
-<area shape="rect" id="node49" href="$_caption_line_8cpp.html" title=" " alt="" coords="1591,105,1750,157"/>
-<area shape="rect" id="node50" href="$_caption_line_test_8cpp.html" title=" " alt="" coords="1774,105,1946,157"/>
-<area shape="rect" id="node3" href="$_caption_manager_8cpp.html" title=" " alt="" coords="561,659,759,711"/>
-<area shape="rect" id="node5" href="$_mock_caption_manager_8h.html" title=" " alt="" coords="2236,659,2434,711"/>
-<area shape="rect" id="node6" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="2736,759,2934,824"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="2308,759,2497,824"/>
-<area shape="rect" id="node8" href="$_libwebvtt_parser_adapter_test_8cpp.html" title=" " alt="" coords="1688,765,1930,817"/>
-<area shape="rect" id="node10" href="$_libwebvtt_parser_adapter_8cpp.html" title=" " alt="" coords="697,552,911,604"/>
-<area shape="rect" id="node12" href="$_caption_frame_parse_listener_interface_8h.html" title=" " alt="" coords="273,205,519,271"/>
-<area shape="rect" id="node13" href="$_caption_parser_interface_8h.html" title=" " alt="" coords="417,325,692,377"/>
-<area shape="rect" id="node15" href="$_caption_timing_adapter_interface_8h.html" title=" " alt="" coords="1157,205,1416,271"/>
-<area shape="rect" id="node24" href="$_caption_manager_interface_8h.html" title=" " alt="" coords="2259,319,2485,384"/>
-<area shape="rect" id="node47" href="$_caption_frame_8cpp.html" title=" " alt="" coords="766,212,925,264"/>
-<area shape="rect" id="node48" href="$_caption_frame_test_8cpp.html" title=" " alt="" coords="949,212,1134,264"/>
-<area shape="rect" id="node14" href="$_mock_caption_parser_8h.html" title=" " alt="" coords="144,439,342,491"/>
-<area shape="rect" id="node16" href="$_caption_timing_adapter_8h.html" title=" " alt="" coords="1225,439,1495,491"/>
-<area shape="rect" id="node20" href="$_timing_adapter_factory_8h.html" title=" " alt="" coords="1050,325,1318,377"/>
-<area shape="rect" id="node17" href="$_caption_timing_adapter_8cpp.html" title=" " alt="" coords="1262,552,1466,604"/>
-<area shape="rect" id="node18" href="$_timing_adapter_factory_8cpp.html" title=" " alt="" coords="986,552,1187,604"/>
-<area shape="rect" id="node19" href="$_caption_timing_adapter_test_8cpp.html" title=" " alt="" coords="1489,552,1721,604"/>
-<area shape="rect" id="node21" href="$_mock_caption_timing_adapter_8h.html" title=" " alt="" coords="416,439,640,491"/>
-<area shape="rect" id="node22" href="$_test_timing_adapter_factory_8h.html" title=" " alt="" coords="147,552,362,604"/>
-<area shape="rect" id="node23" href="$_test_timing_adapter_factory_8cpp.html" title=" " alt="" coords="147,659,376,711"/>
-<area shape="rect" id="node25" href="$_audio_player_8h.html" title=" " alt="" coords="2793,432,3012,497"/>
-<area shape="rect" id="node38" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2509,552,2718,604"/>
-<area shape="rect" id="node39" href="$_speech_synthesizer_8h.html" title=" " alt="" coords="2238,432,2506,497"/>
-<area shape="rect" id="node26" href="$_default_client_8h.html" title=" " alt="" coords="3086,545,3314,611"/>
-<area shape="rect" id="node37" href="$_audio_player_8cpp.html" title=" " alt="" coords="2793,552,3012,604"/>
-<area shape="rect" id="node27" href="$_default_client_8cpp.html" title=" " alt="" coords="3086,659,3314,711"/>
-<area shape="rect" id="node28" href="$_interaction_manager_8h.html" title=" " alt="" coords="3237,765,3459,817"/>
-<area shape="rect" id="node35" href="$_keyword_observer_8h.html" title=" " alt="" coords="3390,659,3605,711"/>
-<area shape="rect" id="node29" href="$_user_input_manager_8h.html" title=" " alt="" coords="3012,872,3231,924"/>
-<area shape="rect" id="node34" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="3254,872,3461,924"/>
-<area shape="rect" id="node30" href="$_sample_application_8h.html" title=" " alt="" coords="3012,972,3231,1024"/>
-<area shape="rect" id="node33" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="3255,972,3457,1024"/>
-<area shape="rect" id="node31" href="$main_8cpp.html" title=" " alt="" coords="3022,1072,3221,1111"/>
-<area shape="rect" id="node32" href="$_sample_application_8cpp.html" title=" " alt="" coords="3357,1072,3637,1111"/>
-<area shape="rect" id="node36" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="3534,772,3810,811"/>
-<area shape="rect" id="node40" href="$_speech_synthesizer_8cpp.html" title=" " alt="" coords="2074,545,2238,611"/>
-<area shape="rect" id="node41" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2262,552,2434,604"/>
-<area shape="rect" id="node42" href="$_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="1847,545,2049,611"/>
-<area shape="rect" id="node44" href="$_mock_caption_presenter_8h.html" title=" " alt="" coords="1565,439,1763,491"/>
-<area shape="rect" id="node45" href="$_caption_presenter_8h.html" title=" " alt="" coords="3741,325,3953,377"/>
-<area shape="rect" id="node46" href="$_caption_presenter_8cpp.html" title=" " alt="" coords="3884,445,4156,484"/>
+<area shape="rect" id="node2" href="$_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionManager.h" alt="" coords="393,577,626,633"/>
+<area shape="rect" id="node4" href="$_caption_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionManagerTest.cpp" alt="" coords="167,799,366,855"/>
+<area shape="rect" id="node9" href="$_libwebvtt_parser_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/LibwebvttParserAdapter.h" alt="" coords="816,458,1093,514"/>
+<area shape="rect" id="node11" href="$_caption_frame_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/include/Captions/CaptionFrame.h" alt="" coords="935,109,1155,165"/>
+<area shape="rect" id="node43" href="$_caption_presenter_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/include/Captions/CaptionPresenter\lInterface.h" alt="" coords="1546,213,1774,284"/>
+<area shape="rect" id="node49" href="$_caption_line_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/src/CaptionLine.cpp" alt="" coords="1595,109,1754,165"/>
+<area shape="rect" id="node50" href="$_caption_line_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/test/CaptionLineTest.cpp" alt="" coords="1778,109,1950,165"/>
+<area shape="rect" id="node3" href="$_caption_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/CaptionManager.cpp" alt="" coords="566,688,762,744"/>
+<area shape="rect" id="node5" href="$_mock_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionManager.h" alt="" coords="2237,688,2433,744"/>
+<area shape="rect" id="node6" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="2743,792,2974,863"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="2307,792,2498,863"/>
+<area shape="rect" id="node8" href="$_libwebvtt_parser_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/LibwebvttParserAdapterTest.cpp" alt="" coords="1689,799,1932,855"/>
+<area shape="rect" id="node10" href="$_libwebvtt_parser_adapter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/LibwebvttParserAdapter.cpp" alt="" coords="701,577,913,633"/>
+<area shape="rect" id="node12" href="$_caption_frame_parse_listener_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionFrameParse\lListenerInterface.h" alt="" coords="333,213,576,284"/>
+<area shape="rect" id="node13" href="$_caption_parser_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionParserInterface.h" alt="" coords="423,339,695,395"/>
+<area shape="rect" id="node15" href="$_caption_timing_adapter_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionTimingAdapter\lInterface.h" alt="" coords="1163,213,1419,284"/>
+<area shape="rect" id="node24" href="$_caption_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/include/Captions/CaptionManager\lInterface.h" alt="" coords="2259,332,2482,403"/>
+<area shape="rect" id="node47" href="$_caption_frame_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/src/CaptionFrame.cpp" alt="" coords="770,221,929,277"/>
+<area shape="rect" id="node48" href="$_caption_frame_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/test/CaptionFrameTest.cpp" alt="" coords="953,221,1138,277"/>
+<area shape="rect" id="node14" href="$_mock_caption_parser_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionParser.h" alt="" coords="145,458,341,514"/>
+<area shape="rect" id="node16" href="$_caption_timing_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionTimingAdapter.h" alt="" coords="1228,458,1495,514"/>
+<area shape="rect" id="node20" href="$_timing_adapter_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/TimingAdapterFactory.h" alt="" coords="1048,339,1315,395"/>
+<area shape="rect" id="node17" href="$_caption_timing_adapter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/CaptionTimingAdapter.cpp" alt="" coords="1264,577,1467,633"/>
+<area shape="rect" id="node18" href="$_timing_adapter_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/TimingAdapterFactory.cpp" alt="" coords="987,577,1189,633"/>
+<area shape="rect" id="node19" href="$_caption_timing_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionTimingAdapterTest.cpp" alt="" coords="1491,577,1723,633"/>
+<area shape="rect" id="node21" href="$_mock_caption_timing_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionTimingAdapter.h" alt="" coords="416,458,640,514"/>
+<area shape="rect" id="node22" href="$_test_timing_adapter_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/TestTimingAdapterFactory.h" alt="" coords="151,577,369,633"/>
+<area shape="rect" id="node23" href="$_test_timing_adapter_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/TestTimingAdapterFactory.cpp" alt="" coords="151,688,382,744"/>
+<area shape="rect" id="node25" href="$_audio_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayer.h" alt="" coords="2809,451,3025,521"/>
+<area shape="rect" id="node38" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="2508,577,2716,633"/>
+<area shape="rect" id="node39" href="$_speech_synthesizer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/include\l/SpeechSynthesizer/SpeechSynthesizer.h" alt="" coords="2237,451,2504,521"/>
+<area shape="rect" id="node26" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="3119,569,3345,640"/>
+<area shape="rect" id="node37" href="$_audio_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/src/AudioPlayer.cpp" alt="" coords="2791,577,3043,633"/>
+<area shape="rect" id="node27" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="3117,688,3347,744"/>
+<area shape="rect" id="node28" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="3271,799,3489,855"/>
+<area shape="rect" id="node35" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="3421,688,3633,744"/>
+<area shape="rect" id="node29" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="3045,911,3259,967"/>
+<area shape="rect" id="node34" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="3284,911,3489,967"/>
+<area shape="rect" id="node30" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="3044,1015,3260,1071"/>
+<area shape="rect" id="node33" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="3285,1015,3486,1071"/>
+<area shape="rect" id="node31" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="3053,1119,3251,1160"/>
+<area shape="rect" id="node32" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="3388,1119,3665,1160"/>
+<area shape="rect" id="node36" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="3565,807,3838,848"/>
+<area shape="rect" id="node40" href="$_speech_synthesizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src\l/SpeechSynthesizer.cpp" alt="" coords="2073,569,2237,640"/>
+<area shape="rect" id="node41" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="2261,577,2433,633"/>
+<area shape="rect" id="node42" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1848,569,2048,640"/>
+<area shape="rect" id="node44" href="$_mock_caption_presenter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionPresenter.h" alt="" coords="1565,458,1761,514"/>
+<area shape="rect" id="node45" href="$_caption_presenter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/CaptionPresenter.h" alt="" coords="3771,339,3981,395"/>
+<area shape="rect" id="node46" href="$_caption_presenter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/CaptionPresenter.cpp" alt="" coords="3914,465,4185,507"/>
 </map>

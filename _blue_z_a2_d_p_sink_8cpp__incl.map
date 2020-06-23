@@ -1,52 +1,32 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/src/BlueZA2DPSink.cpp" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/src/BlueZA2DPSink.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1822,5,2028,57"/>
-<area shape="rect" id="node2" href="$_logger_8h.html" title=" " alt="" coords="749,572,925,611"/>
-<area shape="rect" id="node23" href="$_blue_z_a2_d_p_sink_8h.html" title=" " alt="" coords="3061,192,3227,217"/>
-<area shape="rect" id="node41" href="$_blue_z_device_manager_8h.html" title=" " alt="" coords="1826,105,2025,131"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1154,779,1214,804"/>
-<area shape="rect" id="node4" title=" " alt="" coords="630,779,692,804"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1448,779,1506,804"/>
-<area shape="rect" id="node6" title=" " alt="" coords="716,779,785,804"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1062,779,1119,804"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title=" " alt="" coords="410,672,624,711"/>
-<area shape="rect" id="node15" href="$_level_8h.html" title=" " alt="" coords="5,772,181,811"/>
-<area shape="rect" id="node16" href="$_log_entry_8h.html" title=" " alt="" coords="749,672,925,711"/>
-<area shape="rect" id="node21" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="31,672,228,711"/>
-<area shape="rect" id="node22" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1565,672,1741,711"/>
-<area shape="rect" id="node9" title=" " alt="" coords="492,779,556,804"/>
-<area shape="rect" id="node10" title=" " alt="" coords="120,865,192,891"/>
-<area shape="rect" id="node11" title=" " alt="" coords="2048,779,2117,804"/>
-<area shape="rect" id="node12" title=" " alt="" coords="256,779,296,804"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1602,865,1656,891"/>
-<area shape="rect" id="node14" title=" " alt="" coords="319,779,468,804"/>
-<area shape="rect" id="node17" title=" " alt="" coords="809,779,885,804"/>
-<area shape="rect" id="node18" title=" " alt="" coords="959,779,1038,804"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1667,772,1843,811"/>
-<area shape="rect" id="node20" title=" " alt="" coords="3648,865,3717,891"/>
-<area shape="rect" id="node24" href="$_a2_d_p_sink_interface_8h.html" title=" " alt="" coords="3181,465,3382,517"/>
-<area shape="rect" id="node27" href="$_bluetooth_event_bus_8h.html" title=" " alt="" coords="2070,285,2261,324"/>
-<area shape="rect" id="node40" href="$_s_d_p_records_8h.html" title=" " alt="" coords="3454,672,3645,711"/>
-<area shape="rect" id="node25" href="$_bluetooth_service_interface_8h.html" title=" " alt="" coords="3182,665,3378,717"/>
-<area shape="rect" id="node26" href="$_s_d_p_record_interface_8h.html" title=" " alt="" coords="3077,765,3288,817"/>
-<area shape="rect" id="node28" title=" " alt="" coords="2018,385,2134,411"/>
-<area shape="rect" id="node29" title=" " alt="" coords="2611,385,2650,411"/>
-<area shape="rect" id="node30" href="$_bluetooth_events_8h.html" title=" " alt="" coords="2611,472,2802,511"/>
-<area shape="rect" id="node39" href="$_bluetooth_event_listener_interface_8h.html" title=" " alt="" coords="2259,379,2485,417"/>
-<area shape="rect" id="node31" href="$_bluetooth_device_interface_8h.html" title=" " alt="" coords="2292,572,2537,611"/>
-<area shape="rect" id="node33" href="$_media_streaming_state_8h.html" title=" " alt="" coords="2521,672,2711,711"/>
-<area shape="rect" id="node35" href="$_a2_d_p_source_interface_8h.html" title=" " alt="" coords="2877,565,3094,617"/>
-<area shape="rect" id="node37" href="$_a_v_r_c_p_target_interface_8h.html" title=" " alt="" coords="3297,565,3519,617"/>
-<area shape="rect" id="node38" href="$_a2_d_p_role_8h.html" title=" " alt="" coords="2561,572,2751,611"/>
-<area shape="rect" id="node32" title=" " alt="" coords="2120,679,2176,704"/>
-<area shape="rect" id="node34" href="$_optional_8h.html" title=" " alt="" coords="2250,679,2446,704"/>
-<area shape="rect" id="node36" href="$_formatted_audio_stream_adapter_8h.html" title=" " alt="" coords="2786,672,3006,711"/>
-<area shape="rect" id="node42" title=" " alt="" coords="1395,192,1442,217"/>
-<area shape="rect" id="node43" href="$_bluetooth_device_manager_interface_8h.html" title=" " alt="" coords="2403,179,2637,231"/>
-<area shape="rect" id="node44" href="$_bluetooth_host_controller_interface_8h.html" title=" " alt="" coords="1611,279,1837,331"/>
-<area shape="rect" id="node45" href="$_requires_shutdown_8h.html" title=" " alt="" coords="1101,672,1289,711"/>
-<area shape="rect" id="node46" href="$_blue_z_host_controller_8h.html" title=" " alt="" coords="1466,192,1656,217"/>
-<area shape="rect" id="node47" title=" " alt="" coords="1515,292,1587,317"/>
-<area shape="rect" id="node48" href="$_blue_z_utils_8h.html" title=" " alt="" coords="1207,292,1339,317"/>
-<area shape="rect" id="node49" href="$_m_p_r_i_s_player_8h.html" title=" " alt="" coords="1962,192,2112,217"/>
-<area shape="rect" id="node50" href="$_pairing_agent_8h.html" title=" " alt="" coords="1690,192,1838,217"/>
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="751,593,927,634"/>
+<area shape="rect" id="node23" href="$_blue_z_a2_d_p_sink_8h.html" title="BlueZ/BlueZA2DPSink.h" alt="" coords="3065,199,3231,225"/>
+<area shape="rect" id="node41" href="$_blue_z_device_manager_8h.html" title="BlueZ/BlueZDeviceManager.h" alt="" coords="1829,109,2025,136"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="410,697,625,738"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="5,801,181,842"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="751,697,927,738"/>
+<area shape="rect" id="node21" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="69,697,262,738"/>
+<area shape="rect" id="node22" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1569,697,1745,738"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1671,801,1847,842"/>
+<area shape="rect" id="node24" href="$_a2_d_p_sink_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSink\lInterface.h" alt="" coords="3186,481,3387,537"/>
+<area shape="rect" id="node27" href="$_bluetooth_event_bus_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEventBus.h" alt="" coords="2072,295,2264,337"/>
+<area shape="rect" id="node40" href="$_s_d_p_records_8h.html" title="AVSCommon/Utils/Bluetooth\l/SDPRecords.h" alt="" coords="3455,697,3647,738"/>
+<area shape="rect" id="node25" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="3185,689,3380,745"/>
+<area shape="rect" id="node26" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="3080,793,3291,849"/>
+<area shape="rect" id="node30" href="$_bluetooth_events_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEvents.h" alt="" coords="2607,489,2799,530"/>
+<area shape="rect" id="node39" href="$_bluetooth_event_listener_interface_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEventListenerInterface.h" alt="" coords="2259,392,2482,433"/>
+<area shape="rect" id="node31" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="2289,593,2532,634"/>
+<area shape="rect" id="node33" href="$_media_streaming_state_8h.html" title="AVSCommon/Utils/Bluetooth\l/MediaStreamingState.h" alt="" coords="2527,697,2719,738"/>
+<area shape="rect" id="node35" href="$_a2_d_p_source_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/A2DPSource\lInterface.h" alt="" coords="2873,585,3089,641"/>
+<area shape="rect" id="node37" href="$_a_v_r_c_p_target_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPTarget\lInterface.h" alt="" coords="3297,585,3521,641"/>
+<area shape="rect" id="node38" href="$_a2_d_p_role_8h.html" title="AVSCommon/Utils/Bluetooth\l/A2DPRole.h" alt="" coords="2556,593,2748,634"/>
+<area shape="rect" id="node34" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2255,704,2451,731"/>
+<area shape="rect" id="node36" href="$_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="2793,697,3009,738"/>
+<area shape="rect" id="node43" href="$_bluetooth_device_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceManager\lInterface.h" alt="" coords="2402,184,2633,240"/>
+<area shape="rect" id="node44" href="$_bluetooth_host_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothHostController\lInterface.h" alt="" coords="1615,288,1839,344"/>
+<area shape="rect" id="node45" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1103,697,1292,738"/>
+<area shape="rect" id="node46" href="$_blue_z_host_controller_8h.html" title="BlueZ/BlueZHostController.h" alt="" coords="1469,199,1659,225"/>
+<area shape="rect" id="node48" href="$_blue_z_utils_8h.html" title="BlueZ/BlueZUtils.h" alt="" coords="1210,303,1342,329"/>
+<area shape="rect" id="node49" href="$_m_p_r_i_s_player_8h.html" title="BlueZ/MPRISPlayer.h" alt="" coords="1965,199,2115,225"/>
+<area shape="rect" id="node50" href="$_pairing_agent_8h.html" title="BlueZ/PairingAgent.h" alt="" coords="1693,199,1838,225"/>
 </map>

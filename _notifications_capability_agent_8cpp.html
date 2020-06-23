@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Notifications/src/NotificationsCapabilityAgent.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Notifications/acsdkNotifications/src/NotificationsCapabilityAgent.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_51ceba3e0236022a3ce16bfbc638804e.html">Notifications</a></li><li class="navelem"><a class="el" href="dir_3cb7a24e7d88f8d7e416c9228ad06d12.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_1b24651c7570ffe584d16a409aec5522.html">Notifications</a></li><li class="navelem"><a class="el" href="dir_c561697a2a7f13e0483afc1a192409a3.html">acsdkNotifications</a></li><li class="navelem"><a class="el" href="dir_9d184a7d37963f3f1c8aea45a948a86e.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,10 +74,10 @@ $(function() {
 <div class="title">NotificationsCapabilityAgent.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_notifications_capability_agent_8h_source.html">Notifications/NotificationsCapabilityAgent.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_notifications_capability_agent_8h_source.html">acsdkNotifications/NotificationsCapabilityAgent.h</a>&quot;</code><br />
+<code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
-<code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
@@ -86,8 +86,41 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for NotificationsCapabilityAgent.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_notifications_capability_agent_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2src_2_notifications_capability_agent_8cpp" alt=""/></div>
-<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2src_2_notifications_capability_agent_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workplace_21_819__release_2doxy_2avs-device-sdk_2_capability_agents_2_notifications_2src_2_notifications_capability_agent_8cpp">
+<div class="center"><img src="_notifications_capability_agent_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2src_2_notifications_capability_agent_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2src_2_notifications_capability_agent_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2src_2_notifications_capability_agent_8cpp">
+<area shape="rect" id="node2" href="_notifications_capability_agent_8h.html" title="acsdkNotifications\l/NotificationsCapabilityAgent.h" alt="" coords="1107,124,1309,165"/>
+<area shape="rect" id="node17" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2943,303,3137,344"/>
+<area shape="rect" id="node43" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="3417,303,3591,344"/>
+<area shape="rect" id="node45" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="3625,124,3807,165"/>
+<area shape="rect" id="node46" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="3291,213,3471,255"/>
+<area shape="rect" id="node47" href="_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="4016,213,4192,255"/>
+<area shape="rect" id="node5" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1697,213,1892,255"/>
+<area shape="rect" id="node23" href="_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="5,392,219,448"/>
+<area shape="rect" id="node26" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="2277,213,2499,255"/>
+<area shape="rect" id="node27" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1179,213,1371,255"/>
+<area shape="rect" id="node28" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2786,213,2966,255"/>
+<area shape="rect" id="node31" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="563,399,752,441"/>
+<area shape="rect" id="node32" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="243,399,437,441"/>
+<area shape="rect" id="node33" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="321,213,487,255"/>
+<area shape="rect" id="node34" href="_notification_indicator_8h.html" title="NotificationIndicator.h" alt="" coords="933,310,1083,337"/>
+<area shape="rect" id="node35" href="_notifications_capability_agent_state_8h.html" title="NotificationsCapabilityAgent\lState.h" alt="" coords="2524,213,2711,255"/>
+<area shape="rect" id="node36" href="_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="614,213,821,255"/>
+<area shape="rect" id="node37" href="_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="715,303,909,344"/>
+<area shape="rect" id="node38" href="_notifications_observer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsObserverInterface.h" alt="" coords="1395,213,1610,255"/>
+<area shape="rect" id="node39" href="_notifications_storage_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsStorageInterface.h" alt="" coords="897,213,1103,255"/>
+<area shape="rect" id="node9" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1443,399,1674,441"/>
+<area shape="rect" id="node10" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2162,303,2422,344"/>
+<area shape="rect" id="node11" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2447,303,2639,344"/>
+<area shape="rect" id="node12" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1893,303,2088,344"/>
+<area shape="rect" id="node14" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1259,303,1451,344"/>
+<area shape="rect" id="node15" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1627,303,1819,344"/>
+<area shape="rect" id="node16" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1698,399,1921,441"/>
+<area shape="rect" id="node20" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3033,407,3229,433"/>
+<area shape="rect" id="node21" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3363,496,3539,537"/>
+<area shape="rect" id="node29" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="3213,303,3393,344"/>
+<area shape="rect" id="node30" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="3629,399,3809,441"/>
+<area shape="rect" id="node49" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="3716,310,3929,337"/>
+<area shape="rect" id="node50" href="_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="3953,303,4129,344"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -96,9 +129,7 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html">alexaClientSDK::capabilityAgents::notifications</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_notifications"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html">alexaClientSDK::acsdkNotifications</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -108,58 +139,57 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afc97f17d35adf26c4d0c1e3abb297631"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#afc97f17d35adf26c4d0c1e3abb297631">alexaClientSDK::capabilityAgents::notifications::TAG</a> (&quot;NotificationsCapabilityAgent&quot;)</td></tr>
-<tr class="memdesc:afc97f17d35adf26c4d0c1e3abb297631"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#afc97f17d35adf26c4d0c1e3abb297631">More...</a><br /></td></tr>
-<tr class="separator:afc97f17d35adf26c4d0c1e3abb297631"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a51d4e6a1a00ffd0da28a416ea9c160"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; avsCommon::avs::CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1a51d4e6a1a00ffd0da28a416ea9c160">alexaClientSDK::capabilityAgents::notifications::getNotificationsCapabilityConfiguration</a> ()</td></tr>
-<tr class="separator:a1a51d4e6a1a00ffd0da28a416ea9c160"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7c21404d74f914c5e995a2e0cb2b69b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#aa7c21404d74f914c5e995a2e0cb2b69b">alexaClientSDK::capabilityAgents::notifications::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;eventName)</td></tr>
-<tr class="separator:aa7c21404d74f914c5e995a2e0cb2b69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ccbbfdac0bf6c3f002c739f723c14ca"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a5ccbbfdac0bf6c3f002c739f723c14ca">alexaClientSDK::acsdkNotifications::TAG</a> (&quot;NotificationsCapabilityAgent&quot;)</td></tr>
+<tr class="memdesc:a5ccbbfdac0bf6c3f002c739f723c14ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a5ccbbfdac0bf6c3f002c739f723c14ca">More...</a><br /></td></tr>
+<tr class="separator:a5ccbbfdac0bf6c3f002c739f723c14ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd056ee013e9d5d494c65da088c39120"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; avsCommon::avs::CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#acd056ee013e9d5d494c65da088c39120">alexaClientSDK::acsdkNotifications::getNotificationsCapabilityConfiguration</a> ()</td></tr>
+<tr class="separator:acd056ee013e9d5d494c65da088c39120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72a20e157a8f55914f17f2e6736709ae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a72a20e157a8f55914f17f2e6736709ae">alexaClientSDK::acsdkNotifications::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;eventName)</td></tr>
+<tr class="separator:a72a20e157a8f55914f17f2e6736709ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a0440aa524c87505ac3caae9e9e1f706a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0440aa524c87505ac3caae9e9e1f706a">alexaClientSDK::capabilityAgents::notifications::NOTIFICATIONS_CAPABILITY_INTERFACE_TYPE</a> = &quot;AlexaInterface&quot;</td></tr>
-<tr class="separator:a0440aa524c87505ac3caae9e9e1f706a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fef378c8df5fc5b4a2b1f0ba729d05a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6fef378c8df5fc5b4a2b1f0ba729d05a">alexaClientSDK::capabilityAgents::notifications::NOTIFICATIONS_CAPABILITY_INTERFACE_NAME</a> = &quot;Notifications&quot;</td></tr>
-<tr class="memdesc:a6fef378c8df5fc5b4a2b1f0ba729d05a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications interface name.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6fef378c8df5fc5b4a2b1f0ba729d05a">More...</a><br /></td></tr>
-<tr class="separator:a6fef378c8df5fc5b4a2b1f0ba729d05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84ecc569ef1a58a6907928984d783f65"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a84ecc569ef1a58a6907928984d783f65">alexaClientSDK::capabilityAgents::notifications::NOTIFICATIONS_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.0&quot;</td></tr>
-<tr class="memdesc:a84ecc569ef1a58a6907928984d783f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications interface version.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a84ecc569ef1a58a6907928984d783f65">More...</a><br /></td></tr>
-<tr class="separator:a84ecc569ef1a58a6907928984d783f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ca861f554bba3a2d5acac936585312"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a13ca861f554bba3a2d5acac936585312">alexaClientSDK::capabilityAgents::notifications::NAMESPACE</a> = &quot;Notifications&quot;</td></tr>
-<tr class="memdesc:a13ca861f554bba3a2d5acac936585312"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a13ca861f554bba3a2d5acac936585312">More...</a><br /></td></tr>
-<tr class="separator:a13ca861f554bba3a2d5acac936585312"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e343449108711c9324d4e67bdb3d78b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0e343449108711c9324d4e67bdb3d78b">alexaClientSDK::capabilityAgents::notifications::NOTIFICATION_METRIC_SOURCE_PREFIX</a> = &quot;NOTIFICATION-&quot;</td></tr>
-<tr class="memdesc:a0e343449108711c9324d4e67bdb3d78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for NOTIFICATION metric source.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a0e343449108711c9324d4e67bdb3d78b">More...</a><br /></td></tr>
-<tr class="separator:a0e343449108711c9324d4e67bdb3d78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af92c6d3ad8907d9d76ef781fd35af4"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a8af92c6d3ad8907d9d76ef781fd35af4">alexaClientSDK::capabilityAgents::notifications::INDICATOR_STATE_CONTEXT_KEY</a> {NAMESPACE, &quot;IndicatorState&quot;}</td></tr>
-<tr class="memdesc:a8af92c6d3ad8907d9d76ef781fd35af4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1notifications_1_1_notifications_capability_agent.html">NotificationsCapabilityAgent</a></code> context state signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a8af92c6d3ad8907d9d76ef781fd35af4">More...</a><br /></td></tr>
-<tr class="separator:a8af92c6d3ad8907d9d76ef781fd35af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e313af9a2e32fa33305b0a245d6d415"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a7e313af9a2e32fa33305b0a245d6d415">alexaClientSDK::capabilityAgents::notifications::SET_INDICATOR</a> {NAMESPACE, &quot;SetIndicator&quot;}</td></tr>
-<tr class="memdesc:a7e313af9a2e32fa33305b0a245d6d415"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>SetIndicator</code> directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a7e313af9a2e32fa33305b0a245d6d415">More...</a><br /></td></tr>
-<tr class="separator:a7e313af9a2e32fa33305b0a245d6d415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afda3820736d291b26674fb1a9d6d19d3"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#afda3820736d291b26674fb1a9d6d19d3">alexaClientSDK::capabilityAgents::notifications::CLEAR_INDICATOR</a> {NAMESPACE, &quot;ClearIndicator&quot;}</td></tr>
-<tr class="memdesc:afda3820736d291b26674fb1a9d6d19d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>SetIndicator</code> directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#afda3820736d291b26674fb1a9d6d19d3">More...</a><br /></td></tr>
-<tr class="separator:afda3820736d291b26674fb1a9d6d19d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fb1574295aed88b0a1531bc23a9fa3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ae7fb1574295aed88b0a1531bc23a9fa3">alexaClientSDK::capabilityAgents::notifications::PERSIST_VISUAL_INDICATOR_KEY</a> = &quot;persistVisualIndicator&quot;</td></tr>
-<tr class="memdesc:ae7fb1574295aed88b0a1531bc23a9fa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keys for directive payload values.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ae7fb1574295aed88b0a1531bc23a9fa3">More...</a><br /></td></tr>
-<tr class="separator:ae7fb1574295aed88b0a1531bc23a9fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aa7e9ad73bda33e496470c62c598302"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a6aa7e9ad73bda33e496470c62c598302">alexaClientSDK::capabilityAgents::notifications::PLAY_AUDIO_INDICATOR_KEY</a> = &quot;playAudioIndicator&quot;</td></tr>
-<tr class="separator:a6aa7e9ad73bda33e496470c62c598302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afed64e71909bb1352f700201de6197e1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#afed64e71909bb1352f700201de6197e1">alexaClientSDK::capabilityAgents::notifications::ASSET_KEY</a> = &quot;asset&quot;</td></tr>
-<tr class="separator:afed64e71909bb1352f700201de6197e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1de1b8752cb3549716c816d609e1f097"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a1de1b8752cb3549716c816d609e1f097">alexaClientSDK::capabilityAgents::notifications::ASSET_ID_KEY</a> = &quot;assetId&quot;</td></tr>
-<tr class="separator:a1de1b8752cb3549716c816d609e1f097"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea51fb508a3da5dff12f149c38e40cd8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#aea51fb508a3da5dff12f149c38e40cd8">alexaClientSDK::capabilityAgents::notifications::ASSET_URL_KEY</a> = &quot;url&quot;</td></tr>
-<tr class="separator:aea51fb508a3da5dff12f149c38e40cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a777bf22881b730248127a3197fe6e59e"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a777bf22881b730248127a3197fe6e59e">alexaClientSDK::capabilityAgents::notifications::IS_ENABLED_KEY</a> [] = &quot;isEnabled&quot;</td></tr>
-<tr class="memdesc:a777bf22881b730248127a3197fe6e59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to provide the "isEnabled" property in the state payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a777bf22881b730248127a3197fe6e59e">More...</a><br /></td></tr>
-<tr class="separator:a777bf22881b730248127a3197fe6e59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90159498ad75a76f8eb3be1c0839b4ef"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a90159498ad75a76f8eb3be1c0839b4ef">alexaClientSDK::capabilityAgents::notifications::IS_VISUAL_INDICATOR_PERSISTED_KEY</a> [] = &quot;isVisualIndicatorPersisted&quot;</td></tr>
-<tr class="memdesc:a90159498ad75a76f8eb3be1c0839b4ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to provide the "isVisualIndicatorPersisted" property in the state payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#a90159498ad75a76f8eb3be1c0839b4ef">More...</a><br /></td></tr>
-<tr class="separator:a90159498ad75a76f8eb3be1c0839b4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad168645113a45c10d458b90bc14241c3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1notifications.html#ad168645113a45c10d458b90bc14241c3">alexaClientSDK::capabilityAgents::notifications::SHUTDOWN_TIMEOUT</a> {500}</td></tr>
-<tr class="separator:ad168645113a45c10d458b90bc14241c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a850ab41de0da465261291cf8ba7e72d0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a850ab41de0da465261291cf8ba7e72d0">alexaClientSDK::acsdkNotifications::NOTIFICATIONS_CAPABILITY_INTERFACE_TYPE</a> = &quot;AlexaInterface&quot;</td></tr>
+<tr class="separator:a850ab41de0da465261291cf8ba7e72d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dd8eb02062e07d7f2fbe907ffc8f654"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a2dd8eb02062e07d7f2fbe907ffc8f654">alexaClientSDK::acsdkNotifications::NOTIFICATIONS_CAPABILITY_INTERFACE_NAME</a> = &quot;Notifications&quot;</td></tr>
+<tr class="memdesc:a2dd8eb02062e07d7f2fbe907ffc8f654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications interface name.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a2dd8eb02062e07d7f2fbe907ffc8f654">More...</a><br /></td></tr>
+<tr class="separator:a2dd8eb02062e07d7f2fbe907ffc8f654"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22e73f3a8b60730a526d854c50be1a87"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a22e73f3a8b60730a526d854c50be1a87">alexaClientSDK::acsdkNotifications::NOTIFICATIONS_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="memdesc:a22e73f3a8b60730a526d854c50be1a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifications interface version.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a22e73f3a8b60730a526d854c50be1a87">More...</a><br /></td></tr>
+<tr class="separator:a22e73f3a8b60730a526d854c50be1a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8db4c3ac5118cc15ffff54c3c7123281"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a8db4c3ac5118cc15ffff54c3c7123281">alexaClientSDK::acsdkNotifications::NAMESPACE</a> = &quot;Notifications&quot;</td></tr>
+<tr class="memdesc:a8db4c3ac5118cc15ffff54c3c7123281"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a8db4c3ac5118cc15ffff54c3c7123281">More...</a><br /></td></tr>
+<tr class="separator:a8db4c3ac5118cc15ffff54c3c7123281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a655e77ae5d2d12fe0e351326d73654b9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a655e77ae5d2d12fe0e351326d73654b9">alexaClientSDK::acsdkNotifications::NOTIFICATION_METRIC_SOURCE_PREFIX</a> = &quot;NOTIFICATION-&quot;</td></tr>
+<tr class="memdesc:a655e77ae5d2d12fe0e351326d73654b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for NOTIFICATION metric source.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a655e77ae5d2d12fe0e351326d73654b9">More...</a><br /></td></tr>
+<tr class="separator:a655e77ae5d2d12fe0e351326d73654b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a482dfd5b93fb5e3baa1b61a031e7749d"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a482dfd5b93fb5e3baa1b61a031e7749d">alexaClientSDK::acsdkNotifications::INDICATOR_STATE_CONTEXT_KEY</a> {NAMESPACE, &quot;IndicatorState&quot;}</td></tr>
+<tr class="memdesc:a482dfd5b93fb5e3baa1b61a031e7749d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html">NotificationsCapabilityAgent</a></code> context state signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a482dfd5b93fb5e3baa1b61a031e7749d">More...</a><br /></td></tr>
+<tr class="separator:a482dfd5b93fb5e3baa1b61a031e7749d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab85a4acd35e30f4961e7f2658bbd7a98"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ab85a4acd35e30f4961e7f2658bbd7a98">alexaClientSDK::acsdkNotifications::SET_INDICATOR</a> {NAMESPACE, &quot;SetIndicator&quot;}</td></tr>
+<tr class="memdesc:ab85a4acd35e30f4961e7f2658bbd7a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>SetIndicator</code> directive signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ab85a4acd35e30f4961e7f2658bbd7a98">More...</a><br /></td></tr>
+<tr class="separator:ab85a4acd35e30f4961e7f2658bbd7a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae12269aead236434d97246507bef681c"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ae12269aead236434d97246507bef681c">alexaClientSDK::acsdkNotifications::CLEAR_INDICATOR</a> {NAMESPACE, &quot;ClearIndicator&quot;}</td></tr>
+<tr class="memdesc:ae12269aead236434d97246507bef681c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>SetIndicator</code> directive signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ae12269aead236434d97246507bef681c">More...</a><br /></td></tr>
+<tr class="separator:ae12269aead236434d97246507bef681c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3fa765e6f04201809385eac23c035c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#aff3fa765e6f04201809385eac23c035c">alexaClientSDK::acsdkNotifications::PERSIST_VISUAL_INDICATOR_KEY</a> = &quot;persistVisualIndicator&quot;</td></tr>
+<tr class="memdesc:aff3fa765e6f04201809385eac23c035c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keys for directive payload values.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#aff3fa765e6f04201809385eac23c035c">More...</a><br /></td></tr>
+<tr class="separator:aff3fa765e6f04201809385eac23c035c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a727e904978295001c83943e68fb91f90"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a727e904978295001c83943e68fb91f90">alexaClientSDK::acsdkNotifications::PLAY_AUDIO_INDICATOR_KEY</a> = &quot;playAudioIndicator&quot;</td></tr>
+<tr class="separator:a727e904978295001c83943e68fb91f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81e9fab8a300bbdc73a3de142dd8247"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ad81e9fab8a300bbdc73a3de142dd8247">alexaClientSDK::acsdkNotifications::ASSET_KEY</a> = &quot;asset&quot;</td></tr>
+<tr class="separator:ad81e9fab8a300bbdc73a3de142dd8247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1cf6c0097148189d65cf14982c8faab"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ab1cf6c0097148189d65cf14982c8faab">alexaClientSDK::acsdkNotifications::ASSET_ID_KEY</a> = &quot;assetId&quot;</td></tr>
+<tr class="separator:ab1cf6c0097148189d65cf14982c8faab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f5d431d975b9d2e69926bc3fb9a6d62"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a3f5d431d975b9d2e69926bc3fb9a6d62">alexaClientSDK::acsdkNotifications::ASSET_URL_KEY</a> = &quot;url&quot;</td></tr>
+<tr class="separator:a3f5d431d975b9d2e69926bc3fb9a6d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae23665b07092a98d2999fa31ec6c3c55"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ae23665b07092a98d2999fa31ec6c3c55">alexaClientSDK::acsdkNotifications::IS_ENABLED_KEY</a> [] = &quot;isEnabled&quot;</td></tr>
+<tr class="memdesc:ae23665b07092a98d2999fa31ec6c3c55"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to provide the "isEnabled" property in the state payload.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ae23665b07092a98d2999fa31ec6c3c55">More...</a><br /></td></tr>
+<tr class="separator:ae23665b07092a98d2999fa31ec6c3c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2e346195f53884d35b6c72c44ce3db4"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#af2e346195f53884d35b6c72c44ce3db4">alexaClientSDK::acsdkNotifications::IS_VISUAL_INDICATOR_PERSISTED_KEY</a> [] = &quot;isVisualIndicatorPersisted&quot;</td></tr>
+<tr class="separator:af2e346195f53884d35b6c72c44ce3db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80ea16310064d0be80ad353f177ecb43"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a80ea16310064d0be80ad353f177ecb43">alexaClientSDK::acsdkNotifications::SHUTDOWN_TIMEOUT</a> {500}</td></tr>
+<tr class="separator:a80ea16310064d0be80ad353f177ecb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -191,7 +221,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

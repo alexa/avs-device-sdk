@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::captions::CaptionParserInterface" name="alexaClientSDK::captions::CaptionParserInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,37,177,76"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_libwebvtt_parser_adapter.html" title=" " alt="" coords="227,5,398,44"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_parser.html" title=" " alt="" coords="225,68,400,107"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_libwebvtt_parser_adapter.html" title="alexaClientSDK::captions\l::LibwebvttParserAdapter" alt="" coords="227,5,399,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_parser.html" title="alexaClientSDK::captions\l::test::MockCaptionParser" alt="" coords="225,71,400,112"/>
 </map>

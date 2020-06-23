@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acl_1_1_message_request_queue_1_1_message_request_queue_struct.html" title="Helper structure to keep track of the SendQueue." alt="" coords="5,5,213,57"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acl_1_1_message_request_queue_interface.html" title="alexaClientSDK::acl\l::MessageRequestQueueInterface" alt="" coords="5,43,227,84"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_request_queue.html" title="alexaClientSDK::acl\l::MessageRequestQueue" alt="" coords="295,5,465,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_synchronized_message_request_queue.html" title="alexaClientSDK::acl\l::SynchronizedMessageRequest\lQueue" alt="" coords="275,71,485,127"/>
 </map>

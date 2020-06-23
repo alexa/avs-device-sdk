@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -212,6 +212,8 @@ Variables</h2></td></tr>
 <tr class="memitem:aad8cc461ed23ef8905a86dc583620653"><td class="memItemLeft" align="right" valign="top">static char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html#aad8cc461ed23ef8905a86dc583620653">GSTREAMER_TREBLE_BAND_NAME</a> [] = &quot;band2&quot;</td></tr>
 <tr class="memdesc:aad8cc461ed23ef8905a86dc583620653"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GStreamer property name for the frequency band 11 kHz.  <a href="#aad8cc461ed23ef8905a86dc583620653">More...</a><br /></td></tr>
 <tr class="separator:aad8cc461ed23ef8905a86dc583620653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a435056e6164e37a3ccbe7b4cef924393"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html#a435056e6164e37a3ccbe7b4cef924393">NUM_OF_CONTENT_READERS</a> = 2</td></tr>
+<tr class="separator:a435056e6164e37a3ccbe7b4cef924393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a550e774c2545455ad0f02afa39b0903a"></a>
@@ -1110,6 +1112,29 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a435056e6164e37a3ccbe7b4cef924393"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a435056e6164e37a3ccbe7b4cef924393">&#9670;&nbsp;</a></span>NUM_OF_CONTENT_READERS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr size_t alexaClientSDK::mediaPlayer::NUM_OF_CONTENT_READERS = 2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Number of readers for UrlContentToAttachmentConverter. We have 2 readers to have an additional parked reader, to ensure that the whole of SDS buffer is conserved until the seek() is called. </p>
+
+</div>
+</div>
 <a id="a9cd4f168cc221964ee9a91cbfe4f8af6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9cd4f168cc221964ee9a91cbfe4f8af6">&#9670;&nbsp;</a></span>RETRY_INTERVALS_MILLISECONDS</h2>
 
@@ -1186,7 +1211,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.19.0</span>
+   &#160;<span id="projectnumber">1.20.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -78,7 +78,7 @@ $(function() {
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a36ca7ce1744926dbbe46abbbccda7072">onRequestProcessingCompleted</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#af6c12223145993e1b099e46c5cdf025c">onRequestProcessingStarted</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a899c2ae495b5f5a0e38837354000ee08">onStateChanged</a>(sdkInterfaces::AudioInputProcessorObserverInterface::State state) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a3bcfc7a5ed98897754888c951c2b0adb">onStateChanged</a>(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state, const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId, const avsCommon::utils::Optional&lt; avsCommon::utils::mediaPlayer::MediaPlayerState &gt; &amp;mediaPlayerState) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#ac06115a6d72e9bb8efe095af0f63db5e">onStateChanged</a>(sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state, const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId, const avsCommon::utils::Optional&lt; avsCommon::utils::mediaPlayer::MediaPlayerState &gt; &amp;mediaPlayerState, const std::vector&lt; avsCommon::utils::audioAnalyzer::AudioAnalyzerState &gt; &amp;audioAnalyzerState) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#aeea4a2b73c4a8e7ae513f4fc4b92a3fd">receive</a>(const std::string &amp;contextId, const std::string &amp;message) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#ade81b7f5b3fd27648292d2b8da73ff39">removeObserver</a>(std::shared_ptr&lt; sdkInterfaces::DialogUXStateObserverInterface &gt; observer)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html#a8ab366983aede83468f6fecd144057fe">SpeechSynthesizerState</a> enum name</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_synthesizer_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface</a></td><td class="entry"></td></tr>
@@ -94,7 +94,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.19.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.20.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

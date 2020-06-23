@@ -1,52 +1,28 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/test/SettingsManagerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/test/SettingsManagerTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1076,5,1252,57"/>
-<area shape="rect" id="node2" title=" " alt="" coords="3148,859,3218,884"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1005,779,1059,804"/>
-<area shape="rect" id="node4" title=" " alt="" coords="105,179,220,204"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1008,105,1102,131"/>
-<area shape="rect" id="node6" href="$_wait_event_8h.html" title=" " alt="" coords="2851,605,3056,631"/>
-<area shape="rect" id="node10" href="$_customer_data_manager_8h.html" title=" " alt="" coords="2893,252,3067,291"/>
-<area shape="rect" id="node14" href="$_device_settings_manager_8h.html" title=" " alt="" coords="758,105,983,131"/>
-<area shape="rect" id="node38" href="$_setting_observer_interface_8h.html" title=" " alt="" coords="2014,599,2184,637"/>
-<area shape="rect" id="node39" href="$_settings_manager_8h.html" title=" " alt="" coords="1677,179,1862,204"/>
-<area shape="rect" id="node50" href="$_mock_setting_8h.html" title=" " alt="" coords="576,105,734,131"/>
-<area shape="rect" id="node7" title=" " alt="" coords="2544,692,2606,717"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2877,692,3006,717"/>
-<area shape="rect" id="node9" title=" " alt="" coords="2683,692,2741,717"/>
-<area shape="rect" id="node11" title=" " alt="" coords="2902,345,2941,371"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1931,432,2038,457"/>
-<area shape="rect" id="node13" href="$_customer_data_handler_8h.html" title=" " alt="" coords="3141,339,3310,377"/>
-<area shape="rect" id="node15" title=" " alt="" coords="2312,432,2371,457"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1139,692,1178,717"/>
-<area shape="rect" id="node17" title=" " alt="" coords="2066,859,2124,884"/>
-<area shape="rect" id="node18" href="$_setting_interface_8h.html" title=" " alt="" coords="1530,345,1708,371"/>
-<area shape="rect" id="node44" href="$_speech_confirmation_setting_type_8h.html" title=" " alt="" coords="262,685,456,724"/>
-<area shape="rect" id="node46" href="$_alarm_volume_ramp_types_8h.html" title=" " alt="" coords="531,685,723,724"/>
-<area shape="rect" id="node47" href="$_network_info_8h.html" title=" " alt="" coords="528,259,723,284"/>
-<area shape="rect" id="node49" href="$_wake_word_confirmation_setting_type_8h.html" title=" " alt="" coords="24,685,238,724"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1305,605,1365,631"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1245,432,1328,457"/>
-<area shape="rect" id="node21" href="$_guarded_value_8h.html" title=" " alt="" coords="1906,519,2137,544"/>
-<area shape="rect" id="node22" href="$_log_entry_8h.html" title=" " alt="" coords="1440,599,1616,637"/>
-<area shape="rect" id="node29" href="$_logger_utils_8h.html" title=" " alt="" coords="2062,425,2237,464"/>
-<area shape="rect" id="node37" href="$_set_setting_result_8h.html" title=" " alt="" coords="1195,519,1379,544"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1371,692,1448,717"/>
-<area shape="rect" id="node24" title=" " alt="" coords="2016,692,2094,717"/>
-<area shape="rect" id="node25" title=" " alt="" coords="1923,692,1992,717"/>
-<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1523,685,1699,724"/>
-<area shape="rect" id="node27" title=" " alt="" coords="592,779,662,804"/>
-<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="2070,772,2245,811"/>
-<area shape="rect" id="node30" href="$_logger_8h.html" title=" " alt="" coords="1656,512,1832,551"/>
-<area shape="rect" id="node31" href="$_configuration_node_8h.html" title=" " alt="" coords="2208,599,2422,637"/>
-<area shape="rect" id="node34" href="$_level_8h.html" title=" " alt="" coords="1723,685,1899,724"/>
-<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1640,599,1837,637"/>
-<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="3032,772,3208,811"/>
-<area shape="rect" id="node32" title=" " alt="" coords="1000,692,1064,717"/>
-<area shape="rect" id="node33" title=" " alt="" coords="2371,692,2520,717"/>
-<area shape="rect" id="node40" title=" " alt="" coords="2040,345,2091,371"/>
-<area shape="rect" id="node41" href="$_setting_string_conversion_8h.html" title=" " alt="" coords="2059,259,2288,284"/>
-<area shape="rect" id="node42" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="2363,339,2533,377"/>
-<area shape="rect" id="node43" title=" " alt="" coords="2497,432,2544,457"/>
-<area shape="rect" id="node45" title=" " alt="" coords="212,779,277,804"/>
-<area shape="rect" id="node48" href="$_optional_8h.html" title=" " alt="" coords="1733,345,1928,371"/>
+<area shape="rect" id="node6" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="2846,623,3055,650"/>
+<area shape="rect" id="node10" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2890,259,3062,300"/>
+<area shape="rect" id="node14" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="747,109,971,136"/>
+<area shape="rect" id="node38" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="2008,616,2176,657"/>
+<area shape="rect" id="node39" href="$_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="1766,184,1949,211"/>
+<area shape="rect" id="node50" href="$_mock_setting_8h.html" title="Settings/MockSetting.h" alt="" coords="563,109,722,136"/>
+<area shape="rect" id="node13" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="3139,348,3306,389"/>
+<area shape="rect" id="node18" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="1519,355,1697,382"/>
+<area shape="rect" id="node44" href="$_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="261,705,453,747"/>
+<area shape="rect" id="node46" href="$_alarm_volume_ramp_types_8h.html" title="Settings/Types/AlarmVolume\lRampTypes.h" alt="" coords="528,705,720,747"/>
+<area shape="rect" id="node47" href="$_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="523,266,719,293"/>
+<area shape="rect" id="node49" href="$_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="24,705,237,747"/>
+<area shape="rect" id="node21" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1897,534,2127,561"/>
+<area shape="rect" id="node22" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1437,616,1613,657"/>
+<area shape="rect" id="node29" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2053,437,2229,479"/>
+<area shape="rect" id="node37" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1184,534,1368,561"/>
+<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1517,705,1693,747"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2067,795,2243,836"/>
+<area shape="rect" id="node30" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1645,527,1821,568"/>
+<area shape="rect" id="node31" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2201,616,2415,657"/>
+<area shape="rect" id="node34" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1717,705,1893,747"/>
+<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1638,616,1831,657"/>
+<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="3032,795,3208,836"/>
+<area shape="rect" id="node41" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2053,266,2280,293"/>
+<area shape="rect" id="node42" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2355,348,2528,389"/>
+<area shape="rect" id="node48" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1722,355,1918,382"/>
 </map>
