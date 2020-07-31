@@ -21,19 +21,29 @@
 
 #include <AIP/AudioInputProcessor.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/CallManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <ExternalMediaPlayer/ExternalMediaPlayer.h>
-#include <MRM/MRMCapabilityAgent.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
+#include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <System/ReportStateHandler.h>
+#include <System/UserInactivityMonitor.h>
+#include <TemplateRuntime/TemplateRuntime.h>
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -77,17 +87,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> visualFocusManager) = 0;
 
     /**
-     * This method sets the MRM capability agent.
-     *
-     * This method will only get called if MRM support has been enabled.
-     *
-     * @param mrmCapabilityAgent The MRM capability agent.
-     * @return A reference to this builder to allow nested function calls.
-     */
-    virtual ExternalCapabilitiesBuilderInterface& withMRMCapabilityAgent(
-        std::shared_ptr<capabilityAgents::mrm::MRMCapabilityAgent> mrmCapabilityAgent) = 0;
-
-    /**
      * This method sets the storage using for setting.
      *
      * @warning The settings storage is opened and closed by DefaultClient during creation and shutdown respectively.
@@ -95,7 +94,40 @@ public:
      * DefaultClient to ensure the storage usage will not be done after it closure.
      */
     virtual ExternalCapabilitiesBuilderInterface& withSettingsStorage(
-        std::shared_ptr<alexaClientSDK::settings::storage::DeviceSettingStorageInterface> settingStorage) = 0;
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage) = 0;
+
+    /**
+     * This method sets the TemplateRuntime Capability Agent for visual interactions.
+     *
+     * This method will only get called if GUI supports has been enabled.
+     *
+     * @param templateRuntime The TemplateRuntime object.
+     */
+    virtual ExternalCapabilitiesBuilderInterface& withTemplateRunTime(
+        std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> templateRuntime) = 0;
+
+    /**
+     * Get the CallManager reference.
+     *
+     * @return A reference of CallManager.
+     */
+    virtual std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface> getCallManager() = 0;
+
+    /**
+     * This method sets the InternetConnectionMonitor for CallManager.
+     *
+     * @param internetConnectionMonitor The InternetConnectionMonitor object.
+     */
+    virtual ExternalCapabilitiesBuilderInterface& withInternetConnectionMonitor(
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor) = 0;
+
+    /**
+     * This method sets the DialogUXStateAggregator for CallManager.
+     *
+     * @param dialogUXStateAggregator The DialogUXStateAggregator object.
+     */
+    virtual ExternalCapabilitiesBuilderInterface& withDialogUXStateAggregator(
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator) = 0;
 
     /**
      * Build the capabilities with the given core components.
@@ -105,10 +137,24 @@ public:
      * @param messageSender Object that can be used to send events to AVS.
      * @param exceptionSender Object that can be used to send exceptions to AVS.
      * @param certifiedSender Object that can be used to send events to AVS that require stronger guarantee.
+     * @param audioFocusManager The focus manager for audio channels.
      * @param dataManager Object used to manage objects that store customer data.
      * @param stateReportHandler Object used to report the device state and its settings.
      * @param audioInputProcessor Object used to recognize voice interactions.
      * @param speakerManager Object used to manage all speaker instances that can be controlled by Alexa.
+     * @param directiveSequencer Object used to sequence and handle a stream of @c AVSDirective instances.
+     * @param userInactivityMonitor Object used to notify an implementation of the user activity.
+     * @param contextManager Object used to provide the context for various components.
+     * @param avsGatewayManager Object used to get the AVS gateway URL data.
+     * @param ringtoneMediaPlayer The media player to play Comms ringtones.
+     * @param audioFactory The audioFactory is a component the provides unique audio streams.
+     * @param ringtoneChannelVolumeInterface The ChannelVolumeInterface used for ringtone channel volume attenuation.
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+     * @param commsMediaPlayer The media player to play Comms calling audio.
+     * @param commsSpeaker The speaker to control volume of Comms calling audio.
+     * @param sharedDataStream The stream to use which has the audio from microphone.
+#endif
+     * @param powerResourceManager Object to manage power resource.
      * @return A list with all capabilities as well as objects that require explicit shutdown. Shutdown will be
      * performed in the reverse order of occurrence.
      */
@@ -123,7 +169,20 @@ public:
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
         std::shared_ptr<capabilityAgents::system::ReportStateHandler> stateReportHandler,
         std::shared_ptr<capabilityAgents::aip::AudioInputProcessor> audioInputProcessor,
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
+        std::shared_ptr<capabilityAgents::system::UserInactivityMonitor> userInactivityMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> ringtoneChannelVolumeInterface,
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+        std::shared_ptr<avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) = 0;
 };
 
 }  // namespace defaultClient

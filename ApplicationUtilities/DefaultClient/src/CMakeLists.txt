@@ -9,7 +9,6 @@ add_library(DefaultClient SHARED
     )
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
-    "${MRM_SOURCE_DIR}/include"
     "${DeviceSettings_SOURCE_DIR}/include"
     "${Endpoints_SOURCE_DIR}/include")
 
@@ -23,35 +22,33 @@ target_link_libraries(DefaultClient
     ADSL
     AFML
     AIP
-    Alerts
     Alexa
     ApiGateway
     AudioResources
-    AudioPlayer
     AVSCommon
     AVSSystem
-    Bluetooth
     Captions
     ContextManager
     DeviceSettings
-    DoNotDisturbCA
+    acsdkDoNotDisturb
     Endpoints
     Equalizer
     ExternalMediaPlayer
     InteractionModel
     InterruptModel
-    Notifications
+    acsdkNotifications
     PlaybackController
     RegistrationManager
+    SDKComponent
+    SoftwareComponentReporter
     SpeakerManager
     SpeechSynthesizer
     SystemSoundPlayer
     TemplateRuntime
+    acsdkAlerts
+    acsdkAudioPlayer
+    acsdkBluetooth
     )
-
-if (COMMS)
-    target_link_libraries(DefaultClient CallManager)
-endif()
 
 if (CAPTIONS)
     target_link_libraries(DefaultClient CaptionsLib)
@@ -63,12 +60,6 @@ endif()
 
 if (MCC)
     target_link_libraries(DefaultClient MeetingClientController)
-endif()
-
-if (MRM AND MRM_STANDALONE_APP)
-    target_link_libraries(DefaultClient MRM MRMHandlerProxy)
-elseif (MRM)
-    target_link_libraries(DefaultClient MRM MRMHandler)
 endif()
 
 if (METRICS)

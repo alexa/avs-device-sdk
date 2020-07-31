@@ -25,7 +25,7 @@ namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 
 /**
- * Interface to observe discovery status from the @c PostConnectCapabilitiesPublisher.
+ * Interface to observe Discovery status from @c CapabilitiesDelegate.
  */
 class DiscoveryStatusObserverInterface {
 public:

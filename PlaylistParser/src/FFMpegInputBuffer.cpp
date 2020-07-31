@@ -30,8 +30,8 @@ int FFMpegInputBuffer::read(int size, uint8_t* data) {
     auto remainingSize = getSize() - m_offset;
     auto readSize = (remainingSize < size) ? remainingSize : size;
     if (readSize > 0) {
-        std::memcpy(data, m_inputBytes.data() + m_offset, size);
-        m_offset += size;
+        std::memcpy(data, m_inputBytes.data() + m_offset, readSize);
+        m_offset += readSize;
     }
     return readSize;
 }

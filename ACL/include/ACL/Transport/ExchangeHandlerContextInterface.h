@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h>
 
@@ -48,7 +49,7 @@ public:
     /**
      * Notification that an @c MessageRequest has been sent.
      */
-    virtual void onMessageRequestSent() = 0;
+    virtual void onMessageRequestSent(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) = 0;
 
     /**
      * Notification that sending a message request timed out.
@@ -59,7 +60,7 @@ public:
      * Notification that sending a @c MessageRequest has failed or been acknowledged by AVS
      * (this is used to indicate it is okay to send the next message).
      */
-    virtual void onMessageRequestAcknowledged() = 0;
+    virtual void onMessageRequestAcknowledged(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) = 0;
 
     /**
      * Notification tht a message request has finished it's exchange with AVS.

@@ -23,7 +23,7 @@ namespace attachment {
 Attachment::Attachment(const std::string& attachmentId) :
         m_id{attachmentId},
         m_hasCreatedWriter{false},
-        m_hasCreatedReader{false} {
+        m_numReaders{0} {
 }
 
 std::string Attachment::getId() const {
@@ -31,7 +31,7 @@ std::string Attachment::getId() const {
 }
 
 bool Attachment::hasCreatedReader() {
-    return m_hasCreatedReader;
+    return m_numReaders > 0;
 }
 
 bool Attachment::hasCreatedWriter() {

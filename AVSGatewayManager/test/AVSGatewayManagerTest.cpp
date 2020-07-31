@@ -154,6 +154,7 @@ TEST_F(AVSGatewayManagerTest, test_createAVSGatewayManagerWithInvalidParameters)
 TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFile) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
     createAVSGatewayManager();
+    ASSERT_EQ(TEST_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 
     EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, TEST_AVS_GATEWAY);
@@ -167,6 +168,7 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFile) {
 TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithNoGateway) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON_NO_GATEWAY);
     createAVSGatewayManager();
+    ASSERT_EQ(DEFAULT_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 
     EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, DEFAULT_AVS_GATEWAY);
@@ -180,6 +182,7 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithNoGateway)
 TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithEmptyGateway) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON_EMPTY_GATEWAY);
     createAVSGatewayManager();
+    ASSERT_EQ(DEFAULT_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 
     EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, DEFAULT_AVS_GATEWAY);
@@ -189,6 +192,7 @@ TEST_F(AVSGatewayManagerTest, test_defaultAVSGatewayFromConfigFileWithEmptyGatew
 
 /**
  * Test if a call to setAVSGatewayAssigner uses the gateway URL from storage.
+ * Also, test if the @c createPostConnectOperation() returns nullptr if the gateway has already been verified.
  */
 TEST_F(AVSGatewayManagerTest, test_avsGatewayFromStorage) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
@@ -203,11 +207,15 @@ TEST_F(AVSGatewayManagerTest, test_avsGatewayFromStorage) {
         AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
 
     ASSERT_NE(m_avsGatewayManager, nullptr);
+    ASSERT_EQ(STORED_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 
     EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).WillOnce(Invoke([](const std::string& gatewayURL) {
         ASSERT_EQ(gatewayURL, STORED_AVS_GATEWAY);
     }));
     m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
+
+    auto postConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_EQ(postConnectOperation, nullptr);
 }
 
 /**
@@ -226,7 +234,9 @@ TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithNewURL) {
 
     m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
     m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
-    m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY);
+    ASSERT_TRUE(m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY));
+
+    ASSERT_EQ(DEFAULT_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 }
 
 /**
@@ -236,12 +246,28 @@ TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithNewURL) {
 TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithSameURL) {
     initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
     createAVSGatewayManager();
+
     EXPECT_CALL(*m_mockAVSGatewayAssigner, setAVSGateway(_)).Times(1);
     EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).Times(0);
     EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(0);
+
     m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
     m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
-    m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY);
+    ASSERT_FALSE(m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY));
+    ASSERT_EQ(TEST_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
+}
+
+TEST_F(AVSGatewayManagerTest, test_setAVSGatewayURLWithoutAssigner) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    createAVSGatewayManager();
+
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).Times(1);
+    EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(1);
+
+    m_avsGatewayManager->addObserver(m_mockAVSGatewayObserver);
+    ASSERT_TRUE(m_avsGatewayManager->setGatewayURL(DEFAULT_AVS_GATEWAY));
+
+    ASSERT_EQ(DEFAULT_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 }
 
 /**
@@ -276,6 +302,7 @@ TEST_F(AVSGatewayManagerTest, test_removeAddedObserver) {
     EXPECT_CALL(*m_mockAVSGatewayObserver, onAVSGatewayChanged(_)).Times(0);
     m_avsGatewayManager->removeObserver(m_mockAVSGatewayObserver);
     m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY);
+    ASSERT_EQ(TEST_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
 }
 
 /**
@@ -299,6 +326,146 @@ TEST_F(AVSGatewayManagerTest, test_clearData) {
     createAVSGatewayManager();
     EXPECT_CALL(*m_mockAVSGatewayManagerStorage, clear()).Times(1);
     m_avsGatewayManager->clearData();
+    ASSERT_EQ(TEST_AVS_GATEWAY, m_avsGatewayManager->getGatewayURL());
+}
+
+/**
+ * Test if a call to @c createPostConnectOperation() does the following:
+ * 1) Return a valid @c PostConnectVerifyGatewaySender when the database is empty.
+ * 2) Return nullptr on a subsequent call to @c createPostConnectOperation() if the gateway has been verified.
+ *
+ * @note This test simulates a fresh device connecting for the first time followed by a successful gateway
+ * verification after which a reconnection happens.
+ */
+TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationMultipleTimesWhenDBIsEmpty) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, init()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, loadState(_)).WillOnce(Invoke([](GatewayVerifyState* state) {
+        EXPECT_EQ(state->avsGatewayURL, TEST_AVS_GATEWAY);
+        EXPECT_EQ(state->isVerified, false);
+        return true;
+    }));
+
+    m_avsGatewayManager =
+        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+
+    ASSERT_NE(m_avsGatewayManager, nullptr);
+
+    /// First call to createPostConnectOperation() when database is empty.
+    auto firstPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_NE(firstPostConnectOperation, nullptr);
+
+    /// Expect state to be stored after a successful onGatewayVerified call.
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).WillOnce(Invoke([](const GatewayVerifyState& state) {
+        EXPECT_EQ(state.isVerified, true);
+        EXPECT_EQ(state.avsGatewayURL, TEST_AVS_GATEWAY);
+        return true;
+    }));
+
+    /// Callback to indicate if the postConnectOperation successfully finished gateway verification.
+    m_avsGatewayManager->onGatewayVerified(firstPostConnectOperation);
+
+    /// Subsequent call to createPostConnectOperation() when gateway is verified.
+    auto secondPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_EQ(secondPostConnectOperation, nullptr);
+}
+
+/**
+ * Test if a call to @c createPostConnectOperation() does the following:
+ * 1) Return a valid @c PostConnectVerifyGatewaySender when the database has gateway in unverified state.
+ * 2) Return nullptr on a subsequent call to @c createPostConnectOperation() if the gateway has been verified.
+ *
+ * @note This test simulates first connection followed by a reconnection when the database contains a gateway that has
+ * not been verified yet.
+ */
+TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationRetunrsNullIfDBContainsVerifiedGateway) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, init()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, loadState(_)).WillOnce(Invoke([](GatewayVerifyState* state) {
+        state->avsGatewayURL = STORED_AVS_GATEWAY;
+        state->isVerified = false;
+        return true;
+    }));
+
+    m_avsGatewayManager =
+        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+
+    ASSERT_NE(m_avsGatewayManager, nullptr);
+
+    /// First call to createPostConnectOperation() when database has unverified gateway.
+    auto firstPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_NE(firstPostConnectOperation, nullptr);
+
+    /// Expect state to be stored after a successful onGatewayVerified call.
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).WillOnce(Invoke([](const GatewayVerifyState& state) {
+        EXPECT_EQ(state.isVerified, true);
+        EXPECT_EQ(state.avsGatewayURL, STORED_AVS_GATEWAY);
+        return true;
+    }));
+
+    /// Callback to indicate if the postConnectOperation successfully finished gateway verification.
+    m_avsGatewayManager->onGatewayVerified(firstPostConnectOperation);
+
+    /// Subsequent call to createPostConnectOperation() when gateway is verified.
+    auto secondPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_EQ(secondPostConnectOperation, nullptr);
+}
+
+/**
+ * Test if a call to @c createPostConnectOperation() does the following:
+ * 1) Return null if the database contains a verified gateway.
+ * 2) Returns a valid @c PostConnectVerifyGatewaySender after setGatewayURL is called with a different gateway.
+ * 3) Return null on a subsequent call to @c createPostConnectOperation().
+ *
+ * @note This test simulates a device starting up with verified gateway. Then a setGateway directive is received with a
+ * different gateway and after successful verification of the new gateway, a reconnection happens.
+ */
+
+TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationSequenceAfterSetGatewayURL) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, init()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, loadState(_)).WillOnce(Invoke([](GatewayVerifyState* state) {
+        state->avsGatewayURL = STORED_AVS_GATEWAY;
+        state->isVerified = true;
+        return true;
+    }));
+
+    m_avsGatewayManager =
+        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+    ASSERT_NE(m_avsGatewayManager, nullptr);
+
+    m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
+
+    /// First call to createPostConnectOperation() when database has unverified gateway.
+    auto firstPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_EQ(firstPostConnectOperation, nullptr);
+
+    /// Expect state to be stored before verification.
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).WillOnce(Invoke([](const GatewayVerifyState& state) {
+        EXPECT_EQ(state.isVerified, false);
+        EXPECT_EQ(state.avsGatewayURL, TEST_AVS_GATEWAY);
+        return true;
+    }));
+
+    m_avsGatewayManager->setGatewayURL(TEST_AVS_GATEWAY);
+
+    /// Second call to createPostConnectOperation() creates a valid PostConnectVerifyGatewaySender.
+    auto secondPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_NE(secondPostConnectOperation, nullptr);
+
+    /// Expect state to be stored after verification.
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, saveState(_)).WillOnce(Invoke([](const GatewayVerifyState& state) {
+        EXPECT_EQ(state.isVerified, true);
+        EXPECT_EQ(state.avsGatewayURL, TEST_AVS_GATEWAY);
+        return true;
+    }));
+
+    /// Callback to indicate if the postConnectOperation successfully finished gateway verification.
+    m_avsGatewayManager->onGatewayVerified(secondPostConnectOperation);
+
+    /// Subsequent call to createPostConnectOperation() when gateway is verified.
+    auto thirdPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_EQ(thirdPostConnectOperation, nullptr);
 }
 
 }  // namespace test

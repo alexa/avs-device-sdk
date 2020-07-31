@@ -47,6 +47,7 @@ public:
     MOCK_METHOD2(
         provideState,
         void(const avs::CapabilityTag& stateProviderName, const ContextRequestToken stateRequestToken));
+    MOCK_METHOD0(hasReportableStateProperties, bool());
 };
 
 /// Mock legacy state provider.
@@ -88,7 +89,7 @@ void ContextManagerTest::SetUp() {
         "clientId", "productId", "1234", "manufacturer", "my device", "friendlyName", "deviceType");
     ASSERT_NE(deviceInfo, nullptr);
 
-    m_contextManager = ContextManager::create(*deviceInfo);
+    m_contextManager = ContextManager::createContextManagerInterface(std::move(deviceInfo));
 }
 
 /**
@@ -345,11 +346,13 @@ TEST_F(ContextManagerTest, test_getEndpointContextShouldIncludeOnlyRelevantState
     auto providerForTargetEndpoint = std::make_shared<MockStateProvider>();
     auto capabilityForTarget = CapabilityTag("TargetNamespace", "TargetName", "TargetEndpointId");
     CapabilityState stateForTarget{R"({"state":"target"})"};
+    EXPECT_CALL(*providerForTargetEndpoint, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capabilityForTarget, providerForTargetEndpoint);
 
     // Capability that belongs to another endpoint.
     auto providerForOtherEndpoint = std::make_shared<StrictMock<MockStateProvider>>();
     auto capabilityForOther = CapabilityTag("OtherNamespace", "OtherName", "OtherEndpointId");
+    EXPECT_CALL(*providerForOtherEndpoint, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capabilityForOther, providerForOtherEndpoint);
 
     utils::WaitEvent provideStateEvent;
@@ -383,6 +386,7 @@ TEST_F(ContextManagerTest, test_getEndpointContextShouldIncludeOnlyRelevantState
 TEST_F(ContextManagerTest, test_getContextWhenStateAndCacheAreUnavailableShouldFail) {
     auto provider = std::make_shared<MockStateProvider>();
     auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
+    EXPECT_CALL(*provider, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capability, provider);
 
     utils::WaitEvent provideStateEvent;
@@ -413,6 +417,7 @@ TEST_F(ContextManagerTest, test_getContextWhenStateUnavailableShouldReturnCache)
     auto provider = std::make_shared<MockStateProvider>();
     auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
     CapabilityState state{R"({"state":"target"})"};
+    EXPECT_CALL(*provider, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capability, provider);
 
     // Set value in the cache.
@@ -475,12 +480,14 @@ TEST_F(ContextManagerTest, test_getContextInParallelShouldSucceed) {
     auto providerForEndpoint1 = std::make_shared<MockStateProvider>();
     auto capabilityForEndpoint1 = CapabilityTag("Namespace", "Name", "EndpointId1");
     CapabilityState stateForEndpoint1{R"({"state":1})"};
+    EXPECT_CALL(*providerForEndpoint1, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capabilityForEndpoint1, providerForEndpoint1);
 
     // Capability that belongs to the second endpoint.
     auto providerForEndpoint2 = std::make_shared<MockStateProvider>();
     auto capabilityForEndpoint2 = CapabilityTag("Namespace", "Name", "EndpointId2");
     CapabilityState stateForEndpoint2{R"({"state":2})"};
+    EXPECT_CALL(*providerForEndpoint2, hasReportableStateProperties()).WillRepeatedly(Return(false));
     m_contextManager->setStateProvider(capabilityForEndpoint2, providerForEndpoint2);
 
     // Expect both provide state calls
@@ -530,6 +537,97 @@ TEST_F(ContextManagerTest, test_getContextInParallelShouldSucceed) {
     auto statesForEndpoint2 = statesFuture2.get();
     EXPECT_EQ(statesForEndpoint2[capabilityForEndpoint2].valuePayload, stateForEndpoint2.valuePayload);
     EXPECT_EQ(statesForEndpoint2.find(capabilityForEndpoint1), statesForEndpoint2.end());
+}
+
+/// Test if the getContextWithoutReportableStateProperties() method skips state from @c StateProviders which have
+/// reportable state properties.
+TEST_F(ContextManagerTest, test_getContextWithoutReportableStateProperties) {
+    auto providerWithReportableStateProperties = std::make_shared<MockStateProvider>();
+    auto capability1 = CapabilityTag("Namespace", "Name1", "");
+    CapabilityState state1{R"({"state1":"target1"})"};
+    EXPECT_CALL(*providerWithReportableStateProperties, hasReportableStateProperties()).WillRepeatedly(Return(true));
+    m_contextManager->setStateProvider(capability1, providerWithReportableStateProperties);
+
+    auto providerWithoutReportableStateProperties = std::make_shared<MockStateProvider>();
+    auto capability2 = CapabilityTag("Namespace", "Name2", "");
+    CapabilityState state2{R"({"state2":"target2"})"};
+    EXPECT_CALL(*providerWithoutReportableStateProperties, hasReportableStateProperties())
+        .WillRepeatedly(Return(false));
+    m_contextManager->setStateProvider(capability2, providerWithoutReportableStateProperties);
+
+    EXPECT_CALL(*providerWithReportableStateProperties, provideState(_, _)).Times(0);
+
+    utils::WaitEvent provideStateEvent;
+    EXPECT_CALL(*providerWithoutReportableStateProperties, provideState(_, _))
+        .WillOnce((InvokeWithoutArgs([&provideStateEvent] { provideStateEvent.wakeUp(); })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    // Get context for the target endpoint.
+    auto requestToken = m_contextManager->getContextWithoutReportableStateProperties(requester);
+
+    const std::chrono::milliseconds timeout{100};
+    provideStateEvent.wait(timeout);
+    m_contextManager->provideStateResponse(capability2, state2, requestToken);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+
+    auto states = statesFuture.get();
+    EXPECT_EQ(states[capability2].valuePayload, state2.valuePayload);
+    EXPECT_EQ(states.find(capability1), states.end());
+}
+
+/// Test if the getContext() method includes state from @c StateProviders which have reportable state properties.
+TEST_F(ContextManagerTest, test_getContextWithReportableStateProperties) {
+    auto providerWithReportableStateProperties = std::make_shared<MockStateProvider>();
+    auto capability1 = CapabilityTag("Namespace", "Name1", "");
+    CapabilityState state1{R"({"state1":"target1"})"};
+    EXPECT_CALL(*providerWithReportableStateProperties, hasReportableStateProperties()).WillRepeatedly(Return(true));
+    m_contextManager->setStateProvider(capability1, providerWithReportableStateProperties);
+
+    auto providerWithoutReportableStateProperties = std::make_shared<MockStateProvider>();
+    auto capability2 = CapabilityTag("Namespace", "Name2", "");
+    CapabilityState state2{R"({"state2":"target2"})"};
+    EXPECT_CALL(*providerWithoutReportableStateProperties, hasReportableStateProperties())
+        .WillRepeatedly(Return(false));
+    m_contextManager->setStateProvider(capability2, providerWithoutReportableStateProperties);
+
+    utils::WaitEvent provideStateEvent1;
+    EXPECT_CALL(*providerWithReportableStateProperties, provideState(_, _))
+        .WillOnce((InvokeWithoutArgs([&provideStateEvent1] { provideStateEvent1.wakeUp(); })));
+
+    utils::WaitEvent provideStateEvent2;
+    EXPECT_CALL(*providerWithoutReportableStateProperties, provideState(_, _))
+        .WillOnce((InvokeWithoutArgs([&provideStateEvent2] { provideStateEvent2.wakeUp(); })));
+
+    auto requester = std::make_shared<MockContextRequester>();
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    // Get context for the target endpoint.
+    auto requestToken = m_contextManager->getContext(requester);
+
+    const std::chrono::milliseconds timeout{100};
+    provideStateEvent1.wait(timeout);
+    provideStateEvent2.wait(timeout);
+    m_contextManager->provideStateResponse(capability2, state2, requestToken);
+    m_contextManager->provideStateResponse(capability1, state1, requestToken);
+
+    auto statesFuture = contextStatesPromise.get_future();
+    ASSERT_EQ(statesFuture.wait_for(timeout), std::future_status::ready);
+
+    auto states = statesFuture.get();
+    EXPECT_EQ(states[capability2].valuePayload, state2.valuePayload);
+    EXPECT_EQ(states[capability1].valuePayload, state1.valuePayload);
 }
 
 }  // namespace test

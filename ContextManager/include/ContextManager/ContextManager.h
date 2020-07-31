@@ -53,6 +53,21 @@ public:
      * @param metricRecorder The metric recorder.
      * @return Returns a new @c ContextManager.
      */
+    static std::shared_ptr<ContextManagerInterface> createContextManagerInterface(
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const std::shared_ptr<avsCommon::utils::timing::MultiTimer>& multiTimer =
+            std::make_shared<avsCommon::utils::timing::MultiTimer>(),
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr);
+
+    /**
+     * Create a new @c ContextManager instance.
+     *
+     * @deprecated
+     * @param deviceInfo Structure used to retrieve the default endpoint id.
+     * @param multiTimer Object used to schedule request timeout.
+     * @param metricRecorder The metric recorder.
+     * @return Returns a new @c ContextManager.
+     */
     static std::shared_ptr<ContextManager> create(
         const avsCommon::utils::DeviceInfo& deviceInfo,
         std::shared_ptr<avsCommon::utils::timing::MultiTimer> multiTimer =
@@ -81,6 +96,11 @@ public:
         const avsCommon::sdkInterfaces::ContextRequestToken stateRequestToken = 0) override;
 
     avsCommon::sdkInterfaces::ContextRequestToken getContext(
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester,
+        const std::string& endpointId,
+        const std::chrono::milliseconds& timeout) override;
+
+    avsCommon::sdkInterfaces::ContextRequestToken getContextWithoutReportableStateProperties(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester,
         const std::string& endpointId,
         const std::chrono::milliseconds& timeout) override;
@@ -169,6 +189,25 @@ private:  // Private type declarations.
         avsCommon::utils::timing::MultiTimer::Token timerToken;
         /// The context requester.
         std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester;
+        /// If Reportable Properties should be skipped for this request.
+        bool skipReportableStateProperties;
+
+        /**
+         * Default Constructor.
+         */
+        RequestTracker();
+
+        /**
+         * Constructor.
+         * @param timerToken The token returned by the @c MultiTimer.
+         * @param contextRequester The @c ContextRequesterInterface pointer.
+         * @param skipReportableProperties The boolean indicating if the reportable properties should be skipped for
+         * this request.
+         */
+        RequestTracker(
+            avsCommon::utils::timing::MultiTimer::Token timerToken,
+            std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester,
+            bool skipReportableProperties);
     };
 
 private:  // Private method declarations.
@@ -208,6 +247,23 @@ private:  // Private method declarations.
     void updateCapabilityState(
         const avsCommon::avs::CapabilityTag& capabilityIdentifier,
         const avsCommon::avs::CapabilityState& capabilityState);
+
+    /**
+     * Request the @c ContextManager for context.
+     *
+     * @param contextRequester The context requester asking for context.
+     * @param endpointId The @c endpointId used to select which context is being requested.
+     * @param timeout The maximum time this request should take. After the timeout, the context manager will abort the
+     * request.
+     * @param skipReportableStateProperties The flag which indicates if ReportableStateProperties can be ignored from
+     * the context response.
+     * @return A token that can be used to correlate this request with the context response.
+     */
+    avsCommon::sdkInterfaces::ContextRequestToken getContextInternal(
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester,
+        const std::string& endpointId,
+        const std::chrono::milliseconds& timeout,
+        bool skipReportableStateProperties);
 
     /**
      * This method returns a callback which should be invoked once the context is ready.

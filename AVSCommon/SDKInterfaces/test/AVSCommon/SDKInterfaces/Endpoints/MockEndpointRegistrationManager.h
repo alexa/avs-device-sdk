@@ -32,6 +32,7 @@ public:
     /// @name @c EndpointRegistrationManagerInterface methods to be mocked.
     /// @{
     MOCK_METHOD1(registerEndpoint, std::future<RegistrationResult>(std::shared_ptr<EndpointInterface> endpoint));
+    MOCK_METHOD1(deregisterEndpoint, std::future<DeregistrationResult>(const EndpointIdentifier& endpointId));
     MOCK_METHOD1(addObserver, void(std::shared_ptr<EndpointRegistrationObserverInterface> observer));
     MOCK_METHOD1(removeObserver, void(const std::shared_ptr<EndpointRegistrationObserverInterface>& observer));
     /// @}

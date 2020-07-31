@@ -22,15 +22,13 @@
 #include <string>
 #include <deque>
 
-#include <Alerts/AlertObserverInterface.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-using namespace capabilityAgents::alerts;
-
-class TestAlertObserver : public AlertObserverInterface {
+class TestAlertObserver : public acsdkAlertsInterfaces::AlertObserverInterface {
 public:
     void onAlertStateChange(
         const std::string& alertToken,

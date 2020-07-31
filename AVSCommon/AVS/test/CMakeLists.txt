@@ -4,3 +4,8 @@ set(INCLUDE_PATH
     "${AVSCommon_SOURCE_DIR}/AVS/test"
     "${MetricRecorder_INCLUDE_DIRS}")
 discover_unit_tests("${INCLUDE_PATH}" "AVSCommon;AttachmentCommonTestLib;SDKInterfacesTests")
+
+if (BUILD_TESTING)
+    add_library(AVSCommonTestLib INTERFACE)
+    target_include_directories(AVSCommonTestLib INTERFACE "${AVSCommon_SOURCE_DIR}/AVS/test")
+endif()

@@ -54,7 +54,7 @@ PostConnectSequencer::~PostConnectSequencer() {
 }
 
 bool PostConnectSequencer::doPostConnect(
-    std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
     ACSDK_DEBUG5(LX(__func__));
 
@@ -81,7 +81,7 @@ bool PostConnectSequencer::doPostConnect(
 }
 
 void PostConnectSequencer::mainLoop(
-    std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
     ACSDK_DEBUG5(LX(__func__));
 

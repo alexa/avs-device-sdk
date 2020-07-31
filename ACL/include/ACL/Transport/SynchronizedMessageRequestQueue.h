@@ -47,10 +47,11 @@ public:
     /// @{
     void enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest) override;
     avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>> peekRequestTime() override;
-    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueRequest() override;
+    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueOldestRequest() override;
+    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueSendableRequest() override;
     bool isMessageRequestAvailable() const override;
-    void setWaitingFlagForQueue() override;
-    void clearWaitingFlagForQueue() override;
+    void setWaitingForSendAcknowledgement() override;
+    void clearWaitingForSendAcknowledgement() override;
     bool empty() const override;
     void clear() override;
     /// @}

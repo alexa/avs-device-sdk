@@ -29,21 +29,38 @@ namespace endpoints {
 class EndpointRegistrationObserverInterface {
 public:
     /**
-     * Enumeration of possible registration result.
+     * Enumeration of possible registration results.
      */
     enum class RegistrationResult {
         /// Registration succeeded.
         SUCCEEDED,
-        /// Registration failed because endpoint has been enqueued for registration.
-        PENDING_REGISTRATION,
-        /// Registration failed because endpoint has already been registered.
-        ALREADY_REGISTERED,
         /// Registration failed due to some configuration error.
         CONFIGURATION_ERROR,
-        /// We currently only support endpoint registration before the client has connected to AVS.
-        REGISTRATION_DISABLED,
         /// Registration failed due to internal error.
-        INTERNAL_ERROR
+        INTERNAL_ERROR,
+        /// Registration failed because the endpoint is currently being updated.
+        REGISTRATION_IN_PROGRESS,
+        /// Registration failed because the endpoint is being deregistered.
+        PENDING_DEREGISTRATION
+
+    };
+
+    /**
+     * Enumeration of possible deregistration results.
+     */
+    enum class DeregistrationResult {
+        /// Deregistration succeeded.
+        SUCCEEDED,
+        /// Deregistration failed due to the endpoint not being registered yet.
+        NOT_REGISTERED,
+        /// Deregistration failed due to internal error.
+        INTERNAL_ERROR,
+        /// Deregistration failed due to some configuration error.
+        CONFIGURATION_ERROR,
+        /// Deregistration failed because the endpoint is currently being updated.
+        REGISTRATION_IN_PROGRESS,
+        /// Deregistration is pending.
+        PENDING_DEREGISTRATION
     };
 
     /**
@@ -59,10 +76,87 @@ public:
      * @param result The final registration result.
      */
     virtual void onEndpointRegistration(
-        const EndpointIdentifier endpointId,
+        const EndpointIdentifier& endpointId,
         const avs::AVSDiscoveryEndpointAttributes& attributes,
         const RegistrationResult result) = 0;
+
+    /**
+     * Notifies observer that an endpoint deregistration has been processed.
+     *
+     * @param endpointId The endpoint identifier.
+     * @param result The final deregistration result.
+     */
+    virtual void onEndpointDeregistration(const EndpointIdentifier& endpointId, const DeregistrationResult result) = 0;
 };
+
+/**
+ * Write an @c RegistrationResult value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param registrationResult The @c RegistrationResult value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(
+    std::ostream& stream,
+    const EndpointRegistrationObserverInterface::RegistrationResult& registrationResult) {
+    switch (registrationResult) {
+        case EndpointRegistrationObserverInterface::RegistrationResult::SUCCEEDED:
+            stream << "SUCCEEDED";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::CONFIGURATION_ERROR:
+            stream << "CONFIGURATION_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::INTERNAL_ERROR:
+            stream << "INTERNAL_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::REGISTRATION_IN_PROGRESS:
+            stream << "REGISTRATION_IN_PROGRESS";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::PENDING_DEREGISTRATION:
+            stream << "PENDING_DEREGISTRATION";
+            break;
+        default:
+            stream << "UNKNOWN";
+            break;
+    }
+    return stream;
+}
+
+/**
+ * Write an @c DeregistrationResult value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param deregistrationResult The @c DeregistrationResult value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(
+    std::ostream& stream,
+    const EndpointRegistrationObserverInterface::DeregistrationResult& deregistrationResult) {
+    switch (deregistrationResult) {
+        case EndpointRegistrationObserverInterface::DeregistrationResult::SUCCEEDED:
+            stream << "SUCCEEDED";
+            break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::NOT_REGISTERED:
+            stream << "NOT_REGISTERED";
+            break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::CONFIGURATION_ERROR:
+            stream << "CONFIGURATION_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::INTERNAL_ERROR:
+            stream << "INTERNAL_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::REGISTRATION_IN_PROGRESS:
+            stream << "REGISTRATION_IN_PROGRESS";
+            break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::PENDING_DEREGISTRATION:
+            stream << "PENDING_DEREGISTRATION";
+            break;
+        default:
+            stream << "UNKNOWN";
+            break;
+    }
+    return stream;
+}
 
 }  // namespace endpoints
 }  // namespace sdkInterfaces

@@ -25,7 +25,6 @@
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
-#include <AVSGatewayManager/PostConnectVerifyGatewaySender.h>
 #include <AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 
@@ -64,6 +63,7 @@ public:
     /// @{
     bool setAVSGatewayAssigner(
         std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> avsGatewayAssigner) override;
+    std::string getGatewayURL() const override;
     bool setGatewayURL(const std::string& avsGatewayURL) override;
     void addObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) override;
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayObserverInterface> observer) override;
@@ -85,7 +85,13 @@ public:
      *
      * @param verifyGatewaySender The pointer to the @c PostConnectVerifyGatewaySender.
      */
-    void onGatewayVerified(const std::shared_ptr<PostConnectVerifyGatewaySender>& verifyGatewaySender);
+    void onGatewayVerified(
+        const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationInterface>& verifyGatewaySender);
+
+    /**
+     * Destructor.
+     */
+    ~AVSGatewayManager();
 
 private:
     /**
@@ -122,10 +128,10 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> m_avsGatewayAssigner;
 
     /// The mutex to synchronize access to members.
-    std::mutex m_mutex;
+    mutable std::mutex m_mutex;
 
     /// The current @c PostConnectVerifyGateway sender used to send the verify gateway event.
-    std::shared_ptr<PostConnectVerifyGatewaySender> m_currentVerifyGatewaySender;
+    std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationInterface> m_currentVerifyGatewaySender;
 
     /// The current AVS Gateway Verification state.
     GatewayVerifyState m_currentState;

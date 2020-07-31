@@ -118,10 +118,9 @@ bool PostConnectSynchronizeStateSender::fetchContext() {
     return true;
 }
 
-bool PostConnectSynchronizeStateSender::performOperation(
-    const std::shared_ptr<PostConnectSendMessageInterface>& postConnectMessageSender) {
+bool PostConnectSynchronizeStateSender::performOperation(const std::shared_ptr<MessageSenderInterface>& messageSender) {
     ACSDK_DEBUG5(LX(__func__));
-    if (!postConnectMessageSender) {
+    if (!messageSender) {
         ACSDK_ERROR(LX("performOperationFailed").d("reason", "nullPostConnectSender"));
         return false;
     }
@@ -137,10 +136,10 @@ bool PostConnectSynchronizeStateSender::performOperation(
 
             auto event =
                 buildJsonEventString(SYNCHRONIZE_STATE_NAMESPACE, SYNCHRONIZE_STATE_NAME, "", "{}", m_contextString);
-            m_postConnectRequest = std::make_shared<PostConnectMessageRequest>(event.second);
+            m_postConnectRequest = std::make_shared<WaitableMessageRequest>(event.second);
             lock.unlock();
 
-            postConnectMessageSender->sendPostConnectMessage(m_postConnectRequest);
+            messageSender->sendMessage(m_postConnectRequest);
 
             auto status = m_postConnectRequest->waitForCompletion();
             ACSDK_DEBUG5(LX(__func__).d("SynchronizeState event status", status));
@@ -171,7 +170,7 @@ bool PostConnectSynchronizeStateSender::isStopping() {
 
 void PostConnectSynchronizeStateSender::abortOperation() {
     ACSDK_DEBUG5(LX(__func__));
-    std::shared_ptr<PostConnectMessageRequest> requestCopy;
+    std::shared_ptr<WaitableMessageRequest> requestCopy;
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         if (m_isStopping) {

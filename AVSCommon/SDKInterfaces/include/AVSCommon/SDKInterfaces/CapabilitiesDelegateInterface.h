@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 
 namespace alexaClientSDK {
@@ -37,7 +38,8 @@ namespace sdkInterfaces {
  */
 class CapabilitiesDelegateInterface
         : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface
-        , public avsCommon::sdkInterfaces::AVSGatewayObserverInterface {
+        , public avsCommon::sdkInterfaces::AVSGatewayObserverInterface
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
 public:
     /**
      * Destructor
@@ -45,13 +47,36 @@ public:
     virtual ~CapabilitiesDelegateInterface() = default;
 
     /**
-     * Registers endpoint capabilities
+     * Updates an existing endpoint's capabilities or, if the endpoint does not already exist, registers a new endpoint.
      *
      * @param endpointAttributes The @c EndpointAttributes for the registering endpoint.
      * @param capabilities The array of @c CapabilityConfiguration the endpoint supports.
-     * @return true if registering was successful, else false.
+     * @return true if operation was successful, else false.
+     *
+     * @note This operation can fail at several stages before publishing the endpoint to AVS:
+     * if the capabilities are empty; if the attributes or capability configurations are invalid;
+     * if the endpoint is already pending deletion or registration. If this function returns true,
+     * the endpoint will be published to AVS. Callers can be notified of published endpoints using
+     * @c CapabilitiesObserverInterface.
      */
-    virtual bool registerEndpoint(
+    virtual bool addOrUpdateEndpoint(
+        const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+        const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) = 0;
+
+    /**
+     * Deletes an existing endpoint.
+     *
+     * @param endpointAttributes The @c EndpointAttributes for the deregistering endpoint.
+     * @param capabilities The array of @c CapabilityConfiguration the endpoint supports.
+     * @return true if operation was successful, else false.
+     *
+     * @note This operation can fail at several stages before publishing the endpoint to AVS:
+     * if the endpoint is not registered; if the capabilities are empty; if the attributes or capability
+     * configurations are invalid; if the endpoint is already pending deletion or registration. If this
+     * function returns true, the endpoint will be deregistered from AVS. Callers can be notified of
+     * deregistered endpoints using @c CapabilitiesObserverInterface.
+     */
+    virtual bool deleteEndpoint(
         const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
         const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) = 0;
 
@@ -66,7 +91,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) = 0;
 
     /**
-     * Remove an observer
+     * Remove an observer.
      *
      * @param observer The observer to remove.
      */
@@ -78,6 +103,14 @@ public:
      * to the AVS during the next synchronization.
      */
     virtual void invalidateCapabilities() = 0;
+
+    /**
+     * Set the message sender to use for sending Discovery events to AVS when connected.
+     *
+     * @param messageSender The message sender.
+     */
+    virtual void setMessageSender(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) = 0;
 };
 
 }  // namespace sdkInterfaces

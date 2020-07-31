@@ -107,7 +107,7 @@ public:
      *
      * @return The @c ContextManager instance to use for the test.
      */
-    std::shared_ptr<contextManager::ContextManager> getContextManager() const;
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> getContextManager() const;
 
     /**
      * Wait for the @c ConnectionStatusObserver to be notified that the client has successfully connected to @c AVS.
@@ -142,7 +142,7 @@ private:
     std::shared_ptr<ConnectionStatusObserver> m_connectionStatusObserver;
 
     /// Object to acquire SDK context.
-    std::shared_ptr<contextManager::ContextManager> m_contextManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
 };
 
 }  // namespace test

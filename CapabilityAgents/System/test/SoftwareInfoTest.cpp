@@ -144,6 +144,7 @@ public:
 
 protected:
     std::shared_ptr<StrictMock<MockSoftwareInfoSenderObserver>> m_mockObserver;
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> m_mockObservers;
     /// Mocked connection
     std::shared_ptr<StrictMock<MockConnection>> m_mockConnection;
     /// Mocked MessageSenderInterface
@@ -158,6 +159,7 @@ protected:
 
 void SoftwareInfoSenderTest::SetUp() {
     m_mockObserver = std::make_shared<StrictMock<MockSoftwareInfoSenderObserver>>();
+    m_mockObservers.insert(m_mockObserver);
     m_mockConnection = std::make_shared<StrictMock<MockConnection>>();
     m_mockMessageSender = std::make_shared<StrictMock<MockMessageSender>>();
     m_mockExceptionEncounteredSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
@@ -177,7 +179,7 @@ TEST_F(SoftwareInfoSenderTest, test_createFailedInvalidFirmwareVersion) {
     ASSERT_FALSE(SoftwareInfoSender::create(
         INVALID_FIRMWARE_VERSION,
         true,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender));
@@ -190,7 +192,7 @@ TEST_F(SoftwareInfoSenderTest, test_createSuccessWithsendSoftwareInfoUponConnect
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -199,11 +201,12 @@ TEST_F(SoftwareInfoSenderTest, test_createSuccessWithsendSoftwareInfoUponConnect
 }
 
 /**
- * Verify that passing nullptr for observer will NOT cause SoftwareInfoSender::create() to fail.
+ * Verify that passing empty set for observers will NOT cause SoftwareInfoSender::create() to fail.
  */
 TEST_F(SoftwareInfoSenderTest, test_createSuccessWithObserverNull) {
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface>> observers;
     auto softwareInfoSender = SoftwareInfoSender::create(
-        1, true, nullptr, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
+        1, true, observers, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_TRUE(softwareInfoSender);
     softwareInfoSender->shutdown();
 }
@@ -213,7 +216,7 @@ TEST_F(SoftwareInfoSenderTest, test_createSuccessWithObserverNull) {
  */
 TEST_F(SoftwareInfoSenderTest, test_createFailedConnectionNull) {
     ASSERT_FALSE(SoftwareInfoSender::create(
-        1, true, m_mockObserver, nullptr, m_mockMessageSender, m_mockExceptionEncounteredSender));
+        1, true, m_mockObservers, nullptr, m_mockMessageSender, m_mockExceptionEncounteredSender));
 }
 
 /**
@@ -221,14 +224,14 @@ TEST_F(SoftwareInfoSenderTest, test_createFailedConnectionNull) {
  */
 TEST_F(SoftwareInfoSenderTest, test_createFailedMessageSenderNull) {
     ASSERT_FALSE(SoftwareInfoSender::create(
-        1, true, m_mockObserver, m_mockConnection, nullptr, m_mockExceptionEncounteredSender));
+        1, true, m_mockObservers, m_mockConnection, nullptr, m_mockExceptionEncounteredSender));
 }
 
 /**
  * Verify that not providing a @c MessageSender will cause @c SoftwareInfoSender::create() to fail.
  */
 TEST_F(SoftwareInfoSenderTest, test_createFailedExceptionEncounteredSenderNull) {
-    ASSERT_FALSE(SoftwareInfoSender::create(1, true, m_mockObserver, m_mockConnection, m_mockMessageSender, nullptr));
+    ASSERT_FALSE(SoftwareInfoSender::create(1, true, m_mockObservers, m_mockConnection, m_mockMessageSender, nullptr));
 }
 
 /**
@@ -243,7 +246,7 @@ TEST_F(SoftwareInfoSenderTest, test_noSoftwareInfoEventSentByDefault) {
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -282,7 +285,7 @@ TEST_F(SoftwareInfoSenderTest, test_nothingSentBeforeConnected) {
     EXPECT_CALL(*(m_mockExceptionEncounteredSender.get()), sendExceptionEncountered(_, _, _)).Times(0);
 
     auto softwareInfoSender = SoftwareInfoSender::create(
-        1, true, m_mockObserver, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
+        1, true, m_mockObservers, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_TRUE(softwareInfoSender);
 
     m_mockConnection->updateConnectionStatus(
@@ -311,7 +314,7 @@ TEST_F(SoftwareInfoSenderTest, test_softwareInfoSentUponConnectIfSendSetTrueBefo
     EXPECT_CALL(*(m_mockExceptionEncounteredSender.get()), sendExceptionEncountered(_, _, _)).Times(0);
 
     auto softwareInfoSender = SoftwareInfoSender::create(
-        1, true, m_mockObserver, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
+        1, true, m_mockObservers, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_TRUE(softwareInfoSender);
 
     m_mockConnection->updateConnectionStatus(
@@ -360,7 +363,7 @@ TEST_F(SoftwareInfoSenderTest, test_reportSoftwareInfoReceived) {
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -408,7 +411,7 @@ TEST_F(SoftwareInfoSenderTest, test_reportSoftwareInfoCancellsPreviousDirective)
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -443,12 +446,12 @@ TEST_F(SoftwareInfoSenderTest, test_reportSoftwareInfoCancellsPreviousDirective)
 }
 
 /**
- * Verify that notification that the firmware version was accepted by @c AVS is only sent once.
+ * Verify that notification that the firmware version was accepted by @c AVS is sent each time.
  */
 TEST_F(SoftwareInfoSenderTest, test_delayedReportSoftwareInfoNotifiesOnce) {
     std::promise<void> versionAcceptedPromise;
     EXPECT_CALL(*(m_mockObserver.get()), onFirmwareVersionAccepted(_))
-        .Times(1)
+        .Times(2)
         .WillOnce(InvokeWithoutArgs([&versionAcceptedPromise]() { versionAcceptedPromise.set_value(); }));
 
     std::promise<void> messageSentTwicePromise;
@@ -467,7 +470,7 @@ TEST_F(SoftwareInfoSenderTest, test_delayedReportSoftwareInfoNotifiesOnce) {
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -515,7 +518,7 @@ TEST_F(SoftwareInfoSenderTest, testSlow_verifySendRetries) {
     EXPECT_CALL(*(m_mockExceptionEncounteredSender.get()), sendExceptionEncountered(_, _, _)).Times(0);
 
     auto softwareInfoSender = SoftwareInfoSender::create(
-        1, true, m_mockObserver, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
+        1, true, m_mockObservers, m_mockConnection, m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_TRUE(softwareInfoSender);
 
     m_mockConnection->updateConnectionStatus(
@@ -542,7 +545,7 @@ TEST_F(SoftwareInfoSenderTest, test_setInvalidFirmwareVersion) {
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);
@@ -587,7 +590,7 @@ TEST_F(SoftwareInfoSenderTest, test_setFirmwareVersionCancellsPreviousSetting) {
     auto softwareInfoSender = SoftwareInfoSender::create(
         FIRST_FIRMWARE_VERSION,
         false,
-        m_mockObserver,
+        m_mockObservers,
         m_mockConnection,
         m_mockMessageSender,
         m_mockExceptionEncounteredSender);

@@ -132,6 +132,10 @@ void ConfigurationNode::uninitialize() {
     m_root = ConfigurationNode();
 }
 
+std::shared_ptr<ConfigurationNode> ConfigurationNode::createRoot() {
+    return std::make_shared<ConfigurationNode>(getRoot());
+}
+
 ConfigurationNode ConfigurationNode::getRoot() {
     return m_root;
 }

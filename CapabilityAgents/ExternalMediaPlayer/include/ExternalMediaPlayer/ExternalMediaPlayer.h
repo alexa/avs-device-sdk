@@ -34,6 +34,7 @@
 #include <AVSCommon/SDKInterfaces/ExternalMediaPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExternalMediaPlayerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/LocalPlaybackHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
@@ -65,6 +66,7 @@ class ExternalMediaPlayer
         , public avsCommon::sdkInterfaces::MediaPropertiesInterface
         , public avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface
         , public avsCommon::sdkInterfaces::PlaybackHandlerInterface
+        , public avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface
         , public std::enable_shared_from_this<ExternalMediaPlayer> {
 public:
     // Map of adapter business names to their mediaPlayers.
@@ -170,9 +172,16 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer) override;
     /// @}
 
+    /// @name LocalPlaybackHandlerInterface Functions
+    /// @{
+    bool localOperation(PlaybackOperation op) override;
+    bool localSeekTo(std::chrono::milliseconds location, bool fromStart) override;
+    /// @}
+
     /// @name MediaPropertiesInterface Functions
     /// @{
     std::chrono::milliseconds getAudioItemOffset() override;
+    std::chrono::milliseconds getAudioItemDuration() override;
     /// @}
 
     /**

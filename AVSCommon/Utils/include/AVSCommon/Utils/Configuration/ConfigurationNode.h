@@ -95,6 +95,13 @@ public:
     static void uninitialize();
 
     /**
+     * Create a shared_ptr to the root configuration node.
+     *
+     * @return A shared_ptr to the root configuration node.
+     */
+    static std::shared_ptr<ConfigurationNode> createRoot();
+
+    /**
      * Get the root @c ConfigurationNode of the global configuration.
      *
      * @return The root @c ConfigurationNode of the global configuration.

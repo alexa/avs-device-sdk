@@ -34,9 +34,16 @@ namespace sampleApp {
 class LocaleAssetsManager : public avsCommon::sdkInterfaces::LocaleAssetsManagerInterface {
 public:
     /**
+     * Create an instance of LocaleAssetsManagerInterface.
+     *
+     * @return A pointer to a new LocaleAssetsManager object if it succeeds; otherwise, @c nullptr.
+     */
+    static std::shared_ptr<LocaleAssetsManagerInterface> createLocaleAssetsManagerInterface();
+
+    /**
      * Create a LocaleAssetsManager object.
      *
-     * @param enableWakeWord Indicates whether wake words are enabled in this device or not.
+     * @deprecated
      * @return A pointer to a new LocaleAssetsManager object if it succeeds; otherwise, @c nullptr.
      */
     static std::shared_ptr<LocaleAssetsManager> create(bool enableWakeWord);

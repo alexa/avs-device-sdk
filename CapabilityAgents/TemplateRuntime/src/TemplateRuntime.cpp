@@ -785,6 +785,19 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Tem
     return m_capabilityConfigurations;
 }
 
+void TemplateRuntime::addRenderPlayerInfoCardsProvider(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface> cardsProvider) {
+    ACSDK_DEBUG5(LX("addRenderPlayerInfoCardsProvider"));
+
+    if (!cardsProvider) {
+        ACSDK_ERROR(
+            LX("addRenderPlayerInfoCardsProviderFailed").d("reason", "nullRenderPlayerInfoCardsProviderInterface"));
+        return;
+    }
+    cardsProvider->setObserver(shared_from_this());
+    m_renderPlayerInfoCardsInterfaces.insert(cardsProvider);
+}
+
 }  // namespace templateRuntime
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK

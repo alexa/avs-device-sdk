@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.0)
-project(DoNotDisturbCA LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-include(${AVS_CORE}/build/BuildDefaults.cmake)
-
-add_subdirectory("src")
-add_subdirectory("test")
+add_subdirectory("acsdkDoNotDisturb")

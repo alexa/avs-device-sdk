@@ -75,6 +75,15 @@ inline EndpointIdentifier generateEndpointId(
     return clientId + ENDPOINT_ID_CONCAT + productId + ENDPOINT_ID_CONCAT + deviceSerialNumber;
 }
 
+std::shared_ptr<DeviceInfo> DeviceInfo::createFromConfiguration(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    if (!configurationRoot) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullConfigurationRoot"));
+        return nullptr;
+    }
+    return create(*configurationRoot);
+}
+
 std::unique_ptr<DeviceInfo> DeviceInfo::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     std::string clientId;

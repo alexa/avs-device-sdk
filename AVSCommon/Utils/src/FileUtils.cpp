@@ -35,11 +35,6 @@ static const std::string TAG("FileUtils");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/*
- * TODO - make this more portable and dependable.
- *
- * https://issues.labcollab.net/browse/ACSDK-380
- */
 bool fileExists(const std::string& filePath) {
     std::ifstream is(filePath);
     return is.good();

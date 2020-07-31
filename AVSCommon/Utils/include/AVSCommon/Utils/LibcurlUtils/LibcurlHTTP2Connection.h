@@ -124,15 +124,25 @@ private:
     void unPauseActiveStreams();
 
     /**
-     * Cancel a stream and report CANCELLED completion status.
+     * Cancel an active stream and report CANCELLED completion status.
      *
      * @param stream The stream to cancel.
      * @return Whether the operation was successful.
      */
-    bool cancelStream(LibcurlHTTP2Request& stream);
+    bool cancelActiveStream(LibcurlHTTP2Request& stream);
 
     /**
-     * Release any streams that are active and report CANCELLED completion status.
+     * Release any active streams and report CANCELLED completion status.
+     */
+    void cancelActiveStreams();
+
+    /**
+     * Report CANCELLED completion status on any pending streams in the queue.
+     */
+    void cancelPendingStreams();
+
+    /**
+     * Cancels all streams on cleanup.
      */
     void cancelAllStreams();
 

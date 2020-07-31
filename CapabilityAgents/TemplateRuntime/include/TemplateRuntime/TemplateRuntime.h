@@ -131,6 +131,15 @@ public:
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
+    /**
+     * This function adds a @RenderPlayerInfoCardsProviderInterface for a client to subscribe @c TemplateRuntime as an
+     * observer of changes for RenderPlayerInfoCards.
+     *
+     * @param cardsProvider The @c RenderPlayerInfoCardsProviderInterface
+     */
+    void addRenderPlayerInfoCardsProvider(
+        std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface> cardsProvider);
+
 private:
     /**
      * This enum provides the state of the @c TemplateRuntime.

@@ -305,19 +305,6 @@ static void submitMetric(
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechRecognizerCapabilityConfiguration(
     const LocaleAssetsManagerInterface& assetsManager);
 
-/**
- * Checks whether a new dialogRequestId should be generated.
- *
- * @param state The current state.
- * @return Whether a new dialogRequestId should be generated.
- */
-static bool shouldGenerateDialogRequestId(AudioInputProcessor::ObserverInterface::State state) {
-    if (AudioInputProcessor::ObserverInterface::State::IDLE == state) {
-        return true;
-    }
-    return false;
-}
-
 std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<DirectiveSequencerInterface> directiveSequencer,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -600,7 +587,6 @@ AudioInputProcessor::AudioInputProcessor(
         m_preparingToSend{false},
         m_initialDialogUXStateReceived{false},
         m_localStopCapturePerformed{false},
-        m_shouldGenerateDialogRequestId{true},
         m_systemSoundPlayer{systemSoundPlayer},
         m_precedingExpectSpeechInitiator{nullptr},
         m_wakeWordConfirmation{wakeWordConfirmation},
@@ -977,11 +963,7 @@ bool AudioInputProcessor::executeRecognize(
 
     // Code below this point changes the state of AIP.  Formally update state now, and don't error out without calling
     // executeResetState() after this point.
-    m_shouldGenerateDialogRequestId = shouldGenerateDialogRequestId(m_state);
-
-    if (m_shouldGenerateDialogRequestId) {
-        m_preCachedDialogRequestId = uuidGeneration::generateUUID();
-    }
+    m_preCachedDialogRequestId = uuidGeneration::generateUUID();
 
     setState(ObserverInterface::State::RECOGNIZING);
 
@@ -992,7 +974,7 @@ bool AudioInputProcessor::executeRecognize(
     m_localStopCapturePerformed = false;
 
     //  Start assembling the context; we'll service the callback after assembling our Recognize event.
-    m_contextManager->getContext(shared_from_this());
+    m_contextManager->getContextWithoutReportableStateProperties(shared_from_this());
 
     // Stop the ExpectSpeech timer so we don't get a timeout.
     m_expectingSpeechTimer.stop();
@@ -1071,7 +1053,7 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
         }
     }
 
-    if (m_shouldGenerateDialogRequestId && !m_preCachedDialogRequestId.empty()) {
+    if (!m_preCachedDialogRequestId.empty()) {
         m_directiveSequencer->setDialogRequestId(m_preCachedDialogRequestId);
         m_preCachedDialogRequestId.clear();
     }
@@ -1307,14 +1289,12 @@ void AudioInputProcessor::executeOnDialogUXStateChanged(DialogUXStateObserverInt
         m_initialDialogUXStateReceived = true;
         return;
     }
+
     if (newState != DialogUXStateObserverInterface::DialogUXState::IDLE) {
         return;
     }
-    if (m_focusState != avsCommon::avs::FocusState::NONE) {
-        m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
-        m_focusState = avsCommon::avs::FocusState::NONE;
-    }
-    setState(ObserverInterface::State::IDLE);
+
+    executeResetState();
 }
 
 void AudioInputProcessor::setState(ObserverInterface::State state) {
@@ -1535,6 +1515,19 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
         case ObserverInterface::State::IDLE:
             m_powerResourceManager->releasePowerResource(POWER_RESOURCE_COMPONENT_NAME);
             break;
+    }
+}
+
+void AudioInputProcessor::onConnectionStatusChanged(bool connected) {
+    if (!connected) {
+        m_executor.submit([this]() { return executeDisconnected(); });
+    }
+}
+
+void AudioInputProcessor::executeDisconnected() {
+    if (ObserverInterface::State::IDLE != m_state) {
+        ACSDK_WARN(LX(__func__).d("state", AudioInputProcessorObserverInterface::stateToString(m_state)));
+        executeResetState();
     }
 }
 

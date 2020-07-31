@@ -31,6 +31,15 @@ namespace implementations {
 class MetricRecorder : public avsCommon::utils::metrics::MetricRecorderInterface {
 public:
     /**
+     * Create a MetricRecorder.
+     *
+     * @param sink A sink to send metrics to.
+     * @return A new @c MetricRecorder instance.
+     */
+    static std::shared_ptr<MetricRecorderInterface> createMetricRecorderInterface(
+        std::unique_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface> sink);
+
+    /**
      * Destructor
      */
     virtual ~MetricRecorder() = default;

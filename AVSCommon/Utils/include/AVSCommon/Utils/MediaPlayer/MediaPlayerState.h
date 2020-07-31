@@ -23,6 +23,8 @@ namespace avsCommon {
 namespace utils {
 namespace mediaPlayer {
 
+const std::chrono::milliseconds DURATION_UNKNOWN = std::chrono::milliseconds(-1);
+
 /**
  * Structure to hold metadata about the MediaPlayerState
  */
@@ -30,17 +32,22 @@ struct MediaPlayerState {
     /**
      * Default Constructor, initializes the offset to zero.
      */
-    MediaPlayerState() : offset(std::chrono::milliseconds::zero()) {
+    MediaPlayerState() : offset(std::chrono::milliseconds::zero()), duration(DURATION_UNKNOWN) {
     }
 
     /**
      * Constructor.
      */
-    MediaPlayerState(std::chrono::milliseconds offsetInMs) : offset(offsetInMs) {
+    MediaPlayerState(std::chrono::milliseconds offsetInMs, std::chrono::milliseconds duration_ = DURATION_UNKNOWN) :
+            offset(offsetInMs),
+            duration(duration_) {
     }
 
     /// Offset in milliseconds
     std::chrono::milliseconds offset;
+
+    /// Duration
+    std::chrono::milliseconds duration;
 
     /**
      * Overload the == operator for equality checks

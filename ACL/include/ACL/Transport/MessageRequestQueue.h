@@ -36,49 +36,32 @@ namespace acl {
  */
 class MessageRequestQueue : public MessageRequestQueueInterface {
 public:
-    /// Helper structure to keep track of the SendQueue.
-    struct MessageRequestQueueStruct {
-        /// Indicates if the queue is waiting on a response.
-        bool isQueueWaitingForResponse;
-
-        /// The queue used to send @c MessageRequest.
-        std::deque<std::pair<
-            std::chrono::time_point<std::chrono::steady_clock>,
-            std::shared_ptr<avsCommon::avs::MessageRequest>>>
-            queue;
-
-        MessageRequestQueueStruct() : isQueueWaitingForResponse{false} {
-        }
-    };
-
     /**
      * Constructor.
      */
     MessageRequestQueue();
 
-    /**
-     * Destructor.
-     */
-    ~MessageRequestQueue() override;
-
     /// Override MessageRequestQueueInterface methods
     /// @{
     void enqueueRequest(std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest) override;
     avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>> peekRequestTime() override;
-    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueRequest() override;
+    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueOldestRequest() override;
+    std::shared_ptr<avsCommon::avs::MessageRequest> dequeueSendableRequest() override;
     bool isMessageRequestAvailable() const override;
-    void setWaitingFlagForQueue() override;
-    void clearWaitingFlagForQueue() override;
+    void setWaitingForSendAcknowledgement() override;
+    void clearWaitingForSendAcknowledgement() override;
     bool empty() const override;
     void clear() override;
     /// @}
 
 private:
-    /// Member to keep track of the current @c MessageRequests present.
-    int m_size;
+    /// Flag indicating whether to block sending serialized messages.
+    bool m_isWaitingForAcknowledgement;
 
-    /// The struct that contains the message queue
-    MessageRequestQueueStruct m_sendQueue;
+    /// The queue of @c MessageRequests to be sent, paired with the time that each request was added to the queue.
+    std::deque<
+        std::pair<std::chrono::time_point<std::chrono::steady_clock>, std::shared_ptr<avsCommon::avs::MessageRequest>>>
+        m_queue;
 };
 
 }  // namespace acl

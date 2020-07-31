@@ -45,6 +45,12 @@ public:
             const std::string&,
             const std::chrono::milliseconds&));
     MOCK_METHOD3(
+        getContextWithoutReportableStateProperties,
+        ContextRequestToken(
+            std::shared_ptr<ContextRequesterInterface>,
+            const std::string&,
+            const std::chrono::milliseconds&));
+    MOCK_METHOD3(
         reportStateChange,
         void(
             const avs::CapabilityTag& capabilityIdentifier,

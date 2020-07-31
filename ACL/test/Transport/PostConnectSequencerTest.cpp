@@ -21,7 +21,7 @@
 #include "MockPostConnectObserver.h"
 #include "MockPostConnectOperation.h"
 #include <ACL/Transport/PostConnectSequencer.h>
-#include <AVSCommon/SDKInterfaces/MockPostConnectSendMessage.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/Utils/PromiseFuturePair.h>
 
 namespace alexaClientSDK {
@@ -49,13 +49,13 @@ protected:
     /// The mock @c PostConnectObserverInterface.
     std::shared_ptr<MockPostConnectObserver> m_mockPostConnectObserver;
 
-    /// The mock @c PostConnectSendMessageInterface.
-    std::shared_ptr<MockPostConnectSendMessage> m_mockPostConnectMessageSender;
+    /// The mock @c MessageSenderInterface.
+    std::shared_ptr<MockMessageSender> m_mockMessageSender;
 };
 
 void PostConnectSequencerTest::SetUp() {
     m_mockPostConnectObserver = std::make_shared<NiceMock<MockPostConnectObserver>>();
-    m_mockPostConnectMessageSender = std::make_shared<NiceMock<MockPostConnectSendMessage>>();
+    m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
 }
 
 /**
@@ -132,7 +132,7 @@ TEST_F(PostConnectSequencerTest, test_happyPathAndPostConnectObserverGetsNotifie
         promiseFuturePair.setValue(true);
     }));
 
-    postConnectSequencer->doPostConnect(m_mockPostConnectMessageSender, m_mockPostConnectObserver);
+    postConnectSequencer->doPostConnect(m_mockMessageSender, m_mockPostConnectObserver);
 
     promiseFuturePair.waitFor(SHORT_DELAY);
 }
@@ -158,8 +158,8 @@ TEST_F(PostConnectSequencerTest, test_doPostConnectReturnFalseOnSecondCall) {
         promiseFuturePair.setValue(true);
     }));
 
-    ASSERT_TRUE(postConnectSequencer->doPostConnect(m_mockPostConnectMessageSender, m_mockPostConnectObserver));
-    ASSERT_FALSE(postConnectSequencer->doPostConnect(m_mockPostConnectMessageSender, m_mockPostConnectObserver));
+    ASSERT_TRUE(postConnectSequencer->doPostConnect(m_mockMessageSender, m_mockPostConnectObserver));
+    ASSERT_FALSE(postConnectSequencer->doPostConnect(m_mockMessageSender, m_mockPostConnectObserver));
 
     promiseFuturePair.waitFor(SHORT_DELAY);
 }
@@ -192,7 +192,7 @@ TEST_F(PostConnectSequencerTest, test_subsequentOperationsDontExecute) {
         promiseFuturePair.setValue(true);
     }));
 
-    postConnectSequencer->doPostConnect(m_mockPostConnectMessageSender, m_mockPostConnectObserver);
+    postConnectSequencer->doPostConnect(m_mockMessageSender, m_mockPostConnectObserver);
 
     /// It is possible that the destructor gets called first which initiates an abortOperation before the mainLoopThread
     /// exits.
@@ -223,8 +223,8 @@ TEST_F(PostConnectSequencerTest, test_onDisconnectStopsExecution) {
 
     PromiseFuturePair<bool> notifyOnPerfromOperation, notifyOnAbortOperation;
     EXPECT_CALL(*operation3, performOperation(_))
-        .WillOnce(Invoke([&notifyOnAbortOperation, &notifyOnPerfromOperation](
-                             const std::shared_ptr<PostConnectSendMessageInterface>& postConnectSender) {
+        .WillOnce(Invoke([&notifyOnAbortOperation,
+                          &notifyOnPerfromOperation](const std::shared_ptr<MessageSenderInterface>& postConnectSender) {
             notifyOnPerfromOperation.setValue(true);
             notifyOnAbortOperation.waitFor(SHORT_DELAY);
             return true;
@@ -233,7 +233,7 @@ TEST_F(PostConnectSequencerTest, test_onDisconnectStopsExecution) {
         notifyOnAbortOperation.setValue(true);
     }));
 
-    postConnectSequencer->doPostConnect(m_mockPostConnectMessageSender, m_mockPostConnectObserver);
+    postConnectSequencer->doPostConnect(m_mockMessageSender, m_mockPostConnectObserver);
     notifyOnPerfromOperation.waitFor(SHORT_DELAY);
     postConnectSequencer->onDisconnect();
 }

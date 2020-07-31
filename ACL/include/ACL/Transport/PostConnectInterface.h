@@ -19,7 +19,7 @@
 #include <memory>
 
 #include "ACL/Transport/PostConnectObserverInterface.h"
-#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 
 namespace alexaClientSDK {
 namespace acl {
@@ -34,13 +34,13 @@ public:
      *
      * @note: This method is not expected to be called twice throughout the lifecycle of the object.
      *
-     * @param postConnectSender The @c PostConnectSendMessageInterface to send post connect messages.
+     * @param postConnectSender The @c MessageSenderInterface used to send post connect messages.
      * @param postConnectObserver The @c PostConnectObserverInterface to get notified on success or failure of the
      * post connect action.
      * @return A boolean to indicate that the post connect process has been successfully initiated.
      */
     virtual bool doPostConnect(
-        std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface> postConnectSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
         std::shared_ptr<PostConnectObserverInterface> postConnectObserver) = 0;
 
     /**

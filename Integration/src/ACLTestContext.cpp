@@ -81,7 +81,7 @@ std::shared_ptr<ConnectionStatusObserver> ACLTestContext::getConnectionStatusObs
     return m_connectionStatusObserver;
 }
 
-std::shared_ptr<ContextManager> ACLTestContext::getContextManager() const {
+std::shared_ptr<ContextManagerInterface> ACLTestContext::getContextManager() const {
     return m_contextManager;
 }
 
@@ -111,13 +111,14 @@ ACLTestContext::ACLTestContext(const std::string& filePath, const std::string& o
         return;
     }
 
-    auto deviceInfo = avsCommon::utils::DeviceInfo::create(config);
+    auto deviceInfo =
+        avsCommon::utils::DeviceInfo::createFromConfiguration(std::make_shared<ConfigurationNode>(config));
     EXPECT_TRUE(deviceInfo);
     if (!deviceInfo) {
         return;
     }
 
-    m_contextManager = ContextManager::create(*deviceInfo);
+    m_contextManager = ContextManager::createContextManagerInterface(std::move(deviceInfo));
     EXPECT_TRUE(m_contextManager);
     if (!m_contextManager) {
         return;

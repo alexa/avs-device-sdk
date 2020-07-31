@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include "PlaybackHandlerInterface.h"
+#include "LocalPlaybackHandlerInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -39,6 +40,7 @@ public:
     /**
      * This method can be called by the client when a Button is pressed on a physical button or on the GUI.
      * A ButtonCommandIssued event message will be sent to the observer.
+     * NOTE: Instances may attempt to handle button locally first.
      *
      * @param button The PlaybackButton type being pressed
      */
@@ -58,13 +60,44 @@ public:
      * this handler will be called.
      *
      * @param handler - The handler to call on future playback button presses.
+     * @param localHandler The handler to use for local requests.  nullptr to disable local requests
      */
-    virtual void setHandler(std::shared_ptr<PlaybackHandlerInterface> handler) = 0;
+    virtual void setHandler(
+        std::shared_ptr<PlaybackHandlerInterface> handler,
+        std::shared_ptr<LocalPlaybackHandlerInterface> localHandler = nullptr) = 0;
 
     /**
      * This method switches playback button pressess handling to the default handler.
      */
     virtual void switchToDefaultHandler() = 0;
+
+    /**
+     * This method switches playback button pressess handling to the default handler,
+     * and enables the given local Handler.
+     */
+    virtual void useDefaultHandlerWith(std::shared_ptr<LocalPlaybackHandlerInterface> localHandler){};
+
+    /**
+     * Request the handler to perform a local playback operation.
+     * NOTE: If local operation is not possable, Instances may fall back on @c ButtonPressed
+     *
+     * @param op Operation to request
+     * @return true if successful, false if the operation cannot be performed locally.
+     */
+    virtual bool localOperation(LocalPlaybackHandlerInterface::PlaybackOperation op) {
+        return false;
+    };
+
+    /**
+     * Request the handler to perform a local seek operation.
+     *
+     * @param location Position to seek to
+     * @param fromStart true to seek to absolute location, false to seek reletive to current location.
+     * @return true if successful, false if the operation cannot be performed locally.
+     */
+    virtual bool localSeekTo(std::chrono::milliseconds location, bool fromStart) {
+        return false;
+    };
 };
 
 }  // namespace sdkInterfaces

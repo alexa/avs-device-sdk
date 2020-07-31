@@ -5,17 +5,14 @@ include(${AVS_CORE}/build/BuildDefaults.cmake)
 
 set(CAPABILITY_AGENTS
         "AIP"
-        "Alerts"
         "Alexa"
         "ApiGateway"
-        "AudioPlayer"
-        "Bluetooth"
         "Equalizer"
         "ExternalMediaPlayer"
         "InteractionModel"
-        "MRM"
         "Notifications"
         "PlaybackController"
+        "SoftwareComponentReporter"
         "SpeakerManager"
         "SpeechSynthesizer"
         "System"

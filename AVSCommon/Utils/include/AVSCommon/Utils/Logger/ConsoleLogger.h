@@ -51,7 +51,8 @@ private:
      */
     ConsoleLogger();
 
-    std::mutex m_coutMutex;
+    /// Mutex to serialize writing to cout.
+    std::shared_ptr<std::mutex> m_coutMutex;
 
     /// Object to format log strings correctly.
     LogStringFormatter m_logFormatter;

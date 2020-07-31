@@ -29,7 +29,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
-#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionObserverInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -51,7 +51,7 @@ class HTTP2Transport
         : public std::enable_shared_from_this<HTTP2Transport>
         , public TransportInterface
         , public PostConnectObserverInterface
-        , public avsCommon::sdkInterfaces::PostConnectSendMessageInterface
+        , public avsCommon::sdkInterfaces::MessageSenderInterface
         , public avsCommon::sdkInterfaces::AuthObserverInterface
         , public avsCommon::utils::http2::HTTP2ConnectionObserverInterface
         , public ExchangeHandlerContextInterface {
@@ -129,9 +129,10 @@ public:
     void onWakeVerifyConnectivity() override;
     /// @}
 
-    /// @name PostConnectSendMessageInterface methods.
+    /// HTTP2Transport uses sendMessage to handle the post-connect state only.
+    /// @name MessageSenderInterface methods.
     /// @{
-    void sendPostConnectMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
     /// @}
 
     /// @name PostConnectObserverInterface methods.
@@ -156,9 +157,9 @@ public:
     /// @{
     void onDownchannelConnected() override;
     void onDownchannelFinished() override;
-    void onMessageRequestSent() override;
+    void onMessageRequestSent(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) override;
     void onMessageRequestTimeout() override;
-    void onMessageRequestAcknowledged() override;
+    void onMessageRequestAcknowledged(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) override;
     void onMessageRequestFinished() override;
     void onPingRequestAcknowledged(bool success) override;
     void onPingTimeout() override;

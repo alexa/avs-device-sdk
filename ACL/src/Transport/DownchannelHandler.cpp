@@ -108,8 +108,10 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
     switch (intToHTTPResponseCode(responseCode)) {
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
+        case HTTPResponseCode::SUCCESS_CREATED:
         case HTTPResponseCode::SUCCESS_ACCEPTED:
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
+        case HTTPResponseCode::SUCCESS_PARTIAL_CONTENT:
         case HTTPResponseCode::SUCCESS_END_CODE:
         case HTTPResponseCode::REDIRECTION_MULTIPLE_CHOICES:
         case HTTPResponseCode::REDIRECTION_MOVED_PERMANENTLY:

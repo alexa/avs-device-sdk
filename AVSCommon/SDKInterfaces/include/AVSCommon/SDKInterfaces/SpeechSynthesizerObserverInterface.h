@@ -17,8 +17,10 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_SPEECHSYNTHESIZEROBSERVERINTERFACE_H_
 
 #include <iostream>
+#include <vector>
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/AudioAnalyzer/AudioAnalyzerState.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -60,11 +62,13 @@ public:
      * @param mediaSourceId The current media source id for SpeechSynthesizer
      * @param mediaPlayerState Optional state of the media player as of this state change. The Optional is blank
      *                         if the state is unavailable.
+     * @param audioAnalyzerState states of the audio analyzers related to the speech output.
      */
     virtual void onStateChanged(
         SpeechSynthesizerState state,
         const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
-        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) = 0;
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
+        const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) = 0;
 };
 
 /**

@@ -58,6 +58,7 @@ ADB=${ADB:-"adb"}
 # CMake parameters used to build the SDK.
 set_cmake_var() {
   CMAKE_PLATFORM_SPECIFIC=(-DANDROID="ON" \
+        -DUSE_CCACHE=ON \
         -DANDROID_LOGGER="OFF" \
         -DANDROID_DEVICE_INSTALL_PREFIX="${DEVICE_INSTALL_PATH}" \
         -DANDROID_NDK="${ANDROID_NDK}" \

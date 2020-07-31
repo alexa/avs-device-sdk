@@ -120,6 +120,7 @@ int FFmpegAttachmentInputController::read(uint8_t* buffer, int bufferSize) {
             return AVERROR(EAGAIN);
         case AttachmentReader::ReadStatus::CLOSED:
             ACSDK_DEBUG5(LX(__func__).m("Found EOF"));
+            m_reachedEOF = true;
             return AVERROR_EOF;
         case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
         case AttachmentReader::ReadStatus::ERROR_INTERNAL:
@@ -143,6 +144,7 @@ FFmpegAttachmentInputController::FFmpegAttachmentInputController(
     std::shared_ptr<AttachmentReader> reader,
     std::shared_ptr<AVInputFormat> inputFormat,
     std::shared_ptr<AVDictionary> inputOptions) :
+        m_reachedEOF{false},
         m_reader{reader},
         m_inputFormat{inputFormat},
         m_inputOptions{inputOptions} {
@@ -195,9 +197,14 @@ FFmpegAttachmentInputController::getCurrentFormatContext() {
     if (error != 0) {
         // The avFormatContext will be freed on failure.
         if (-EAGAIN == error) {
-            ACSDK_DEBUG(LX("getContextdFailed").d("reason", "Data unavailable. Try again."));
+            ACSDK_DEBUG(LX("getContextFailed").d("reason", "Data unavailable. Try again."));
             return {Result::TRY_AGAIN, nullptr, std::chrono::milliseconds::zero()};
         }
+        if (m_reachedEOF) {
+            ACSDK_DEBUG5(LX("getContextSkipped").d("reason", "Empty attachment."));
+            return {Result::OK_EMPTY, nullptr, std::chrono::milliseconds::zero()};
+        }
+
         auto errorStr = av_err2str(error);
         ACSDK_ERROR(LX("getContextFailed").d("reason", "openInputFailed").d("error", errorStr));
         return {Result::ERROR, nullptr, std::chrono::milliseconds::zero()};

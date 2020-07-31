@@ -117,7 +117,7 @@ public:
      * response to the @c provideState. If the token sent in the @c setState request does not match the token in the
      * @c ContextManager, @c setState will return an error.
      *
-     * @deprecated Use the provideStateResponse for responding to @c provideState request and @c onStateChanged to
+     * @deprecated Use the provideStateResponse for responding to @c provideState request and @c reportStateChange to
      * proactively report to the ContextManager that the state has changed.
      *
      * @note Token needs to be set only if the @c setState is in response to a @c provideState request. Setting the
@@ -206,6 +206,37 @@ public:
      * required in future versions of the SDK.
      */
     virtual ContextRequestToken getContext(
+        std::shared_ptr<ContextRequesterInterface> contextRequester,
+        const std::string& endpointId = "",
+        const std::chrono::milliseconds& timeout = std::chrono::seconds(2)) = 0;
+
+    /**
+     * Request the @c ContextManager for context while skipping state from @c StateProviders which have reportable
+     * state properties.
+     *
+     * @see https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/reportable-state-properties.html
+     *
+     * @note An example use case of when this method can be is used is to get the Context sent in
+     * @c SpeechRecognizer.Recognize event. The reason being, sending all state information can make the context
+     * bloated which might adversely effect user perceived latency. Additionally, state from reportable state properties
+     * can be sent to the cloud either by using @c StateReport event or the @c ChangeReport event.
+     *
+     * @note This method is functionally similar to the getContext() method except that it skips state information of
+     * reportable state properties.
+     *
+     * @note If you are using RequestToken to track the context response, make sure that the access is synchronized
+     * with the @c onContextAvailable response.
+     *
+     * @param contextRequester The context requester asking for context.
+     * @param endpointId The @c endpointId used to select which context is being requested.
+     * @param timeout The maximum time this request should take. After the timeout, the context manager will abort the
+     * request.
+     * @return A token that can be used to correlate this request with the context response.
+     *
+     * @warning An empty endpointId will select the defaultEndpoint context for now. This argument will become
+     * required in future versions of the SDK.
+     */
+    virtual ContextRequestToken getContextWithoutReportableStateProperties(
         std::shared_ptr<ContextRequesterInterface> contextRequester,
         const std::string& endpointId = "",
         const std::chrono::milliseconds& timeout = std::chrono::seconds(2)) = 0;

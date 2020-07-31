@@ -19,12 +19,12 @@
 #include <string>
 #include <unordered_map>
 
-#include <Alerts/AlertObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/AudioPlayerObserverInterface.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
+#include <acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/Optional.h>
@@ -38,11 +38,11 @@ namespace diagnostics {
  * A class used to aggregate various states and properties of the device.
  */
 class DevicePropertyAggregatorInterface
-        : public capabilityAgents::alerts::AlertObserverInterface
-        , public avsCommon::sdkInterfaces::AudioPlayerObserverInterface
+        : public acsdkAlertsInterfaces::AlertObserverInterface
+        , public acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::ContextRequesterInterface
-        , public avsCommon::sdkInterfaces::NotificationsObserverInterface
+        , public acsdkNotificationsInterfaces::NotificationsObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface {
 public:

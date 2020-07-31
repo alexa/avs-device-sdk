@@ -19,7 +19,7 @@
 
 #include <gmock/gmock.h>
 
-#include <AVSCommon/SDKInterfaces/MockPostConnectSendMessage.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSGatewayManager/PostConnectVerifyGatewaySender.h>
@@ -74,7 +74,7 @@ protected:
     std::thread m_mockPostConnectSenderThread;
 
     /// The mock @c PostConnectSendMessage used to test.
-    std::shared_ptr<MockPostConnectSendMessage> m_mockPostConnectSendMessage;
+    std::shared_ptr<MockMessageSender> m_mockPostConnectSendMessage;
 };
 
 struct EventData {
@@ -124,7 +124,7 @@ bool validateEvent(const std::string& eventJson) {
 
 void PostConnectVerifyGatewaySenderTest::SetUp() {
     m_callbackCheck = false;
-    m_mockPostConnectSendMessage = std::make_shared<NiceMock<MockPostConnectSendMessage>>();
+    m_mockPostConnectSendMessage = std::make_shared<NiceMock<MockMessageSender>>();
     auto callback = std::bind(&PostConnectVerifyGatewaySenderTest::updateStateCallback, this, std::placeholders::_1);
     m_postConnectVerifyGatewaySender = PostConnectVerifyGatewaySender::create(callback);
 }
@@ -164,7 +164,7 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayWhen204IsReceived)
             request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillOnce(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillOnce(Invoke(sendMessageLambda));
     ASSERT_TRUE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
     ASSERT_TRUE(m_callbackCheck);
 }
@@ -183,7 +183,7 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayWhen200IsReceived)
             request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS);
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillOnce(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillOnce(Invoke(sendMessageLambda));
     ASSERT_TRUE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
     ASSERT_FALSE(m_callbackCheck);
 }
@@ -202,7 +202,7 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayWhen400IsReceived)
             request->sendCompleted(MessageRequestObserverInterface::Status::BAD_REQUEST);
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillOnce(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillOnce(Invoke(sendMessageLambda));
     ASSERT_FALSE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
     ASSERT_FALSE(m_callbackCheck);
 }
@@ -232,7 +232,7 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayRetriesWhen503IsRe
             }
         });
     };
-    EXPECT_CALL(*m_mockPostConnectSendMessage, sendPostConnectMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));
     ASSERT_FALSE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
     EXPECT_EQ(retryCountPromise.get_future().get(), TEST_RETRY_COUNT);
     ASSERT_FALSE(m_callbackCheck);

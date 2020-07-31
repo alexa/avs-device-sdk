@@ -396,6 +396,7 @@ void EqualizerCapabilityAgent::doShutdown() {
 }
 
 void EqualizerCapabilityAgent::clearData() {
+    ACSDK_DEBUG5(LX(__func__));
     std::unique_lock<std::mutex> lock(m_storageMutex);
     // Create a local copy in case m_equalizerStorage is reset
     auto equalizerStorage = m_equalizerStorage;

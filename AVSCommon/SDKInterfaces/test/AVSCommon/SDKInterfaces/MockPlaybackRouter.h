@@ -34,6 +34,16 @@ public:
     MOCK_METHOD2(togglePressed, void(avsCommon::avs::PlaybackToggle toggle, bool action));
     MOCK_METHOD1(setHandler, void(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler));
     MOCK_METHOD0(switchToDefaultHandler, void());
+    MOCK_METHOD2(
+        setHandler,
+        void(
+            std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler,
+            std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler));
+    MOCK_METHOD1(
+        useDefaultHandlerWith,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler));
+    MOCK_METHOD1(localOperation, bool(avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface::PlaybackOperation op));
+    MOCK_METHOD2(localSeekTo, bool(std::chrono::milliseconds location, bool fromStart));
 };
 
 }  // namespace test

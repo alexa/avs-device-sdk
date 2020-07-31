@@ -75,18 +75,6 @@ void PlaybackRouter::togglePressed(PlaybackToggle toggle, bool action) {
     observer->onTogglePressed(toggle, action);
 }
 
-void PlaybackRouter::setHandler(std::shared_ptr<PlaybackHandlerInterface> handler) {
-    ACSDK_DEBUG9(LX("setHandler").d("handler", handler));
-    std::lock_guard<std::mutex> guard(m_handlerMutex);
-
-    if (!handler) {
-        ACSDK_ERROR(LX("setHandler").d("handler", handler));
-        return;
-    }
-
-    m_handler = handler;
-}
-
 void PlaybackRouter::switchToDefaultHandler() {
     ACSDK_DEBUG9(LX("switchToDefaultHandler"));
 
@@ -104,6 +92,65 @@ void PlaybackRouter::doShutdown() {
 
     m_handler.reset();
     m_defaultHandler.reset();
+}
+
+void PlaybackRouter::setHandler(
+    std::shared_ptr<PlaybackHandlerInterface> handler,
+    std::shared_ptr<LocalPlaybackHandlerInterface> localHandler) {
+    ACSDK_DEBUG9(LX("setHandler").d("handler", handler));
+    std::lock_guard<std::mutex> guard(m_handlerMutex);
+
+    if (!handler) {
+        ACSDK_ERROR(LX("setHandler").d("handler", handler));
+        return;
+    }
+
+    m_handler = handler;
+    m_localHandler = localHandler;
+}
+
+void PlaybackRouter::useDefaultHandlerWith(std::shared_ptr<LocalPlaybackHandlerInterface> localHandler) {
+    ACSDK_DEBUG9(LX("useDefaultHandlerWith"));
+    setHandler(m_defaultHandler, localHandler);
+}
+
+bool PlaybackRouter::localOperation(LocalPlaybackHandlerInterface::PlaybackOperation op) {
+    ACSDK_DEBUG9(LX("localOperation"));
+
+    bool useFallback = true;
+    {
+        std::lock_guard<std::mutex> guard(m_handlerMutex);
+
+        if (m_localHandler) {
+            useFallback = !m_localHandler->localOperation(op);
+            ACSDK_DEBUG(LX("localOperation").d("usingFallback", useFallback));
+        }
+    }
+
+    if (useFallback) {
+        switch (op) {
+            case LocalPlaybackHandlerInterface::PlaybackOperation::STOP_PLAYBACK:
+            case LocalPlaybackHandlerInterface::PlaybackOperation::PAUSE_PLAYBACK:
+                buttonPressed(PlaybackButton::PAUSE);
+                break;
+            case LocalPlaybackHandlerInterface::PlaybackOperation::RESUME_PLAYBACK:
+                buttonPressed(PlaybackButton::PLAY);
+                break;
+            default:
+                return false;
+        }
+    }
+
+    return true;
+}
+
+bool PlaybackRouter::localSeekTo(std::chrono::milliseconds location, bool fromStart) {
+    ACSDK_DEBUG9(LX("localSeekTo").d("location", location.count()).d("fromStart", fromStart));
+    std::lock_guard<std::mutex> guard(m_handlerMutex);
+    if (m_localHandler) {
+        return m_localHandler->localSeekTo(location, fromStart);
+    }
+    return false;
 }
 
 }  // namespace playbackController

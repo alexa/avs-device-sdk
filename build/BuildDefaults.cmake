@@ -100,12 +100,20 @@ include_once(CustomSDSTraits)
 # Setup diagnostics variables.
 include_once(Diagnostics)
 
-if (HAS_EXTERNAL_MEDIA_PLAYER_ADAPTERS)
-    include_once(ExternalMediaPlayerAdapters)
-endif()
-
 # Setup Endpoint Controller capabilities
 include_once(EndpointControllers)
 
 # Functions to ExternalMediaPlayer Adapters
-include_once (ExternalMediaPlayerAdapters)
+include_once(ExternalMediaPlayerAdapters)
+
+# Speed up compilation using ccache
+include_once(Ccache)
+
+# Include ACS utilities
+include_once(ACSUtils)
+
+# Allow use of RTTI
+include_once(UseRTTI)
+
+# Setup rapidjson memory options.
+include_once(Rapidjson)

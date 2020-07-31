@@ -16,13 +16,18 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_MEDIAPLAYER_MEDIAPLAYERFACTORYINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_MEDIAPLAYER_MEDIAPLAYERFACTORYINTERFACE_H_
 
-#include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <memory>
+#include <string>
+
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace mediaPlayer {
+
+// Forward-declare the MediaPlayerInterface class
+class MediaPlayerInterface;
 
 /**
  * A struct to hold fingerprint for MediaPlayer.

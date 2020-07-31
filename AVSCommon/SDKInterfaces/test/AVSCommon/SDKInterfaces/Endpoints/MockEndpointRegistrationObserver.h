@@ -34,9 +34,12 @@ public:
     MOCK_METHOD3(
         onEndpointRegistration,
         void(
-            const EndpointIdentifier endpointId,
+            const EndpointIdentifier& endpointId,
             const avs::AVSDiscoveryEndpointAttributes& attributes,
             const RegistrationResult result));
+    MOCK_METHOD2(
+        onEndpointDeregistration,
+        void(const EndpointIdentifier& endpointId, const DeregistrationResult result));
     /// @}
 };
 

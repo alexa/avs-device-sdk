@@ -235,6 +235,13 @@ bool getAbsoluteURLFromRelativePathToURL(std::string baseURL, std::string relati
         }
         baseURL.resize(firstSlashPosition);
     } else {
+        // Look for first '?' that contains parameters of the URL.  Need to strip all parameters before appending the
+        // relative path.
+        auto parameterPosition = baseURL.find_first_of("?", searchBegin);
+        if (parameterPosition != std::string::npos) {
+            baseURL.resize(parameterPosition);
+        }
+
         auto lastSlashPosition = baseURL.find_last_of("/");
         if (lastSlashPosition == std::string::npos || lastSlashPosition < searchBegin) {
             ACSDK_ERROR(LX("getAbsoluteURLFromRelativePathToURLFailed").d("reason", "lastSlashNotFound"));

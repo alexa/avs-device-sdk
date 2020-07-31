@@ -94,6 +94,7 @@ public:
         const avsCommon::avs::CapabilityTag& stateProviderName,
         const avsCommon::sdkInterfaces::ContextRequestToken contextRequestToken) override;
     bool canStateBeRetrieved() override;
+    bool hasReportableStateProperties() override;
     /// @}
 
     /**

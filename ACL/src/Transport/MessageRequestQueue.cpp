@@ -35,61 +35,69 @@ static const std::string EMPTY_QUEUE_NAME = "";
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-MessageRequestQueue::MessageRequestQueue() : m_size{0} {
-}
-
-MessageRequestQueue::~MessageRequestQueue() {
-    clearWaitingFlagForQueue();
-    clear();
+MessageRequestQueue::MessageRequestQueue() : m_isWaitingForAcknowledgement{false} {
 }
 
 void MessageRequestQueue::enqueueRequest(std::shared_ptr<MessageRequest> messageRequest) {
     if (messageRequest != nullptr) {
-        m_sendQueue.queue.push_back({std::chrono::steady_clock::now(), messageRequest});
-        m_size++;
+        m_queue.push_back({std::chrono::steady_clock::now(), messageRequest});
     } else {
         ACSDK_ERROR(LX("enqueueRequest").d("reason", "nullMessageRequest"));
     }
 }
 
 avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>> MessageRequestQueue::peekRequestTime() {
-    if (m_size > 0) {
-        return m_sendQueue.queue.front().first;
+    if (!m_queue.empty()) {
+        return m_queue.front().first;
     }
 
     return avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>>();
 }
 
-std::shared_ptr<MessageRequest> MessageRequestQueue::dequeueRequest() {
-    std::shared_ptr<MessageRequest> messageRequest;
-
-    if (m_size > 0) {
-        messageRequest = m_sendQueue.queue.front().second;
-        m_sendQueue.queue.pop_front();
-        m_size--;
+std::shared_ptr<MessageRequest> MessageRequestQueue::dequeueOldestRequest() {
+    if (m_queue.empty()) {
+        return nullptr;
     }
-    return messageRequest;
+
+    auto result = m_queue.front().second;
+    m_queue.pop_front();
+    return result;
+}
+
+std::shared_ptr<avsCommon::avs::MessageRequest> MessageRequestQueue::dequeueSendableRequest() {
+    for (auto it = m_queue.begin(); it != m_queue.end(); it++) {
+        if (!m_isWaitingForAcknowledgement || !it->second->getIsSerialized()) {
+            auto result = it->second;
+            m_queue.erase(it);
+            return result;
+        }
+    }
+    return nullptr;
 }
 
 bool MessageRequestQueue::isMessageRequestAvailable() const {
-    return !m_sendQueue.queue.empty() && !m_sendQueue.isQueueWaitingForResponse;
+    for (auto it = m_queue.begin(); it != m_queue.end(); it++) {
+        if (!m_isWaitingForAcknowledgement || !it->second->getIsSerialized()) {
+            return true;
+        }
+    }
+    return false;
 }
 
-void MessageRequestQueue::setWaitingFlagForQueue() {
-    m_sendQueue.isQueueWaitingForResponse = true;
+void MessageRequestQueue::setWaitingForSendAcknowledgement() {
+    m_isWaitingForAcknowledgement = true;
 }
 
-void MessageRequestQueue::clearWaitingFlagForQueue() {
-    m_sendQueue.isQueueWaitingForResponse = false;
+void MessageRequestQueue::clearWaitingForSendAcknowledgement() {
+    m_isWaitingForAcknowledgement = false;
 }
 
 bool MessageRequestQueue::empty() const {
-    return (0 == m_size);
+    return m_queue.empty();
 }
 
 void MessageRequestQueue::clear() {
-    m_sendQueue.queue.clear();
-    m_size = 0;
+    m_queue.clear();
 }
 
 }  // namespace acl

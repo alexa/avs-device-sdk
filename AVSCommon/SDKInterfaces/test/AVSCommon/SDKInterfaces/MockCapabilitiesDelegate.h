@@ -29,7 +29,12 @@ namespace test {
 class MockCapabilitiesDelegate : public CapabilitiesDelegateInterface {
 public:
     MOCK_METHOD2(
-        registerEndpoint,
+        addOrUpdateEndpoint,
+        bool(
+            const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+            const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities));
+    MOCK_METHOD2(
+        deleteEndpoint,
         bool(
             const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
             const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities));
@@ -40,8 +45,12 @@ public:
         removeCapabilitiesObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer));
     MOCK_METHOD0(invalidateCapabilities, void());
+    MOCK_METHOD1(
+        setMessageSender,
+        void(const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender));
     MOCK_METHOD1(onAlexaEventProcessedReceived, void(const std::string& eventCorrelationToken));
     MOCK_METHOD1(onAVSGatewayChanged, void(const std::string& avsGateway));
+    MOCK_METHOD2(onConnectionStatusChanged, void(const Status, const ChangedReason));
 };
 
 }  // namespace test

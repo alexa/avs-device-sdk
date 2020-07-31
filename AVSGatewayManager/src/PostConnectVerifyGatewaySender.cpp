@@ -82,16 +82,15 @@ unsigned int PostConnectVerifyGatewaySender::getOperationPriority() {
     return VERIFY_GATEWAY_PRIORITY;
 }
 
-bool PostConnectVerifyGatewaySender::performOperation(
-    const std::shared_ptr<PostConnectSendMessageInterface>& postConnectMessageSender) {
+bool PostConnectVerifyGatewaySender::performOperation(const std::shared_ptr<MessageSenderInterface>& messageSender) {
     ACSDK_DEBUG5(LX(__func__));
-    if (!postConnectMessageSender) {
+    if (!messageSender) {
         ACSDK_ERROR(LX("performOperationFailed").d("reason", "nullPostConnectSender"));
         return false;
     }
     int retryAttempt = 0;
     while (!isStopping()) {
-        auto status = sendVerifyGateway(postConnectMessageSender);
+        auto status = sendVerifyGateway(messageSender);
         switch (status) {
             /// Notify AVSGatewayManager and proceed to next post connect operation.
             case VerifyGatewayReturnCode::GATEWAY_VERIFIED:
@@ -123,7 +122,7 @@ bool PostConnectVerifyGatewaySender::isStopping() {
 
 void PostConnectVerifyGatewaySender::abortOperation() {
     ACSDK_DEBUG5(LX(__func__));
-    std::shared_ptr<PostConnectMessageRequest> requestCopy;
+    std::shared_ptr<WaitableMessageRequest> requestCopy;
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         if (m_isStopping) {
@@ -140,15 +139,15 @@ void PostConnectVerifyGatewaySender::abortOperation() {
 }
 
 PostConnectVerifyGatewaySender::VerifyGatewayReturnCode PostConnectVerifyGatewaySender::sendVerifyGateway(
-    const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>& postConnectMessageSender) {
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) {
     ACSDK_DEBUG5(LX(__func__));
     std::unique_lock<std::mutex> lock{m_mutex};
     auto event = buildJsonEventString(VERIFY_GATEWAY_NAMESPACE, VERIFY_GATEWAY_NAME);
     m_postConnectRequest.reset();
-    m_postConnectRequest = std::make_shared<PostConnectMessageRequest>(event.second);
+    m_postConnectRequest = std::make_shared<WaitableMessageRequest>(event.second);
     lock.unlock();
 
-    postConnectMessageSender->sendPostConnectMessage(m_postConnectRequest);
+    messageSender->sendMessage(m_postConnectRequest);
 
     /// Wait for the response.
     auto status = m_postConnectRequest->waitForCompletion();

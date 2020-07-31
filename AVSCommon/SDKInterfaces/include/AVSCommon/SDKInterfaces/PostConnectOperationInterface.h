@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -56,11 +56,11 @@ public:
      *
      * @note: The performOperation() method is not expected to be called twice.
      *
-     * @param postConnectMessageSender - The @c PostConnectSendMessageInterface to send post connect message.
+     * @param messageSender - The @c MessageSenderInterface to send post connect message.
      * @return True if the post connect operation is successful, else false.
      */
     virtual bool performOperation(
-        const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>& postConnectMessageSender) = 0;
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) = 0;
 
     /**
      * Aborts an operation that is currently being executed using the performOperation() method.

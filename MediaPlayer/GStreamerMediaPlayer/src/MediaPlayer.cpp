@@ -108,6 +108,10 @@ static char GSTREAMER_MIDRANGE_BAND_NAME[] = "band1";
 /// The GStreamer property name for the frequency band 11 kHz.
 static char GSTREAMER_TREBLE_BAND_NAME[] = "band2";
 
+/// Number of readers for UrlContentToAttachmentConverter.  We have 2 readers to have an additional parked reader, to
+/// ensure that the whole of SDS buffer is conserved until the seek() is called.
+static constexpr size_t NUM_OF_CONTENT_READERS = 2;
+
 /**
  * Processes tags found in the tagList.
  * Called through gst_tag_list_foreach.
@@ -238,7 +242,8 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
     const SourceConfig& config,
-    bool repeat) {
+    bool repeat,
+    const PlaybackContext& playbackContext) {
     ACSDK_DEBUG9(LX("setSourceForUrlCalled").d("name", RequiresShutdown::name()).sensitive("url", url));
     std::promise<MediaPlayer::SourceId> promise;
     auto future = promise.get_future();
@@ -575,6 +580,7 @@ MediaPlayer::MediaPlayer(
         m_isPaused{false},
         m_isBufferUnderrun{false},
         m_currentId{ERROR},
+        m_isFakeSink{false},
         m_playPending{false},
         m_pausePending{false},
         m_resumePending{false},
@@ -664,6 +670,14 @@ bool MediaPlayer::setupPipeline() {
     ConfigurationNode::getRoot()[MEDIAPLAYER_CONFIGURATION_ROOT_KEY].getString(
         MEDIAPLAYER_AUDIO_SINK_KEY, &audioSinkElement, "alsasink");
     m_pipeline.audioSink = gst_element_factory_make(audioSinkElement.c_str(), "audio_sink");
+
+    /// If the sink is a fakesink, set sync to true so that it uses system clock for consuming the buffer
+    /// instead of the default behavior, which is to consume the buffer as fast as possible.
+    if (audioSinkElement == "fakesink") {
+        m_isFakeSink = true;
+        g_object_set(m_pipeline.audioSink, "sync", true, NULL);
+    }
+
     if (!m_pipeline.audioSink) {
         ACSDK_ERROR(LX("setupPipelineFailed")
                         .d("name", RequiresShutdown::name())
@@ -904,6 +918,7 @@ bool MediaPlayer::seek() {
                         .d("offsetInMs", m_offsetManager.getSeekPoint().count()));
     }
 
+    m_parkedReader.reset();
     m_offsetManager.clear();
     return seekSuccessful;
 }
@@ -967,6 +982,7 @@ void MediaPlayer::doShutdown() {
         m_urlConverter->shutdown();
     }
     m_urlConverter.reset();
+    m_parkedReader.reset();
 
     std::lock_guard<std::mutex> lock{m_operationMutex};
     m_playerObservers.clear();
@@ -1130,11 +1146,19 @@ gboolean MediaPlayer::handleBusMessage(GstMessage* message) {
                      * were getting dropped and the audio would play very choppily. For example, in a 10 second chunk,
                      * seconds 1-5 would play followed immediately by seconds 6.5-7.5, followed by 8.5-10. Setting this
                      * property to false prevents the sink from dropping frames because they arrive too late.
+                     *
+                     * Note that when the audiosink is a fake sink, this workaround should be avoided. This is because
+                     * when the fake sink has sync set to false, the sink consumes the buffer too quickly, leading to
+                     * a flood of buffer underrun logs.
+                     *
                      * TODO: (ACSDK-828) Investigate why frames are arriving late to the sink causing MPEG-TS files to
                      * play choppily
                      */
-                    ACSDK_DEBUG5(LX("audioSink").d("name", RequiresShutdown::name()).m("Sync option set to false."));
-                    g_object_set(m_pipeline.audioSink, "sync", FALSE, NULL);
+                    if (!m_isFakeSink) {
+                        ACSDK_DEBUG5(
+                            LX("audioSink").d("name", RequiresShutdown::name()).m("Sync option set to false."));
+                        g_object_set(m_pipeline.audioSink, "sync", FALSE, NULL);
+                    }
                 } else if (GST_STATE_NULL == newState) {
                     // Reset sync state back to true if tsdemux changes to NULL state
                     ACSDK_DEBUG5(LX("audioSink").d("name", RequiresShutdown::name()).m("Sync option set to true."));
@@ -1328,7 +1352,7 @@ void MediaPlayer::handleSetUrlSource(
     tearDownTransientPipelineElements(true);
 
     m_urlConverter = alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::create(
-        m_contentFetcherFactory, url, shared_from_this(), offset, shared_from_this());
+        m_contentFetcherFactory, url, shared_from_this(), offset, shared_from_this(), NUM_OF_CONTENT_READERS);
     if (!m_urlConverter) {
         ACSDK_ERROR(LX("setSourceUrlFailed").d("name", RequiresShutdown::name()).d("reason", "badUrlConverter"));
         promise->set_value(ERROR_SOURCE_ID);
@@ -1349,6 +1373,16 @@ void MediaPlayer::handleSetUrlSource(
         return;
     }
     handleSetAttachmentReaderSource(reader, config, promise, nullptr, repeat);
+
+    if (offset != std::chrono::milliseconds::zero()) {
+        std::shared_ptr<AttachmentReader> parkedReaderToPreventOverwrites =
+            attachment->createReader(alexaClientSDK::avsCommon::utils::sds::ReaderPolicy::BLOCKING);
+        if (!parkedReaderToPreventOverwrites) {
+            ACSDK_ERROR(LX("setSourceUrlFailed").d("reason", "null parked reader"));
+            promise->set_value(ERROR_SOURCE_ID);
+        }
+        m_parkedReader = parkedReaderToPreventOverwrites;
+    }
 }
 
 void MediaPlayer::handlePlay(SourceId id, std::promise<bool>* promise) {
@@ -1608,7 +1642,7 @@ void MediaPlayer::handleGetOffset(SourceId id, std::promise<std::chrono::millise
         return;
     }
 
-    if (!m_source || !validateSourceAndId(id)) {
+    if (!m_source || id != m_currentId) {
         promise->set_value(m_offsetBeforeTeardown);
         return;
     }
@@ -1886,6 +1920,7 @@ void MediaPlayer::cleanUpSource() {
         m_source->shutdown();
     }
     m_source.reset();
+    m_parkedReader.reset();
 }
 
 int MediaPlayer::clampEqualizerLevel(int level) {

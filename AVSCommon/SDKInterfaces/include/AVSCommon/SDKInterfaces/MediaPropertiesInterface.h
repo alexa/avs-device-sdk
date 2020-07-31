@@ -38,6 +38,15 @@ public:
      * @return This returns the offset in milliseconds.
      */
     virtual std::chrono::milliseconds getAudioItemOffset() = 0;
+
+    /**
+     * Returns the duration of the current AudioItem the player is handling.
+     *
+     * @return returns the duration.
+     */
+    virtual std::chrono::milliseconds getAudioItemDuration() {
+        return std::chrono::milliseconds::zero();
+    };
 };
 
 }  // namespace sdkInterfaces

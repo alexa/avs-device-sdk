@@ -19,6 +19,7 @@
 #include <atomic>
 #include <chrono>
 #include <unordered_set>
+#include <vector>
 
 #include "AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h"
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
@@ -89,7 +90,8 @@ public:
     void onStateChanged(
         sdkInterfaces::SpeechSynthesizerObserverInterface::SpeechSynthesizerState state,
         const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
-        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState) override;
+        const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
+        const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) override;
 
     void receive(const std::string& contextId, const std::string& message) override;
 

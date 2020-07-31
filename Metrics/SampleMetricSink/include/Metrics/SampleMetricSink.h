@@ -32,6 +32,13 @@ namespace implementations {
 class SampleMetricSink : public avsCommon::utils::metrics::MetricSinkInterface {
 public:
     /**
+     * Create a @c SampleMetricSink.
+     *
+     * @return A @c SampleMetricSink, or nullptr if the operation fails.
+     */
+    static std::unique_ptr<avsCommon::utils::metrics::MetricSinkInterface> createMetricSinkInterface();
+
+    /**
      * Destructor
      */
     ~SampleMetricSink();

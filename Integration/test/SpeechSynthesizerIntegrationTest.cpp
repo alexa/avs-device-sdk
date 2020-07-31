@@ -545,7 +545,7 @@ protected:
  * then return to a finished state.
  *
  */
-TEST_F(SpeechSynthesizerTest, test_handleOneSpeech) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleOneSpeech) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),

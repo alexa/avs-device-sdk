@@ -30,7 +30,7 @@
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <AIP/Initiator.h>
-#include <AudioPlayer/AudioPlayer.h>
+#include <acsdkAudioPlayer/AudioPlayer.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -400,7 +400,7 @@ protected:
         auto mockFactory = mediaPlayer::PooledMediaPlayerFactory::create(players);
 
         // Create and register the AudioPlayer.
-        m_audioPlayer = capabilityAgents::audioPlayer::AudioPlayer::create(
+        m_audioPlayer = acsdkAudioPlayer::AudioPlayer::create(
             std::move(mockFactory),
             m_avsConnectionManager,
             m_focusManager,
@@ -574,7 +574,7 @@ protected:
     std::shared_ptr<AudioInputStream> m_AudioBuffer;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
-    std::shared_ptr<capabilityAgents::audioPlayer::AudioPlayer> m_audioPlayer;
+    std::shared_ptr<acsdkAudioPlayer::AudioPlayer> m_audioPlayer;
     std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
     std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
     std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;

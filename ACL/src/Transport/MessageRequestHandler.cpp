@@ -85,6 +85,9 @@ static const std::string ERROR_INTERNAL = "INTERNAL_ERROR";
 /// Send completed
 static const std::string SEND_COMPLETED = "SEND_COMPLETED";
 
+// Key value separator for HTTP headers
+static const std::string HTTP_KEY_VALUE_SEPARATOR = ": ";
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -155,7 +158,7 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
         std::make_shared<MimeResponseSink>(handler, messageConsumer, attachmentManager, cfg.getId())));
     cfg.setActivityTimeout(STREAM_PROGRESS_TIMEOUT);
 
-    context->onMessageRequestSent();
+    context->onMessageRequestSent(messageRequest);
     auto request = context->createAndSendRequest(cfg);
 
     if (!request) {
@@ -168,6 +171,10 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     if (eventTracer) {
         eventTracer->traceEvent(messageRequest->getJsonContent());
     }
+    // Log Event Message Sent
+    ACSDK_DEBUG0(LX("EventSent")
+                     .sensitive("url", messageRequest->getUriPathExtension())
+                     .sensitive("jsonContent", messageRequest->getJsonContent()));
 
     return handler;
 }
@@ -194,7 +201,7 @@ void MessageRequestHandler::reportMessageRequestAcknowledged() {
     ACSDK_DEBUG7(LX(__func__));
     if (!m_wasMessageRequestAcknowledgeReported) {
         m_wasMessageRequestAcknowledgeReported = true;
-        m_context->onMessageRequestAcknowledged();
+        m_context->onMessageRequestAcknowledged(m_messageRequest);
     }
 }
 
@@ -211,7 +218,13 @@ std::vector<std::string> MessageRequestHandler::getRequestHeaderLines() {
 
     m_context->onActivity();
 
-    return {m_authHeader};
+    std::vector<std::string> result({m_authHeader});
+    auto headers = m_messageRequest->getHeaders();
+    for (const auto& header : headers) {
+        result.emplace_back(header.first + HTTP_KEY_VALUE_SEPARATOR + header.second);
+    }
+
+    return result;
 }
 
 HTTP2GetMimeHeadersResult MessageRequestHandler::getMimePartHeaderLines() {

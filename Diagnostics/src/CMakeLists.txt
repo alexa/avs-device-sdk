@@ -14,7 +14,10 @@ target_include_directories(Diagnostics PUBLIC
         )
 
 target_link_libraries(Diagnostics
-        Alerts
+        acsdkAlertsInterfaces
+        acsdkAudioPlayerInterfaces
+        acsdkNotificationsInterfaces
+        AudioResources
         AVSCommon
         )
 

@@ -25,7 +25,7 @@
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
-#include <DoNotDisturbCA/DoNotDisturbCapabilityAgent.h>
+#include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/CloudControlledSettingProtocol.h>
 #include <Settings/DeviceControlledSettingProtocol.h>

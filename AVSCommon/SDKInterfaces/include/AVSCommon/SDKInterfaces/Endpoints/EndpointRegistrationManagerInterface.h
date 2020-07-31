@@ -38,8 +38,9 @@ namespace endpoints {
  */
 class EndpointRegistrationManagerInterface {
 public:
-    /// Alias for the registration result type.
+    /// Aliases.
     using RegistrationResult = EndpointRegistrationObserverInterface::RegistrationResult;
+    using DeregistrationResult = EndpointRegistrationObserverInterface::DeregistrationResult;
 
     /**
      * Destructor
@@ -47,18 +48,32 @@ public:
     virtual ~EndpointRegistrationManagerInterface() = default;
 
     /**
-     * Registers an endpoint with AVS and enable control via this client.
+     * Registers an endpoint.
      *
-     * @param endpoint The endpoint to be registered.
+     * @note endpointIds are unique. If an endpoint is registered with the same endpointId as a pre-existing
+     * endpoint, the pre-existing endpoint will be replaced with the new one.
+     *
+     * @param endpoint A pointer to the @c EndpointInterface to be registered.
      * @return A future that is set to @c true when the endpoint has been registered and enabled, or that is set to
-     * @c false if registration failed.
-     * @note This operation is asynchronous. You can also use @c EndpointRegistrationManagerInterface to get notified
+     * @c false if the operation failed.
+     * @note This operation is asynchronous. You can also use @c EndpointRegistrationObserverInterface to get notified
      * whenever the operation succeeds or fails.
      */
     virtual std::future<RegistrationResult> registerEndpoint(std::shared_ptr<EndpointInterface> endpoint) = 0;
 
     /**
-     * Adds a registration manager observer to be notified whe a registration has succeeded.
+     * Deregisters an endpoint.
+     *
+     * @param endpoint The @c EndpointIdentifier of the endpoint to be deregistered.
+     * @return A future that is set to @c true when the endpoint has been deregistered, or that is set to @c false
+     * if the operation failed.
+     * @note This operation is asynchronous. You can also use @c EndpointRegistrationObserverInterface to get notified
+     * whenever the operation succeeds or fails.
+     */
+    virtual std::future<DeregistrationResult> deregisterEndpoint(const EndpointIdentifier& endpointId) = 0;
+
+    /**
+     * Adds a registration manager observer to be notified when a registration has succeeded.
      *
      * @param observer The observer to add.
      */

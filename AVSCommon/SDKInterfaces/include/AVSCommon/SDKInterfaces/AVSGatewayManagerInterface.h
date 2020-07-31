@@ -21,7 +21,6 @@
 
 #include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/PostConnectSendMessageInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -46,6 +45,13 @@ public:
      */
     virtual bool setAVSGatewayAssigner(
         std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> avsGatewayAssigner) = 0;
+
+    /**
+     * Gets the AVS Gateway URL.
+     *
+     * @return The string representing the AVS Gateway URL
+     */
+    virtual std::string getGatewayURL() const = 0;
 
     /**
      * Sets the AVS Gateway URL.

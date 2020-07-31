@@ -36,6 +36,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -74,6 +75,7 @@ class AudioInputProcessor
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::MessageRequestObserverInterface
+        , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<AudioInputProcessor> {
 public:
@@ -256,6 +258,11 @@ public:
     /// @name CapabilityConfigurationInterface Functions
     /// @{
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
+    /// @name InternetConnectionObserverInterface Functions
+    /// @{
+    void onConnectionStatusChanged(bool connected) override;
     /// @}
 
     /**
@@ -531,6 +538,11 @@ private:
         avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
 
     /**
+     * This function is called whenever disconnected is received with onConnectionStatusChanged event
+     */
+    void executeDisconnected();
+
+    /**
      * This function updates the @c AudioInputProcessor state and notifies the state observer.  Any changes to
      * @c m_state should be made through this function.
      *
@@ -685,12 +697,6 @@ private:
      * directive.
      */
     bool m_localStopCapturePerformed;
-
-    /**
-     * This flag indicates if a new dialogRequestId should be generated (e.g. the Recognize event is not part of a
-     * multi-turn interaction).
-     */
-    bool m_shouldGenerateDialogRequestId;
 
     /// The system sound player.
     std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;

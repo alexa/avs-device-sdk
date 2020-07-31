@@ -23,13 +23,17 @@ namespace attachment {
 
 using namespace alexaClientSDK::avsCommon::utils::memory;
 
-InProcessAttachment::InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds) :
+/// The default word size for InProcessAttachment.
+static constexpr size_t WORD_SIZE = 1;
+
+InProcessAttachment::InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds, size_t maxNumReaders) :
         Attachment(id),
-        m_sds{std::move(sds)} {
+        m_sds{std::move(sds)},
+        m_maxNumReaders{maxNumReaders} {
     if (!m_sds) {
-        auto buffSize = SDSType::calculateBufferSize(SDS_BUFFER_DEFAULT_SIZE_IN_BYTES);
+        auto buffSize = SDSType::calculateBufferSize(SDS_BUFFER_DEFAULT_SIZE_IN_BYTES, WORD_SIZE, maxNumReaders);
         auto buff = std::make_shared<SDSBufferType>(buffSize);
-        m_sds = SDSType::create(buff);
+        m_sds = SDSType::create(buff, WORD_SIZE, m_maxNumReaders);
     }
 }
 
@@ -53,13 +57,13 @@ std::unique_ptr<AttachmentReader> InProcessAttachment::createReader(
     InProcessAttachmentReader::SDSTypeReader::Policy policy) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    if (m_hasCreatedReader) {
+    if (m_numReaders > m_maxNumReaders) {
         return nullptr;
     }
 
     auto reader = InProcessAttachmentReader::create(policy, m_sds);
     if (reader) {
-        m_hasCreatedReader = true;
+        ++m_numReaders;
     }
 
     return std::move(reader);

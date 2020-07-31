@@ -52,8 +52,26 @@ struct SourceConfig {
         bool enabled;
     };
 
+    /*
+     * Object that contains audio normalization configuration
+     */
+    struct AudioNormalizationConfig {
+        /*
+         * Enable audio normalization.
+         * This is an optional feature and could be safely ignored
+         * if not supported by MediaPlayer implementation.
+         */
+        bool enabled;
+    };
+
     /// Fade-In configuration.
     FadeInConfig fadeInConfig;
+
+    /// Audio normalization configuration
+    AudioNormalizationConfig audioNormalizationConfig;
+
+    /// End offset for where playback should be stopped
+    std::chrono::milliseconds endOffset;
 
     /**
      * Builds a Source Config object with fade in enabled.
@@ -73,7 +91,8 @@ struct SourceConfig {
  * @return a Source Config object without fade in
  */
 inline SourceConfig emptySourceConfig() {
-    return SourceConfig{{100, 100, std::chrono::milliseconds::zero(), false}};
+    return SourceConfig{
+        {100, 100, std::chrono::milliseconds::zero(), false}, {false}, std::chrono::milliseconds::zero()};
 }
 
 /**
@@ -91,7 +110,7 @@ inline SourceConfig SourceConfig::createWithFadeIn(
     const std::chrono::milliseconds& duration) {
     short validStartGain = std::max(MIN_GAIN, std::min(MAX_GAIN, startGain));
     short validEndGain = std::max(MIN_GAIN, std::min(MAX_GAIN, endGain));
-    return SourceConfig{{validStartGain, validEndGain, duration, true}};
+    return SourceConfig{{validStartGain, validEndGain, duration, true}, {false}, std::chrono::milliseconds::zero()};
 }
 
 /**
@@ -105,7 +124,10 @@ inline std::ostream& operator<<(std::ostream& stream, const SourceConfig& config
     return stream << "fadeIn{"
                   << " enabled:" << config.fadeInConfig.enabled << ", start:" << config.fadeInConfig.startGain
                   << ", end:" << config.fadeInConfig.endGain
-                  << ", duration(ms):" << config.fadeInConfig.duration.count() << "}";
+                  << ", duration(ms):" << config.fadeInConfig.duration.count() << "}"
+                  << ", normalization{"
+                  << " enabled: " << config.audioNormalizationConfig.enabled << "}"
+                  << ", endOffset(ms): " << config.endOffset.count();
 }
 
 }  // namespace mediaPlayer

@@ -35,8 +35,16 @@ namespace libcurlUtils {
 class HttpPost : public HttpPostInterface {
 public:
     /**
+     * Create a new HttpPost instance returned as an @c HttpPostInterface.
+     *
+     * @return Returns an std::unique_ptr to the new @c HttpPost instance, or @c nullptr of the operation failed.
+     */
+    static std::unique_ptr<HttpPostInterface> createHttpPostInterface();
+
+    /**
      * Create a new HttpPost instance, passing ownership of the new instance on to the caller.
      *
+     * @deprecated
      * @return Returns an std::unique_ptr to the new HttpPost instance, or @c nullptr of the operation failed.
      */
     static std::unique_ptr<HttpPost> create();

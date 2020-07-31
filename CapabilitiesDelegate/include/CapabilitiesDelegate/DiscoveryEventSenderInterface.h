@@ -16,37 +16,42 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_DISCOVERYEVENTSENDERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_DISCOVERYEVENTSENDERINTERFACE_H_
 
-#include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
-#include <CapabilitiesDelegate/DiscoveryStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+
+#include "DiscoveryStatusObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 
 /**
- * Interface to observe discovery status from the @c PostConnectCapabilitiesPublisher.
+ * Interface to send Discovery events.
  */
-class DiscoveryEventSenderInterface : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface {
+class DiscoveryEventSenderInterface
+        : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface
+        , public avsCommon::sdkInterfaces::AuthObserverInterface {
 public:
     /**
-     * Destructor.
+     * Sends Discovery.AddOrUpdateReport and Discovery.deleteReport events for the addOrUpdateEndpoints and
+     * deleteReportEndpoints with which this object was created.
+     *
+     * @param messageSender The @c MessageSenderInterface to send messages.
+     * @return Whether sending the Discovery events was successful.
      */
-    virtual ~DiscoveryEventSenderInterface() = default;
+    virtual bool sendDiscoveryEvents(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) = 0;
 
     /**
-     * This method adds an @c DiscoveryStatusObserver. The observer gets notified of SUCCESS or FAILURE responses during
-     * discovery.
-     *
-     * @note: If there is a failure to send a Discovery event, the onDiscoveryFailed() method will be called
-     * immediately. If the discovery event is sent successfully, the onDiscoverySuccess() method will be called only
-     * after all the events are successfully sent.
-     * @param observer The pointer to the observer that will be added.
+     * Method to stop execution and unblock any condition variables that are waiting.
+     */
+    virtual void stop() = 0;
+
+    /**
+     * Adds a @c DiscoveryStatusObserverInterface observer.
      */
     virtual void addDiscoveryStatusObserver(const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) = 0;
 
     /**
-     * This method removes an @c DiscoveryStatusObserver.
-     * @param observer The pointer to the observer that needs to be removed. If the observer is not found, this
-     * method returns silently without changing the existing observer.
+     * Removes a @c DiscoveryStatusObserverInterface observer.
      */
     virtual void removeDiscoveryStatusObserver(const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) = 0;
 };

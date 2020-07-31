@@ -21,7 +21,7 @@
 #include <mutex>
 #include <string>
 
-#include <AVSCommon/AVS/PostConnectMessageRequest.h>
+#include <AVSCommon/AVS/WaitableMessageRequest.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
@@ -55,8 +55,8 @@ public:
     /// PostConnectOperationInterface Methods.
     /// @{
     unsigned int getOperationPriority() override;
-    bool performOperation(const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>&
-                              postConnectMessageSender) override;
+    bool performOperation(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) override;
     void abortOperation() override;
     /// @}
 private:
@@ -92,8 +92,8 @@ private:
     /// Mutex to serialize access to shared variables.
     std::mutex m_mutex;
 
-    /// PostConnectMessageRequest used to send the SynchronizeState event.
-    std::shared_ptr<avsCommon::avs::PostConnectMessageRequest> m_postConnectRequest;
+    /// WaitableMessageRequest used to send the SynchronizeState event.
+    std::shared_ptr<avsCommon::avs::WaitableMessageRequest> m_postConnectRequest;
 
     /// wake trigger to signal when data is ready.
     std::condition_variable m_wakeTrigger;

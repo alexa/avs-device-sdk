@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -1039,6 +1039,90 @@ void ExternalMediaPlayer::setObserver(
     m_renderPlayerObserver = observer;
 }
 
+bool ExternalMediaPlayer::localOperation(PlaybackOperation op) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::string playerInFocus;
+    {
+        std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+        playerInFocus = m_playerInFocus;
+    }
+    std::string localPlayerId;
+    if (!playerInFocus.empty()) {
+        auto lock = std::unique_lock<std::mutex>(m_authorizedMutex);
+        auto playerIdToLocalPlayerId = m_authorizedAdapters.find(playerInFocus);
+
+        if (m_authorizedAdapters.end() == playerIdToLocalPlayerId) {
+            ACSDK_ERROR(LX("stopPlaybackFailed").d("reason", "noMatchingLocalId").d(PLAYER_ID, m_playerInFocus));
+            return false;
+        }
+        localPlayerId = playerIdToLocalPlayerId->second;
+
+        lock.unlock();
+
+        auto adapter = getAdapterByLocalPlayerId(localPlayerId);
+
+        if (!adapter) {
+            // Should never reach here as playerInFocus is always set based on a contract with AVS.
+            ACSDK_ERROR(LX("AdapterNotFound").d("player", localPlayerId));
+            return false;
+        }
+
+        switch (op) {
+            case PlaybackOperation::STOP_PLAYBACK:
+                adapter->handlePlayControl(RequestType::STOP);
+                break;
+            case PlaybackOperation::PAUSE_PLAYBACK:
+                adapter->handlePlayControl(RequestType::PAUSE);
+                break;
+            case PlaybackOperation::RESUME_PLAYBACK:
+                adapter->handlePlayControl(RequestType::RESUME);
+                break;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool ExternalMediaPlayer::localSeekTo(std::chrono::milliseconds location, bool fromStart) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::string playerInFocus;
+    {
+        std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+        playerInFocus = m_playerInFocus;
+    }
+    std::string localPlayerId;
+    if (!playerInFocus.empty()) {
+        auto lock = std::unique_lock<std::mutex>(m_authorizedMutex);
+        auto playerIdToLocalPlayerId = m_authorizedAdapters.find(playerInFocus);
+
+        if (m_authorizedAdapters.end() == playerIdToLocalPlayerId) {
+            ACSDK_ERROR(LX("stopPlaybackFailed").d("reason", "noMatchingLocalId").d(PLAYER_ID, m_playerInFocus));
+            return false;
+        }
+        localPlayerId = playerIdToLocalPlayerId->second;
+
+        lock.unlock();
+
+        auto adapter = getAdapterByLocalPlayerId(localPlayerId);
+
+        if (!adapter) {
+            // Should never reach here as playerInFocus is always set based on a contract with AVS.
+            ACSDK_ERROR(LX("AdapterNotFound").d("player", localPlayerId));
+            return false;
+        }
+
+        if (fromStart) {
+            adapter->handleSeek(location);
+        } else {
+            adapter->handleAdjustSeek(location);
+        }
+        return true;
+    }
+    return false;
+}
+
 std::chrono::milliseconds ExternalMediaPlayer::getAudioItemOffset() {
     ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
@@ -1047,6 +1131,16 @@ std::chrono::milliseconds ExternalMediaPlayer::getAudioItemOffset() {
         return std::chrono::milliseconds::zero();
     }
     return m_adapterInFocus->getOffset();
+}
+
+std::chrono::milliseconds ExternalMediaPlayer::getAudioItemDuration() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
+    if (!m_adapterInFocus) {
+        ACSDK_ERROR(LX("getAudioItemDurationFailed").d("reason", "NoActiveAdapter").d("player", m_playerInFocus));
+        return std::chrono::milliseconds::zero();
+    }
+    return m_adapterInFocus->getState().playbackState.duration;
 }
 
 void ExternalMediaPlayer::setPlayerInFocus(const std::string& playerInFocus) {
@@ -1059,7 +1153,7 @@ void ExternalMediaPlayer::setPlayerInFocus(const std::string& playerInFocus) {
         }
     }
     ACSDK_DEBUG(LX(__func__).d("playerInFocus", playerInFocus));
-    auto adapterInFocus = getAdapterByLocalPlayerId(playerInFocus);
+    auto adapterInFocus = getAdapterByPlayerId(playerInFocus);
 
     {
         std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};

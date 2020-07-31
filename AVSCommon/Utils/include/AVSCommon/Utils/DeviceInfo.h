@@ -33,6 +33,16 @@ public:
     /**
      * Create a DeviceInfo.
      *
+     * @param configurationRoot The @c ConfiguratioNode to read device info from.
+     * @return If successful, returns a new DeviceInfo, otherwise @c nullptr.
+     */
+    static std::shared_ptr<DeviceInfo> createFromConfiguration(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Create a DeviceInfo.
+     *
+     * @deprecated
      * @param configurationRoot The global config object.
      * @return If successful, returns a new DeviceInfo, otherwise @c nullptr.
      */

@@ -34,7 +34,7 @@ static const std::string TAG("SynchronizedMessageRequestQueue");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 SynchronizedMessageRequestQueue::~SynchronizedMessageRequestQueue() {
-    clearWaitingFlagForQueue();
+    clearWaitingForSendAcknowledgement();
     clear();
 }
 
@@ -49,9 +49,14 @@ avsCommon::utils::Optional<std::chrono::time_point<std::chrono::steady_clock>> S
     return m_requestQueue.peekRequestTime();
 }
 
-std::shared_ptr<MessageRequest> SynchronizedMessageRequestQueue::dequeueRequest() {
+std::shared_ptr<MessageRequest> SynchronizedMessageRequestQueue::dequeueOldestRequest() {
     std::lock_guard<std::mutex> lock{m_mutex};
-    return m_requestQueue.dequeueRequest();
+    return m_requestQueue.dequeueOldestRequest();
+}
+
+std::shared_ptr<MessageRequest> SynchronizedMessageRequestQueue::dequeueSendableRequest() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    return m_requestQueue.dequeueSendableRequest();
 }
 
 bool SynchronizedMessageRequestQueue::isMessageRequestAvailable() const {
@@ -59,14 +64,14 @@ bool SynchronizedMessageRequestQueue::isMessageRequestAvailable() const {
     return m_requestQueue.isMessageRequestAvailable();
 }
 
-void SynchronizedMessageRequestQueue::setWaitingFlagForQueue() {
+void SynchronizedMessageRequestQueue::setWaitingForSendAcknowledgement() {
     std::lock_guard<std::mutex> lock{m_mutex};
-    m_requestQueue.setWaitingFlagForQueue();
+    m_requestQueue.setWaitingForSendAcknowledgement();
 }
 
-void SynchronizedMessageRequestQueue::clearWaitingFlagForQueue() {
+void SynchronizedMessageRequestQueue::clearWaitingForSendAcknowledgement() {
     std::lock_guard<std::mutex> lock{m_mutex};
-    m_requestQueue.clearWaitingFlagForQueue();
+    m_requestQueue.clearWaitingForSendAcknowledgement();
 }
 
 bool SynchronizedMessageRequestQueue::empty() const {

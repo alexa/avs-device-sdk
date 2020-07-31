@@ -57,7 +57,16 @@ static const std::string CONFIG_KEY_DB_FILE_PATH_KEY = "databaseFilePath";
 static const std::string CREATE_REFRESH_TOKEN_TABLE_SQL_STRING =
     "CREATE TABLE " REFRESH_TOKEN_TABLE_NAME " (" REFRESH_TOKEN_COLUMN_NAME " TEXT);";
 
-std::unique_ptr<SQLiteCBLAuthDelegateStorage> SQLiteCBLAuthDelegateStorage::create(
+std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRootPtr) {
+    if (!configurationRootPtr) {
+        ACSDK_ERROR(LX("createCBLAuthDelegateStorageInterfaceFailed").d("reason", "nullConfigurationRoot"));
+        return nullptr;
+    }
+    return create(*configurationRootPtr);
+}
+
+std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     auto cblAuthDelegateConfigurationRoot = configurationRoot[CONFIG_KEY_CBL_AUTH_DELEGATE];
     if (!cblAuthDelegateConfigurationRoot) {
@@ -72,7 +81,7 @@ std::unique_ptr<SQLiteCBLAuthDelegateStorage> SQLiteCBLAuthDelegateStorage::crea
         return nullptr;
     }
 
-    return std::unique_ptr<SQLiteCBLAuthDelegateStorage>(new SQLiteCBLAuthDelegateStorage(databaseFilePath));
+    return std::shared_ptr<SQLiteCBLAuthDelegateStorage>(new SQLiteCBLAuthDelegateStorage(databaseFilePath));
 }
 
 SQLiteCBLAuthDelegateStorage::~SQLiteCBLAuthDelegateStorage() {

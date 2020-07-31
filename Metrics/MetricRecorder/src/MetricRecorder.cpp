@@ -31,6 +31,16 @@ static const std::string TAG("MetricRecorder");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> MetricRecorder::createMetricRecorderInterface(
+    std::unique_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface> sink) {
+    if (!sink) {
+        return nullptr;
+    }
+    auto recorder = std::make_shared<MetricRecorder>();
+    recorder->addSink(std::move(sink));
+    return recorder;
+}
+
 bool MetricRecorder::addSink(std::unique_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface> sink) {
     if (!sink) {
         ACSDK_WARN(LX("addSinkFailed").d("reason", "nullSink"));

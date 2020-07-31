@@ -194,6 +194,12 @@ bool InteractionModelCapabilityAgent::handleDirectiveHelper(
                 *type = ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED;
                 return false;
             }
+            if (uuid.empty()) {
+                ACSDK_ERROR(LX("processDirectiveFailed").d("reason", "dialogRequestIDIsAnEmptyString"));
+                *errMessage = "Dialog Request ID is an Empty String";
+                *type = ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED;
+                return false;
+            }
             m_directiveSequencer->setDialogRequestId(uuid);
         } else {
             *errMessage = "Dialog Request ID not specified";

@@ -16,9 +16,8 @@
 #include <iostream>
 #include <sstream>
 
-#include "SampleApp/UIManager.h"
-
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/SDKVersion.h>
@@ -27,6 +26,7 @@
 #include <Settings/WakeWordConfirmationSettingType.h>
 
 #include "SampleApp/ConsolePrinter.h"
+#include "SampleApp/UIManager.h"
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("UIManager");
@@ -114,10 +114,13 @@ static const std::string HELP_MESSAGE =
     "| Meeting Control:                                                           |\n"
     "|       Press 'j' followed by Enter at any time to control the meeting.      |\n"
 #endif
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
     "| Endpoint Controller:                                                       |\n"
     "|       Press 'e' followed by Enter at any time to see the endpoint          |\n"
     "|       controller screen.                                                   |\n"
+    "| Dynamic Endpoint Modification:                                             |\n"
+    "|       Press 'y' followed by Enter at any time to see dynamic endpoint      |\n"
+    "|       screen.                                                              |\n"
 #endif
     "| Firmware Version:                                                          |\n"
     "|       Press 'f' followed by Enter at any time to report a different        |\n"
@@ -200,10 +203,19 @@ static const std::string SETTINGS_MESSAGE =
     "|  Press 'q' followed by Enter to exit Settings Options.                     |\n"
     "+----------------------------------------------------------------------------+\n";
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+static const std::string ENDPOINT_MODIFICATION_MESSAGE =
+    "+-------------------------------------------------------------------------------------------+\n"
+    "|                       Dynamic Endpoint Modification Options:                              |\n"
+    "|  Press 'a' followed by Enter to add an endpoint with friendly name 'light'.               |\n"
+    "|  Press 'm' followed by Enter to toggle the endpoint's friendly name to 'light' or 'lamp'. |\n"
+    "|  Press 'd' followed by Enter to delete the endpoint.                                      |\n"
+    "|  Press 'q' followed by Enter to exit Dynamic Endpoint Modification Options.               |\n"
+    "+-------------------------------------------------------------------------------------------+\n";
+
 static const std::string ENDPOINT_CONTROLLER_MESSAGE =
     "+----------------------------------------------------------------------------+\n"
-    "|                          Endpoint Controller Options:                               |\n"
+    "|                 Peripheral Endpoint Controller Options:                        |\n"
 #ifdef POWER_CONTROLLER
     "|  Press '1' followed by Enter to see Power Controller Options.              |\n"
 #endif
@@ -573,14 +585,29 @@ static const std::string NETWORK_INFO_NAME = "NetworkInfo";
 /// The index of the first option in displaying a list of options.
 static const unsigned int OPTION_ENUM_START = 1;
 
-UIManager::UIManager(std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager) :
+std::shared_ptr<UIManager> UIManager::create(
+    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
+    if (!localeAssetsManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullLocaleAssetsManager"));
+        return nullptr;
+    }
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullDeviceInfo"));
+        return nullptr;
+    }
+    return std::shared_ptr<UIManager>(new UIManager(localeAssetsManager, deviceInfo));
+}
+
+UIManager::UIManager(
+    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) :
         m_dialogState{DialogUXState::IDLE},
-        m_capabilitiesState{CapabilitiesObserverInterface::State::UNINITIALIZED},
-        m_capabilitiesError{CapabilitiesObserverInterface::Error::UNINITIALIZED},
         m_authState{AuthObserverInterface::State::UNINITIALIZED},
         m_authCheckCounter{0},
         m_connectionStatus{avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::DISCONNECTED},
-        m_localeAssetsManager{localeAssetsManager} {
+        m_localeAssetsManager{localeAssetsManager},
+        m_defaultEndpointId{deviceInfo->getDefaultEndpointId()} {
 }
 
 static const std::string COMMS_MESSAGE =
@@ -719,16 +746,41 @@ void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObs
 
 void UIManager::onCapabilitiesStateChange(
     CapabilitiesObserverInterface::State newState,
-    CapabilitiesObserverInterface::Error newError) {
-    m_executor.submit([this, newState, newError]() {
-        if ((m_capabilitiesState != newState) && (m_capabilitiesError != newError)) {
-            m_capabilitiesState = newState;
-            m_capabilitiesError = newError;
-            if (CapabilitiesObserverInterface::State::FATAL_ERROR == m_capabilitiesState) {
+    CapabilitiesObserverInterface::Error newError,
+    const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
+    const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) {
+    m_executor.submit([this, newState, newError, addedOrUpdatedEndpoints, deletedEndpoints]() {
+        // If one of the added or updated endpointIds is the default endpoint, and the
+        // add/update failed, go into limited mode.
+        // Limited mode is unnecessary if the failure is for non-default endpoints.
+        if (CapabilitiesObserverInterface::State::FATAL_ERROR == newState) {
+            auto it = std::find(addedOrUpdatedEndpoints.begin(), addedOrUpdatedEndpoints.end(), m_defaultEndpointId);
+            if (addedOrUpdatedEndpoints.end() != it) {
                 std::ostringstream oss;
-                oss << "UNRECOVERABLE CAPABILITIES API ERROR: " << m_capabilitiesError;
+                oss << "UNRECOVERABLE CAPABILITIES API ERROR: " << newError;
                 ConsolePrinter::prettyPrint({oss.str(), ENTER_LIMITED});
                 setFailureStatus(CAPABILITIES_API_FAILED_STR);
+                return;
+            } else {
+                std::ostringstream oss;
+                if (!addedOrUpdatedEndpoints.empty()) {
+                    oss << "Failed to register " << addedOrUpdatedEndpoints.size() << " endpoint(s): " << newError;
+                    ConsolePrinter::prettyPrint(oss.str());
+                }
+                if (!deletedEndpoints.empty()) {
+                    oss << "Failed to deregister " << deletedEndpoints.size() << " endpoint(s): " << newError;
+                    ConsolePrinter::prettyPrint(oss.str());
+                }
+            }
+        } else if (CapabilitiesObserverInterface::State::SUCCESS == newState) {
+            std::ostringstream oss;
+            if (!addedOrUpdatedEndpoints.empty()) {
+                oss << "Successfully registered " << addedOrUpdatedEndpoints.size() << " endpoint(s). ";
+                ConsolePrinter::prettyPrint(oss.str());
+            }
+            if (!deletedEndpoints.empty()) {
+                oss << "Successfully deregistered " << deletedEndpoints.size() << " endpoint(s).";
+                ConsolePrinter::prettyPrint(oss.str());
             }
         }
     });
@@ -755,7 +807,15 @@ void UIManager::printSettingsScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(SETTINGS_MESSAGE); });
 }
 
-#ifdef ENABLE_ENDPOINT_CONTROLLERS_MENU
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+void UIManager::printEndpointModificationScreen() {
+    m_executor.submit([]() { ConsolePrinter::simplePrint(ENDPOINT_MODIFICATION_MESSAGE); });
+}
+
+void UIManager::printEndpointModificationError(const std::string& message) {
+    m_executor.submit([message]() { ConsolePrinter::prettyPrint(message); });
+}
+
 void UIManager::printEndpointControllerScreen() {
     m_executor.submit([]() { ConsolePrinter::simplePrint(ENDPOINT_CONTROLLER_MESSAGE); });
 }

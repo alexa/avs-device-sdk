@@ -21,7 +21,7 @@
 #include <functional>
 
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
-#include <AVSCommon/AVS/PostConnectMessageRequest.h>
+#include <AVSCommon/AVS/WaitableMessageRequest.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 #include <AVSGatewayManager/GatewayVerifyState.h>
 
@@ -47,8 +47,8 @@ public:
     /// @name PostConnectOperationInterface Methods
     /// @{
     unsigned int getOperationPriority() override;
-    bool performOperation(const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>&
-                              postConnectMessageSender) override;
+    bool performOperation(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) override;
     void abortOperation() override;
     /// @}
 private:
@@ -77,11 +77,11 @@ private:
     /**
      * The VerifyGateway operation which sends the @c ApiGateway.VerifyGateway event.
      *
-     * @param postConnectMessageSender The @c PostConnectMessageSender to send the post connect message.
+     * @param messageSender The @c MessageSenderInterface to send the post connect message.
      * @return The @c VerifyGatewayReturnCode used to determine the next action.
      */
     VerifyGatewayReturnCode sendVerifyGateway(
-        const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectSendMessageInterface>& postConnectMessageSender);
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender);
 
     /**
      * Thread safe method to check if the operation is stopping.
@@ -92,14 +92,14 @@ private:
     /// The Callback function that will be called after successful response to @c VerifyGateway event.
     std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> m_gatewayVerifiedCallback;
 
-    /// Mutex to synchronize access to @c PostConnectMessageRequest.
+    /// Mutex to synchronize access to @c WaitableMessageRequest.
     std::mutex m_mutex;
 
     /// Flag that will be set when the abortOperation method is called.
     bool m_isStopping;
 
-    /// The @c PostConnectMessageRequest used to send post connect messages.
-    std::shared_ptr<avsCommon::avs::PostConnectMessageRequest> m_postConnectRequest;
+    /// The @c WaitableMessageRequest used to send post connect messages.
+    std::shared_ptr<avsCommon::avs::WaitableMessageRequest> m_postConnectRequest;
 
     /// The @c WaitEvent to cancel retry waits.
     avsCommon::utils::WaitEvent m_wakeEvent;

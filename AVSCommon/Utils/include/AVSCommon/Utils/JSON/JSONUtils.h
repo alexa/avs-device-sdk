@@ -232,6 +232,33 @@ std::string convertToJsonString(const CollectionT& elements);
  */
 std::map<std::string, std::string> retrieveStringMap(const rapidjson::Value& value, const std::string& key);
 
+/**
+ * Retrieve string map from array of a @c rapidjson value with the given key.
+ *
+ * @param value A @c Value that represents a array of string map.
+ * @param key The name of the array being looked for.
+ * @param elements The output collection which will contain all extracted elements.  An empty collection if value
+ * contains non-string elements or if the key was not found.
+ */
+void retrieveStringMapFromArray(
+    const rapidjson::Value& value,
+    const std::string& key,
+    std::map<std::string, std::string>& elements);
+
+/**
+ * Retrieve array of string map from array of a @c rapidjson value with the given key.
+ *
+ * @param value A @c Value that represents a array of string map.
+ * @param key The name of the array being looked for.
+ * @param elements The output collection which will contain all extracted elements.
+ *
+ * @return A bool indicating success or failure retrieving elements
+ */
+bool retrieveArrayOfStringMapFromArray(
+    const rapidjson::Value& value,
+    const std::string& key,
+    std::vector<std::map<std::string, std::string>>& elements);
+
 //----- Templated functions implementation and specializations.
 
 template <>

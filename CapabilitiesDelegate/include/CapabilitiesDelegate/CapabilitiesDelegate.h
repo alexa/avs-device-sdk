@@ -21,20 +21,39 @@
 #include <mutex>
 #include <string>
 
-#include "CapabilitiesDelegate/DiscoveryEventSenderInterface.h"
+#include "CapabilitiesDelegate/DiscoveryEventSender.h"
 #include "CapabilitiesDelegate/Storage/CapabilitiesDelegateStorageInterface.h"
 
+#include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 #include <RegistrationManager/CustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
+
+/**
+ * Helper struct used to store pending and in-flight endpoint changes.
+ */
+struct InProcessEndpointsToConfigMapStruct {
+    /// A map of pending endpointId to configuration changes.
+    /// These endpoints will be sent in a Discovery Event to AVS when next possible.
+    std::unordered_map<std::string, std::string> pending;
+
+    /// A map of in-flight endpointId to configuration changes.
+    /// These endpoints are currently part of an active Discovery event in-flight to AVS.
+    std::unordered_map<std::string, std::string> inFlight;
+};
+
 /**
  * CapabilitiesDelegate provides an implementation of the CapabilitiesDelegateInterface. It allows clients to register
  * capabilities implemented by agents and publish them so that Alexa is aware of the device's capabilities.
@@ -62,7 +81,11 @@ public:
 
     /// @name CapabilitiesDelegateInterface method overrides.
     /// @{
-    bool registerEndpoint(
+    bool addOrUpdateEndpoint(
+        const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+        const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) override;
+
+    bool deleteEndpoint(
         const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
         const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) override;
 
@@ -73,6 +96,9 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) override;
 
     void invalidateCapabilities() override;
+
+    void setMessageSender(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) override;
     /// @}
 
     /// @name AlexaEventProcessedObserverInterface method overrides.
@@ -106,6 +132,11 @@ public:
     /// @name CustomerDataHandler Functions
     /// @{
     void clearData() override;
+    /// @}
+
+    /// @name ConnectionStatusObserverInterface Functions
+    /// @{
+    void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
     /// @}
 
     /**
@@ -147,10 +178,16 @@ private:
      *
      * @param newState The new state.
      * @param newError The error associated with the newState.
+     * @param addOrUpdateReportEndpoints The list of @c EndpointIdentifier of endpoints that were intended to
+     * be added or updated.
+     * @param deleteReportEndpoints The list of @c EndpointIdentifier of endpoints that were intended for
+     * deletion.
      */
     void setCapabilitiesState(
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError);
+        const avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
+        const avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addOrUpdateReportEndpoints,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deleteReportEndpoints);
 
     /**
      * Updates the storage with the AddOrUpdateReport and DeleteReport endpoints.
@@ -169,6 +206,51 @@ private:
      * Resets the discovery event sender.
      */
     void resetDiscoveryEventSender();
+
+    /**
+     * Executes sending the CapabilitiesDelegate's pending endpoints.
+     */
+    void executeSendPendingEndpoints();
+
+    /**
+     * Whether @c CapabilitiesDelegate is shutting down.
+     */
+    bool isShuttingDown();
+
+    /**
+     * Adds stale endpoints from the database to m_deleteEndpoints.pending list. Stale endpoints are endpoints
+     * stored in the database, but are not registered or pending registration. @c m_endpointsMutex must be locked
+     * to call this method.
+     *
+     * @param storedEndpointConfig The reference to the stored map of endpointId to configuration.
+     */
+    void addStaleEndpointsToPendingDeleteLocked(std::unordered_map<std::string, std::string>* storedEndpointConfig);
+
+    /**
+     * Filters m_addOrUpdate.pending endpoints to remove those that are already in the database, and therefore
+     * do not need to be sent in an addOrUpdateReport. @c m_endpointsMutex must be locked to call this method.
+     *
+     * @param storedEndpointConfig The reference to the stored map of endpointId to configuration. This map
+     * is filtered to remove endpoints that do not need to be registered to AVS.
+     */
+    void filterUnchangedPendingAddOrUpdateEndpointsLocked(
+        std::unordered_map<std::string, std::string>* storedEndpointConfig);
+
+    /**
+     * Moves in-flight endpoints to pending for re-try purposes (e.g. on re-connect). @c m_endpointsMutex must
+     * be locked to call this method.
+     */
+    void moveInFlightEndpointsToPendingLocked();
+
+    /**
+     * Moves in-flight endpoints to pending for re-try purposes (e.g. on re-connect).
+     */
+    void moveInFlightEndpointsToPending();
+
+    /**
+     * Moves in-flight endpoints into m_endpoints, e.g. when Discovery events completed successfully.
+     */
+    void moveInFlightEndpointsToRegisteredEndpoints();
 
     /// Mutex used to serialize access to Capabilities state and Capabilities state observers.
     std::mutex m_observerMutex;
@@ -189,17 +271,50 @@ private:
     /// The reference to the @c CapabilitiesDelegateStorageInterface.
     std::shared_ptr<storage::CapabilitiesDelegateStorageInterface> m_capabilitiesDelegateStorage;
 
-    /// The mutex to serialize access to the endpoint config map.
-    std::mutex m_endpointMapMutex;
+    /// The mutex to serialize access to m_isConnected.
+    std::mutex m_isConnectedMutex;
 
-    /// A map from endpoint ID to endpoint configuration.
-    std::unordered_map<std::string, std::string> m_endpointIdToConfigMap;
+    /// Flag indicating latest reported connection status. True if SDK is connected to the AVS and ready,
+    /// false otherwise.
+    bool m_isConnected;
 
-    /// The mutex to synchronize access to the current @c DiscoveryEventSender
-    std::mutex m_discoveryEventSenderMutex;
+    /// The mutex to serialize operations related to pending and in-flight endpoints.
+    std::mutex m_endpointsMutex;
 
-    /// The current post connect publisher.
+    /// A struct containing the in-flight and pending endpoints for Discovery.addOrUpdateReport event.
+    InProcessEndpointsToConfigMapStruct m_addOrUpdateEndpoints;
+
+    /// A struct containing the in-flight and pending endpoints Discovery.deleteReport event.
+    InProcessEndpointsToConfigMapStruct m_deleteEndpoints;
+
+    /// A map of endpointId to configuration for currently registered endpoints.
+    std::unordered_map<std::string, std::string> m_endpoints;
+
+    /// The mutex to serialize operations related to @c m_currentDiscoveryEventSender.
+    std::mutex m_currentDiscoveryEventSenderMutex;
+
+    /// The current @c DiscoveryEventSenderInterface.
     std::shared_ptr<DiscoveryEventSenderInterface> m_currentDiscoveryEventSender;
+
+    /// The mutex to synchronize access to the @c MessageSenderInterface.
+    std::mutex m_messageSenderMutex;
+
+    /// Object that can send messages to AVS.
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
+
+    /// The mutex to synchronize access to @c m_isShuttingDown.
+    std::mutex m_isShuttingDownMutex;
+
+    /// Whether or not the @c CapabilitiesDelegate is shutting down.
+    bool m_isShuttingDown;
+
+    /**
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 }  // namespace capabilitiesDelegate
