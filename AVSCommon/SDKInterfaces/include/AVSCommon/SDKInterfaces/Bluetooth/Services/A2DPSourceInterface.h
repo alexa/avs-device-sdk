@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,12 +32,23 @@ namespace services {
  */
 class A2DPSourceInterface : public BluetoothServiceInterface {
 public:
+    /// The Service UUID.
+    static constexpr const char* UUID = "0000110a-0000-1000-8000-00805f9b34fb";
+
+    /// The Service Name.
+    static constexpr const char* NAME = "AudioSource";
+
     /**
      * Returns the stream containing the decoded raw PCM data sent by the connected device.
      *
      * @return A shared_ptr to a @c FormattedAudioStreamAdapter object to be consumed.
      */
     virtual std::shared_ptr<avsCommon::utils::bluetooth::FormattedAudioStreamAdapter> getSourceStream() = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~A2DPSourceInterface() = default;
 };
 
 }  // namespace services

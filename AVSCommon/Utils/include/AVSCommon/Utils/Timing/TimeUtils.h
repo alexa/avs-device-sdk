@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #include <chrono>
 #include <ctime>
 #include <string>
-#include <sys/time.h>
 
 #include "AVSCommon/Utils/RetryTimer.h"
 #include "AVSCommon/Utils/Timing/SafeCTimeAccess.h"
@@ -98,23 +97,27 @@ public:
      * @return True, if successful, false otherwise.
      */
     bool convertTimeToUtcIso8601Rfc3339(
-        const std::chrono::high_resolution_clock::time_point& tp,
+        const std::chrono::system_clock::time_point& tp,
         std::string* iso8601TimeString);
 
 private:
     /**
      * Calculate localtime offset in std::time_t.
      *
-     * In order to calculate the timezone offset, we call gmtime and localtime giving the same arbitrary time point.
-     * Then, we convert them back to time_t and calculate the conversion difference. The arbitrary time point is 24
-     * hours past epoch, so we don't have to deal with negative time_t values.
+     * In order to calculate the timezone offset, we call gmtime and localtime giving the same reference time point.
+     * Then, we convert them back to time_t and calculate the conversion difference.
+     *
+     * Note: The reference time point cannot be a fixed value as time differences for a timezone can change.
+     * For example, Europe/London was observing UTC + 1:00 year long during 1970 but later changed to UTC + 1:00 only
+     * during summer time.
      *
      * This function uses non-threadsafe time functions. Thus, it is important to use the SafeCTimeAccess class.
      *
+     * @param referenceTime - The input reference time used to calculate the offset.
      * @param[out] ret Required pointer to object where the result will be saved.
      * @return Whether it succeeded to calculate the localtime offset.
      */
-    bool localtimeOffset(std::time_t* ret);
+    bool localtimeOffset(std::time_t referenceTime, std::time_t* ret);
 
     /// Object used to safely access the system ctime functions.
     std::shared_ptr<SafeCTimeAccess> m_safeCTimeAccess;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,12 +25,13 @@
 #include <AVSCommon/AVS/AudioInputStream.h>
 
 #include <portaudio.h>
+#include <Audio/MicrophoneInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
 
 /// This acts as a wrapper around PortAudio, a cross-platform open-source audio I/O library.
-class PortAudioMicrophoneWrapper {
+class PortAudioMicrophoneWrapper : public applicationUtilities::resources::audio::MicrophoneInterface {
 public:
     /**
      * Creates a @c PortAudioMicrophoneWrapper.
@@ -45,14 +46,21 @@ public:
      *
      * @return Whether the stop was successful.
      */
-    bool stopStreamingMicrophoneData();
+    bool stopStreamingMicrophoneData() override;
 
     /**
      * Starts streaming from the microphone.
      *
      * @return Whether the start was successful.
      */
-    bool startStreamingMicrophoneData();
+    bool startStreamingMicrophoneData() override;
+
+    /**
+     * Whether the microphone is currently streaming.
+     *
+     * @return Whether the microphone is streaming.
+     */
+    bool isStreaming() override;
 
     /**
      * Destructor.
@@ -112,6 +120,11 @@ private:
      * threads.
      */
     std::mutex m_mutex;
+
+    /**
+     * Whether the microphone is currently streaming.
+     */
+    bool m_isStreaming;
 
     /**
      * HACK Read from file instead of a real audio device.

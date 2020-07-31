@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <RegistrationManager/CustomerDataManager.h>
+
+#include <queue>
 
 namespace alexaClientSDK {
 namespace certifiedSender {
@@ -38,35 +39,49 @@ static const std::string TAG("CertifiedSender");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(const std::string& jsonContent, int dbId) :
-        MessageRequest{jsonContent},
+/*
+ * Retry times on subsequent retries for when a message could not be sent to the server over a valid AVS connection.
+ * These numbers are based on the formula: 10 * 5^n, where n is the number of retries.
+ */
+static const std::vector<int> EXPONENTIAL_BACKOFF_RETRY_TABLE = {
+    10000,   // Retry 1:  10s
+    50000,   // Retry 2:  50s
+    250000,  // Retry 3:  250s = 4min 10s
+    1250000  // Retry 4:  1250s = 20min 50s
+};
+
+CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(
+    const std::string& jsonContent,
+    int dbId,
+    const std::string& uriPathExtension) :
+        MessageRequest{jsonContent, uriPathExtension},
         m_responseReceived{false},
         m_dbId{dbId},
-        m_isShuttingDown{false} {
+        m_isRequestShuttingDown{false} {
 }
 
 void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::lock_guard<std::mutex> lock(m_requestMutex);
     m_sendMessageStatus = MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2;
     m_responseReceived = true;
-    m_cv.notify_all();
+    m_requestCv.notify_all();
 }
 
 void CertifiedSender::CertifiedMessageRequest::sendCompleted(
     MessageRequestObserverInterface::Status sendMessageStatus) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::lock_guard<std::mutex> lock(m_requestMutex);
     if (!m_responseReceived) {
         m_sendMessageStatus = sendMessageStatus;
         m_responseReceived = true;
-        m_cv.notify_all();
+        m_requestCv.notify_all();
     }
 }
 
 MessageRequestObserverInterface::Status CertifiedSender::CertifiedMessageRequest::waitForCompletion() {
-    std::unique_lock<std::mutex> lock(m_mutex);
-    m_cv.wait(lock, [this]() { return m_isShuttingDown || m_responseReceived; });
+    std::unique_lock<std::mutex> lock(m_requestMutex);
+    m_requestCv.wait(lock, [this]() { return m_isRequestShuttingDown || m_responseReceived; });
 
-    if (m_isShuttingDown) {
+    if (m_isRequestShuttingDown) {
         return MessageRequestObserverInterface::Status::TIMEDOUT;
     }
 
@@ -78,9 +93,9 @@ int CertifiedSender::CertifiedMessageRequest::getDbId() {
 }
 
 void CertifiedSender::CertifiedMessageRequest::shutdown() {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_isShuttingDown = true;
-    m_cv.notify_all();
+    std::lock_guard<std::mutex> lock(m_requestMutex);
+    m_isRequestShuttingDown = true;
+    m_requestCv.notify_all();
 }
 
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
@@ -114,6 +129,7 @@ CertifiedSender::CertifiedSender(
         m_queueSizeHardLimit{queueSizeHardLimit},
         m_isShuttingDown{false},
         m_isConnected{false},
+        m_retryTimer(EXPONENTIAL_BACKOFF_RETRY_TABLE),
         m_messageSender{messageSender},
         m_connection{connection},
         m_storage{storage} {
@@ -128,6 +144,7 @@ CertifiedSender::~CertifiedSender() {
     lock.unlock();
 
     m_workerThreadCV.notify_one();
+    m_backoffWaitCV.notify_one();
 
     if (m_workerThread.joinable()) {
         m_workerThread.join();
@@ -151,12 +168,60 @@ bool CertifiedSender::init() {
         }
     }
 
+    /// Load stored messages from storage.
+    std::queue<MessageStorageInterface::StoredMessage> storedMessages;
+    if (!m_storage->load(&storedMessages)) {
+        ACSDK_ERROR(LX("initFailed").m("Could not load messages from database file."));
+        return false;
+    }
+
+    while (!storedMessages.empty()) {
+        auto storedMessage = storedMessages.front();
+        {
+            std::lock_guard<std::mutex> lock{m_mutex};
+            m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(
+                storedMessage.message, storedMessage.id, storedMessage.uriPathExtension));
+        }
+        storedMessages.pop();
+    }
+
     m_workerThread = std::thread(&CertifiedSender::mainloop, this);
 
     return true;
 }
 
+/**
+ * A function to evaluate if the given status suggests that the client should retry sending the message.
+ *
+ * @param status The status being queried.
+ * @return Whether the status means the client should keep retrying.
+ */
+inline bool shouldRetryTransmission(MessageRequestObserverInterface::Status status) {
+    switch (status) {
+        case MessageRequestObserverInterface::Status::SUCCESS:
+        case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
+        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
+        case MessageRequestObserverInterface::Status::CANCELED:
+        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
+        case MessageRequestObserverInterface::Status::BAD_REQUEST:
+            return false;
+        case MessageRequestObserverInterface::Status::THROTTLED:
+        case MessageRequestObserverInterface::Status::PENDING:
+        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
+        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
+        case MessageRequestObserverInterface::Status::TIMEDOUT:
+        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
+        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::REFUSED:
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
+            return true;
+    }
+    return false;
+}
+
 void CertifiedSender::mainloop() {
+    int failedSendRetryCount = 0;
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
 
@@ -168,7 +233,7 @@ void CertifiedSender::mainloop() {
         }
 
         if (m_isShuttingDown) {
-            ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  exiting mainloop."));
+            ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  Exiting mainloop."));
             return;
         }
 
@@ -181,7 +246,37 @@ void CertifiedSender::mainloop() {
 
         auto status = m_currentMessage->waitForCompletion();
 
-        if (MessageRequest::isServerStatus(status)) {
+        if (shouldRetryTransmission(status)) {
+            // If we couldn't send the message ok, let's push a fresh instance to the front of the deque.  This allows
+            // ACL to continue interacting with the old instance (for example, if it is involved in a complex flow
+            // of exception / onCompleted handling), and allows us to safely try sending the new instance.
+            lock.lock();
+            m_messagesToSend.pop_front();
+            m_messagesToSend.push_front(std::make_shared<CertifiedMessageRequest>(
+                m_currentMessage->getJsonContent(),
+                m_currentMessage->getDbId(),
+                m_currentMessage->getUriPathExtension()));
+            lock.unlock();
+
+            // Ensures that we do not DDOS the AVS endpoint, just in case we have a valid AVS connection but
+            // the server is returning some non-server HTTP error.
+            auto timeout = m_retryTimer.calculateTimeToRetry(failedSendRetryCount);
+            ACSDK_DEBUG5(LX(__func__).d("failedSendRetryCount", failedSendRetryCount).d("timeout", timeout.count()));
+
+            failedSendRetryCount++;
+
+            lock.lock();
+            m_backoffWaitCV.wait_for(lock, timeout, [this]() { return m_isShuttingDown; });
+            if (m_isShuttingDown) {
+                ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  Exiting mainloop."));
+                return;
+            }
+            lock.unlock();
+        } else {
+            /*
+             * We should not retry to send the message (either because it was sent successfully or because trying again
+             * is not expected to solve the issue)
+             */
             lock.lock();
 
             if (!m_storage->erase(m_currentMessage->getDbId())) {
@@ -190,15 +285,8 @@ void CertifiedSender::mainloop() {
 
             m_messagesToSend.pop_front();
             lock.unlock();
-        } else {
-            // If we couldn't send the message ok, let's push a fresh instance to the front of the deque.  This allows
-            // ACL to continue interacting with the old instance (for example, if it is involved in a complex flow
-            // of exception / onCompleted handling), and allows us to safely try sending the new instance.
-            lock.lock();
-            m_messagesToSend.pop_front();
-            m_messagesToSend.push_front(std::make_shared<CertifiedMessageRequest>(
-                m_currentMessage->getJsonContent(), m_currentMessage->getDbId()));
-            lock.unlock();
+            // Resetting the fail count.
+            failedSendRetryCount = 0;
         }
     }
 }
@@ -206,16 +294,20 @@ void CertifiedSender::mainloop() {
 void CertifiedSender::onConnectionStatusChanged(
     ConnectionStatusObserverInterface::Status status,
     ConnectionStatusObserverInterface::ChangedReason reason) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
     m_isConnected = (ConnectionStatusObserverInterface::Status::CONNECTED == status);
+    lock.unlock();
     m_workerThreadCV.notify_one();
 }
 
-std::future<bool> CertifiedSender::sendJSONMessage(const std::string& jsonMessage) {
-    return m_executor.submit([this, jsonMessage]() { return executeSendJSONMessage(jsonMessage); });
+std::future<bool> CertifiedSender::sendJSONMessage(
+    const std::string& jsonMessage,
+    const std::string& uriPathExtension) {
+    return m_executor.submit(
+        [this, jsonMessage, uriPathExtension]() { return executeSendJSONMessage(jsonMessage, uriPathExtension); });
 }
 
-bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
+bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage, const std::string& uriPathExtension) {
     std::unique_lock<std::mutex> lock(m_mutex);
 
     int queueSize = static_cast<int>(m_messagesToSend.size());
@@ -230,12 +322,12 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage) {
     }
 
     int messageId = 0;
-    if (!m_storage->store(jsonMessage, &messageId)) {
+    if (!m_storage->store(jsonMessage, uriPathExtension, &messageId)) {
         ACSDK_ERROR(LX("executeSendJSONMessage").m("Could not store message."));
         return false;
     }
 
-    m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId));
+    m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(jsonMessage, messageId, uriPathExtension));
 
     lock.unlock();
 

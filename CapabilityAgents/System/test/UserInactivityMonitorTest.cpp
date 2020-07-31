@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
-#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockUserInactivityMonitorObserver.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <ADSL/DirectiveSequencer.h>
@@ -53,7 +53,7 @@ static const std::string USER_INACTIVITY_RESET_NAME = "ResetUserInactivity";
 /// This is the string for the message ID used in the directive.
 static const std::string USER_INACTIVITY_MESSAGE_ID = "ABC123DEF";
 static const std::string USER_INACTIVITY_PAYLOAD_KEY = "inactiveTimeInSeconds";
-static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{20};
+static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{100};
 
 /// This is the condition variable to be used to control the exit of the test case.
 std::condition_variable exitTrigger;
@@ -118,7 +118,7 @@ void UserInactivityMonitorTest::SetUp() {
 /**
  * This case tests if @c UserInactivityMonitor basic create function works properly
  */
-TEST_F(UserInactivityMonitorTest, createSuccessfully) {
+TEST_F(UserInactivityMonitorTest, testTimer_createSuccessfully) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
@@ -133,7 +133,7 @@ TEST_F(UserInactivityMonitorTest, createSuccessfully) {
 /**
  * This case tests if possible @c nullptr parameters passed to @c UserInactivityMonitor::create are handled properly.
  */
-TEST_F(UserInactivityMonitorTest, createWithError) {
+TEST_F(UserInactivityMonitorTest, test_createWithError) {
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(m_mockMessageSender, nullptr));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, m_mockExceptionEncounteredSender));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, nullptr));
@@ -142,9 +142,14 @@ TEST_F(UserInactivityMonitorTest, createWithError) {
 /**
  * This case tests if a directive is handled properly.
  */
-TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
+TEST_F(UserInactivityMonitorTest, testTimer_handleDirectiveProperly) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
+    std::promise<void> notifyObserverPromise1;
+    std::promise<void> notifyObserverPromise2;
+    auto notifyObserverFuture1 = notifyObserverPromise1.get_future();
+    auto notifyObserverFuture2 = notifyObserverPromise2.get_future();
+
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
 
     auto userInactivityMonitor = UserInactivityMonitor::create(
@@ -154,8 +159,12 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
     // let's verify that observers are notified when the UserInactivityReport Event is sent.
     auto userInactivityObserver1 = std::make_shared<MockUserInactivityMonitorObserver>();
     auto userInactivityObserver2 = std::make_shared<MockUserInactivityMonitorObserver>();
-    EXPECT_CALL(*(userInactivityObserver1.get()), onUserInactivityReportSent());
-    EXPECT_CALL(*(userInactivityObserver2.get()), onUserInactivityReportSent());
+    EXPECT_CALL(*(userInactivityObserver1.get()), onUserInactivityReportSent())
+        .WillOnce(InvokeWithoutArgs([&notifyObserverPromise1] { notifyObserverPromise1.set_value(); }));
+    ;
+    EXPECT_CALL(*(userInactivityObserver2.get()), onUserInactivityReportSent())
+        .WillOnce(InvokeWithoutArgs([&notifyObserverPromise2] { notifyObserverPromise2.set_value(); }));
+    ;
     userInactivityMonitor->addObserver(userInactivityObserver1);
     userInactivityMonitor->addObserver(userInactivityObserver2);
 
@@ -170,6 +179,8 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 
     directiveSequencer->onDirective(userInactivityDirective);
     exitTrigger.wait_for(exitLock, USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
+    notifyObserverFuture1.wait_for(USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
+    notifyObserverFuture2.wait_for(USER_INACTIVITY_REPORT_PERIOD + USER_INACTIVITY_REPORT_PERIOD);
 
     directiveSequencer->shutdown();
 }
@@ -177,7 +188,7 @@ TEST_F(UserInactivityMonitorTest, handleDirectiveProperly) {
 /**
  * This case tests if multiple requests are being sent up to AVS.
  */
-TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
+TEST_F(UserInactivityMonitorTest, testTimer_sendMultipleReports) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
@@ -194,7 +205,7 @@ TEST_F(UserInactivityMonitorTest, sendMultipleReports) {
 /**
  * Verify that timeSinceUserInactivity works as expected.
  */
-TEST_F(UserInactivityMonitorTest, verifyInactivityTime) {
+TEST_F(UserInactivityMonitorTest, test_verifyInactivityTime) {
     auto userInactivityMonitor = UserInactivityMonitor::create(m_mockMessageSender, m_mockExceptionEncounteredSender);
     ASSERT_NE(nullptr, userInactivityMonitor);
 
@@ -212,7 +223,7 @@ TEST_F(UserInactivityMonitorTest, verifyInactivityTime) {
 /**
  * This case tests if multiple requests are being sent up to AVS with a reset during the process.
  */
-TEST_F(UserInactivityMonitorTest, sendMultipleReportsWithReset) {
+TEST_F(UserInactivityMonitorTest, test_sendMultipleReportsWithReset) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);

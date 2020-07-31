@@ -6,8 +6,6 @@ add_library(SQLiteStorage SHARED
         SQLiteUtils.cpp)
 
 set(PKG_CONFIG_USE_CMAKE_PREFIX_PATH ON)
-find_package(PkgConfig)
-pkg_check_modules(SQLITE REQUIRED sqlite3)
 
 target_include_directories(SQLiteStorage PUBLIC
         "${AVSCommon_INCLUDE_DIRS}"

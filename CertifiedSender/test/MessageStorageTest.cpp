@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,6 +46,8 @@ static const std::string TEST_MESSAGE_ONE = "test_message_one";
 static const std::string TEST_MESSAGE_TWO = "test_message_two";
 /// A test message text.
 static const std::string TEST_MESSAGE_THREE = "test_message_three";
+/// A test message uri.
+static const std::string TEST_MESSAGE_URI = "/v20160207/events/SpeechRecognizer/Recognize";
 
 /**
  * A class which helps drive this unit test suite.
@@ -106,124 +108,143 @@ static bool isOpen(const std::shared_ptr<MessageStorageInterface>& storage) {
 /**
  * Test basic construction.  Database should not be open.
  */
-TEST_F(MessageStorageTest, testConstructionAndDestruction) {
-    ASSERT_FALSE(isOpen(m_storage));
+TEST_F(MessageStorageTest, test_constructionAndDestruction) {
+    EXPECT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test database creation.
  */
-TEST_F(MessageStorageTest, testDatabaseCreation) {
-    ASSERT_FALSE(isOpen(m_storage));
+TEST_F(MessageStorageTest, test_databaseCreation) {
+    EXPECT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_TRUE(isOpen(m_storage));
 }
 
 /**
  * Test opening and closing a database.
  */
-TEST_F(MessageStorageTest, testOpenAndCloseDatabase) {
-    ASSERT_FALSE(isOpen(m_storage));
+TEST_F(MessageStorageTest, test_openAndCloseDatabase) {
+    EXPECT_FALSE(isOpen(m_storage));
     createDatabase();
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(isOpen(m_storage));
-    ASSERT_TRUE(m_storage->open());
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_FALSE(isOpen(m_storage));
+    EXPECT_TRUE(m_storage->open());
+    EXPECT_TRUE(isOpen(m_storage));
     m_storage->close();
-    ASSERT_FALSE(isOpen(m_storage));
+    EXPECT_FALSE(isOpen(m_storage));
 }
 
 /**
  * Test storing records in the database.
  */
-TEST_F(MessageStorageTest, testDatabaseStoreAndLoad) {
+TEST_F(MessageStorageTest, test_databaseStoreAndLoad) {
     createDatabase();
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_TRUE(isOpen(m_storage));
 
     std::queue<MessageStorageInterface::StoredMessage> dbMessages;
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 0);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 0);
 
     // test storing a single message first
     int dbId = 0;
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
-    ASSERT_EQ(dbId, 1);
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 1);
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
+    EXPECT_EQ(dbId, 1);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 1);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
     dbMessages.pop();
 
     // now store two more, and verify
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
-    ASSERT_EQ(dbId, 2);
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
-    ASSERT_EQ(dbId, 3);
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
+    EXPECT_EQ(dbId, 2);
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
+    EXPECT_EQ(dbId, 3);
 
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 3);
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 3);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
     dbMessages.pop();
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_TWO);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_TWO);
     dbMessages.pop();
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_THREE);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_THREE);
 }
 
 /**
  * Test erasing a record from the database.
  */
-TEST_F(MessageStorageTest, testDatabaseErase) {
+TEST_F(MessageStorageTest, test_databaseErase) {
     createDatabase();
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_TRUE(isOpen(m_storage));
 
     // add three messages, and verify
     int dbId = 0;
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
 
     std::queue<MessageStorageInterface::StoredMessage> dbMessages;
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 3);
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 3);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
 
     // erase the first one, then verify it's gone from db
-    ASSERT_TRUE(m_storage->erase(dbMessages.front().id));
+    EXPECT_TRUE(m_storage->erase(dbMessages.front().id));
 
     while (!dbMessages.empty()) {
         dbMessages.pop();
     }
 
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 2);
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_TWO);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 2);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_TWO);
     dbMessages.pop();
-    ASSERT_EQ(dbMessages.front().message, TEST_MESSAGE_THREE);
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_THREE);
 }
 
 /**
  * Test clearing the database.
  */
-TEST_F(MessageStorageTest, testDatabaseClear) {
+TEST_F(MessageStorageTest, test_databaseClear) {
     createDatabase();
-    ASSERT_TRUE(isOpen(m_storage));
+    EXPECT_TRUE(isOpen(m_storage));
 
     int dbId = 0;
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
-    ASSERT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_ONE, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_TWO, &dbId));
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_THREE, &dbId));
 
     std::queue<MessageStorageInterface::StoredMessage> dbMessages;
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 3);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 3);
     while (!dbMessages.empty()) {
         dbMessages.pop();
     }
 
-    ASSERT_TRUE(m_storage->clearDatabase());
+    EXPECT_TRUE(m_storage->clearDatabase());
 
-    ASSERT_TRUE(m_storage->load(&dbMessages));
-    ASSERT_EQ(static_cast<int>(dbMessages.size()), 0);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 0);
+}
+
+/**
+ * Test storing records with URI in the database.
+ */
+TEST_F(MessageStorageTest, testDatabaseStoreAndLoadWithURI) {
+    createDatabase();
+    EXPECT_TRUE(isOpen(m_storage));
+
+    std::queue<MessageStorageInterface::StoredMessage> dbMessages;
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(static_cast<int>(dbMessages.size()), 0);
+
+    int dbId = 0;
+    EXPECT_TRUE(m_storage->store(TEST_MESSAGE_ONE, TEST_MESSAGE_URI, &dbId));
+    EXPECT_EQ(dbId, 1);
+    EXPECT_TRUE(m_storage->load(&dbMessages));
+    EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
+    EXPECT_EQ(dbMessages.front().uriPathExtension, TEST_MESSAGE_URI);
 }
 
 }  // namespace test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 #include <algorithm>
+#include <iostream>
 #include <errno.h>
 #include <iomanip>
 #include <limits>
@@ -46,41 +47,10 @@ bool stringToInt(const std::string& str, int* result) {
 }
 
 bool stringToInt(const char* str, int* result) {
-    if (!str) {
-        ACSDK_ERROR(LX("stringToIntFailed").m("str parameter is null."));
-        return false;
-    }
-    if (!result) {
-        ACSDK_ERROR(LX("stringToIntFailed").m("result parameter is null."));
-        return false;
-    }
-
-    // ensure errno is set to zero before calling strtol.
-    errno = 0;
-    char* endPtr = nullptr;
-    long tempResult = strtol(str, &endPtr, BASE_TEN);
-
-    // If strtol() fails, then endPtr will still point to the beginning of str - a simple way to detect error.
-    if (str == endPtr) {
-        ACSDK_ERROR(LX("stringToIntFailed").m("input string was not parsable as an integer."));
-        return false;
-    }
-
-    if (ERANGE == errno || tempResult < std::numeric_limits<int>::min() ||
+    int64_t tempResult = 0;
+    if (!stringToInt64(str, &tempResult) || tempResult < std::numeric_limits<int>::min() ||
         tempResult > std::numeric_limits<int>::max()) {
         ACSDK_ERROR(LX("stringToIntFailed").m("converted number was out of range."));
-        return false;
-    }
-
-    // Ignore trailing whitespace.
-    while (isspace(*endPtr)) {
-        endPtr++;
-    }
-
-    // If endPtr does not point to a null terminator, then parsing the number was terminated by running in to
-    // a non-digit (and non-whitespace character), in which case the string was not just an integer (e.g. "1.23").
-    if (*endPtr != '\0') {
-        ACSDK_ERROR(LX("stringToIntFailed").m("non-whitespace in string after integer."));
         return false;
     }
 
@@ -102,6 +72,78 @@ std::string stringToLowerCase(const std::string& input) {
     std::string lowerCaseString = input;
     std::transform(lowerCaseString.begin(), lowerCaseString.end(), lowerCaseString.begin(), ::tolower);
     return lowerCaseString;
+}
+
+std::string stringToUpperCase(const std::string& input) {
+    std::string upperCaseString = input;
+    std::transform(upperCaseString.begin(), upperCaseString.end(), upperCaseString.begin(), ::toupper);
+    return upperCaseString;
+}
+
+bool stringToInt64(const std::string& str, int64_t* result) {
+    return stringToInt64(str.c_str(), result);
+}
+
+bool stringToInt64(const char* str, int64_t* result) {
+    if (!str) {
+        ACSDK_ERROR(LX("stringToInt64Failed").m("string parameter is null."));
+        return false;
+    }
+
+    if (!result) {
+        ACSDK_ERROR(LX("stringToInt64Failed").m("result parameter is null."));
+        return false;
+    }
+
+    // ensure errno is set to zero before calling strtol.
+    errno = 0;
+    char* endPtr = nullptr;
+    auto tempResult = strtoll(str, &endPtr, BASE_TEN);
+
+    // If stroll() fails, then endPtr will still point to the beginning of str - a simple way to detect error.
+    if (str == endPtr) {
+        ACSDK_ERROR(LX("stringToInt64Failed").m("input string was not parsable as an integer."));
+        return false;
+    }
+
+    if (ERANGE == errno || tempResult < std::numeric_limits<int64_t>::min() ||
+        tempResult > std::numeric_limits<int64_t>::max()) {
+        ACSDK_ERROR(LX("stringToInt64Failed").m("converted number was out of range."));
+        return false;
+    }
+
+    // Ignore trailing whitespace.
+    while (isspace(*endPtr)) {
+        endPtr++;
+    }
+
+    // If endPtr does not point to a null terminator, then parsing the number was terminated by running in to
+    // a non-digit (and non-whitespace character), in which case the string was not just an integer (e.g. "1.23").
+    if (*endPtr != '\0') {
+        ACSDK_ERROR(LX("stringToInt64Failed").m("non-whitespace in string after integer."));
+        return false;
+    }
+
+    *result = static_cast<int64_t>(tempResult);
+    return true;
+}
+
+std::string replaceAllSubstring(const std::string& str, const std::string& from, const std::string& to) {
+    size_t pos = 0;
+    std::string subject = str;
+    while ((pos = subject.find(from, pos)) != std::string::npos) {
+        subject.replace(pos, from.length(), to);
+        pos += to.length();
+    }
+    return subject;
+}
+
+std::string ltrim(const std::string& str) {
+    if (str.empty()) {
+        return str;
+    }
+    auto iter = std::find_if(str.begin(), str.end(), [](char c) { return !std::isspace(c); });
+    return std::string(iter, str.end());
 }
 
 }  // namespace string

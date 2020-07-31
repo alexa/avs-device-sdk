@@ -1,5 +1,5 @@
 #
-# Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
@@ -13,6 +13,12 @@
 # permissions and limitations under the License.
 #
 
+
+#
+# Modified by XMOS Ltd
+# https://github.com/xmos/avs-device-sdk
+#
+
 if [ -z "$PLATFORM" ]; then
 	echo "You should run the setup.sh script."
 	exit 1
@@ -21,20 +27,24 @@ fi
 SOUND_CONFIG="$HOME/.asoundrc"
 START_SCRIPT="$INSTALL_BASE/startsample.sh"
 CMAKE_PLATFORM_SPECIFIC=(-DSENSORY_KEY_WORD_DETECTOR=ON \
+    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+    -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
+    -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
     -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
     -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include)
-
+SENSORY_MODEL_HASH=5d811d92fb89043f4a4a7b7d0d26d7c3c83899b0
 GSTREAMER_AUDIO_SINK="alsasink"
 
 install_dependencies() {
   sudo apt-get update
-  sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
+  sudo apt-get -y install git gcc cmake build-essential libsqlite3-dev libcurl4-openssl-dev libssl-dev libfaad-dev libsoup2.4-dev libgcrypt20-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-good libasound2-dev sox gedit vim python3-pip
   pip install flask commentjson
 }
 
 run_os_specifics() {
+  build_port_audio
   build_kwd_engine
-  configure_sound
+  # configure_sound
 }
 
 configure_sound() {
@@ -64,7 +74,11 @@ build_kwd_engine() {
   echo
 
   cd $THIRD_PARTY_PATH
+  rm -rf alexa-rpi
   git clone git://github.com/Sensory/alexa-rpi.git
+  pushd alexa-rpi > /dev/null
+  git checkout $SENSORY_MODEL_HASH -- models/spot-alexa-rpi-31000.snsr
+  popd > /dev/null
   bash ./alexa-rpi/bin/license.sh
 }
 
@@ -72,6 +86,18 @@ generate_start_script() {
   cat << EOF > "$START_SCRIPT"
   cd "$BUILD_PATH/SampleApp/src"
 
-  ./SampleApp "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+  PA_ALSA_PLUGHW=1 ./SampleApp "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+EOF
+}
+
+generate_test_script() {
+  cat << EOF > "${TEST_SCRIPT}"
+  echo
+  echo "==============> BUILDING Tests =============="
+  echo
+  mkdir -p "$UNIT_TEST_MODEL_PATH"
+  cp "$UNIT_TEST_MODEL" "$UNIT_TEST_MODEL_PATH"
+  cd $BUILD_PATH
+  make all test -j2
 EOF
 }

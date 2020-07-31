@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,12 +61,19 @@ public:
     virtual void removeAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) = 0;
 
     /**
-     * Get the current LWA authoriation token.
+     * Get the current LWA authorization token.
      *
      * @return The current authorization token.  The returned value will be empty if an authorization token
      * has yet to be acquired or if the most recently acquired token has expired.
      */
     virtual std::string getAuthToken() = 0;
+
+    /**
+     * Receive notification that an operation using the specified auth token experienced an authorization failure.
+     *
+     * @param token The token used to authorize the forbidden operation.
+     */
+    virtual void onAuthFailure(const std::string& token) = 0;
 };
 
 }  // namespace sdkInterfaces

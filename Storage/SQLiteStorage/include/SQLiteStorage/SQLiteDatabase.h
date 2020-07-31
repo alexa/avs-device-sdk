@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,52 @@ namespace sqliteStorage {
  */
 class SQLiteDatabase {
 public:
+    /**
+     * Class to manage SQL transaction lifecycle.
+     */
+    class Transaction {
+        /// Allow @c SQLiteDatabase to access private constructor of @c Transaction.
+        friend SQLiteDatabase;
+
+    public:
+        /**
+         * Destructor
+         */
+        ~Transaction();
+
+        /**
+         * Commits the current transaction.
+         *
+         * @return true if commit was successful, false otherwise
+         */
+        bool commit();
+
+        /**
+         * Rolls back the current transaction.
+         *
+         * @return true if rollback was successful, false otherwise
+         */
+        bool rollback();
+
+    private:
+        /**
+         * Constructor
+         *
+         * @param dbHandle weak pointer to a @c SQLiteDatabase instance that will own the transaction.
+         */
+        Transaction(std::weak_ptr<SQLiteDatabase> dbHandle);
+
+        /**
+         * Pointer to a @c SQLiteDatabase instance that owns the transaction.
+         */
+        std::weak_ptr<SQLiteDatabase> m_database;
+
+        /**
+         * Flag indicating whether the transaction has already been completed.
+         */
+        bool m_transactionCompleted;
+    };
+
     /**
      * Constructor.  The internal variables are initialized.
      *
@@ -113,12 +159,42 @@ public:
      */
     bool isDatabaseReady();
 
+    /**
+     * Begins transaction.
+     *
+     * @return true if query succeeded, false otherwise
+     */
+    std::unique_ptr<Transaction> beginTransaction();
+
 private:
+    /**
+     * Commits the transaction started with @c beginTransaction.
+     *
+     * @return true if transaction has been successfully committed, false otherwise.
+     */
+    bool commitTransaction();
+
+    /**
+     * Rolls back the transaction started with @c beginTransaction.
+     * @return true if transaction has been successfully rolled back, false otherwise.
+     */
+    bool rollbackTransaction();
+
     /// The path to use when creating/opening the internal SQLite DB.
     const std::string m_storageFilePath;
 
+    /// Flag indicating whether there is a transaction in progress.
+    bool m_transactionIsInProgress;
+
     /// The sqlite database handle.
     sqlite3* m_dbHandle;
+
+    /**
+     * A shared_ptr to this that is used to manage viability of weak_ptrs to this.  This shared_ptr has a no-op deleter,
+     * and does not manage the lifecycle of this instance.  Instead, ~SQLiteDatabase() resets this shared_ptr to signal
+     * to any outstanding Transaction that this instance has been deleted.
+     */
+    std::shared_ptr<SQLiteDatabase> m_sharedThisPlaceholder;
 };
 
 }  // namespace sqliteStorage

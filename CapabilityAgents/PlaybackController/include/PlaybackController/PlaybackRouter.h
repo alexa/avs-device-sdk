@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,12 +45,16 @@ public:
 
     /// @name @c PlaybackRouterInterface functions.
     /// @{
-    virtual void playButtonPressed() override;
-    virtual void pauseButtonPressed() override;
-    virtual void nextButtonPressed() override;
-    virtual void previousButtonPressed() override;
-    virtual void setHandler(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler) override;
+    virtual void buttonPressed(avsCommon::avs::PlaybackButton button) override;
+    virtual void togglePressed(avsCommon::avs::PlaybackToggle toggle, bool action) override;
     virtual void switchToDefaultHandler() override;
+    virtual void setHandler(
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler = nullptr) override;
+    virtual void useDefaultHandlerWith(
+        std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler) override;
+    virtual bool localOperation(avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface::PlaybackOperation op) override;
+    virtual bool localSeekTo(std::chrono::milliseconds location, bool fromStart) override;
     /// @}
 
 private:
@@ -59,13 +63,6 @@ private:
      */
     PlaybackRouter(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> defaultHandler);
 
-    /**
-     * Handle a playback button press.
-     *
-     * @param button The button that has been pressed.
-     */
-    void buttonPressed(avsCommon::avs::PlaybackButton button);
-
     /// @name RequiresShutdown Functions
     /// @{
     void doShutdown() override;
@@ -73,6 +70,9 @@ private:
 
     /// The active button press handler.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> m_handler;
+
+    /// The activelocal handler.
+    std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> m_localHandler;
 
     /// The default handler to be used after @c switchToDefaultHandler has been called.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> m_defaultHandler;

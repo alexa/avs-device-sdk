@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <unordered_map>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <ADSL/DirectiveSequencer.h>
@@ -32,25 +32,30 @@
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <AIP/Initiator.h>
-#include <Alerts/AlertObserverInterface.h>
-#include <Alerts/AlertsCapabilityAgent.h>
-#include <Alerts/Storage/SQLiteAlertStorage.h>
+#include <acsdkAlerts/AlertsCapabilityAgent.h>
+#include <acsdkAlerts/Storage/SQLiteAlertStorage.h>
 #include <Audio/AlertsAudioFactory.h>
+#include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
-#include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
-#include <AVSCommon/AVS/BlockingPolicy.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
+#include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
+#include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <Settings/MockSetting.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/Types/AlarmVolumeRampTypes.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/UserInactivityMonitor.h>
+#include <SystemSoundPlayer/SystemSoundPlayer.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 #include "Integration/ACLTestContext.h"
-#include "Integration/ObservableMessageRequest.h"
 #include "Integration/TestAlertObserver.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
@@ -68,6 +73,8 @@ namespace integration {
 namespace test {
 
 using namespace acl;
+using namespace acsdkAlerts;
+using namespace acsdkAlertsInterfaces;
 using namespace adsl;
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -80,8 +87,12 @@ using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace capabilityAgents::aip;
 using namespace afml;
+using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
+using namespace settings;
+using namespace settings::test;
+using namespace testing;
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
 #endif
@@ -99,7 +110,7 @@ static const std::string RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME = "/recognize_long
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Set a timer for 15 seconds" to be recognized.
 static const std::string RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME = "/recognize_very_long_timer_test.wav";
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Stop" to be recognized.
-static const std::string RECOGNIZE_STOP_AUDIO_FILE_NAME = "/recognize_stop_timer_test.wav";
+static const std::string RECOGNIZE_STOP_AUDIO_FILE_NAME = "/recognize_stop_test.wav";
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Cancel the timer" to be recognized.
 static const std::string RECOGNIZE_CANCEL_TIMER_AUDIO_FILE_NAME = "/recognize_cancel_timer_test.wav";
 // This string to be used for Speak Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
@@ -192,8 +203,9 @@ public:
      * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
      *
      * @param focusState The new focus state of the Channel observer.
+     * @param behavior The new MixingBehavior of the Channel observer.
      */
-    void onFocusChanged(FocusState focusState) override {
+    void onFocusChanged(FocusState focusState, MixingBehavior behavior) override {
         std::unique_lock<std::mutex> lock(m_mutex);
         m_focusState = focusState;
         m_focusChangeOccurred = true;
@@ -252,11 +264,12 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
+        m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
-        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager(), m_metricRecorder);
 
         // Set up connection and connect
         m_avsConnectionManager = std::make_shared<TestMessageSender>(
@@ -264,6 +277,17 @@ protected:
         ASSERT_TRUE(m_avsConnectionManager);
 
         m_focusManager = std::make_shared<FocusManager>(FocusManager::getDefaultAudioChannels());
+        std::shared_ptr<avsCommon::sdkInterfaces::test::MockSpeakerManager> mockSpeakerManager =
+            std::make_shared<avsCommon::sdkInterfaces::test::MockSpeakerManager>();
+        ON_CALL(*(mockSpeakerManager.get()), getSpeakerSettings(testing::_, testing::_))
+            .WillByDefault(testing::Invoke([](avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
+                                              avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings*) {
+                std::promise<bool> promise;
+                promise.set_value(true);
+                return promise.get_future();
+            }));
+        m_speakerManager = mockSpeakerManager;
+
         m_testContentClient = std::make_shared<TestClient>();
         ASSERT_TRUE(m_focusManager->acquireChannel(
             FocusManager::CONTENT_CHANNEL_NAME, m_testContentClient, CONTENT_ACTIVITY_ID));
@@ -286,6 +310,13 @@ protected:
         m_compatibleAudioFormat.numChannels = COMPATIBLE_NUM_CHANNELS;
         m_compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;
         m_compatibleAudioFormat.encoding = COMPATIBLE_ENCODING;
+
+        m_mockAlarmVolumeRampSetting =
+            std::make_shared<MockSetting<types::AlarmVolumeRampTypes>>(types::getAlarmVolumeRampDefault());
+        m_mockWakeWordConfirmationSetting =
+            std::make_shared<MockSetting<WakeWordConfirmationSettingType>>(getWakeWordConfirmationDefault());
+        m_mockSpeechConfirmationSetting =
+            std::make_shared<MockSetting<SpeechConfirmationSettingType>>(getSpeechConfirmationDefault());
 
         size_t nWords = 1024 * 1024;
         size_t wordSize = 2;
@@ -315,6 +346,22 @@ protected:
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
 
         m_userInactivityMonitor = UserInactivityMonitor::create(m_avsConnectionManager, m_exceptionEncounteredSender);
+
+#ifdef GSTREAMER_MEDIA_PLAYER
+        auto systemSoundMediaPlayer =
+            MediaPlayer::create(std::make_shared<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory>());
+#else
+        auto systemSoundMediaPlayer = std::make_shared<TestMediaPlayer>();
+#endif
+
+        m_systemSoundPlayer = applicationUtilities::systemSoundPlayer::SystemSoundPlayer::create(
+            systemSoundMediaPlayer,
+            std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
+
+        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+
+        m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(m_customerDataManager);
+
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
             m_avsConnectionManager,
@@ -322,7 +369,16 @@ protected:
             m_focusManager,
             m_dialogUXStateAggregator,
             m_exceptionEncounteredSender,
-            m_userInactivityMonitor);
+            m_userInactivityMonitor,
+            m_systemSoundPlayer,
+            std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
+            m_mockWakeWordConfirmationSetting,
+            m_mockSpeechConfirmationSetting,
+            nullptr,
+            nullptr,
+            AudioProvider::null(),
+            nullptr,
+            m_metricRecorder);
         ASSERT_NE(nullptr, m_AudioInputProcessor);
         m_AudioInputProcessor->addObserver(m_dialogUXStateAggregator);
 
@@ -333,6 +389,7 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
+            m_metricRecorder,
             m_dialogUXStateAggregator);
         ASSERT_NE(nullptr, m_speechSynthesizer);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
@@ -340,24 +397,28 @@ protected:
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
         m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
+        m_interactionModelCA =
+            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        ASSERT_NE(nullptr, m_interactionModelCA);
+        ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
+        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_rendererMediaPlayer = MediaPlayer::create(nullptr);
 #else
         m_rendererMediaPlayer = std::make_shared<TestMediaPlayer>();
 #endif
-        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer);
+        m_alertRenderer = renderer::Renderer::create(m_rendererMediaPlayer, nullptr);
 
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
-        m_alertStorage = capabilityAgents::alerts::storage::SQLiteAlertStorage::create(
+        m_alertStorage = acsdkAlerts::storage::SQLiteAlertStorage::create(
             avsCommon::utils::configuration::ConfigurationNode::getRoot(), alertsAudioFactory);
 
         m_alertObserver = std::make_shared<TestAlertObserver>();
 
         auto messageStorage =
             SQLiteMessageStorage::create(avsCommon::utils::configuration::ConfigurationNode::getRoot());
-
-        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
 
         m_certifiedSender = CertifiedSender::create(
             m_avsConnectionManager,
@@ -367,14 +428,19 @@ protected:
 
         m_alertsAgent = AlertsCapabilityAgent::create(
             m_avsConnectionManager,
+            m_avsConnectionManager->getConnectionManager(),
             m_certifiedSender,
             m_focusManager,
+            m_speakerManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
             m_alertStorage,
             alertsAudioFactory,
             m_alertRenderer,
-            m_customerDataManager);
+            m_customerDataManager,
+            m_mockAlarmVolumeRampSetting,
+            m_deviceSettingsManager,
+            m_metricRecorder);
         ASSERT_NE(m_alertsAgent, nullptr);
         m_alertsAgent->addObserver(m_alertObserver);
         m_alertsAgent->onLocalStop();
@@ -527,17 +593,23 @@ protected:
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<CertifiedSender> m_certifiedSender;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<FocusManager> m_focusManager;
+    std::shared_ptr<SpeakerManagerInterface> m_speakerManager;
     std::shared_ptr<TestClient> m_testContentClient;
     std::shared_ptr<TestClient> m_testDialogClient;
     std::shared_ptr<TestAlertObserver> m_AlertsAgentObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
-    std::shared_ptr<capabilityAgents::alerts::storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<acsdkAlerts::storage::SQLiteAlertStorage> m_alertStorage;
+    std::shared_ptr<MockSetting<types::AlarmVolumeRampTypes>> m_mockAlarmVolumeRampSetting;
+    std::shared_ptr<MockSetting<WakeWordConfirmationSettingType>> m_mockWakeWordConfirmationSetting;
+    std::shared_ptr<MockSetting<SpeechConfirmationSettingType>> m_mockSpeechConfirmationSetting;
     std::shared_ptr<renderer::RendererInterface> m_alertRenderer;
     std::shared_ptr<TestAlertObserver> m_alertObserver;
     std::shared_ptr<holdToTalkButton> m_holdToTalkButton;
@@ -547,6 +619,8 @@ protected:
     std::shared_ptr<AudioInputStream> m_AudioBuffer;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
+    std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
+    std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
     std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
 
     FocusState m_focusState;
@@ -569,7 +643,7 @@ protected:
  *
  * Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped.
  */
-TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleOneTimerWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -619,7 +693,7 @@ TEST_F(AlertsTest, handleOneTimerWithLocalStop) {
  *
  * Set two second timer, ensure they go off, then stop both timers.
  */
-TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleMultipleTimersWithLocalStop) {
     // Write audio to SDS saying "Set a timer for 15 seconds".
     sendAudioFileAsRecognize(RECOGNIZE_VERY_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -716,7 +790,7 @@ TEST_F(AlertsTest, handleMultipleTimersWithLocalStop) {
  * Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert
  * is stopped.
  */
-TEST_F(AlertsTest, stealChannelFromActiveAlert) {
+TEST_F(AlertsTest, DISABLED_test_stealChannelFromActiveAlert) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -746,7 +820,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
 
     // Steal the alerts channel.
     ASSERT_TRUE(
-        m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testDialogClient, ALERTS_ACTIVITY_ID));
+        m_focusManager->acquireChannel(FocusManager::ALERT_CHANNEL_NAME, m_testDialogClient, ALERTS_ACTIVITY_ID));
 
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -755,7 +829,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STOPPED);
 
     // Release the alerts channel.
-    m_focusManager->releaseChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testDialogClient);
+    m_focusManager->releaseChannel(FocusManager::ALERT_CHANNEL_NAME, m_testDialogClient);
 
     // Low priority Test client gets back permission to the test channel.
     EXPECT_EQ(
@@ -769,7 +843,7 @@ TEST_F(AlertsTest, stealChannelFromActiveAlert) {
  * Set a 5 second timer, then call disconnect, wait for the alert to become active and reconnect.
  * Locally stop the alert and ensure AlertStopped is sent.
  */
-TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
+TEST_F(AlertsTest, test_disconnectAndReconnectBeforeLocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -829,7 +903,7 @@ TEST_F(AlertsTest, DisconnectAndReconnectBeforeLocalStop) {
  * Set a 5 second timer, then call disconnect then reconnect. Once the alert is active, locally stop the alert
  * and ensure AlertStopped is sent.
  */
-TEST_F(AlertsTest, DisconnectAndReconnect) {
+TEST_F(AlertsTest, test_disconnectAndReconnect) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -861,9 +935,13 @@ TEST_F(AlertsTest, DisconnectAndReconnect) {
 
     connect();
 
+    // AlertStarted Event is sent.
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
+
     // AlertStopped Event is sent.
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STOPPED));
 
     // Low priority Test client gets back permission to the test channel
     EXPECT_EQ(
@@ -877,7 +955,7 @@ TEST_F(AlertsTest, DisconnectAndReconnect) {
  * Set a 5 second timer, then call removeAllAlerts. Wait and ensure that the alert does not become active and no
  * events are sent for it.
  */
-TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
+TEST_F(AlertsTest, test_removeAllAlertsBeforeAlertIsActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -927,7 +1005,7 @@ TEST_F(AlertsTest, RemoveAllAlertsBeforeAlertIsActive) {
  * Set a 10 second timer, then send audio of "Cancel the timer" as a recognize event. Ensure the timer does not go off
  * and the DeleteAlertSucceeded event is sent.
  */
-TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
+TEST_F(AlertsTest, DISABLED_test_cancelAlertBeforeItIsActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -976,9 +1054,10 @@ TEST_F(AlertsTest, cancelAlertBeforeItIsActive) {
 /**
  * Test when the storage is removed before an alert is set
  *
- * Close the storage before asking for a 5 second timer. SetAlertFailed and DeleteAlertFailed events are then sent.
+ * Close the storage before asking for a 5 second timer. SetAlertFailed and then DeleteAlertSucceeded events are then
+ * sent. Deletion succeeds because missing alert is not treated as an error.
  */
-TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
+TEST_F(AlertsTest, test_removeStorageBeforeAlarmIsSet) {
     m_alertStorage->close();
 
     // Write audio to SDS saying "Set a timer for 5 seconds"
@@ -1012,8 +1091,8 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
             sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         }
     }
-    // DeleteAlertFailed is sent.
-    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_FAILED));
+    // Missing alert is not treated as an error, DeleteAlertSucceeded is sent.
+    ASSERT_TRUE(checkSentEventName(sendParams, NAME_DELETE_ALERT_SUCCEEDED));
 
     ASSERT_EQ(
         m_testContentClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION, &focusChanged), FocusState::BACKGROUND);
@@ -1029,9 +1108,12 @@ TEST_F(AlertsTest, RemoveStorageBeforeAlarmIsSet) {
  * Test when an alert is active and the user barges in and gets one speak in response
  *
  * Set a 5 second timer and wait until it is active. Send a recognize event asking for joke and see that the alert goes
- * into the background. When the speak is complete, the alert is forgrounded and can be locally stopped.
+ * into the background. When the speak is complete, the alert is foregrounded and can be locally stopped.
+ *
+ * Note: Disabling test as sometimes "tell me a joke" causes multiple speech started and speech finished events to
+ *       be sent based on user config making this integration test unstable.
  */
-TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
+TEST_F(AlertsTest, DISABLED_testTimer_userShortUnrelatedBargeInOnActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1099,7 +1181,7 @@ TEST_F(AlertsTest, UserShortUnrelatedBargeInOnActiveTimer) {
  * Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert
  * goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped.
  */
-TEST_F(AlertsTest, DISABLED_UserLongUnrelatedBargeInOnActiveTimer) {
+TEST_F(AlertsTest, DISABLED_testTimer_UserLongUnrelatedBargeInOnActive) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1184,7 +1266,7 @@ TEST_F(AlertsTest, DISABLED_UserLongUnrelatedBargeInOnActiveTimer) {
  * the alert has become active in the background. Once the alert is active, call stopCapture and see that is is in the
  * foreground before locally stopping it.
  */
-TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
+TEST_F(AlertsTest, DISABLED_test_userSpeakingWhenAlertShouldBeActive) {
     // Write audio to SDS saying "Set a timer for 10 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_LONG_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1232,12 +1314,15 @@ TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
     sendStartedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
 
-    sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+    sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     if (getSentEventName(sendParams) == NAME_SPEECH_FINISHED) {
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_SPEECH_FINISHED));
         sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
         ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
     } else {
-        ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_ENTERED_FOREGROUND));
+        sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
+        ASSERT_TRUE(checkSentEventName(sendParams, NAME_SPEECH_FINISHED));
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(800));
@@ -1251,7 +1336,7 @@ TEST_F(AlertsTest, UserSpeakingWhenAlertShouldBeActive) {
     ASSERT_TRUE(focusChanged);
 }
 
-TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
+TEST_F(AlertsTest, DISABLED_test_handleOneTimerWithVocalStop) {
     // Write audio to SDS saying "Set a timer for 5 seconds"
     sendAudioFileAsRecognize(RECOGNIZE_TIMER_AUDIO_FILE_NAME);
     TestMessageSender::SendParams sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
@@ -1272,6 +1357,9 @@ TEST_F(AlertsTest, handleOneTimerWithVocalStop) {
     sendParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
     ASSERT_TRUE(checkSentEventName(sendParams, NAME_ALERT_STARTED));
 
+    ASSERT_EQ(
+        m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state,
+        AlertObserverInterface::State::SCHEDULED_FOR_LATER);
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::READY);
     ASSERT_EQ(m_alertObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION).state, AlertObserverInterface::State::STARTED);
 

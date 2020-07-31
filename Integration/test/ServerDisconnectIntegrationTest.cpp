@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,19 +23,21 @@
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
+#include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <ContextManager/ContextManager.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
+#include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
-#include "Integration/SDKTestContext.h"
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/JsonHeader.h"
 #include "Integration/ObservableMessageRequest.h"
+#include "Integration/SDKTestContext.h"
 
 namespace alexaClientSDK {
 namespace integration {
@@ -47,6 +49,10 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::libcurlUtils;
+using namespace contextManager;
 
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
@@ -128,7 +134,7 @@ private:
     /// Connection Manager for handling the communication between client.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
     /// ContextManager object.
-    std::shared_ptr<contextManager::ContextManager> m_contextManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
     /// Pointer to message router so we can properly shutdown
     std::shared_ptr<MessageRouter> m_messageRouter;
 };
@@ -142,11 +148,29 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthD
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
         return nullptr;
     }
-    avsCommunication->m_contextManager = contextManager::ContextManager::create();
+
+    auto config = ConfigurationNode::getRoot();
+    EXPECT_TRUE(config);
+    if (!config) {
+        return nullptr;
+    }
+
+    auto deviceInfo = DeviceInfo::createFromConfiguration(std::make_shared<ConfigurationNode>(config));
+    EXPECT_TRUE(deviceInfo);
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "createDeviceInfoFailed"));
+        return nullptr;
+    }
+    avsCommunication->m_contextManager = ContextManager::createContextManagerInterface(std::move(deviceInfo));
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
-    auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(avsCommunication->m_contextManager);
-    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(postConnectFactory);
+    auto synchronizeStateSenderFactory =
+        synchronizeStateSender::SynchronizeStateSenderFactory::create(avsCommunication->m_contextManager);
+    std::vector<std::shared_ptr<PostConnectOperationProviderInterface>> providers;
+    providers.push_back(synchronizeStateSenderFactory);
+    auto postConnectFactory = acl::PostConnectSequencerFactory::create(providers);
+    auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
+    auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     avsCommunication->m_messageRouter = std::make_shared<MessageRouter>(
         authDelegate,
         std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS),
@@ -244,8 +268,10 @@ void ServerDisconnectIntegrationTest::TearDown() {
 /**
  * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
  * using two different @c AVSConnectionManager.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testConnect) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_connect) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));
@@ -262,8 +288,10 @@ TEST_F(ServerDisconnectIntegrationTest, testConnect) {
 /**
  * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
  * using two different @c AVSConnectionManager and reconnecting one of the connections.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_reConnect) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));
@@ -290,8 +318,10 @@ TEST_F(ServerDisconnectIntegrationTest, testReConnect) {
 /**
  * Test sending a message while having a server side disconnect. The send fails to return the expected
  * status of SUCCESS.
+ *
+ * @note Disabling this test until it can be updated to reflect server side changes.
  */
-TEST_F(ServerDisconnectIntegrationTest, testSendEvent) {
+TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_sendEvent) {
     m_firstAvsCommunication->connect();
     ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
         ConnectionStatusObserverInterface::Status::CONNECTED));

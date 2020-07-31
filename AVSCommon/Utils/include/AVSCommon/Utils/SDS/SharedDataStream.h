@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -159,6 +159,20 @@ public:
         size_t maxReaders = 1);
 
     /**
+     * @copydoc create(std::shared_ptr<Buffer>,size_t,size_t)
+     *
+     * @param maxEphemeralReaders The maximum number of ephemeral readers to support. This value can't be more than
+     *     @c maxReaders. Call to @code createReader(policy, startWithNewData) will use reader ids in range
+     *     [0, maxEphemeralReaders). To use readers with reader id in the range [maxEphemeralReaders, maxReaders) use
+     *     @code createReader(id, policy, startWithNewData, forceReplacement).
+     */
+    static std::unique_ptr<SharedDataStream> create(
+        std::shared_ptr<Buffer> buffer,
+        size_t wordSize,
+        size_t maxReaders,
+        size_t maxEphemeralReaders);
+
+    /**
      * This function creates a new @c SharedDataStream using a preinitialized @c Buffer.  This allows a stream to
      * attach to a @c Buffer shared with another pre-existing stream.  This function will verify that @c buffer
      * contains a valid header which is compatible with this stream's traits.  This function can be safely called from
@@ -219,7 +233,8 @@ public:
      * @param startWithNewData Flag indicating that this @c Reader should start reading data which is written to the
      *     buffer after this @c Reader is created.  If this parameter is set to false, the @c Reader will start with
      *     the oldest valid data in the buffer.  This parameter defaults to false.
-     * @return @c nullptr if all @c Reader ids are already allocated, else the new @c Reader.
+     * @return @c nullptr if all @c Reader ids in range [0, maxEphemeralReaders) are already allocated, else the new
+     *     @c Reader.
      */
     std::unique_ptr<Reader> createReader(typename Reader::Policy policy, bool startWithNewData = false);
 
@@ -233,7 +248,8 @@ public:
      * id (any value in the range `[0, getMaxReaders())`), and this function will add the @c Reader with that id if it
      * is not already in use.
      *
-     * @param id The id to use for this Reader.
+     * @param id The id to use for this Reader. To avoid collisions it is recommended to use value in range
+     *     [maxEphemeralReaders, maxReaders).
      * @param policy The policy to use for reading from the stream.
      * @param startWithNewData Flag indicating that this @c Reader should start reading data which is written to the
      *     buffer after this @c Reader is created.  If this parameter is set to false, the @c Reader will start with
@@ -299,9 +315,17 @@ private:
      */
     static const std::string TAG;
 
+    /**
+     * The maximum number of retires when create an SDS reader in case a write occurs interrupting reader creation.
+     */
+    static const int MAX_READER_CREATION_RETRIES;
+
     /// The @c BufferLayout of the shared buffer.
     std::shared_ptr<BufferLayout> m_bufferLayout;
 };
+
+template <typename T>
+const int SharedDataStream<T>::MAX_READER_CREATION_RETRIES = 3;
 
 template <typename T>
 const std::string SharedDataStream<T>::TAG = "SharedDataStream";
@@ -325,6 +349,15 @@ std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
     std::shared_ptr<Buffer> buffer,
     size_t wordSize,
     size_t maxReaders) {
+    return create(buffer, wordSize, maxReaders, maxReaders);
+}
+
+template <typename T>
+std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
+    std::shared_ptr<Buffer> buffer,
+    size_t wordSize,
+    size_t maxReaders,
+    size_t maxEphemeralReaders) {
     size_t expectedSize = calculateBufferSize(1, wordSize, maxReaders);
     if (0 == expectedSize) {
         // Logged in calcutlateBuffersize().
@@ -338,10 +371,13 @@ std::unique_ptr<SharedDataStream<T>> SharedDataStream<T>::create(
                                .d("bufferSize", buffer->size())
                                .d("expectedSize", expectedSize));
         return nullptr;
+    } else if (maxEphemeralReaders > maxReaders) {
+        logger::acsdkError(logger::LogEntry(TAG, "createFailed").d("reason", "maxEphemeralReaders > maxReaders"));
+        return nullptr;
     }
 
     std::unique_ptr<SharedDataStream<T>> sds(new SharedDataStream<T>(buffer));
-    if (!sds->m_bufferLayout->init(wordSize, maxReaders)) {
+    if (!sds->m_bufferLayout->init(wordSize, maxReaders, maxEphemeralReaders)) {
         // Logged in init().
         return nullptr;
     }
@@ -395,7 +431,7 @@ std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::creat
     typename Reader::Policy policy,
     bool startWithNewData) {
     std::unique_lock<Mutex> lock(m_bufferLayout->getHeader()->readerEnableMutex);
-    for (size_t id = 0; id < m_bufferLayout->getHeader()->maxReaders; ++id) {
+    for (size_t id = 0; id < m_bufferLayout->getHeader()->maxEphemeralReaders; ++id) {
         if (!m_bufferLayout->isReaderEnabled(id)) {
             return createReaderLocked(id, policy, startWithNewData, false, &lock);
         }
@@ -442,18 +478,42 @@ std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::creat
         if (startWithNewData) {
             // We're not moving the cursor again, so call updateUnconsumedCursor() now.
             m_bufferLayout->updateOldestUnconsumedCursor();
-        } else {
-            Index offset = m_bufferLayout->getDataSize();
-            if (m_bufferLayout->getHeader()->writeStartCursor < offset) {
-                offset = m_bufferLayout->getHeader()->writeStartCursor;
+            return reader;
+        }
+
+        auto headerPtr = m_bufferLayout->getHeader();
+        for (int i = 0; i < MAX_READER_CREATION_RETRIES; i++) {
+            auto offset = m_bufferLayout->getDataSize();
+            auto writeStartCursor = headerPtr->writeStartCursor.load();
+            if (writeStartCursor < offset) {
+                offset = writeStartCursor;
+            } else {
+                auto writeEndCursor = headerPtr->writeEndCursor.load();
+                if (writeEndCursor < writeStartCursor) {
+                    logger::acsdkError(logger::LogEntry(TAG, "createReaderLockedError")
+                                           .d("reason", "writeCursorBeyondEndCursor?")
+                                           .d("readerId", id));
+                    continue;
+                }
+                auto wordsBeingWritten = writeEndCursor - writeStartCursor;
+                if (offset < wordsBeingWritten) {
+                    logger::acsdkWarn(logger::LogEntry(TAG, "createReaderLockedWarning")
+                                          .d("reason", "detectedWriterOverflow")
+                                          .d("readerId", id));
+                    continue;
+                }
+                offset -= wordsBeingWritten;
             }
-            // Note: seek() will call updateUnconsumedCursor().
-            if (!reader->seek(offset, Reader::Reference::BEFORE_WRITER)) {
-                // Logged in seek().
-                return nullptr;
+
+            if (reader->seek(offset, Reader::Reference::BEFORE_WRITER)) {
+                // Note: seek() will call updateUnconsumedCursor() if it returns true.
+                return reader;
             }
         }
-        return reader;
+
+        logger::acsdkError(
+            logger::LogEntry(TAG, "createReaderLockedFailed").d("reason", "seekRetriesExhausted").d("readerId", id));
+        return nullptr;
     }
 }
 

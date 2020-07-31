@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_EXTERNALMEDIAPLAYER_ADAPTERUTILS_H_
 
 #include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-#include <rapidjson/error/en.h>
 
 #include "AVSCommon/AVS/NamespaceAndName.h"
 #include "AVSCommon/SDKInterfaces/ExternalMediaAdapterInterface.h"
@@ -66,22 +66,22 @@ extern const avsCommon::avs::NamespaceAndName PLAYER_EVENT;
 extern const avsCommon::avs::NamespaceAndName PLAYER_ERROR_EVENT;
 
 /**
- * Method to iterate over a vector of supported operation in playback state and convert to JSON.
+ * Method to iterate over a collection of supported operation in playback state and convert to JSON.
  *
- * @param supportedOperations The array of supported operations from the current playback state.
+ * @param supportedOperations The collection of supported operations from the current playback state.
  * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
  * rapidjson::Value objects.
  * @return The rapidjson::Value representing the array.
  */
 rapidjson::Value buildSupportedOperations(
-    const std::vector<avsCommon::sdkInterfaces::externalMediaPlayer::SupportedPlaybackOperation>& supportedOperations,
+    const std::set<avsCommon::sdkInterfaces::externalMediaPlayer::SupportedPlaybackOperation>& supportedOperations,
     rapidjson::Document::AllocatorType& allocator);
 
 /**
  * Method to convert a playbackState to JSON.
  *
  * @param playbackState The playback state of the adapter.
- * @param The rapidjson allocator, required for the results of this function to be mergable with other
+ * @param The rapidjson allocator, required for the results of this function to be merge-able with other
  * rapidjson::Value objects.
  * @return The rapidjson::Value representing the playback state JSON.
  */
@@ -105,7 +105,7 @@ rapidjson::Value buildSessionState(
  * Method to build the default player.
  *
  * @param document The JSON Value to write the default player state into.
- * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
+ * @param allocator The rapidjson allocator, required for the results of this function to be merge-able with other
  * rapidjson::Value objects.
  * @return @c true if the build of default player state was successful, @c false otherwise.
  */

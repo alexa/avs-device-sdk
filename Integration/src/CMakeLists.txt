@@ -9,12 +9,21 @@ if(BUILD_TESTING)
     target_include_directories(Integration PUBLIC "${CapabilityAgents_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${AIP_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${SpeechSynthesizer_SOURCE_DIR}/include")
-    target_include_directories(Integration PUBLIC "${Alerts_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${AudioPlayer_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${AVSSystem_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${RegistrationManager_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${SQLiteStorage_SOURCE_DIR}/include")
+    target_include_directories(Integration PUBLIC "${SynchronizeStateSender_SOURCE_DIR}/include")
 
-    target_link_libraries(Integration ACL CBLAuthDelegate ContextManager gtest gmock RegistrationManager)
+    target_link_libraries(Integration
+            ACL
+            AudioResources
+            CBLAuthDelegate
+            ContextManager
+            gtest
+            gmock
+            RegistrationManager
+            SynchronizeStateSender
+            acsdkAlerts)
 endif()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_BLUEZBLUETOOTHDEVICE_H_
 #define ALEXA_CLIENT_SDK_BLUETOOTHIMPLEMENTATIONS_BLUEZ_INCLUDE_BLUEZ_BLUEZBLUETOOTHDEVICE_H_
 
+#include <future>
+#include <memory>
 #include <mutex>
+#include <string>
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -25,7 +29,6 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
-#include "BlueZ/BlueZA2DPSource.h"
 #include "BlueZ/DBusPropertiesProxy.h"
 
 namespace alexaClientSDK {
@@ -67,6 +70,7 @@ public:
     std::string getMac() const override;
     std::string getFriendlyName() const override;
     avsCommon::sdkInterfaces::bluetooth::DeviceState getDeviceState() override;
+    MetaData getDeviceMetaData() override;
 
     bool isPaired() override;
     std::future<bool> pair() override;
@@ -78,8 +82,12 @@ public:
 
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::SDPRecordInterface>>
     getSupportedServices() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::A2DPSourceInterface> getA2DPSource() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPTargetInterface> getAVRCPTarget() override;
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> getService(
+        std::string uuid) override;
+    avsCommon::utils::bluetooth::MediaStreamingState getStreamingState() override;
+    bool toggleServiceConnection(
+        bool enabled,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service) override;
     /// @}
 
     /**
@@ -201,6 +209,16 @@ private:
     bool executeIsConnected();
 
     /**
+     * Helper function to toggle a profile, which restricts the future connection/disconnection.
+     * @param enabled true if need to connect.
+     * @param service the Bluetooth profile needed to toggle.
+     * @return A bool indicating success.
+     */
+    bool executeToggleServiceConnection(
+        bool enabled,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service);
+
+    /**
      * Queries BlueZ for the value of the property as reported by the adapter.
      *
      * @param name The name of the property.
@@ -222,6 +240,60 @@ private:
      */
     void transitionToState(BlueZDeviceState newState, bool sendEvent);
 
+    /*
+     * Querying BlueZ for whether the Connect property is set to true does not guarantee
+     * that a device has established a connection with its services.
+     * The Connect property can be set to true when pairing:
+     *
+     * 1) Pairing (BlueZ sends Connect = true).
+     * 2) Pair Successful.
+     * 3) Connect multimedia services.
+     * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of
+     * uuids]).
+     *
+     * Use a combination of Connect, Paired, and the availability of certain UUIDs to
+     * determine if a service has been connected to. A relevant service currently encompasses the set of
+     * A2DP services that AVS uses to understand connectedness. This should be done in the executor.
+     *
+     * @return Whether the device has established a connection with at least one service of interest.
+     */
+    bool executeIsConnectedToRelevantServices();
+
+    /**
+     * Helper function to check if a service exists in the @c m_servicesMap.
+     *
+     * @param uuid The service UUID to check.
+     * @return A bool indicating whether it exists.
+     */
+    bool serviceExists(const std::string& uuid);
+
+    /**
+     * Helper function to insert service into @c m_servicesMap.
+     *
+     * @param service The service to insert.
+     * @return bool Indicates whether insertion was successful.
+     */
+    bool insertService(
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service);
+
+    /**
+     * Helper function to insert service into @c m_servicesMap.
+     *
+     * @tparam ServiceType The type of the @c BluetoothServiceInterface.
+     * @return The instance of the service if successful, else nullptr.
+     */
+    template <typename ServiceType>
+    std::shared_ptr<ServiceType> getService();
+
+    /**
+     * Helper function to initialize an existing service.
+     *
+     * @tparam BlueZServiceType the type of the @c BluetoothServiceInterface.
+     * @return bool Indicates whether the service initialization was successful.
+     */
+    template <typename BlueZServiceType>
+    bool initializeService();
+
     /// Proxy to interact with the org.bluez.Device1 interface.
     std::shared_ptr<DBusProxy> m_deviceProxy;
 
@@ -237,6 +309,9 @@ private:
     /// The friendly name.
     std::string m_friendlyName;
 
+    /// Mutex to protect access to @c m_servicesMap.
+    std::mutex m_servicesMapMutex;
+
     /// A map of UUID to services.
     std::unordered_map<
         std::string,
@@ -245,6 +320,9 @@ private:
 
     /// The current state of the device.
     BlueZDeviceState m_deviceState;
+
+    /// Used to store device metadata.
+    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData> m_metaData;
 
     /// The associated @c BlueZDeviceManager.
     std::shared_ptr<BlueZDeviceManager> m_deviceManager;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ namespace attachment {
 Attachment::Attachment(const std::string& attachmentId) :
         m_id{attachmentId},
         m_hasCreatedWriter{false},
-        m_hasCreatedReader{false} {
+        m_numReaders{0} {
 }
 
 std::string Attachment::getId() const {
@@ -31,7 +31,7 @@ std::string Attachment::getId() const {
 }
 
 bool Attachment::hasCreatedReader() {
-    return m_hasCreatedReader;
+    return m_numReaders > 0;
 }
 
 bool Attachment::hasCreatedWriter() {

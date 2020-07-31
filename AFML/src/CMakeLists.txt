@@ -5,8 +5,8 @@ add_library(AFML SHARED
     VisualActivityTracker.cpp)
 
 add_definitions("-DACSDK_LOG_MODULE=afml")
-include_directories(AFML "${AFML_SOURCE_DIR}/include")
-target_link_libraries(AFML AVSCommon)
+include_directories(AFML "${AFML_SOURCE_DIR}/include" "{InterruptModel_SOURCE_DIR}/include")
+target_link_libraries(AFML AVSCommon InterruptModel)
 
 # install target
 asdk_install()

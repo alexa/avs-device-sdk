@@ -1,4 +1,4 @@
- {
+{
     "cblAuthDelegate":{
         // Path to CBLAuthDelegate's database file. e.g. /home/ubuntu/Build/cblAuthDelegate.db
         // Note: The directory specified must be valid.
@@ -12,24 +12,24 @@
         // The Client ID of the Product from developer.amazon.com
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
         // Product ID from developer.amazon.com
-        "productId":"${SDK_CONFIG_PRODUCT_ID}"
+        "productId":"${SDK_CONFIG_PRODUCT_ID}",
+        // The name of the device manufacturer.
+        "manufacturerName": "${SDK_CONFIG_MANUFACTURER_NAME}",
+        // The description of the device which should contain the manufacturer name or how the device is connected.
+        "description": "${SDK_CONFIG_DEVICE_DESCRIPTION}"
+    },
+    "avsGatewayManager": {
+        // Allows configuring the AVS Gateway the device should connect to.
+        // Important Note: The AVSGatewayManager stores a previously verified gateway in the MiscDB and uses it
+        // to establish a connection with AVS. In order to override the gateway configured here, you may have to
+        // delete the AVSGatewayManager table under the MiscDB.
+        // "avsGateway":"https://alexa.na.gateway.devices.a2z.com"
     },
     "capabilitiesDelegate":{
-        // The endpoint to connect in order to send device capabilities.
-        // This will only be used in DEBUG builds.
-        // e.g. "endpoint": "https://api.amazonalexa.com"
-        // Override the message to be sent out to the Capabilities API.
-        // This will only be used in DEBUG builds.
-        // e.g. "overridenCapabilitiesPublishMessageBody": {
-        //          "envelopeVersion":"20160207",
-        //          "capabilities":[
-        //              {
-        //                "type":"AlexaInterface",
-        //                "interface":"Alerts",
-        //                "version":"1.1"
-        //              }
-        //          ]
-        //      }
+        // Path to misc database file. e.g. /home/ubuntu/Build/capabilitiesDelegate.db
+        // Note: The directory specified must be valid.
+        // The database file (capabilitiesDelegate.db) will be created by SampleApp, do not create it yourself.
+        "databaseFilePath":"${SDK_CAPABILITIES_DELEGATE_DATABASE_FILE_PATH}"
     },
     "miscDatabase":{
         // Path to misc database file. e.g. /home/ubuntu/Build/miscDatabase.db
@@ -44,17 +44,25 @@
         // The database file should only be used for alerts (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}"
     },
-    "settings":{
-        // Path to Settings database file. e.g. /home/ubuntu/Build/settings.db
+    "deviceSettings":{
+        // Path to Device Settings database file. e.g. /home/ubuntu/Build/deviceSettings.db
         // Note: The directory specified must be valid.
-        // The database file (settings.db) will be created by SampleApp, do not create it yourself.
-        // The database file should only be used for settings (don't use it for other components of SDK)
-        "databaseFilePath":"${SDK_SQLITE_SETTINGS_DATABASE_FILE_PATH}",
-        "defaultAVSClientSettings":{
-            // Default language for Alexa.
-            // See https://developer.amazon.com/docs/alexa-voice-service/settings.html#settingsupdated for valid values.
-            "locale":"${SETTING_LOCALE_VALUE}"
-        }
+        // The database file (deviceSettings.db) will be created by SampleApp, do not create it yourself.
+        // The database file should only be used for device settings (don't use it for other components of SDK)
+        "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}",
+        // The list of supported locales on this device.
+        "locales":["en-US","en-GB","de-DE","en-IN","en-CA","ja-JP","en-AU","fr-FR","it-IT","es-ES","es-MX","fr-CA",
+            "es-US", "hi-IN", "pt-BR"],
+        // The default locale of this device.
+        "defaultLocale":"en-US",
+        // The list of locale combinations supported on this device.
+        "localeCombinations":[
+            ["en-CA", "fr-CA"],
+            ["fr-CA", "en-CA"]
+        ],
+        // The default timezone of this device.  This is an optional parameter; if it isn't specified, Etc/GMT is set as
+        // the default timezone.
+        "defaultTimezone":"America/Vancouver"
     },
     "bluetooth" : {
         // Path to Bluetooth database file. e.g. /home/ubuntu/Build/bluetooth.db
@@ -70,22 +78,31 @@
         // The database file should only be used for certifiedSender (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH}"
     },
-    "notifications":{ 
+    "notifications":{
         // Path to Notifications database file. e.g. /home/ubuntu/Build/notifications.db
         // Note: The directory specified must be valid.
         // The database file (notifications.db) will be created by SampleApp, do not create it yourself.
         // The database file should only be used for notifications (don't use it for other components of SDK)
         "databaseFilePath":"${SDK_NOTIFICATIONS_DATABASE_FILE_PATH}"
     },
-    "sampleApp":{
+    "diagnostics":{
+        // The maximum number of directive/event messages to store. If exceeded, additional messages will not be stored.
+        // "maxTracedMessages":1
+    },
+    "externalMediaPlayer": {
+        // Agent identifier provided by AlexaMusic.
+        // Developers creating their own adaptors must use an Agent ID assigned to them by Alexa Music
+        "agentString": "CQCAFYNYDC"
+    },
+    "sampleApp": {
         // To specify if the SampleApp supports display cards.
         "displayCardsSupported":true
         // The firmware version of the device to send in SoftwareInfo event.
         // Note: The firmware version should be a positive 32-bit integer in the range [1-2147483647].
         // e.g. "firmwareVersion": 123
         // The default endpoint to connect to.
-        // See https://developer.amazon.com/docs/alexa-voice-service/api-overview.html#endpoints for regions and values
-        // e.g. "endpoint": "https://avs-alexa-na.amazon.com"
+        // See https://developer.amazon.com/docs/alexa/alexa-voice-service/api-overview.html#endpoints for regions and values
+        // e.g. "endpoint": "https://alexa.na.gateway.devices.a2z.com"
 
         // Example of specifying suggested latency in seconds when openning PortAudio stream. By default,
         // when this paramater isn't specified, SampleApp calls Pa_OpenDefaultStream to use the default value.
@@ -94,6 +111,14 @@
         //"portAudio":{
         //    "suggestedLatency": 0.150
         //}
+
+        // To specify the number of MediaPlayer instances for AudioPlayer to use,
+        // a value of '1' will result in limited pre-buffering:  It will buffer during introductory TTS, but not
+        // the next track.
+        // A value of '2' will allow next track buffering as well.  If multiple Play directives are expected to be enqueued,
+        // at the same time, and the memory is available, a value of 3 or more will allow additional buffering.
+        // The default is '2'.
+        // "audioMediaPlayerPoolSize": 1
     }
 
     // Example of specifying output format and the audioSink for the gstreamer-based MediaPlayer bundled with the SDK.
@@ -114,6 +139,21 @@
     //     "audioSink":"autoaudiosink"
     // },
 
+    // Example of specifiying curl options that is different from the default values used by libcurl.
+    // "libcurlUtils":{
+    //
+    //     By default libcurl is built with paths to a CA bundle and a directory containing CA certificates. You can
+    //     direct the AVS Device SDK to configure libcurl to use an additional path to directories containing CA
+    //     certificates via the CURLOPT_CAPATH setting.  Additional details of this curl option can be found in:
+    //     https://curl.haxx.se/libcurl/c/CURLOPT_CAPATH.html
+    //     "CURLOPT_CAPATH":"INSERT_YOUR_CA_CERTIFICATE_PATH_HERE",
+    //
+    //     You can specify the AVS Device SDK to use a specific outgoing network interface.  More information of
+    //     this curl option can be found here:
+    //     https://curl.haxx.se/libcurl/c/CURLOPT_INTERFACE.html
+    //     "CURLOPT_INTERFACE":"INSERT_YOUR_INTERFACE_HERE"
+    // },
+
     // Example of specifying a default log level for all ModuleLoggers.  If not specified, ModuleLoggers get
     // their log level from the sink logger.
     // "logging":{
@@ -124,7 +164,74 @@
     // provided by the logging.logLevel value (as in the above example) or the log level of the sink logger.
     // "acl":{
     //     "logLevel":"DEBUG9"
+    // },
+
+    // // Example for specifiying the Template Runtime display card timeout values.
+    // "templateRuntimeCapabilityAgent": {
+    //     // If present, shall override the default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
+    //     "displayCardTTSFinishedTimeout": 2000,
+    //     // If present, shall override the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
+    //     "displayCardAudioPlaybackFinishedTimeout": 2000,
+    //     // If present, shall override the default timeout in ms for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED or PAUSED state.
+    //     "displayCardAudioPlaybackStoppedPausedTimeout": 60000
     // }
+
+    // // The equalizer function allows you to adjust equalizer settings, such as decibel (dB) levels and modes.
+    // // By default, the equalizer is enabled. The default settings are:
+    // // * `"enabled":true`. By default, the equalizer is active.
+    // // * All `"bands"` are active: `BASS`, `MIDRANGE`, `TREBLE`.
+    // // * "modes" are disabled. See below for more information.
+    // // * Minimum band level (`"minLevel"`): -6 dB
+    // // * Maximum band level (`"maxLevel"`): +6 dB
+    // // * Default state (defaultState): All "bands" are set to 0dB, and no "mode" is active.
+
+    // "equalizer": {
+    //     // Enables or disables the equalizer. Setting this value to `false` will disable the equalizer locally, and report to AVS that it is disabled.
+    //     "enabled": true,
+    //     // The equalizer bands supported by the device. Currently, there are only three available options: `BASS`, `MIDRANGE` and `TREBLE`.
+    //     // By default, all bands are enabled. However, if you specify a band or bands, then only those will be supported.
+    //     // bands will be supported.
+    //     "bands": {
+    //         "BASS": true,
+    //         "MIDRANGE": true,
+    //         "TREBLE": true
+    //     },
+    //     // The equalizer modes supported by the device. AVS doesn't define specific behavior for modes,
+    //     // the `EqualizerModeControllerInterface` defines this behavior. AVS provides the following options for modes: "MOVIE", "MUSIC", "NIGHT",
+    //     // "SPORT", "TV". By default, all modes are disabled (`false`), unless specifically marked as enabled (`true`).
+    //     "modes": {
+    //         "NIGHT": false,
+    //         "MOVIE": false,
+    //         "MUSIC": false,
+    //         "SPORT": false,
+    //         "TV": false
+    //     },
+    //     // The equalizer factory settings. These default values are used for a newly registered device, or when a user requests that Alexa reset a band.
+    //     "defaultState": {
+    //         // The default mode to be applied. When no default mode is desired, set the `"mode"` value to `"NONE"`, which is a custom value.
+    //         "mode": "NONE",
+    //         // Defines band level defaults (integer dB)
+    //         "bands": {
+    //             "BASS": 0,
+    //             "MIDRANGE": 0,
+    //             "TREBLE": 0
+    //         }
+    //     },
+    //     // Minimum value an equalizer band could have (integer dB).
+    //     "minLevel": -6,
+    //     // Maximum value an equalizer band could have (integer dB).
+    //     "maxLevel": 6,
+    //     // Default delta value to adjust the equalizer band (integer dB).
+    //     "defaultDelta": 1
+    // }
+
+    // Example of setting the minUnmuteVolume level in SpeakerManager
+    // "speakerManagerCapabilityAgent": {
+    //     // If present, shall override the default minUnmuteVolume value that the device restores to when unmuting
+    //     // at volume level 0.
+    //     // "minUnmuteVolume": 10
+    // }
+
  }
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEOBSERVERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MESSAGEOBSERVERINTERFACE_H_
 
+#include <string>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
-
-#include <string>
 
 /**
  * This class allows a client to receive messages from AVS.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ std::unique_ptr<DBusConnection> DBusConnection::create(GBusType connectionType) 
     return std::unique_ptr<DBusConnection>(new DBusConnection(connection));
 }
 
-uint DBusConnection::subscribeToSignal(
+unsigned int DBusConnection::subscribeToSignal(
     const char* serviceName,
     const char* interfaceName,
     const char* member,

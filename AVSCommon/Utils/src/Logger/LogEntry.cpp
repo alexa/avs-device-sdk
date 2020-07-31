@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -110,6 +110,10 @@ LogEntry& LogEntry::m(const std::string& message) {
     prefixMessage();
     m_stream << message;
     return *this;
+}
+
+LogEntry& LogEntry::p(const char* key, void* ptr) {
+    return d(key, ptr);
 }
 
 const char* LogEntry::c_str() const {

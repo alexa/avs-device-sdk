@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -102,13 +102,18 @@ inline AudioProvider::AudioProvider(
 }
 
 inline const AudioProvider& AudioProvider::null() {
-    static AudioProvider nullAudioProvider{
-        nullptr,
-        {avsCommon::utils::AudioFormat::Encoding::LPCM, avsCommon::utils::AudioFormat::Endianness::LITTLE, 0, 0, 0},
-        ASRProfile::CLOSE_TALK,
-        false,
-        false,
-        false};
+    static AudioProvider nullAudioProvider{nullptr,
+                                           {avsCommon::utils::AudioFormat::Encoding::LPCM,
+                                            avsCommon::utils::AudioFormat::Endianness::LITTLE,
+                                            0,
+                                            0,
+                                            0,
+                                            true,
+                                            avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED},
+                                           ASRProfile::CLOSE_TALK,
+                                           false,
+                                           false,
+                                           false};
     return nullAudioProvider;
 }
 

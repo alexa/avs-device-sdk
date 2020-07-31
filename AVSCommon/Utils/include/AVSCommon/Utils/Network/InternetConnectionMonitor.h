@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public:
     /**
      * Destructor.
      */
-    ~InternetConnectionMonitor();
+    virtual ~InternetConnectionMonitor();
 
     /// @name InternetConnectionMonitorInterface Methods
     /// @{
@@ -114,8 +114,8 @@ private:
     /// The timer that will call testConnection() every m_period seconds.
     avsCommon::utils::timing::Timer m_connectionTestTimer;
 
-    /// The stream that will hold downloaded data.
-    std::shared_ptr<avsCommon::avs::attachment::InProcessAttachment> m_stream;
+    /// A flag to tell the HTTP content fetcher that it is time to shutdown.
+    std::atomic<bool> m_isShuttingDown;
 
     /// The content fetcher factory that will produce a content fetcher.
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> m_contentFetcherFactory;

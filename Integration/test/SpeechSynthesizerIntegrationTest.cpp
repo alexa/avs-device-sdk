@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,13 +17,11 @@
 
 #include <chrono>
 #include <deque>
-#include <fstream>
-#include <future>
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <unordered_map>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <ADSL/DirectiveSequencer.h>
@@ -35,18 +33,17 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
-#include <AVSCommon/SDKInterfaces/DirectiveHandlerResultInterface.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
+#include <InteractionModel/InteractionModelCapabilityAgent.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 
 #include "Integration/ACLTestContext.h"
-#include "Integration/ClientMessageHandler.h"
-#include "Integration/ConnectionStatusObserver.h"
 #include "Integration/ObservableMessageRequest.h"
-#include "Integration/TestMessageSender.h"
-#include "Integration/TestSpeechSynthesizerObserver.h"
 #include "Integration/TestDirectiveHandler.h"
 #include "Integration/TestExceptionEncounteredSender.h"
+#include "Integration/TestMessageSender.h"
+#include "Integration/TestSpeechSynthesizerObserver.h"
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 #include "MediaPlayer/MediaPlayer.h"
@@ -68,9 +65,11 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::sds;
+using namespace capabilityAgents::interactionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace contextManager;
 using namespace sdkInterfaces;
+using namespace testing;
 
 #ifdef GSTREAMER_MEDIA_PLAYER
 using namespace mediaPlayer;
@@ -174,10 +173,12 @@ static const std::string NAME_ADJUST_VOLUME = "AdjustVolume";
 static const std::string NAME_EXPECT_SPEECH = "ExpectSpeech";
 // This string to be used for SetMute Directives which use the NAMESPACE_SPEAKER namespace.
 static const std::string NAME_SET_MUTE = "SetMute";
-// This string to be used for SpeechStarted Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+// This string to be used for SpeechStarted events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
 static const std::string NAME_SPEECH_STARTED = "SpeechStarted";
-// This string to be used for SpeechFinished Directives which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+// This string to be used for SpeechFinished events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
 static const std::string NAME_SPEECH_FINISHED = "SpeechFinished";
+// This string to be used for SpeechInterrupted events which use the NAMESPACE_SPEECH_SYNTHESIZER namespace.
+static const std::string NAME_SPEECH_INTERRUPTED = "SpeechInterrupted";
 // This String to be used to register the SpeechRecognizer namespace to a DirectiveHandler.
 static const std::string NAMESPACE_SPEECH_RECOGNIZER = "SpeechRecognizer";
 // This String to be used to register the SpeechSynthesizer namespace to a DirectiveHandler.
@@ -256,8 +257,9 @@ public:
      * Implementation of the ChannelObserverInterface##onFocusChanged() callback.
      *
      * @param focusState The new focus state of the Channel observer.
+     * @param behavior The new MixingBehavior of the Channel observer.
      */
-    void onFocusChanged(FocusState focusState) override {
+    void onFocusChanged(FocusState focusState, MixingBehavior behavior) override {
         std::unique_lock<std::mutex> lock(m_mutex);
         m_queue.push_back(focusState);
         m_focusState = focusState;
@@ -307,17 +309,19 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
+        m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
         DirectiveHandlerConfiguration config;
-        config[SET_MUTE_PAIR] = BlockingPolicy::BLOCKING;
-        config[ADJUST_VOLUME_PAIR] = BlockingPolicy::BLOCKING;
-        config[EXPECT_SPEECH_PAIR] = BlockingPolicy::BLOCKING;
+        auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+        config[SET_MUTE_PAIR] = audioBlockingPolicy;
+        config[ADJUST_VOLUME_PAIR] = audioBlockingPolicy;
+        config[EXPECT_SPEECH_PAIR] = audioBlockingPolicy;
         m_directiveHandler = std::make_shared<TestDirectiveHandler>(config);
 
-        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+        m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
-            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager());
+            m_exceptionEncounteredSender, m_directiveSequencer, m_context->getAttachmentManager(), m_metricRecorder);
 
         // Set up connection and connect
         m_avsConnectionManager = std::make_shared<TestMessageSender>(
@@ -328,8 +332,7 @@ protected:
 
         m_focusManager = std::make_shared<FocusManager>(FocusManager::getDefaultAudioChannels());
         m_testClient = std::make_shared<TestClient>();
-        ASSERT_TRUE(
-            m_focusManager->acquireChannel(FocusManager::ALERTS_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));
+        ASSERT_TRUE(m_focusManager->acquireChannel(FocusManager::ALERT_CHANNEL_NAME, m_testClient, ALERTS_ACTIVITY_ID));
         ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
@@ -346,13 +349,21 @@ protected:
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
-            m_dialogUXStateAggregator);
+            m_metricRecorder,
+            m_dialogUXStateAggregator,
+            nullptr);
         m_directiveSequencer->addDirectiveHandler(m_speechSynthesizer);
         m_speechSynthesizerObserver = std::make_shared<TestSpeechSynthesizerObserver>();
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
         m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_directiveHandler));
+
+        m_interactionModelCA =
+            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        ASSERT_NE(nullptr, m_interactionModelCA);
+        ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
+        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
     }
 
     /**
@@ -505,11 +516,13 @@ protected:
 
     std::shared_ptr<TestMessageSender> m_avsConnectionManager;
     std::shared_ptr<TestExceptionEncounteredSender> m_exceptionEncounteredSender;
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
     std::shared_ptr<TestDirectiveHandler> m_directiveHandler;
     std::shared_ptr<DirectiveSequencerInterface> m_directiveSequencer;
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
     std::shared_ptr<FocusManager> m_focusManager;
     std::shared_ptr<TestClient> m_testClient;
@@ -532,7 +545,7 @@ protected:
  * then return to a finished state.
  *
  */
-TEST_F(SpeechSynthesizerTest, handleOneSpeech) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleOneSpeech) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -596,7 +609,7 @@ TEST_F(SpeechSynthesizerTest, handleOneSpeech) {
  * done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak.
  *
  */
-TEST_F(SpeechSynthesizerTest, handleMultipleConsecutiveSpeaks) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleMultipleConsecutiveSpeaks) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -663,7 +676,7 @@ TEST_F(SpeechSynthesizerTest, handleMultipleConsecutiveSpeaks) {
  * all directives are cancelled.
  *
  */
-TEST_F(SpeechSynthesizerTest, bargeInOnOneSpeech) {
+TEST_F(SpeechSynthesizerTest, test_bargeInOnOneSpeech) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -712,18 +725,18 @@ TEST_F(SpeechSynthesizerTest, bargeInOnOneSpeech) {
     // SpeechSynthesizer has finished.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED);
 
-    // No SpeechFinished was sent.
+    // SpeechInterrupted was sent.
     TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
+    ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_INTERRUPTED));
 
     // Alerts channel regains the foreground.
     ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
 }
 
 /**
- * Test ability for the SpeechSynthesizer to handle a barge in at the begining of consucutive speaks.
+ * Test ability for the SpeechSynthesizer to handle a barge in at the begining of consecutive speaks.
  *
  * This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a
  * MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is
@@ -731,7 +744,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnOneSpeech) {
  * Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled.
  *
  */
-TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksAtTheBeginning) {
+TEST_F(SpeechSynthesizerTest, test_bargeInOnMultipleSpeaksAtTheBeginning) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -791,7 +804,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksAtTheBeginning) {
 }
 
 /**
- * Test ability for the SpeechSynthesizer to handle a barge in in the middle of consucutive speaks.
+ * Test ability for the SpeechSynthesizer to handle a barge in in the middle of consecutive speaks.
  *
  * This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a
  * MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is
@@ -799,7 +812,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksAtTheBeginning) {
  * While the Speak directives are being handled, the dialogRequestID is changed and all directives are cancelled.
  *
  */
-TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksInTheMiddle) {
+TEST_F(SpeechSynthesizerTest, test_bargeInOnMultipleSpeaksInTheMiddle) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -905,7 +918,7 @@ TEST_F(SpeechSynthesizerTest, bargeInOnMultipleSpeaksInTheMiddle) {
  * then return to a finished state. Another recognize event is then sent to AVS is response to the ExpectSpeech
  * directive which prompts another Speak directive to be handled.
  */
-TEST_F(SpeechSynthesizerTest, multiturnScenario) {
+TEST_F(SpeechSynthesizerTest, test_multiturnScenario) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -1032,7 +1045,7 @@ TEST_F(SpeechSynthesizerTest, multiturnScenario) {
  * This test is intended to test the SpeechSynthesizer's ability to do nothing when there are no Speak directives. A
  * Recognize event with audio of "Volume up" is sent to AVS to prompt a AdjustVolume directive but no Speak directives.
  */
-TEST_F(SpeechSynthesizerTest, handleNoSpeakDirectives) {
+TEST_F(SpeechSynthesizerTest, DISABLED_test_handleNoSpeakDirectives) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
@@ -1091,7 +1104,7 @@ TEST_F(SpeechSynthesizerTest, handleNoSpeakDirectives) {
  * This test is intended to test the SpeechSynthesizer's ability to do nothing when there are no Speak directives. No
  * Recognize events are sent to trigger any directives.
  */
-TEST_F(SpeechSynthesizerTest, handleNoDirectives) {
+TEST_F(SpeechSynthesizerTest, test_handleNoDirectives) {
     // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
     ASSERT_EQ(
         m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),

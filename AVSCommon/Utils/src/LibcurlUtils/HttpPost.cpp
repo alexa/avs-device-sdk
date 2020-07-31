@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 #include <sstream>
 
+#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -37,12 +37,12 @@ static const std::string TAG("HttpPost");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::unique_ptr<HttpPostInterface> HttpPost::createHttpPostInterface() {
+    return std::unique_ptr<HttpPostInterface>(new HttpPost());
+}
+
 std::unique_ptr<HttpPost> HttpPost::create() {
-    std::unique_ptr<HttpPost> httpPost(new HttpPost());
-    if (httpPost->m_curl.isValid()) {
-        return httpPost;
-    }
-    return nullptr;
+    return std::unique_ptr<HttpPost>(new HttpPost());
 }
 
 long HttpPost::doPost(
@@ -50,7 +50,8 @@ long HttpPost::doPost(
     const std::string& data,
     std::chrono::seconds timeout,
     std::string& body) {
-    auto response = doPost(url, {}, data, timeout);
+    CurlEasyHandleWrapper curl;
+    auto response = doPostInternal(curl, url, {}, data, timeout);
     body = response.body;
     return response.code;
 }
@@ -60,8 +61,9 @@ HTTPResponse HttpPost::doPost(
     const std::vector<std::string> headerLines,
     const std::vector<std::pair<std::string, std::string>>& data,
     std::chrono::seconds timeout) {
-    auto encodedData = buildPostData(data);
-    return doPost(url, headerLines, encodedData, timeout);
+    CurlEasyHandleWrapper curl;
+    auto encodedData = buildPostData(curl, data);
+    return doPostInternal(curl, url, headerLines, encodedData, timeout);
 }
 
 HTTPResponse HttpPost::doPost(
@@ -69,23 +71,31 @@ HTTPResponse HttpPost::doPost(
     const std::vector<std::string> headerLines,
     const std::string& data,
     std::chrono::seconds timeout) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    CurlEasyHandleWrapper curl;
+    return doPostInternal(curl, url, headerLines, data, timeout);
+}
 
+HTTPResponse HttpPost::doPostInternal(
+    CurlEasyHandleWrapper& curl,
+    const std::string& url,
+    const std::vector<std::string> headerLines,
+    const std::string& data,
+    std::chrono::seconds timeout) {
     HTTPResponse response;
 
-    if (!m_curl.reset() || !m_curl.setTransferTimeout(static_cast<long>(timeout.count())) || !m_curl.setURL(url) ||
-        !m_curl.setPostData(data) || !m_curl.setWriteCallback(staticWriteCallbackLocked, &response.body)) {
+    if (!curl.isValid() || !curl.setTransferTimeout(static_cast<long>(timeout.count())) || !curl.setURL(url) ||
+        !curl.setPostData(data) || !curl.setWriteCallback(staticWriteCallbackLocked, &response.body)) {
         return HTTPResponse();
     }
 
     for (auto line : headerLines) {
-        if (!m_curl.addHTTPHeader(line)) {
+        if (!curl.addHTTPHeader(line)) {
             ACSDK_ERROR(LX("doPostFailed").d("reason", "unableToAddHttpHeader"));
             return HTTPResponse();
         }
     }
 
-    auto curlHandle = m_curl.getCurlHandle();
+    auto curlHandle = curl.getCurlHandle();
     auto result = curl_easy_perform(curlHandle);
 
     if (result != CURLE_OK) {
@@ -110,14 +120,16 @@ HTTPResponse HttpPost::doPost(
     }
 }
 
-std::string HttpPost::buildPostData(const std::vector<std::pair<std::string, std::string>>& data) const {
+std::string HttpPost::buildPostData(
+    CurlEasyHandleWrapper& curl,
+    const std::vector<std::pair<std::string, std::string>>& data) const {
     std::stringstream dataStream;
 
     for (auto ix = data.begin(); ix != data.end(); ix++) {
         if (ix != data.begin()) {
             dataStream << '&';
         }
-        dataStream << m_curl.urlEncode(ix->first) << '=' << m_curl.urlEncode(ix->second);
+        dataStream << curl.urlEncode(ix->first) << '=' << curl.urlEncode(ix->second);
     }
 
     return dataStream.str();

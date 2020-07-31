@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,39 +13,24 @@
  * permissions and limitations under the License.
  */
 
+#include <functional>
+
 #include "CapabilitiesDelegate/CapabilitiesDelegate.h"
+#include "CapabilitiesDelegate/DiscoveryEventSender.h"
+#include "CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h"
+#include "CapabilitiesDelegate/Utils/DiscoveryUtils.h"
 
-#include <iomanip>
-#include <unordered_map>
-#include <unordered_set>
-
-#include <curl/curl.h>
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
-
-#include <ACL/Transport/TransportDefines.h>
-#include <AVSCommon/AVS/CapabilityConfiguration.h>
-#include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
-#include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
-#include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpPutInterface.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpResponseCodes.h>
-#include <AVSCommon/Utils/LibcurlUtils/HTTPResponse.h>
-#include <AVSCommon/Utils/LibcurlUtils/LibcurlUtils.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 
 using namespace avsCommon::avs;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::endpoints;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::configuration;
-using namespace avsCommon::utils::libcurlUtils;
-using namespace avsCommon::sdkInterfaces;
-using namespace avsCommon::sdkInterfaces::storage;
-using namespace rapidjson;
+using namespace capabilitiesDelegate::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CapabilitiesDelegate");
@@ -57,985 +42,770 @@ static const std::string TAG("CapabilitiesDelegate");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// Name of @c ConfigurationNode for CapabilitiesDelegate
-static const std::string CONFIG_KEY_CAPABILITIES_DELEGATE = "capabilitiesDelegate";
-/// Name of overridenCapabilitiesPublishMessageBody value in CapabilitiesDelegate's @c ConfigurationNode.
-static const std::string CONFIG_KEY_OVERRIDE_CAPABILITIES_API_REQUEST_BODY = "overridenCapabilitiesPublishMessageBody";
-/// Name of endpoint value in CapabilitiesDelegate's @c ConfigurationNode.
-static const std::string CONFIG_KEY_CAPABILITIES_API_ENDPOINT = "endpoint";
-
-/// Constituents of the Capabilities API URL
-/// Capabilities API endpoint
-static const std::string DEFAULT_CAPABILITIES_API_ENDPOINT = "https://api.amazonalexa.com";
-/// Suffix before the device's place in the URL
-static const std::string CAPABILITIES_API_URL_PRE_DEVICE_SUFFIX = "/v1/devices/";
-/// Suffix after the device's place in the URL
-static const std::string CAPABILITIES_API_URL_POST_DEVICE_SUFFIX = "/capabilities";
-/// Device ID for the device that will show up in the URL
-static const std::string SELF_DEVICE = "@self";
-
-/// Constants for the Capabilities API message json
-/// Content type header key
-static const std::string CONTENT_TYPE_HEADER_KEY = "Content-Type";
-/// Content type header value
-static const std::string CONTENT_TYPE_HEADER_VALUE = "application/json";
-/// Content length header key
-static const std::string CONTENT_LENGTH_HEADER_KEY = "Content-Length";
-/// Auth token header key
-static const std::string AUTHORIZATION_HEADER_KEY = "x-amz-access-token";
-/// Accept header key
-static const std::string ACCEPT_HEADER_KEY = "Accept";
-/// Expect header key
-static const std::string EXPECT_HEADER_KEY = "Expect";
-/// Envelope version key in message body
-static const std::string ENVELOPE_VERSION_KEY = "envelopeVersion";
-/// Envelope version value in message body
-static const std::string ENVELOPE_VERSION_VALUE = "20160207";
-/// Capabilities key in message body
-static const std::string CAPABILITIES_KEY = "capabilities";
-
-/// Constant for HTTP 400 response json
-static const std::string HTTP_RESPONSE_ERROR_VALUE = "message";
-
-/// Separator between the components that make up a capability key
-static const std::string CAPABILITY_KEY_SEPARATOR = ".";
-/// Separator between header key and value
-static const std::string HEADER_KEY_VALUE_SEPARATOR = ":";
-
-/// Constants for prefixes for DB storage
-/// Endpoint key
-static const std::string DB_KEY_ENDPOINT = "endpoint:";
-/// Client id key
-static const std::string DB_KEY_CLIENT_ID = "clientId:";
-/// Product id key
-static const std::string DB_KEY_PRODUCT_ID = "productId:";
-/// Envelope version key
-static const std::string DB_KEY_ENVELOPE_VERSION = "envelopeVersion:";
-/// DSN key
-static const std::string DB_KEY_DSN = "deviceSerialNumber:";
-/// Message key
-static const std::string DB_KEY_PUBLISH_MSG = "publishMsg:";
-/// Separator between keys
-static const std::string DB_KEY_SEPARATOR = ",";
-
-/// Constants for entries in the capability map
-/// Required number of entries in capability map
-static const unsigned int CAPABILITY_MAP_REQUIRED_ENTRIES = 3;
-/// Maximum number of entries in capability map
-static const unsigned int CAPABILITY_MAP_MAXIMUM_ENTRIES = 4;
-
-/// Component name needed for Misc DB
-static const std::string COMPONENT_NAME = "capabilitiesDelegate";
-/// Capabilities publish message table
-static const std::string CAPABILITIES_PUBLISH_TABLE = "capabilitiesPublishMessage";
-
 /**
- * Returns a key for a capability map, which is used as a key to store in the m_capabilityConfigs map.
- * The key consists of the interface type and interface name.
+ * Gets the @c EndpointIdentifiers from a map of EndpointIdentifier to configuration.
  *
- * @param capabilityMap The capability configuration map of a specific capability.
- * @return a string that is basically <interface type>.<interface name>
+ * @param endpoints The map of endpoint to configuration.
+ * @return A vector of @c EndpointIdentifiers.
  */
-static std::string getCapabilityKey(const std::unordered_map<std::string, std::string>& capabilityMap);
-
-/**
- * Helper method for isCapabilityMapCorrectlyFormed() to check if a key is present,
- * and its corresponding value is not empty.
- *
- * @param capabilityMap The capability configuration map of a specific capability.
- * @param findKey The key from capabilityMap that needs to be checked.
- * @param errorEvent Log error event if checks fail.
- * @param errorReasonKey Log error reason key if checks fail.
- * @param errorReasonValue Log error reason value if checks fail.
- * @return True if the checks pass, else false.
- */
-static bool capabilityMapFormCheckHelper(
-    const std::unordered_map<std::string, std::string>& capabilityMap,
-    const std::string& findKey,
-    const std::string& errorEvent,
-    const std::string& errorReasonKey,
-    const std::string& errorReasonValue);
-
-/**
- * Checks a capability map to see
- * - It has all of the required information (type, name, version)
- * - If a configuration string is available, then it is a valid json
- * - There is no other unexpected information
- * Note that, the method will not check to see if the values themselves are valid.
- *
- * @param capabilityMap The capability configuration map of a specific capability.
- * @return True if all the checked conditions pass, else false.
- */
-static bool isCapabilityMapCorrectlyFormed(const std::unordered_map<std::string, std::string>& capabilityMap);
-
-/**
- * Get the error message from HTTP response.
- *
- * @return The error message from the HTTP response if the json is valid, else ""
- */
-static std::string getErrorMsgFromHttpResponse(const std::string& httpResponse);
-
-/**
- * Get a capability info string from the capability json.
- *
- * @param capabilityJson The capability json
- * @param jsonMemberKey the member key in the json where the capability info can be found
- * @return The capability info string if found, else "" ("" is ok as a return for errors because a null string itself is
- * also an error)
- */
-static std::string getCapabilityInfoStringFromJson(
-    const rapidjson::Value& capabilityJson,
-    const std::string& jsonMemberKey);
-
-/**
- * Helper method that will log a fail for saving Capabilities API data to misc DB and then attempt to clear the table.
- *
- * @param miscStorage The misc storage handler.
- */
-static void logFailedSaveAndClearCapabilitiesPublishTable(const std::shared_ptr<MiscStorageInterface>& miscStorage);
-
-std::string getCapabilityKey(const std::unordered_map<std::string, std::string>& capabilityMap) {
-    auto interfaceTypeIterator = capabilityMap.find(CAPABILITY_INTERFACE_TYPE_KEY);
-    if (interfaceTypeIterator == capabilityMap.end()) {
-        return "";
-    }
-    auto interfaceType = interfaceTypeIterator->second;
-
-    auto interfaceNameIterator = capabilityMap.find(CAPABILITY_INTERFACE_NAME_KEY);
-    if (interfaceNameIterator == capabilityMap.end()) {
-        return "";
-    }
-    auto interfaceName = interfaceNameIterator->second;
-
-    return interfaceType + CAPABILITY_KEY_SEPARATOR + interfaceName;
-}
-
-bool capabilityMapFormCheckHelper(
-    const std::unordered_map<std::string, std::string>& capabilityMap,
-    const std::string& findKey,
-    const std::string& errorEvent,
-    const std::string& errorReasonKey,
-    const std::string& errorReasonValue) {
-    auto foundValueIterator = capabilityMap.find(findKey);
-
-    if (foundValueIterator == capabilityMap.end()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, errorReasonValue));
-        return false;
-    } else {
-        std::string foundValue = foundValueIterator->second;
-        if (foundValue.empty()) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, errorReasonValue));
-            return false;
+static std::vector<EndpointIdentifier> getEndpointIdentifiers(
+    const std::unordered_map<std::string, std::string>& endpoints) {
+    std::vector<std::string> identifiers;
+    if (!endpoints.empty()) {
+        identifiers.reserve(endpoints.size());
+        for (auto const& endpoint : endpoints) {
+            identifiers.push_back(endpoint.first);
         }
     }
 
-    return true;
-}
-
-bool isCapabilityMapCorrectlyFormed(const std::unordered_map<std::string, std::string>& capabilityMap) {
-    const std::string errorEvent = "capabilityMapIncorrectlyFormed";
-    const std::string errorReasonKey = "reason";
-
-    if (!capabilityMapFormCheckHelper(
-            capabilityMap, CAPABILITY_INTERFACE_TYPE_KEY, errorEvent, errorReasonKey, "interfaceTypeNotAvailable")) {
-        return false;
-    }
-
-    if (!capabilityMapFormCheckHelper(
-            capabilityMap, CAPABILITY_INTERFACE_NAME_KEY, errorEvent, errorReasonKey, "interfaceNameNotAvailable")) {
-        return false;
-    }
-
-    if (!capabilityMapFormCheckHelper(
-            capabilityMap,
-            CAPABILITY_INTERFACE_VERSION_KEY,
-            errorEvent,
-            errorReasonKey,
-            "interfaceVersionNotAvailable")) {
-        return false;
-    }
-
-    auto mapSize = capabilityMap.size();
-    std::string unexpectedValueErrorReasonValue = "unexpectedValuesFound";
-
-    /// interface type, name and version are the only entries that are required,
-    /// and we have checked above that all of them exist.
-    if (CAPABILITY_MAP_REQUIRED_ENTRIES == mapSize) {
-        return true;
-    }
-
-    if (mapSize > CAPABILITY_MAP_MAXIMUM_ENTRIES) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, unexpectedValueErrorReasonValue));
-        return false;
-    }
-
-    /// the fourth entry (for CAPABILITY_INTERFACE_CONFIGURATIONS_KEY) is optional
-    std::string configurationValues;
-    auto foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
-    if (foundValueIterator == capabilityMap.end()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, unexpectedValueErrorReasonValue));
-        return false;
-    }
-    configurationValues = foundValueIterator->second;
-    if (configurationValues.empty()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "configurationValuesNotAvailable"));
-        return false;
-    }
-
-    /// check if the configuration values string is a valid json
-    rapidjson::Document configJson;
-    if (configJson.Parse(configurationValues).HasParseError()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "configurationValuesNotValidJson"));
-        return false;
-    }
-
-    return true;
-}
-
-std::string getErrorMsgFromHttpResponse(const std::string& httpResponse) {
-    if (httpResponse.empty()) {
-        return "";
-    }
-
-    std::string errorMsg;
-    rapidjson::Document errorMsgJson;
-    errorMsgJson.Parse(httpResponse);
-
-    if ((errorMsgJson.HasParseError()) || (!errorMsgJson.HasMember(HTTP_RESPONSE_ERROR_VALUE))) {
-        return "";
-    }
-
-    return (errorMsgJson.FindMember(HTTP_RESPONSE_ERROR_VALUE))->value.GetString();
+    return identifiers;
 }
 
 std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
-    const std::shared_ptr<MiscStorageInterface>& miscStorage,
-    const std::shared_ptr<HttpPutInterface>& httpPut,
-    const ConfigurationNode& configurationRoot,
-    std::shared_ptr<DeviceInfo> deviceInfo) {
-    const std::string errorEvent = "createFailed";
-    const std::string errorReasonKey = "reason";
-
-    if (!deviceInfo) {
-        deviceInfo = DeviceInfo::create(configurationRoot);
-        if (!deviceInfo) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "deviceInfoNotAvailable"));
+    const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
+    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager) {
+    if (!authDelegate) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
+    } else if (!capabilitiesDelegateStorage) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullCapabilitiesDelegateStorage"));
+    } else if (!customerDataManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullCustomerDataManager"));
+    } else {
+        std::shared_ptr<CapabilitiesDelegate> instance(
+            new CapabilitiesDelegate(authDelegate, capabilitiesDelegateStorage, customerDataManager));
+        if (!(instance->init())) {
+            ACSDK_ERROR(LX("createFailed").d("reason", "CapabilitiesDelegateInitFailed"));
             return nullptr;
         }
+
+        return instance;
     }
 
-    std::shared_ptr<CapabilitiesDelegate> instance(
-        new CapabilitiesDelegate(authDelegate, miscStorage, httpPut, deviceInfo));
-    if (!(instance->init(configurationRoot))) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "CapabilitiesDelegateInitFailed"));
-        return nullptr;
-    }
-    authDelegate->addAuthObserver(instance);
-
-    return instance;
+    return nullptr;
 }
 
 CapabilitiesDelegate::CapabilitiesDelegate(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
-    const std::shared_ptr<MiscStorageInterface>& miscStorage,
-    const std::shared_ptr<HttpPutInterface>& httpPut,
-    const std::shared_ptr<DeviceInfo>& deviceInfo) :
+    const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
+    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager) :
         RequiresShutdown{"CapabilitiesDelegate"},
+        CustomerDataHandler{customerDataManager},
         m_capabilitiesState{CapabilitiesObserverInterface::State::UNINITIALIZED},
         m_capabilitiesError{CapabilitiesObserverInterface::Error::UNINITIALIZED},
         m_authDelegate{authDelegate},
-        m_miscStorage{miscStorage},
-        m_httpPut{httpPut},
-        m_deviceInfo{deviceInfo},
-        m_currentAuthState{AuthObserverInterface::State::UNINITIALIZED},
-        m_isCapabilitiesDelegateShutdown{false} {
+        m_capabilitiesDelegateStorage{capabilitiesDelegateStorage},
+        m_isConnected{false},
+        m_isShuttingDown{false} {
 }
 
 void CapabilitiesDelegate::doShutdown() {
+    ACSDK_DEBUG5(LX(__func__));
     {
-        std::lock_guard<std::mutex> lock(m_publishWaitMutex);
-        m_isCapabilitiesDelegateShutdown = true;
-        m_publishWaitDone.notify_one();
+        std::lock_guard<std::mutex> lock(m_isShuttingDownMutex);
+        m_isShuttingDown = true;
     }
-    m_executor.shutdown();
-    m_authDelegate->removeAuthObserver(shared_from_this());
+
     {
-        std::lock_guard<std::mutex> lock(m_capabilitiesMutex);
+        std::lock_guard<std::mutex> lock(m_observerMutex);
         m_capabilitiesObservers.clear();
+    }
+
+    m_executor.shutdown();
+    resetDiscoveryEventSender();
+}
+
+void CapabilitiesDelegate::clearData() {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!m_capabilitiesDelegateStorage->clearDatabase()) {
+        ACSDK_ERROR(LX("clearDataFailed").d("reason", "unable to clear database"));
     }
 }
 
-bool CapabilitiesDelegate::init(const ConfigurationNode& configurationRoot) {
+bool CapabilitiesDelegate::init() {
     const std::string errorEvent = "initFailed";
     std::string infoEvent = "CapabilitiesDelegateInit";
 
-#ifdef DEBUG
-    std::string capabilitiesDelegateConfigurationMissing = "missingCapabilitiesDelegateConfigurationValue";
-    auto capabilitiesDelegateConfiguration = configurationRoot[CONFIG_KEY_CAPABILITIES_DELEGATE];
-    if (!capabilitiesDelegateConfiguration) {
-        ACSDK_DEBUG0(LX(infoEvent)
-                         .d("reason", capabilitiesDelegateConfigurationMissing)
-                         .d("key", CONFIG_KEY_CAPABILITIES_DELEGATE));
-    } else {
-        capabilitiesDelegateConfiguration.getString(
-            CONFIG_KEY_CAPABILITIES_API_ENDPOINT, &m_capabilitiesApiEndpoint, DEFAULT_CAPABILITIES_API_ENDPOINT);
-        auto overriddenCapabilitiesPublishMsg =
-            capabilitiesDelegateConfiguration[CONFIG_KEY_OVERRIDE_CAPABILITIES_API_REQUEST_BODY];
-        if (overriddenCapabilitiesPublishMsg) {
-            m_overridenCapabilitiesPublishMessageBody = overriddenCapabilitiesPublishMsg.serialize();
-        }
-    }
-#endif
-    if (m_capabilitiesApiEndpoint.empty()) {
-        m_capabilitiesApiEndpoint = DEFAULT_CAPABILITIES_API_ENDPOINT;
-    }
-
-    if (!m_miscStorage->open()) {
-        ACSDK_DEBUG0(LX(infoEvent).m("Couldn't open misc database. Creating."));
-        if (!m_miscStorage->createDatabase()) {
-            ACSDK_ERROR(LX(errorEvent).m("Could not create misc database."));
-            return false;
-        }
-    }
-
-    bool capabilitiesTableExists = false;
-    if (!m_miscStorage->tableExists(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, &capabilitiesTableExists)) {
-        ACSDK_ERROR(LX(errorEvent).m("Could not get Capabilities table information misc database."));
-        return false;
-    }
-
-    if (!capabilitiesTableExists) {
-        ACSDK_DEBUG0(LX(infoEvent).m(
-            "Table for Capabilities doesn't exist in misc database. Creating table " + CAPABILITIES_PUBLISH_TABLE +
-            " for component " + COMPONENT_NAME + "."));
-        if (!m_miscStorage->createTable(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                MiscStorageInterface::KeyType::STRING_KEY,
-                MiscStorageInterface::ValueType::STRING_VALUE)) {
-            ACSDK_ERROR(LX(errorEvent)
-                            .m("Could not create misc table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
-                               COMPONENT_NAME + "."));
+    if (!m_capabilitiesDelegateStorage->open()) {
+        ACSDK_INFO(LX(__func__).m("Couldn't open database. Creating."));
+        if (!m_capabilitiesDelegateStorage->createDatabase()) {
+            ACSDK_ERROR(LX("initFailed").m("Could not create database"));
             return false;
         }
     }
 
     return true;
-}
-
-bool CapabilitiesDelegate::isCapabilityRegisteredLocked(
-    const std::unordered_map<std::string, std::string>& capabilityMap) {
-    std::string capabilityKey = getCapabilityKey(capabilityMap);
-    return (m_registeredCapabilityConfigs.find(capabilityKey) != m_registeredCapabilityConfigs.end());
-}
-
-bool CapabilitiesDelegate::registerCapability(
-    const std::shared_ptr<CapabilityConfigurationInterface>& capabilitiesProvider) {
-    const std::string errorEvent = "registerCapabilityFailed";
-    const std::string errorReasonKey = "reason";
-
-    if (!capabilitiesProvider) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilitiesConfigurationNotAvailable"));
-        return false;
-    }
-
-    auto capabilities = capabilitiesProvider->getCapabilityConfigurations();
-    if (capabilities.empty()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilitiesNotAvailable"));
-        return false;
-    }
-
-    std::lock_guard<std::mutex> lock(m_capabilityMutex);
-    for (const auto& capability : capabilities) {
-        auto capabilityMap = capability->capabilityConfiguration;
-        if (!isCapabilityMapCorrectlyFormed(capabilityMap)) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityNotDefinedCorrectly"));
-            return false;
-        }
-
-        if (isCapabilityRegisteredLocked(capabilityMap)) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityAlreadyRegistered"));
-            return false;
-        }
-
-        std::string capabilityKey = getCapabilityKey(capabilityMap);
-        bool capabilityAdded = m_registeredCapabilityConfigs
-                                   .insert({capabilityKey, std::make_shared<CapabilityConfiguration>(capabilityMap)})
-                                   .second;
-        if (!capabilityAdded) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "capabilityRegistryFailed"));
-            return false;
-        }
-    }
-
-    return true;
-}
-
-CapabilitiesDelegate::CapabilitiesPublishReturnCode CapabilitiesDelegate::publishCapabilities() {
-    std::lock_guard<std::mutex> lock(m_capabilityMutex);
-    const std::string errorEvent = "publishCapabilitiesFailed";
-    const std::string errorReasonKey = "reason";
-
-    m_capabilitiesPublishMessage = getCapabilitiesPublishMessageBody();
-    if (m_capabilitiesPublishMessage.empty()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "emptyCapabiltiesList"));
-        setCapabilitiesState(
-            CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::BAD_REQUEST);
-        return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-    }
-
-    if (!isCapabilitiesPublishDataDifferent()) {
-        setCapabilitiesState(
-            CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS);
-        return CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS;
-    }
-
-    std::string authToken = getAuthToken();
-    if (authToken.empty()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "getAuthTokenFailed"));
-        setCapabilitiesState(
-            CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::FORBIDDEN);
-        return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-    }
-
-    const std::string capabilitiesApiUrl = getCapabilitiesApiUrl(SELF_DEVICE);
-
-    const std::vector<std::string> httpHeaderData = {
-        CONTENT_TYPE_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + CONTENT_TYPE_HEADER_VALUE,
-        CONTENT_LENGTH_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + std::to_string(m_capabilitiesPublishMessage.size()),
-        AUTHORIZATION_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR + authToken,
-        ACCEPT_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR,
-        EXPECT_HEADER_KEY + HEADER_KEY_VALUE_SEPARATOR};
-
-    HTTPResponse httpResponse = m_httpPut->doPut(capabilitiesApiUrl, httpHeaderData, m_capabilitiesPublishMessage);
-
-    switch (httpResponse.code) {
-        case HTTPResponseCode::SUCCESS_NO_CONTENT:
-            if (!saveCapabilitiesPublishData()) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "unableToSaveCapabilitiesData"));
-                setCapabilitiesState(
-                    CapabilitiesObserverInterface::State::FATAL_ERROR,
-                    CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
-                return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-            }
-            setCapabilitiesState(
-                CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::SUCCESS;
-        case HTTPResponseCode::BAD_REQUEST:
-            ACSDK_ERROR(
-                LX(errorEvent).d(errorReasonKey, "badRequest: " + getErrorMsgFromHttpResponse(httpResponse.body)));
-            setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::BAD_REQUEST);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-        case HTTPResponseCode::FORBIDDEN:
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "authenticationFailed"));
-            setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::FORBIDDEN);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-        case HTTPResponseCode::SERVER_INTERNAL_ERROR:
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "internalServiceError"));
-            setCapabilitiesState(
-                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
-                CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::RETRIABLE_ERROR;
-        default:
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "httpRequestFailed " + httpResponse.serialize()));
-            setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
-            return CapabilitiesDelegate::CapabilitiesPublishReturnCode::FATAL_ERROR;
-    }
-}
-
-void CapabilitiesDelegate::publishCapabilitiesAsyncWithRetries() {
-    m_executor.submit([this]() {
-        int retryCount = 0;
-        CapabilitiesDelegateInterface::CapabilitiesPublishReturnCode capabilitiesPublishReturnCode =
-            publishCapabilities();
-
-        while (CapabilitiesDelegateInterface::CapabilitiesPublishReturnCode::RETRIABLE_ERROR ==
-               capabilitiesPublishReturnCode) {
-            std::chrono::milliseconds retryBackoff =
-                acl::TransportDefines::RETRY_TIMER.calculateTimeToRetry(retryCount++);
-            ACSDK_ERROR(LX("capabilitiesPublishFailed").d("reason", "serverError").d("retryCount", retryCount));
-
-            std::unique_lock<std::mutex> lock(m_publishWaitMutex);
-            m_publishWaitDone.wait_for(lock, retryBackoff, [this] { return m_isCapabilitiesDelegateShutdown; });
-
-            if (m_isCapabilitiesDelegateShutdown) {
-                capabilitiesPublishReturnCode =
-                    CapabilitiesDelegateInterface::CapabilitiesPublishReturnCode::FATAL_ERROR;
-            } else {
-                capabilitiesPublishReturnCode = publishCapabilities();
-            }
-        }
-
-        if (CapabilitiesDelegateInterface::CapabilitiesPublishReturnCode::FATAL_ERROR ==
-            capabilitiesPublishReturnCode) {
-            ACSDK_ERROR(LX("capabilitiesPublishFailed").d("reason", "unableToPublishCapabilities"));
-        }
-    });
-}
-
-std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesLocked() {
-    if (m_registeredCapabilityConfigs.empty()) {
-        return "";
-    }
-
-    rapidjson::Document capabilitiesPublishMessageBody(kObjectType);
-    auto& allocator = capabilitiesPublishMessageBody.GetAllocator();
-
-    capabilitiesPublishMessageBody.AddMember(StringRef(ENVELOPE_VERSION_KEY), ENVELOPE_VERSION_VALUE, allocator);
-
-    rapidjson::Value capabilities(kArrayType);
-    for (auto capabilityConfigIterator : m_registeredCapabilityConfigs) {
-        auto capabilityMap = (capabilityConfigIterator.second)->capabilityConfiguration;
-
-        /// You should not have been able to register incomplete capabilties. But, checking just in case.
-        if (!isCapabilityMapCorrectlyFormed(capabilityMap)) {
-            return "";
-        }
-
-        rapidjson::Value capability(kObjectType);
-        auto foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_TYPE_KEY);
-        if (foundValueIterator != capabilityMap.end()) {
-            capability.AddMember(StringRef(CAPABILITY_INTERFACE_TYPE_KEY), foundValueIterator->second, allocator);
-        }
-        foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_NAME_KEY);
-        if (foundValueIterator != capabilityMap.end()) {
-            capability.AddMember(StringRef(CAPABILITY_INTERFACE_NAME_KEY), foundValueIterator->second, allocator);
-        }
-        foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_VERSION_KEY);
-        if (foundValueIterator != capabilityMap.end()) {
-            capability.AddMember(StringRef(CAPABILITY_INTERFACE_VERSION_KEY), foundValueIterator->second, allocator);
-        }
-        if (capabilityMap.size() == CAPABILITY_MAP_MAXIMUM_ENTRIES) {
-            foundValueIterator = capabilityMap.find(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY);
-            if (foundValueIterator != capabilityMap.end()) {
-                capability.AddMember(
-                    StringRef(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY), foundValueIterator->second, allocator);
-            }
-        }
-        capabilities.PushBack(capability, allocator);
-    }
-    capabilitiesPublishMessageBody.AddMember(StringRef(CAPABILITIES_KEY), capabilities, allocator);
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    if (!capabilitiesPublishMessageBody.Accept(writer)) {
-        ACSDK_ERROR(LX("getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesFailed")
-                        .d("reason", "writerRefusedCapabilitiesPublishMessageBodyJson"));
-        return "";
-    }
-
-    m_envelopeVersion = ENVELOPE_VERSION_VALUE;
-    m_capabilityConfigs = m_registeredCapabilityConfigs;
-
-    const char* bufferData = buffer.GetString();
-    if (!bufferData) {
-        ACSDK_ERROR(LX("getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesFailed")
-                        .d("reason", "nullptrCapabilitiesPublishMessageBodyJsonBufferString"));
-        return "";
-    }
-
-    return std::string(bufferData);
-}
-
-std::string getCapabilityInfoStringFromJson(const rapidjson::Value& capabilityJson, const std::string& jsonMemberKey) {
-    if (!capabilityJson.HasMember(jsonMemberKey)) {
-        return "";
-    }
-    const rapidjson::Value& capabilityTypeJson = (capabilityJson.FindMember(jsonMemberKey))->value;
-    if (!capabilityTypeJson.IsString()) {
-        return "";
-    }
-    return capabilityTypeJson.GetString();
-}
-
-std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBodyFromOverride() {
-    if (m_overridenCapabilitiesPublishMessageBody.empty()) {
-        return "";
-    }
-
-    const std::string errorEvent = "getCapabilitiesPublishMessageBodyFromOverrideFailed";
-    const std::string errorReasonKey = "reason";
-
-    std::string envelopeVersion;
-    std::unordered_map<std::string, std::shared_ptr<CapabilityConfiguration>> capabilityConfigs;
-
-    rapidjson::Document overridenCapabilitiesPublishMessageJson;
-    overridenCapabilitiesPublishMessageJson.Parse(m_overridenCapabilitiesPublishMessageBody);
-
-    if (overridenCapabilitiesPublishMessageJson.HasParseError()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error parsing the message"));
-        return "";
-    }
-
-    unsigned int numOfMembersInJson = 2;
-    if (overridenCapabilitiesPublishMessageJson.MemberCount() != numOfMembersInJson) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "The message has incorrect number of components"));
-        return "";
-    }
-
-    if ((!overridenCapabilitiesPublishMessageJson.HasMember(ENVELOPE_VERSION_KEY)) ||
-        (!overridenCapabilitiesPublishMessageJson.HasMember(CAPABILITIES_KEY))) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "The message does not have the required components"));
-        return "";
-    }
-
-    const rapidjson::Value& envelopeVersionJson =
-        (overridenCapabilitiesPublishMessageJson.FindMember(ENVELOPE_VERSION_KEY))->value;
-    if (!envelopeVersionJson.IsString()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Envelope version value is not a string"));
-        return "";
-    }
-    envelopeVersion = envelopeVersionJson.GetString();
-
-    const rapidjson::Value& capabiltiesJson =
-        (overridenCapabilitiesPublishMessageJson.FindMember(CAPABILITIES_KEY))->value;
-    if (!capabiltiesJson.IsArray()) {
-        ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capabilities list is not an array"));
-        return "";
-    }
-    for (rapidjson::SizeType capabilityIndx = 0; capabilityIndx < capabiltiesJson.Size(); capabilityIndx++) {
-        const rapidjson::Value& capabilityJson = capabiltiesJson[capabilityIndx];
-        std::unordered_map<std::string, std::string> capabilityMap;
-
-        unsigned int numOfMembers = capabilityJson.MemberCount();
-        if ((numOfMembers < CAPABILITY_MAP_REQUIRED_ENTRIES) || (numOfMembers > CAPABILITY_MAP_MAXIMUM_ENTRIES)) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability has incorrect number of components"));
-            return "";
-        }
-
-        std::string capabilityType = getCapabilityInfoStringFromJson(capabilityJson, CAPABILITY_INTERFACE_TYPE_KEY);
-        if (capabilityType.empty()) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability does not have an appropriate interface type"));
-            return "";
-        }
-        capabilityMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, capabilityType});
-
-        std::string capabilityName = getCapabilityInfoStringFromJson(capabilityJson, CAPABILITY_INTERFACE_NAME_KEY);
-        if (capabilityName.empty()) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability does not have an appropriate interface name"));
-            return "";
-        }
-        capabilityMap.insert({CAPABILITY_INTERFACE_NAME_KEY, capabilityName});
-
-        std::string capabilityVersion =
-            getCapabilityInfoStringFromJson(capabilityJson, CAPABILITY_INTERFACE_VERSION_KEY);
-        if (capabilityVersion.empty()) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability does not have an appropriate interface version"));
-            return "";
-        }
-        capabilityMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, capabilityVersion});
-
-        if (numOfMembers == CAPABILITY_MAP_MAXIMUM_ENTRIES) {
-            if (!capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Capability has an unexpected component"));
-                return "";
-            }
-            const rapidjson::Value& capabilityConfigJson =
-                (capabilityJson.FindMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY))->value;
-            rapidjson::StringBuffer buffer;
-            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-            if (!capabilityConfigJson.Accept(writer)) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing capability configuration"));
-                return "";
-            }
-            const char* bufferData = buffer.GetString();
-            if (!bufferData) {
-                ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing capability configuration"));
-                return "";
-            }
-            capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, std::string(bufferData)});
-        }
-
-        std::string capabilityKey = getCapabilityKey(capabilityMap);
-        bool capabilityAdded =
-            capabilityConfigs.insert({capabilityKey, std::make_shared<CapabilityConfiguration>(capabilityMap)}).second;
-        if (!capabilityAdded) {
-            ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "Error in processing message"));
-            return "";
-        }
-    }
-
-    m_envelopeVersion = envelopeVersion;
-    m_capabilityConfigs = capabilityConfigs;
-
-    return m_overridenCapabilitiesPublishMessageBody;
-}
-
-std::string CapabilitiesDelegate::getCapabilitiesPublishMessageBody() {
-    std::string capabilitiesMessageBody = getCapabilitiesPublishMessageBodyFromOverride();
-
-    if (capabilitiesMessageBody.empty()) {
-        capabilitiesMessageBody = getCapabilitiesPublishMessageBodyFromRegisteredCapabilitiesLocked();
-    }
-
-    return capabilitiesMessageBody;
-}
-
-std::string CapabilitiesDelegate::getCapabilitiesApiUrl(const std::string& deviceId) {
-    return m_capabilitiesApiEndpoint + CAPABILITIES_API_URL_PRE_DEVICE_SUFFIX + deviceId +
-           CAPABILITIES_API_URL_POST_DEVICE_SUFFIX;
 }
 
 void CapabilitiesDelegate::addCapabilitiesObserver(std::shared_ptr<CapabilitiesObserverInterface> observer) {
-    ACSDK_DEBUG5(LX("addCapabilitiesObserver").d("observer", observer.get()));
-
-    std::lock_guard<std::mutex> lock(m_capabilitiesMutex);
     if (!observer) {
         ACSDK_ERROR(LX("addCapabilitiesObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    if (!m_capabilitiesObservers.insert(observer).second) {
-        ACSDK_WARN(LX("addCapabilitiesObserverFailed").d("reason", "observerAlreadyAdded"));
-        return;
+
+    ACSDK_DEBUG5(LX("addCapabilitiesObserver").d("observer", observer.get()));
+
+    {
+        std::lock_guard<std::mutex> lock(m_observerMutex);
+        if (!m_capabilitiesObservers.insert(observer).second) {
+            ACSDK_WARN(LX("addCapabilitiesObserverFailed").d("reason", "observerAlreadyAdded"));
+            return;
+        }
     }
-    observer->onCapabilitiesStateChange(m_capabilitiesState, m_capabilitiesError);
+
+    observer->onCapabilitiesStateChange(
+        m_capabilitiesState, m_capabilitiesError, std::vector<std::string>{}, std::vector<std::string>{});
 }
 
 void CapabilitiesDelegate::removeCapabilitiesObserver(std::shared_ptr<CapabilitiesObserverInterface> observer) {
-    ACSDK_DEBUG5(LX("removeCapabilitiesObserver").d("observer", observer.get()));
-
-    std::lock_guard<std::mutex> lock(m_capabilitiesMutex);
     if (!observer) {
         ACSDK_ERROR(LX("removeCapabilitiesObserverFailed").d("reason", "nullObserver"));
-    } else if (m_capabilitiesObservers.erase(observer) == 0) {
+        return;
+    }
+
+    ACSDK_DEBUG5(LX("removeCapabilitiesObserver").d("observer", observer.get()));
+
+    std::lock_guard<std::mutex> lock(m_observerMutex);
+    if (m_capabilitiesObservers.erase(observer) == 0) {
         ACSDK_WARN(LX("removeCapabilitiesObserverFailed").d("reason", "observerNotAdded"));
     }
 }
 
 void CapabilitiesDelegate::setCapabilitiesState(
-    CapabilitiesObserverInterface::State newCapabilitiesState,
-    CapabilitiesObserverInterface::Error newCapabilitiesError) {
+    const CapabilitiesObserverInterface::State newCapabilitiesState,
+    const CapabilitiesObserverInterface::Error newCapabilitiesError,
+    const std::vector<EndpointIdentifier>& addOrUpdateReportEndpoints,
+    const std::vector<EndpointIdentifier>& deleteReportEndpoints) {
     ACSDK_DEBUG5(LX("setCapabilitiesState").d("newCapabilitiesState", newCapabilitiesState));
 
-    std::lock_guard<std::mutex> lock(m_capabilitiesMutex);
-    if ((newCapabilitiesState == m_capabilitiesState) && (newCapabilitiesError == m_capabilitiesError)) {
-        return;
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface>> capabilitiesObservers;
+    {
+        std::lock_guard<std::mutex> lock(m_observerMutex);
+        capabilitiesObservers = m_capabilitiesObservers;
+        m_capabilitiesState = newCapabilitiesState;
+        m_capabilitiesError = newCapabilitiesError;
     }
-    m_capabilitiesState = newCapabilitiesState;
-    m_capabilitiesError = newCapabilitiesError;
 
-    if (!m_capabilitiesObservers.empty()) {
+    if (!capabilitiesObservers.empty()) {
         ACSDK_DEBUG9(
             LX("callingOnCapabilitiesStateChange").d("state", m_capabilitiesState).d("error", m_capabilitiesError));
-        for (auto& observer : m_capabilitiesObservers) {
-            observer->onCapabilitiesStateChange(m_capabilitiesState, m_capabilitiesError);
+        for (auto& observer : capabilitiesObservers) {
+            observer->onCapabilitiesStateChange(
+                newCapabilitiesState, newCapabilitiesError, addOrUpdateReportEndpoints, deleteReportEndpoints);
         }
     }
 }
 
-void CapabilitiesDelegate::onAuthStateChange(
-    AuthObserverInterface::State newState,
-    AuthObserverInterface::Error newError) {
-    std::lock_guard<std::mutex> lock(m_authStatusMutex);
-    m_currentAuthState = newState;
-    if ((AuthObserverInterface::State::REFRESHED == m_currentAuthState) ||
-        (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState)) {
-        m_authStatusReady.notify_one();
+void CapabilitiesDelegate::setMessageSender(
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!messageSender) {
+        ACSDK_ERROR(LX("setMessageSenderFailed").d("reason", "Null messageSender"));
+        return;
+    }
+    std::lock_guard<std::mutex> lock(m_messageSenderMutex);
+    m_messageSender = messageSender;
+}
+
+void CapabilitiesDelegate::invalidateCapabilities() {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!m_capabilitiesDelegateStorage->clearDatabase()) {
+        ACSDK_ERROR(LX("invalidateCapabilitiesFailed").d("reason", "unable to clear database"));
     }
 }
 
-std::string CapabilitiesDelegate::getAuthToken() {
+bool CapabilitiesDelegate::addOrUpdateEndpoint(
+    const AVSDiscoveryEndpointAttributes& endpointAttributes,
+    const std::vector<CapabilityConfiguration>& capabilities) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!validateEndpointAttributes(endpointAttributes)) {
+        ACSDK_ERROR(LX("addOrUpdateEndpointFailed").d("reason", "invalidAVSDiscoveryEndpointAttributes"));
+        return false;
+    }
+
+    if (capabilities.empty()) {
+        ACSDK_ERROR(LX("addOrUpdateEndpointFailed").d("reason", "invalidCapabilities"));
+        return false;
+    }
+
+    for (auto& capability : capabilities) {
+        if (!validateCapabilityConfiguration(capability)) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "invalidCapabilityConfiguration")
+                            .d("capability", capability.interfaceName));
+            return false;
+        }
+    }
+
+    std::string endpointId = endpointAttributes.endpointId;
     {
-        std::unique_lock<std::mutex> lock(m_authStatusMutex);
-        m_authStatusReady.wait(lock, [this]() {
-            return (
-                (AuthObserverInterface::State::REFRESHED == m_currentAuthState) ||
-                (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState));
-        });
-    }
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
 
-    if (AuthObserverInterface::State::UNRECOVERABLE_ERROR == m_currentAuthState) {
-        ACSDK_ERROR(LX("getAuthTokenFailed").d("reason", "Unrecoverable error by auth delegate"));
-        return "";
-    }
-
-    return m_authDelegate->getAuthToken();
-}
-
-void CapabilitiesDelegate::getPreviouslySentCapabilitiesPublishData() {
-    const std::string dbKeysPrefix = DB_KEY_ENDPOINT + m_capabilitiesApiEndpoint + DB_KEY_SEPARATOR;
-
-    std::string previousClientId;
-    std::string previousProductId;
-    std::string previousDeviceSerialNumber;
-    m_miscStorage->get(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKeysPrefix + DB_KEY_CLIENT_ID, &previousClientId);
-    m_miscStorage->get(
-        COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKeysPrefix + DB_KEY_PRODUCT_ID, &previousProductId);
-    m_miscStorage->get(
-        COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKeysPrefix + DB_KEY_DSN, &previousDeviceSerialNumber);
-
-    if (!previousClientId.empty() && !previousProductId.empty() && !previousDeviceSerialNumber.empty()) {
-        m_previousDeviceInfo = DeviceInfo::create(previousClientId, previousProductId, previousDeviceSerialNumber);
-    } else {
-        m_previousDeviceInfo.reset();
-    }
-
-    m_previousEnvelopeVersion = "";
-    m_miscStorage->get(
-        COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE, dbKeysPrefix + DB_KEY_ENVELOPE_VERSION, &m_previousEnvelopeVersion);
-
-    std::string previousCapabilitiesPublishMsgStr;
-    m_miscStorage->get(
-        COMPONENT_NAME,
-        CAPABILITIES_PUBLISH_TABLE,
-        dbKeysPrefix + DB_KEY_PUBLISH_MSG,
-        &previousCapabilitiesPublishMsgStr);
-    if (!previousCapabilitiesPublishMsgStr.empty()) {
-        rapidjson::Document previousCapabilitiesPublishMsgJson;
-        previousCapabilitiesPublishMsgJson.Parse(previousCapabilitiesPublishMsgStr);
-
-        for (rapidjson::SizeType capabilityIndx = 0;
-             capabilityIndx < previousCapabilitiesPublishMsgJson[CAPABILITIES_KEY].Size();
-             capabilityIndx++) {
-            const rapidjson::Value& capabilityJson =
-                previousCapabilitiesPublishMsgJson[CAPABILITIES_KEY][capabilityIndx];
-            std::unordered_map<std::string, std::string> capabilityMap;
-
-            std::string capabilityType = (capabilityJson.FindMember(CAPABILITY_INTERFACE_TYPE_KEY))->value.GetString();
-            capabilityMap.insert({CAPABILITY_INTERFACE_TYPE_KEY, capabilityType});
-
-            std::string capabilityName = (capabilityJson.FindMember(CAPABILITY_INTERFACE_NAME_KEY))->value.GetString();
-            capabilityMap.insert({CAPABILITY_INTERFACE_NAME_KEY, capabilityName});
-
-            std::string capabilityVersion =
-                (capabilityJson.FindMember(CAPABILITY_INTERFACE_VERSION_KEY))->value.GetString();
-            capabilityMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, capabilityVersion});
-
-            if (capabilityJson.HasMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY)) {
-                std::string capabilityConfigs =
-                    (capabilityJson.FindMember(CAPABILITY_INTERFACE_CONFIGURATIONS_KEY))->value.GetString();
-                capabilityMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, capabilityConfigs});
-            }
-
-            std::string capabilityKey = getCapabilityKey(capabilityMap);
-            m_previousCapabilityConfigs.insert(
-                {capabilityKey, std::make_shared<CapabilityConfiguration>(capabilityMap)});
-        }
-    }
-}
-
-bool CapabilitiesDelegate::isCapabilitiesPublishDataDifferent() {
-    getPreviouslySentCapabilitiesPublishData();
-
-    if ((!m_previousDeviceInfo) || (*m_previousDeviceInfo != *m_deviceInfo)) {
-        return true;
-    }
-
-    if (m_previousEnvelopeVersion != m_envelopeVersion) {
-        return true;
-    }
-
-    return isCapabilitiesPublishMessageDifferent();
-}
-
-bool CapabilitiesDelegate::isCapabilitiesPublishMessageDifferent() {
-    if (m_previousCapabilityConfigs.size() != m_capabilityConfigs.size()) {
-        return true;
-    }
-
-    for (const auto& capConfigIterator : m_capabilityConfigs) {
-        std::string capConfigKey = capConfigIterator.first;
-        std::unordered_map<std::string, std::string> currCapConfigMap =
-            (capConfigIterator.second)->capabilityConfiguration;
-
-        auto prevCapConfigIterator = m_previousCapabilityConfigs.find(capConfigKey);
-        if (prevCapConfigIterator == m_previousCapabilityConfigs.end()) {
-            return true;
-        }
-
-        std::unordered_map<std::string, std::string> prevCapConfigMap =
-            (prevCapConfigIterator->second)->capabilityConfiguration;
-
-        CapabilityConfiguration currCapConfig(currCapConfigMap);
-        CapabilityConfiguration prevCapConfig(prevCapConfigMap);
-
-        if (currCapConfig != prevCapConfigMap) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-void logFailedSaveAndClearCapabilitiesPublishTable(const std::shared_ptr<MiscStorageInterface>& miscStorage) {
-    ACSDK_ERROR(
-        LX("saveCapabilitiesPublishDataFailed")
-            .d("reason",
-               "Unable to update the table " + CAPABILITIES_PUBLISH_TABLE + " for component " + COMPONENT_NAME + "."));
-    ACSDK_INFO(LX("saveCapabilitiesPublishDataInfo")
-                   .m("Clearing table " + CAPABILITIES_PUBLISH_TABLE + " for component " + COMPONENT_NAME + "."));
-    if (!miscStorage->clearTable(COMPONENT_NAME, CAPABILITIES_PUBLISH_TABLE)) {
-        ACSDK_ERROR(LX("saveCapabilitiesPublishDataFailed")
-                        .d("reason",
-                           "Unable to clear the table " + CAPABILITIES_PUBLISH_TABLE + " for component " +
-                               COMPONENT_NAME + ". Please clear the table for proper future functioning."));
-    }
-}
-
-bool CapabilitiesDelegate::saveCapabilitiesPublishData() {
-    const std::string dbKeysPrefix = DB_KEY_ENDPOINT + m_capabilitiesApiEndpoint + DB_KEY_SEPARATOR;
-
-    if ((!m_previousDeviceInfo) || (m_previousDeviceInfo->getClientId() != m_deviceInfo->getClientId())) {
-        if (!m_miscStorage->put(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                dbKeysPrefix + DB_KEY_CLIENT_ID,
-                m_deviceInfo->getClientId())) {
-            logFailedSaveAndClearCapabilitiesPublishTable(m_miscStorage);
+        // Check if this endpoint ID is already pending deletion.
+        auto it = m_deleteEndpoints.pending.find(endpointId);
+        if (m_deleteEndpoints.pending.end() != it) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "already pending deletion")
+                            .sensitive("endpointId", endpointId));
             return false;
         }
-    }
 
-    if ((!m_previousDeviceInfo) || (m_previousDeviceInfo->getProductId() != m_deviceInfo->getProductId())) {
-        if (!m_miscStorage->put(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                dbKeysPrefix + DB_KEY_PRODUCT_ID,
-                m_deviceInfo->getProductId())) {
-            logFailedSaveAndClearCapabilitiesPublishTable(m_miscStorage);
+        // Add endpoint to pending list.
+        it = m_addOrUpdateEndpoints.pending.find(endpointId);
+        if (m_addOrUpdateEndpoints.pending.end() != it) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "already pending addOrUpdate")
+                            .sensitive("endpointId", endpointId));
             return false;
         }
+
+        std::string endpointConfigJson = getEndpointConfigJson(endpointAttributes, capabilities);
+        m_addOrUpdateEndpoints.pending.insert(std::make_pair(endpointId, endpointConfigJson));
     }
 
-    if ((!m_previousDeviceInfo) ||
-        (m_previousDeviceInfo->getDeviceSerialNumber() != m_deviceInfo->getDeviceSerialNumber())) {
-        if (!m_miscStorage->put(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                dbKeysPrefix + DB_KEY_DSN,
-                m_deviceInfo->getDeviceSerialNumber())) {
-            logFailedSaveAndClearCapabilitiesPublishTable(m_miscStorage);
-            return false;
-        }
-    }
-
-    if ((m_previousEnvelopeVersion.empty()) || (m_previousEnvelopeVersion != m_envelopeVersion)) {
-        if (!m_miscStorage->put(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                dbKeysPrefix + DB_KEY_ENVELOPE_VERSION,
-                m_envelopeVersion)) {
-            logFailedSaveAndClearCapabilitiesPublishTable(m_miscStorage);
-            return false;
-        }
-    }
-
-    if (m_previousCapabilityConfigs.empty() || isCapabilitiesPublishMessageDifferent()) {
-        if (!m_miscStorage->put(
-                COMPONENT_NAME,
-                CAPABILITIES_PUBLISH_TABLE,
-                dbKeysPrefix + DB_KEY_PUBLISH_MSG,
-                m_capabilitiesPublishMessage)) {
-            logFailedSaveAndClearCapabilitiesPublishTable(m_miscStorage);
-            return false;
-        }
+    if (!m_currentDiscoveryEventSender) {
+        m_executor.submit([this] { executeSendPendingEndpoints(); });
     }
 
     return true;
+}
+
+bool CapabilitiesDelegate::deleteEndpoint(
+    const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+    const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!validateEndpointAttributes(endpointAttributes)) {
+        ACSDK_ERROR(LX("deleteEndpointFailed").d("reason", "invalidAVSDiscoveryEndpointAttributes"));
+        return false;
+    }
+
+    if (capabilities.empty()) {
+        ACSDK_ERROR(LX("deleteEndpointFailed").d("reason", "invalidCapabilities"));
+        return false;
+    }
+
+    for (auto& capability : capabilities) {
+        if (!validateCapabilityConfiguration(capability)) {
+            ACSDK_ERROR(LX("deleteEndpointFailed")
+                            .d("reason", "invalidCapabilityConfiguration")
+                            .d("capability", capability.interfaceName));
+            return false;
+        }
+    }
+
+    std::string endpointId = endpointAttributes.endpointId;
+
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+
+        // Check for duplicate in addOrUpdateEndpoints and report error if found.
+        auto it = m_addOrUpdateEndpoints.pending.find(endpointId);
+        if (m_addOrUpdateEndpoints.pending.end() != it) {
+            ACSDK_ERROR(LX(__func__)
+                            .d("deleteEndpointFailed", "already pending registration")
+                            .sensitive("endpointId", endpointId));
+            return false;
+        }
+
+        // If the endpoint to delete is not registered, return false and do not send Discovery event.
+        it = m_endpoints.find(endpointId);
+        if (m_endpoints.end() == it) {
+            ACSDK_ERROR(
+                LX("deleteEndpointFailed").d("reason", "endpoint not registered").sensitive("endpointId", endpointId));
+            return false;
+        }
+
+        // Add endpoint to pending list.
+        it = m_deleteEndpoints.pending.find(endpointId);
+        if (m_deleteEndpoints.pending.end() != it) {
+            ACSDK_ERROR(
+                LX("deleteEndpointFailed").d("reason", "already pending deletion").sensitive("endpointId", endpointId));
+            return false;
+        }
+
+        std::string endpointConfigJson = getEndpointConfigJson(endpointAttributes, capabilities);
+        m_deleteEndpoints.pending.insert(std::make_pair(endpointId, endpointConfigJson));
+    }
+
+    if (!m_currentDiscoveryEventSender) {
+        m_executor.submit([this] { executeSendPendingEndpoints(); });
+    }
+
+    return true;
+}
+
+void CapabilitiesDelegate::executeSendPendingEndpoints() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (isShuttingDown()) {
+        ACSDK_DEBUG5(LX(__func__).d("Skipped", "Shutting down"));
+        return;
+    }
+
+    if (!m_isConnected) {
+        ACSDK_DEBUG5(LX(__func__).d("Deferred", "Not connected"));
+        return;
+    }
+
+    if (m_currentDiscoveryEventSender) {
+        ACSDK_DEBUG5(LX(__func__).d("Deferred", "Discovery events already in-flight"));
+        return;
+    }
+
+    if (m_addOrUpdateEndpoints.pending.empty() && m_deleteEndpoints.pending.empty()) {
+        ACSDK_DEBUG5(LX(__func__).d("Skipped", "No endpoints to register or delete"));
+        return;
+    }
+
+    std::unordered_map<std::string, std::string> addOrUpdateEndpointsToSend;
+    std::unordered_map<std::string, std::string> deleteEndpointsToSend;
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+
+        // Move pending endpoints to in-flight, since we are going to send them.
+        m_addOrUpdateEndpoints.inFlight = m_addOrUpdateEndpoints.pending;
+        addOrUpdateEndpointsToSend = m_addOrUpdateEndpoints.inFlight;
+        m_addOrUpdateEndpoints.pending.clear();
+
+        m_deleteEndpoints.inFlight = m_deleteEndpoints.pending;
+        deleteEndpointsToSend = m_deleteEndpoints.inFlight;
+        m_deleteEndpoints.pending.clear();
+    }
+
+    ACSDK_DEBUG5(LX(__func__)
+                     .d("num endpoints to add", addOrUpdateEndpointsToSend.size())
+                     .d("num endpoints to delete", deleteEndpointsToSend.size()));
+
+    auto discoveryEventSender =
+        DiscoveryEventSender::create(addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate);
+
+    if (!discoveryEventSender) {
+        ACSDK_ERROR(LX("failedExecuteSendPendingEndpoints").d("reason", "failed to create DiscoveryEventSender"));
+        moveInFlightEndpointsToPending();
+        setCapabilitiesState(
+            CapabilitiesObserverInterface::State::FATAL_ERROR,
+            CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+            getEndpointIdentifiers(addOrUpdateEndpointsToSend),
+            getEndpointIdentifiers(deleteEndpointsToSend));
+        return;
+    }
+
+    addDiscoveryEventSender(discoveryEventSender);
+    discoveryEventSender->sendDiscoveryEvents(m_messageSender);
+}
+
+void CapabilitiesDelegate::onAlexaEventProcessedReceived(const std::string& eventCorrelationToken) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    std::shared_ptr<DiscoveryEventSenderInterface> currentEventSender;
+    {
+        std::lock_guard<std::mutex> lock{m_currentDiscoveryEventSenderMutex};
+        currentEventSender = m_currentDiscoveryEventSender;
+    }
+
+    if (currentEventSender) {
+        currentEventSender->onAlexaEventProcessedReceived(eventCorrelationToken);
+    } else {
+        ACSDK_ERROR(LX(__func__).m("invalidDiscoveryEventSender"));
+    }
+}
+
+std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostConnectOperation() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    resetDiscoveryEventSender();
+
+    /// We track the original pending endpoints in order to notify observers of their registration,
+    /// even if CapabilitiesDelegate does not need to actually send the events since they are already
+    /// registered with AVS.
+    std::unordered_map<std::string, std::string> originalPendingAddOrUpdateEndpoints;
+
+    /// The endpoints that need to be sent to AVS.
+    std::unordered_map<std::string, std::string> addOrUpdateEndpointsToSend;
+    std::unordered_map<std::string, std::string> deleteEndpointsToSend;
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+
+        /// If any endpoints were in-flight at the time of creating a post-connect operation, move them
+        /// back to pending to be re-filtered and sent as part of the post-connect operation.
+        moveInFlightEndpointsToPendingLocked();
+
+        originalPendingAddOrUpdateEndpoints = m_addOrUpdateEndpoints.pending;
+
+        std::unordered_map<std::string, std::string> storedEndpointConfig;
+        if (!m_capabilitiesDelegateStorage->load(&storedEndpointConfig)) {
+            ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not load previous config from database."));
+            return nullptr;
+        }
+        ACSDK_DEBUG5(LX(__func__).d("num endpoints stored", storedEndpointConfig.size()));
+
+        /// If the database is empty, send any cached endpoints as part of this post-connect operation.
+        if (storedEndpointConfig.empty()) {
+            for (auto& endpoint : m_endpoints) {
+                auto endpointId = endpoint.first;
+
+                /// If the stored endpoint is pending deletion, do not include it in the addOrUpdateReport.
+                auto it = m_deleteEndpoints.pending.find(endpointId);
+                if (m_deleteEndpoints.pending.end() != it) {
+                    continue;
+                }
+
+                /// If the registered endpoint does not have a pending change, add the stored configuration
+                /// to the addOrUpdateReport. Otherwise, prefer the pending change as it's more recent.
+                it = m_addOrUpdateEndpoints.pending.find(endpointId);
+                if (m_addOrUpdateEndpoints.pending.end() == it) {
+                    m_addOrUpdateEndpoints.pending[endpointId] = endpoint.second;
+                }
+            }
+        } else {
+            filterUnchangedPendingAddOrUpdateEndpointsLocked(&storedEndpointConfig);
+            addStaleEndpointsToPendingDeleteLocked(&storedEndpointConfig);
+        }
+
+        /// Move endpoints from pending to in-flight, since they will now be sent.
+        m_addOrUpdateEndpoints.inFlight = m_addOrUpdateEndpoints.pending;
+        addOrUpdateEndpointsToSend = m_addOrUpdateEndpoints.inFlight;
+        m_addOrUpdateEndpoints.pending.clear();
+
+        m_deleteEndpoints.inFlight = m_deleteEndpoints.pending;
+        deleteEndpointsToSend = m_deleteEndpoints.inFlight;
+        m_deleteEndpoints.pending.clear();
+    }
+
+    /// Sometimes pending add/update endpoints do not need to be sent to AVS as they are already stored
+    /// and registered with AVS. In this case, we should still notify observers that registration succeeded
+    /// even though no Discovery event was sent. This logic is not required for pending delete endpoints, since
+    /// calls to CapabilitiesDelegate.deleteEndpoint fail when the endpoint is not already cached with
+    /// CapabilitiesDelegate.
+    if (addOrUpdateEndpointsToSend.empty() && !originalPendingAddOrUpdateEndpoints.empty()) {
+        setCapabilitiesState(
+            CapabilitiesObserverInterface::State::SUCCESS,
+            CapabilitiesObserverInterface::Error::SUCCESS,
+            getEndpointIdentifiers(originalPendingAddOrUpdateEndpoints),
+            std::vector<std::string>{});
+    }
+
+    if (addOrUpdateEndpointsToSend.empty() && deleteEndpointsToSend.empty()) {
+        ACSDK_DEBUG5(LX(__func__).m("No change in Capabilities, skipping post connect step"));
+
+        return nullptr;
+    }
+
+    ACSDK_DEBUG5(LX(__func__)
+                     .d("num endpoints to add", addOrUpdateEndpointsToSend.size())
+                     .d("num endpoints to delete", deleteEndpointsToSend.size()));
+
+    std::shared_ptr<DiscoveryEventSenderInterface> currentEventSender =
+        DiscoveryEventSender::create(addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate);
+
+    if (currentEventSender) {
+        addDiscoveryEventSender(currentEventSender);
+    } else {
+        ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not create DiscoveryEventSender."));
+        return nullptr;
+    }
+
+    auto instance = PostConnectCapabilitiesPublisher::create(currentEventSender);
+    if (!instance) {
+        resetDiscoveryEventSender();
+    }
+    return instance;
+}
+
+void CapabilitiesDelegate::onDiscoveryCompleted(
+    const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
+    const std::unordered_map<std::string, std::string>& deleteReportEndpoints) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (m_addOrUpdateEndpoints.inFlight != addOrUpdateReportEndpoints ||
+        m_deleteEndpoints.inFlight != deleteReportEndpoints) {
+        ACSDK_WARN(LX(__func__).m("Cached in-flight endpoints do not match endpoints registered to AVS"));
+    }
+
+    auto addOrUpdateReportEndpointIdentifiers = getEndpointIdentifiers(addOrUpdateReportEndpoints);
+    auto deleteReportEndpointIdentifiers = getEndpointIdentifiers(deleteReportEndpoints);
+
+    if (!updateEndpointConfigInStorage(addOrUpdateReportEndpoints, deleteReportEndpoints)) {
+        ACSDK_ERROR(LX("publishCapabilitiesFailed").d("reason", "failed to save endpointConfig to database"));
+        setCapabilitiesState(
+            CapabilitiesObserverInterface::State::FATAL_ERROR,
+            CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+            addOrUpdateReportEndpointIdentifiers,
+            deleteReportEndpointIdentifiers);
+        return;
+    }
+
+    moveInFlightEndpointsToRegisteredEndpoints();
+    resetDiscoveryEventSender();
+
+    setCapabilitiesState(
+        CapabilitiesObserverInterface::State::SUCCESS,
+        CapabilitiesObserverInterface::Error::SUCCESS,
+        addOrUpdateReportEndpointIdentifiers,
+        deleteReportEndpointIdentifiers);
+
+    m_executor.submit([this] { executeSendPendingEndpoints(); });
+}
+
+void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::Status status) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (status == MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED) {
+        ACSDK_ERROR(LX(__func__).d("reason", "invalidStatus").d("status", status));
+        return;
+    }
+    ACSDK_ERROR(LX(__func__).d("reason", status));
+
+    auto addOrUpdateReportEndpointIdentifiers = getEndpointIdentifiers(m_addOrUpdateEndpoints.inFlight);
+    auto deleteReportEndpointIdentifiers = getEndpointIdentifiers(m_deleteEndpoints.inFlight);
+
+    switch (status) {
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
+            m_addOrUpdateEndpoints.inFlight.clear();
+            m_deleteEndpoints.inFlight.clear();
+            resetDiscoveryEventSender();
+
+            setCapabilitiesState(
+                CapabilitiesObserverInterface::State::FATAL_ERROR,
+                CapabilitiesObserverInterface::Error::FORBIDDEN,
+                addOrUpdateReportEndpointIdentifiers,
+                deleteReportEndpointIdentifiers);
+            break;
+        case MessageRequestObserverInterface::Status::BAD_REQUEST:
+            m_addOrUpdateEndpoints.inFlight.clear();
+            m_deleteEndpoints.inFlight.clear();
+            resetDiscoveryEventSender();
+
+            setCapabilitiesState(
+                CapabilitiesObserverInterface::State::FATAL_ERROR,
+                CapabilitiesObserverInterface::Error::BAD_REQUEST,
+                addOrUpdateReportEndpointIdentifiers,
+                deleteReportEndpointIdentifiers);
+            break;
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
+            if (isShuttingDown()) {
+                resetDiscoveryEventSender();
+            }
+
+            setCapabilitiesState(
+                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
+                CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR,
+                addOrUpdateReportEndpointIdentifiers,
+                deleteReportEndpointIdentifiers);
+            break;
+        default:
+            if (isShuttingDown()) {
+                resetDiscoveryEventSender();
+            }
+
+            setCapabilitiesState(
+                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
+                CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+                addOrUpdateReportEndpointIdentifiers,
+                deleteReportEndpointIdentifiers);
+            break;
+    }
+}
+
+bool CapabilitiesDelegate::updateEndpointConfigInStorage(
+    const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
+    const std::unordered_map<std::string, std::string>& deleteReportEndpoints) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!m_capabilitiesDelegateStorage) {
+        ACSDK_ERROR(LX("updateEndpointConfigInStorageLockedFailed").d("reason", "invalidStorage"));
+        return false;
+    }
+
+    if (!m_capabilitiesDelegateStorage->store(addOrUpdateReportEndpoints)) {
+        ACSDK_ERROR(LX("updateStorageFailed").d("reason", "storeFailed"));
+        return false;
+    }
+
+    if (!m_capabilitiesDelegateStorage->erase(deleteReportEndpoints)) {
+        ACSDK_ERROR(LX("updateStorageFailed").d("reason", "eraseFailed"));
+        return false;
+    }
+
+    return true;
+}
+
+void CapabilitiesDelegate::addDiscoveryEventSender(
+    const std::shared_ptr<DiscoveryEventSenderInterface>& discoveryEventSender) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!discoveryEventSender) {
+        ACSDK_ERROR(LX("addDiscoveryEventSenderFailed").d("reason", "invalid sender"));
+        return;
+    }
+
+    resetDiscoveryEventSender();
+
+    std::lock_guard<std::mutex> lock{m_currentDiscoveryEventSenderMutex};
+    discoveryEventSender->addDiscoveryStatusObserver(shared_from_this());
+    m_currentDiscoveryEventSender = discoveryEventSender;
+}
+
+void CapabilitiesDelegate::resetDiscoveryEventSender() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::shared_ptr<DiscoveryEventSenderInterface> currentDiscoveryEventSender;
+    {
+        std::lock_guard<std::mutex> lock{m_currentDiscoveryEventSenderMutex};
+        currentDiscoveryEventSender = m_currentDiscoveryEventSender;
+        m_currentDiscoveryEventSender.reset();
+    }
+
+    if (currentDiscoveryEventSender) {
+        currentDiscoveryEventSender->removeDiscoveryStatusObserver(shared_from_this());
+        currentDiscoveryEventSender->stop();
+    }
+}
+
+void CapabilitiesDelegate::onAVSGatewayChanged(const std::string& avsGateway) {
+    ACSDK_DEBUG5(LX(__func__));
+    invalidateCapabilities();
+}
+
+void CapabilitiesDelegate::onConnectionStatusChanged(
+    const ConnectionStatusObserverInterface::Status status,
+    const ConnectionStatusObserverInterface::ChangedReason reason) {
+    ACSDK_DEBUG5(LX(__func__).d("connectionStatus", status));
+
+    {
+        std::lock_guard<std::mutex> lock(m_isConnectedMutex);
+        m_isConnected = (ConnectionStatusObserverInterface::Status::CONNECTED == status);
+    }
+
+    if (ConnectionStatusObserverInterface::Status::CONNECTED == status) {
+        /// If newly connected, send Discovery events for any endpoints that may have been added or deleted
+        /// during the post-connect stage.
+        m_executor.submit([this] { executeSendPendingEndpoints(); });
+    }
+}
+
+void CapabilitiesDelegate::moveInFlightEndpointsToRegisteredEndpoints() {
+    std::lock_guard<std::mutex> lock(m_endpointsMutex);
+    for (const auto& inFlight : m_addOrUpdateEndpoints.inFlight) {
+        m_endpoints[inFlight.first] = inFlight.second;
+    }
+    for (const auto& inFlight : m_deleteEndpoints.inFlight) {
+        m_endpoints.erase(inFlight.first);
+    }
+    m_addOrUpdateEndpoints.inFlight.clear();
+    m_deleteEndpoints.inFlight.clear();
+}
+
+void CapabilitiesDelegate::addStaleEndpointsToPendingDeleteLocked(
+    std::unordered_map<std::string, std::string>* storedEndpointConfig) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!storedEndpointConfig) {
+        ACSDK_ERROR(LX("findEndpointsToDeleteLockedFailed").d("reason", "invalidStoredEndpointConfig"));
+        return;
+    }
+
+    for (auto& it : *storedEndpointConfig) {
+        if (m_endpoints.end() == m_endpoints.find(it.first) &&
+            m_addOrUpdateEndpoints.pending.end() == m_addOrUpdateEndpoints.pending.find(it.first)) {
+            ACSDK_DEBUG9(LX(__func__).d("step", "endpoint included in deleteReport").sensitive("endpointId", it.first));
+            m_deleteEndpoints.pending.insert({it.first, getDeleteReportEndpointConfigJson(it.first)});
+        }
+    }
+}
+
+void CapabilitiesDelegate::filterUnchangedPendingAddOrUpdateEndpointsLocked(
+    std::unordered_map<std::string, std::string>* storedEndpointConfig) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!storedEndpointConfig) {
+        ACSDK_ERROR(
+            LX("filterUnchangedPendingAddOrUpdateEndpointsLockedFailed").d("reason", "invalidStoredEndpointConfig"));
+        return;
+    }
+
+    std::unordered_map<std::string, std::string> addOrUpdateEndpointIdToConfigPairs = m_addOrUpdateEndpoints.pending;
+
+    /// Find the endpoints that are unchanged
+    for (auto& endpointIdToConfigPair : addOrUpdateEndpointIdToConfigPairs) {
+        auto storedEndpointConfigId = storedEndpointConfig->find(endpointIdToConfigPair.first);
+        if (storedEndpointConfig->end() != storedEndpointConfigId) {
+            if (endpointIdToConfigPair.second == storedEndpointConfigId->second) {
+                ACSDK_DEBUG9(LX(__func__)
+                                 .d("step", "endpoint not be included in addOrUpdateReport")
+                                 .sensitive("endpointId", endpointIdToConfigPair.first));
+
+                /// Endpoint has not changed, so it does not need to be updated.
+                /// Remove it from pending list of endpoints to register.
+                m_addOrUpdateEndpoints.pending.erase(endpointIdToConfigPair.first);
+
+                /// Add endpoint to cached registered endpoints, in case this is the first time the stored endpoints
+                /// have been checked (ie. this is the first post-connect operation since starting the client).
+                m_endpoints[endpointIdToConfigPair.first] = endpointIdToConfigPair.second;
+
+                /// Remove this endpoint from the stored endpoint list.
+                storedEndpointConfig->erase(endpointIdToConfigPair.first);
+            } else {
+                ACSDK_DEBUG9(LX(__func__)
+                                 .d("step", "endpoint included in addOrUpdateReport")
+                                 .d("reason", "configuration changed")
+                                 .sensitive("endpointId", endpointIdToConfigPair.first));
+            }
+        } else {
+            ACSDK_DEBUG9(LX(__func__)
+                             .d("step", "endpoint included in addOrUpdateReport")
+                             .d("reason", "new")
+                             .sensitive("endpointId", endpointIdToConfigPair.first));
+        }
+    }
+}
+
+void CapabilitiesDelegate::moveInFlightEndpointsToPendingLocked() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    /// Move in-flight addOrUpdateEndpoints to pending.
+    for (auto& inFlightEndpointIdToConfigPair : m_addOrUpdateEndpoints.inFlight) {
+        if (m_addOrUpdateEndpoints.pending.end() !=
+            m_addOrUpdateEndpoints.pending.find(inFlightEndpointIdToConfigPair.first)) {
+            ACSDK_ERROR(LX(__func__)
+                            .d("moveInFlightEndpointToPendingFailed", "Unexpected duplicate endpointId in pending")
+                            .sensitive("endpointId", inFlightEndpointIdToConfigPair.first));
+        } else {
+            ACSDK_DEBUG9(LX(__func__)
+                             .d("step", "willRetryInFlightAddOrUpdateEndpoint")
+                             .sensitive("endpointId", inFlightEndpointIdToConfigPair.first)
+                             .sensitive("configuration", inFlightEndpointIdToConfigPair.second));
+            m_addOrUpdateEndpoints.pending.insert(inFlightEndpointIdToConfigPair);
+        }
+    }
+
+    /// Move in-flight deleteEndpoints to pending.
+    for (auto& inFlightEndpointIdToConfigPair : m_deleteEndpoints.inFlight) {
+        auto inFlightEndpointIdToConfigPairId = m_deleteEndpoints.pending.find(inFlightEndpointIdToConfigPair.first);
+        if (m_deleteEndpoints.pending.end() != inFlightEndpointIdToConfigPairId) {
+            ACSDK_ERROR(LX(__func__)
+                            .d("moveInFlightEndpointToPendingFailed", "Unexpected duplicate endpointId in pending")
+                            .sensitive("endpointId", inFlightEndpointIdToConfigPair.first));
+        } else {
+            ACSDK_DEBUG9(LX(__func__)
+                             .d("step", "willRetryDeletingInFlightEndpoint")
+                             .sensitive("endpointId", inFlightEndpointIdToConfigPair.first));
+            m_deleteEndpoints.pending.insert(inFlightEndpointIdToConfigPair);
+        }
+    }
+
+    m_addOrUpdateEndpoints.inFlight.clear();
+    m_deleteEndpoints.inFlight.clear();
+}
+
+void CapabilitiesDelegate::moveInFlightEndpointsToPending() {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock(m_endpointsMutex);
+    moveInFlightEndpointsToPendingLocked();
+}
+
+bool CapabilitiesDelegate::isShuttingDown() {
+    std::lock_guard<std::mutex> lock(m_isShuttingDownMutex);
+    return m_isShuttingDown;
 }
 
 }  // namespace capabilitiesDelegate

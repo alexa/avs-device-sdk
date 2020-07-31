@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,14 +57,13 @@ public:
     virtual ~DirectiveSequencerInterface() = default;
 
     /**
-     * Add the specified handler as a handler for its specified namespace, name, and policy. Note that implementations
-     * of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and policy(ies) of
-     * the handler. If any of the mappings fail, the entire call is refused.
+     * Add the specified handler as a handler for its specified routing rule and policy. If any of the mappings fail,
+     * the entire call is refused.
      *
-     * @note If the @c name of the configuration is "*", then this is considered a wildcard handler for the given
-     * @c namespace.  For a given @c directive, the @c DirectiveSequencer will look first for a handler whose
-     * configuration exactly matches the @c directive's { namespace, name } pair.  If no exact match is found, then
-     * the @c directive will be sent to the wildcard handler for the @c namespace, if one has been added.
+     * @note If the handler provides rules that matches multiple directives, then @c DirectiveSequencer will look
+     * first for a handler whose configuration is an exact match.  If no exact match is found, then
+     * the @c directive will be sent to the wildcard handler with the most specific rule. See DirectiveRoutingRule.h
+     * for more information on the rules available.
      *
      * @param handler The handler to add.
      * @return Whether the handler was added.
@@ -72,10 +71,8 @@ public:
     virtual bool addDirectiveHandler(std::shared_ptr<DirectiveHandlerInterface> handler) = 0;
 
     /**
-     * Remove the specified handler's mapping of @c NamespaceAndName to @c BlockingPolicy values. Note that
-     * implementations of this should call the handler's getConfiguration() method to get the namespace(s), name(s), and
-     * policy(ies) of the handler. If the handler's configurations are unable to be removed, the entire operation is
-     * refused.
+     * Remove the specified handler's mapping of @c DirectiveRoutingRule to @c BlockingPolicy values. If the handler's
+     * configurations are unable to be removed, the entire operation is refused.
      *
      * @param handler The handler to remove.
      * @return Whether the handler was removed.
@@ -93,8 +90,16 @@ public:
     virtual void setDialogRequestId(const std::string& dialogRequestId) = 0;
 
     /**
+     * Returns the @c dialogRequestId currently in use for Directive handling. This may be the empty string if
+     * Directives have either experienced errors, or have been cancelled.
+     *
+     * @return dialogRequestId  The current dialog request id.
+     */
+    virtual std::string getDialogRequestId() = 0;
+
+    /**
      * Sequence the handling of an @c AVSDirective.  The actual handling is done by whichever @c DirectiveHandler
-     * is associated with the @c AVSDirective's (namespace, name) pair.
+     * is associated with the most specific routing rule.
      *
      * @param directive The @c AVSDirective to handle.
      * @return Whether or not the directive was accepted.

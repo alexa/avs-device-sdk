@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -97,7 +97,8 @@ static const unsigned long ENCODED_TIME_STRING_EXPECTED_LENGTH =
  * Utility function that wraps localtime conversion to std::time_t.
  *
  * This function also creates a copy of the given timeStruct since mktime can
- * change the object.
+ * change the object. Note that the tm_isdst is set to -1 as we leave it to
+ * std::mktime to determine if daylight savings is in effect.
  *
  * @param timeStruct Required pointer to timeStruct to be converted to time_t.
  * @param[out] ret Required pointer to object where the result will be saved.
@@ -109,6 +110,7 @@ static bool convertToLocalTimeT(const std::tm* timeStruct, std::time_t* ret) {
     }
 
     std::tm tmCopy = *timeStruct;
+    tmCopy.tm_isdst = -1;
     *ret = std::mktime(&tmCopy);
     return *ret >= 0;
 }
@@ -125,7 +127,7 @@ bool TimeUtils::convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret) {
         return false;
     }
 
-    if (!convertToLocalTimeT(utcTm, &converted) || !localtimeOffset(&offset)) {
+    if (!convertToLocalTimeT(utcTm, &converted) || !localtimeOffset(converted, &offset)) {
         ACSDK_ERROR(LX("convertToUtcTimeT").m("failed to convert to local time"));
         return false;
     }
@@ -193,7 +195,6 @@ bool TimeUtils::convert8601TimeStringToUnix(const std::string& timeString, int64
     }
 
     // adjust for C struct tm standard
-    timeInfo.tm_isdst = 0;
     timeInfo.tm_year -= 1900;
     timeInfo.tm_mon -= 1;
 
@@ -203,7 +204,6 @@ bool TimeUtils::convert8601TimeStringToUnix(const std::string& timeString, int64
     if (!ok) {
         return false;
     }
-
     *convertedTime = static_cast<int64_t>(convertedTimeT);
     return true;
 }
@@ -221,7 +221,7 @@ bool TimeUtils::getCurrentUnixTime(int64_t* currentTime) {
 }
 
 bool TimeUtils::convertTimeToUtcIso8601Rfc3339(
-    const std::chrono::high_resolution_clock::time_point& tp,
+    const std::chrono::system_clock::time_point& tp,
     std::string* iso8601TimeString) {
     // The length of the RFC 3339 string for the time is maximum 28 characters, include an extra byte for the '\0'
     // terminator.
@@ -254,16 +254,13 @@ bool TimeUtils::convertTimeToUtcIso8601Rfc3339(
     return true;
 }
 
-bool TimeUtils::localtimeOffset(std::time_t* ret) {
-    static const std::chrono::time_point<std::chrono::system_clock> timePoint{std::chrono::hours(24)};
-    auto fixedTime = std::chrono::system_clock::to_time_t(timePoint);
-
+bool TimeUtils::localtimeOffset(std::time_t referenceTime, std::time_t* ret) {
     std::tm utcTm;
     std::time_t utc;
     std::tm localTm;
     std::time_t local;
-    if (!m_safeCTimeAccess->getGmtime(fixedTime, &utcTm) || !convertToLocalTimeT(&utcTm, &utc) ||
-        !m_safeCTimeAccess->getLocaltime(fixedTime, &localTm) || !convertToLocalTimeT(&localTm, &local)) {
+    if (!m_safeCTimeAccess->getGmtime(referenceTime, &utcTm) || !convertToLocalTimeT(&utcTm, &utc) ||
+        !m_safeCTimeAccess->getLocaltime(referenceTime, &localTm) || !convertToLocalTimeT(&localTm, &local)) {
         ACSDK_ERROR(LX("localtimeOffset").m("cannot retrieve tm struct"));
         return false;
     }

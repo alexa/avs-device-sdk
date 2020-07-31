@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,6 +42,9 @@ public:
 
     /// Name of the BlueZ interface responsible for media playback control
     static constexpr auto BLUEZ_MEDIA_INTERFACE = "org.bluez.Media1";
+
+    /// Name of the BlueZ interface responsible for media playback control
+    static constexpr auto BLUEZ_MEDIA_PLAYER_INTERFACE = "org.bluez.MediaPlayer1";
 
     /// Name of the BlueZ interface responsible for pairing agents control
     static constexpr auto BLUEZ_AGENTMANAGER_INTERFACE = "org.bluez.AgentManager1";

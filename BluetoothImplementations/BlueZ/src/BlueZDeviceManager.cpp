@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,11 +13,14 @@
  * permissions and limitations under the License.
  */
 
-#include <unordered_map>
-#include <string>
+#include <algorithm>
 #include <cstring>
+#include <string>
+#include <unordered_map>
 
+#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEvents.h>
+#include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 
@@ -34,6 +37,7 @@ namespace blueZ {
 using namespace avsCommon::sdkInterfaces::bluetooth;
 using namespace avsCommon::sdkInterfaces::bluetooth::services;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::bluetooth;
 
 /// MediaTransport1 interface property "state"
 static const char* MEDIATRANSPORT_PROPERTY_STATE = "State";
@@ -43,9 +47,6 @@ static const char* OBJECT_PATH_ROOT = "/";
 
 /// BlueZ codec id for SBC
 static const int A2DP_CODEC_SBC = 0x00;
-
-/// Bluetooth service id for A2DP Sink
-static const char* A2DP_SINK_UUID = "0000110B-0000-1000-8000-00805F9B34FB";
 
 /// Support all available capabilities for this byte
 static const int SBC_CAPS_ALL = 0xff;
@@ -134,6 +135,12 @@ bool BlueZDeviceManager::init() {
         return false;
     }
 
+    m_mediaProxy = DBusProxy::create(BlueZConstants::BLUEZ_MEDIA_INTERFACE, m_adapterPath);
+    if (nullptr == m_mediaProxy) {
+        ACSDK_ERROR(LX("initializeMediaFailed").d("reason", "Failed to create Media proxy"));
+        return false;
+    }
+
     m_workerContext = g_main_context_new();
     if (nullptr == m_workerContext) {
         ACSDK_ERROR(LX("initFailed").d("reason", "Failed to create glib main context"));
@@ -155,17 +162,14 @@ bool BlueZDeviceManager::init() {
 
     ACSDK_DEBUG5(LX("BlueZDeviceManager initialized..."));
 
+    BluetoothDeviceManagerInitializedEvent event;
+    m_eventBus->sendEvent(event);
+
     return true;
 }
 
 bool BlueZDeviceManager::initializeMedia() {
     // Create Media interface proxy to register MediaEndpoint
-    m_mediaProxy = DBusProxy::create(BlueZConstants::BLUEZ_MEDIA_INTERFACE, m_adapterPath);
-    if (nullptr == m_mediaProxy) {
-        ACSDK_ERROR(LX("initializeMediaFailed").d("reason", "Failed to create Media proxy"));
-        return false;
-    }
-
     m_mediaEndpoint = std::make_shared<MediaEndpoint>(m_connection, DBUS_ENDPOINT_PATH_SINK);
 
     if (!m_mediaEndpoint->registerWithDBus()) {
@@ -196,7 +200,11 @@ bool BlueZDeviceManager::initializeMedia() {
     GVariant* caps = g_variant_builder_end(capBuilder);
 
     b = g_variant_builder_new(G_VARIANT_TYPE("a{sv}"));
-    g_variant_builder_add(b, "{sv}", "UUID", g_variant_new_string(A2DP_SINK_UUID));
+
+    std::string a2dpSinkUuid = A2DPSinkInterface::UUID;
+    std::transform(a2dpSinkUuid.begin(), a2dpSinkUuid.end(), a2dpSinkUuid.begin(), ::toupper);
+
+    g_variant_builder_add(b, "{sv}", "UUID", g_variant_new_string(a2dpSinkUuid.c_str()));
     g_variant_builder_add(b, "{sv}", "Codec", g_variant_new_byte(A2DP_CODEC_SBC));
     g_variant_builder_add(b, "{sv}", "Capabilities", caps);
 
@@ -229,28 +237,75 @@ std::shared_ptr<BlueZBluetoothDevice> BlueZDeviceManager::getDeviceByPath(const 
 }
 
 void BlueZDeviceManager::onMediaStreamPropertyChanged(const std::string& path, const GVariantMapReader& changesMap) {
-    if (path != m_mediaEndpoint->getStreamingDevicePath()) {
-        ACSDK_DEBUG5(LX(__func__)
-                         .d("reason", "pathMismatch")
-                         .d("path", path)
-                         .d("streamingDevicePath", m_mediaEndpoint->getStreamingDevicePath()));
+    ACSDK_DEBUG7(LX(__func__).d("path", path));
+    const std::string FD_KEY = "/fd";
+
+    // Get device path without the /fd<number>
+    auto pos = path.rfind(FD_KEY);
+    if (std::string::npos == pos) {
+        ACSDK_ERROR(LX(__func__).d("reason", "unexpectedPath").d("path", path));
         return;
     }
 
+    std::string devicePath = path.substr(0, pos);
+
+    auto device = getDeviceByPath(devicePath);
+    if (!device) {
+        ACSDK_ERROR(LX(__func__).d("reason", "deviceDoesNotExist").d("path", devicePath));
+        return;
+    }
+
+    auto mediaTransportProperties = DBusPropertiesProxy::create(path);
+    if (!mediaTransportProperties) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullPropertiesProxy").d("path", path));
+        return;
+    }
+
+    std::string uuid;
+    if (!mediaTransportProperties->getStringProperty(BlueZConstants::BLUEZ_MEDIATRANSPORT_INTERFACE, "UUID", &uuid)) {
+        ACSDK_ERROR(LX(__func__).d("reason", "getPropertyFailed"));
+        return;
+    }
+
+    std::transform(uuid.begin(), uuid.end(), uuid.begin(), ::tolower);
+    ACSDK_DEBUG5(LX(__func__).d("mediaStreamUuid", uuid));
+
     char* newStateStr;
-    if (changesMap.getCString(MEDIATRANSPORT_PROPERTY_STATE, &newStateStr)) {
-        avsCommon::utils::bluetooth::MediaStreamingState newState;
+    if (!changesMap.getCString(MEDIATRANSPORT_PROPERTY_STATE, &newStateStr)) {
+        ACSDK_DEBUG5(LX("mediaTransportStateUnchanged").d("action", "ignoringCallback"));
+        return;
+    }
 
-        ACSDK_DEBUG5(LX("Media transport state changed").d("newState", newStateStr));
+    ACSDK_DEBUG5(LX("mediaTransportStateChanged").d("newState", newStateStr));
 
-        if (STATE_ACTIVE == newStateStr) {
-            newState = avsCommon::utils::bluetooth::MediaStreamingState::ACTIVE;
-        } else if (STATE_PENDING == newStateStr) {
-            newState = avsCommon::utils::bluetooth::MediaStreamingState::PENDING;
-        } else if (STATE_IDLE == newStateStr) {
-            newState = avsCommon::utils::bluetooth::MediaStreamingState::IDLE;
-        } else {
-            ACSDK_ERROR(LX("onMediaStreamPropertyChangedFailed").d("Unknown state", newStateStr));
+    MediaStreamingState newState = MediaStreamingState::IDLE;
+    if (STATE_ACTIVE == newStateStr) {
+        newState = MediaStreamingState::ACTIVE;
+    } else if (STATE_PENDING == newStateStr) {
+        newState = MediaStreamingState::PENDING;
+    } else if (STATE_IDLE == newStateStr) {
+        newState = MediaStreamingState::IDLE;
+    } else {
+        ACSDK_ERROR(LX("onMediaStreamPropertyChangedFailed").d("unknownState", newStateStr));
+        return;
+    }
+
+    if (A2DPSourceInterface::UUID == uuid) {
+        auto sink = device->getService(A2DPSinkInterface::UUID);
+        if (!sink) {
+            ACSDK_ERROR(LX(__func__).d("reason", "nullSink"));
+            return;
+        }
+
+        MediaStreamingStateChangedEvent event(newState, A2DPRole::SOURCE, device);
+        m_eventBus->sendEvent(event);
+        return;
+    } else if (A2DPSinkInterface::UUID == uuid) {
+        if (path != m_mediaEndpoint->getStreamingDevicePath()) {
+            ACSDK_DEBUG5(LX(__func__)
+                             .d("reason", "pathMismatch")
+                             .d("path", path)
+                             .d("streamingDevicePath", m_mediaEndpoint->getStreamingDevicePath()));
             return;
         }
 
@@ -259,10 +314,9 @@ void BlueZDeviceManager::onMediaStreamPropertyChanged(const std::string& path, c
         }
 
         m_streamingState = newState;
-
         m_mediaEndpoint->onMediaTransportStateChanged(newState, path);
 
-        avsCommon::utils::bluetooth::MediaStreamingStateChangedEvent event(newState);
+        MediaStreamingStateChangedEvent event(newState, bluetooth::A2DPRole::SINK, device);
         m_eventBus->sendEvent(event);
     }
 }
@@ -291,6 +345,10 @@ void BlueZDeviceManager::onAdapterPropertyChanged(const std::string& path, const
 
 std::string BlueZDeviceManager::getAdapterPath() const {
     return m_adapterPath;
+}
+
+avsCommon::utils::bluetooth::MediaStreamingState BlueZDeviceManager::getMediaStreamingState() {
+    return m_streamingState;
 }
 
 void BlueZDeviceManager::interfacesAddedCallback(
@@ -461,16 +519,25 @@ void BlueZDeviceManager::removeDevice(const char* devicePath) {
     }
 }
 
-BlueZDeviceManager::~BlueZDeviceManager() {
+void BlueZDeviceManager::doShutdown() {
     ACSDK_DEBUG5(LX(__func__));
 
-    // Disconnect every device.
-    for (auto iter : m_devices) {
-        std::shared_ptr<BlueZBluetoothDevice> device = iter.second;
-        device->disconnect().get();
+    {
+        std::lock_guard<std::mutex> guard(m_devicesMutex);
+
+        // Disconnect every device.
+        for (auto iter : m_devices) {
+            std::shared_ptr<BlueZBluetoothDevice> device = iter.second;
+            device->disconnect().get();
+        }
+
+        m_devices.clear();
     }
 
+    // Destroy all objects requiring m_connection first.
     finalizeMedia();
+    m_pairingAgent.reset();
+    m_mediaPlayer.reset();
 
     m_connection->close();
     if (m_eventLoop) {
@@ -482,8 +549,13 @@ BlueZDeviceManager::~BlueZDeviceManager() {
     }
 }
 
+BlueZDeviceManager::~BlueZDeviceManager() {
+    ACSDK_DEBUG5(LX(__func__));
+}
+
 BlueZDeviceManager::BlueZDeviceManager(
     const std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus>& eventBus) :
+        RequiresShutdown{"BlueZDeviceManager"},
         m_eventBus{eventBus},
         m_streamingState{avsCommon::utils::bluetooth::MediaStreamingState::IDLE} {
 }
@@ -666,6 +738,15 @@ void BlueZDeviceManager::mainLoopThread() {
         m_pairingAgent = PairingAgent::create(m_connection);
         if (!m_pairingAgent) {
             ACSDK_ERROR(LX("initFailed").d("reason", "initPairingAgentFailed"));
+            m_mainLoopInitPromise.set_value(false);
+            break;
+        }
+
+        ACSDK_DEBUG5(LX("init").m("Initializing MRPIS Player"));
+
+        m_mediaPlayer = MPRISPlayer::create(m_connection, m_mediaProxy, m_eventBus);
+        if (!m_mediaPlayer) {
+            ACSDK_ERROR(LX("initFailed").d("reason", "initMediaPlayerFailed"));
             m_mainLoopInitPromise.set_value(false);
             break;
         }

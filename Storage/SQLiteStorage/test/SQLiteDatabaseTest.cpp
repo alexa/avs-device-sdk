@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ static std::string generateDbFilePath() {
 }
 
 /// Test to close DB then open it.
-TEST(SQLiteDatabaseTest, CloseThenOpen) {
+TEST(SQLiteDatabaseTest, test_closeThenOpen) {
     auto dbFilePath = generateDbFilePath();
     SQLiteDatabase db(dbFilePath);
     ASSERT_TRUE(db.initialize());
@@ -58,7 +58,7 @@ TEST(SQLiteDatabaseTest, CloseThenOpen) {
 }
 
 /// Test to initialize already existing DB.
-TEST(SQLiteDatabaseTest, InitializeAlreadyExisting) {
+TEST(SQLiteDatabaseTest, test_initializeAlreadyExisting) {
     auto dbFilePath = generateDbFilePath();
     SQLiteDatabase db1(dbFilePath);
     ASSERT_TRUE(db1.initialize());
@@ -71,19 +71,19 @@ TEST(SQLiteDatabaseTest, InitializeAlreadyExisting) {
 }
 
 /// Test to initialize a bad path.
-TEST(SQLiteDatabaseTest, InitializeBadPath) {
+TEST(SQLiteDatabaseTest, test_initializeBadPath) {
     SQLiteDatabase db(BAD_PATH);
     ASSERT_FALSE(db.initialize());
 }
 
 /// Test to initialize a directory.
-TEST(SQLiteDatabaseTest, InitializeOnDirectory) {
+TEST(SQLiteDatabaseTest, test_initializeOnDirectory) {
     SQLiteDatabase db(g_workingDirectory);
     ASSERT_FALSE(db.initialize());
 }
 
 /// Test to initialize DB twice.
-TEST(SQLiteDatabaseTest, InitializeTwice) {
+TEST(SQLiteDatabaseTest, test_initializeTwice) {
     SQLiteDatabase db(generateDbFilePath());
 
     ASSERT_TRUE(db.initialize());
@@ -92,7 +92,7 @@ TEST(SQLiteDatabaseTest, InitializeTwice) {
 }
 
 /// Test to open already existing DB.
-TEST(SQLiteDatabaseTest, OpenAlreadyExisting) {
+TEST(SQLiteDatabaseTest, test_openAlreadyExisting) {
     auto dbFilePath = generateDbFilePath();
     SQLiteDatabase db1(dbFilePath);
     ASSERT_TRUE(db1.initialize());
@@ -105,19 +105,19 @@ TEST(SQLiteDatabaseTest, OpenAlreadyExisting) {
 }
 
 /// Test to open a bad path.
-TEST(SQLiteDatabaseTest, OpenBadPath) {
+TEST(SQLiteDatabaseTest, test_openBadPath) {
     SQLiteDatabase db(BAD_PATH);
     ASSERT_FALSE(db.open());
 }
 
 /// Test to open directory.
-TEST(SQLiteDatabaseTest, OpenDirectory) {
+TEST(SQLiteDatabaseTest, test_openDirectory) {
     SQLiteDatabase db(g_workingDirectory);
     ASSERT_FALSE(db.open());
 }
 
 /// Test to open DB twice.
-TEST(SQLiteDatabaseTest, OpenTwice) {
+TEST(SQLiteDatabaseTest, test_openTwice) {
     auto dbFilePath = generateDbFilePath();
     SQLiteDatabase db1(dbFilePath);
     ASSERT_TRUE(db1.initialize());
@@ -128,6 +128,90 @@ TEST(SQLiteDatabaseTest, OpenTwice) {
 
     db2.close();
     db1.close();
+}
+
+/// Test transactions commit
+TEST(SQLiteDatabaseTest, test_transactionsCommit) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+        ASSERT_TRUE(transaction1->commit());
+    }
+
+    // Should not fail because previous transaction is completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
+}
+
+// Test transactions rollback
+TEST(SQLiteDatabaseTest, test_transactionsRollback) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+        ASSERT_TRUE(transaction1->rollback());
+    }
+
+    // Should not fail because previous transaction is completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
+}
+
+/// Test nested transactions
+TEST(SQLiteDatabaseTest, test_nestedTransactions) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    auto transaction1 = db.beginTransaction();
+    ASSERT_NE(transaction1, nullptr);
+    auto transaction2 = db.beginTransaction();
+    ASSERT_EQ(transaction2, nullptr);
+
+    db.close();
+}
+
+/// Test transactions double commit
+TEST(SQLiteDatabaseTest, test_doubleCommit) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    auto transaction1 = db.beginTransaction();
+    ASSERT_NE(transaction1, nullptr);
+    ASSERT_TRUE(transaction1->commit());
+    ASSERT_FALSE(transaction1->commit());
+
+    db.close();
+}
+
+/// Test automatic rollback
+TEST(SQLiteDatabaseTest, test_autoRollback) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db(dbFilePath);
+    ASSERT_TRUE(db.initialize());
+
+    {
+        auto transaction1 = db.beginTransaction();
+        ASSERT_NE(transaction1, nullptr);
+    }
+
+    // Should not fail because transaction should have been automatically completed
+    auto transaction2 = db.beginTransaction();
+    ASSERT_NE(transaction2, nullptr);
+
+    db.close();
 }
 
 }  // namespace test

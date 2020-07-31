@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/RetryTimer.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 #include <RegistrationManager/CustomerDataManager.h>
@@ -86,9 +87,11 @@ public:
      * is persisted, the caller can expect the message to be sent to AVS at some point in the future by this class.
      *
      * @param jsonMessage The message to be sent to AVS.
+     * @param uriPathExtension An optional uri path extension to be appended to the base url of the AVS endpoint. If
+     * not specified, the default AVS path extension will be used.
      * @return A future expressing if the message was successfully persisted.
      */
-    std::future<bool> sendJSONMessage(const std::string& jsonMessage);
+    std::future<bool> sendJSONMessage(const std::string& jsonMessage, const std::string& uriPathExtension = "");
 
     /**
      * Clear all messages that we are currently storing
@@ -106,8 +109,10 @@ private:
          *
          * @param jsonContent The JSON text to be sent to AVS.
          * @param dbId The database id associated with this @c MessageRequest.
+         * @param uriPathExtension An optional URI path extension of the message to be appended to the base url of the
+         * AVS endpoint. If not specified, the default AVS path extension will be used.
          */
-        CertifiedMessageRequest(const std::string& jsonContent, int dbId);
+        CertifiedMessageRequest(const std::string& jsonContent, int dbId, const std::string& uriPathExtension = "");
 
         void exceptionReceived(const std::string& exceptionMessage) override;
 
@@ -139,13 +144,13 @@ private:
         /// Captures if the @c MessageRequest has been processed or not by AVS.
         bool m_responseReceived;
         /// Mutex used to enforce thread safety.
-        std::mutex m_mutex;
+        std::mutex m_requestMutex;
         /// The condition variable used when waiting for the @c MessageRequest to be processed.
-        std::condition_variable m_cv;
+        std::condition_variable m_requestCv;
         /// The database id associated with this @c MessageRequest.
         int m_dbId;
         /// A control so we may allow the message to stop waiting to be sent.
-        bool m_isShuttingDown;
+        bool m_isRequestShuttingDown;
     };
 
     /**
@@ -181,9 +186,11 @@ private:
      * The actual handling of the sendJSONMessage call by our internal executor.
      *
      * @param jsonMessage The message to be sent to AVS.
+     * @param uriPathExtension The uri path extension to be appended to the base url of the AVS endpoint. If passed as
+     * an empty string, the default AVS path extension will be used.
      * @return Whether the message was successfully persisted.
      */
-    bool executeSendJSONMessage(std::string jsonMessage);
+    bool executeSendJSONMessage(std::string jsonMessage, const std::string& uriPathExtension);
 
     void doShutdown() override;
 
@@ -199,15 +206,21 @@ private:
 
     /// The thread that will actually handle the sending of messages.
     std::thread m_workerThread;
+
     /// A control so we may disable the worker thread on shutdown.
     bool m_isShuttingDown;
+
     /// Mutex to protect access to class data members.
     std::mutex m_mutex;
+
     /// A condition variable with which to notify the worker thread that a new item was added to the queue.
     std::condition_variable m_workerThreadCV;
 
     /// A variable to capture if we are currently connected to AVS.
     bool m_isConnected;
+
+    /// Retry Timer Object for transport.
+    avsCommon::utils::RetryTimer m_retryTimer;
 
     /// Our queue of requests that should be sent.
     std::deque<std::shared_ptr<CertifiedMessageRequest>> m_messagesToSend;
@@ -226,6 +239,9 @@ private:
 
     /// Executor to decouple the public-facing api from possibly inefficient persistent storage implementations.
     avsCommon::utils::threading::Executor m_executor;
+
+    // A condition variable for the main loop to wait for during back-off.
+    std::condition_variable m_backoffWaitCV;
 };
 
 }  // namespace certifiedSender

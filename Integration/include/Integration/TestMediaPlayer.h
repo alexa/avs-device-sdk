@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,9 +24,11 @@
 #include <iostream>
 #include <string>
 #include <future>
+#include <unordered_set>
 
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include "AVSCommon/Utils/MediaType.h"
 #include "AVSCommon/Utils/Timing/Timer.h"
 
 namespace alexaClientSDK {
@@ -45,15 +47,23 @@ public:
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* audioFormat = nullptr) override;
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         std::shared_ptr<std::istream> stream,
-        bool repeat) override;
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) override;
 
     avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId setSource(
         const std::string& url,
-        std::chrono::milliseconds offset = std::chrono::milliseconds::zero()) override;
+        std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext =
+            avsCommon::utils::mediaPlayer::PlaybackContext()) override;
 
     bool play(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
 
@@ -65,14 +75,20 @@ public:
 
     std::chrono::milliseconds getOffset(avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
 
-    void setObserver(
+    void addObserver(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
+
+    void removeObserver(
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> playerObserver) override;
+
+    avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> getMediaPlayerState(
+        avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId id) override;
 
     uint64_t getNumBytesBuffered() override;
 
 private:
-    /// Observer to notify of state changes.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_observer;
+    /// Observers to notify of state changes.
+    std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface>> m_observers;
     /// Flag to indicate when a playback finished notification has been sent to the observer.
     bool m_playbackFinished = false;
     /// The AttachmentReader to read audioData from.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ namespace test {
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
+using namespace avsCommon::avs::directiveRoutingRule;
 
 /// Generic messageId used for tests.
 static const std::string MESSAGE_ID_0_0("Message_0_0");
@@ -108,6 +109,9 @@ static const std::string TEST_ATTACHMENT_CONTEXT_ID("TEST_ATTACHMENT_CONTEXT_ID"
 /// Long timeout we only reach when a concurrency test fails.
 static const std::chrono::seconds LONG_TIMEOUT(15);
 
+/// Represent a wildcard string.
+static const std::string WILDCARD = "*";
+
 /**
  * DirectiveRouterTest
  */
@@ -115,6 +119,20 @@ class DirectiveRouterTest : public ::testing::Test {
 public:
     void SetUp() override;
     void TearDown() override;
+    /**
+     * Create a directive with the given attributes.
+     *
+     * @param endpointId The target endpointId.
+     * @param instance The instance name.
+     * @param nameSpace The directive name space.
+     * @param name The directive name.
+     * @return A pointer to a new directive.
+     */
+    std::shared_ptr<AVSDirective> createDirective(
+        const std::string& endpointId,
+        const utils::Optional<std::string>& instance,
+        const std::string& nameSpace,
+        const std::string& name) const;
 
     /// A DirectiveRouter instance to test with.
     DirectiveRouter m_router;
@@ -167,10 +185,22 @@ void DirectiveRouterTest::TearDown() {
     m_router.shutdown();
 }
 
+std::shared_ptr<AVSDirective> DirectiveRouterTest::createDirective(
+    const std::string& endpointId,
+    const utils::Optional<std::string>& instance,
+    const std::string& nameSpace,
+    const std::string& name) const {
+    auto header = std::make_shared<AVSMessageHeader>(
+        nameSpace, name, "messageId", "dialogId", "token", "eventToken", "3.0", instance.valueOr(""));
+    AVSMessageEndpoint endpoint{endpointId};
+    return AVSDirective::create(
+        UNPARSED_DIRECTIVE, header, PAYLOAD_TEST, m_attachmentManager, TEST_ATTACHMENT_CONTEXT_ID, endpoint);
+}
+
 /**
  * Check that an un-registered @c AVDirective will not be routed.
  */
-TEST_F(DirectiveRouterTest, testUnroutedDirective) {
+TEST_F(DirectiveRouterTest, test_unroutedDirective) {
     ASSERT_FALSE(m_router.handleDirectiveImmediately(m_directive_0_0));
 }
 
@@ -178,9 +208,9 @@ TEST_F(DirectiveRouterTest, testUnroutedDirective) {
  * Register an @c AVSDirective for routing. Exercise routing via @c handleDirectiveImmediately().
  * Expect that the @c AVSDirective is routed.
  */
-TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
+TEST_F(DirectiveRouterTest, test_settingADirectiveHandler) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    handler0Config[NamespaceAndName{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
 
@@ -197,25 +227,26 @@ TEST_F(DirectiveRouterTest, testSettingADirectiveHandler) {
  * Register @c AVSDirectives to be routed to different handlers. Exercise routing via @c preHandleDirective().
  * Expect that the @c AVSDirectives make it to their registered handler.
  */
-TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
+TEST_F(DirectiveRouterTest, test_registeringMultipeHandler) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler0Config[NamespaceAndName{NAMESPACE_AND_NAME_0_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    handler1Config[NamespaceAndName{NAMESPACE_AND_NAME_0_1}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AND_NAME_0_ANY}] = BlockingPolicy::NON_BLOCKING;
+    handler2Config[NamespaceAndName{NAMESPACE_AND_NAME_0_ANY}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
 
     DirectiveHandlerConfiguration handler3Config;
-    handler3Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    handler3Config[NamespaceAndName{NAMESPACE_AND_NAME_1_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler3 = MockDirectiveHandler::create(handler3Config);
 
     DirectiveHandlerConfiguration handler4Config;
-    handler4Config[{NAMESPACE_AND_NAME_2_ANY}] = BlockingPolicy::NON_BLOCKING;
+    handler4Config[NamespaceAndName{NAMESPACE_AND_NAME_2_ANY}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler4 = MockDirectiveHandler::create(handler4Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -270,21 +301,23 @@ TEST_F(DirectiveRouterTest, testRegisteringMultipeHandler) {
  * were last assigned to and that false and a @c BlockingPolicy of NONE is returned for the directive whose handler
  * was removed.
  */
-TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
+TEST_F(DirectiveRouterTest, test_removingChangingAndNotChangingHandlers) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    handler0Config[NamespaceAndName{NAMESPACE_AND_NAME_0_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::NON_BLOCKING;
+    handler1Config[NamespaceAndName{NAMESPACE_AND_NAME_0_1}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     DirectiveHandlerConfiguration handler2Config;
-    handler2Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::NON_BLOCKING;
+    handler2Config[NamespaceAndName{NAMESPACE_AND_NAME_1_0}] = audioNonBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler2 = MockDirectiveHandler::create(handler2Config);
 
     DirectiveHandlerConfiguration handler3Config;
-    handler3Config[{NAMESPACE_AND_NAME_1_0}] = BlockingPolicy::BLOCKING;
+    handler3Config[NamespaceAndName{NAMESPACE_AND_NAME_1_0}] = audioBlockingPolicy;
     std::shared_ptr<MockDirectiveHandler> handler3 = MockDirectiveHandler::create(handler3Config);
 
     EXPECT_CALL(*(handler0.get()), handleDirectiveImmediately(_)).Times(0);
@@ -322,27 +355,29 @@ TEST_F(DirectiveRouterTest, testRemovingChangingAndNotChangingHandlers) {
     ASSERT_TRUE(m_router.addDirectiveHandler(handler1));
     ASSERT_TRUE(m_router.addDirectiveHandler(handler3));
 
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
-    ASSERT_TRUE(m_router.handleDirective(m_directive_0_1, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NON_BLOCKING);
-    ASSERT_TRUE(m_router.handleDirective(m_directive_1_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::BLOCKING);
+    auto policy = m_router.getPolicy(m_directive_0_0);
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0));
+    ASSERT_FALSE(policy.isValid());
+    policy = m_router.getPolicy(m_directive_0_1);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_0_1));
+    ASSERT_EQ(policy, audioNonBlockingPolicy);
+    policy = m_router.getPolicy(m_directive_1_0);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_1_0));
+    ASSERT_EQ(policy, audioBlockingPolicy);
 }
 
 /**
  * Register two @c AVSDirectives to be routed to different handlers with different blocking policies. Configure the
  * mock handlers to return false from @c handleDirective(). Exercise routing via handleDirective(). Expect that
- * @c DirectiveRouter::handleDirective() returns @c false and BlockingPolicy::NONE to indicate failure.
+ * @c DirectiveRouter::handleDirective() returns @c false and BlockingPolicy::nonePolicy() to indicate failure.
  */
-TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
+TEST_F(DirectiveRouterTest, test_resultOfHandleDirectiveFailure) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::NON_BLOCKING;
+    handler0Config[NamespaceAndName{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     DirectiveHandlerConfiguration handler1Config;
-    handler1Config[{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy::BLOCKING;
+    handler1Config[NamespaceAndName{NAMESPACE_AND_NAME_0_1}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     std::shared_ptr<MockDirectiveHandler> handler1 = MockDirectiveHandler::create(handler1Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -360,11 +395,8 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
     EXPECT_CALL(*(handler1.get()), cancelDirective(_)).Times(0);
     EXPECT_CALL(*(handler1.get()), onDeregistered()).Times(1);
 
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
-    ASSERT_FALSE(m_router.handleDirective(m_directive_0_1, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::NONE);
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_0));
+    ASSERT_FALSE(m_router.handleDirective(m_directive_0_1));
 }
 
 /**
@@ -372,9 +404,9 @@ TEST_F(DirectiveRouterTest, testResultOfHandleDirectiveFailure) {
  * until a subsequent invocation of @c handleDirective() has started. Expect the blocked call to preHandleDirective()
  * to complete quickly.
  */
-TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
+TEST_F(DirectiveRouterTest, test_handlerMethodsCanRunConcurrently) {
     DirectiveHandlerConfiguration handler0Config;
-    handler0Config[{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy::BLOCKING;
+    handler0Config[NamespaceAndName{NAMESPACE_AND_NAME_0_0}] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
     std::shared_ptr<MockDirectiveHandler> handler0 = MockDirectiveHandler::create(handler0Config);
 
     ASSERT_TRUE(m_router.addDirectiveHandler(handler0));
@@ -399,10 +431,146 @@ TEST_F(DirectiveRouterTest, testHandlerMethodsCanRunConcurrently) {
     EXPECT_CALL(*(handler0.get()), onDeregistered()).Times(1);
 
     std::thread sleeperThread([this]() { ASSERT_TRUE(m_router.preHandleDirective(m_directive_0_0, nullptr)); });
-    auto policy = BlockingPolicy::NONE;
-    ASSERT_TRUE(m_router.handleDirective(m_directive_0_0, &policy));
-    ASSERT_EQ(policy, BlockingPolicy::BLOCKING);
+    ASSERT_TRUE(m_router.handleDirective(m_directive_0_0));
+    auto policy = m_router.getPolicy(m_directive_0_0);
+    ASSERT_EQ(policy, BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true));
     sleeperThread.join();
+}
+
+/**
+ * Check that we are able to match directives to handlers that use a per directive routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_perDirectiveRuleMatching) {
+    // Configure handler.
+    auto rule = routingRulePerDirective("endpointId", std::string("instance"), "namespace", "name");
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler));
+
+    // Add expectations.
+    auto directive = createDirective(rule.endpointId, rule.instance, rule.nameSpace, rule.name);
+    EXPECT_CALL(*handler, handleDirectiveImmediately(directive)).Times(1);
+    EXPECT_CALL(*handler, onDeregistered()).Times(1);
+
+    // Handle the directive.
+    EXPECT_TRUE(m_router.handleDirectiveImmediately(directive));
+}
+
+/**
+ * Check that we are able to match directives to handlers that use a per name space routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_perNamespaceRuleMatching) {
+    // Configure handler.
+    auto rule = routingRulePerNamespace("endpointId", std::string("instance"), "namespace");
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler));
+
+    // Use a random name for the directive.
+    const std::string directiveName = "RandomName";
+    EXPECT_NE(rule.name, directiveName);
+
+    // Add expectations.
+    auto directive = createDirective(rule.endpointId, rule.instance, rule.nameSpace, directiveName);
+    EXPECT_CALL(*handler, handleDirectiveImmediately(directive)).Times(1);
+    EXPECT_CALL(*handler, onDeregistered()).Times(1);
+
+    // Handle the directive.
+    EXPECT_TRUE(m_router.handleDirectiveImmediately(directive));
+}
+
+/**
+ * Check that we are able to match directives to handlers that use a per instance routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_perInstanceRuleMatching) {
+    // Configure handler.
+    auto rule = routingRulePerInstance("endpointId", std::string("instance"));
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler));
+
+    // Use a random name / name space for the directive.
+    const std::string directiveName = "RandomName";
+    const std::string directiveNameSpace = "RandomNamespace";
+    EXPECT_NE(rule.name, directiveName);
+    EXPECT_NE(rule.nameSpace, directiveNameSpace);
+
+    // Add expectations.
+    auto directive = createDirective(rule.endpointId, rule.instance, directiveNameSpace, directiveName);
+    EXPECT_CALL(*handler, handleDirectiveImmediately(directive)).Times(1);
+    EXPECT_CALL(*handler, onDeregistered()).Times(1);
+
+    // Handle the directive.
+    EXPECT_TRUE(m_router.handleDirectiveImmediately(directive));
+}
+
+/**
+ * Check that we are able to match directives to handlers that use a per name space with any instance routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_perNamespaceAnyInstanceRuleMatching) {
+    // Configure handler.
+    auto rule = routingRulePerNamespaceAnyInstance("endpointId", "nameSpace");
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler));
+
+    // Use a random name / instance for the directive.
+    const std::string directiveName = "RandomName";
+    const std::string directiveInstance = "RandomInstance";
+    EXPECT_NE(rule.name, directiveName);
+    EXPECT_NE(rule.instance.valueOr(""), directiveInstance);
+
+    // Add expectations.
+    auto directive = createDirective(rule.endpointId, directiveInstance, rule.nameSpace, directiveName);
+    EXPECT_CALL(*handler, handleDirectiveImmediately(directive)).Times(1);
+    EXPECT_CALL(*handler, onDeregistered()).Times(1);
+
+    // Handle the directive.
+    EXPECT_TRUE(m_router.handleDirectiveImmediately(directive));
+}
+
+/**
+ * Check that we are able to match directives to handlers that use a per endpoint routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_perEndpointMatching) {
+    // Configure handler.
+    auto rule = routingRulePerEndpoint("endpoint");
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    ASSERT_TRUE(m_router.addDirectiveHandler(handler));
+
+    // Use a random name, name space, and instance for the directive.
+    const std::string directiveName = "RandomName";
+    const std::string directiveNameSpace = "RandomNamespace";
+    const std::string directiveInstance = "RandomInstance";
+    EXPECT_NE(rule.name, directiveName);
+    EXPECT_NE(rule.nameSpace, directiveNameSpace);
+    EXPECT_NE(rule.instance.valueOr(""), directiveInstance);
+
+    // Add expectations.
+    auto directive = createDirective(rule.endpointId, directiveInstance, directiveNameSpace, directiveName);
+    EXPECT_CALL(*handler, handleDirectiveImmediately(directive)).Times(1);
+    EXPECT_CALL(*handler, onDeregistered()).Times(1);
+
+    // Handle the directive.
+    EXPECT_TRUE(m_router.handleDirectiveImmediately(directive));
+}
+
+/**
+ * Check that we fail when a directive handler declares an invalid routing rule.
+ */
+TEST_F(DirectiveRouterTest, test_addDirectiveHandlerWithInvalidRoutingRuleShouldFail) {
+    // Configure handler with endpoint wildcard.
+    auto rule = routingRulePerEndpoint(WILDCARD);
+    DirectiveHandlerConfiguration handlerConfig;
+    handlerConfig[rule] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
+    std::shared_ptr<MockDirectiveHandler> handler = MockDirectiveHandler::create(handlerConfig);
+    EXPECT_FALSE(m_router.addDirectiveHandler(handler));
 }
 
 }  // namespace test

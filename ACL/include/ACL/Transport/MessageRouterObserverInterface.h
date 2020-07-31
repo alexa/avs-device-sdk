@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,12 @@ namespace acl {
  * or when a message arrives from AVS.
  */
 class MessageRouterObserverInterface {
-private:
+public:
+    /**
+     * Destructor.
+     */
+    virtual ~MessageRouterObserverInterface() = default;
+
     /**
      * This function will be called when the connection status changes.
      *
@@ -47,9 +52,6 @@ private:
      * @param message The AVS message that has been received.
      */
     virtual void receive(const std::string& contextId, const std::string& message) = 0;
-
-    /// The friend declaration.
-    friend class MessageRouter;
 };
 
 }  // namespace acl

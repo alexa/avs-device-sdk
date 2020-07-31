@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  */
 
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 
 #include "ACL/Transport/HTTP2TransportFactory.h"
 #include "ACL/Transport/HTTP2Transport.h"
-#include "ACL/Transport/PostConnectSynchronizer.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -29,20 +29,38 @@ using namespace avsCommon::avs::attachment;
 std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
     std::shared_ptr<AttachmentManager> attachmentManager,
-    const std::string& avsEndpoint,
+    const std::string& avsGateway,
     std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
-    std::shared_ptr<TransportObserverInterface> transportObserverInterface) {
+    std::shared_ptr<TransportObserverInterface> transportObserverInterface,
+    std::shared_ptr<SynchronizedMessageRequestQueue> sharedMessageRequestQueue) {
+    auto connection = m_connectionFactory->createHTTP2Connection();
+    if (!connection) {
+        return nullptr;
+    }
+
     return HTTP2Transport::create(
         authDelegate,
-        avsEndpoint,
+        avsGateway,
+        connection,
         messageConsumerInterface,
         attachmentManager,
         transportObserverInterface,
-        m_postConnectFactory);
+        m_postConnectFactory,
+        sharedMessageRequestQueue,
+        HTTP2Transport::Configuration(),
+        m_metricRecorder,
+        m_eventTracer);
 }
 
-HTTP2TransportFactory::HTTP2TransportFactory(std::shared_ptr<PostConnectFactoryInterface> postConnectFactory) :
-        m_postConnectFactory{postConnectFactory} {
+HTTP2TransportFactory::HTTP2TransportFactory(
+    std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> connectionFactory,
+    std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer) :
+        m_connectionFactory{std::move(connectionFactory)},
+        m_postConnectFactory{std::move(postConnectFactory)},
+        m_metricRecorder{std::move(metricRecorder)},
+        m_eventTracer{eventTracer} {
 }
 
 }  // namespace acl

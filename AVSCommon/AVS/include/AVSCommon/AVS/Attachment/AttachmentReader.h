@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 #include <chrono>
 #include <cstddef>
+#include <ostream>
 
 #include "AVSCommon/Utils/SDS/ReaderPolicy.h"
 
@@ -41,6 +42,9 @@ public:
         OK_WOULDBLOCK,
         /// On a request for n bytes, less than n bytes were available on a blocking read.
         OK_TIMEDOUT,
+        /// The writer has overwritten the new data on reader's current position. Reader position is reset
+        /// to current writer position.
+        OK_OVERRUN_RESET,
         /// The underlying data representation is no longer readable.
         CLOSED,
         /// The writer has corrupted the reader data.  The attachment is no longer valid.
@@ -104,6 +108,43 @@ public:
      */
     virtual void close(ClosePoint closePoint = ClosePoint::AFTER_DRAINING_CURRENT_BUFFER) = 0;
 };
+
+/**
+ * Write an @c Attachment::ReadStatus value to the given stream.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The value to write to the stream as a string.
+ * @return The stream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AttachmentReader::ReadStatus& status) {
+    switch (status) {
+        case AttachmentReader::ReadStatus::OK:
+            stream << "OK";
+            break;
+        case AttachmentReader::ReadStatus::OK_WOULDBLOCK:
+            stream << "OK_WOULDBLOCK";
+            break;
+        case AttachmentReader::ReadStatus::OK_TIMEDOUT:
+            stream << "OK_TIMEDOUT";
+            break;
+        case AttachmentReader::ReadStatus::OK_OVERRUN_RESET:
+            stream << "OK_OVERRUN_RESET";
+            break;
+        case AttachmentReader::ReadStatus::CLOSED:
+            stream << "CLOSED";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+            stream << "ERROR_BYTES_LESS_THAN_WORD_SIZE";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_OVERRUN:
+            stream << "ERROR_OVERRUN";
+            break;
+        case AttachmentReader::ReadStatus::ERROR_INTERNAL:
+            stream << "ERROR_INTERNAL";
+            break;
+    }
+    return stream;
+}
 
 }  // namespace attachment
 }  // namespace avs

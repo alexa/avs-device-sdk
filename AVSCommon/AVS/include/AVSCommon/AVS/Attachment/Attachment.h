@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -93,8 +93,8 @@ protected:
     std::mutex m_mutex;
     /// An atomic tracking variable to tell whether this object has created a writer.
     std::atomic<bool> m_hasCreatedWriter;
-    /// An atomic tracking variable to tell whether this object has created a reader.
-    std::atomic<bool> m_hasCreatedReader;
+    /// An atomic tracking variable to tell how many readers have been created.
+    std::atomic<size_t> m_numReaders;
 };
 
 }  // namespace attachment

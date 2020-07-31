@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,11 +28,16 @@ namespace audio {
  */
 class CommunicationsAudioFactory : public avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface {
 public:
-    std::function<std::unique_ptr<std::istream>()> callConnectedRingtone() const override;
-    std::function<std::unique_ptr<std::istream>()> callDisconnectedRingtone() const override;
-    std::function<std::unique_ptr<std::istream>()> outboundRingtone() const override;
-    std::function<std::unique_ptr<std::istream>()> dropInConnectedRingtone() const override;
-    std::function<std::unique_ptr<std::istream>()> callIncomingRingtone() const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> callConnectedRingtone()
+        const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+    callDisconnectedRingtone() const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> outboundRingtone()
+        const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> dropInIncoming()
+        const override;
+    std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> callIncomingRingtone()
+        const override;
 };
 
 }  // namespace audio

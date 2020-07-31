@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,7 +34,19 @@ static const std::string TAG("MessageRequest");
 
 MessageRequest::MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension) :
         m_jsonContent{jsonContent},
+        m_isSerialized{true},
         m_uriPathExtension{uriPathExtension} {
+}
+
+MessageRequest::MessageRequest(
+    const std::string& jsonContent,
+    bool isSerialized,
+    const std::string& uriPathExtension,
+    std::vector<std::pair<std::string, std::string>> headers) :
+        m_jsonContent{jsonContent},
+        m_isSerialized{isSerialized},
+        m_uriPathExtension{uriPathExtension},
+        m_headers(std::move(headers)) {
 }
 
 MessageRequest::~MessageRequest() {
@@ -52,15 +64,19 @@ void MessageRequest::addAttachmentReader(
     m_readers.push_back(namedReader);
 }
 
-std::string MessageRequest::getJsonContent() {
+std::string MessageRequest::getJsonContent() const {
     return m_jsonContent;
 }
 
-std::string MessageRequest::getUriPathExtension() {
+bool MessageRequest::getIsSerialized() const {
+    return m_isSerialized;
+}
+
+std::string MessageRequest::getUriPathExtension() const {
     return m_uriPathExtension;
 }
 
-int MessageRequest::attachmentReadersCount() {
+int MessageRequest::attachmentReadersCount() const {
     return m_readers.size();
 }
 
@@ -116,30 +132,8 @@ void MessageRequest::removeObserver(
     m_observers.erase(observer);
 }
 
-using namespace avsCommon::sdkInterfaces;
-
-bool MessageRequest::isServerStatus(MessageRequestObserverInterface::Status status) {
-    switch (status) {
-        case MessageRequestObserverInterface::Status::SUCCESS:
-        case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
-        case MessageRequestObserverInterface::Status::CANCELED:
-        case MessageRequestObserverInterface::Status::THROTTLED:
-        case MessageRequestObserverInterface::Status::BAD_REQUEST:
-        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
-            return true;
-        case MessageRequestObserverInterface::Status::PENDING:
-        case MessageRequestObserverInterface::Status::NOT_CONNECTED:
-        case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
-        case MessageRequestObserverInterface::Status::TIMEDOUT:
-        case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
-        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
-        case MessageRequestObserverInterface::Status::REFUSED:
-        case MessageRequestObserverInterface::Status::INVALID_AUTH:
-            return false;
-    }
-
-    return false;
+const std::vector<std::pair<std::string, std::string>>& MessageRequest::getHeaders() const {
+    return m_headers;
 }
 
 }  // namespace avs

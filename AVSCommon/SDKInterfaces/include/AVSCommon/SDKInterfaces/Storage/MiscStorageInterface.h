@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -73,6 +73,13 @@ public:
     virtual bool open() = 0;
 
     /**
+     * Returns true if this object is already managing an open database, false otherwise.
+     *
+     * @return True if this object is already managing an open database, false otherwise.
+     */
+    virtual bool isOpened() = 0;
+
+    /**
      * Close the currently open database, if one is open.
      */
     virtual void close() = 0;
@@ -134,6 +141,7 @@ public:
      * @param tableName The table name.
      * @param key The key for the table entry.
      * @param value The value of the table entry.
+     * @note @c value should be a string literal.
      * @return @c true If the value was added ok, @c false if not.
      */
     virtual bool add(
@@ -148,6 +156,7 @@ public:
      * @param tableName The table name.
      * @param key The key for the table entry.
      * @param value The value of the table entry.
+     * @note @c value should be a literal string.
      * @return @c true If the value was updated ok, @c false if not (including if the entry does not exist).
      */
     virtual bool update(
@@ -165,6 +174,7 @@ public:
      * @param tableName The table name.
      * @param key The key for the table entry.
      * @param value The value of the table entry.
+     * @note @c value should be a literal string.
      * @return @c true If the value was put ok, @c false if not.
      */
     virtual bool put(

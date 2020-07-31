@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,9 @@ static const avsCommon::utils::AudioFormat::Encoding SENSORY_COMPATIBLE_ENCODING
 /// The Sensory compatible endianness which is little endian.
 static const avsCommon::utils::AudioFormat::Endianness SENSORY_COMPATIBLE_ENDIANNESS =
     avsCommon::utils::AudioFormat::Endianness::LITTLE;
+
+/// The Sensory operating point
+static const unsigned int SENSORY_OPERATING_POINT = 12;
 
 /**
  * Checks to see if an @c avsCommon::utils::AudioFormat is compatible with Sensory.
@@ -315,6 +318,23 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
     }
 
 
+    result = snsrSetInt(*session, SNSR_OPERATING_POINT, SENSORY_OPERATING_POINT);
+    if (result != SNSR_RC_OK) {
+        ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
+                        .d("reason", "settingOperationPointFailed")
+                        .d("error", getSensoryDetails(*session, result)));
+        return false;
+    }
+
+    int op=0; 
+    result = snsrGetInt(*session, SNSR_OPERATING_POINT, &op);
+    if (result != SNSR_RC_OK) {
+        ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
+                        .d("reason", "gettingOperatingPointFaied")
+                        .d("error", getSensoryDetails(*session, result)));
+        return false;
+    }
+    printf("Sensory operating point = %d\n",op);
     return true;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 
 #include "PlaybackController.h"
+#include "PlaybackCommand.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -31,8 +32,6 @@ namespace playbackController {
 class PlaybackMessageRequest : public avsCommon::avs::MessageRequest {
 public:
     /**
-     * @copyDoc avsCommon::avs::MessageRequest()
-     *
      * Construct a @c MessageRequest while binding it to a @c PlaybackController and a @c Button.
      *
      * @param button The @c Button pressed.
@@ -41,7 +40,7 @@ public:
      * @c onSendCompleted is invoked.
      */
     PlaybackMessageRequest(
-        avsCommon::avs::PlaybackButton button,
+        const PlaybackCommand& command,
         const std::string& jsonContent,
         std::shared_ptr<PlaybackController> playbackController);
 
@@ -54,8 +53,8 @@ private:
     /// The @c PlaybackController to be notified when @c onSendCompleted is called.
     std::shared_ptr<PlaybackController> m_playbackController;
 
-    /// The @c Button pressed for this message request.
-    avsCommon::avs::PlaybackButton m_button;
+    /// The command associated with the @c Button pressed for this message request.
+    const PlaybackCommand& m_command;
 };
 
 }  // namespace playbackController

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
 
-#include "AVSCommon/Utils/RequiresShutdown.h"
-
 #include <chrono>
+#include <set>
 #include <string>
-#include <vector>
+
+#include "AVSCommon/AVS/PlayRequestor.h"
+#include "AVSCommon/Utils/RequiresShutdown.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -74,6 +75,9 @@ enum class RequestType {
     /// Enable Repeat of a track.
     ENABLE_REPEAT_ONE,
 
+    /// Disable Repeat of a track.
+    DISABLE_REPEAT_ONE,
+
     /// Enable Loop on.
     ENABLE_REPEAT,
 
@@ -86,11 +90,17 @@ enum class RequestType {
     /// Disable shuffle.
     DISABLE_SHUFFLE,
 
-    /// Mark a track as favorite.(thumbs up)
+    /// Mark a track as favorite.(thumbs up true)
     FAVORITE,
 
-    /// Mark a track as not a favorite.(thumbs down)
+    /// Unmark a track as favorite.(thumbs up false)
+    DESELECT_FAVORITE,
+
+    /// Mark a track as not a favorite.(thumbs down true)
     UNFAVORITE,
+
+    /// Unmark a track as not a favorite.(thumbs down false)
+    DESELECT_UNFAVORITE,
 
     /// Seek to a given offset.
     SEEK,
@@ -106,6 +116,18 @@ enum class RequestType {
 
     /// Set mute to true/false.
     SET_MUTE,
+
+    /// Set the name the external media player will show for this device
+    SET_DISPLAY_NAME,
+
+    /// Get Info
+    GET_INFO,
+
+    /// Add User Message
+    ADD_USER,
+
+    /// Reset User Message
+    RESET_USER,
 
     /// None means there are no pending requests.
     NONE
@@ -130,7 +152,7 @@ enum class SupportedPlaybackOperation {
     /// Previous
     PREVIOUS,
 
-    /// Starover a track from the beginning
+    /// Start over a track from the beginning
     START_OVER,
 
     /// Fast-forward
@@ -184,7 +206,7 @@ enum class ChangeCauseType {
     /// Change was triggered by a rule.
     RULE_TRIGGER,
 
-    /// Change was triggerd by periodic polling.
+    /// Change was triggered by periodic polling.
     PERIODIC_POLL
 };
 
@@ -237,6 +259,9 @@ struct AdapterSessionState {
     /// The playerId of an adapter which is the pre-negotiated business id for a partner music provider.
     std::string playerId;
 
+    /// The localPlayerId of an adapter which is the pre-negotiated business id for a partner music provider.
+    std::string localPlayerId;
+
     /// The unique device endpoint.
     std::string endpointId;
 
@@ -258,6 +283,18 @@ struct AdapterSessionState {
      */
     bool active;
 
+    /// The service provider interface (SPI) version.
+    std::string spiVersion;
+
+    /// The playerCookie to select version-specific content or actions.
+    std::string playerCookie;
+
+    /// An opaque token for the domain or skill that is presently associated with this player.
+    std::string skillToken;
+
+    /// A universally unique identifier (UUID) generated to the RFC 4122 specification.
+    std::string playbackSessionId;
+
     /**
      * The accessToken used to login a user. The access token may also be used as a bearer token if the adapter
      * makes an authenticated Web API to the music provider.
@@ -278,11 +315,11 @@ struct AdapterPlaybackState {
     /// The playerId of an adapter which is the pre-negotiated business id for a partner music provider.
     std::string playerId;
 
-    /// The state of the default player - IDLE/STOPPED/PLAYING...
+    /// The players current state
     std::string state;
 
     /// The set of states the default player can move into from its current state.
-    std::vector<SupportedPlaybackOperation> supportedOperations;
+    std::set<SupportedPlaybackOperation> supportedOperations;
 
     /// The offset of the track in milliseconds.
     std::chrono::milliseconds trackOffset;
@@ -355,6 +392,9 @@ struct AdapterPlaybackState {
 
     /// Media item duration in milliseconds.
     std::chrono::milliseconds duration;
+
+    /// The PlayRequestor object from the @c PLAY directive.
+    avsCommon::avs::PlayRequestor playRequestor;
 };
 
 /**
@@ -377,14 +417,19 @@ public:
  * music service provider library. The adapter object handles session management of an user with the third party
  * library/cloud and provides users with an interface to manage behaviors to control their play queue.
  */
-class ExternalMediaAdapterInterface : public avsCommon::utils::RequiresShutdown {
+class ExternalMediaAdapterInterface : public virtual avsCommon::utils::RequiresShutdown {
 public:
     /**
      * ExternalMediaAdapterInterface constructor.
      *
-     * @param adapaterName The name of the adapter.
+     * @param adapterName The name of the adapter.
      */
-    ExternalMediaAdapterInterface(const std::string& adapaterName);
+    explicit ExternalMediaAdapterInterface(const std::string& adapterName);
+
+    /**
+     * Destructor.
+     */
+    virtual ~ExternalMediaAdapterInterface() = default;
 
     /// Method to initialize a third party library.
     virtual void init() = 0;
@@ -417,8 +462,22 @@ public:
      * @param playContextToken Play context {Track/playlist/album/artist/station/podcast} identifier.
      * @param index The index of the media item in the container, if the container is indexable.
      * @param offset The offset position within media item, in milliseconds.
+     * @param skillToken An opaque token for the domain or skill that is presently associated with this player.
+     * @param playbackSessionId A universally unique identifier (UUID) generated to the RFC 4122 specification.
+     * @param navigation Communicates desired visual display behavior for the app associated with playback.
+     * @param preload If true, this Play directive is intended to preload the identified content only but not begin
+     * playback.
+     * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
      */
-    virtual void handlePlay(std::string& playContextToken, int64_t index, std::chrono::milliseconds offset) = 0;
+    virtual void handlePlay(
+        std::string& playContextToken,
+        int64_t index,
+        std::chrono::milliseconds offset,
+        const std::string& skillToken,
+        const std::string& playbackSessionId,
+        const std::string& navigation,
+        bool preload,
+        const avsCommon::avs::PlayRequestor& playRequestor) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
@@ -441,8 +500,28 @@ public:
      */
     virtual void handleAdjustSeek(std::chrono::milliseconds deltaOffset) = 0;
 
+    /**
+     * Method to alert if a player has been authorized. This method also provides the playerId and skillToken as
+     * identified by the cloud. Authorization may be revoked.
+     *
+     * @param authorized Whether the player is authorized.
+     * @param playerId The playerId of this player.
+     * @param defaultSkillToken The default skillToken to use if no directives have supplied one yet.
+     */
+    virtual void handleAuthorized(
+        bool authorized,
+        const std::string& playerId,
+        const std::string& defaultSkillToken) = 0;
+
     /// Method to fetch the state(session state and playback state) of an adapter.
     virtual AdapterState getState() = 0;
+
+    /**
+     * This function retrieves the offset of the current track the adapter is handling.
+     *
+     * @return This returns the offset in milliseconds.
+     */
+    virtual std::chrono::milliseconds getOffset() = 0;
 };
 
 inline AdapterSessionState::AdapterSessionState() : loggedIn{false}, isGuest{false}, launched{false}, active{false} {

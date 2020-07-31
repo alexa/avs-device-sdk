@@ -1,5 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=kittAiKeyWordDetector")
 add_library(KITTAI SHARED
+    SnowboyWrapper.cpp
     KittAiKeyWordDetector.cpp)
 
 target_include_directories(KITTAI PUBLIC

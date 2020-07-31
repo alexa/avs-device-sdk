@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,67 +53,139 @@ void PlaybackRouterTest::TearDown() {
 /**
  * Test default handler is called.
  */
-TEST_F(PlaybackRouterTest, defaultHandler) {
+TEST_F(PlaybackRouterTest, test_defaultHandler) {
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PAUSE));
-    m_playbackRouter->pauseButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PAUSE);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::NEXT));
-    m_playbackRouter->nextButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::NEXT);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PREVIOUS));
-    m_playbackRouter->previousButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PREVIOUS);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_FORWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_FORWARD);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_BACKWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_BACKWARD);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::LOOP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::LOOP, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::REPEAT, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::REPEAT, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_UP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_UP, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_DOWN, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_DOWN, true);
 }
 
 /**
  * Test 2nd handler is called after registration.
  */
-TEST_F(PlaybackRouterTest, secondHandler) {
+TEST_F(PlaybackRouterTest, test_secondHandler) {
     m_playbackRouter->setHandler(m_defaultPlaybackHandler);
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
 
     m_playbackRouter->setHandler(m_secondPlaybackHandler);
 
     EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
 
     EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::PAUSE));
-    m_playbackRouter->pauseButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PAUSE);
 
     EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::NEXT));
-    m_playbackRouter->nextButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::NEXT);
 
     EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::PREVIOUS));
-    m_playbackRouter->previousButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PREVIOUS);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_FORWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_FORWARD);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_BACKWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_BACKWARD);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::LOOP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::LOOP, true);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::REPEAT, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::REPEAT, true);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_UP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_UP, true);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_DOWN, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_DOWN, true);
 }
 
 /**
  * Test default handler is called again after @c switchToDefaultHandler has been called.
  */
-TEST_F(PlaybackRouterTest, switchToDefaultHandler) {
+TEST_F(PlaybackRouterTest, test_switchToDefaultHandler) {
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
 
     m_playbackRouter->setHandler(m_secondPlaybackHandler);
     EXPECT_CALL(*m_secondPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
+
+    EXPECT_CALL(*m_secondPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
 
     m_playbackRouter->switchToDefaultHandler();
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PLAY));
-    m_playbackRouter->playButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PLAY);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PAUSE));
-    m_playbackRouter->pauseButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PAUSE);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::NEXT));
-    m_playbackRouter->nextButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::NEXT);
 
     EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::PREVIOUS));
-    m_playbackRouter->previousButtonPressed();
+    m_playbackRouter->buttonPressed(PlaybackButton::PREVIOUS);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_FORWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_FORWARD);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onButtonPressed(PlaybackButton::SKIP_BACKWARD));
+    m_playbackRouter->buttonPressed(PlaybackButton::SKIP_BACKWARD);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::SHUFFLE, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::SHUFFLE, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::LOOP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::LOOP, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::REPEAT, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::REPEAT, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_UP, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_UP, true);
+
+    EXPECT_CALL(*m_defaultPlaybackHandler, onTogglePressed(PlaybackToggle::THUMBS_DOWN, true));
+    m_playbackRouter->togglePressed(PlaybackToggle::THUMBS_DOWN, true);
 }
 
 }  // namespace test

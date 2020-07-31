@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace utils {
 namespace timing {
 namespace test {
 
-TEST(TimeTest, testStringConversion) {
+TEST(TimeTest, test_stringConversion) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-08-10T21:30:00+0000"};
     int64_t date;
@@ -45,7 +45,7 @@ TEST(TimeTest, testStringConversion) {
     ASSERT_EQ(dateTm.tm_min, 30);
 }
 
-TEST(TimeTest, testStringConversionError) {
+TEST(TimeTest, test_stringConversionError) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-8-10T21:30:00+0000"};
     int64_t date;
@@ -53,14 +53,14 @@ TEST(TimeTest, testStringConversionError) {
     ASSERT_FALSE(success);
 }
 
-TEST(TimeTest, testStringConversionNullParam) {
+TEST(TimeTest, test_stringConversionNullParam) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-8-10T21:30:00+0000"};
     auto success = timeUtils.convert8601TimeStringToUnix(dateStr, nullptr);
     ASSERT_FALSE(success);
 }
 
-TEST(TimeTest, testTimeConversion) {
+TEST(TimeTest, test_timeConversion) {
     TimeUtils timeUtils;
     std::time_t randomDate = 524089800;
     std::tm date;
@@ -73,7 +73,24 @@ TEST(TimeTest, testTimeConversion) {
     ASSERT_EQ(randomDate, convertBack);
 }
 
-TEST(TimeTest, testCurrentTime) {
+TEST(TimeTest, test_timeConversionCurrentTime) {
+    TimeUtils timeUtils;
+    int64_t time = -1;
+    ASSERT_TRUE(timeUtils.getCurrentUnixTime(&time));
+
+    std::time_t currentDate = static_cast<std::time_t>(time);
+    std::tm date;
+
+    auto safeCTimeAccess = SafeCTimeAccess::instance();
+    ASSERT_TRUE(safeCTimeAccess->getGmtime(currentDate, &date));
+    std::time_t convertBack;
+    auto success = timeUtils.convertToUtcTimeT(&date, &convertBack);
+
+    ASSERT_TRUE(success);
+    ASSERT_EQ(currentDate, convertBack);
+}
+
+TEST(TimeTest, test_currentTime) {
     TimeUtils timeUtils;
     int64_t time = -1;
     auto success = timeUtils.getCurrentUnixTime(&time);
@@ -82,7 +99,7 @@ TEST(TimeTest, testCurrentTime) {
     ASSERT_GT(time, 0);
 }
 
-TEST(TimeTest, testCurrentTimeNullParam) {
+TEST(TimeTest, test_currentTimeNullParam) {
     TimeUtils timeUtils;
     auto success = timeUtils.getCurrentUnixTime(nullptr);
     ASSERT_FALSE(success);
@@ -101,14 +118,14 @@ static void testIso8601ConversionHelper(
     const std::chrono::microseconds us) {
     TimeUtils timeUtils;
     std::string resultString;
-    std::chrono::high_resolution_clock::time_point tp;
+    std::chrono::system_clock::time_point tp;
     tp += sec;
     tp += us;
     EXPECT_TRUE(timeUtils.convertTimeToUtcIso8601Rfc3339(tp, &resultString));
     EXPECT_EQ(expectedString, resultString);
 }
 
-TEST(TimeTest, testIso8601Conversion) {
+TEST(TimeTest, test_iso8601Conversion) {
     testIso8601ConversionHelper("1970-01-01T00:00:00.000Z", std::chrono::seconds{0}, std::chrono::microseconds{0});
     testIso8601ConversionHelper("1970-01-01T00:00:01.000Z", std::chrono::seconds{1}, std::chrono::microseconds{0});
     testIso8601ConversionHelper("1970-01-01T00:00:00.001Z", std::chrono::seconds{0}, std::chrono::microseconds{1000});

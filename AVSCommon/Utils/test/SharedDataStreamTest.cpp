@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,17 +15,18 @@
 
 /// @file SharedDataStreamTest.cpp
 
-#include <vector>
-#include <random>
-#include <climits>
 #include <algorithm>
+#include <chrono>
+#include <climits>
 #include <functional>
+#include <random>
 #include <unordered_map>
+#include <vector>
 
 #include <gtest/gtest.h>
 
-#include "AVSCommon/Utils/Timing/Timer.h"
 #include "AVSCommon/Utils/SDS/InProcessSDS.h"
+#include "AVSCommon/Utils/Timing/Timer.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -74,7 +75,7 @@ struct MinimalTraits2 {
 };
 
 /// An @c AtomicIndex type with the minimum functionality required by SDS.
-class MinimalTraits::AtomicIndex : private InProcessSDS::AtomicIndex {
+class MinimalTraits::AtomicIndex : public InProcessSDS::AtomicIndex {
 public:
     /// Conversion to @c Index.
     operator InProcessSDS::Index() {
@@ -97,7 +98,7 @@ public:
 };
 
 /// An @c AtomicBool type with the minimum functionality required by SDS.
-class MinimalTraits::AtomicBool : private InProcessSDS::AtomicBool {
+class MinimalTraits::AtomicBool : public InProcessSDS::AtomicBool {
 public:
     /// Conversion to bool.
     operator bool() {
@@ -212,7 +213,7 @@ std::future<size_t> Source::run(
     bool started = m_timer.start(
         period,
         timing::Timer::PeriodType::RELATIVE,
-        timing::Timer::FOREVER,
+        timing::Timer::getForever(),
         [this, writer, blockSizeWords, maxWords, wordSize] {
             std::vector<uint8_t> block(blockSizeWords * writer->getWordSize());
             size_t wordsToWrite = 0;
@@ -293,7 +294,7 @@ std::future<size_t> Sink::run(
     bool started = m_timer.start(
         period,
         timing::Timer::PeriodType::RELATIVE,
-        timing::Timer::FOREVER,
+        timing::Timer::getForever(),
         [this, reader, blockSizeWords, maxWords, wordSize] {
             std::vector<uint8_t> block(blockSizeWords * wordSize);
             ssize_t nWords = reader->read(block.data(), block.size() / wordSize);
@@ -336,7 +337,7 @@ private:
 };
 
 /// This tests @c SharedDataStream::calculateCreateSize() and @c SharedDataStream::create().
-TEST_F(SharedDataStreamTest, sdsCalculateCreateSize) {
+TEST_F(SharedDataStreamTest, test_sdsCalculateCreateSize) {
     static const size_t SDK_MAXREADERS_REQUIRED = 2;
     static const size_t SDK_WORDSIZE_REQUIRED = sizeof(uint16_t);
     size_t maxReaders, wordCount, wordSize;
@@ -412,7 +413,7 @@ TEST_F(SharedDataStreamTest, sdsCalculateCreateSize) {
 }
 
 /// This tests @c SharedDataStream::open().
-TEST_F(SharedDataStreamTest, sdsOpen) {
+TEST_F(SharedDataStreamTest, test_sdsOpen) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 10;
     static const size_t MAXREADERS = 2;
@@ -454,7 +455,7 @@ TEST_F(SharedDataStreamTest, sdsOpen) {
 }
 
 /// This tests @c SharedDataStream::createWriter().
-TEST_F(SharedDataStreamTest, createWriter) {
+TEST_F(SharedDataStreamTest, test_createWriter) {
     static const size_t WORDSIZE = 1;
     static const size_t WORDCOUNT = 1;
     static const size_t MAXREADERS = 1;
@@ -506,7 +507,7 @@ TEST_F(SharedDataStreamTest, createWriter) {
 }
 
 /// This tests @c SharedDataStream::createReader().
-TEST_F(SharedDataStreamTest, createReader) {
+TEST_F(SharedDataStreamTest, test_createReader) {
     static const size_t WORDSIZE = 1;
     static const size_t WORDCOUNT = 1;
     static const size_t MAXREADERS = 2;
@@ -570,8 +571,52 @@ TEST_F(SharedDataStreamTest, createReader) {
     ASSERT_EQ(reader->tell(Sds::Reader::Reference::BEFORE_WRITER), 0U);
 }
 
+TEST_F(SharedDataStreamTest, test_createReaderWhileWriting) {
+    static const size_t WORDSIZE = 2;
+    static const size_t WORDCOUNT = 100000;
+    static const size_t MAXREADERS = 2;
+    static const uint16_t WRITEFILL = 0x5555;
+
+    // Initialize SDS.
+    size_t bufferSize = Sds::calculateBufferSize(WORDCOUNT, WORDSIZE, MAXREADERS);
+    auto buffer1 = std::make_shared<Sds::Buffer>(bufferSize);
+    std::shared_ptr<SharedDataStream<MinimalTraits>> sds = Sds::create(buffer1, WORDSIZE, MAXREADERS);
+
+    std::shared_ptr<std::atomic<bool>> waitingForWriter = std::make_shared<std::atomic<bool>>(true);
+    std::shared_ptr<std::atomic<bool>> running = std::make_shared<std::atomic<bool>>(true);
+
+    // Run a test where we write into the stream while creating readers, and ensure the readers can always be created.
+    std::thread writerThread = std::thread([sds, waitingForWriter, running]() {
+        std::vector<uint16_t> writeBuf(WORDCOUNT / 10, WRITEFILL);
+
+        // Attach a writer.
+        auto writer = sds->createWriter(Sds::Writer::Policy::NONBLOCKABLE);
+        *waitingForWriter = false;
+        ASSERT_NE(writer, nullptr);
+        for (int i = 0; i < 1000; i++) {
+            ASSERT_EQ(writer->write(writeBuf.data(), writeBuf.size()), static_cast<ssize_t>(writeBuf.size()));
+            // Intentionally sleep for 1ms between writes.
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+        *running = false;
+    });
+
+    while (*waitingForWriter) {
+        std::this_thread::yield();
+    }
+    // Repeatedly create readers in a tight loop while writing.
+    while (*running) {
+        // Create a reader.
+        auto reader = sds->createReader(Sds::Reader::Policy::NONBLOCKING);
+        ASSERT_NE(reader, nullptr);
+        reader->close();
+    }
+    writerThread.join();
+}
+
+// Disabled due to ACSDK-3414
 /// This tests @c SharedDataStream::Reader::read().
-TEST_F(SharedDataStreamTest, readerRead) {
+TEST_F(SharedDataStreamTest, DISABLED_test_readerRead) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 2;
     static const size_t MAXREADERS = 2;
@@ -647,7 +692,7 @@ TEST_F(SharedDataStreamTest, readerRead) {
 }
 
 /// This tests @c SharedDataStream::Reader::seek().
-TEST_F(SharedDataStreamTest, readerSeek) {
+TEST_F(SharedDataStreamTest, test_readerSeek) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 10;
     static const size_t MAXREADERS = 2;
@@ -794,7 +839,7 @@ TEST_F(SharedDataStreamTest, readerSeek) {
 }
 
 /// This tests @c SharedDataStream::Reader::tell().
-TEST_F(SharedDataStreamTest, readerTell) {
+TEST_F(SharedDataStreamTest, test_readerTell) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 10;
     static const size_t MAXREADERS = 2;
@@ -857,7 +902,7 @@ TEST_F(SharedDataStreamTest, readerTell) {
 }
 
 /// This tests @c SharedDataStream::Reader::close().
-TEST_F(SharedDataStreamTest, readerClose) {
+TEST_F(SharedDataStreamTest, test_readerClose) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 10;
     static const size_t MAXREADERS = 2;
@@ -894,7 +939,7 @@ TEST_F(SharedDataStreamTest, readerClose) {
 }
 
 /// This tests @c SharedDataStream::Reader::getId().
-TEST_F(SharedDataStreamTest, readerGetId) {
+TEST_F(SharedDataStreamTest, test_readerGetId) {
     static const size_t WORDSIZE = 1;
     static const size_t WORDCOUNT = 1;
     static const size_t MAXREADERS = 10;
@@ -925,7 +970,7 @@ TEST_F(SharedDataStreamTest, readerGetId) {
 }
 
 /// This tests @c SharedDataStream::Reader::getWordSize().
-TEST_F(SharedDataStreamTest, readerGetWordSize) {
+TEST_F(SharedDataStreamTest, test_readerGetWordSize) {
     static const size_t MINWORDSIZE = 1;
     static const size_t MAXWORDSIZE = 8;
     static const size_t WORDCOUNT = 1;
@@ -943,7 +988,7 @@ TEST_F(SharedDataStreamTest, readerGetWordSize) {
 }
 
 /// This tests @c SharedDataStream::Writer::write().
-TEST_F(SharedDataStreamTest, writerWrite) {
+TEST_F(SharedDataStreamTest, test_writerWrite) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 2;
     static const size_t MAXREADERS = 1;
@@ -969,8 +1014,12 @@ TEST_F(SharedDataStreamTest, writerWrite) {
     std::shared_ptr<Sds::Writer> blocking = sds3->createWriter(Sds::Writer::Policy::BLOCKING);
     ASSERT_NE(blocking, nullptr);
 
+    // Note since we have a test that will write 1.5x the buffer size, we allocate some extra space in our write
+    // buffer (Address sanitizer was complaining due to the last write in this test, before adjusting to include
+    // this extra space in the buffer).
+    uint8_t writeBuf[WORDSIZE * WORDCOUNT + ((WORDSIZE / 2) * WORDCOUNT)];
+
     // Verify bad parameter handling.
-    uint8_t writeBuf[WORDSIZE * WORDCOUNT];
     ASSERT_EQ(nonblockable->write(nullptr, WORDCOUNT), Sds::Writer::Error::INVALID);
     ASSERT_EQ(nonblockable->write(writeBuf, 0), Sds::Writer::Error::INVALID);
 
@@ -1014,7 +1063,7 @@ TEST_F(SharedDataStreamTest, writerWrite) {
 }
 
 /// This tests @c SharedDataStream::Writer::tell().
-TEST_F(SharedDataStreamTest, writerTell) {
+TEST_F(SharedDataStreamTest, test_writerTell) {
     static const size_t WORDSIZE = 1;
     static const size_t WORDCOUNT = 1;
     static const size_t MAXREADERS = 1;
@@ -1043,7 +1092,7 @@ TEST_F(SharedDataStreamTest, writerTell) {
 }
 
 /// This tests @c SharedDataStream::Writer::close().
-TEST_F(SharedDataStreamTest, writerClose) {
+TEST_F(SharedDataStreamTest, test_writerClose) {
     static const size_t WORDSIZE = 1;
     static const size_t WORDCOUNT = 1;
     static const size_t MAXREADERS = 1;
@@ -1066,7 +1115,7 @@ TEST_F(SharedDataStreamTest, writerClose) {
 }
 
 /// This tests @c SharedDataStream::Writer::getWordSize().
-TEST_F(SharedDataStreamTest, writerGetWordSize) {
+TEST_F(SharedDataStreamTest, test_writerGetWordSize) {
     static const size_t MINWORDSIZE = 1;
     static const size_t MAXWORDSIZE = 8;
     static const size_t WORDCOUNT = 1;
@@ -1083,8 +1132,9 @@ TEST_F(SharedDataStreamTest, writerGetWordSize) {
     }
 }
 
+// Disabled test due to ACSDK-3414
 /// This tests a nonblockable, slow @c Writer streaming concurrently to two fast @c Readers (one of each type).
-TEST_F(SharedDataStreamTest, concurrencyNonblockableWriterDualReader) {
+TEST_F(SharedDataStreamTest, DISABLED_testTimer_concurrencyNonblockableWriterDualReader) {
     static const size_t WORDSIZE = 2;
     static const size_t WRITE_FREQUENCY_HZ = 1000;
     static const size_t READ_FREQUENCY_HZ = 0;
@@ -1119,7 +1169,7 @@ TEST_F(SharedDataStreamTest, concurrencyNonblockableWriterDualReader) {
 }
 
 /// This tests an all-or-nothing, fast @c Writer streaming concurrently to a slow non-blocking @c Reader.
-TEST_F(SharedDataStreamTest, concurrencyAllOrNothingWriterNonblockingReader) {
+TEST_F(SharedDataStreamTest, test_concurrencyAllOrNothingWriterNonblockingReader) {
     static const size_t WORDSIZE = 1;
     static const size_t WRITE_FREQUENCY_HZ = 320000;
     static const size_t READ_FREQUENCY_HZ = 160000;
@@ -1148,7 +1198,7 @@ TEST_F(SharedDataStreamTest, concurrencyAllOrNothingWriterNonblockingReader) {
 }
 
 /// This tests a @c Writer from one SDS streaming to a @c Reader from a different SDS, usig a shared @c Buffer.
-TEST_F(SharedDataStreamTest, concurrencyMultipleSds) {
+TEST_F(SharedDataStreamTest, test_concurrencyMultipleSds) {
     static const size_t WORDSIZE = 1;
     static const size_t WRITE_FREQUENCY_HZ = 320000;
     static const size_t READ_FREQUENCY_HZ = 160000;
@@ -1180,7 +1230,7 @@ TEST_F(SharedDataStreamTest, concurrencyMultipleSds) {
 }
 
 /// This tests that a @c Reader closes if a @c Writer is attached and closed before writing anything
-TEST_F(SharedDataStreamTest, writerClosedBeforeWriting) {
+TEST_F(SharedDataStreamTest, test_writerClosedBeforeWriting) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 2;
     static const size_t MAXREADERS = 2;
@@ -1218,7 +1268,7 @@ TEST_F(SharedDataStreamTest, writerClosedBeforeWriting) {
 }
 
 /// This tests that a @c Reader closes if a @c Writer is attached and closed before the @c Reader is first attached
-TEST_F(SharedDataStreamTest, writerClosedBeforeAttachingReader) {
+TEST_F(SharedDataStreamTest, test_writerClosedBeforeAttachingReader) {
     static const size_t WORDSIZE = 2;
     static const size_t WORDCOUNT = 2;
     static const size_t MAXREADERS = 2;

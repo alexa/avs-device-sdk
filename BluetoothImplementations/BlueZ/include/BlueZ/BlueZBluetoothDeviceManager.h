@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,13 +40,14 @@ public:
     static std::unique_ptr<BlueZBluetoothDeviceManager> create(
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus);
 
+    virtual ~BlueZBluetoothDeviceManager() override;
+
     /// @name BluetoothDeviceManagerInterface Functions
     /// @{
-
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothHostControllerInterface> getHostController() override;
     std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>> getDiscoveredDevices()
         override;
-
+    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> getEventBus() override;
     ///@}
 
 private:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,16 +23,13 @@ namespace avs {
 
 using namespace sdkInterfaces;
 
-HandlerAndPolicy::HandlerAndPolicy() : policy{BlockingPolicy::NONE} {
-}
-
 HandlerAndPolicy::HandlerAndPolicy(std::shared_ptr<DirectiveHandlerInterface> handlerIn, BlockingPolicy policyIn) :
         handler{handlerIn},
         policy{policyIn} {
 }
 
 HandlerAndPolicy::operator bool() const {
-    return handler && (policy != BlockingPolicy::NONE);
+    return handler && policy.isValid();
 }
 
 bool operator==(const HandlerAndPolicy& lhs, const HandlerAndPolicy& rhs) {

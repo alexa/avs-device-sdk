@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,6 +57,24 @@ inline std::ostream& operator<<(std::ostream& stream, ASRProfile profile) {
             break;
     }
     return stream;
+}
+
+/**
+ * Convert the @c ASRProfile to an AVS-compliant string.
+ *
+ * @param profile The profile value to convert to a string.
+ * @return String representing the profile value. If the profile given is not valid, an empty string will be returned.
+ */
+inline std::string asrProfileToString(ASRProfile profile) {
+    switch (profile) {
+        case ASRProfile::CLOSE_TALK:
+            return "CLOSE_TALK";
+        case ASRProfile::NEAR_FIELD:
+            return "NEAR_FIELD";
+        case ASRProfile::FAR_FIELD:
+            return "FAR_FIELD";
+    }
+    return "";
 }
 
 }  // namespace aip

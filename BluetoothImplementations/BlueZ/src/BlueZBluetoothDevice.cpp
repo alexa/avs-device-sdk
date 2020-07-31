@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -12,15 +12,20 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
-#include "BlueZ/BlueZBluetoothDevice.h"
-
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Memory/Memory.h>
+
+#include "BlueZ/BlueZA2DPSink.h"
 #include "BlueZ/BlueZA2DPSource.h"
+#include "BlueZ/BlueZAVRCPController.h"
 #include "BlueZ/BlueZAVRCPTarget.h"
+#include "BlueZ/BlueZBluetoothDevice.h"
 #include "BlueZ/BlueZConstants.h"
 #include "BlueZ/BlueZDeviceManager.h"
+#include "BlueZ/BlueZHFP.h"
+#include "BlueZ/BlueZHID.h"
+#include "BlueZ/BlueZSPP.h"
 
 namespace alexaClientSDK {
 namespace bluetoothImplementations {
@@ -62,11 +67,20 @@ static const std::string BLUEZ_DEVICE_METHOD_CONNECT = "Connect";
 /// BlueZ org.bluez.Device1 method to disconnect.
 static const std::string BLUEZ_DEVICE_METHOD_DISCONNECT = "Disconnect";
 
+/// BlueZ org.bluez.Device1 method to connect profile.
+static const std::string BLUZ_DEVICE_METHOD_CONNECT_PROFILE = "ConnectProfile";
+
+/// BlueZ org.bluez.Device1 method to disconnect profile.
+static const std::string BLUZ_DEVICE_METHOD_DISCONNECT_PROFILE = "DisconnectProfile";
+
 /// BlueZ org.bluez.Device1 paired property.
 static const std::string BLUEZ_DEVICE_PROPERTY_PAIRED = "Paired";
 
 /// BlueZ org.bluez.Device1 connected property.
 static const std::string BLUEZ_DEVICE_PROPERTY_CONNECTED = "Connected";
+
+/// BlueZ org.bluez.Device1 class property.
+static const std::string BLUEZ_DEVICE_PROPERTY_CLASS = "Class";
 
 /// BlueZ org.bluez.Adapter1 method to remove device.
 static const std::string BLUEZ_ADAPTER_REMOVE_DEVICE = "RemoveDevice";
@@ -130,9 +144,16 @@ bool BlueZBluetoothDevice::updateFriendlyName() {
 }
 
 BlueZBluetoothDevice::~BlueZBluetoothDevice() {
-    ACSDK_DEBUG5(LX(__func__));
-    for (auto& entry : m_servicesMap) {
-        entry.second->cleanup();
+    ACSDK_DEBUG5(LX(__func__).d("mac", getMac()));
+    m_executor.shutdown();
+
+    {
+        std::lock_guard<std::mutex> lock(m_servicesMapMutex);
+
+        for (auto& entry : m_servicesMap) {
+            entry.second->cleanup();
+        }
+        m_servicesMap.clear();
     }
 }
 
@@ -156,13 +177,51 @@ bool BlueZBluetoothDevice::init() {
     bool isPaired = false;
     if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_PAIRED, &isPaired) && isPaired) {
         ACSDK_DEBUG5(LX(__func__).m("deviceIsPaired"));
-        m_deviceState = BlueZDeviceState::IDLE;
+        transitionToState(BlueZDeviceState::IDLE, true);
     }
 
     // Parse UUIDs and find versions.
     if (!initializeServices(getServiceUuids())) {
         ACSDK_ERROR(LX(__func__).d("reason", "initializeServicesFailed"));
         return false;
+    }
+
+    bool isConnected = executeIsConnectedToRelevantServices();
+
+    if (isConnected) {
+        transitionToState(BlueZDeviceState::CONNECTED, true);
+    }
+
+    // Get device MetaData
+    int defaultUndefinedClass = BlueZBluetoothDevice::MetaData::UNDEFINED_CLASS_VALUE;
+    m_metaData = alexaClientSDK::avsCommon::utils::memory::make_unique<BlueZBluetoothDevice::MetaData>(
+        Optional<int>(), Optional<int>(), defaultUndefinedClass, Optional<int>(), Optional<std::string>());
+
+    ManagedGVariant classOfDevice;
+    if (m_propertiesProxy->getVariantProperty(
+            BlueZConstants::BLUEZ_DEVICE_INTERFACE, BLUEZ_DEVICE_PROPERTY_CLASS, &classOfDevice)) {
+        GVariantTupleReader tupleReader(classOfDevice);
+        ManagedGVariant unboxed = tupleReader.getVariant(0).unbox();
+        if (g_variant_is_of_type(unboxed.get(), G_VARIANT_TYPE_UINT32) == TRUE) {
+            m_metaData->classOfDevice = g_variant_get_uint32(unboxed.get());
+            ACSDK_DEBUG5(LX(__func__).d("ClassOfDevice", g_variant_get_uint32(unboxed.get())));
+        }
+    }
+
+    return true;
+}
+
+template <typename BlueZServiceType>
+bool BlueZBluetoothDevice::initializeService() {
+    ACSDK_DEBUG5(LX(__func__).d("supports", BlueZServiceType::NAME));
+    std::shared_ptr<BlueZServiceType> service = BlueZServiceType::create();
+
+    if (!service) {
+        ACSDK_ERROR(LX(__func__).d("createBlueZServiceFailed", BlueZServiceType::NAME));
+        return false;
+    } else {
+        service->setup();
+        insertService(service);
     }
 
     return true;
@@ -175,18 +234,18 @@ bool BlueZBluetoothDevice::initializeServices(const std::unordered_set<std::stri
         ACSDK_DEBUG9(LX(__func__).d("supportedUUID", uuid));
 
         // BlueZ does not provide the version of the service.
-        if (A2DPSourceRecord::UUID == uuid && m_servicesMap.count(A2DPSourceRecord::UUID) == 0) {
-            ACSDK_DEBUG5(LX(__func__).d("supports", A2DPSourceRecord::NAME));
+        if (A2DPSourceInterface::UUID == uuid && !serviceExists(uuid)) {
+            ACSDK_DEBUG5(LX(__func__).d("supports", A2DPSourceInterface::NAME));
             auto a2dpSource = BlueZA2DPSource::create(m_deviceManager);
             if (!a2dpSource) {
                 ACSDK_ERROR(LX(__func__).d("reason", "createA2DPFailed"));
                 return false;
             } else {
                 a2dpSource->setup();
-                m_servicesMap.insert({a2dpSource->getRecord()->getUuid(), a2dpSource});
+                insertService(a2dpSource);
             }
-        } else if (AVRCPTargetRecord::UUID == uuid && m_servicesMap.count(AVRCPTargetRecord::UUID) == 0) {
-            ACSDK_DEBUG5(LX(__func__).d("supports", AVRCPTargetRecord::NAME));
+        } else if (AVRCPTargetInterface::UUID == uuid && !serviceExists(uuid)) {
+            ACSDK_DEBUG5(LX(__func__).d("supports", AVRCPTargetInterface::NAME));
             auto mediaControlProxy = DBusProxy::create(MEDIA_CONTROL_INTERFACE, m_objectPath);
             if (!mediaControlProxy) {
                 ACSDK_ERROR(LX(__func__).d("reason", "nullMediaControlProxy"));
@@ -199,7 +258,27 @@ bool BlueZBluetoothDevice::initializeServices(const std::unordered_set<std::stri
                 return false;
             } else {
                 avrcpTarget->setup();
-                m_servicesMap.insert({avrcpTarget->getRecord()->getUuid(), avrcpTarget});
+                insertService(avrcpTarget);
+            }
+        } else if (A2DPSinkInterface::UUID == uuid && !serviceExists(uuid)) {
+            if (!initializeService<BlueZA2DPSink>()) {
+                return false;
+            }
+        } else if (AVRCPControllerInterface::UUID == uuid && !serviceExists(uuid)) {
+            if (!initializeService<BlueZAVRCPController>()) {
+                return false;
+            }
+        } else if (HFPInterface::UUID == uuid && !serviceExists(uuid)) {
+            if (!initializeService<BlueZHFP>()) {
+                return false;
+            }
+        } else if (HIDInterface::UUID == uuid && !serviceExists(uuid)) {
+            if (!initializeService<BlueZHID>()) {
+                return false;
+            }
+        } else if (SPPInterface::UUID == uuid && !serviceExists(uuid)) {
+            if (!initializeService<BlueZSPP>()) {
+                return false;
             }
         }
     }
@@ -275,6 +354,9 @@ bool BlueZBluetoothDevice::executeUnpair() {
         ACSDK_ERROR(LX(__func__).d("error", errorMsg));
         return false;
     }
+
+    transitionToState(BlueZDeviceState::UNPAIRED, true);
+    transitionToState(BlueZDeviceState::FOUND, true);
     return true;
 }
 
@@ -317,14 +399,12 @@ std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids(GVariant* 
 std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids() {
     ACSDK_DEBUG5(LX(__func__));
 
-    std::unordered_set<std::string> uuids;
-
     // DBus returns this as (a{v},). We have to drill into the tuple to retrieve the array.
     ManagedGVariant uuidsTuple;
     if (!m_propertiesProxy->getVariantProperty(
             BlueZConstants::BLUEZ_DEVICE_INTERFACE, BLUEZ_DEVICE_PROPERTY_UUIDS, &uuidsTuple)) {
         ACSDK_ERROR(LX(__func__).d("reason", "getVariantPropertyFailed"));
-        return {};
+        return std::unordered_set<std::string>();
     }
 
     GVariantTupleReader tupleReader(uuidsTuple);
@@ -333,7 +413,7 @@ std::unordered_set<std::string> BlueZBluetoothDevice::getServiceUuids() {
     if (!array.hasValue()) {
         // The format isn't what we were expecting. Print the original tuple for debugging.
         ACSDK_ERROR(LX(__func__).d("reason", "unexpectedVariantFormat").d("variant", uuidsTuple.dumpToString(false)));
-        return {};
+        return std::unordered_set<std::string>();
     }
 
     return getServiceUuids(array.get());
@@ -374,6 +454,8 @@ bool BlueZBluetoothDevice::executeConnect() {
     }
 
     ManagedGError error;
+    // Calling org.bluez.Device1::Connect will attempt to connect as many services as possible, and return when at least
+    // one service is connected.
     m_deviceProxy->callMethod(BLUEZ_DEVICE_METHOD_CONNECT, nullptr, error.toOutputParameter());
 
     if (error.hasError()) {
@@ -415,6 +497,9 @@ bool BlueZBluetoothDevice::executeDisconnect() {
         return false;
     }
 
+    transitionToState(BlueZDeviceState::DISCONNECTED, true);
+    transitionToState(BlueZDeviceState::IDLE, true);
+
     return true;
 }
 
@@ -423,41 +508,139 @@ std::vector<std::shared_ptr<SDPRecordInterface>> BlueZBluetoothDevice::getSuppor
 
     std::vector<std::shared_ptr<SDPRecordInterface>> services;
 
-    for (auto& it : m_servicesMap) {
-        services.push_back(it.second->getRecord());
+    {
+        std::lock_guard<std::mutex> lock(m_servicesMapMutex);
+
+        for (auto& it : m_servicesMap) {
+            services.push_back(it.second->getRecord());
+        }
     }
 
     return services;
 }
 
-std::shared_ptr<A2DPSourceInterface> BlueZBluetoothDevice::getA2DPSource() {
-    ACSDK_DEBUG5(LX(__func__));
-
-    std::shared_ptr<A2DPSourceInterface> a2dpSource = nullptr;
-    auto it = m_servicesMap.find(A2DPSourceRecord::UUID);
-    if (it != m_servicesMap.end()) {
-        a2dpSource = std::static_pointer_cast<A2DPSourceInterface>(it->second);
-    }
-
-    return a2dpSource;
+bool BlueZBluetoothDevice::serviceExists(const std::string& uuid) {
+    std::lock_guard<std::mutex> lock(m_servicesMapMutex);
+    return m_servicesMap.count(uuid) != 0;
 }
 
-std::shared_ptr<AVRCPTargetInterface> BlueZBluetoothDevice::getAVRCPTarget() {
+bool BlueZBluetoothDevice::insertService(std::shared_ptr<BluetoothServiceInterface> service) {
     ACSDK_DEBUG5(LX(__func__));
 
-    std::shared_ptr<AVRCPTargetInterface> avrcpTarget = nullptr;
-    auto it = m_servicesMap.find(AVRCPTargetRecord::UUID);
-    if (it != m_servicesMap.end()) {
-        avrcpTarget = std::static_pointer_cast<AVRCPTargetInterface>(it->second);
+    if (!service) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullService"));
+        return false;
     }
 
-    return avrcpTarget;
+    std::shared_ptr<SDPRecordInterface> record = service->getRecord();
+
+    if (!record) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullRecord"));
+        return false;
+    }
+
+    ACSDK_DEBUG5(LX(__func__).d("serviceUuid", record->getUuid()));
+
+    bool success = false;
+    {
+        std::lock_guard<std::mutex> lock(m_servicesMapMutex);
+        success = m_servicesMap.insert({record->getUuid(), service}).second;
+    }
+
+    if (!success) {
+        ACSDK_ERROR(LX(__func__).d("reason", "serviceAlreadyExists"));
+    }
+
+    return success;
+}
+
+template <typename ServiceType>
+std::shared_ptr<ServiceType> BlueZBluetoothDevice::getService() {
+    ACSDK_DEBUG5(LX(__func__).d("uuid", ServiceType::UUID));
+
+    std::shared_ptr<ServiceType> service = nullptr;
+    {
+        std::lock_guard<std::mutex> lock(m_servicesMapMutex);
+        auto it = m_servicesMap.find(ServiceType::UUID);
+        if (it == m_servicesMap.end()) {
+            ACSDK_DEBUG(LX(__func__).d("reason", "serviceNotFound"));
+        } else {
+            // We completely control the types these are going to be, so avoid the overhead of dynamic_pointer_cast.
+            service = std::static_pointer_cast<ServiceType>(it->second);
+        }
+    }
+
+    return service;
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> BlueZBluetoothDevice::
+    getService(std::string uuid) {
+    if (A2DPSourceInterface::UUID == uuid) {
+        return getService<A2DPSourceInterface>();
+    } else if (A2DPSinkInterface::UUID == uuid) {
+        return getService<A2DPSinkInterface>();
+    } else if (AVRCPTargetInterface::UUID == uuid) {
+        return getService<AVRCPTargetInterface>();
+    } else if (AVRCPControllerInterface::UUID == uuid) {
+        return getService<AVRCPControllerInterface>();
+    } else if (HFPInterface::UUID == uuid) {
+        return getService<HFPInterface>();
+    } else if (HIDInterface::UUID == uuid) {
+        return getService<HIDInterface>();
+    } else if (SPPInterface::UUID == uuid) {
+        return getService<SPPInterface>();
+    }
+
+    return nullptr;
 }
 
 DeviceState BlueZBluetoothDevice::getDeviceState() {
     ACSDK_DEBUG5(LX(__func__));
 
     return m_executor.submit([this] { return convertToDeviceState(m_deviceState); }).get();
+}
+
+BlueZBluetoothDevice::MetaData BlueZBluetoothDevice::getDeviceMetaData() {
+    return *m_metaData;
+}
+
+MediaStreamingState BlueZBluetoothDevice::getStreamingState() {
+    return m_executor
+        .submit([this] {
+            if (!m_deviceManager) {
+                ACSDK_ERROR(LX(__func__).d("reason", "nullDeviceManager"));
+                return MediaStreamingState::IDLE;
+            }
+
+            return m_deviceManager->getMediaStreamingState();
+        })
+        .get();
+}
+
+bool BlueZBluetoothDevice::toggleServiceConnection(bool enabled, std::shared_ptr<BluetoothServiceInterface> service) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    return m_executor.submit([this, enabled, service] { return executeToggleServiceConnection(enabled, service); })
+        .get();
+}
+
+bool BlueZBluetoothDevice::executeToggleServiceConnection(
+    bool enabled,
+    std::shared_ptr<BluetoothServiceInterface> service) {
+    std::string uuid = service->getRecord()->getUuid();
+    ManagedGError error;
+    if (enabled) {
+        m_deviceProxy->callMethod(
+            BLUZ_DEVICE_METHOD_CONNECT_PROFILE, g_variant_new_string(uuid.c_str()), error.toOutputParameter());
+    } else {
+        m_deviceProxy->callMethod(
+            BLUZ_DEVICE_METHOD_DISCONNECT_PROFILE, g_variant_new_string(uuid.c_str()), error.toOutputParameter());
+    }
+    if (error.hasError()) {
+        ACSDK_ERROR(LX(__func__).d("reason", error.getMessage()));
+        return false;
+    }
+    return true;
 }
 
 avsCommon::sdkInterfaces::bluetooth::DeviceState BlueZBluetoothDevice::convertToDeviceState(
@@ -518,6 +701,18 @@ void BlueZBluetoothDevice::transitionToState(BlueZDeviceState newState, bool sen
     }
 }
 
+bool BlueZBluetoothDevice::executeIsConnectedToRelevantServices() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    bool isPaired = false;
+    bool isConnected = false;
+    bool relevantServiceDiscovered =
+        getService(A2DPSinkInterface::UUID) != nullptr || getService(A2DPSourceInterface::UUID) != nullptr;
+
+    return relevantServiceDiscovered && queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_PAIRED, &isPaired) && isPaired &&
+           queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected;
+}
+
 // TODO ACSDK-1398: Refactor this with a proper state machine.
 void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap) {
     ACSDK_DEBUG5(LX(__func__).d("values", g_variant_print(changesMap.get(), true)));
@@ -543,9 +738,6 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
         }
     }
 
-    // This is used for checking connectedness.
-    bool a2dpSourceAvailable = false;
-
     /*
      * It's not guaranteed all services will be available at construction time.
      * If any become available at a later time, initialize them.
@@ -556,78 +748,59 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
     if (uuidsVariant.hasValue()) {
         auto uuids = getServiceUuids(uuidsVariant.get());
         initializeServices(uuids);
-
-        a2dpSourceAvailable = (uuids.count(A2DPSourceRecord::UUID) > 0);
     }
 
-    m_executor.submit(
-        [this, pairedChanged, paired, connectedChanged, connected, a2dpSourceAvailable, aliasChanged, aliasStr] {
+    m_executor.submit([this, pairedChanged, paired, connectedChanged, connected, aliasChanged, aliasStr] {
+        if (aliasChanged) {
+            ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
+            m_friendlyName = aliasStr;
+        }
 
-            if (aliasChanged) {
-                ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
-                m_friendlyName = aliasStr;
-            }
+        switch (m_deviceState) {
+            case BlueZDeviceState::FOUND: {
+                if (pairedChanged && paired) {
+                    transitionToState(BlueZDeviceState::PAIRED, true);
+                    transitionToState(BlueZDeviceState::IDLE, true);
 
-            switch (m_deviceState) {
-                case BlueZDeviceState::FOUND: {
-                    if (pairedChanged && paired) {
-                        transitionToState(BlueZDeviceState::PAIRED, true);
-                        transitionToState(BlueZDeviceState::IDLE, true);
-
-                        /*
-                         * A connect signal doesn't always mean a device is connected by the BluetoothDeviceInterface
-                         * definition. This sequence has observed:
-                         *
-                         * 1) Pairing (BlueZ sends Connect = true).
-                         * 2) Pair Successful.
-                         * 3) Connect multimedia services.
-                         * 4) Connect multimedia services successful (BlueZ sends Paired = true, UUIDs = [array of
-                         * uuids]).
-                         *
-                         * Thus we will use the combination of Connect, Paired, and the availability of certain UUIDs to
-                         * determine connectedness.
-                         */
-                        bool isConnected = false;
-                        if (queryDeviceProperty(BLUEZ_DEVICE_PROPERTY_CONNECTED, &isConnected) && isConnected &&
-                            a2dpSourceAvailable) {
-                            transitionToState(BlueZDeviceState::CONNECTED, true);
-                        }
-                    }
-                    break;
-                }
-                case BlueZDeviceState::IDLE: {
-                    if (connectedChanged && connected) {
+                    if (executeIsConnectedToRelevantServices()) {
                         transitionToState(BlueZDeviceState::CONNECTED, true);
-                    } else if (pairedChanged && !paired) {
-                        transitionToState(BlueZDeviceState::UNPAIRED, true);
-                        transitionToState(BlueZDeviceState::FOUND, true);
                     }
-                    break;
                 }
-                case BlueZDeviceState::CONNECTED: {
-                    if (pairedChanged && !paired) {
-                        transitionToState(BlueZDeviceState::UNPAIRED, true);
-                        transitionToState(BlueZDeviceState::FOUND, true);
-                    } else if (connectedChanged && !connected) {
-                        transitionToState(BlueZDeviceState::DISCONNECTED, true);
-                        transitionToState(BlueZDeviceState::IDLE, true);
-                    }
-                    break;
+                break;
+            }
+            case BlueZDeviceState::IDLE: {
+                if (executeIsConnectedToRelevantServices()) {
+                    transitionToState(BlueZDeviceState::CONNECTED, true);
+                } else if (pairedChanged && !paired) {
+                    transitionToState(BlueZDeviceState::UNPAIRED, true);
+                    transitionToState(BlueZDeviceState::FOUND, true);
                 }
-                case BlueZDeviceState::UNPAIRED:
-                case BlueZDeviceState::PAIRED:
-                case BlueZDeviceState::DISCONNECTED: {
-                    ACSDK_ERROR(LX("onPropertyChanged").d("reason", "invalidState").d("state", m_deviceState));
-                    break;
+                break;
+            }
+            case BlueZDeviceState::CONNECTED: {
+                if (pairedChanged && !paired) {
+                    transitionToState(BlueZDeviceState::UNPAIRED, true);
+                    transitionToState(BlueZDeviceState::FOUND, true);
+                } else if (connectedChanged && !connected) {
+                    transitionToState(BlueZDeviceState::DISCONNECTED, true);
+                    transitionToState(BlueZDeviceState::IDLE, true);
                 }
-                case BlueZDeviceState::CONNECTION_FAILED: {
-                    if (pairedChanged && !paired) {
-                        transitionToState(BlueZDeviceState::UNPAIRED, true);
-                        transitionToState(BlueZDeviceState::FOUND, true);
-                    }
+                break;
+            }
+            case BlueZDeviceState::UNPAIRED:
+            case BlueZDeviceState::PAIRED:
+            case BlueZDeviceState::DISCONNECTED: {
+                ACSDK_ERROR(LX("onPropertyChanged").d("reason", "invalidState").d("state", m_deviceState));
+                break;
+            }
+            case BlueZDeviceState::CONNECTION_FAILED: {
+                if (pairedChanged && !paired) {
+                    transitionToState(BlueZDeviceState::UNPAIRED, true);
+                    transitionToState(BlueZDeviceState::FOUND, true);
                 }
             }
-        });
+        }
+    });
 }
 
 }  // namespace blueZ

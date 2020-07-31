@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,6 +69,7 @@ std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
 PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) :
         m_audioInputStream{stream},
         m_paStream{nullptr},
+        m_isStreaming{false},
         m_readerThread{nullptr},
         m_fileStream{nullptr},
         m_threadPromise{nullptr},
@@ -117,7 +118,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
     PaError err;
     err = Pa_Initialize();
     if (err != paNoError) {
-        ACSDK_CRITICAL(LX("Failed to initialize PortAudio"));
+        ACSDK_CRITICAL(LX("Failed to initialize PortAudio").d("errorCode", err));
         return false;
     }
 
@@ -158,7 +159,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
     }
 
     if (err != paNoError) {
-        ACSDK_CRITICAL(LX("Failed to open PortAudio default stream"));
+        ACSDK_CRITICAL(LX("Failed to open PortAudio default stream").d("errorCode", err));
         return false;
     }
     return true;
@@ -191,6 +192,7 @@ void PortAudioMicrophoneWrapper::ReaderThread(PortAudioMicrophoneWrapper *wrappe
 }
 
 bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
+    ACSDK_INFO(LX(__func__));
     m_threadPromise = new std::promise<void>;
     m_threadFuture = new std::future<void>{m_threadPromise->get_future()};
     m_readerThread = new std::thread{ReaderThread, this};
@@ -204,18 +206,24 @@ bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
         ACSDK_CRITICAL(LX("Failed to start PortAudio stream"));
         return false;
     }
+    m_isStreaming = true;
     return true;
 }
 
 bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
-    return true;
+    ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StopStream(m_paStream);
     if (err != paNoError) {
         ACSDK_CRITICAL(LX("Failed to stop PortAudio stream"));
         return false;
     }
+    m_isStreaming = false;
     return true;
+}
+
+bool PortAudioMicrophoneWrapper::isStreaming() {
+    return m_isStreaming;
 }
 
 int PortAudioMicrophoneWrapper::PortAudioCallback(

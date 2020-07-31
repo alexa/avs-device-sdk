@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ namespace templateRuntime {
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::json;
 
 /// TemplateRuntime capability constants
@@ -38,10 +39,20 @@ static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_TYPE = "AlexaInter
 /// TemplateRuntime interface name
 static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_NAME = "TemplateRuntime";
 /// TemplateRuntime interface version
-static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.0";
+static const std::string TEMPLATERUNTIME_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"TemplateRuntime"};
+
+/// The key in our config file to find the root of template runtime configuration.
+static const std::string TEMPLATERUNTIME_CONFIGURATION_ROOT_KEY = "templateRuntimeCapabilityAgent";
+/// The key in our config file to set the display card timeout value when TTS is in FINISHED state
+static const std::string TEMPLATERUNTIME_TTS_FINISHED_KEY = "displayCardTTSFinishedTimeout";
+/// The key in our config file to set the display card timeout value when AudioPlayer is in FINISHED state
+static const std::string TEMPLATERUNTIME_AUDIOPLAYBACK_FINISHED_KEY = "displayCardAudioPlaybackFinishedTimeout";
+/// The key in our config file to set the display card timeout value when AudioPlayer is in STOPPED or PAUSE state
+static const std::string TEMPLATERUNTIME_AUDIOPLAYBACK_STOPPED_PAUSED_KEY =
+    "displayCardAudioPlaybackStoppedPausedTimeout";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -74,14 +85,14 @@ static const std::string AUDIO_ITEM_ID_TAG{"audioItemId"};
 /// Maximum queue size allowed for m_audioItems.
 static const size_t MAXIMUM_QUEUE_SIZE{100};
 
-/// Timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
-static const std::chrono::milliseconds TTS_FINISHED_TIMEOUT_MS{2000};
+/// Default timeout for clearing the RenderTemplate display card when SpeechSynthesizer is in FINISHED state.
+static const std::chrono::milliseconds DEFAULT_TTS_FINISHED_TIMEOUT_MS{2000};
 
-/// Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
-static const std::chrono::milliseconds AUDIO_FINISHED_TIMEOUT_MS{2000};
+/// Default timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in FINISHED state.
+static const std::chrono::milliseconds DEFAULT_AUDIO_FINISHED_TIMEOUT_MS{2000};
 
-/// Timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.
-static const std::chrono::milliseconds AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
+/// Default timeout for clearing the RenderPlayerInfo display card when AudioPlayer is in STOPPED/PAUSED state.
+static const std::chrono::milliseconds DEFAULT_AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
 
 /**
  * Creates the TemplateRuntime capability configuration.
@@ -91,14 +102,10 @@ static const std::chrono::milliseconds AUDIO_STOPPED_PAUSED_TIMEOUT_MS{60000};
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getTemplateRuntimeCapabilityConfiguration();
 
 std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> audioPlayerInterface,
+    const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>&
+        renderPlayerInfoCardInterface,
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
-    if (!audioPlayerInterface) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullAudioPlayerInterface"));
-        return nullptr;
-    }
-
     if (!focusManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullFocusManager"));
         return nullptr;
@@ -109,18 +116,59 @@ std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
         return nullptr;
     }
     std::shared_ptr<TemplateRuntime> templateRuntime(
-        new TemplateRuntime(audioPlayerInterface, focusManager, exceptionSender));
-    audioPlayerInterface->addObserver(templateRuntime);
+        new TemplateRuntime(renderPlayerInfoCardInterface, focusManager, exceptionSender));
+
+    if (!templateRuntime->initialize()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "Initialization error."));
+        return nullptr;
+    }
+
+    for (const auto& renderPlayerInfoCardProvider : renderPlayerInfoCardInterface) {
+        if (!renderPlayerInfoCardProvider) {
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullRenderPlayerInfoCardInterface"));
+            return nullptr;
+        }
+        renderPlayerInfoCardProvider->setObserver(templateRuntime);
+    }
+
     return templateRuntime;
+}
+
+/**
+ * Initializes the object by reading the values from configuration.
+ */
+bool TemplateRuntime::initialize() {
+    auto configurationRoot = ConfigurationNode::getRoot()[TEMPLATERUNTIME_CONFIGURATION_ROOT_KEY];
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_TTS_FINISHED_KEY, &m_ttsFinishedTimeout, DEFAULT_TTS_FINISHED_TIMEOUT_MS);
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_AUDIOPLAYBACK_FINISHED_KEY, &m_audioPlaybackFinishedTimeout, DEFAULT_AUDIO_FINISHED_TIMEOUT_MS);
+
+    // If key is present, then read and initilize the value from config or set to default.
+    configurationRoot.getDuration<std::chrono::milliseconds>(
+        TEMPLATERUNTIME_AUDIOPLAYBACK_STOPPED_PAUSED_KEY,
+        &m_audioPlaybackStoppedPausedTimeout,
+        DEFAULT_AUDIO_STOPPED_PAUSED_TIMEOUT_MS);
+
+    return true;
 }
 
 void TemplateRuntime::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
     ACSDK_DEBUG5(LX("handleDirectiveImmediately"));
-    preHandleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+    handleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
 }
 
 void TemplateRuntime::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX("preHandleDirective"));
+    // do nothing.
+}
+
+void TemplateRuntime::handleDirective(std::shared_ptr<DirectiveInfo> info) {
+    ACSDK_DEBUG5(LX("handleDirective"));
     if (!info || !info->directive) {
         ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullDirectiveInfo"));
         return;
@@ -134,11 +182,6 @@ void TemplateRuntime::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
     }
 }
 
-void TemplateRuntime::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG5(LX("handleDirective"));
-    // Do nothing here as directives are handled in the preHandle stage.
-}
-
 void TemplateRuntime::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
     removeDirective(info);
 }
@@ -146,17 +189,19 @@ void TemplateRuntime::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
 DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     ACSDK_DEBUG5(LX("getConfiguration"));
     DirectiveHandlerConfiguration configuration;
-    configuration[TEMPLATE] = BlockingPolicy::HANDLE_IMMEDIATELY;
-    configuration[PLAYER_INFO] = BlockingPolicy::HANDLE_IMMEDIATELY;
+    auto visualNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_VISUAL, false);
+
+    configuration[TEMPLATE] = visualNonBlockingPolicy;
+    configuration[PLAYER_INFO] = visualNonBlockingPolicy;
     return configuration;
 }
 
-void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus) {
+void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus, MixingBehavior) {
     m_executor.submit([this, newFocus]() { executeOnFocusChangedEvent(newFocus); });
 }
 
-void TemplateRuntime::onPlayerActivityChanged(avsCommon::avs::PlayerActivity state, const Context& context) {
-    ACSDK_DEBUG5(LX("onPlayerActivityChanged"));
+void TemplateRuntime::onRenderPlayerCardsInfoChanged(avsCommon::avs::PlayerActivity state, const Context& context) {
+    ACSDK_DEBUG5(LX("onRenderPlayerCardsInfoChanged"));
     m_executor.submit([this, state, context]() {
         ACSDK_DEBUG5(LX("onPlayerActivityChangedInExecutor"));
         executeAudioPlayerInfoUpdates(state, context);
@@ -167,10 +212,14 @@ void TemplateRuntime::onDialogUXStateChanged(
     avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
     ACSDK_DEBUG5(LX("onDialogUXStateChanged").d("state", newState));
     m_executor.submit([this, newState]() {
-        if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == newState &&
-            TemplateRuntime::State::DISPLAYING == m_state) {
-            if (m_lastDisplayedDirective && m_lastDisplayedDirective->directive->getName() == RENDER_TEMPLATE) {
-                executeStartTimer(TTS_FINISHED_TIMEOUT_MS);
+        if (TemplateRuntime::State::DISPLAYING == m_state && m_lastDisplayedDirective &&
+            m_lastDisplayedDirective->directive->getName() == RENDER_TEMPLATE) {
+            if (avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE == newState) {
+                executeStartTimer(m_ttsFinishedTimeout);
+            } else if (
+                avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::EXPECTING == newState ||
+                avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::SPEAKING == newState) {
+                executeStopTimer();
             }
         }
     });
@@ -207,7 +256,8 @@ void TemplateRuntime::removeObserver(
 }
 
 TemplateRuntime::TemplateRuntime(
-    std::shared_ptr<avsCommon::sdkInterfaces::AudioPlayerInterface> audioPlayerInterface,
+    const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>&
+        renderPlayerInfoCardsInterfaces,
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) :
         CapabilityAgent{NAMESPACE, exceptionSender},
@@ -215,7 +265,7 @@ TemplateRuntime::TemplateRuntime(
         m_isRenderTemplateLastReceived{false},
         m_focus{FocusState::NONE},
         m_state{TemplateRuntime::State::IDLE},
-        m_audioPlayerInterface{audioPlayerInterface},
+        m_renderPlayerInfoCardsInterfaces{renderPlayerInfoCardsInterfaces},
         m_focusManager{focusManager} {
     m_capabilityConfigurations.insert(getTemplateRuntimeCapabilityConfiguration());
 }
@@ -233,8 +283,13 @@ void TemplateRuntime::doShutdown() {
     m_executor.shutdown();
     m_focusManager.reset();
     m_observers.clear();
-    m_audioPlayerInterface->removeObserver(shared_from_this());
-    m_audioPlayerInterface.reset();
+    m_activeRenderPlayerInfoCardsProvider.reset();
+    m_audioItemsInExecution.clear();
+    m_audioPlayerInfo.clear();
+    for (const auto renderPlayerInfoCardsInterface : m_renderPlayerInfoCardsInterfaces) {
+        renderPlayerInfoCardsInterface->setObserver(nullptr);
+    }
+    m_renderPlayerInfoCardsInterfaces.clear();
 }
 
 void TemplateRuntime::removeDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -297,29 +352,44 @@ void TemplateRuntime::handleRenderPlayerInfoDirective(std::shared_ptr<DirectiveI
             return;
         }
 
-        if (m_audioItemInExecution.audioItemId != audioItemId) {
+        size_t found = std::string::npos;
+        for (auto& executionMap : m_audioItemsInExecution) {
+            if (!executionMap.second.audioItemId.empty()) {
+                found = audioItemId.find(executionMap.second.audioItemId);
+            }
+            if (found != std::string::npos) {
+                ACSDK_DEBUG3(LX("handleRenderPlayerInfoDirectiveInExecutor")
+                                 .d("audioItemId", audioItemId)
+                                 .m("Matching audioItemId in execution."));
+                executionMap.second.directive = info;
+                m_activeRenderPlayerInfoCardsProvider = executionMap.first;
+                m_audioPlayerInfo[m_activeRenderPlayerInfoCardsProvider].offset =
+                    executionMap.first->getAudioItemOffset();
+                executeStopTimer();
+                executeDisplayCardEvent(info);
+                // Since there'a match, we can safely empty m_audioItems.
+                m_audioItems.clear();
+                break;
+            }
+        }
+
+        if (std::string::npos == found) {
             ACSDK_DEBUG3(LX("handleRenderPlayerInfoDirectiveInExecutor")
                              .d("audioItemId", audioItemId)
                              .m("Not matching audioItemId in execution."));
+
             AudioItemPair itemPair{audioItemId, info};
             if (m_audioItems.size() == MAXIMUM_QUEUE_SIZE) {
-                // Something is wrong, so we pop the front of the queue and log an error.
-                auto discardedAudioItem = m_audioItems.front();
-                m_audioItems.pop();
+                // Something is wrong, so we pop the back of the queue and log an error.
+                auto discardedAudioItem = m_audioItems.back();
+                m_audioItems.pop_back();
                 ACSDK_ERROR(LX("handleRenderPlayerInfoDirective")
                                 .d("reason", "queueIsFull")
                                 .d("discardedAudioItemId", discardedAudioItem.audioItemId));
             }
-            m_audioItems.push(itemPair);
-        } else {
-            ACSDK_DEBUG3(LX("handleRenderPlayerInfoDirectiveInExecutor")
-                             .d("audioItemId", audioItemId)
-                             .m("Matching audioItemId in execution."));
-            m_audioItemInExecution.directive = info;
-            m_audioPlayerInfo.offset = m_audioPlayerInterface->getAudioItemOffset();
-            executeStopTimer();
-            executeDisplayCardEvent(info);
+            m_audioItems.push_front(itemPair);
         }
+
         setHandlingCompleted(info);
     });
 }
@@ -354,7 +424,14 @@ void TemplateRuntime::executeAudioPlayerInfoUpdates(avsCommon::avs::PlayerActivi
         return;
     }
 
-    if (m_audioPlayerInfo.audioPlayerState == state && m_audioItemInExecution.audioItemId == context.audioItemId) {
+    if (!context.mediaProperties) {
+        ACSDK_ERROR(LX("executeAudioPlayerInfoUpdatesFailed").d("reason", "nullRenderPlayerInfoCardsInterface"));
+        return;
+    }
+
+    const auto& currentRenderPlayerInfoCardsProvider = context.mediaProperties;
+    if (m_audioPlayerInfo[currentRenderPlayerInfoCardsProvider].audioPlayerState == state &&
+        m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].audioItemId == context.audioItemId) {
         /*
          * The AudioPlayer notification is chatty during audio playback as it will frequently toggle between
          * BUFFER_UNDERRUN and PLAYER state.  So we filter out the callbacks if the notification are with the
@@ -363,32 +440,31 @@ void TemplateRuntime::executeAudioPlayerInfoUpdates(avsCommon::avs::PlayerActivi
         return;
     }
 
-    auto isStateUpdated = (m_audioPlayerInfo.audioPlayerState != state);
-    m_audioPlayerInfo.audioPlayerState = state;
-    m_audioPlayerInfo.offset = context.offset;
-    if (m_audioItemInExecution.audioItemId != context.audioItemId) {
-        m_audioItemInExecution.audioItemId = context.audioItemId;
-        m_audioItemInExecution.directive.reset();
-        while (!m_audioItems.empty()) {
-            auto audioItem = m_audioItems.front();
-            m_audioItems.pop();
-            if (audioItem.audioItemId == context.audioItemId) {
+    auto isStateUpdated = (m_audioPlayerInfo[currentRenderPlayerInfoCardsProvider].audioPlayerState != state);
+    m_audioPlayerInfo[currentRenderPlayerInfoCardsProvider].audioPlayerState = state;
+    m_audioPlayerInfo[currentRenderPlayerInfoCardsProvider].offset = context.offset;
+    if (m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].audioItemId != context.audioItemId) {
+        m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].audioItemId = context.audioItemId;
+        m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].directive.reset();
+        // iterate from front to back (front is most recent)
+        for (auto it = m_audioItems.begin(); it != m_audioItems.end(); ++it) {
+            auto found = it->audioItemId.find(context.audioItemId);
+            if (std::string::npos != found) {
                 ACSDK_DEBUG3(LX("executeAudioPlayerInfoUpdates")
                                  .d("audioItemId", context.audioItemId)
                                  .m("Found matching audioItemId in queue."));
-                m_audioItemInExecution.directive = audioItem.directive;
+                m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].directive = it->directive;
+                m_activeRenderPlayerInfoCardsProvider = currentRenderPlayerInfoCardsProvider;
+                // We are erasing items older than the current found, as well as the current item.
+                m_audioItems.erase(it, m_audioItems.end());
                 break;
-            } else {
-                ACSDK_DEBUG3(LX("executeAudioPlayerInfoUpdates")
-                                 .d("audioItemId", audioItem.audioItemId)
-                                 .m("Dropping out-dated audioItemId in queue."));
             }
         }
     }
     if (m_isRenderTemplateLastReceived && state != avsCommon::avs::PlayerActivity::PLAYING) {
         /*
          * If RenderTemplate is the last directive received and the AudioPlayer is not notifying a PLAY,
-         * we shouldn't be notifing the observer to render a PlayerInfo display card.
+         * we shouldn't be notifying the observer to render a PlayerInfo display card.
          */
         return;
     }
@@ -396,15 +472,20 @@ void TemplateRuntime::executeAudioPlayerInfoUpdates(avsCommon::avs::PlayerActivi
 
     /*
      * If the AudioPlayer notifies a PLAYING state before the RenderPlayerInfo with the corresponding
-     * audioItemId is received, this function will also be called but the m_audioItemInExecution.directive
+     * audioItemId is received, this function will also be called but the m_audioItemsInExecution.directive
      * will be set to nullptr.  So we need to do a nullptr check here to make sure there is a RenderPlayerInfo
      * displayCard to display..
      */
-    if (m_audioItemInExecution.directive) {
+    if (m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].directive) {
         if (isStateUpdated) {
             executeAudioPlayerStartTimer(state);
         }
-        executeDisplayCardEvent(m_audioItemInExecution.directive);
+        executeDisplayCardEvent(m_audioItemsInExecution[currentRenderPlayerInfoCardsProvider].directive);
+    } else {
+        // The RenderTemplateCard is cleared before it's displayed, so we should release the focus.
+        if (TemplateRuntime::State::ACQUIRING == m_state) {
+            m_state = TemplateRuntime::State::RELEASING;
+        }
     }
 }
 
@@ -412,20 +493,32 @@ void TemplateRuntime::executeAudioPlayerStartTimer(avsCommon::avs::PlayerActivit
     if (avsCommon::avs::PlayerActivity::PLAYING == state) {
         executeStopTimer();
     } else if (avsCommon::avs::PlayerActivity::PAUSED == state || avsCommon::avs::PlayerActivity::STOPPED == state) {
-        executeStartTimer(AUDIO_STOPPED_PAUSED_TIMEOUT_MS);
+        executeStartTimer(m_audioPlaybackStoppedPausedTimeout);
     } else if (avsCommon::avs::PlayerActivity::FINISHED == state) {
-        executeStartTimer(AUDIO_FINISHED_TIMEOUT_MS);
+        executeStartTimer(m_audioPlaybackFinishedTimeout);
     }
 }
 
 void TemplateRuntime::executeRenderPlayerInfoCallbacks(bool isClearCard) {
     ACSDK_DEBUG3(LX("executeRenderPlayerInfoCallbacks").d("isClearCard", isClearCard ? "True" : "False"));
-    for (auto& observer : m_observers) {
-        if (isClearCard) {
+    if (isClearCard) {
+        for (auto& observer : m_observers) {
             observer->clearPlayerInfoCard();
-        } else {
-            observer->renderPlayerInfoCard(
-                m_audioItemInExecution.directive->directive->getPayload(), m_audioPlayerInfo, m_focus);
+        }
+    } else {
+        if (!m_activeRenderPlayerInfoCardsProvider) {
+            ACSDK_ERROR(
+                LX("executeRenderPlayerInfoCallbacksFailed").d("reason", "nullActiveRenderPlayerInfoCardsProvider"));
+            return;
+        }
+        if (!m_audioItemsInExecution[m_activeRenderPlayerInfoCardsProvider].directive) {
+            ACSDK_ERROR(LX("executeRenderPlayerInfoCallbacksFailed").d("reason", "nullAudioItemInExecution"));
+            return;
+        }
+        auto payload =
+            m_audioItemsInExecution[m_activeRenderPlayerInfoCardsProvider].directive->directive->getPayload();
+        for (auto& observer : m_observers) {
+            observer->renderPlayerInfoCard(payload, m_audioPlayerInfo[m_activeRenderPlayerInfoCardsProvider], m_focus);
         }
     }
 }
@@ -602,7 +695,8 @@ void TemplateRuntime::executeOnFocusChangedEvent(avsCommon::avs::FocusState newF
             switch (newFocus) {
                 case FocusState::FOREGROUND:
                 case FocusState::BACKGROUND:
-                    weirdFocusState = true;
+                    m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                    nextState = TemplateRuntime::State::RELEASING;
                     break;
                 case FocusState::NONE:
                     nextState = TemplateRuntime::State::IDLE;
@@ -689,6 +783,19 @@ void TemplateRuntime::executeCardClearedEvent() {
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> TemplateRuntime::
     getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+void TemplateRuntime::addRenderPlayerInfoCardsProvider(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface> cardsProvider) {
+    ACSDK_DEBUG5(LX("addRenderPlayerInfoCardsProvider"));
+
+    if (!cardsProvider) {
+        ACSDK_ERROR(
+            LX("addRenderPlayerInfoCardsProviderFailed").d("reason", "nullRenderPlayerInfoCardsProviderInterface"));
+        return;
+    }
+    cardsProvider->setObserver(shared_from_this());
+    m_renderPlayerInfoCardsInterfaces.insert(cardsProvider);
 }
 
 }  // namespace templateRuntime

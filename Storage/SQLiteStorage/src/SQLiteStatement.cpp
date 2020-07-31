@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ bool SQLiteStatement::bindIntParameter(int index, int value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindIntParameterFailed")
                         .m("Could not bind int parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }
@@ -122,7 +122,7 @@ bool SQLiteStatement::bindInt64Parameter(int index, int64_t value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindInt64ParameterFailed")
                         .m("Could not bind int64_t parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }
@@ -136,10 +136,11 @@ bool SQLiteStatement::bindStringParameter(int index, const std::string& value) {
         return false;
     }
 
+    m_boundValues.push_back(value);
     int rcode = sqlite3_bind_text(
         m_handle,                                 // the statement handle
         index,                                    // the position to bind to
-        value.c_str(),                            // the value to bind
+        m_boundValues.back().c_str(),             // the value to bind
         SQLITE_PARSE_STRING_UNTIL_NUL_CHARACTER,  // SQLite string parsing instruction
         nullptr);                                 // optional destructor for SQLite to call once done
 
@@ -147,7 +148,7 @@ bool SQLiteStatement::bindStringParameter(int index, const std::string& value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindStringParameterFailed")
                         .m("Could not bind string parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }
@@ -180,8 +181,8 @@ std::string SQLiteStatement::getColumnText(int index) const {
 
     // The reinterpret_cast is needed due to SQLite storing text data as utf8 (ie. const unsigned char*).
     // We are ok in our implementation to do the cast, since we know we're storing as regular ascii.
-    const char* rowValue = reinterpret_cast<const char*>(sqlite3_column_text(m_handle, index));
-    return std::string(rowValue);
+    const unsigned char* rowValue = sqlite3_column_text(m_handle, index);
+    return rowValue ? std::string(reinterpret_cast<const char*>(rowValue)) : "";
 }
 
 int SQLiteStatement::getColumnInt(int index) const {

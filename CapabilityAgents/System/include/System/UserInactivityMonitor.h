@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -104,6 +104,9 @@ private:
     /// Send inactivity report by comparing to the last time active. We will register this function with the timer.
     void sendInactivityReport();
 
+    /// Start the timer for sending UserInactivity event to AVS.
+    void startTimer();
+
     /**
      * Utility function to notify our inactivityObservers that the System.UserInactivityReport Event has been sent.
      */
@@ -133,6 +136,9 @@ private:
     /// Observers to be notified when the System.UserInactivityReport Event has been sent.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface>>
         m_inactivityObservers;
+
+    /// Interval in milliseconds to send UserInactivity event to AVS.
+    const std::chrono::milliseconds m_sendPeriod;
 };
 
 }  // namespace system

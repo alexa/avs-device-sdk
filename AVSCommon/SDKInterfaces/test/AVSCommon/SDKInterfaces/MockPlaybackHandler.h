@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ namespace test {
 class MockPlaybackHandler : public PlaybackHandlerInterface {
 public:
     MOCK_METHOD1(onButtonPressed, void(avs::PlaybackButton button));
+    MOCK_METHOD2(onTogglePressed, void(avs::PlaybackToggle toggle, bool action));
 };
 
 }  // namespace test

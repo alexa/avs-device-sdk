@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -549,12 +549,22 @@ bool SQLiteMiscStorage::get(
         return false;
     }
 
-    const std::string sqlString = "SELECT value FROM " + dbTableName + " WHERE " + KEY_COLUMN_NAME + "='" + key + "';";
+    const std::string sqlString = "SELECT value FROM " + dbTableName + " WHERE " + KEY_COLUMN_NAME + "=?;";
+    const int keyIndex = 1;
 
     auto sqliteStatement = m_db.createStatement(sqlString);
+    if (!sqliteStatement) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Create statement failed."));
+        return false;
+    }
 
-    if ((!sqliteStatement) || (!sqliteStatement->step())) {
-        ACSDK_ERROR(LX(errorEvent).d("Could not get value for " + key + " from table", tableName));
+    if (!sqliteStatement->bindStringParameter(keyIndex, key)) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Bind parameter failed."));
+        return false;
+    }
+
+    if (!sqliteStatement->step()) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Step failed."));
         return false;
     }
 
@@ -662,11 +672,25 @@ bool SQLiteMiscStorage::add(
 
     std::string dbTableName = getDBTableName(componentName, tableName);
 
-    const std::string sqlString = "INSERT INTO " + dbTableName + " (" + KEY_COLUMN_NAME + ", " + VALUE_COLUMN_NAME +
-                                  ") VALUES ('" + key + "', '" + value + "');";
+    const std::string sqlString =
+        "INSERT INTO " + dbTableName + " (" + KEY_COLUMN_NAME + ", " + VALUE_COLUMN_NAME + ") VALUES (?, ?);";
 
-    if (!m_db.performQuery(sqlString)) {
-        ACSDK_ERROR(LX(errorEvent).d("Could not add entry (" + key + ", " + value + ") to table", tableName));
+    const int keyIndex = 1;
+    const int valueIndex = 2;
+
+    auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Create statement failed."));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(keyIndex, key) || !statement->bindStringParameter(valueIndex, value)) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Bind parameter failed."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Step failed."));
         return false;
     }
 
@@ -705,11 +729,25 @@ bool SQLiteMiscStorage::update(
 
     std::string dbTableName = getDBTableName(componentName, tableName);
 
-    const std::string sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + value + "' WHERE " +
-                                  KEY_COLUMN_NAME + "='" + key + "';";
+    const std::string sqlString =
+        "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "=? WHERE " + KEY_COLUMN_NAME + "=?;";
 
-    if (!m_db.performQuery(sqlString)) {
-        ACSDK_ERROR(LX(errorEvent).d("Could not update entry for " + key + " in table", tableName));
+    const int valueIndex = 1;
+    const int keyIndex = 2;
+
+    auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Create statement failed."));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(keyIndex, key) || !statement->bindStringParameter(valueIndex, value)) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Bind parameter failed."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Step failed."));
         return false;
     }
 
@@ -748,17 +786,30 @@ bool SQLiteMiscStorage::put(
     std::string errorValue;
 
     if (!tableEntryExistsValue) {
-        sqlString = "INSERT INTO " + dbTableName + " (" + KEY_COLUMN_NAME + ", " + VALUE_COLUMN_NAME + ") VALUES ('" +
-                    key + "', '" + value + "');";
+        sqlString =
+            "INSERT INTO " + dbTableName + " (" + VALUE_COLUMN_NAME + ", " + KEY_COLUMN_NAME + ") VALUES (?, ?);";
         errorValue = "Could not add entry (" + key + ", " + value + ") to table";
     } else {
-        sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "='" + value + "' WHERE " +
-                    KEY_COLUMN_NAME + "='" + key + "';";
+        sqlString = "UPDATE " + dbTableName + " SET " + VALUE_COLUMN_NAME + "=? WHERE " + KEY_COLUMN_NAME + "=?;";
         errorValue = "Could not update entry for " + key + " in table";
     }
 
-    if (!m_db.performQuery(sqlString)) {
-        ACSDK_ERROR(LX(errorEvent).d(errorValue, tableName));
+    const int valueIndex = 1;
+    const int keyIndex = 2;
+
+    auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Create statement failed."));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(keyIndex, key) || !statement->bindStringParameter(valueIndex, value)) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Bind parameter failed."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Step failed (" + errorValue + ")."));
         return false;
     }
 
@@ -792,10 +843,23 @@ bool SQLiteMiscStorage::remove(const std::string& componentName, const std::stri
 
     std::string dbTableName = getDBTableName(componentName, tableName);
 
-    const std::string sqlString = "DELETE FROM " + dbTableName + " WHERE " + KEY_COLUMN_NAME + "='" + key + "';";
+    const std::string sqlString = "DELETE FROM " + dbTableName + " WHERE " + KEY_COLUMN_NAME + "=?;";
 
-    if (!m_db.performQuery(sqlString)) {
-        ACSDK_ERROR(LX(errorEvent).d("Could not remove entry for " + key + " in table", tableName));
+    const int keyIndex = 1;
+
+    auto statement = m_db.createStatement(sqlString);
+    if (!statement) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Create statement failed."));
+        return false;
+    }
+
+    if (!statement->bindStringParameter(keyIndex, key)) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Bind parameter failed."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX(errorEvent).d("reason", "Step failed."));
         return false;
     }
 
@@ -864,6 +928,10 @@ bool SQLiteMiscStorage::load(
     }
 
     return true;
+}
+
+bool SQLiteMiscStorage::isOpened() {
+    return m_db.isDatabaseReady();
 }
 
 }  // namespace sqliteStorage

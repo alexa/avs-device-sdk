@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_INTERNETCONNECTIONMONITORINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_INTERNETCONNECTIONMONITORINTERFACE_H_
+
+#include <memory>
 
 #include "AVSCommon/SDKInterfaces/InternetConnectionObserverInterface.h"
 
@@ -36,6 +38,11 @@ public:
      * Remove an observer to be notified of internet connection changes.
      */
     virtual void removeInternetConnectionObserver(std::shared_ptr<InternetConnectionObserverInterface> observer) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~InternetConnectionMonitorInterface() = default;
 };
 
 }  // namespace sdkInterfaces

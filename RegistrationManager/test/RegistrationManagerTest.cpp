@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,8 +35,6 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace testing;
 
-using avsCommon::utils::memory::make_unique;
-
 class MockRegistrationObserver : public RegistrationObserverInterface {
 public:
     MOCK_METHOD0(onLogout, void());
@@ -55,7 +53,7 @@ protected:
         m_directiveSequencer = std::make_shared<MockDirectiveSequencer>();
         m_avsConnectionManager = std::make_shared<MockAVSConnectionManager>();
         m_dataManager = std::make_shared<CustomerDataManager>();
-        m_dataHandler = make_unique<MockCustomerDataHandler>(m_dataManager);
+        m_dataHandler = avsCommon::utils::memory::make_unique<MockCustomerDataHandler>(m_dataManager);
         m_registrationManager.reset(
             new RegistrationManager(m_directiveSequencer, m_avsConnectionManager, m_dataManager));
         m_registrationObserver = std::make_shared<MockRegistrationObserver>();
@@ -89,7 +87,7 @@ protected:
  * - clear data handler's data
  * - notify registration observer
  */
-TEST_F(RegistrationManagerTest, testLogout) {
+TEST_F(RegistrationManagerTest, test_logout) {
     EXPECT_CALL(*m_directiveSequencer, disable());
     EXPECT_CALL(*m_avsConnectionManager, disable());
     EXPECT_CALL(*m_registrationObserver, onLogout());

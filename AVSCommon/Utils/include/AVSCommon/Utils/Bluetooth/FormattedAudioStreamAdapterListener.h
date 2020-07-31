@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_BLUETOOTH_FORMATTEDAUDIOSTREAMADAPTERLISTENER_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_BLUETOOTH_FORMATTEDAUDIOSTREAMADAPTERLISTENER_H_
 
-#include <AVSCommon/Utils/AudioFormat.h>
+#include "AVSCommon/Utils/AudioFormat.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -38,6 +38,11 @@ public:
         avsCommon::utils::AudioFormat audioFormat,
         const unsigned char* buffer,
         size_t size) = 0;
+
+    /**
+     * Destructor.
+     */
+    virtual ~FormattedAudioStreamAdapterListener() = default;
 };
 
 }  // namespace bluetooth

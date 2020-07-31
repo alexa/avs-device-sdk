@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public:
      * @remarks @c DBusConnection internally keeps list of all subscriptions made. They all will be closed in
      * the destructor. For most of the cases we don't need the unsubscribing in runtime, so this is left undone now.
      */
-    uint subscribeToSignal(
+    unsigned int subscribeToSignal(
         const char* serviceName,
         const char* interfaceName,
         const char* member,

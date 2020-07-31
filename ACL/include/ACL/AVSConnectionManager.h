@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,8 +24,9 @@
 
 #include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
-#include <AVSCommon/SDKInterfaces/AVSEndpointAssignerInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -69,9 +70,11 @@ namespace acl {
 class AVSConnectionManager
         : public avsCommon::avs::AbstractAVSConnectionManager
         , public avsCommon::sdkInterfaces::MessageSenderInterface
-        , public avsCommon::sdkInterfaces::AVSEndpointAssignerInterface
+        , public avsCommon::sdkInterfaces::AVSGatewayAssignerInterface
         , public MessageRouterObserverInterface
-        , public avsCommon::utils::RequiresShutdown {
+        , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
+        , public avsCommon::utils::RequiresShutdown
+        , public std::enable_shared_from_this<AVSConnectionManager> {
 public:
     /**
      * A factory function that creates an AVSConnectionManager object.
@@ -91,7 +94,9 @@ public:
             connectionStatusObservers =
                 std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> messageObservers =
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>(),
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor =
+            nullptr);
 
     /// @name AVSConnectionManagerInterface method overrides.
     /// @{
@@ -100,6 +105,7 @@ public:
     bool isEnabled() override;
     void reconnect() override;
     bool isConnected() const override;
+    void onWakeConnectionRetry() override;
     void addMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     /// @}
@@ -107,10 +113,20 @@ public:
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
 
     /**
-     * @note Set the URL endpoint for the AVS connection.  Calling this function with a new value will cause the
-     * current active connection to be closed, and a new one opened to the new endpoint.
+     * @note Set the gateway URL for the AVS connection.  Calling this function with a new value will cause the
+     * current active connection to be closed, and a new one opened to the new gateway.
      */
-    void setAVSEndpoint(const std::string& avsEndpoint) override;
+    void setAVSGateway(const std::string& avsGateway) override;
+
+    /**
+     * @return The current gateway URL for AVS connection.
+     */
+    std::string getAVSGateway();
+
+    /// @name InternetConnectionObserverInterface method overrides.
+    /// @{
+    void onConnectionStatusChanged(bool connected) override;
+    /// @}
 
 private:
     /**
@@ -127,7 +143,9 @@ private:
             connectionStatusObservers =
                 std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>(),
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> messageObserver =
-            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>());
+            std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>>(),
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor =
+            nullptr);
 
     void doShutdown() override;
 
@@ -137,8 +155,11 @@ private:
 
     void receive(const std::string& contextId, const std::string& message) override;
 
+    /// Mutex to serialize access to @c m_isEnabled
+    std::mutex m_isEnabledMutex;
+
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
-    std::atomic<bool> m_isEnabled;
+    bool m_isEnabled;
 
     /// Client-provided message listener, which will receive all messages sent from AVS.
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface>> m_messageObservers;
@@ -148,6 +169,9 @@ private:
 
     /// Internal object that manages the actual connection to AVS.
     std::shared_ptr<MessageRouterInterface> m_messageRouter;
+
+    /// Object providing notification of gaining and losing internet connectivity.
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 };
 
 }  // namespace acl

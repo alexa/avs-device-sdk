@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,22 +28,24 @@
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
-#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/RetryTimer.h>
+#include <AVSCommon/Utils/WaitEvent.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace speakerManager {
 
 /**
- * This class implementes a @c CapabilityAgent that handles the AVS @c Speaker API.
+ * This class implements a @c CapabilityAgent that handles the AVS @c Speaker API.
  *
- * The @c SpeakerManager can handle multiple @c SpeakerInterface objects. @c SpeakerInterface
- * are grouped by their respective types, and the volume and mute state will be consistent
- * across each type. For example, to change the volume of all speakers of a specific type:
+ * The @c SpeakerManager can handle multiple @c ChannelVolumeInterface objects. @c ChannelVolumeInterface
+ * are grouped by their respective @c ChannelVolumeInterface::Type, and the volume and mute state will be consistent
+ * across each type. For example, to change the volume of all @c ChannelVolumeInterface objects of a specific type:
  *
  * @code{.cpp}
  *     // Use local setVolume API.
@@ -54,18 +56,7 @@ namespace speakerManager {
  *     }
  * @endcode
  *
- * AVS documentation specifies that Alerts volume should be handled separately.
- * Currently, the AVS API does not support differentiating between different speakers.
- * To provide clients an option to handle Alerts (and any other) volumes independently,
- * only @c SpeakerInterface::Type::AVS_SYNCED speakers will communicate with AVS.
- *
- * A default type, @c SpeakerInterface::Type::LOCAL, is provided. This type will not be modified by directives sent by
- * AVS, nor will they send events on volume/mute change. These @c SpeakerInterfaces can still be modified through the
- * APIs that @c SpeakerManagerInterface provides. Clients may extend the @c SpeakerInterface::Type enum if multiple
- * independent volume controls are needed.
- *
- * If clients wish directives and events to apply to the specific @c SpeakerInterface, it must
- * have a type of @c SpeakerInterface::Type::AVS_SYNCED.
+ * Clients may extend the @c ChannelVolumeInterface::Type enum if multiple independent volume controls are needed.
  */
 class SpeakerManager
         : public avsCommon::avs::CapabilityAgent
@@ -74,20 +65,22 @@ class SpeakerManager
         , public avsCommon::utils::RequiresShutdown {
 public:
     /**
-     * Create an instance of @c SpeakerManager, and register the @c SpeakerInterfaces that will be controlled
-     * by it. SpeakerInterfaces will be grouped by @c SpeakerInterface::Type.
+     * Create an instance of @c SpeakerManager, and register the @c ChannelVolumeInterfaces that will be controlled
+     * by it. ChannelVolumeInterfaces will be grouped by @c ChannelVolumeInterface::Type.
      *
-     * @param speakers The @c Speakers to register.
+     * @param volumeInterfaces The @c ChannelVolumeInterfaces to register.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
      * directive processing exceptions to AVS.
+     * @param metricRecorder The metric recorder.
      */
     static std::shared_ptr<SpeakerManager> create(
-        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakers,
+        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& volumeInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -106,25 +99,48 @@ public:
     // @name SpeakerManagerInterface Functions
     /// @{
     std::future<bool> setVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         int8_t volume,
-        bool forceNoNotifications = false) override;
+        const NotificationProperties& properties) override;
     std::future<bool> adjustVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         int8_t delta,
-        bool forceNoNotifications = false) override;
+        const NotificationProperties& properties) override;
     std::future<bool> setMute(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         bool mute,
-        bool forceNoNotifications = false) override;
+        const NotificationProperties& properties) override;
+    std::future<bool> setVolume(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        int8_t volume,
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
+    std::future<bool> adjustVolume(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        int8_t delta,
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
+    std::future<bool> setMute(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        bool mute,
+        bool forceNoNotifications = false,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source =
+            avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source::LOCAL_API) override;
+
+#ifdef ENABLE_MAXVOLUME_SETTING
+    std::future<bool> setMaximumVolumeLimit(const int8_t maximumVolumeLimit) override;
+#endif
     std::future<bool> getSpeakerSettings(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
     void addSpeakerManagerObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) override;
     void removeSpeakerManagerObserver(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerObserverInterface> observer) override;
-    void addSpeaker(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) override;
+    void addChannelVolumeInterface(
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface) override;
     /// @}
 
     /// @name CapabilityConfigurationInterface Functions
@@ -136,17 +152,21 @@ private:
     /**
      * Constructor. Called after validation has occurred on parameters.
      *
-     * @param speakers The @c Speakers to register.
+     * @param groupVolumeInterfaces The @c ChannelVolumeInterfaces to register.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
-     * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
+     * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send.
      * directive processing exceptions to AVS.
+     * @param minUnmuteVolume The volume level to increase to when unmuting.
+     * @param metricRecorder The metric recorder.
      */
     SpeakerManager(
-        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>& speakerInterfaces,
+        const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender);
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+        const int minUnmuteVolume,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Parses the payload from a string into a rapidjson document.
@@ -184,14 +204,14 @@ private:
         avsCommon::avs::ExceptionErrorType type);
 
     /**
-     * Internal function to update the state of the ContextManager.
+     * Function to update the state of the ContextManager.
      *
-     * @param type The Speaker Type that is being updated.
+     * @param type The @c ChannelVolumeInterface Type that is being updated.
      * @param settings The SpeakerSettings to update the ContextManager with.
      * @return Whether the ContextManager was successfully updated.
      */
     bool updateContextManager(
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
@@ -205,55 +225,71 @@ private:
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings settings);
 
     /**
-     * Internal function to set the volume for a specific @c Type. This runs on a worker thread.
+     * Function to set the volume for a specific @c Type. This runs on a worker thread.
      * Upon success, a VolumeChanged event will be sent to AVS.
      *
-     * @param type The type of speaker to modify volume for.
+     * @param type The type of @c ChannelVolumeInterface to modify volume for.
      * @param volume The volume to change.
-     * @param source Whether the call is from AVS or locally.
-     * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param properties Notification properties that specify how the volume change will be notified.
      * @return A bool indicating success.
      */
     bool executeSetVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         int8_t volume,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties);
 
     /**
-     * Internal function to adjust the volume for a specific @c Type. This runs on a worker thread.
+     * Function to restore the volume from a mute state. This runs on a worker thread and will not send an event or
+     * notify an observer. Upon success, a VolumeChanged event will be sent to AVS.
+     *
+     * @param type The type of @c ChannelVolumeInterface to modify volume for.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
+     * @return A bool indicating success.
+     */
+    bool executeRestoreVolume(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source);
+
+    /**
+     * Function to adjust the volume for a specific @c Type. This runs on a worker thread.
      * Upon success, a VolumeChanged event will be sent to AVS.
      *
-     * @param type The type of speaker to modify volume for.
+     * @param type The type of @c ChannelVolumeInterface to modify volume for.
      * @param delta The delta to change the volume by.
-     * @param source Whether the call is from AVS or locally.
-     * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param properties Notification properties that specify how the volume change will be notified.
      * @return A bool indicating success.
      */
     bool executeAdjustVolume(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         int8_t delta,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties);
 
     /**
-     * Internal function to set the mute for a specific @c Type. This runs on a worker thread.
+     * Function to set the mute for a specific @c Type. This runs on a worker thread.
      * Upon success, a MuteChanged event will be sent to AVS.
      *
-     * @param type The type of speaker to modify mute for.
+     * @param type The type of @c ChannelVolumeInterface to modify mute for.
      * @param mute Whether to mute/unmute.
-     * @param source Whether the call is from AVS or locally.
-     * @param forceNoNotifications This flag will ensure no event is sent and the observer is not notified.
+     * @param properties Notification properties that specify how the volume change will be notified.
      * @return A bool indicating success.
      */
     bool executeSetMute(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         bool mute,
-        avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source source,
-        bool forceNoNotifications = false);
+        const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties);
+
+#ifdef ENABLE_MAXVOLUME_SETTING
+    /**
+     * Function to set a limit on the maximum volume. This runs on a worker thread.
+     *
+     * @param type The type of speaker to modify mute for.
+     * @return A bool indicating success.
+     */
+    bool executeSetMaximumVolumeLimit(const int8_t maximumVolumeLimit);
+#endif  // ENABLE_MAXVOLUME_SETTING
 
     /**
-     * Internal function to get the speaker settings for a specific @c Type.
+     * Function to get the speaker settings for a specific @c ChannelVolumeInterface Type.
      * This runs on a worker thread.
      *
      * @param type The type of speaker to modify mute for.
@@ -261,26 +297,26 @@ private:
      * @return A bool indicating success.
      */
     bool executeGetSpeakerSettings(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
     /**
-     * Internal function to send events and notify observers when settings have changed.
+     * Function to send events when settings have changed.
      * This runs on a worker thread.
      *
      * @param settings The new settings.
      * @param eventName The event name to send.
-     * @param source Whether the call is from AVS or locally.
+     * @param source Whether the call is a result from an AVS directive or local interaction.
      * @param type The Speaker type.
      */
     void executeNotifySettingsChanged(
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings,
         const std::string& eventName,
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type);
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type);
 
     /**
-     * Internal function to notify the observer when a @c SpeakerSettings change has occurred.
+     * Function to notify the observer when a @c SpeakerSettings change has occurred.
      *
      * @param source. This indicates the origin of the call.
      * @param type. This indicates the type of speaker that was modified.
@@ -288,7 +324,7 @@ private:
      */
     void executeNotifyObserver(
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
@@ -299,8 +335,29 @@ private:
      * @return A bool indicating success.
      */
     bool validateSpeakerSettingsConsistency(
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
+
+    /**
+     * Get the maximum volume limit.
+     *
+     * @return The maximum volume limit.
+     */
+    int8_t getMaximumVolumeLimit();
+
+    /**
+     * Applies Settings to All Speakers
+     * Attempts to synchronize by backing off using a retry timeout table
+     * @tparam Task The type of task to execute.
+     * @tparam Args The argument types for the task to execute.
+     * @param task A callable type representing a task.
+     * @param args The arguments to call the task with.
+     */
+    template <typename Task, typename... Args>
+    void retryAndApplySettings(Task task, Args&&... args);
+
+    /// The metric recorder.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The @c ContextManager used to generate system context for events.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
@@ -308,10 +365,13 @@ private:
     /// The @c MessageSenderInterface used to send event messages.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
-    /// A multimap contain speakers keyed by @c Type.
+    /// the @c volume to restore to when unmuting at 0 volume
+    const int m_minUnmuteVolume;
+
+    /// A multimap contain ChannelVolumeInterfaces keyed by @c Type.
     std::multimap<
-        avsCommon::sdkInterfaces::SpeakerInterface::Type,
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>
         m_speakerMap;
 
     /// The observers to be notified whenever any of the @c SpeakerSetting changing APIs are called.
@@ -319,6 +379,18 @@ private:
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
+    /// Object used to wait for event transmission cancellation.
+    avsCommon::utils::WaitEvent m_waitCancelEvent;
+
+    /// Retry Timer object.
+    avsCommon::utils::RetryTimer m_retryTimer;
+
+    /// The number of retries that will be done on an event in case of setting synchronization failure.
+    const std::size_t m_maxRetries;
+
+    /// maximumVolumeLimit The maximum volume level speakers in this system can reach.
+    int8_t m_maximumVolumeLimit;
 
     /// An executor to perform operations on a worker thread.
     avsCommon::utils::threading::Executor m_executor;
