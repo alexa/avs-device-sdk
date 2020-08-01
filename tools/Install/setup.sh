@@ -348,11 +348,11 @@ then
       "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
   cd $BUILD_PATH
-  make SampleApp -j2
+  make SampleApp
 
 else
   cd $BUILD_PATH
-  make SampleApp -j2
+  make SampleApp
 fi
 
 echo
