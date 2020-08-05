@@ -76,7 +76,7 @@ public:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel = "",
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
         const int opPoint = 5);
 
     /**
@@ -152,7 +152,7 @@ private:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel,
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
         const int opPoint);
 
     /**
