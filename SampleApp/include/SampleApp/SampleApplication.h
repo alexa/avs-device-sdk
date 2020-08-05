@@ -58,7 +58,7 @@ namespace alexaClientSDK {
 namespace sampleApp {
 
 /// Class to manage the top-level components of the AVS Client Application
-class SampleApplication {:tabe
+class SampleApplication {
 public:
     /**
      * Create a SampleApplication.
