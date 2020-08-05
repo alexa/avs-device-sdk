@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
             consoleReader,
             configFiles,
             pathToKWDInputFolder,
-            logLevel,
+            logLevel
 #ifdef DIAGNOSTICS
             ,
             std::move(diagnostics)
