@@ -137,6 +137,9 @@ int main(int argc, char* argv[]) {
 #ifdef DIAGNOSTICS
             ,
             std::move(diagnostics)
+#else
+            ,
+            nullptr
 #endif
             ,
             opPoint
