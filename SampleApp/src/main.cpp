@@ -134,11 +134,12 @@ int main(int argc, char* argv[]) {
             configFiles,
             pathToKWDInputFolder,
             logLevel,
-            opPoint
 #ifdef DIAGNOSTICS
             ,
             std::move(diagnostics)
 #endif
+            ,
+            opPoint
         );
 
         if (!sampleApplication) {
