@@ -629,7 +629,8 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::vector<std::string>& configFiles,
     const std::string& pathToInputFolder,
     const std::string& logLevel,
-    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
+    const int opPoint) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
     if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
