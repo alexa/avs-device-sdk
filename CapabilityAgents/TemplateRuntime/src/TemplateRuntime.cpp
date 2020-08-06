@@ -286,7 +286,7 @@ void TemplateRuntime::doShutdown() {
     m_activeRenderPlayerInfoCardsProvider.reset();
     m_audioItemsInExecution.clear();
     m_audioPlayerInfo.clear();
-    for (const auto renderPlayerInfoCardsInterface : m_renderPlayerInfoCardsInterfaces) {
+    for (const auto& renderPlayerInfoCardsInterface : m_renderPlayerInfoCardsInterfaces) {
         renderPlayerInfoCardsInterface->setObserver(nullptr);
     }
     m_renderPlayerInfoCardsInterfaces.clear();
