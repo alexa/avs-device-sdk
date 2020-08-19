@@ -49,7 +49,7 @@ using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::configuration;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
-static const unsigned SAMPLE_RATE = 24000;
+static const unsigned SAMPLE_RATE = 16000;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
