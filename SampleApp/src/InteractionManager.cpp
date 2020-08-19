@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <unistd.h> // needed for sleep() and usleep()
+
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "RegistrationManager/CustomerDataManager.h"
@@ -110,9 +112,12 @@ InteractionManager::InteractionManager(
         m_friendlyNameToggle{true},
 #endif
         m_diagnostics{diagnostics} {
-    if (m_wakeWordAudioProvider) {
-        m_micWrapper->startStreamingMicrophoneData();
-    }
+
+    // Do not start streaming the audio now, the SDK is not ready to process the audio
+    // wait for the device to be authorized
+    //if (m_wakeWordAudioProvider) {
+    //    m_micWrapper->startStreamingMicrophoneData();
+    //}
 };
 
 void InteractionManager::begin() {
@@ -123,6 +128,16 @@ void InteractionManager::begin() {
         }
         m_userInterface->printHelpScreen();
     });
+
+    // wait for the device to be authorized
+    while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+        usleep(50000);
+    }
+    sleep(2);
+    // start streaming the audio
+    if (m_wakeWordAudioProvider) {
+        m_micWrapper->startStreamingMicrophoneData();
+    }
 }
 
 void InteractionManager::help() {
