@@ -27,8 +27,10 @@
 #include <thread>
 #include <unordered_set>
 #include <vector>
+#ifdef XMOS_AVS_TESTS
 #include <iostream>
 #include <fstream>
+#endif // XMOS_AVS_TESTS
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -715,7 +717,7 @@ private:
 
     /// Flag to indicate if the player is in live mode.
     const bool m_isLiveMode;
-
+#ifdef XMOS_AVS_TESTS
     /**
      * HACK Write to file instead of a real audio device.
      */
@@ -723,6 +725,7 @@ private:
     unsigned m_samplesWritten;
 
     static GstFlowReturn WriterCallback(GstElement *sink, void *data);
+#endif // XMOS_AVS_TESTS
 };
 
 }  // namespace mediaPlayer

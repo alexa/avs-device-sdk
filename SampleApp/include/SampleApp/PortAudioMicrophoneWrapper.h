@@ -18,9 +18,12 @@
 
 #include <mutex>
 #include <thread>
+#ifdef XMOS_AVS_TESTS
 #include <iostream>
 #include <fstream>
 #include <future>
+#include <chrono>
+#endif // XMOS_AVS_TESTS
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 
@@ -126,6 +129,7 @@ private:
      */
     bool m_isStreaming;
 
+#ifdef XMOS_AVS_TESTS
     /**
      * HACK Read from file instead of a real audio device.
      */
@@ -135,7 +139,7 @@ private:
     std::future<void> *m_threadFuture;
     unsigned m_samplesRead;
     bool m_eofReached;
-
+#endif // XMOS_AVS_TESTS
     static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
 };
 

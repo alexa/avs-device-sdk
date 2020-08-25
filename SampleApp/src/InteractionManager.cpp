@@ -13,7 +13,9 @@
  * permissions and limitations under the License.
  */
 
+#ifdef XMOS_AVS_TESTS
 #include <unistd.h> // needed for sleep() and usleep()
+#endif // XMOS_AVS_TESTS
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -113,11 +115,14 @@ InteractionManager::InteractionManager(
 #endif
         m_diagnostics{diagnostics} {
 
+#ifndef XMOS_AVS_TESTS
     // Do not start streaming the audio now, the SDK is not ready to process the audio
     // wait for the device to be authorized
-    //if (m_wakeWordAudioProvider) {
-    //    m_micWrapper->startStreamingMicrophoneData();
-    //}
+    if (m_wakeWordAudioProvider) {
+        m_micWrapper->startStreamingMicrophoneData();
+    }
+#endif // XMOS_AVS_TESTS
+
 };
 
 void InteractionManager::begin() {
@@ -128,6 +133,7 @@ void InteractionManager::begin() {
         }
         m_userInterface->printHelpScreen();
     });
+#ifndef XMOS_AVS_TESTS
 
     // wait for the device to be authorized
     while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
@@ -138,6 +144,7 @@ void InteractionManager::begin() {
     if (m_wakeWordAudioProvider) {
         m_micWrapper->startStreamingMicrophoneData();
     }
+#endif // XMOS_AVS_TESTS
 }
 
 void InteractionManager::help() {

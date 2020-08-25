@@ -17,8 +17,6 @@
 #include <cmath>
 #include <cstring>
 #include <unordered_map>
-#include <iostream>
-#include <fstream>
 
 #include <gst/controller/gstinterpolationcontrolsource.h>
 #include <gst/controller/gstdirectcontrolbinding.h>
@@ -196,12 +194,13 @@ MediaPlayer::~MediaPlayer() {
     g_main_loop_unref(m_mainLoop);
 
     g_main_context_unref(m_workerContext);
-
+#ifdef XMOS_AVS_TESTS
     if (m_fileStream) {
         delete m_fileStream;
         m_fileStream = nullptr;
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileClosed"));
     }
+#endif // XMOS_AVS_TESTS
 }
 
 MediaPlayer::SourceId MediaPlayer::setSource(
@@ -595,9 +594,13 @@ MediaPlayer::MediaPlayer(
         m_pausePending{false},
         m_resumePending{false},
         m_pauseImmediately{false},
-        m_isLiveMode{enableLiveMode},
+        m_isLiveMode{enableLiveMode}
+#ifdef XMOS_AVS_TESTS
+        ,
         m_fileStream{nullptr},
-        m_samplesWritten{0} {
+        m_samplesWritten{0}
+#endif // XMOS_AVS_TESTS
+{
 }
 
 void MediaPlayer::workerLoop() {
@@ -629,7 +632,7 @@ bool MediaPlayer::init() {
         ACSDK_ERROR(LX("initPlayerFailed").d("name", RequiresShutdown::name()).d("reason", "gstInitCheckFailed"));
         return false;
     }
-
+#ifdef XMOS_AVS_TESTS
     if (name() == "SpeakMediaPlayer") {
         m_fileStream = new std::ofstream{"/tmp/out.raw", std::ios::binary};
         if (!m_fileStream->is_open()) {
@@ -638,7 +641,7 @@ bool MediaPlayer::init() {
         }
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileOpen"));
     }
-
+#endif // XMOS_AVS_TESTS
     if (!setupPipeline()) {
         ACSDK_ERROR(LX("initPlayerFailed").d("name", RequiresShutdown::name()).d("reason", "setupPipelineFailed"));
         return false;
@@ -649,6 +652,7 @@ bool MediaPlayer::init() {
     return true;
 }
 
+#ifdef XMOS_AVS_TESTS
 GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
 {
     MediaPlayer *player = (MediaPlayer*)data;
@@ -669,6 +673,7 @@ GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
 
     return GST_FLOW_OK;
 }
+#endif // XMOS_AVS_TESTS
 
 bool MediaPlayer::setupPipeline() {
     m_pipeline.decodedQueue = gst_element_factory_make("queue2", "decodedQueue");
@@ -711,9 +716,11 @@ bool MediaPlayer::setupPipeline() {
     std::string audioSinkElement;
     ConfigurationNode::getRoot()[MEDIAPLAYER_CONFIGURATION_ROOT_KEY].getString(
         MEDIAPLAYER_AUDIO_SINK_KEY, &audioSinkElement, "alsasink");
+#ifdef XMOS_AVS_TESTS
     if (m_fileStream) {
         audioSinkElement = "appsink";
     }
+#endif // XMOS_AVS_TESTS
     m_pipeline.audioSink = gst_element_factory_make(audioSinkElement.c_str(), "audio_sink");
 
     /// If the sink is a fakesink, set sync to true so that it uses system clock for consuming the buffer
@@ -794,7 +801,7 @@ bool MediaPlayer::setupPipeline() {
     } else {
         ACSDK_DEBUG9(LX("noOutputConversion").d("name", RequiresShutdown::name()));
     }
-
+#ifdef XMOS_AVS_TESTS
     // https://gstreamer.freedesktop.org/documentation/tutorials/basic/short-cutting-the-pipeline.html
     // except for return value of new-sample callback function - needs to return OK to avoid the sink blocking
     if (m_fileStream) {
@@ -804,7 +811,7 @@ bool MediaPlayer::setupPipeline() {
             return false;
         }
     }
-
+#endif // XMOS_AVS_TESTS
     // clean up caps object
     gst_caps_unref(caps);
 
@@ -1823,7 +1830,6 @@ void MediaPlayer::sendPlaybackFinished() {
         m_urlConverter->shutdown();
     }
     m_urlConverter.reset();
-
 }
 
 void MediaPlayer::sendPlaybackPaused() {

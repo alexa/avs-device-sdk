@@ -403,13 +403,14 @@ public:
      *  Prints audio injection failure message.
      */
     void printAudioInjectionFailureMessage();
-
+#ifdef XMOS_AVS_TESTS
     /**
      *  Return connection status
      */
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() {
         return m_connectionStatus;
     }
+#endif // XMOS_AVS_TESTS
 
 private:
     /**
