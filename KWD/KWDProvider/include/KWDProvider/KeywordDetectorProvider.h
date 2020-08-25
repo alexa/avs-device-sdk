@@ -52,7 +52,8 @@ public:
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
             keyWordDetectorStateObservers,
-        const std::string& pathToInputFolder);
+        const std::string& pathToInputFolder,
+        const int opPoint);
 };
 
 }  // namespace kwd

@@ -76,7 +76,8 @@ public:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel = "",
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
+        const int opPoint = 5);
 
     /**
      * Runs the application, blocking until the user asks the application to quit or a device reset is triggered.
@@ -151,7 +152,8 @@ private:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel,
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
+        const int opPoint);
 
     /**
      * Create an application media player.

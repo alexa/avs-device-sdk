@@ -60,7 +60,8 @@ public:
         std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
         const std::string& modelFilePath,
-        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10),
+        const int opPoint = 5);
 
     /**
      * Destructor.
@@ -87,7 +88,8 @@ private:
         std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
         avsCommon::utils::AudioFormat audioFormat,
-        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10),
+        const int opPoint = 5);
 
     /**
      * Initializes the stream reader, sets up the Sensory engine, and kicks off a thread to begin processing data from
@@ -146,6 +148,8 @@ private:
      * sampling rate of the audio data passed in.
      */
     const size_t m_maxSamplesPerPush;
+
+    int m_opPoint;
 };
 
 }  // namespace kwd

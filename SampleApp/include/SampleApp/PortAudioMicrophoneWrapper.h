@@ -18,6 +18,9 @@
 
 #include <mutex>
 #include <thread>
+#include <iostream>
+#include <fstream>
+#include <future>
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 
@@ -122,6 +125,18 @@ private:
      * Whether the microphone is currently streaming.
      */
     bool m_isStreaming;
+
+    /**
+     * HACK Read from file instead of a real audio device.
+     */
+    std::thread *m_readerThread;
+    std::ifstream *m_fileStream;
+    std::promise<void> *m_threadPromise;
+    std::future<void> *m_threadFuture;
+    unsigned m_samplesRead;
+    bool m_eofReached;
+
+    static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
 };
 
 }  // namespace sampleApp
