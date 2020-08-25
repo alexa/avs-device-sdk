@@ -633,7 +633,7 @@ bool MediaPlayer::init() {
     if (name() == "SpeakMediaPlayer") {
         m_fileStream = new std::ofstream{"/tmp/out.raw", std::ios::binary};
         if (!m_fileStream->is_open()) {
-            ACSDK_CRITICAL(LX("Failed to open output audio file"));
+            ACSDK_ERROR(LX("Failed to open output audio file"));
             return false;
         }
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileOpen"));

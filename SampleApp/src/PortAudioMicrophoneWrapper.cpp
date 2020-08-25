@@ -109,7 +109,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
 
     m_fileStream = new std::ifstream{"/tmp/in.raw", std::ios::binary};
     if (!m_fileStream->is_open()) {
-        ACSDK_CRITICAL(LX("Failed to open input audio file"));
+        ACSDK_ERROR(LX("Failed to open input audio file"));
         return false;
     }
     ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "fileOpen"));
