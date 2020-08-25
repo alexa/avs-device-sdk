@@ -133,7 +133,7 @@ void InteractionManager::begin() {
         }
         m_userInterface->printHelpScreen();
     });
-#ifndef XMOS_AVS_TESTS
+#ifdef XMOS_AVS_TESTS
 
     // wait for the device to be authorized
     while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
