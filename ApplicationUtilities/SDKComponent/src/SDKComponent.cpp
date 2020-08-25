@@ -26,7 +26,7 @@ namespace SDKComponent {
 using namespace avsCommon::utils::logger;
 
 // Name of the Component to add to ComponentReporter
-static const std::string SDK_COMPONENT_NAME = "com.amazon.sdk";
+static const std::string SDK_COMPONENT_NAME = "com.amazon.alexa.deviceSDK";
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SDKComponent");

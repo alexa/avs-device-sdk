@@ -14,8 +14,8 @@
  */
 
 #include <chrono>
+#include <future>
 #include <memory>
-#include <queue>
 
 #include <gtest/gtest.h>
 
@@ -85,22 +85,20 @@ protected:
         (*configuration) << CONFIGURATION;
         ASSERT_TRUE(avsCommon::avs::initialization::AlexaClientSDKInit::initialize({configuration}));
 
-        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+        auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
         m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
         m_connection = std::make_shared<MockConnection>();
         m_storage = std::make_shared<MockMessageStorage>();
 
         EXPECT_CALL(*m_storage, open()).Times(1).WillOnce(Return(true));
-        EXPECT_CALL(*m_storage, load(_)).Times(1).WillOnce(Return(true));
-        m_certifiedSender =
-            CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, m_customerDataManager);
+        m_certifiedSender = CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, customerDataManager);
     }
 
     void TearDown() override {
         if (avsCommon::avs::initialization::AlexaClientSDKInit::isInitialized()) {
             avsCommon::avs::initialization::AlexaClientSDKInit::uninitialize();
         }
-        m_certifiedSender->shutdown();
+        m_connection->removeConnectionStatusObserver(m_certifiedSender);
     }
 
     /// Class under test.
@@ -112,9 +110,6 @@ protected:
     /// Pointer to connection. We need to remove certifiedSender as a connection observer or both objects will never
     /// be deleted.
     std::shared_ptr<MockConnection> m_connection;
-
-    /// The pointer to the customer data manager
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
 
     /// The mock message sender instance.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockMessageSender> m_mockMessageSender;
@@ -129,99 +124,15 @@ TEST_F(CertifiedSenderTest, test_clearData) {
 }
 
 /**
- * Tests various failure scenarios for the init method.
- */
-TEST_F(CertifiedSenderTest, test_initFailsWhenStorageMethodsFail) {
-    /// Test if the init method fails when createDatabase on storage fails.
-    {
-        EXPECT_CALL(*m_storage, open()).Times(1).WillOnce(Return(false));
-        EXPECT_CALL(*m_storage, createDatabase()).Times(1).WillOnce(Return(false));
-        EXPECT_CALL(*m_storage, load(_)).Times(0);
-        auto certifiedSender =
-            CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, m_customerDataManager);
-        ASSERT_EQ(certifiedSender, nullptr);
-    }
-
-    /// Test if the init method fails when load from storage fails.
-    {
-        EXPECT_CALL(*m_storage, open()).Times(1).WillOnce(Return(true));
-        EXPECT_CALL(*m_storage, load(_)).Times(1).WillOnce(Return(false));
-        auto certifiedSender =
-            CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, m_customerDataManager);
-        ASSERT_EQ(certifiedSender, nullptr);
-    }
-}
-
-/**
- * Tests if the stored messages get sent when a connection is established.
- */
-TEST_F(CertifiedSenderTest, testTimer_storedMessagesGetSent) {
-    EXPECT_CALL(*m_storage, open()).Times(1).WillOnce(Return(true));
-
-    /// Return messages from storage.
-    EXPECT_CALL(*m_storage, load(_))
-        .Times(1)
-        .WillOnce(Invoke([](std::queue<MessageStorageInterface::StoredMessage>* storedMessages) {
-            storedMessages->push(MessageStorageInterface::StoredMessage(1, "testMessage_1"));
-            storedMessages->push(MessageStorageInterface::StoredMessage(2, "testMessage_2"));
-            return true;
-        }));
-
-    avsCommon::utils::PromiseFuturePair<bool> allRequestsSent;
-    {
-        InSequence s;
-
-        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-            .Times(1)
-            .WillOnce(Invoke([](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-                ASSERT_EQ(request->getJsonContent(), "testMessage_1");
-                request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
-            }));
-        EXPECT_CALL(*m_storage, erase(1)).WillOnce(Return(true));
-
-        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-            .Times(1)
-            .WillOnce(Invoke([](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-                ASSERT_EQ(request->getJsonContent(), "testMessage_2");
-                request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
-            }));
-        EXPECT_CALL(*m_storage, erase(2)).WillOnce(Invoke([&allRequestsSent](int messageId) {
-            allRequestsSent.setValue(true);
-            return true;
-        }));
-    }
-
-    auto certifiedSender = CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, m_customerDataManager);
-
-    std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(certifiedSender)
-        ->onConnectionStatusChanged(
-            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED,
-            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
-
-    /// wait for requests to get sent out.
-    EXPECT_TRUE(allRequestsSent.waitFor(TEST_TIMEOUT));
-
-    /// Cleanup
-    certifiedSender->shutdown();
-}
-
-/**
  * Verify that a message with a URI specified will be sent out by the sender with the URI.
  */
 TEST_F(CertifiedSenderTest, testTimer_SendMessageWithURI) {
     avsCommon::utils::PromiseFuturePair<std::shared_ptr<avsCommon::avs::MessageRequest>> requestSent;
-
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillOnce(Invoke([&requestSent](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            requestSent.setValue(request);
+        }));
     EXPECT_CALL(*m_storage, store(_, TEST_URI, _)).WillOnce(Return(true));
-
-    {
-        InSequence s;
-        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
-            .WillOnce(Invoke([&requestSent](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-                requestSent.setValue(request);
-                request->sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS);
-            }));
-        EXPECT_CALL(*m_storage, erase(_)).WillOnce(Return(true));
-    }
 
     std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(m_certifiedSender)
         ->onConnectionStatusChanged(
