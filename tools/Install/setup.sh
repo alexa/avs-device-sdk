@@ -36,7 +36,7 @@ CURRENT_DIR="$( pwd )"
 THIS_SCRIPT="$CURRENT_DIR/setup.sh"
 popd > /dev/null
 
-INSTALL_BASE=${INSTALL_BASE:-"$HOME/sdk-folder"}
+INSTALL_BASE=${INSTALL_BASE:-"$HOME/sdk-folder-avs-tests"}
 SOURCE_FOLDER=${SDK_LOC:-''}
 THIRD_PARTY_FOLDER=${THIRD_PARTY_LOC:-'third-party'}
 BUILD_FOLDER=${BUILD_FOLDER:-'sdk-build'}
@@ -63,6 +63,9 @@ ALIASES="$HOME/.bash_aliases"
 
 # Default value for XMOS device
 XMOS_DEVICE="xvf3510"
+
+# Default value for XMOS AVS test flag
+XMOS_AVS_TESTS_FLAG=""
 
 # Default device serial number if nothing is specified
 DEVICE_SERIAL_NUMBER="123456"
@@ -138,9 +141,8 @@ fi
 
 XMOS_TAG=$2
 
-shift 1
-
-OPTIONS=s:a:m:d:h:x
+shift 2
+OPTIONS=s:a:m:d:hx:t
 while getopts "$OPTIONS" opt ; do
     case $opt in
         s )
@@ -162,6 +164,9 @@ while getopts "$OPTIONS" opt ; do
             ;;
         x )
             XMOS_DEVICE="$OPTARG"
+            ;;
+	t )
+            XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
             ;;
         h )
             show_help
@@ -283,6 +288,12 @@ while true; do
     esac
 done
 
+if [ $XMOS_DEVICE = "xvf3510" ]
+then
+  PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
+else
+  PI_HAT_FLAG=""
+fi
 
 if [ ! -d "$BUILD_PATH" ]
 then
@@ -305,13 +316,6 @@ then
   mkdir -p $DB_PATH
 
   run_os_specifics
-
-  if [ $XMOS_DEVICE = "xvf3510" ]
-  then
-    PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
-  else
-    PI_HAT_FLAG=""
-  fi
 
   if [ ! -d "${SOURCE_PATH}/avs-device-sdk" ]
   then
@@ -339,11 +343,11 @@ then
   echo
   echo "==============> BUILDING SDK =============="
   echo
-
   mkdir -p $BUILD_PATH
   cd $BUILD_PATH
   cmake "$SOURCE_PATH/avs-device-sdk" \
       $PI_HAT_FLAG \
+      $XMOS_AVS_TESTS_FLAG \
       -DCMAKE_BUILD_TYPE=DEBUG \
       "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
@@ -351,6 +355,12 @@ then
   make SampleApp
 
 else
+  cd $BUILD_PATH
+  cmake "$SOURCE_PATH/avs-device-sdk" \
+      $PI_HAT_FLAG \
+      $XMOS_AVS_TESTS_FLAG \
+      -DCMAKE_BUILD_TYPE=DEBUG \
+      "${CMAKE_PLATFORM_SPECIFIC[@]}"
   cd $BUILD_PATH
   make SampleApp
 fi
@@ -418,4 +428,3 @@ echo "echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaC
 echo "echo "Remove .bash_aliases and open a new terminal to remove bindings"" >> $ALIASES
 
 echo " **** Completed Configuration/Build ***"
-
