@@ -23,7 +23,7 @@
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
 
-CLONE_URL=${CLONE_URL:- 'git://github.com/lucianomartin/avs-device-sdk.git'}
+CLONE_URL=${CLONE_URL:- 'git://github.com/xmos/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
