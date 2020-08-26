@@ -23,3 +23,7 @@ if(PORTAUDIO)
         message(FATAL_ERROR "Must pass include dir path of PortAudio to enable it.")
     endif()
 endif()
+
+if(XMOS_AVS_TESTS)
+    add_definitions(-DXMOS_AVS_TESTS)
+endif()
