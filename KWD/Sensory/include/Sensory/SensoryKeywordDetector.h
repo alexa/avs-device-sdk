@@ -79,6 +79,7 @@ private:
      * @param keyWordObservers The observers to notify of keyword detections.
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
      * @param msToPushPerIteration The amount of data in milliseconds to push to Sensory at a time. Smaller sizes will
+     * @param opPoint Operating point of the Sensory KWD engine.
      * lead to less delay but more CPU usage. Additionally, larger amounts of data fed into the engine per iteration
      * might lead longer delays before receiving keyword detection events. This has been defaulted to 10 milliseconds
      * as it is a good trade off between CPU usage and recognition delay. Additionally, this was the amount used by

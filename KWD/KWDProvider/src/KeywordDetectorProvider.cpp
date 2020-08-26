@@ -59,6 +59,7 @@ std::unique_ptr<kwd::AbstractKeywordDetector> KeywordDetectorProvider::create(
         stream,
         audioFormat,
         keyWordObservers,
+        keyWordDetectorStateObservers,
         pathToInputFolder + "/spot-alexa-rpi-31000.snsr",
         std::chrono::milliseconds(10),
         opPoint);
