@@ -79,10 +79,10 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
         const int opPoint = 5
 #ifdef XMOS_AVS_TESTS
-	,
-	const bool isFileStream = false
+        ,
+        const bool isFileStream = false
 #endif // XMOS_AVS_TESTS
-	);
+    );
 
     /**
      * Runs the application, blocking until the user asks the application to quit or a device reset is triggered.
@@ -105,8 +105,8 @@ public:
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
         std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup
 #ifdef XMOS_AVS_TESTS
-	,
-    	const bool isFileStream
+        ,
+        const bool isFileStream
 #endif // XMOS_AVS_TESTS
      );
 
@@ -165,10 +165,10 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
         const int opPoint
 #ifdef XMOS_AVS_TESTS
-    	,
-    	const bool isFileStream
+        ,
+        const bool isFileStream
 #endif // XMOS_AVS_TESTS
-	);
+    );
 
     /**
      * Create an application media player.
@@ -185,10 +185,10 @@ private:
         const std::string& name,
         bool enableLiveMode = false
 #ifdef XMOS_AVS_TESTS
-	,
-    	const bool isFileStream = false
+        ,
+        const bool isFileStream = false
 #endif // XMOS_AVS_TESTS
-	);
+    );
 
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
     /**

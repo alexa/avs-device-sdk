@@ -86,10 +86,10 @@ public:
         std::string name = "",
         bool enableLiveMode = false
 #ifdef XMOS_AVS_TESTS
-	,
-    	const bool isFileStream = false
-#endif // XMOS_AVS_TESTS	
-	);
+        ,
+        const bool isFileStream = false
+#endif // XMOS_AVS_TESTS
+    );
     /**
      * Destructor.
      */

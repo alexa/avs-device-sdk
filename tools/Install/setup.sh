@@ -165,7 +165,7 @@ while getopts "$OPTIONS" opt ; do
         x )
             XMOS_DEVICE="$OPTARG"
             ;;
-	t )
+        t )
             XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
             ;;
         h )

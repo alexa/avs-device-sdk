@@ -173,14 +173,14 @@ std::shared_ptr<MediaPlayer> MediaPlayer::create(
 #ifdef XMOS_AVS_TESTS
     ,
     const bool isFileStream
-#endif // XMOS_AVS_TESTS	
+#endif // XMOS_AVS_TESTS
     ) {
     ACSDK_DEBUG9(LX("createCalled").d("name", name));
     std::shared_ptr<MediaPlayer> mediaPlayer(
         new MediaPlayer(contentFetcherFactory, enableEqualizer, name, enableLiveMode));
     if (mediaPlayer->init(
 #ifdef XMOS_AVS_TESTS
-   	isFileStream
+        isFileStream
 #endif // XMOS_AVS_TESTS
     )) {
         return mediaPlayer;

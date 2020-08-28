@@ -702,7 +702,7 @@ bool SampleApplication::createMediaPlayersForAdapters(
 #ifdef XMOS_AVS_TESTS
     ,
     const bool isFileStream
-#endif // XMOS_AVS_TESTS	
+#endif // XMOS_AVS_TESTS
     ) {
     bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
 
@@ -710,10 +710,10 @@ bool SampleApplication::createMediaPlayersForAdapters(
         auto applicationMediaInterfaces = createApplicationMediaPlayer(
             httpContentFetcherFactory, equalizerEnabled, entry.first + "MediaPlayer", false
 #ifdef XMOS_AVS_TESTS
-	    ,
-    	    isFileStream
+            ,
+            isFileStream
 #endif // XMOS_AVS_TESTS
-    	);
+        );
         if (applicationMediaInterfaces) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = applicationMediaInterfaces->mediaPlayer;
             m_externalMusicProviderSpeakersMap[entry.first] = applicationMediaInterfaces->speaker;
@@ -954,7 +954,7 @@ bool SampleApplication::initialize(
 #ifdef XMOS_AVS_TESTS
     ,
     isFileStream
-#endif // XMOS_AVS_TESTS			    
+#endif // XMOS_AVS_TESTS
     )) {
         ACSDK_CRITICAL(LX("Could not create mediaPlayers for adapters"));
         return false;
@@ -1548,7 +1548,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
 #ifdef XMOS_AVS_TESTS
     ,
     const bool isFileStream
-#endif // XMOS_AVS_TESTS	
+#endif // XMOS_AVS_TESTS
     ) {
 #ifdef GSTREAMER_MEDIA_PLAYER
     /*
@@ -1561,7 +1561,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
 #ifdef XMOS_AVS_TESTS
     ,
     isFileStream
-#endif // XMOS_AVS_TESTS	
+#endif // XMOS_AVS_TESTS
     );
     if (!mediaPlayer) {
         return nullptr;
