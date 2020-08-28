@@ -633,13 +633,12 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const int opPoint
 #ifdef XMOS_AVS_TESTS
     ,
-    isFileStream
+    const bool isFileStream
 #endif // XMOS_AVS_TESTS
     ) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    MediaPlayer::setIsFileStream(true);
     PortAudioMicrophoneWrapper::setIsFileStream(true);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint,
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
 #ifdef XMOS_AVS_TESTS
     ,
     isFileStream
@@ -729,7 +728,7 @@ bool SampleApplication::initialize(
     const int opPoint
 #ifdef XMOS_AVS_TESTS
     ,
-    isFileStream
+    const bool isFileStream
 #endif // XMOS_AVS_TESTS
     ) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
@@ -1452,12 +1451,7 @@ bool SampleApplication::initialize(
 #endif
         ,
         nullptr,
-        diagnostics
-#ifdef XMOS_AVS_TESTS
-        ,
-        isFileStream
-#endif // XMOS_AVS_TESTS
-        );
+        diagnostics);
 #else
     // clang-format off
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.

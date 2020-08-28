@@ -48,6 +48,10 @@ static const std::string TAG("InteractionManager");
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
+#ifdef XMOS_AVS_TESTS
+    bool InteractionManager::m_isFileStream = false;
+#endif // XMOS_AVS_TESTS
+
 InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
     std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> micWrapper,
@@ -77,12 +81,7 @@ InteractionManager::InteractionManager(
     std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler,
 #endif
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager,
-    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics
-#ifdef XMOS_AVS_TESTS
-    ,
-    isFileStream
-#endif // XMOS_AVS_TESTS
-    ) :
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
         m_micWrapper{micWrapper},
@@ -119,21 +118,17 @@ InteractionManager::InteractionManager(
         m_friendlyNameToggle{true},
 #endif
         m_diagnostics{diagnostics}
-#ifdef XMOS_AVS_TESTS
-        ,
-        m_isFileStream{isFileStream}
-#endif // XMOS_AVS_TESTS
 {
 
 #ifdef XMOS_AVS_TESTS
-    if (m_isFileStream) {
+    if (!m_isFileStream) {
 #endif // XMOS_AVS_TESTS
 
-    // Do not start streaming the audio now, the SDK is not ready to process the audio
-    // wait for the device to be authorized
-    if (m_wakeWordAudioProvider) {
-        m_micWrapper->startStreamingMicrophoneData();
-    }
+    	// Do not start streaming the audio now, the SDK is not ready to process the audio
+    	// wait for the device to be authorized
+    	if (m_wakeWordAudioProvider) {
+        	m_micWrapper->startStreamingMicrophoneData();
+    	}
 #ifdef XMOS_AVS_TESTS
     }
 #endif // XMOS_AVS_TESTS

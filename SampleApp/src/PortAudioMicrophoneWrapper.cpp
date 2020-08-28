@@ -39,6 +39,10 @@ static const std::string PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY("suggestedLatenc
 /// String to identify log entries originating from this file.
 static const std::string TAG("PortAudioMicrophoneWrapper");
 
+#ifdef XMOS_AVS_TESTS
+    bool PortAudioMicrophoneWrapper::m_isFileStream = false;
+#endif // XMOS_AVS_TESTS
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -66,7 +70,6 @@ PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInpu
         m_isStreaming{false}
 #ifdef XMOS_AVS_TESTS
         ,
-        m_isFileStream{false};
         m_readerThread{nullptr},
         m_fileStream{nullptr},
         m_threadPromise{nullptr},
@@ -91,7 +94,7 @@ PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
         m_readerThread = nullptr;
         m_threadFuture = nullptr;
         m_threadPromise = nullptr;
-        m_isFileStream = false;
+        PortAudioMicrophoneWrapper::m_isFileStream = false;
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadDestroyed"));
     }
     if (m_fileStream) {
@@ -109,7 +112,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
         return false;
     }
 #ifdef XMOS_AVS_TESTS
-    if (m_isFileStream) {
+    if (PortAudioMicrophoneWrapper::m_isFileStream) {
         m_fileStream = new std::ifstream{"/tmp/in.raw", std::ios::binary};
         if (!m_fileStream->is_open()) {
             ACSDK_ERROR(LX("Failed to open input audio file"));
@@ -199,7 +202,7 @@ void PortAudioMicrophoneWrapper::ReaderThread(PortAudioMicrophoneWrapper *wrappe
 bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
 #ifdef XMOS_AVS_TESTS
-    if (m_isFileStream) {
+    if (m_fileStream) {
         m_threadPromise = new std::promise<void>;
         m_threadFuture = new std::future<void>{m_threadPromise->get_future()};
         m_readerThread = new std::thread{ReaderThread, this};

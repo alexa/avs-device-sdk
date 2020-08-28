@@ -105,12 +105,7 @@ public:
         std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler = nullptr,
 #endif
         std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr,
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr
-#ifdef XMOS_AVS_TESTS
-        ,
-        bool isFileStream = false
-#endif // XMOS_AVS_TESTS
-);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -634,6 +629,12 @@ public:
      */
     void clearProtocolTrace();
 
+#ifdef XMOS_AVS_TESTS
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif // XMOS_AVS_TESTS
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -726,6 +727,7 @@ private:
 
     /// sends Gui Toggle event
     void sendGuiToggleEvent(const std::string& toggleName, avsCommon::avs::PlaybackToggle toggleType);
+
 #ifdef  XMOS_AVS_TESTS
     static bool m_isFileStream;
 #endif //  XMOS_AVS_TESTS

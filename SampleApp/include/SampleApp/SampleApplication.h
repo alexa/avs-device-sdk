@@ -77,7 +77,12 @@ public:
         const std::string& pathToInputFolder,
         const std::string& logLevel = "",
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
-        const int opPoint = 5);
+        const int opPoint = 5
+#ifdef XMOS_AVS_TESTS
+	,
+	const bool isFileStream = false
+#endif // XMOS_AVS_TESTS
+	);
 
     /**
      * Runs the application, blocking until the user asks the application to quit or a device reset is triggered.
@@ -153,7 +158,12 @@ private:
         const std::string& pathToInputFolder,
         const std::string& logLevel,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-        const int opPoint);
+        const int opPoint
+#ifdef XMOS_AVS_TESTS
+    	,
+    	const bool isFileStream
+#endif // XMOS_AVS_TESTS
+	);
 
     /**
      * Create an application media player.
