@@ -637,7 +637,7 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
 #endif // XMOS_AVS_TESTS
     ) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    PortAudioMicrophoneWrapper::setIsFileStream(true);
+    PortAudioMicrophoneWrapper::setIsFileStream(isFileStream);
     if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
 #ifdef XMOS_AVS_TESTS
     ,
@@ -698,12 +698,22 @@ SampleApplication::~SampleApplication() {
 
 bool SampleApplication::createMediaPlayersForAdapters(
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
-    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup) {
+    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup
+#ifdef XMOS_AVS_TESTS
+    ,
+    const bool isFileStream
+#endif // XMOS_AVS_TESTS	
+    ) {
     bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
 
     for (auto& entry : m_playerToSpeakerTypeMap) {
         auto applicationMediaInterfaces = createApplicationMediaPlayer(
-            httpContentFetcherFactory, equalizerEnabled, entry.first + "MediaPlayer", false);
+            httpContentFetcherFactory, equalizerEnabled, entry.first + "MediaPlayer", false
+#ifdef XMOS_AVS_TESTS
+	    ,
+    	    isFileStream
+#endif // XMOS_AVS_TESTS
+    	);
         if (applicationMediaInterfaces) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = applicationMediaInterfaces->mediaPlayer;
             m_externalMusicProviderSpeakersMap[entry.first] = applicationMediaInterfaces->speaker;
@@ -940,7 +950,12 @@ bool SampleApplication::initialize(
     auto meetingSpeaker = meetingMediaInterfaces->speaker;
 #endif
 
-    if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup)) {
+    if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS			    
+    )) {
         ACSDK_CRITICAL(LX("Could not create mediaPlayers for adapters"));
         return false;
     }
@@ -1529,7 +1544,12 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
     bool enableEqualizer,
     const std::string& name,
-    bool enableLiveMode) {
+    bool enableLiveMode
+#ifdef XMOS_AVS_TESTS
+    ,
+    const bool isFileStream
+#endif // XMOS_AVS_TESTS	
+    ) {
 #ifdef GSTREAMER_MEDIA_PLAYER
     /*
      * For the SDK, the MediaPlayer happens to also provide volume control functionality.
@@ -1537,7 +1557,12 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
      * more actions needed for these beyond setting the volume control on the MediaPlayer.
      */
     auto mediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode);
+        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS	
+    );
     if (!mediaPlayer) {
         return nullptr;
     }

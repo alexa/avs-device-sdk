@@ -103,7 +103,12 @@ public:
      */
     bool createMediaPlayersForAdapters(
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
-        std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup);
+        std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup
+#ifdef XMOS_AVS_TESTS
+	,
+    	const bool isFileStream
+#endif // XMOS_AVS_TESTS
+     );
 
     /**
      * Instances of this class register ExternalMediaAdapters. Each adapter registers itself by instantiating
@@ -178,7 +183,12 @@ private:
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
         bool enableEqualizer,
         const std::string& name,
-        bool enableLiveMode = false);
+        bool enableLiveMode = false
+#ifdef XMOS_AVS_TESTS
+	,
+    	const bool isFileStream = false
+#endif // XMOS_AVS_TESTS
+	);
 
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
     /**
