@@ -77,7 +77,12 @@ InteractionManager::InteractionManager(
     std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler,
 #endif
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager,
-    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) :
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    ) :
         RequiresShutdown{"InteractionManager"},
         m_client{client},
         m_micWrapper{micWrapper},
@@ -113,13 +118,23 @@ InteractionManager::InteractionManager(
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
         m_friendlyNameToggle{true},
 #endif
-        m_diagnostics{diagnostics} {
+        m_diagnostics{diagnostics}
+#ifdef XMOS_AVS_TESTS
+        ,
+        m_isFileStream{isFileStream}
+#endif // XMOS_AVS_TESTS
+{
 
-#ifndef XMOS_AVS_TESTS
+#ifdef XMOS_AVS_TESTS
+    if (m_isFileStream) {
+#endif // XMOS_AVS_TESTS
+
     // Do not start streaming the audio now, the SDK is not ready to process the audio
     // wait for the device to be authorized
     if (m_wakeWordAudioProvider) {
         m_micWrapper->startStreamingMicrophoneData();
+    }
+#ifdef XMOS_AVS_TESTS
     }
 #endif // XMOS_AVS_TESTS
 
@@ -134,15 +149,16 @@ void InteractionManager::begin() {
         m_userInterface->printHelpScreen();
     });
 #ifdef XMOS_AVS_TESTS
-
-    // wait for the device to be authorized
-    while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
-        usleep(50000);
-    }
-    sleep(2);
-    // start streaming the audio
-    if (m_wakeWordAudioProvider) {
-        m_micWrapper->startStreamingMicrophoneData();
+    if (m_isFileStream) {
+        // wait for the device to be authorized
+        while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+            usleep(50000);
+        }
+        sleep(2);
+        // start streaming the audio
+        if (m_wakeWordAudioProvider) {
+            m_micWrapper->startStreamingMicrophoneData();
+        }
     }
 #endif // XMOS_AVS_TESTS
 }

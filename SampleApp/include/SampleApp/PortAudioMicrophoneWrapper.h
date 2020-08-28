@@ -65,6 +65,13 @@ public:
      */
     bool isStreaming() override;
 
+#ifdef XMOS_AVS_TESTS
+
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif // XMOS_AVS_TESTS
+
     /**
      * Destructor.
      */
@@ -133,6 +140,7 @@ private:
     /**
      * HACK Read from file instead of a real audio device.
      */
+    static bool m_isFileStream;
     std::thread *m_readerThread;
     std::ifstream *m_fileStream;
     std::promise<void> *m_threadPromise;

@@ -159,6 +159,11 @@ public:
     /// @}
 
     void doShutdown() override;
+#ifdef XMOS_AVS_TESTS
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif // XMOS_AVS_TESTS
 
 private:
     /**
@@ -721,6 +726,7 @@ private:
     /**
      * HACK Write to file instead of a real audio device.
      */
+    static bool m_isFileStream;
     std::ofstream *m_fileStream;
     unsigned m_samplesWritten;
 

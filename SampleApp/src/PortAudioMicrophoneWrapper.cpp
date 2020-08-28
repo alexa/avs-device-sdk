@@ -66,6 +66,7 @@ PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInpu
         m_isStreaming{false}
 #ifdef XMOS_AVS_TESTS
         ,
+        m_isFileStream{false};
         m_readerThread{nullptr},
         m_fileStream{nullptr},
         m_threadPromise{nullptr},
@@ -90,6 +91,7 @@ PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
         m_readerThread = nullptr;
         m_threadFuture = nullptr;
         m_threadPromise = nullptr;
+        m_isFileStream = false;
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadDestroyed"));
     }
     if (m_fileStream) {
@@ -107,13 +109,15 @@ bool PortAudioMicrophoneWrapper::initialize() {
         return false;
     }
 #ifdef XMOS_AVS_TESTS
-    m_fileStream = new std::ifstream{"/tmp/in.raw", std::ios::binary};
-    if (!m_fileStream->is_open()) {
-        ACSDK_ERROR(LX("Failed to open input audio file"));
-        return false;
+    if (m_isFileStream) {
+        m_fileStream = new std::ifstream{"/tmp/in.raw", std::ios::binary};
+        if (!m_fileStream->is_open()) {
+            ACSDK_ERROR(LX("Failed to open input audio file"));
+            return false;
+        }
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "fileOpen"));
+        return true;
     }
-    ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "fileOpen"));
-    return true;
 #endif // XMOS_AVS_TESTS
     PaError err;
     err = Pa_Initialize();
@@ -195,13 +199,15 @@ void PortAudioMicrophoneWrapper::ReaderThread(PortAudioMicrophoneWrapper *wrappe
 bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
 #ifdef XMOS_AVS_TESTS
-    m_threadPromise = new std::promise<void>;
-    m_threadFuture = new std::future<void>{m_threadPromise->get_future()};
-    m_readerThread = new std::thread{ReaderThread, this};
-    m_samplesRead = 0;
-    m_eofReached = false;
-    ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadCreated"));
-    return true;
+    if (m_isFileStream) {
+        m_threadPromise = new std::promise<void>;
+        m_threadFuture = new std::future<void>{m_threadPromise->get_future()};
+        m_readerThread = new std::thread{ReaderThread, this};
+        m_samplesRead = 0;
+        m_eofReached = false;
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadCreated"));
+        return true;
+    }
 #endif // XMOS_AVS_TESTS
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StartStream(m_paStream);

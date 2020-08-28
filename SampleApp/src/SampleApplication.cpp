@@ -630,9 +630,21 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    const int opPoint
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    ) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
+    MediaPlayer::setIsFileStream(true);
+    PortAudioMicrophoneWrapper::setIsFileStream(true);
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint,
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    )) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -714,7 +726,12 @@ bool SampleApplication::initialize(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    const int opPoint
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    ) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
 
     if (!logLevel.empty()) {
@@ -1435,7 +1452,12 @@ bool SampleApplication::initialize(
 #endif
         ,
         nullptr,
-        diagnostics);
+        diagnostics
+#ifdef XMOS_AVS_TESTS
+        ,
+        isFileStream
+#endif // XMOS_AVS_TESTS
+        );
 #else
     // clang-format off
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
@@ -1472,7 +1494,12 @@ bool SampleApplication::initialize(
 #endif
         ,
         nullptr,
-        diagnostics);
+        diagnostics
+#ifdef XMOS_AVS_TESTS
+        ,
+        isFileStream
+#endif // XMOS_AVS_TESTS
+        );
     // clang-format on
 #endif
 

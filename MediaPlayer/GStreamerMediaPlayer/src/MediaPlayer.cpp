@@ -598,7 +598,8 @@ MediaPlayer::MediaPlayer(
 #ifdef XMOS_AVS_TESTS
         ,
         m_fileStream{nullptr},
-        m_samplesWritten{0}
+        m_samplesWritten{0},
+        m_isFileStream{false}
 #endif // XMOS_AVS_TESTS
 {
 }
@@ -633,7 +634,7 @@ bool MediaPlayer::init() {
         return false;
     }
 #ifdef XMOS_AVS_TESTS
-    if (name() == "SpeakMediaPlayer") {
+    if (m_isFileStream && name() == "SpeakMediaPlayer") {
         m_fileStream = new std::ofstream{"/tmp/out.raw", std::ios::binary};
         if (!m_fileStream->is_open()) {
             ACSDK_ERROR(LX("Failed to open output audio file"));

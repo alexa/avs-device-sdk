@@ -56,6 +56,7 @@ int main(int argc, char* argv[]) {
     std::string pathToKWDInputFolder;
     std::string logLevel;
     int opPoint = 5;
+    bool isFileStream = false;
 
     if (usesOptStyleArgs(argc, argv)) {
         for (int i = 1; i < argc; i++) {
@@ -100,6 +101,13 @@ int main(int argc, char* argv[]) {
             if (5 <= argc) {
                 opPoint = atoi(argv[4]);
             }
+#ifdef XMOS_AVS_TESTS
+            if (6 <= argc) {
+                if (argv[5] == std::string("XMOS_AVS_TESTS")) {
+                    isFileStream = true;
+                }
+            }
+#endif // XMOS_AVS_TESTS
         }
 #else
         if (argc < 2) {
@@ -143,6 +151,11 @@ int main(int argc, char* argv[]) {
 #endif
             ,
             opPoint
+#ifdef XMOS_AVS_TESTS
+            ,
+            isFileStream
+#endif // XMOS_AVS_TESTS
+
         );
 
         if (!sampleApplication) {
