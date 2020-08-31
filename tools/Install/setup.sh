@@ -36,7 +36,7 @@ CURRENT_DIR="$( pwd )"
 THIS_SCRIPT="$CURRENT_DIR/setup.sh"
 popd > /dev/null
 
-INSTALL_BASE=${INSTALL_BASE:-"$HOME/sdk-folder-avs-tests"}
+INSTALL_BASE=${INSTALL_BASE:-"$HOME/sdk-folder"}
 SOURCE_FOLDER=${SDK_LOC:-''}
 THIRD_PARTY_FOLDER=${THIRD_PARTY_LOC:-'third-party'}
 BUILD_FOLDER=${BUILD_FOLDER:-'sdk-build'}
@@ -65,7 +65,7 @@ ALIASES="$HOME/.bash_aliases"
 XMOS_DEVICE="xvf3510"
 
 # Default value for XMOS AVS test flag
-XMOS_AVS_TESTS_FLAG=""
+XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
 
 # Default device serial number if nothing is specified
 DEVICE_SERIAL_NUMBER="123456"
@@ -142,7 +142,7 @@ fi
 XMOS_TAG=$2
 
 shift 2
-OPTIONS=s:a:m:d:hx:t
+OPTIONS=s:a:m:d:hx:
 while getopts "$OPTIONS" opt ; do
     case $opt in
         s )
@@ -164,9 +164,6 @@ while getopts "$OPTIONS" opt ; do
             ;;
         x )
             XMOS_DEVICE="$OPTARG"
-            ;;
-        t )
-            XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
             ;;
         h )
             show_help
@@ -356,12 +353,6 @@ then
 
 else
   cd $BUILD_PATH
-  cmake "$SOURCE_PATH/avs-device-sdk" \
-      $PI_HAT_FLAG \
-      $XMOS_AVS_TESTS_FLAG \
-      -DCMAKE_BUILD_TYPE=DEBUG \
-      "${CMAKE_PLATFORM_SPECIFIC[@]}"
-  cd $BUILD_PATH
   make SampleApp
 fi
 
@@ -419,7 +410,7 @@ sed -i '/AVS/d' $ALIASES > /dev/null
 sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
 sed -i '/Remove/d' $ALIASES > /dev/null
 
-echo "alias avsrun=\"$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models\"" >> $ALIASES
+echo "alias avsrun=\"$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models NONE 12\"" >> $ALIASES
 echo "alias avsunit=\"bash $TEST_SCRIPT\"" >> $ALIASES
 echo "alias avssetup=\"cd $CURRENT_DIR; bash setup.sh\"" >> $ALIASES
 echo "echo "Available AVS aliases:"" >> $ALIASES
