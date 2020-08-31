@@ -700,22 +700,12 @@ SampleApplication::~SampleApplication() {
 
 bool SampleApplication::createMediaPlayersForAdapters(
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
-    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup) {
     bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
 
     for (auto& entry : m_playerToSpeakerTypeMap) {
         auto applicationMediaInterfaces = createApplicationMediaPlayer(
-            httpContentFetcherFactory, equalizerEnabled, entry.first + "MediaPlayer", false
-#ifdef XMOS_AVS_TESTS
-            ,
-            isFileStream
-#endif // XMOS_AVS_TESTS
-        );
+            httpContentFetcherFactory, equalizerEnabled, entry.first + "MediaPlayer", false);
         if (applicationMediaInterfaces) {
             m_externalMusicProviderMediaPlayersMap[entry.first] = applicationMediaInterfaces->mediaPlayer;
             m_externalMusicProviderSpeakersMap[entry.first] = applicationMediaInterfaces->speaker;
@@ -839,7 +829,13 @@ bool SampleApplication::initialize(
     }
 #endif
 
-    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer");
+    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer"
+#ifdef XMOS_AVS_TESTS
+    ,
+    false, /* enableLiveMode */
+    isFileStream
+#endif // XMOS_AVS_TESTS;
+    );
     if (!speakerMediaInterfaces) {
         ACSDK_CRITICAL(LX("Failed to create application media interfaces for speech!"));
         return false;
@@ -952,12 +948,7 @@ bool SampleApplication::initialize(
     auto meetingSpeaker = meetingMediaInterfaces->speaker;
 #endif
 
-    if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup
-#ifdef XMOS_AVS_TESTS
-    ,
-    isFileStream
-#endif // XMOS_AVS_TESTS
-    )) {
+    if (!createMediaPlayersForAdapters(httpContentFetcherFactory, equalizerRuntimeSetup)) {
         ACSDK_CRITICAL(LX("Could not create mediaPlayers for adapters"));
         return false;
     }
