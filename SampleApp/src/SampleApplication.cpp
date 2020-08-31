@@ -637,7 +637,9 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
 #endif // XMOS_AVS_TESTS
     ) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
+#ifdef XMOS_AVS_TESTS
     PortAudioMicrophoneWrapper::setIsFileStream(isFileStream);
+#endif // XMOS_AVS_TESTS
     if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
 #ifdef XMOS_AVS_TESTS
     ,
