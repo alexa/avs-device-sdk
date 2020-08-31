@@ -672,7 +672,6 @@ GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
     GstSample *sample;
     GstBuffer *buffer;
     GstMapInfo map;
-
     g_signal_emit_by_name(sink, "pull-sample", &sample);
     buffer = gst_sample_get_buffer(sample);
     gst_buffer_map(buffer, &map, GST_MAP_READ);

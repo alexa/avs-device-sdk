@@ -209,6 +209,7 @@ bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
         m_samplesRead = 0;
         m_eofReached = false;
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadCreated"));
+        m_isStreaming = true;
         return true;
     }
 #endif // XMOS_AVS_TESTS
