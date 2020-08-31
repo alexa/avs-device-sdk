@@ -57,7 +57,6 @@ int main(int argc, char* argv[]) {
     std::string logLevel;
     int opPoint = 5;
 #ifdef XMOS_AVS_TESTS
-    fffff
     bool isFileStream = false;
 #endif // XMOS_AVS_TESTS
 
@@ -105,7 +104,6 @@ int main(int argc, char* argv[]) {
                 opPoint = atoi(argv[4]);
             }
 #ifdef XMOS_AVS_TESTS
-	    ffff
             if (6 <= argc) {
                 if (argv[5] == std::string("XMOS_AVS_TESTS")) {
                     isFileStream = true;

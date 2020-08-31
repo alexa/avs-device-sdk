@@ -23,10 +23,6 @@ if (VALID)
       add_definitions("-DCUSTOM_MEDIA_PLAYER")
     endif()
 
-    if(XMOS_AVS_TESTS)
-      add_definitions(-DXMOS_AVS_TESTS)
-    endif()
-
     project(SampleApp LANGUAGES CXX)
     include(../build/BuildDefaults.cmake)
 
