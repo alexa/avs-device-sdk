@@ -630,6 +630,9 @@ public:
     void clearProtocolTrace();
 
 #ifdef XMOS_AVS_TESTS
+     /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
     static void setIsFileStream(bool value) {
         m_isFileStream = value;
     }
