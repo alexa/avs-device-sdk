@@ -49,7 +49,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 #ifdef XMOS_AVS_TESTS
-    bool InteractionManager::m_isFileStream = false;
+bool InteractionManager::m_isFileStream = false;
 #endif // XMOS_AVS_TESTS
 
 InteractionManager::InteractionManager(
@@ -121,11 +121,10 @@ InteractionManager::InteractionManager(
 {
 
 #ifdef XMOS_AVS_TESTS
+    // Do not start streaming the audio now, the SDK is not ready to process the audio:
+    // wait for the device to be authorized
     if (!m_isFileStream) {
 #endif // XMOS_AVS_TESTS
-
-        // Do not start streaming the audio now, the SDK is not ready to process the audio
-        // wait for the device to be authorized
         if (m_wakeWordAudioProvider) {
             m_micWrapper->startStreamingMicrophoneData();
         }
