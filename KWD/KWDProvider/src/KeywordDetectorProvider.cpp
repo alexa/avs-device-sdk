@@ -41,7 +41,8 @@ std::unique_ptr<kwd::AbstractKeywordDetector> KeywordDetectorProvider::create(
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
         keyWordDetectorStateObservers,
-    const std::string& pathToInputFolder) {
+    const std::string& pathToInputFolder,
+    const int opPoint) {
 #if defined(KWD_KITTAI)
     return alexaClientSDK::kwd::KittAiKeyWordDetector::create(
         stream,
@@ -59,7 +60,9 @@ std::unique_ptr<kwd::AbstractKeywordDetector> KeywordDetectorProvider::create(
         audioFormat,
         keyWordObservers,
         keyWordDetectorStateObservers,
-        pathToInputFolder + "/spot-alexa-rpi-31000.snsr");
+        pathToInputFolder + "/spot-alexa-rpi-31000.snsr",
+        std::chrono::milliseconds(10),
+        opPoint);
 #else
     return nullptr;
 #endif
