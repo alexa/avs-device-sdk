@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,16 +31,16 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::externalMediaPlayer;
 
 /*
- * As per Spotify integration spec request for RequestToken retries shall not be performed in
+ * As per the integration spec, request for RequestToken retries shall not be performed in
  * an interval of less than 800 milliseconds.
  */
 const std::vector<int> SESSION_RETRY_TABLE = {
-    1600,   // Retry 1:  1.6s -> .8s to 2.4s
-    2000,   // Retry 2:  2.0s -> 1.0s to 3s
-    3000,   // Retry 3:  3.00s
-    5000,   // Retry 4:  5.00s
-    10000,  // Retry 5: 10.00s
-    20000,  // Retry 6: 20.00s
+    1000 * 60,   // Retry 1:  1.0mins
+    5000 * 60,   // Retry 2:  5.0mins
+    15000 * 60,  // Retry 3:  15.00mins
+    20000 * 60,  // Retry 4:  20.00mins
+    30000 * 60,  // Retry 5:  30.00mins
+    60000 * 60,  // Retry 6:  60.00mins
 };
 
 avsCommon::utils::RetryTimer SESSION_RETRY_TIMER(SESSION_RETRY_TABLE);
@@ -128,6 +128,10 @@ rapidjson::Value buildSessionState(
     playerJson.AddMember(IS_GUEST, sessionState.isGuest, allocator);
     playerJson.AddMember(LAUNCHED, sessionState.launched, allocator);
     playerJson.AddMember(ACTIVE, sessionState.active, allocator);
+    playerJson.AddMember(SPI_VERSION, sessionState.spiVersion, allocator);
+    playerJson.AddMember(PLAYER_COOKIE, sessionState.playerCookie, allocator);
+    playerJson.AddMember(SKILL_TOKEN, sessionState.skillToken, allocator);
+    playerJson.AddMember(PLAYBACK_SESSION_ID, sessionState.playbackSessionId, allocator);
 
     return playerJson;
 }
@@ -143,7 +147,6 @@ bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::Al
     document->AddMember(REPEAT, REPEAT_STATUS_STRING(false), allocator);
     document->AddMember(FAVORITE, RatingToString(Favorites::NOT_RATED), allocator);
     document->AddMember(POSITIONINMS, 0, allocator);
-    document->AddMember(UNCERTAINITYINMS, 0, allocator);
 
     return true;
 }

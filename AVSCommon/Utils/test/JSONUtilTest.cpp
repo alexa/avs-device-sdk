@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -416,6 +416,477 @@ TEST_F(JSONUtilTest, test_convertToBoolValueWithBool) {
     bool actual;
     ASSERT_TRUE(convertToValue(expected, &actual));
     ASSERT_EQ(expected.GetBool(), actual);
+}
+
+/**
+ * Test convert to string set with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArraySucceed) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"(["ONE","TWO"])");
+    ASSERT_EQ(entries.size(), 2u);
+    ASSERT_NE(entries.find("ONE"), entries.end());
+    ASSERT_NE(entries.find("TWO"), entries.end());
+}
+
+/**
+ * Test convert to string set with empty entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayEmpty) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"([])");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayNonArray) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":"value"})");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with invalid json.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayNonJson) {
+    auto entries = retrieveStringArray<std::set<std::string>>("Not json");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with an array with elements that are not string.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringArrayWithNonStringArrayFails) {
+    auto entries = retrieveStringArray<std::set<std::string>>(R"([true,1])");
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with empty set.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonStringFromEmptySet) {
+    auto jsonString = convertToJsonString<std::set<std::string>>(std::set<std::string>());
+    ASSERT_EQ(jsonString, std::string("[]"));
+}
+
+/**
+ * Test convert to string set with non-empty set.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonStringFromStringSet) {
+    auto jsonString = convertToJsonString<std::set<std::string>>(std::set<std::string>({"ONE", "TWO"}));
+    ASSERT_EQ(jsonString, std::string(R"(["ONE","TWO"])"));
+}
+
+/**
+ * Test convert to json list with non-empty string vector.
+ */
+TEST_F(JSONUtilTest, test_convertToJsonFromStringVector) {
+    auto jsonString = convertToJsonString<std::vector<std::string>>(std::vector<std::string>({"ONE", "TWO", "THREE"}));
+    ASSERT_EQ(jsonString, std::string(R"(["ONE","TWO","THREE"])"));
+}
+
+/**
+ * Test convert to string set with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":["ONE","TWO"]})", key);
+    ASSERT_EQ(entries.size(), 2u);
+    EXPECT_NE(entries.find("ONE"), entries.end());
+    EXPECT_NE(entries.find("TWO"), entries.end());
+}
+
+/**
+ * Test convert to string set with mix of string and non-strings entries.
+ */
+TEST_F(JSONUtilTest, test_retrieveMixStringNonStringElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":["ONE",2]})", key);
+    ASSERT_EQ(entries.size(), 1u);
+    EXPECT_NE(entries.find("ONE"), entries.end());
+}
+
+/**
+ * Test convert to string set with empty entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyEmptyArray) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":[]})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyNonArray) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"key":"value"})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string set with non-array.
+ */
+TEST_F(JSONUtilTest, test_retrieveElementsWithKeyMissing) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::set<std::string>>(R"({"anotherKey":"value"})", key);
+    ASSERT_TRUE(entries.empty());
+}
+
+/**
+ * Test convert to string array with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayOfElementsWithKeySucceed) {
+    std::string key{"key"};
+    auto entries = retrieveStringArray<std::vector<std::string>>(R"({"key":["ONE","TWO","THREE"]})", key);
+    ASSERT_EQ(entries.size(), 3u);
+    EXPECT_EQ(entries[0], std::string("ONE"));
+    EXPECT_EQ(entries[1], std::string("TWO"));
+    EXPECT_EQ(entries[2], std::string("THREE"));
+}
+
+/**
+ * Test convert to map from string array with only key entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayOnlyKeyEntry) {
+    std::string key{"manifest"};
+    std::map<std::string, std::string> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[{"name": "one"}]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    retrieveStringMapFromArray(headerIterator->value, key, elements);
+    ASSERT_EQ(elements.size(), 0u);
+}
+
+/**
+ * Test convert to map from string array with invalid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayInvalidEntry) {
+    std::string key{"manifest"};
+    std::map<std::string, std::string> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[{"name": "one", "value":"1"}, {"name" : "two", "value":"2"}, {"name":"three", "value":3}]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    retrieveStringMapFromArray(headerIterator->value, key, elements);
+    ASSERT_EQ(elements.size(), 0u);
+}
+
+/**
+ * Test convert to map from string array with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArray) {
+    std::string key{"manifest"};
+    std::map<std::string, std::string> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[{"name": "one", "value":"1"}, {"name" : "two", "value":"2"}, {"name":"three", "value":"3"}]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    retrieveStringMapFromArray(headerIterator->value, key, elements);
+    ASSERT_EQ(elements.size(), 3u);
+    EXPECT_EQ(elements["one"], std::string("1"));
+    EXPECT_EQ(elements["two"], std::string("2"));
+    EXPECT_EQ(elements["three"], std::string("3"));
+}
+
+/**
+ * Test convert to map from string array with multiple valid entries.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayMultiple) {
+    std::string json = R"({
+      "httpHeaders" : {
+           "manifest": [
+                {"name": "one", "value":"1"},
+                {"name" : "two", "value":"2"},
+                {"name":"three", "value":"3"}
+           ],
+           "all": [
+                {"name":"tick", "value":"tock"}
+           ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    {
+        std::string key{"manifest"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 3u);
+        EXPECT_EQ(elements["one"], std::string("1"));
+        EXPECT_EQ(elements["two"], std::string("2"));
+        EXPECT_EQ(elements["three"], std::string("3"));
+    }
+
+    {
+        std::string key{"all"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 1u);
+        EXPECT_EQ(elements["tick"], std::string("tock"));
+    }
+}
+
+/**
+ * Test convert to map from string array with multiple valid entries.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayAll) {
+    std::string json = R"({
+    "httpHeaders": {
+        "key": [
+                 {"name": "one", "value":"1"},
+                 {"name" : "two", "value":"2"},
+                 {"name":"three", "value":"3"}
+               ],
+        "manifest": [
+                 {"name":"tick", "value":"tock"}
+               ],
+        "audioSegment": [
+                 {"name":"hdr", "value":"password"}
+               ],
+        "all": [
+                 {"name":"login", "value":"authToken"},
+                 {"name":"bill", "value":"authTokenIsStillValid"}
+               ]
+        }})";
+
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    {
+        std::string key{"key"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 3u);
+        EXPECT_EQ(elements["one"], std::string("1"));
+        EXPECT_EQ(elements["two"], std::string("2"));
+        EXPECT_EQ(elements["three"], std::string("3"));
+    }
+
+    {
+        std::string key{"manifest"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 1u);
+        EXPECT_EQ(elements["tick"], std::string("tock"));
+    }
+
+    {
+        std::string key{"audioSegment"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 1u);
+        EXPECT_EQ(elements["hdr"], std::string("password"));
+    }
+
+    {
+        std::string key{"all"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 2u);
+        EXPECT_EQ(elements["login"], std::string("authToken"));
+        EXPECT_EQ(elements["bill"], std::string("authTokenIsStillValid"));
+    }
+}
+
+/**
+ * Test convert to map from string array with valid and empty entries.
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayNoneFew) {
+    std::string json = R"({
+      "httpHeaders" : {
+           "manifest": [
+           ],
+           "all": [
+                {"name":"tick", "value":"tock"},
+                {"name":"tick1", "value":"rock"},
+                {"name":"tick2", "value":"kick"},
+                {"name":"tick3", "value":"thisiskey"},
+                {"name":"tick4", "value":"thisismore"},
+                {"name":"tick5", "value":"thisisless"},
+                {"name":"tick6", "value":"thisisnot"},
+                {"name":"tick7", "value":"thatiswhere"},
+                {"name":"tick8", "value":"thoseisthis"}
+           ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    {
+        std::string key{"manifest"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 0u);
+    }
+
+    {
+        std::string key{"all"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 9u);
+        EXPECT_EQ(elements["tick"], std::string("tock"));
+        EXPECT_EQ(elements["tick1"], std::string("rock"));
+        EXPECT_EQ(elements["tick2"], std::string("kick"));
+        EXPECT_EQ(elements["tick3"], std::string("thisiskey"));
+        EXPECT_EQ(elements["tick4"], std::string("thisismore"));
+        EXPECT_EQ(elements["tick5"], std::string("thisisless"));
+        EXPECT_EQ(elements["tick6"], std::string("thisisnot"));
+        EXPECT_EQ(elements["tick7"], std::string("thatiswhere"));
+        EXPECT_EQ(elements["tick8"], std::string("thoseisthis"));
+    }
+}
+
+/**
+ * Test check map is empty for empty or missing header entries in JSON
+ */
+TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayNoneAll) {
+    std::string json = R"({
+      "httpHeaders" : {
+           "manifest": [ ],
+           "all": [ ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    {
+        std::string key{"manifest"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 0u);
+    }
+
+    {
+        std::string key{"all"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 0u);
+    }
+
+    {
+        std::string key{"audioSegment"};
+        std::map<std::string, std::string> elements;
+        retrieveStringMapFromArray(headerIterator->value, key, elements);
+        ASSERT_EQ(elements.size(), 0u);
+    }
+}
+
+/**
+ * Test convert to vector of map from string array with valid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArray) {
+    std::string key{"manifest"};
+    std::vector<std::map<std::string, std::string>> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[
+            {"name": "one", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "two", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "three", "value1":"1", "value2":"2", "value3":"3"}
+        ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    EXPECT_TRUE(retrieveArrayOfStringMapFromArray(headerIterator->value, key, elements));
+    ASSERT_EQ(elements.size(), 3u);
+    for (auto element : elements) {
+        EXPECT_TRUE(element["name"] == "one" || element["name"] == "two" || element["name"] == "three");
+        EXPECT_EQ(element["value1"], std::string("1"));
+        EXPECT_EQ(element["value2"], std::string("2"));
+        EXPECT_EQ(element["value3"], std::string("3"));
+    }
+}
+
+/**
+ * Test convert to vector of map from string array with invalid entry.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayInvalidEntry) {
+    std::string key{"manifest"};
+    std::vector<std::map<std::string, std::string>> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[
+            {"name": "one", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "two", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "three", "value1":"1", "value2":"2", "value3":3}
+        ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    EXPECT_FALSE(retrieveArrayOfStringMapFromArray(headerIterator->value, key, elements));
+    ASSERT_EQ(elements.size(), 0u);
+}
+
+/**
+ * Test convert to vector of map from string array with missing key.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayInvalidKey) {
+    std::string key{"notManifest"};
+    std::vector<std::map<std::string, std::string>> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[
+            {"name": "one", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "two", "value1":"1", "value2":"2", "value3":"3"},
+            {"name": "three", "value1":"1", "value2":"2", "value3":"3"}
+        ]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    EXPECT_FALSE(retrieveArrayOfStringMapFromArray(headerIterator->value, key, elements));
+    ASSERT_EQ(elements.size(), 0u);
+}
+
+/**
+ * Test convert to vector of map from string array with empty Array.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayEmptyArray) {
+    std::string key{"manifest"};
+    std::vector<std::map<std::string, std::string>> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[]} })";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    EXPECT_TRUE(retrieveArrayOfStringMapFromArray(headerIterator->value, key, elements));
+    ASSERT_EQ(elements.size(), 0u);
+}
+
+/**
+ * Test convert to vector of map from string array with empty Array.
+ */
+TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayEmptyMap) {
+    std::string key{"manifest"};
+    std::vector<std::map<std::string, std::string>> elements;
+    std::string json =
+        R"({"httpHeaders" : {"manifest":[ {}]}})";
+    rapidjson::Document document;
+    ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
+    rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
+    ASSERT_TRUE(headerIterator != document.MemberEnd());
+
+    EXPECT_TRUE(retrieveArrayOfStringMapFromArray(headerIterator->value, key, elements));
+    ASSERT_EQ(elements.size(), 1u);
+
+    auto& emptyElement = elements.front();
+    ASSERT_EQ(emptyElement.size(), 0u);
 }
 
 }  // namespace test

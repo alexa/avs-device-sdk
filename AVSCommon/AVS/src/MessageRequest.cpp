@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,7 +34,19 @@ static const std::string TAG("MessageRequest");
 
 MessageRequest::MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension) :
         m_jsonContent{jsonContent},
+        m_isSerialized{true},
         m_uriPathExtension{uriPathExtension} {
+}
+
+MessageRequest::MessageRequest(
+    const std::string& jsonContent,
+    bool isSerialized,
+    const std::string& uriPathExtension,
+    std::vector<std::pair<std::string, std::string>> headers) :
+        m_jsonContent{jsonContent},
+        m_isSerialized{isSerialized},
+        m_uriPathExtension{uriPathExtension},
+        m_headers(std::move(headers)) {
 }
 
 MessageRequest::~MessageRequest() {
@@ -52,15 +64,19 @@ void MessageRequest::addAttachmentReader(
     m_readers.push_back(namedReader);
 }
 
-std::string MessageRequest::getJsonContent() {
+std::string MessageRequest::getJsonContent() const {
     return m_jsonContent;
 }
 
-std::string MessageRequest::getUriPathExtension() {
+bool MessageRequest::getIsSerialized() const {
+    return m_isSerialized;
+}
+
+std::string MessageRequest::getUriPathExtension() const {
     return m_uriPathExtension;
 }
 
-int MessageRequest::attachmentReadersCount() {
+int MessageRequest::attachmentReadersCount() const {
     return m_readers.size();
 }
 
@@ -116,7 +132,9 @@ void MessageRequest::removeObserver(
     m_observers.erase(observer);
 }
 
-using namespace avsCommon::sdkInterfaces;
+const std::vector<std::pair<std::string, std::string>>& MessageRequest::getHeaders() const {
+    return m_headers;
+}
 
 }  // namespace avs
 }  // namespace avsCommon

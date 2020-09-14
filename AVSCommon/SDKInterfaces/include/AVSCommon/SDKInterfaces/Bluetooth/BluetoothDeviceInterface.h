@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,12 +22,10 @@
 #include <string>
 #include <vector>
 
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSourceInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/A2DPSinkInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPTargetInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/BluetoothServiceInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/Services/SDPRecordInterface.h>
+#include <AVSCommon/Utils/Bluetooth/MediaStreamingState.h>
+#include <AVSCommon/Utils/Optional.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -101,6 +99,41 @@ inline std::ostream& operator<<(std::ostream& stream, const DeviceState state) {
 /// Represents a Bluetooth Device.
 class BluetoothDeviceInterface {
 public:
+    /**
+     * Struct to represent a Bluetooth device meta data.
+     */
+    struct MetaData {
+        /// The value of undefined class of the Bluetooth device.
+        static const int UNDEFINED_CLASS_VALUE = 0;
+
+        utils::Optional<int> vendorId;
+        utils::Optional<int> productId;
+        int classOfDevice;
+        utils::Optional<int> vendorDeviceSigId;
+        utils::Optional<std::string> vendorDeviceId;
+
+        /**
+         * Constructor
+         * @param vendorId The vendor id.
+         * @param productId The product id.
+         * @param classOfDevice The class of device.
+         * @param vendorDeviceSigId The vendor device SIG id.
+         * @param vendorDeviceId The vendor device id.
+         */
+        MetaData(
+            utils::Optional<int> vendorId,
+            utils::Optional<int> productId,
+            int classOfDevice,
+            utils::Optional<int> vendorDeviceSigId,
+            utils::Optional<std::string> vendorDeviceId) :
+                vendorId(vendorId),
+                productId(productId),
+                classOfDevice(classOfDevice),
+                vendorDeviceSigId(vendorDeviceSigId),
+                vendorDeviceId(vendorDeviceId) {
+        }
+    };
+
     /// Destructor
     virtual ~BluetoothDeviceInterface() = default;
 
@@ -124,6 +157,13 @@ public:
      * @return The @c DeviceState of the current device.
      */
     virtual DeviceState getDeviceState() = 0;
+
+    /**
+     * Getter for the Bluetooth device metadata.
+     *
+     * @return the meta data of the Bluetooth device.
+     */
+    virtual MetaData getDeviceMetaData() = 0;
 
     /**
      * Getter for the paired state of the device. This should return
@@ -172,18 +212,27 @@ public:
     /// @return The Bluetooth Services that this device supports.
     virtual std::vector<std::shared_ptr<services::SDPRecordInterface>> getSupportedServices() = 0;
 
-    // TODO : Generic getService method.
-    /// @return A pointer to an instance of the @c A2DPSourceInterface if supported, else a nullptr.
-    virtual std::shared_ptr<services::A2DPSourceInterface> getA2DPSource() = 0;
+    /**
+     * Get the Bluetooth service that this device supports.
+     *
+     * @param uuid the uuid of the Bluetooth Service.
+     * @return A pointer to an instance of the @c BluetoothServiceInterface if supported, else a nullptr.
+     */
+    virtual std::shared_ptr<services::BluetoothServiceInterface> getService(std::string uuid) = 0;
 
-    /// @return A pointer to an instance of the @c A2DPSinkInterface if supported, else a nullptr.
-    virtual std::shared_ptr<services::A2DPSinkInterface> getA2DPSink() = 0;
+    /// @return The current media streaming state of the BluetoothDevice if the device supports A2DP streaming.
+    virtual utils::bluetooth::MediaStreamingState getStreamingState() = 0;
 
-    /// @return A pointer to an instance of the @c AVRCPTargetInterface if supported, else a nullptr.
-    virtual std::shared_ptr<services::AVRCPTargetInterface> getAVRCPTarget() = 0;
-
-    /// @return A pointer to an instance of the @c AVRCPControllerInterface if supported, else a nullptr.
-    virtual std::shared_ptr<services::AVRCPControllerInterface> getAVRCPController() = 0;
+    /**
+     * Toggle the profile of a device, which restricts the future connection/disconnection.
+     *
+     * @param enabled True if need to connect the certain profile, false to disconnect.
+     * @param service The target profile to toggle.
+     * @return A bool indicating success.
+     */
+    virtual bool toggleServiceConnection(
+        bool enabled,
+        std::shared_ptr<services::BluetoothServiceInterface> service) = 0;
 };
 
 }  // namespace bluetooth

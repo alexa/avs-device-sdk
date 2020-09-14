@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CAPABILITIESOBSERVERINTERFACE_H_
 
 #include <ostream>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -29,14 +30,14 @@ class CapabilitiesObserverInterface {
 public:
     /// The enum State describes the state of the CapabilitiesDelegate.
     enum class State {
-        /// CapabilitiesDelegate not yet published.
+        /// CapabilitiesDelegate is uninitialized.
         UNINITIALIZED,
         /// The Capabilities API message went through without issues.
         SUCCESS,
         /// The message did not go through because of issues that need fixing.
         FATAL_ERROR,
         /// The message did not go through, but you can retry to see if you succeed.
-        RETRIABLE_ERROR
+        RETRIABLE_ERROR,
     };
 
     /// The enum Error encodes possible errors which may occur when changing state.
@@ -47,6 +48,8 @@ public:
         SUCCESS,
         /// An unknown error occurred.
         UNKNOWN_ERROR,
+        /// The request was canceled.
+        CANCELED,
         /// The authorization failed.
         FORBIDDEN,
         /// The server encountered a runtime error.
@@ -68,8 +71,14 @@ public:
      *
      * @param newState The new state of the CapabilitiesDelegate.
      * @param newError The error associated to the state change.
+     * @param addedOrUpdatedEndpointIds The endpoint identifiers of endpoints sent in the addOrUpdateReport.
+     * @param deletedEndpointIds The endpoint identifiers of endpoints sent in the deleteReport.
      */
-    virtual void onCapabilitiesStateChange(State newState, Error newError) = 0;
+    virtual void onCapabilitiesStateChange(
+        State newState,
+        Error newError,
+        const std::vector<std::string>& addedOrUpdatedEndpointIds,
+        const std::vector<std::string>& deletedEndpointIds) = 0;
 };
 
 /**
@@ -114,6 +123,8 @@ inline std::ostream& operator<<(std::ostream& stream, const CapabilitiesObserver
             return stream << "SERVER_INTERNAL_ERROR";
         case CapabilitiesObserverInterface::Error::BAD_REQUEST:
             return stream << "CLIENT_ERROR_BAD_REQUEST";
+        case CapabilitiesObserverInterface::Error::CANCELED:
+            return stream << "CANCELED";
     }
     return stream << "Unknown CapabilitiesObserverInterface::Error!: " << error;
 }

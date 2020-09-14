@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,6 +63,11 @@ void DirectiveProcessor::setDialogRequestId(const std::string& dialogRequestId) 
     setDialogRequestIdLocked(dialogRequestId);
 }
 
+std::string DirectiveProcessor::getDialogRequestId() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return m_dialogRequestId;
+}
+
 bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
     if (!directive) {
         ACSDK_ERROR(LX("onDirectiveFailed").d("action", "ignored").d("reason", "nullptrDirective"));
@@ -79,25 +84,13 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
         return false;
     }
 
-    // TODO: ACSDK-2218
-    // This additional check is made as a temporary solution to fix the problem with InteractionModel.NewDialogRequest
-    // directives having a dialogRequestID in the payload even though it should be handled immediately. This additional
-    // checking should be removed when a new InteractionModel version has been implemented which fixes the problem in
-    // the directive.
-    bool bypassDialogRequestIDCheck =
-        directive->getName() == "NewDialogRequest" && directive->getNamespace() == "InteractionModel";
-
-    if (bypassDialogRequestIDCheck) {
-        ACSDK_INFO(LX("onDirective")
-                       .d("action", "bypassingDialogRequestIdCheck")
-                       .d("reason", "routinesDirectiveContainsDialogRequestId")
-                       .d("directiveNamespace", "InteractionModel")
-                       .d("directiveName", "NewDialogRequest"));
-    } else if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
+    if (!directive->getDialogRequestId().empty() && directive->getDialogRequestId() != m_dialogRequestId) {
         ACSDK_INFO(LX("onDirective")
                        .d("messageId", directive->getMessageId())
                        .d("action", "dropped")
                        .d("reason", "dialogRequestIdDoesNotMatch")
+                       .d("namespace", directive->getNamespace())
+                       .d("name", directive->getName())
                        .d("directivesDialogRequestId", directive->getDialogRequestId())
                        .d("dialogRequestId", m_dialogRequestId));
         return true;
@@ -200,6 +193,8 @@ void DirectiveProcessor::onHandlingFailed(std::shared_ptr<AVSDirective> directiv
     std::unique_lock<std::mutex> lock(m_mutex);
     ACSDK_DEBUG(LX("onHandlingFailed")
                     .d("messageId", directive->getMessageId())
+                    .d("namespace", directive->getNamespace())
+                    .d("name", directive->getName())
                     .d("directiveBeingPreHandled",
                        m_directiveBeingPreHandled ? m_directiveBeingPreHandled->getMessageId() : "(nullptr)")
                     .d("description", description));
@@ -408,7 +403,13 @@ bool DirectiveProcessor::handleQueuedDirectivesLocked(std::unique_lock<std::mute
         }
 
         if (!handleDirectiveSucceeded) {
-            ACSDK_ERROR(LX("handleDirectiveFailed").d("message id", directive->getMessageId()));
+            ACSDK_ERROR(LX("handleDirectiveFailed")
+                            .d("message id", directive->getMessageId())
+                            .d("namespace", directive->getNamespace())
+                            .d("name", directive->getName())
+                            .d("reason", "dialog request id does not match")
+                            .d("directive's dialog request id", directive->getDialogRequestId())
+                            .d("dialog request id", m_dialogRequestId));
             scrubDialogRequestIdLocked(directive->getDialogRequestId());
         }
     }

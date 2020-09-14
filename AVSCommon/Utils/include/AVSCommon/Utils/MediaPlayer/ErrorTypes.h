@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ namespace mediaPlayer {
 
 /// Identifies the specific type of error in a @c PlaybackFailed event.
 enum class ErrorType {
+    /// None
+    NONE,
     /// An unknown error occurred.
     MEDIA_ERROR_UNKNOWN,
     /// The server recognized the request as being malformed (bad request, unauthorized, forbidden, not found, etc).
@@ -34,7 +36,48 @@ enum class ErrorType {
     /// The server accepted the request, but was unable to process the request as expected.
     MEDIA_ERROR_INTERNAL_SERVER_ERROR,
     /// There was an internal error on the client.
-    MEDIA_ERROR_INTERNAL_DEVICE_ERROR
+    MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+    /// There was an bad request
+    MEDIA_ERROR_HTTP_BAD_REQUEST,
+    /// Request is unauthorized
+    MEDIA_ERROR_HTTP_UNAUTHORIZED,
+    /// Request is forbidden
+    MEDIA_ERROR_HTTP_FORBIDDEN,
+    /// Http resource not found
+    MEDIA_ERROR_HTTP_NOT_FOUND,
+    /// There was a conflict
+    MEDIA_ERROR_HTTP_CONFLICT,
+    /// Range is invalid
+    MEDIA_ERROR_HTTP_INVALID_RANGE,
+    /// There were too many requests
+    MEDIA_ERROR_HTTP_TOO_MANY_REQUESTS,
+    /// Bad Gateway
+    MEDIA_ERROR_HTTP_BAD_GATEWAY,
+    /// Service is unavailable
+    MEDIA_ERROR_HTTP_SERVICE_UNAVAILABLE,
+    /// Gateway timeout occurred
+    MEDIA_ERROR_HTTP_GATEWAY_TIMEOUT,
+    /// There was a timeout
+    MEDIA_ERROR_TIMED_OUT,
+    /// URL was malformed
+    MEDIA_ERROR_URL_MALFORMED,
+    /// Couldn't resolve host
+    MEDIA_ERROR_COULD_NOT_RESOLVE_HOST,
+    /// Coudln't connect to server
+    MEDIA_ERROR_COULD_NOT_CONNECT,
+    /// The resource is not seekable
+    MEDIA_ERROR_NOT_SEEKABLE,
+    /// Unsupported error
+    MEDIA_ERROR_UNSUPPORTED,
+    /// Text file, hence not playable
+    MEDIA_ERROR_POSSIBLY_TEXT,
+    /// IO error
+    MEDIA_ERROR_IO,
+    /// Invalid command
+    MEDIA_ERROR_INVALID_COMMAND,
+    /// Playlist error occurred
+    MEDIA_ERROR_PLAYLIST_ERROR
+
 };
 
 /**
@@ -45,6 +88,8 @@ enum class ErrorType {
  */
 inline std::string errorTypeToString(ErrorType errorType) {
     switch (errorType) {
+        case ErrorType::NONE:
+            return "NONE";
         case ErrorType::MEDIA_ERROR_UNKNOWN:
             return "MEDIA_ERROR_UNKNOWN";
         case ErrorType::MEDIA_ERROR_INVALID_REQUEST:
@@ -55,6 +100,46 @@ inline std::string errorTypeToString(ErrorType errorType) {
             return "MEDIA_ERROR_INTERNAL_SERVER_ERROR";
         case ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR:
             return "MEDIA_ERROR_INTERNAL_DEVICE_ERROR";
+        case ErrorType::MEDIA_ERROR_HTTP_BAD_REQUEST:
+            return "MEDIA_ERROR_HTTP_BAD_REQUEST";
+        case ErrorType::MEDIA_ERROR_HTTP_UNAUTHORIZED:
+            return "MEDIA_ERROR_HTTP_UNAUTHORIZED";
+        case ErrorType::MEDIA_ERROR_HTTP_FORBIDDEN:
+            return "MEDIA_ERROR_HTTP_FORBIDDEN";
+        case ErrorType::MEDIA_ERROR_HTTP_NOT_FOUND:
+            return "MEDIA_ERROR_HTTP_NOT_FOUND";
+        case ErrorType::MEDIA_ERROR_HTTP_CONFLICT:
+            return "MEDIA_ERROR_HTTP_CONFLICT";
+        case ErrorType::MEDIA_ERROR_HTTP_INVALID_RANGE:
+            return "MEDIA_ERROR_HTTP_INVALID_RANGE";
+        case ErrorType::MEDIA_ERROR_HTTP_TOO_MANY_REQUESTS:
+            return "MEDIA_ERROR_HTTP_TOO_MANY_REQUESTS";
+        case ErrorType::MEDIA_ERROR_HTTP_BAD_GATEWAY:
+            return "MEDIA_ERROR_HTTP_BAD_GATEWAY";
+        case ErrorType::MEDIA_ERROR_HTTP_SERVICE_UNAVAILABLE:
+            return "MEDIA_ERROR_HTTP_SERVICE_UNAVAILABLE";
+        case ErrorType::MEDIA_ERROR_HTTP_GATEWAY_TIMEOUT:
+            return "MEDIA_ERROR_HTTP_GATEWAY_TIMEOUT";
+        case ErrorType::MEDIA_ERROR_TIMED_OUT:
+            return "MEDIA_ERROR_TIMED_OUT";
+        case ErrorType::MEDIA_ERROR_URL_MALFORMED:
+            return "MEDIA_ERROR_URL_MALFORMED";
+        case ErrorType::MEDIA_ERROR_COULD_NOT_RESOLVE_HOST:
+            return "MEDIA_ERROR_COULD_NOT_RESOLVE_HOST";
+        case ErrorType::MEDIA_ERROR_COULD_NOT_CONNECT:
+            return "MEDIA_ERROR_COULD_NOT_CONNECT";
+        case ErrorType::MEDIA_ERROR_NOT_SEEKABLE:
+            return "MEDIA_ERROR_NOT_SEEKABLE";
+        case ErrorType::MEDIA_ERROR_UNSUPPORTED:
+            return "MEDIA_ERROR_UNSUPPORTED";
+        case ErrorType::MEDIA_ERROR_POSSIBLY_TEXT:
+            return "MEDIA_ERROR_TEXT_PLAYBACK";
+        case ErrorType::MEDIA_ERROR_IO:
+            return "MEDIA_ERROR_IO";
+        case ErrorType::MEDIA_ERROR_INVALID_COMMAND:
+            return "MEDIA_ERROR_INVALID_COMMAND";
+        case ErrorType::MEDIA_ERROR_PLAYLIST_ERROR:
+            return "MEDIA_ERROR_PLAYLIST_ERROR";
     }
     return "unknown ErrorType";
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,22 +25,27 @@
 #include <queue>
 #include <string>
 #include <thread>
+#include <unordered_set>
+#include <vector>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
 #include <gst/base/gstbasesink.h>
+#include <gst/controller/gsttimedvaluecontrolsource.h>
 
 #include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
+#include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/PlaylistParser/PlaylistParserInterface.h>
 #include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
 #include "MediaPlayer/OffsetManager.h"
 #include "MediaPlayer/PipelineInterface.h"
 #include "MediaPlayer/SourceInterface.h"
+#include "MediaPlayer/SourceObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace mediaPlayer {
@@ -57,6 +62,8 @@ class MediaPlayer
         , private PipelineInterface
         , public avsCommon::sdkInterfaces::audio::EqualizerInterface
         , public playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface
+        , public playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface
+        , public SourceObserverInterface
         , public std::enable_shared_from_this<MediaPlayer> {
 public:
     /**
@@ -64,7 +71,6 @@ public:
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
-     * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name for the new instance.
      * @param enableLiveMode Flag, indicating if the player is in live mode.
      * @return An instance of the @c MediaPlayer if successful else a @c nullptr.
@@ -73,8 +79,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory =
             nullptr,
         bool enableEqualizer = false,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type =
-            avsCommon::sdkInterfaces::SpeakerInterface::Type::AVS_SPEAKER_VOLUME,
         std::string name = "",
         bool enableLiveMode = false);
     /**
@@ -86,12 +90,23 @@ public:
     /// @{
     SourceId setSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
-        const avsCommon::utils::AudioFormat* format = nullptr) override;
-    SourceId setSource(std::shared_ptr<std::istream> stream, bool repeat) override;
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+
     SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
-        bool repeat = false) override;
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::PlaybackContext& playbackContext =
+            avsCommon::utils::mediaPlayer::PlaybackContext()) override;
+
+    SourceId setSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat = false,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
+        avsCommon::utils::MediaType format = avsCommon::utils::MediaType::UNKNOWN) override;
 
     bool play(SourceId id) override;
     bool stop(SourceId id) override;
@@ -103,16 +118,17 @@ public:
     bool resume(SourceId id) override;
     uint64_t getNumBytesBuffered() override;
     std::chrono::milliseconds getOffset(SourceId id) override;
-    void setObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState> getMediaPlayerState(
+        SourceId id) override;
+    void addObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer) override;
     /// @}
 
     /// @name Overridden SpeakerInterface methods.
     /// @{
     bool setVolume(int8_t volume) override;
-    bool adjustVolume(int8_t volume) override;
     bool setMute(bool mute) override;
     bool getSpeakerSettings(avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) override;
-    avsCommon::sdkInterfaces::SpeakerInterface::Type getSpeakerType() override;
     /// @}
 
     /// @name Overridden PipelineInterface methods.
@@ -127,9 +143,15 @@ public:
     gboolean removeSource(guint tag) override;
     /// @}
 
-    /// @name Overriden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
+    /// @name Overridden UrlContentToAttachmentConverter::ErrorObserverInterface methods.
     /// @{
     void onError() override;
+    void onWriteComplete() override;
+    /// @}
+
+    /// @name Overridden SourceObserverInterface methods.
+    /// @{
+    void onFirstByteRead() override;
     /// @}
 
     void doShutdown() override;
@@ -168,6 +190,9 @@ private:
         /// The volume element.
         GstElement* volume;
 
+        /// The fade in element.
+        GstElement* fadeIn;
+
         /// The resampler element.
         GstElement* resample;
 
@@ -190,6 +215,10 @@ private:
                 decodedQueue{nullptr},
                 converter{nullptr},
                 volume{nullptr},
+                fadeIn{nullptr},
+                resample{nullptr},
+                caps{nullptr},
+                equalizer{nullptr},
                 audioSink{nullptr},
                 pipeline{nullptr} {};
     };
@@ -199,16 +228,22 @@ private:
      *
      * @param contentFetcherFactory Used to create objects that can fetch remote HTTP content.
      * @param enableEqualizer Flag, indicating whether equalizer should be enabled for this instance.
-     * @param type The type used to categorize the speaker for volume control.
      * @param name Readable name of this instance.
      * @param enableLiveMode Flag, indicating the player is in live mode
      */
     MediaPlayer(
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
         bool enableEqualizer,
-        avsCommon::sdkInterfaces::SpeakerInterface::Type type,
         std::string name,
         bool enableLiveMode);
+
+    /**
+     * Handle source configuration.
+     *
+     * @return @c true if initialization was successful; otherwise, return @c false.
+     */
+    bool configureSource(const avsCommon::utils::mediaPlayer::SourceConfig& config);
+
     /**
      * The worker loop to run the glib mainloop.
      */
@@ -311,12 +346,14 @@ private:
      * Worker thread handler for setting the source of audio to play.
      *
      * @param reader The @c AttachmentReader with which to receive the audio to play.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      * @param audioFormat The audioFormat to be used to interpret raw audio data.
      * @param repeat An optional parameter to indicate whether to play from the source in a loop.
      */
     void handleSetAttachmentReaderSource(
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
         std::promise<SourceId>* promise,
         const avsCommon::utils::AudioFormat* audioFormat = nullptr,
         bool repeat = false);
@@ -326,12 +363,14 @@ private:
      *
      * @param url The url to set as the source.
      * @param offset The offset from which to start streaming from.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @c SourceId value once the source has been set.
      * @param repeat A parameter to indicate whether to play from the url source in a loop.
      */
     void handleSetUrlSource(
         const std::string& url,
         std::chrono::milliseconds offset,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
         std::promise<SourceId>* promise,
         bool repeat);
 
@@ -340,9 +379,14 @@ private:
      *
      * @param stream The source from which to receive the audio to play.
      * @param repeat Whether the audio stream should be played in a loop until stopped.
+     * @param config Media configuration of source.
      * @param promise A promise to fulfill with a @ SourceId value once the source has been set.
      */
-    void handleSetIStreamSource(std::shared_ptr<std::istream> stream, bool repeat, std::promise<SourceId>* promise);
+    void handleSetIStreamSource(
+        std::shared_ptr<std::istream> stream,
+        bool repeat,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config,
+        std::promise<SourceId>* promise);
 
     /**
      * Internal method to update the volume according to a gstreamer bug fix
@@ -430,12 +474,37 @@ private:
     void handleGetOffset(SourceId id, std::promise<std::chrono::milliseconds>* promise);
 
     /**
-     * Worker thread handler for setting the observer.
+     * Handler for getting the current playback position immediately
+     *
+     * @param id The @c SourceId that the caller is expecting to be handled.
+     */
+    std::chrono::milliseconds handleGetOffsetImmediately(SourceId id);
+
+    /**
+     * Get the current media player state given the source id
+     *
+     * @param id SourceId of media player
+     * @return Media player state metadata
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerState getMediaPlayerStateInternal(SourceId id);
+
+    /**
+     * Worker thread handler for adding the observer.
      *
      * @param promise A void promise to fulfill once the observer has been set.
      * @param observer The new observer.
      */
-    void handleSetObserver(
+    void handleAddObserver(
+        std::promise<void>* promise,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
+
+    /**
+     * Worker thread handler for removing the observer.
+     *
+     * @param promise A void promise to fulfill once the observer has been set.
+     * @param observer The observer that we want to remove.
+     */
+    void handleRemoveObserver(
         std::promise<void>* promise,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> observer);
 
@@ -473,6 +542,11 @@ private:
     void sendPlaybackError(
         const alexaClientSDK::avsCommon::utils::mediaPlayer::ErrorType& type,
         const std::string& error);
+
+    /**
+     * Sends the buffering complete notification to the observer.
+     */
+    void sendBufferingComplete();
 
     /**
      * Sends the buffer underrun notification to the observer.
@@ -524,6 +598,14 @@ private:
     static gboolean onErrorCallback(gpointer pointer);
 
     /**
+     * The callback to be added to the event loop to process upon onWriteComplete() callback.
+     *
+     * @param pointer The instance to this @c MediaPlayer.
+     * @return @c false if there is no error with this callback, else @c true.
+     */
+    static gboolean onWriteCompleteCallback(gpointer pointer);
+
+    /**
      * Get the current offset of the stream.
      *
      * @return The current stream offset in milliseconds.
@@ -550,6 +632,9 @@ private:
      */
     int clampEqualizerLevel(int level);
 
+    /// Mutex used to synchronize @c operations that notify observers.
+    std::mutex m_operationMutex;
+
     /// The volume to restore to when exiting muted state. Used in GStreamer crash fix for zero volume on PCM data.
     gdouble m_lastVolume;
 
@@ -558,6 +643,10 @@ private:
 
     /// Used to stream urls into attachments
     std::shared_ptr<playlistParser::UrlContentToAttachmentConverter> m_urlConverter;
+
+    /// A parked reader to make sure the attachment is seekable to the beginning until @c seek() is called.  This
+    /// reader will be released after @c seek() is called.
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::attachment::AttachmentReader> m_parkedReader;
 
     /// An instance of the @c OffsetManager.
     OffsetManager m_offsetManager;
@@ -570,9 +659,6 @@ private:
 
     /// An instance of the @c AudioPipeline.
     AudioPipeline m_pipeline;
-
-    /// The Speaker type.
-    avsCommon::sdkInterfaces::SpeakerInterface::Type m_speakerType;
 
     /// Main event loop.
     GMainLoop* m_mainLoop;
@@ -599,13 +685,16 @@ private:
     bool m_isBufferUnderrun;
 
     /// @c MediaPlayerObserverInterface instance to notify when the playback state changes.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface> m_playerObserver;
+    std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface>> m_playerObservers;
 
     /// @c SourceInterface instance set to the appropriate source.
     std::shared_ptr<SourceInterface> m_source;
 
     /// The current source id.
     SourceId m_currentId;
+
+    /// Flag to indicate whether the audiosink is a fakesink.
+    bool m_isFakeSink;
 
     /// Flag to indicate whether a play is currently pending a callback.
     bool m_playPending;

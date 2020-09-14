@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ public:
     MOCK_METHOD0(isEnabled, bool());
     MOCK_METHOD0(reconnect, void());
     MOCK_CONST_METHOD0(isConnected, bool());
+    MOCK_METHOD0(onWakeConnectionRetry, void());
+    MOCK_METHOD0(onWakeVerifyConnectivity, void());
     MOCK_METHOD1(
         addMessageObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@
 #include <AndroidSLESMediaPlayer/FFmpegDecoder.h>
 #include <AndroidUtilities/AndroidLogger.h>
 #include <AndroidUtilities/AndroidSLESEngine.h>
-#include <Audio/Data/med_alerts_notification_01._TTH_.mp3.h>
-#include <Audio/Data/med_system_alerts_melodic_01_short._TTH_.wav.h>
+#include <Audio/Data/med_alerts_notification_01.mp3.h>
+#include <Audio/Data/med_system_alerts_melodic_01_short.wav.h>
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("AndroidSLESMediaPlayerTest");
@@ -55,24 +55,39 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace applicationUtilities::androidUtilities;
+using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// The size of the input buffer.
 static constexpr size_t MP3_INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3_len;
+    applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3_len;
 
 /// An input buffer with an mp3 file.
-static const auto MP3_INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3;
+static const auto MP3_INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3;
 
 /// The mp3 duration in milliseconds.
 static const std::chrono::milliseconds MP3_INPUT_DURATION{1440};
 
+/// The mp3 MediaType.
+static const alexaClientSDK::avsCommon::utils::MediaType MP3_TYPE = alexaClientSDK::avsCommon::utils::MediaType::MPEG;
+
+/// The source config.
+static const SourceConfig EMPTY_CONFIG = emptySourceConfig();
+
 /// The size of the input buffer.
 static const size_t RAW_INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short__TTH__wav_len;
+    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short_wav_len;
 
 /// An input buffer with an mp3 file.
-static const auto RAW_INPUT_CSTR =
-    applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short__TTH__wav;
+static const auto RAW_INPUT_CSTR = applicationUtilities::resources::audio::data::med_system_alerts_melodic_01_short_wav;
+
+/// The raw input duration in milli seconds.
+static const std::chrono::milliseconds RAW_INPUT_DURATION{2177};
+
+/// Default media player state for reporting all playback offsets
+static const MediaPlayerState DEFAULT_MEDIA_PLAYER_STATE = {std::chrono::milliseconds(0)};
+
+/// The finished media player state.
+static const MediaPlayerState MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE = {MP3_INPUT_DURATION};
 
 /// This class mocks an attachment reader that reads from the @c INPUT_CSTR.
 class MockAttachmentReader : public AttachmentReader {
@@ -153,15 +168,17 @@ public:
 /// Mocks the media player observer.
 class MockObserver : public MediaPlayerObserverInterface {
 public:
-    MOCK_METHOD1(onPlaybackStarted, void(SourceId));
-    MOCK_METHOD1(onPlaybackFinished, void(SourceId));
-    MOCK_METHOD1(onPlaybackStopped, void(SourceId));
-    MOCK_METHOD1(onPlaybackPaused, void(SourceId));
-    MOCK_METHOD1(onPlaybackResumed, void(SourceId));
-    MOCK_METHOD3(onPlaybackError, void(SourceId, const ErrorType&, std::string));
+    MOCK_METHOD2(onPlaybackStarted, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onPlaybackFinished, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onPlaybackStopped, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onPlaybackPaused, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onPlaybackResumed, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD4(onPlaybackError, void(SourceId, const ErrorType&, std::string, const MediaPlayerState&));
+    MOCK_METHOD2(onBufferingComplete, void(SourceId, const MediaPlayerState&));
 
-    MOCK_METHOD1(onBufferRefilled, void(SourceId));
-    MOCK_METHOD1(onBufferUnderrun, void(SourceId));
+    MOCK_METHOD2(onBufferRefilled, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onBufferUnderrun, void(SourceId, const MediaPlayerState&));
+    MOCK_METHOD2(onFirstByteRead, void(SourceId, const MediaPlayerState&));
 };
 
 /**
@@ -173,9 +190,9 @@ protected:
         m_reader = std::make_shared<MockAttachmentReader>(MP3_INPUT_CSTR, MP3_INPUT_SIZE);
         m_engine = AndroidSLESEngine::create();
         auto factory = std::make_shared<MockContentFetcherFactory>();
-        m_player = AndroidSLESMediaPlayer::create(factory, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+        m_player = AndroidSLESMediaPlayer::create(factory, m_engine, false);
         m_observer = std::make_shared<NiceMock<MockObserver>>();
-        m_player->setObserver(m_observer);
+        m_player->addObserver(m_observer);
     }
 
     std::shared_ptr<std::stringstream> createStream() {
@@ -207,14 +224,14 @@ protected:
 
 /// Test create with null factory.
 TEST_F(AndroidSLESMediaPlayerTest, test_createNullFactory) {
-    auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+    auto player = AndroidSLESMediaPlayer::create(nullptr, m_engine, false);
     EXPECT_EQ(player, nullptr);
 }
 
 /// Test create with null engine.
 TEST_F(AndroidSLESMediaPlayerTest, test_createNullEngine) {
     auto factory = std::make_shared<MockContentFetcherFactory>();
-    auto player = AndroidSLESMediaPlayer::create(factory, nullptr, SpeakerInterface::Type::AVS_SPEAKER_VOLUME, false);
+    auto player = AndroidSLESMediaPlayer::create(factory, nullptr, false);
     EXPECT_EQ(player, nullptr);
 }
 
@@ -223,10 +240,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_bQMediaPlayer) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
 
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
@@ -244,10 +260,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_bQRawMediaPlayer) {
     auto id = m_player->setSource(m_reader, &format);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MediaPlayerState{RAW_INPUT_DURATION}))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
 }
@@ -260,10 +275,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_firstReadTimeout) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
     EXPECT_EQ(m_player->getOffset(id), MP3_INPUT_DURATION);
@@ -277,10 +291,12 @@ TEST_F(AndroidSLESMediaPlayerTest, test_initializeTimeout) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() {
+            std::cout << "Test\n";
+            finishedEvent.wakeUp();
+        }));
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
     EXPECT_EQ(m_player->getOffset(id), MP3_INPUT_DURATION);
@@ -294,10 +310,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_decodingTimeout) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
     EXPECT_EQ(m_player->getOffset(id), MP3_INPUT_DURATION);
@@ -305,13 +320,13 @@ TEST_F(AndroidSLESMediaPlayerTest, test_decodingTimeout) {
 
 /// Test media player and istream source.
 TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
-    auto id = m_player->setSource(createStream(), false);
+    auto id = m_player->setSource(createStream(), false, EMPTY_CONFIG, MP3_TYPE);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onBufferingComplete(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, _)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
 
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
@@ -320,10 +335,10 @@ TEST_F(AndroidSLESMediaPlayerTest, test_streamMediaPlayer) {
 /// Test media player, istream source and repeat on.
 TEST_F(AndroidSLESMediaPlayerTest, test_streamRepeatMediaPlayer) {
     auto repeat = true;
-    auto id = m_player->setSource(createStream(), repeat);
+    auto id = m_player->setSource(createStream(), repeat, EMPTY_CONFIG, MP3_TYPE);
 
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackStopped(id)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStopped(id, _)).Times(1);
     EXPECT_TRUE(m_player->play(id));
 
     std::chrono::milliseconds sleepPeriod{100};
@@ -334,12 +349,12 @@ TEST_F(AndroidSLESMediaPlayerTest, test_streamRepeatMediaPlayer) {
 /// Test media player pause / resume.
 TEST_F(AndroidSLESMediaPlayerTest, test_resumeMediaPlayer) {
     auto repeat = true;
-    auto id = m_player->setSource(createStream(), repeat);
+    auto id = m_player->setSource(createStream(), repeat, EMPTY_CONFIG, MP3_TYPE);
 
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackStopped(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackPaused(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackResumed(id)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStopped(id, _)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackPaused(id, _)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackResumed(id, _)).Times(1);
     EXPECT_TRUE(m_player->play(id));
 
     std::chrono::milliseconds sleepPeriod{100};
@@ -356,15 +371,15 @@ TEST_F(AndroidSLESMediaPlayerTest, test_resumeMediaPlayer) {
 /// Test play fails with wrong id.
 TEST_F(AndroidSLESMediaPlayerTest, test_playFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
-    EXPECT_CALL(*m_observer, onPlaybackStarted(_)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(_, DEFAULT_MEDIA_PLAYER_STATE)).Times(0);
     EXPECT_FALSE(m_player->play(id + 1));
 }
 
 /// Test pause fails with wrong id.
 TEST_F(AndroidSLESMediaPlayerTest, test_pauseFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackPaused(_)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackPaused(_, _)).Times(0);
     EXPECT_TRUE(m_player->play(id));
     EXPECT_FALSE(m_player->pause(id + 1));
     EXPECT_TRUE(m_player->stop(id));
@@ -373,17 +388,17 @@ TEST_F(AndroidSLESMediaPlayerTest, test_pauseFailed) {
 /// Test pause fails if not playing.
 TEST_F(AndroidSLESMediaPlayerTest, test_pauseFailedNotPlaying) {
     auto id = m_player->setSource(m_reader, nullptr);
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(0);
-    EXPECT_CALL(*m_observer, onPlaybackPaused(_)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackPaused(_, _)).Times(0);
     EXPECT_FALSE(m_player->pause(id));
 }
 
 /// Test resume fails after stop.
 TEST_F(AndroidSLESMediaPlayerTest, test_resumeFailedAfterStop) {
     auto id = m_player->setSource(m_reader, nullptr);
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackStopped(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackPaused(_)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStopped(id, _)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackPaused(_, _)).Times(0);
     EXPECT_TRUE(m_player->play(id));
     EXPECT_TRUE(m_player->stop(id));
     EXPECT_FALSE(m_player->resume(id));
@@ -393,9 +408,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_resumeFailedAfterStop) {
 TEST_F(AndroidSLESMediaPlayerTest, test_stopFailed) {
     auto id = m_player->setSource(m_reader, nullptr);
     auto fakeId = id + 1;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackStopped(_)).Times(AtLeast(1));
-    EXPECT_CALL(*m_observer, onPlaybackStopped(fakeId)).Times(0);
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackStopped(_, _)).Times(AtLeast(1));
+    EXPECT_CALL(*m_observer, onPlaybackStopped(fakeId, _)).Times(0);
     EXPECT_TRUE(m_player->play(id));
     EXPECT_FALSE(m_player->stop(fakeId));
     EXPECT_TRUE(m_player->stop(id));
@@ -406,10 +421,9 @@ TEST_F(AndroidSLESMediaPlayerTest, test_getOffset) {
     auto id = m_player->setSource(m_reader, nullptr);
 
     WaitEvent finishedEvent;
-    EXPECT_CALL(*m_observer, onPlaybackStarted(id)).Times(1);
-    EXPECT_CALL(*m_observer, onPlaybackFinished(id)).WillOnce(InvokeWithoutArgs([&finishedEvent]() {
-        finishedEvent.wakeUp();
-    }));
+    EXPECT_CALL(*m_observer, onPlaybackStarted(id, DEFAULT_MEDIA_PLAYER_STATE)).Times(1);
+    EXPECT_CALL(*m_observer, onPlaybackFinished(id, MP3_INPUT_FINISHED_MEDIA_PLAYER_STATE))
+        .WillOnce(InvokeWithoutArgs([&finishedEvent]() { finishedEvent.wakeUp(); }));
 
     EXPECT_TRUE(m_player->play(id));
     EXPECT_EQ(finishedEvent.wait(), std::cv_status::no_timeout);
@@ -446,7 +460,7 @@ MockAttachmentReader::MockAttachmentReader(const unsigned char* input, size_t le
         m_timeoutIteration{timeoutIteration} {
 }
 
-const std::chrono::seconds WaitEvent::DEFAULT_TIMEOUT{5};
+const std::chrono::seconds WaitEvent::DEFAULT_TIMEOUT{10};
 
 void WaitEvent::wakeUp() {
     m_condition.notify_one();

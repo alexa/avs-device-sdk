@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ static void verifyGetAbsoluteURLResult(std::string baseURL, std::string relative
 
 TEST(PlaylistUtilsTest, test_getAbsoluteURLFromAbsolutePath) {
     std::string baseURL("http://a/b/c/d.m3u8");
+    std::string baseURLwithParameters("http://a/b/c/d.m3u8?def/abc");
 
     // Success cases.
     verifyGetAbsoluteURLResult(baseURL, "g.mp4", "http://a/b/c/g.mp4");
@@ -41,6 +42,11 @@ TEST(PlaylistUtilsTest, test_getAbsoluteURLFromAbsolutePath) {
     verifyGetAbsoluteURLResult(baseURL, "", baseURL);
     verifyGetAbsoluteURLResult(baseURL, "e/f/g.mp4", "http://a/b/c/e/f/g.mp4");
     verifyGetAbsoluteURLResult(baseURL, "/e/f/g.mp4", "http://a/e/f/g.mp4");
+    verifyGetAbsoluteURLResult(baseURLwithParameters, "g.mp4", "http://a/b/c/g.mp4");
+    verifyGetAbsoluteURLResult(baseURLwithParameters, "/g.mp4", "http://a/g.mp4");
+    verifyGetAbsoluteURLResult(baseURLwithParameters, "", baseURLwithParameters);
+    verifyGetAbsoluteURLResult(baseURLwithParameters, "e/f/g.mp4", "http://a/b/c/e/f/g.mp4");
+    verifyGetAbsoluteURLResult(baseURLwithParameters, "/e/f/g.mp4", "http://a/e/f/g.mp4");
 
     // Failure cases.
     verifyGetAbsoluteURLResult("", "g.mp4", "");

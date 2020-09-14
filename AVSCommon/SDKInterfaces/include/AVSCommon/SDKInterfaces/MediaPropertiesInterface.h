@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,15 @@ public:
      * @return This returns the offset in milliseconds.
      */
     virtual std::chrono::milliseconds getAudioItemOffset() = 0;
+
+    /**
+     * Returns the duration of the current AudioItem the player is handling.
+     *
+     * @return returns the duration.
+     */
+    virtual std::chrono::milliseconds getAudioItemDuration() {
+        return std::chrono::milliseconds::zero();
+    };
 };
 
 }  // namespace sdkInterfaces

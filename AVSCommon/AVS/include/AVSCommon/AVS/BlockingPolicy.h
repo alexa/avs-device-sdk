@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 
 #include <bitset>
 #include <iostream>
+
+#include "AVSCommon/Utils/PlatformDefinitions.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -47,19 +49,19 @@ public:
     using Mediums = std::bitset<Medium::COUNT>;
 
     /// Policy uses @c AUDIO medium.
-    static const Mediums MEDIUM_AUDIO;
+    static const avscommon_EXPORT Mediums MEDIUM_AUDIO;
 
     /// Policy uses @c VISUAL medium.
-    static const Mediums MEDIUM_VISUAL;
+    static const avscommon_EXPORT Mediums MEDIUM_VISUAL;
 
     /// Policy uses @c AUDIO and @c VISUAL mediums.
-    static const Mediums MEDIUMS_AUDIO_AND_VISUAL;
+    static const avscommon_EXPORT Mediums MEDIUMS_AUDIO_AND_VISUAL;
 
     /**
      * Policy uses no medium.
      * This should be used for System of setting-type directives.
      */
-    static const Mediums MEDIUMS_NONE;
+    static const avscommon_EXPORT Mediums MEDIUMS_NONE;
 
     /**
      * Constructor

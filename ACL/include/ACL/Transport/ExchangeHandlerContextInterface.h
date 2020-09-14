@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h>
 
@@ -46,9 +47,9 @@ public:
     virtual void onDownchannelFinished() = 0;
 
     /**
-     * Notification that an @c MessgeRequest has been sent.
+     * Notification that an @c MessageRequest has been sent.
      */
-    virtual void onMessageRequestSent() = 0;
+    virtual void onMessageRequestSent(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) = 0;
 
     /**
      * Notification that sending a message request timed out.
@@ -59,7 +60,7 @@ public:
      * Notification that sending a @c MessageRequest has failed or been acknowledged by AVS
      * (this is used to indicate it is okay to send the next message).
      */
-    virtual void onMessageRequestAcknowledged() = 0;
+    virtual void onMessageRequestAcknowledged(const std::shared_ptr<avsCommon::avs::MessageRequest>& request) = 0;
 
     /**
      * Notification tht a message request has finished it's exchange with AVS.
@@ -101,9 +102,9 @@ public:
         const avsCommon::utils::http2::HTTP2RequestConfig& cfg) = 0;
 
     /**
-     * Get AVS endpoint to send request to.
+     * Get AVS gateway to send request to.
      */
-    virtual std::string getEndpoint() = 0;
+    virtual std::string getAVSGateway() = 0;
 };
 
 }  // namespace acl

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,10 @@ enum class PlaylistParseResult {
     ERROR,
 
     /// The playlist parsing is still ongoing.
-    STILL_ONGOING
+    STILL_ONGOING,
+
+    // The playlist parsing was interrupted from a shutdown event
+    SHUTDOWN
 };
 
 /**
@@ -126,6 +129,14 @@ struct PlaylistEntry {
     static PlaylistEntry createErrorEntry(const std::string& url);
 
     /**
+     * Helper method to create SHUTDOWN PlaylistEntry
+     *
+     * @param url playlist URL
+     * @return PlaylistEntry with url, INVALID_DURATION and ERROR parseResult.
+     */
+    static PlaylistEntry createShutdownEntry(const std::string& url);
+
+    /**
      * Helper method to create MEDIA_INIT_INFO PlaylistEntry.
      *
      * @param url playlist URL
@@ -185,6 +196,11 @@ struct PlaylistEntry {
 inline PlaylistEntry PlaylistEntry::createErrorEntry(const std::string& url) {
     return PlaylistEntry(
         url, std::chrono::milliseconds(-1), PlaylistParseResult::ERROR, Type::MEDIA_INFO, std::make_tuple(0, 0));
+}
+
+inline PlaylistEntry PlaylistEntry::createShutdownEntry(const std::string& url) {
+    return PlaylistEntry(
+        url, std::chrono::milliseconds(-1), PlaylistParseResult::SHUTDOWN, Type::MEDIA_INFO, std::make_tuple(0, 0));
 }
 
 inline PlaylistEntry PlaylistEntry::createMediaInitInfo(std::string url, ByteRange byteRange) {

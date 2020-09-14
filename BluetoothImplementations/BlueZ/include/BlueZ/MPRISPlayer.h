@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ private:
      *
      * @param connection A DBusConnection object.
      * @param media The org.bluez.Media1 object.
-     * @param eventBus The eventbus to notify of the @c AVRCPCommand.
+     * @param eventBus The eventbus to notify of the @c MediaCommand.
      * @param playerPath The object to create the player at.
      */
     MPRISPlayer(
@@ -79,7 +79,7 @@ private:
     /**
      * Performs initialization.
      *
-     * @return Whether the operation was succesful or not.
+     * @return Whether the operation was successful or not.
      */
     bool init();
 
@@ -106,19 +106,19 @@ private:
     void unsupportedMethod(GVariant* arguments, GDBusMethodInvocation* invocation);
 
     /**
-     * Converts the callback to the corresponding @c AVRCPCommandReceived event.
+     * Converts the callback to the corresponding @c MediaCommandReceived event.
      *
      * @param arguments The arguments which this DBus method was called with.
      * @invocation A struct containing data about the method invocation.
      */
-    void toAVRCPCommand(GVariant* arguments, GDBusMethodInvocation* invocation);
+    void toMediaCommand(GVariant* arguments, GDBusMethodInvocation* invocation);
 
     /**
-     * Sends the @c AVRCPCommandRecieved event to @c m_eventBus.
+     * Sends the @c MediaCommandReceived event to @c m_eventBus.
      *
      * @param command The command to send.
      */
-    void sendEvent(const avsCommon::sdkInterfaces::bluetooth::services::AVRCPCommand& command);
+    void sendEvent(const avsCommon::sdkInterfaces::bluetooth::services::MediaCommand& command);
 
     /// The DBus object path of the player.
     const std::string m_playerPath;
@@ -126,7 +126,7 @@ private:
     /// A Proxy for the Media object.
     std::shared_ptr<DBusProxy> m_media;
 
-    /// The event bus on which to send the @c AVRCPCommand.
+    /// The event bus on which to send the @c MediaCommand.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
 };
 

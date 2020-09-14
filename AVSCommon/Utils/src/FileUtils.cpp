@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,11 +35,6 @@ static const std::string TAG("FileUtils");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/*
- * TODO - make this more portable and dependable.
- *
- * https://issues.labcollab.net/browse/ACSDK-380
- */
 bool fileExists(const std::string& filePath) {
     std::ifstream is(filePath);
     return is.good();

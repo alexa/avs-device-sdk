@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #include <cstdint>
 #include <string>
+#include <type_traits>
 
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
@@ -42,7 +43,6 @@ namespace json {
  * generator.toString(false)
  *
  * @note This class is NOT thread safe.
- * @note This class doesn't support arrays yet.
  */
 class JsonGenerator {
 public:
@@ -78,6 +78,35 @@ public:
      */
     bool finishObject();
 
+    /**
+     * Starts a new array with the given key.
+     *
+     * @param key The new array name.
+     * @return @c true if it succeeds to create a new object and @c false if it fails.
+     */
+    bool startArray(const std::string& key);
+
+    /**
+     * Starts a new array object element.
+     *
+     * @return @c true if it succeeds to create a new object and @c false if it fails.
+     */
+    bool startArrayElement();
+
+    /**
+     * Finish the last array element that has been opened.
+     *
+     * @return @c true if the last object was closed @c false if it fails.
+     */
+    bool finishArrayElement();
+
+    /**
+     * Finish the last array that has been opened.
+     *
+     * @return @c true if the last object was closed @c false if it fails.
+     */
+    bool finishArray();
+
     ///@{
     /**
      * Add a new member with the key and value.
@@ -93,7 +122,35 @@ public:
     bool addMember(const std::string& key, int value);
     bool addMember(const std::string& key, unsigned int value);
     bool addMember(const std::string& key, bool value);
+    bool addMember(const std::string& key, double value);
     ///@}
+
+    /**
+     * Add a new array of strings with the given @c key name. The array is built from the given @c collection.
+     *
+     * @tparam CollectionT Type of the collection.
+     * @tparam ValueT Type of the collection member.
+     * @param key The name of the member.
+     * @param collection The collection used to generate the array. The strings are going to generate string elements.
+     * For vector of json elements, use @c addMembersArray.
+     * @return @c true if it succeeded to add the new member and @c false otherwise.
+     */
+    template <typename CollectionT, typename ValueT = typename CollectionT::value_type>
+    bool addStringArray(const std::string& key, const CollectionT& collection);
+
+    /**
+     * Add a new array with the given @c key name. The array is built from the given @c collection.
+     *
+     * @tparam CollectionT Type of the collection.
+     * @tparam ValueT Type of the collection member.
+     * @param key The name of the member.
+     * @param collection The collection used to generate the array. Each item in the collection should be a string
+     * in the JSON format. Examples of valid items are: "\"val\"", "123", and "true" representing a JSON string,
+     * a JSON integer, and a JSON boolean respectively.
+     * @return @c true if it succeeded to add the new member and @c false otherwise.
+     */
+    template <typename CollectionT, typename ValueT = typename CollectionT::value_type>
+    bool addMembersArray(const std::string& key, const CollectionT& collection);
 
     /**
      * Adds a raw json as a value to the given key.
@@ -104,6 +161,23 @@ public:
      * @return @c true if it succeeded to add the raw json and @c false otherwise.
      */
     bool addRawJsonMember(const std::string& key, const std::string& json, bool validate = true);
+
+    /**
+     * Add a new array of arrays of strings with the given @c key name. The arrays is built from the given @c
+     * collection.
+     *
+     * @tparam CollectionArrayT Type of the array of collection.
+     * @tparam CollectionValueT Type of the collection.
+     * @tparam ValueT Type of the collection member.
+     * @param key The name of the member.
+     * @param collection The collection of string arrays. The strings are going to generate string elements.
+     * @return @c true if it succeeded to add the new member and @c false otherwise.
+     */
+    template <
+        typename CollectionArrayT,
+        typename CollectionValueT = typename CollectionArrayT::value_type,
+        typename ValueT = typename CollectionValueT::value_type>
+    bool addCollectionOfStringArray(const std::string& key, const CollectionArrayT& collection);
 
     /**
      * Return the string representation of the object.
@@ -118,7 +192,7 @@ public:
 
 private:
     /// Checks if the writer is still open and ready to be used.
-    inline bool checkWriter();
+    bool checkWriter();
 
     /**
      * Method used to finalize the json. This will close all the open objects including the root object.
@@ -133,6 +207,52 @@ private:
     /// The json writer.
     rapidjson::Writer<rapidjson::StringBuffer> m_writer;
 };
+
+template <typename CollectionT, typename ValueT>
+bool JsonGenerator::addStringArray(const std::string& key, const CollectionT& collection) {
+    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+        return false;
+    }
+    m_writer.StartArray();
+    for (const auto& value : collection) {
+        static_assert(std::is_same<ValueT, std::string>::value, "We only support string collection.");
+        m_writer.String(value);
+    }
+    m_writer.EndArray();
+    return true;
+}
+
+template <typename CollectionT, typename ValueT>
+bool JsonGenerator::addMembersArray(const std::string& key, const CollectionT& collection) {
+    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+        return false;
+    }
+    m_writer.StartArray();
+    for (const auto& value : collection) {
+        static_assert(std::is_same<ValueT, std::string>::value, "We only support string collection.");
+        m_writer.RawValue(value.c_str(), value.length(), rapidjson::kStringType);
+    }
+    m_writer.EndArray();
+    return true;
+}
+
+template <typename CollectionArrayT, typename CollectionValueT, typename ValueT>
+bool JsonGenerator::addCollectionOfStringArray(const std::string& key, const CollectionArrayT& collection) {
+    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+        return false;
+    }
+    m_writer.StartArray();
+    for (const auto& stringArray : collection) {
+        m_writer.StartArray();
+        for (const auto& value : stringArray) {
+            static_assert(std::is_same<ValueT, std::string>::value, "We only support string collection.");
+            m_writer.String(value);
+        }
+        m_writer.EndArray();
+    }
+    m_writer.EndArray();
+    return true;
+}
 
 }  // namespace json
 }  // namespace utils

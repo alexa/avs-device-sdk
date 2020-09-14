@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ public:
     enum class Result {
         /// Get context succeeded. The returned @c AVFormatContext shall be valid.
         OK,
+        /// Get context succeeded. The returned @c AVFormatContext is null because there is no input to read.
+        OK_EMPTY,
         /// There is not enough input data available to generate the context. Decoder should try again later.
         TRY_AGAIN,
         /// A unrecoverable error was found while trying to create the @c AVFormatContext.
@@ -85,6 +87,9 @@ inline std::ostream& operator<<(std::ostream& stream, const FFmpegInputControlle
     switch (result) {
         case FFmpegInputControllerInterface::Result::OK:
             stream << "OK";
+            break;
+        case FFmpegInputControllerInterface::Result::OK_EMPTY:
+            stream << "OK_EMPTY";
             break;
         case FFmpegInputControllerInterface::Result::TRY_AGAIN:
             stream << "TRY_AGAIN";

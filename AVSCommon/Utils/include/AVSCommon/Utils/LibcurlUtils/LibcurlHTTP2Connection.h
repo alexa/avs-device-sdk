@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,8 @@ public:
     std::shared_ptr<avsCommon::utils::http2::HTTP2RequestInterface> createAndSendRequest(
         const http2::HTTP2RequestConfig& config) override;
     void disconnect() override;
+    void addObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface> observer) override;
     /// @}
 
 protected:
@@ -122,15 +124,25 @@ private:
     void unPauseActiveStreams();
 
     /**
-     * Cancel a stream and report CANCELLED completion status.
+     * Cancel an active stream and report CANCELLED completion status.
      *
      * @param stream The stream to cancel.
      * @return Whether the operation was successful.
      */
-    bool cancelStream(LibcurlHTTP2Request& stream);
+    bool cancelActiveStream(LibcurlHTTP2Request& stream);
 
     /**
-     * Release any streams that are active and report CANCELLED completion status.
+     * Release any active streams and report CANCELLED completion status.
+     */
+    void cancelActiveStreams();
+
+    /**
+     * Report CANCELLED completion status on any pending streams in the queue.
+     */
+    void cancelPendingStreams();
+
+    /**
+     * Cancels all streams on cleanup.
      */
     void cancelAllStreams();
 
@@ -145,6 +157,11 @@ private:
      * Dequeue next request and add it to the multi-handle
      */
     void processNextRequest();
+
+    /**
+     * Notify observers that a GOAWAY frame has been received.
+     */
+    void notifyObserversOfGoawayReceived();
 
     /// Main thread for this class.
     std::thread m_networkThread;
@@ -165,6 +182,12 @@ private:
 
     /// Queue of requests send. Serialized by @c m_mutex.
     std::deque<std::shared_ptr<LibcurlHTTP2Request>> m_requestQueue;
+
+    /// Mutex for observers.
+    std::mutex m_observersMutex;
+
+    /// Observers
+    std::unordered_set<std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionObserverInterface>> m_observers;
 
     /// Set to true when we want to exit the network loop.
     bool m_isStopping;

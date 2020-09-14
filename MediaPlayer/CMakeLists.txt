@@ -4,7 +4,7 @@ if (GSTREAMER_MEDIA_PLAYER)
     add_subdirectory("GStreamerMediaPlayer")
 elseif (ANDROID_MEDIA_PLAYER)
     add_subdirectory("AndroidSLESMediaPlayer")
-else()
+elseif (NOT CUSTOM_MEDIA_PLAYER)
     message("No media player will be built.")
 endif()
 

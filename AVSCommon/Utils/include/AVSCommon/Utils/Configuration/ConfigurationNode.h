@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -94,6 +95,13 @@ public:
     static void uninitialize();
 
     /**
+     * Create a shared_ptr to the root configuration node.
+     *
+     * @return A shared_ptr to the root configuration node.
+     */
+    static std::shared_ptr<ConfigurationNode> createRoot();
+
+    /**
      * Get the root @c ConfigurationNode of the global configuration.
      *
      * @return The root @c ConfigurationNode of the global configuration.
@@ -137,6 +145,15 @@ public:
      * @return Whether this @c ConfigurationNode has a @c string value for @c key.
      */
     bool getString(const std::string& key, std::string* out = nullptr, std::string defaultValue = "") const;
+
+    /**
+     * Get the @c string value for @c key from this @c ConfigurationNode.
+     *
+     * @param key The key of the @c string value to get.
+     * @param[out] out Pointer to receive the returned value.
+     * @return Whether this @c ConfigurationNode has a @c string array value for @c key.
+     */
+    bool getStringValues(const std::string& key, std::set<std::string>* out = nullptr) const;
 
     /**
      * Get a duration value derived from an integer value for @c key from this @c ConfigurationNode.

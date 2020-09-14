@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +39,14 @@ public:
      * @param newState New state of the @c EqualizerController.
      */
     virtual void onEqualizerStateChanged(const EqualizerState& newState) = 0;
+
+    /**
+     * Receives the same state of the @c EqualizerController when equalizer setting is changed but to an identical state
+     * to the current state. This callback is called after all changes has been applied.
+     *
+     * @param newState New state of the @c EqualizerController.
+     */
+    virtual void onEqualizerSameStateChanged(const EqualizerState& newState) = 0;
 };
 
 }  // namespace audio

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -105,7 +105,7 @@ TEST_F(MessageRouterTest, test_sendIsSuccessfulWhenConnected) {
     auto messageRequest = createMessageRequest();
 
     // Expect to have the message sent to the transport
-    EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
+    EXPECT_CALL(*m_mockTransport, onRequestEnqueued()).Times(1);
 
     m_router->sendMessage(messageRequest);
 
@@ -116,8 +116,8 @@ TEST_F(MessageRouterTest, test_sendIsSuccessfulWhenConnected) {
 TEST_F(MessageRouterTest, test_sendFailsWhenDisconnected) {
     auto messageRequest = createMessageRequest();
 
-    // Expect to have the message sent to the transport
-    EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
+    // Expect to have the message to be enqueued but the transport is not notified
+    EXPECT_CALL(*m_mockTransport, onRequestEnqueued()).Times(0);
 
     m_router->sendMessage(messageRequest);
 }
@@ -130,7 +130,7 @@ TEST_F(MessageRouterTest, test_sendFailsWhenPending) {
     auto messageRequest = createMessageRequest();
 
     // Expect to have the message sent to the transport.
-    EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(1);
+    EXPECT_CALL(*m_mockTransport, onRequestEnqueued()).Times(1);
 
     m_router->sendMessage(messageRequest);
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
@@ -145,7 +145,7 @@ TEST_F(MessageRouterTest, test_sendMessageDoesNotSendAfterDisconnected) {
     m_router->disable();
 
     // Expect to have the message sent to the transport
-    EXPECT_CALL(*m_mockTransport, send(messageRequest)).Times(0);
+    EXPECT_CALL(*m_mockTransport, onRequestEnqueued()).Times(0);
 
     m_router->sendMessage(messageRequest);
 }
@@ -202,9 +202,9 @@ TEST_F(MessageRouterTest, test_serverSideDisconnectCreatesANewTransport) {
 
     auto messageRequest = createMessageRequest();
 
-    EXPECT_CALL(*oldTransport.get(), send(messageRequest)).Times(0);
+    EXPECT_CALL(*oldTransport.get(), onRequestEnqueued()).Times(0);
 
-    EXPECT_CALL(*newTransport.get(), send(messageRequest)).Times(1);
+    EXPECT_CALL(*newTransport.get(), onRequestEnqueued()).Times(1);
 
     m_router->sendMessage(messageRequest);
 
@@ -261,10 +261,10 @@ TEST_F(MessageRouterTest, test_onConnectedOnInactiveTransport) {
     ASSERT_FALSE(m_mockMessageRouterObserver->wasNotifiedOfStatusChange());
 }
 
-TEST_F(MessageRouterTest, setAndGetAVSEndpoint) {
-    auto endpoint = "Endpoint";
-    m_router->setAVSEndpoint(endpoint);
-    ASSERT_EQ(endpoint, m_router->getAVSEndpoint());
+TEST_F(MessageRouterTest, setAndGetAVSGateway) {
+    auto gateway = "Gateway";
+    m_router->setAVSGateway(gateway);
+    ASSERT_EQ(gateway, m_router->getAVSGateway());
 }
 
 }  // namespace test

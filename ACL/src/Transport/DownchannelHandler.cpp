@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ std::shared_ptr<DownchannelHandler> DownchannelHandler::create(
     std::shared_ptr<DownchannelHandler> handler(new DownchannelHandler(context, authToken));
 
     HTTP2RequestConfig cfg{
-        HTTP2RequestType::GET, context->getEndpoint() + AVS_DOWNCHANNEL_URL_PATH_EXTENSION, DOWNCHANNEL_ID_PREFIX};
+        HTTP2RequestType::GET, context->getAVSGateway() + AVS_DOWNCHANNEL_URL_PATH_EXTENSION, DOWNCHANNEL_ID_PREFIX};
     cfg.setRequestSource(handler);
     cfg.setResponseSink(std::make_shared<HTTP2MimeResponseDecoder>(
         std::make_shared<MimeResponseSink>(handler, messageConsumer, attachmentManager, cfg.getId())));
@@ -108,7 +108,10 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
     switch (intToHTTPResponseCode(responseCode)) {
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
+        case HTTPResponseCode::SUCCESS_CREATED:
+        case HTTPResponseCode::SUCCESS_ACCEPTED:
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
+        case HTTPResponseCode::SUCCESS_PARTIAL_CONTENT:
         case HTTPResponseCode::SUCCESS_END_CODE:
         case HTTPResponseCode::REDIRECTION_MULTIPLE_CHOICES:
         case HTTPResponseCode::REDIRECTION_MOVED_PERMANENTLY:
@@ -118,6 +121,7 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
         case HTTPResponseCode::REDIRECTION_PERMANENT_REDIRECT:
         case HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST:
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
+        case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
             break;
         case HTTPResponseCode::SUCCESS_OK:
             m_context->onDownchannelConnected();

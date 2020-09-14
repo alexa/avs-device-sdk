@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ static const std::string PAYLOAD_SPEECH_RECOGNIZER =
 // clang-format off
 static const std::string CONTEXT_TEST =
         "{"
-            "\"context\":["
+            "\"properties\":["
                 "{"
                     "\"header\":{"
                         "\"namespace\":\"SpeechSynthesizer\","
@@ -110,19 +110,21 @@ static const std::tuple<std::string, std::string, std::string> testEventWithDial
     std::make_tuple(
         /// Event with context and dialog request id.
         "{"
-            "\"context\":["
-                "{"
-                    "\"header\":{"
-                        "\"namespace\":\"SpeechSynthesizer\","
-                        "\"name\":\"SpeechState\""
-                    "},"
-                    "\"payload\":{"
-                        "\"playerActivity\":\"FINISHED\","
-                        "\"offsetInMilliseconds\":0,"
-                        "\"token\":\"\""
+            "\"context\":{"
+                "\"properties\":["
+                    "{"
+                        "\"header\":{"
+                            "\"namespace\":\"SpeechSynthesizer\","
+                            "\"name\":\"SpeechState\""
+                        "},"
+                        "\"payload\":{"
+                            "\"playerActivity\":\"FINISHED\","
+                            "\"offsetInMilliseconds\":0,"
+                            "\"token\":\"\""
+                        "}"
                     "}"
-                "}"
-            "],"
+                "]"
+            "},"
             "\"event\":{"
                 "\"header\":{"
                         "\"namespace\":\"SpeechRecognizer\","
@@ -182,19 +184,21 @@ static const std::tuple<std::string, std::string, std::string> testEventWithCont
     std::make_tuple(
         /// An event with no dialog request id for testing.
         "{"
-            "\"context\":["
-                "{"
-                    "\"header\":{"
-                        "\"namespace\":\"SpeechSynthesizer\","
-                        "\"name\":\"SpeechState\""
-                    "},"
-                    "\"payload\":{"
-                        "\"playerActivity\":\"FINISHED\","
-                        "\"offsetInMilliseconds\":0,"
-                        "\"token\":\"\""
+            "\"context\":{"
+                "\"properties\":["
+                    "{"
+                        "\"header\":{"
+                            "\"namespace\":\"SpeechSynthesizer\","
+                            "\"name\":\"SpeechState\""
+                        "},"
+                        "\"payload\":{"
+                            "\"playerActivity\":\"FINISHED\","
+                            "\"offsetInMilliseconds\":0,"
+                            "\"token\":\"\""
+                        "}"
                     "}"
-                "}"
-            "],"
+                "]"
+            "},"
             "\"event\":{"
                 "\"header\":{"
                         "\"namespace\":\"SpeechRecognizer\","

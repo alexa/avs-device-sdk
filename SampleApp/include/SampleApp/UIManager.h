@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,20 +16,29 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_UIMANAGER_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_UIMANAGER_H_
 
+#include <string>
+#include <memory>
+#include <unordered_map>
+#include <vector>
+
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/NotificationsObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SingleSettingObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceObserverInterface.h>
+#include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/SettingCallbacks.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothDeviceObserverInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -45,34 +54,50 @@ class UIManager
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::SingleSettingObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
-        , public avsCommon::sdkInterfaces::NotificationsObserverInterface
-        , public avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface
+        , public acsdkNotificationsInterfaces::NotificationsObserverInterface
+        , public acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface
         , public authorization::cblAuthDelegate::CBLAuthRequesterInterface {
 public:
-    using DeviceAttributes = avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceObserverInterface::DeviceAttributes;
+    using DeviceAttributes = acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface::DeviceAttributes;
 
     /**
-     * Constructor.
+     * Create a UIManager.
+     *
+     * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param deviceInfo Information about the device.  For example, the default endpoint.
+     * @return a new instyance of UIManager.
      */
-    UIManager();
+    static std::shared_ptr<UIManager> create(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
 
+    /// @name DialogUxStateObserverInetrface methods.
+    /// @{
     void onDialogUXStateChanged(DialogUXState state) override;
+    /// @}
 
+    /// @name ConnectionStatusObserverInterface methods.
+    /// @{
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
+    /// @}
 
+    /// @name SingleSettingObserverInterface methods
+    /// @{
     void onSettingChanged(const std::string& key, const std::string& value) override;
+    /// @}
 
     /// @name SpeakerManagerObserverInterface Functions
     /// @{
     void onSpeakerSettingsChanged(
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
-        const avsCommon::sdkInterfaces::SpeakerInterface::Type& type,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) override;
     /// }
 
     /// @name NotificationsObserverInterface Functions
     /// @{
     void onSetIndicator(avsCommon::avs::IndicatorState state) override;
+    void onNotificationReceived() override{};
     /// }
 
     /// @name CBLAuthRequesterInterface Functions
@@ -92,11 +117,13 @@ public:
     /// @{
     void onCapabilitiesStateChange(
         avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError) override;
+        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) override;
     /// }
 
     /// @name BluetoothDeviceObserverInterface Methods
-    // @{
+    /// @{
     void onActiveDeviceConnected(const DeviceAttributes& deviceAttributes) override;
     void onActiveDeviceDisconnected(const DeviceAttributes& deviceAttributes) override;
     /// }
@@ -117,9 +144,31 @@ public:
     void printLimitedHelp();
 
     /**
+     * Prints the audio injection header to warn that audio recording is unavailable when audio injection
+     * is enabled.
+     */
+    void printAudioInjectionHeader();
+
+    /**
      * Prints the Settings Options screen.
      */
     void printSettingsScreen();
+
+    /**
+     * Prints the endpoint modification screen.
+     */
+    void printEndpointModificationScreen();
+
+    /**
+     * Prints an error message.
+     * @param message The error message to print.
+     */
+    void printEndpointModificationError(const std::string& message);
+
+    /**
+     * Prints the Endpoint Controller Options screen.
+     */
+    void printEndpointControllerScreen();
 
     /**
      * Prints the Locale Options screen.
@@ -127,7 +176,28 @@ public:
     void printLocaleScreen();
 
     /**
-     * Prints the Speaker Control Options screen. This prompts the user to select a @c SpeakerInterface::Type to modify.
+     * Prints the Power Controller Options screen.
+     */
+    void printPowerControllerScreen();
+
+    /**
+     * Prints the Toggle Controller Options screen.
+     */
+    void printToggleControllerScreen();
+
+    /**
+     * Prints the Mode Controller Options screen.
+     */
+    void printModeControllerScreen();
+
+    /**
+     * Prints the Range Controller Options screen.
+     */
+    void printRangeControllerScreen();
+
+    /**
+     * Prints the Speaker Control Options screen. This prompts the user to select a @c ChannelVolumeInterface::Type to
+     * modify.
      */
     void printSpeakerControlScreen();
 
@@ -158,15 +228,49 @@ public:
     void printCallIdScreen();
 #endif
 
+#ifdef ENABLE_MCC
     /**
-     * Prints the ESP Control Options screen. This gives the user the possible ESP control options.
+     * Prints the Meeting Control screen. This gives the user the possible meeting control options
      */
-    void printESPControlScreen(bool support, const std::string& voiceEnergy, const std::string& ambientEnergy);
+    void printMeetingControlScreen();
 
+    /**
+     * Prints the Session Id screen. This prompts the user to enter a session Id.
+     */
+    void printSessionIdScreen();
+
+    /**
+     * Prints the Calendar Items screen. This prompts the user to enter a path to Calendar Json file.
+     */
+    void printCalendarItemsScreen();
+#endif
+
+#ifdef ENABLE_COMMS
     /**
      * Prints the Comms Control Options screen. This gives the user the possible Comms control options.
      */
     void printCommsControlScreen();
+
+    /**
+     *  Prints the dtmf screen. This prompts the user to enter dtmf tones.
+     */
+    void printDtmfScreen();
+
+    /**
+     * Prints the Error Message for Invalid dtmf input.
+     */
+    void printDtmfErrorScreen();
+
+    /**
+     * Notifies the user that the call is muted.
+     */
+    void printMuteCallScreen();
+
+    /**
+     * Notifies the user that the call is unmuted.
+     */
+    void printUnmuteCallScreen();
+#endif
 
     /**
      * Prints the Error Message for Wrong Input.
@@ -199,16 +303,6 @@ public:
     void printReauthorizeConfirmation();
 
     /**
-     * Prints an error message while trying to configure ESP in a device where ESP is not supported.
-     */
-    void printESPNotSupported();
-
-    /**
-     * Prints an error message while trying to override ESP Data in a device that do not support manual override.
-     */
-    void printESPDataOverrideNotSupported();
-
-    /**
      * Prints an error message when trying to access Comms controls if Comms is not supported.
      */
     void printCommsNotSupported();
@@ -222,13 +316,105 @@ public:
     bool configureSettingsNotifications(std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
+     * Prints menu for alarm volume ramp.
+     */
+    void printAlarmVolumeRampScreen();
+
+    /**
+     * Prints menu for wake word confirmation.
+     */
+    void printWakeWordConfirmationScreen();
+
+    /**
+     * Prints menu for speech confirmation.
+     */
+    void printSpeechConfirmationScreen();
+
+    /**
+     * Prints menu for device time zone.
+     */
+    void printTimeZoneScreen();
+
+    /**
+     * Prints menu for device network info.
+     */
+    void printNetworkInfoScreen();
+
+    /// @name Print network info menu options
+    /// @{
+    void printNetworkInfoConnectionTypePrompt();
+    void printNetworkInfoESSIDPrompt();
+    void printNetworkInfoBSSIDPrompt();
+    void printNetworkInfoIpPrompt();
+    void printNetworkInfoSubnetPrompt();
+    void printNetworkInfoMacPrompt();
+    void printNetworkInfoDHCPPrompt();
+    void printNetworkInfoStaticIpPrompt();
+    /// @}
+
+    /**
      * Prints menu for do not disturb mode.
      */
     void printDoNotDisturbScreen();
     
     ~UIManager();
 
+    /**
+     * Prints menu for diagnostics screen.
+     */
+    void printDiagnosticsScreen();
+
+    /**
+     * Prints the menu for the device properties screen.
+     */
+    void printDevicePropertiesScreen();
+
+    /**
+     * Print all the device properties from @c DevicePropertyAggregator on screen.
+     * @param deviceProperties The deviceProperties map.
+     */
+    void printAllDeviceProperties(const std::unordered_map<std::string, std::string>& deviceProperties);
+
+    /**
+     * Prints the Device Protocol Tracer screen.
+     */
+    void printDeviceProtocolTracerScreen();
+
+    /**
+     * Prints the captured protocol trace.
+     *
+     * @param The protocol trace string.
+     */
+    void printProtocolTrace(const std::string& protocolTrace);
+
+    /**
+     * Prints the protocol trace flag.
+     *
+     * @param enabled the boolean indicating if protocol trace is enabled/disabled.
+     */
+    void printProtocolTraceFlag(bool enabled);
+
+    /**
+     *  Prints the Audio Injection screen.
+     */
+    void printAudioInjectionScreen();
+
+    /**
+     *  Prints audio injection failure message.
+     */
+    void printAudioInjectionFailureMessage();
+
 private:
+    /**
+     * Constructor
+     *
+     * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
+     * @param deviceInfo Information about the device.  For example, the default endpoint.
+     */
+    UIManager(
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
+
     /**
      * Prints the current state of Alexa after checking what the appropriate message to display is based on the current
      * component states. This should only be used within the internal executor.
@@ -248,6 +434,27 @@ private:
         settings::SettingNotifications notification);
 
     /**
+     * Callback function triggered when there is a notification available regarding a string setting.
+     *
+     * @param name The setting name that was affected.
+     * @param value The string value.
+     * @param notification The type of notification.
+     */
+    void onStringSettingNotification(const std::string& name, bool enable, settings::SettingNotifications notification);
+
+    /**
+     * Callback function triggered when there is a notification available regarding a setting.
+     * This will print out the new value of the setting.
+     *
+     * @tparam SettingType The data type of the setting.
+     * @param name The setting name that was affected.
+     * @param value The value of the setting.
+     * @param notification The type of notification.
+     */
+    template <typename SettingType>
+    void onSettingNotification(const std::string& name, SettingType value, settings::SettingNotifications notification);
+
+    /**
      * Sets the failure status. If status is new and not empty, we'll print the limited mode help.
      *
      * @param failureStatus Status message with the failure reason.
@@ -258,12 +465,6 @@ private:
     /// The current dialog UX state of the SDK
     DialogUXState m_dialogState;
 
-    /// The current CapabilitiesDelegate state.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State m_capabilitiesState;
-
-    /// The error associated with the CapabilitiesDelegate state.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error m_capabilitiesError;
-
     /// The current authorization state of the SDK.
     avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
 
@@ -273,6 +474,9 @@ private:
     /// The current connection state of the SDK.
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;
 
+    /// The @c LocaleAssetsManagerInterface that provides the supported locales.
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> m_localeAssetsManager;
+
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
 
@@ -281,6 +485,9 @@ private:
 
     // Object that manages settings notifications.
     std::shared_ptr<settings::SettingCallbacks<settings::DeviceSettingsManager>> m_callbacks;
+
+    // The @c EndpointIdentifier of the default endpoint.
+    avsCommon::sdkInterfaces::endpoints::EndpointIdentifier m_defaultEndpointId;
 };
 
 }  // namespace sampleApp

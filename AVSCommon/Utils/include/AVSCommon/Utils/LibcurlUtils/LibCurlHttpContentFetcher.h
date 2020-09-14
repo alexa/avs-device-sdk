@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,8 +47,7 @@ public:
     /// @}
 
     /**
-     * @copydoc
-     * In this implementation, the function may only be called once. Subsequent calls will return @c nullptr.
+     * In this implementation, the function may only be called once. Subsequent calls will return nullptr.
      */
     std::unique_ptr<avsCommon::utils::HTTPContent> getContent(
         FetchOptions option,

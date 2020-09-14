@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -196,7 +196,7 @@ DirectiveHandlerConfiguration TemplateRuntime::getConfiguration() const {
     return configuration;
 }
 
-void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus) {
+void TemplateRuntime::onFocusChanged(avsCommon::avs::FocusState newFocus, MixingBehavior) {
     m_executor.submit([this, newFocus]() { executeOnFocusChangedEvent(newFocus); });
 }
 
@@ -286,7 +286,7 @@ void TemplateRuntime::doShutdown() {
     m_activeRenderPlayerInfoCardsProvider.reset();
     m_audioItemsInExecution.clear();
     m_audioPlayerInfo.clear();
-    for (const auto renderPlayerInfoCardsInterface : m_renderPlayerInfoCardsInterfaces) {
+    for (const auto& renderPlayerInfoCardsInterface : m_renderPlayerInfoCardsInterfaces) {
         renderPlayerInfoCardsInterface->setObserver(nullptr);
     }
     m_renderPlayerInfoCardsInterfaces.clear();
@@ -783,6 +783,19 @@ void TemplateRuntime::executeCardClearedEvent() {
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> TemplateRuntime::
     getCapabilityConfigurations() {
     return m_capabilityConfigurations;
+}
+
+void TemplateRuntime::addRenderPlayerInfoCardsProvider(
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface> cardsProvider) {
+    ACSDK_DEBUG5(LX("addRenderPlayerInfoCardsProvider"));
+
+    if (!cardsProvider) {
+        ACSDK_ERROR(
+            LX("addRenderPlayerInfoCardsProviderFailed").d("reason", "nullRenderPlayerInfoCardsProviderInterface"));
+        return;
+    }
+    cardsProvider->setObserver(shared_from_this());
+    m_renderPlayerInfoCardsInterfaces.insert(cardsProvider);
 }
 
 }  // namespace templateRuntime

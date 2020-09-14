@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -123,10 +123,6 @@ void PlaylistParser::doDepthFirstSearch(
     int lastNumberOfFragments = 0;
 
     while (!playQueue.empty() && !m_shuttingDown) {
-        if (m_shuttingDown) {
-            return;
-        }
-
         auto playItem = playQueue.front();
         playQueue.pop_front();
         if (playItem.type == PlayItem::Type::MEDIA_INFO) {
@@ -142,16 +138,20 @@ void PlaylistParser::doDepthFirstSearch(
         contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
 
         HTTPContentFetcherInterface::Header header = contentFetcher->getHeader(&m_shuttingDown);
+        if (m_shuttingDown) {
+            observer->onPlaylistEntryParsed(id, PlaylistEntry::createShutdownEntry(playlistURL));
+            break;
+        }
         if (!header.successful) {
             ACSDK_ERROR(LX(__func__).sensitive("url", playlistURL).m("getHeaderFailed"));
             observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
-            return;
+            break;
         }
 
         if (!isStatusCodeSuccess(header.responseCode)) {
             ACSDK_DEBUG0(LX("nonSuccessStatusCodeFromGetHeader").d("statusCode", header.responseCode));
             observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
-            return;
+            break;
         }
 
         ACSDK_DEBUG9(LX("gotHeader")

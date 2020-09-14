@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,8 +44,9 @@ public:
      *
      * @param id The attachment id.
      * @param sds The underlying @c SharedDataStream object.  If not specified, then this class will create its own.
+     * @param maxNumReaders The maximum number of readers allowed.
      */
-    InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds = nullptr);
+    InProcessAttachment(const std::string& id, std::unique_ptr<SDSType> sds = nullptr, size_t maxNumReaders = 1);
 
     std::unique_ptr<AttachmentWriter> createWriter(
         InProcessAttachmentWriter::SDSTypeWriter::Policy policy =
@@ -54,8 +55,10 @@ public:
     std::unique_ptr<AttachmentReader> createReader(InProcessAttachmentReader::SDSTypeReader::Policy policy) override;
 
 private:
-    // The sds from which we will create the reader and writer.
+    /// The sds from which we will create the reader and writer.
     std::shared_ptr<SDSType> m_sds;
+    /// The maximum number of readers allowed
+    const size_t m_maxNumReaders;
 };
 
 }  // namespace attachment

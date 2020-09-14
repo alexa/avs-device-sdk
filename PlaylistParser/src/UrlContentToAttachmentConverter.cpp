@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,12 +48,14 @@ std::shared_ptr<UrlContentToAttachmentConverter> UrlContentToAttachmentConverter
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
-    std::chrono::milliseconds startTime) {
+    std::chrono::milliseconds startTime,
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver,
+    size_t numOfReaders) {
     if (!contentFetcherFactory) {
         return nullptr;
     }
-    auto thisSharedPointer = std::shared_ptr<UrlContentToAttachmentConverter>(
-        new UrlContentToAttachmentConverter(contentFetcherFactory, url, observer, startTime));
+    auto thisSharedPointer = std::shared_ptr<UrlContentToAttachmentConverter>(new UrlContentToAttachmentConverter(
+        contentFetcherFactory, url, observer, startTime, writeCompleteObserver, numOfReaders));
     auto retVal = thisSharedPointer->m_playlistParser->parsePlaylist(url, thisSharedPointer);
     if (0 == retVal) {
         thisSharedPointer->shutdown();
@@ -70,18 +72,21 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     const std::string& url,
     std::shared_ptr<ErrorObserverInterface> observer,
-    std::chrono::milliseconds startTime) :
+    std::chrono::milliseconds startTime,
+    std::shared_ptr<WriteCompleteObserverInterface> writeCompleteObserver,
+    size_t numOfReaders) :
         RequiresShutdown{"UrlContentToAttachmentConverter"},
         m_desiredStreamPoint{startTime},
         m_contentFetcherFactory{contentFetcherFactory},
         m_observer{observer},
+        m_writeCompleteObserver{writeCompleteObserver},
         m_shuttingDown{false},
         m_runningTotal{0},
         m_startedStreaming{false},
         m_streamWriterClosed{false} {
     m_playlistParser = PlaylistParser::create(m_contentFetcherFactory);
     m_startStreamingPointFuture = m_startStreamingPointPromise.get_future();
-    m_stream = std::make_shared<InProcessAttachment>(url);
+    m_stream = std::make_shared<InProcessAttachment>(url, nullptr, numOfReaders);
     m_streamWriter = m_stream->createWriter(avsCommon::utils::sds::WriterPolicy::BLOCKING);
     m_contentDecrypter = std::make_shared<ContentDecrypter>();
 }
@@ -165,6 +170,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                 }
                 ACSDK_DEBUG9(LX("closingWriter"));
                 closeStreamWriter();
+                notifyWriteComplete();
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
@@ -175,6 +181,12 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                     closeStreamWriter();
                     notifyError();
                 }
+            });
+            break;
+        case avsCommon::utils::playlistParser::PlaylistParseResult::SHUTDOWN:
+            m_executor.submit([this]() {
+                ACSDK_DEBUG9(LX("closingWriter"));
+                closeStreamWriter();
             });
             break;
         default:
@@ -194,6 +206,15 @@ void UrlContentToAttachmentConverter::notifyError() {
     lock.unlock();
     if (observer) {
         observer->onError();
+    }
+}
+
+void UrlContentToAttachmentConverter::notifyWriteComplete() {
+    std::unique_lock<std::mutex> lock{m_mutex};
+    auto observer = m_writeCompleteObserver;
+    lock.unlock();
+    if (observer) {
+        observer->onWriteComplete();
     }
 }
 
@@ -322,7 +343,7 @@ bool UrlContentToAttachmentConverter::download(
 
         localContentFetcher = m_contentFetcherFactory->create(url);
 
-        localContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+        localContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY, nullptr, headers);
 
         HTTPContentFetcherInterface::Header header = localContentFetcher->getHeader(&m_shuttingDown);
 
@@ -349,6 +370,7 @@ void UrlContentToAttachmentConverter::doShutdown() {
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         m_observer.reset();
+        m_writeCompleteObserver.reset();
     }
     m_shuttingDown = true;
     m_contentDecrypter->shutdown();

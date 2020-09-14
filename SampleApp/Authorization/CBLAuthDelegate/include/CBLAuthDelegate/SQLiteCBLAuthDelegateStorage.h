@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,7 +40,17 @@ public:
      * @param configurationRoot The global config object.
      * @return Pointer to the SQLiteCBLAuthDelegate object, nullptr if there's an error creating it.
      */
-    static std::unique_ptr<SQLiteCBLAuthDelegateStorage> create(
+    static std::shared_ptr<CBLAuthDelegateStorageInterface> createCBLAuthDelegateStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Factory method for creating a storage object for CBLAuthDelegate based on an SQLite database.
+     *
+     * @deprecated
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteCBLAuthDelegate object, nullptr if there's an error creating it.
+     */
+    static std::shared_ptr<CBLAuthDelegateStorageInterface> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /**

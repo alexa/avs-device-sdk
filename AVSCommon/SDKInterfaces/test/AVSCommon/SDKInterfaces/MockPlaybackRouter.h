@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,16 @@ public:
     MOCK_METHOD2(togglePressed, void(avsCommon::avs::PlaybackToggle toggle, bool action));
     MOCK_METHOD1(setHandler, void(std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler));
     MOCK_METHOD0(switchToDefaultHandler, void());
+    MOCK_METHOD2(
+        setHandler,
+        void(
+            std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> handler,
+            std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler));
+    MOCK_METHOD1(
+        useDefaultHandlerWith,
+        void(std::shared_ptr<avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface> localHandler));
+    MOCK_METHOD1(localOperation, bool(avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface::PlaybackOperation op));
+    MOCK_METHOD2(localSeekTo, bool(std::chrono::milliseconds location, bool fromStart));
 };
 
 }  // namespace test

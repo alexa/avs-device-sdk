@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 #include "AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2RequestType.h"
+#include "AVSCommon/Utils/HTTP2/HTTP2ConnectionObserverInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -49,6 +50,20 @@ public:
      * Terminate the HTTP2 connection, forcing immediate termination of any active requests.
      */
     virtual void disconnect() = 0;
+
+    /**
+     * Add a new connection observer object.
+     *
+     * @param observer Object to be notified of any registration event.
+     */
+    virtual void addObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) = 0;
+
+    /**
+     * Remove the given observer object.
+     *
+     * @param observer Object to be removed from observers set.
+     */
+    virtual void removeObserver(std::shared_ptr<HTTP2ConnectionObserverInterface> observer) = 0;
 };
 
 }  // namespace http2

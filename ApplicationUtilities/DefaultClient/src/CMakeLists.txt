@@ -2,13 +2,15 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=defaultClient")
 add_library(DefaultClient SHARED
+    ConnectionRetryTrigger.cpp
     DefaultClient.cpp
+    DeviceSettingsManagerBuilder.cpp
     EqualizerRuntimeSetup.cpp
     )
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
-    "${MRM_SOURCE_DIR}/include"
-    "${DeviceSettings_SOURCE_DIR}/include")
+    "${DeviceSettings_SOURCE_DIR}/include"
+    "${Endpoints_SOURCE_DIR}/include")
 
 if(BLUETOOTH_BLUEZ)
     target_link_libraries(DefaultClient
@@ -20,38 +22,49 @@ target_link_libraries(DefaultClient
     ADSL
     AFML
     AIP
-    Alerts
-    AudioPlayer
+    Alexa
+    ApiGateway
+    AudioResources
     AVSCommon
     AVSSystem
-    Bluetooth
+    Captions
     ContextManager
-    DoNotDisturbCA
+    DeviceSettings
+    acsdkDoNotDisturb
+    Endpoints
     Equalizer
     ExternalMediaPlayer
     InteractionModel
-    Notifications
+    InterruptModel
+    acsdkNotifications
     PlaybackController
     RegistrationManager
+    SDKComponent
+    SoftwareComponentReporter
     SpeakerManager
     SpeechSynthesizer
-    Settings
-    DeviceSettings
+    SystemSoundPlayer
     TemplateRuntime
+    acsdkAlerts
+    acsdkAudioPlayer
+    acsdkBluetooth
     )
 
-if (COMMS)
-    target_link_libraries(DefaultClient CallManager)
+if (CAPTIONS)
+    target_link_libraries(DefaultClient CaptionsLib)
 endif()
 
 if (PCC)
     target_link_libraries(DefaultClient PhoneCallController)
 endif()
 
-if (MRM AND MRM_STANDALONE_APP)
-    target_link_libraries(DefaultClient MRM MRMHandlerProxy)
-elseif (MRM)
-    target_link_libraries(DefaultClient MRM MRMHandler)
+if (MCC)
+    target_link_libraries(DefaultClient MeetingClientController)
+endif()
+
+if (METRICS)
+    target_link_libraries(DefaultClient SampleMetricSink)
+    target_link_libraries(DefaultClient MetricRecorder)
 endif()
 
 if (OPUS)

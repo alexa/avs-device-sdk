@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,9 +75,9 @@ TEST_F(StreamFunctionsTest, test_dataContainsUnprintableChars) {
  * Verify that empty datasets work
  */
 TEST_F(StreamFunctionsTest, test_emptyVector) {
-    const unsigned char empty[] = {};
-    auto stream = stream::streamFromData(empty, sizeof(empty));
-    ASSERT_TRUE(streamAndDataAreEqual(*stream, empty, sizeof(empty)));
+    std::vector<unsigned char> empty(0);
+    auto stream = stream::streamFromData(empty.data(), 0);
+    ASSERT_TRUE(streamAndDataAreEqual(*stream, empty.data(), 0));
 }
 
 /**

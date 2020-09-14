@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,20 +19,47 @@
 #include <memory>
 
 #include <Audio/MicrophoneInterface.h>
+#include <AVSCommon/SDKInterfaces/Diagnostics/AudioInjectorInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
-#include <ESP/ESPDataModifierInterface.h>
 #include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/SpeechConfirmationSettingType.h>
+#include <Settings/Types/NetworkInfo.h>
+#include <Settings/WakeWordConfirmationSettingType.h>
 
 #include "KeywordObserver.h"
-#include "UIManager.h"
-
 #include "GuiRenderer.h"
+#include "UIManager.h"
 
 #ifdef ENABLE_PCC
 #include "PhoneCaller.h"
+#endif
+
+#ifdef ENABLE_MCC
+#include "CalendarClient.h"
+#include "MeetingClient.h"
+#endif
+
+#ifdef POWER_CONTROLLER
+#include "PeripheralEndpoint/PeripheralEndpointPowerControllerHandler.h"
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+#include "PeripheralEndpoint/PeripheralEndpointToggleControllerHandler.h"
+#endif
+
+#ifdef RANGE_CONTROLLER
+#include "PeripheralEndpoint/PeripheralEndpointRangeControllerHandler.h"
+#endif
+
+#ifdef MODE_CONTROLLER
+#include "PeripheralEndpoint/PeripheralEndpointModeControllerHandler.h"
 #endif
 
 namespace alexaClientSDK {
@@ -44,6 +71,7 @@ namespace sampleApp {
  */
 class InteractionManager
         : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::CallStateObserverInterface
         , public avsCommon::utils::RequiresShutdown {
 public:
     /**
@@ -56,13 +84,28 @@ public:
 #ifdef ENABLE_PCC
         std::shared_ptr<sampleApp::PhoneCaller> phoneCaller,
 #endif
+#ifdef ENABLE_MCC
+        std::shared_ptr<sampleApp::MeetingClient> meetingClient,
+        std::shared_ptr<sampleApp::CalendarClient> calendarClient,
+#endif
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
         capabilityAgents::aip::AudioProvider tapToTalkAudioProvider,
         std::shared_ptr<sampleApp::GuiRenderer> guiRenderer = nullptr,
         capabilityAgents::aip::AudioProvider wakeWordAudioProvider = capabilityAgents::aip::AudioProvider::null(),
-        std::shared_ptr<esp::ESPDataProviderInterface> espProvider = nullptr,
-        std::shared_ptr<esp::ESPDataModifierInterface> espModifier = nullptr,
-        std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr);
+#ifdef POWER_CONTROLLER
+        std::shared_ptr<PeripheralEndpointPowerControllerHandler> powerControllerHandler = nullptr,
+#endif
+#ifdef TOGGLE_CONTROLLER
+        std::shared_ptr<PeripheralEndpointToggleControllerHandler> toggleControllerHandler = nullptr,
+#endif
+#ifdef RANGE_CONTROLLER
+        std::shared_ptr<PeripheralEndpointRangeControllerHandler> rangeControllerHandler = nullptr,
+#endif
+#ifdef MODE_CONTROLLER
+        std::shared_ptr<PeripheralEndpointModeControllerHandler> modeControllerHandler = nullptr,
+#endif
+        std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> callManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
     /**
      * Begins the interaction between the Sample App and the user. This should only be called at startup.
@@ -164,9 +207,116 @@ public:
     void settings();
 
     /**
+     * Should be called whenever a user requests 'ALARM_VOLUME_RAMP' change.
+     */
+    void alarmVolumeRamp();
+
+    /**
+     * Should be called whenever a user requests 'WAKEWORD_CONFIRMATION' change.
+     */
+    void wakewordConfirmation();
+
+    /**
+     * Should be called whenever a user requests 'SPEECH_CONFIRMATION' change.
+     */
+    void speechConfirmation();
+
+    /**
      * Should be called whenever a user requests 'LOCALE' change.
      */
     void locale();
+
+    /**
+     * Resets cached endpoint identifiers.
+     */
+    void clearCachedEndpointIdentifiers(
+        const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints);
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+    /**
+     * Should be called whenever a user requests dynamic endpoint modification options.
+     */
+    void endpointModification();
+
+    /**
+     * Builds and dynamically registers an endpoint with the given friendlyName.
+     * @param friendlyName
+     * @return Whether building and enqueuing the endpoint for registration succeeded.
+     * The CapabilitiesDelegate observer callback will indicate whether registration with AVS succeeded.
+     */
+    bool addEndpoint(const std::string& friendlyName);
+
+    /**
+     * Adds an endpoint.
+     */
+    void addDynamicEndpoint();
+
+    /**
+     * Modifies an endpoint.
+     */
+    void modifyDynamicEndpoint();
+
+    /**
+     * Deletes an endpoint.
+     */
+    void deleteDynamicEndpoint();
+
+    /**
+     * Should be called whenever a user presses 'ENDPOINT_CONTROLLER' for endpoint point controller options.
+     */
+    void endpointController();
+#endif
+
+#ifdef POWER_CONTROLLER
+    /**
+     * Should be called whenever a user requests 'POWER CONTROLLER' options.
+     */
+    void powerController();
+
+#endif
+#ifdef TOGGLE_CONTROLLER
+    /**
+     * Should be called whenever a user requests 'TOGGLE CONTROLLER' options.
+     */
+    void toggleController();
+#endif
+
+#ifdef MODE_CONTROLLER
+    /**
+     * Should be called whenever a user requests 'MODE CONTROLLER' options.
+     */
+    void modeController();
+#endif
+
+#ifdef RANGE_CONTROLLER
+    /**
+     * Should be called whenever a user requests 'RANGE CONTROLLER' options.
+     */
+    void rangeController();
+#endif
+
+    /**
+     * Should be called whenever a user requests 'TIMEZONE' change.
+     */
+    void timeZone();
+
+    /**
+     * Should be called whenever a user requests 'NETWORK_INFO' change.
+     */
+    void networkInfo();
+
+    /// @name Network Info Prompt Functions
+    /// Should be called whenever a user requests a specific 'NETWORK_INFO' change.
+    /// @{
+    void networkInfoConnectionTypePrompt();
+    void networkInfoESSIDPrompt();
+    void networkInfoBSSIDPrompt();
+    void networkInfoIpPrompt();
+    void networkInfoSubnetPrompt();
+    void networkInfoMacPrompt();
+    void networkInfoDHCPPrompt();
+    void networkInfoStaticIpPrompt();
+    /// @}
 
     /**
      * Should be called whenever a user requests 'DO_NOT_DISTURB' change.
@@ -177,11 +327,6 @@ public:
      * Should be called whenever a user presses invalid option.
      */
     void errorValue();
-
-    /**
-     * Should be called when setting value is selected by the user.
-     */
-    void changeSetting(const std::string& key, const std::string& value);
 
     /**
      * Should be called whenever a users requests 'SPEAKER_CONTROL' for speaker control.
@@ -208,12 +353,12 @@ public:
     /**
      * Should be called after a user wishes to modify the volume.
      */
-    void adjustVolume(avsCommon::sdkInterfaces::SpeakerInterface::Type type, int8_t delta);
+    void adjustVolume(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, int8_t delta);
 
     /**
      * Should be called after a user wishes to set mute.
      */
-    void setMute(avsCommon::sdkInterfaces::SpeakerInterface::Type type, bool mute);
+    void setMute(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type, bool mute);
 
     /**
      * Reset the device and remove any customer data.
@@ -230,32 +375,7 @@ public:
      */
     void confirmReauthorizeDevice();
 
-    /**
-     * Should be called whenever a user requests for ESP control.
-     */
-    void espControl();
-
-    /**
-     * Should be called whenever a user requests to toggle the ESP support.
-     */
-    void toggleESPSupport();
-
-    /**
-     * Should be called whenever a user requests to set the @c voiceEnergy sent in ReportEchoSpatialPerceptionData
-     * event.
-     *
-     * @param voiceEnergy The voice energy measurement to be set as the ESP measurement.
-     */
-    void setESPVoiceEnergy(const std::string& voiceEnergy);
-
-    /**
-     * Should be called whenever a user requests set the @c ambientEnergy sent in ReportEchoSpatialPerceptionData
-     * event.
-     *
-     * @param ambientEnergy The ambient energy measurement to be set as the ESP measurement.
-     */
-    void setESPAmbientEnergy(const std::string& ambientEnergy);
-
+#ifdef ENABLE_COMMS
     /**
      * Grants the user access to the communications controls.
      */
@@ -267,14 +387,42 @@ public:
     void acceptCall();
 
     /**
+     * Send dtmf tones during the call.
+     *
+     * @param dtmfTone The signal of the dtmf message.
+     */
+    void sendDtmf(avsCommon::sdkInterfaces::CallManagerInterface::DTMFTone dtmfTone);
+
+    /**
+     * Should be called whenever collecting a dtmf.
+     */
+    void dtmfControl();
+
+    /**
+     * Should be called whenever a user presses invalid dtmf.
+     */
+    void errorDtmf();
+
+    /**
      * Should be called when the user wants to stop a call.
      */
     void stopCall();
 
     /**
+     * Should be called when the user wants to mute/unmute a call.
+     */
+    void muteCallToggle();
+#endif
+
+    /**
      * UXDialogObserverInterface methods
      */
     void onDialogUXStateChanged(DialogUXState newState) override;
+
+    /**
+     * CallStateObserverInterface methods
+     */
+    void onCallStateChange(CallState newState) override;
 
 #ifdef ENABLE_PCC
     /**
@@ -308,10 +456,178 @@ public:
 
 #endif
 
+#ifdef ENABLE_MCC
+    /**
+     * Should be called whenever a user selects Phone Control.
+     */
+    void meetingControl();
+
+    /**
+     * Should be called whenever collecting a Call Id.
+     */
+    void sessionId();
+
+    /**
+     * Should be called whenever collecting a path to Calendar Items file.
+     */
+    void calendarItemsFile();
+
+    /**
+     * MeetingClientController commands.
+     */
+    void sendMeetingJoined(const std::string& sessionId);
+    void sendMeetingEnded(const std::string& sessionId);
+    void sendSetCurrentMeetingSession(const std::string& sessionId);
+    void sendClearCurrentMeetingSession();
+    void sendConferenceConfigurationChanged();
+    void sendMeetingClientErrorOccured(const std::string& sessionId);
+    void sendCalendarItemsRetrieved(const std::string& calendarItemsFile);
+    void sendCalendarClientErrorOccured();
+#endif
+
     /**
      * Sets the do not disturb mode state.
      */
     void setDoNotDisturbMode(bool enable);
+
+    /**
+     * Sets the Alarm Volume Ramp state.
+     */
+    void setAlarmVolumeRamp(bool enable);
+
+    /**
+     * Sets the speech confirmation state.
+     */
+    void setSpeechConfirmation(settings::SpeechConfirmationSettingType value);
+
+    /**
+     * Sets the wake word confirmation state.
+     */
+    void setWakewordConfirmation(settings::WakeWordConfirmationSettingType value);
+
+    /**
+     * Sets the time zone of the device.
+     */
+    void setTimeZone(const std::string& value);
+
+    /**
+     * Sets the locale of the device.
+     */
+    void setLocale(const settings::DeviceLocales& value);
+
+    /**
+     * Gets the network info of the device.
+     * @return The network info.
+     */
+    settings::types::NetworkInfo getNetworkInfo();
+
+    /**
+     * Sets the network info of the device.
+     * @param value The network info being set.
+     */
+    void setNetworkInfo(const settings::types::NetworkInfo& value);
+
+#ifdef POWER_CONTROLLER
+    /**
+     * Sets the power state on power handler.
+     *
+     * @param powerState Power state to be set.
+     */
+    void setPowerState(const bool powerState);
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+    /**
+     * Sets the toggle state on toggle handler.
+     *
+     * @param toggleState Toggle state to be set.
+     */
+    void setToggleState(const bool toggleState);
+#endif
+
+#ifdef RANGE_CONTROLLER
+    /**
+     * Sets the range on range handler.
+     *
+     * @param rangeValue A range to be set.
+     */
+    void setRangeValue(const int rangeValue);
+#endif
+
+#ifdef MODE_CONTROLLER
+    /**
+     * Sets the mode on mode handler.
+     *
+     * @param mode The mode to be set.
+     */
+    void setMode(const std::string mode);
+#endif
+
+    /**
+     * Stop the microphone from streaming audio data.
+     */
+    void stopMicrophone();
+
+    /**
+     * Start streaming audio data from the microphone.
+     */
+    void startMicrophone();
+
+    /**
+     * Prints the diagnostics screen.
+     */
+    void diagnosticsControl();
+
+    /**
+     * Prints the device properties screen.
+     */
+    void devicePropertiesControl();
+
+    /**
+     * Prints a requested device property.
+     */
+    void showDeviceProperties();
+
+    /**
+     * Prints the audio injection screen.
+     */
+    void audioInjectionControl();
+
+    /**
+     * Injects wav file into audio stream.
+     *
+     * Note: Currently audio injection is supported for wav files with the following properties
+     * Sample Size: 16 bits
+     * Sample Rate: 16 KHz
+     * Number of channels : 1
+     * Endianness : Little
+     * Encoding Format : LPCM
+     *
+     * @param absoluteFilePath the absolute filepath of the wav file containing the audio to be injected.
+     */
+    void injectWavFile(const std::string& absoluteFilePath);
+
+    /**
+     * Prints device protocol tracer screen.
+     */
+    void deviceProtocolTraceControl();
+
+    /**
+     * Prints the protocol trace string.
+     */
+    void printProtocolTrace();
+
+    /**
+     * Enables the protocol trace utility.
+     *
+     * @param enabled flag indicating if protocol trace is enabled/disabled.
+     */
+    void setProtocolTraceFlag(bool enabled);
+
+    /**
+     * Clears the protocol trace message list.
+     */
+    void clearProtocolTrace();
 
 private:
     /// The default SDK client.
@@ -326,18 +642,19 @@ private:
     /// The gui renderer.
     std::shared_ptr<sampleApp::GuiRenderer> m_guiRenderer;
 
-    /// The ESP provider.
-    std::shared_ptr<esp::ESPDataProviderInterface> m_espProvider;
-
-    /// The ESP modifier.
-    std::shared_ptr<esp::ESPDataModifierInterface> m_espModifier;
-
     /// The call manager.
     std::shared_ptr<avsCommon::sdkInterfaces::CallManagerInterface> m_callManager;
 
 #ifdef ENABLE_PCC
     /// The Phone Caller
     std::shared_ptr<sampleApp::PhoneCaller> m_phoneCaller;
+#endif
+
+#ifdef ENABLE_MCC
+    /// The Meeting Client.
+    std::shared_ptr<sampleApp::MeetingClient> m_meetingClient;
+    /// The Calendar Client.
+    std::shared_ptr<sampleApp::CalendarClient> m_calendarClient;
 #endif
 
     /// The hold to talk audio provider.
@@ -349,14 +666,48 @@ private:
     /// The wake word audio provider.
     capabilityAgents::aip::AudioProvider m_wakeWordAudioProvider;
 
+#ifdef POWER_CONTROLLER
+    /// The Power Controller Handler
+    std::shared_ptr<PeripheralEndpointPowerControllerHandler> m_powerControllerHandler;
+#endif
+
+#ifdef TOGGLE_CONTROLLER
+    /// The Toggle Controller Handler
+    std::shared_ptr<PeripheralEndpointToggleControllerHandler> m_toggleControllerHandler;
+#endif
+
+#ifdef RANGE_CONTROLLER
+    /// The Range Controller Handler
+    std::shared_ptr<PeripheralEndpointRangeControllerHandler> m_rangeControllerHandler;
+#endif
+
+#ifdef MODE_CONTROLLER
+    /// The Mode Controller Handler
+    std::shared_ptr<PeripheralEndpointModeControllerHandler> m_modeControllerHandler;
+#endif
+
     /// Whether a hold is currently occurring.
     bool m_isHoldOccurring;
 
     /// Whether a tap is currently occurring.
     bool m_isTapOccurring;
 
-    /// Whether the microphone is currently turned on.
+    /// Whether a call is currently connected.
+    bool m_isCallConnected;
+
+    /// Whether the microphone is currently on.
     bool m_isMicOn;
+
+    /// Optional dynamic endpointId.
+    avsCommon::utils::Optional<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier> m_dynamicEndpointId;
+
+#ifdef ENABLE_ENDPOINT_CONTROLLERS
+    /// Whether to toggle the dynamic endpoint's friendly name.
+    bool m_friendlyNameToggle;
+#endif
+
+    /// Diagnostics object.
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> m_diagnostics;
 
     /**
      * An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.

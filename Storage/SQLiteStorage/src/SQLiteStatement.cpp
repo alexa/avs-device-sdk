@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ bool SQLiteStatement::bindIntParameter(int index, int value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindIntParameterFailed")
                         .m("Could not bind int parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }
@@ -122,7 +122,7 @@ bool SQLiteStatement::bindInt64Parameter(int index, int64_t value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindInt64ParameterFailed")
                         .m("Could not bind int64_t parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }
@@ -148,7 +148,7 @@ bool SQLiteStatement::bindStringParameter(int index, const std::string& value) {
         ACSDK_ERROR(LX("SQLiteStatement::bindStringParameterFailed")
                         .m("Could not bind string parameter.")
                         .d("bound position", index)
-                        .d("value", value)
+                        .sensitive("value", value)
                         .d("rcode", rcode));
         return false;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -235,6 +235,13 @@ bool getAbsoluteURLFromRelativePathToURL(std::string baseURL, std::string relati
         }
         baseURL.resize(firstSlashPosition);
     } else {
+        // Look for first '?' that contains parameters of the URL.  Need to strip all parameters before appending the
+        // relative path.
+        auto parameterPosition = baseURL.find_first_of("?", searchBegin);
+        if (parameterPosition != std::string::npos) {
+            baseURL.resize(parameterPosition);
+        }
+
         auto lastSlashPosition = baseURL.find_last_of("/");
         if (lastSlashPosition == std::string::npos || lastSlashPosition < searchBegin) {
             ACSDK_ERROR(LX("getAbsoluteURLFromRelativePathToURLFailed").d("reason", "lastSlashNotFound"));

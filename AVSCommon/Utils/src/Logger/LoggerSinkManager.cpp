@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,10 +49,25 @@ void LoggerSinkManager::removeSinkObserver(SinkObserverInterface* observer) {
     m_sinkObservers.erase(std::remove(m_sinkObservers.begin(), m_sinkObservers.end(), observer), m_sinkObservers.end());
 }
 
+void LoggerSinkManager::setLevel(Level level) {
+    m_level = level;
+    if (m_sink) {
+        m_sink->setLevel(level);
+    }
+}
+
 void LoggerSinkManager::initialize(const std::shared_ptr<Logger>& sink) {
+    if (!sink) {
+        return;
+    }
+
     if (m_sink == sink) {
         // don't do anything if the sink is the same
         return;
+    }
+
+    if (m_level != Level::UNKNOWN) {
+        sink->setLevel(m_level);
     }
 
     // copy the vector first with the lock
@@ -70,7 +85,7 @@ void LoggerSinkManager::initialize(const std::shared_ptr<Logger>& sink) {
     }
 }
 
-LoggerSinkManager::LoggerSinkManager() : m_sink(ACSDK_GET_SINK_LOGGER()) {
+LoggerSinkManager::LoggerSinkManager() : m_sink{ACSDK_GET_SINK_LOGGER()}, m_level(Level::UNKNOWN) {
 }
 
 }  // namespace logger

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_EQUALIZER_INCLUDE_EQUALIZER_EQUALIZERCAPABILITYAGENT_H_
 
 #include <memory>
+#include <mutex>
 
 #include <rapidjson/document.h>
 
@@ -106,6 +107,11 @@ public:
     /// @name EqualizerControllerListenerInterface Functions
     /// @{
     void onEqualizerStateChanged(const avsCommon::sdkInterfaces::audio::EqualizerState& state) override;
+    /// @}
+
+    /// @name EqualizerControllerListenerInterface Functions
+    /// @{
+    void onEqualizerSameStateChanged(const avsCommon::sdkInterfaces::audio::EqualizerState& state) override;
     /// @}
 
 private:
@@ -212,6 +218,9 @@ private:
 
     /// An executor used for serializing requests on agent's own thread of execution.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// A mutex for serializing accesses to storage
+    std::mutex m_storageMutex;
 };
 
 }  // namespace equalizer

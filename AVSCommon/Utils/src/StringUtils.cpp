@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 #include <algorithm>
+#include <iostream>
 #include <errno.h>
 #include <iomanip>
 #include <limits>
@@ -135,6 +136,14 @@ std::string replaceAllSubstring(const std::string& str, const std::string& from,
         pos += to.length();
     }
     return subject;
+}
+
+std::string ltrim(const std::string& str) {
+    if (str.empty()) {
+        return str;
+    }
+    auto iter = std::find_if(str.begin(), str.end(), [](char c) { return !std::isspace(c); });
+    return std::string(iter, str.end());
 }
 
 }  // namespace string

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
+#include <future>
 #include <memory>
 
 #include <gtest/gtest.h>
@@ -20,7 +22,9 @@
 #include <RegistrationManager/CustomerDataManager.h>
 #include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
+#include <AVSCommon/Utils/PromiseFuturePair.h>
 
 #include "CertifiedSender/CertifiedSender.h"
 
@@ -30,12 +34,23 @@ namespace alexaClientSDK {
 namespace certifiedSender {
 namespace test {
 
+/// A sample message
+static const std::string TEST_MESSAGE = "TEST_MESSAGE";
+
+/// A sample message URI.
+static const std::string TEST_URI = "TEST_URI";
+
+/// Timeout used in test
+static const auto TEST_TIMEOUT = std::chrono::seconds(5);
+
 class MockConnection : public avsCommon::avs::AbstractAVSConnectionManager {
     MOCK_METHOD0(enable, void());
     MOCK_METHOD0(disable, void());
     MOCK_METHOD0(isEnabled, bool());
     MOCK_METHOD0(reconnect, void());
     MOCK_CONST_METHOD0(isConnected, bool());
+    MOCK_METHOD0(onWakeConnectionRetry, void());
+    MOCK_METHOD0(onWakeVerifyConnectivity, void());
     MOCK_METHOD1(
         addMessageObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
@@ -50,6 +65,7 @@ public:
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
     MOCK_METHOD2(store, bool(const std::string& message, int* id));
+    MOCK_METHOD3(store, bool(const std::string& message, const std::string& uriPathExtension, int* id));
     MOCK_METHOD1(load, bool(std::queue<StoredMessage>* messageContainer));
     MOCK_METHOD1(erase, bool(int messageId));
     MOCK_METHOD0(clearDatabase, bool());
@@ -70,12 +86,12 @@ protected:
         ASSERT_TRUE(avsCommon::avs::initialization::AlexaClientSDKInit::initialize({configuration}));
 
         auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-        auto msgSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
+        m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
         m_connection = std::make_shared<MockConnection>();
         m_storage = std::make_shared<MockMessageStorage>();
 
         EXPECT_CALL(*m_storage, open()).Times(1).WillOnce(Return(true));
-        m_certifiedSender = CertifiedSender::create(msgSender, m_connection, m_storage, customerDataManager);
+        m_certifiedSender = CertifiedSender::create(m_mockMessageSender, m_connection, m_storage, customerDataManager);
     }
 
     void TearDown() override {
@@ -94,6 +110,9 @@ protected:
     /// Pointer to connection. We need to remove certifiedSender as a connection observer or both objects will never
     /// be deleted.
     std::shared_ptr<MockConnection> m_connection;
+
+    /// The mock message sender instance.
+    std::shared_ptr<avsCommon::sdkInterfaces::test::MockMessageSender> m_mockMessageSender;
 };
 
 /**
@@ -102,6 +121,29 @@ protected:
 TEST_F(CertifiedSenderTest, test_clearData) {
     EXPECT_CALL(*m_storage, clearDatabase()).Times(1);
     m_certifiedSender->clearData();
+}
+
+/**
+ * Verify that a message with a URI specified will be sent out by the sender with the URI.
+ */
+TEST_F(CertifiedSenderTest, testTimer_SendMessageWithURI) {
+    avsCommon::utils::PromiseFuturePair<std::shared_ptr<avsCommon::avs::MessageRequest>> requestSent;
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillOnce(Invoke([&requestSent](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
+            requestSent.setValue(request);
+        }));
+    EXPECT_CALL(*m_storage, store(_, TEST_URI, _)).WillOnce(Return(true));
+
+    std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(m_certifiedSender)
+        ->onConnectionStatusChanged(
+            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED,
+            avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    m_certifiedSender->sendJSONMessage(TEST_MESSAGE, TEST_URI);
+
+    EXPECT_TRUE(requestSent.waitFor(TEST_TIMEOUT));
+    EXPECT_EQ(requestSent.getValue()->getJsonContent(), TEST_MESSAGE);
+    EXPECT_EQ(requestSent.getValue()->getUriPathExtension(), TEST_URI);
 }
 
 }  // namespace test

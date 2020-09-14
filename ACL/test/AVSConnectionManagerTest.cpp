@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -64,8 +64,10 @@ public:
     MOCK_METHOD0(doShutdown, void());
     MOCK_METHOD0(getConnectionStatus, MessageRouterInterface::ConnectionStatus());
     MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
-    MOCK_METHOD1(setAVSEndpoint, void(const std::string& avsEndpoint));
-    MOCK_METHOD0(getAVSEndpoint, std::string());
+    MOCK_METHOD1(setAVSGateway, void(const std::string& avsGateway));
+    MOCK_METHOD0(getAVSGateway, std::string());
+    MOCK_METHOD0(onWakeConnectionRetry, void());
+    MOCK_METHOD0(onWakeVerifyConnectivity, void());
     MOCK_METHOD1(setObserver, void(std::shared_ptr<MessageRouterObserverInterface> observer));
 };
 
@@ -223,24 +225,24 @@ TEST_F(AVSConnectionManagerTest, test_sendMessageRequest) {
 }
 
 /**
- * Test setAVSEndpoint and expect a call to messageRouter's setAVSEndpoint.
+ * Test setAVSGateway and expect a call to messageRouter's setAVSGateway.
  */
-TEST_F(AVSConnectionManagerTest, test_setAVSEndpoint) {
-    EXPECT_CALL(*m_messageRouter, setAVSEndpoint(_)).Times(1);
-    m_avsConnectionManager->setAVSEndpoint("AVSEndpoint");
+TEST_F(AVSConnectionManagerTest, test_setAVSGateway) {
+    EXPECT_CALL(*m_messageRouter, setAVSGateway(_)).Times(1);
+    m_avsConnectionManager->setAVSGateway("AVSGateway");
 }
 
 /**
- * Test getAVSEndpoint and expect a call to messageRouter's getAVSEndpoint.
+ * Test getAVSGateway and expect a call to messageRouter's getAVSGateway.
  */
-TEST_F(AVSConnectionManagerTest, getAVSEndpointTest) {
-    auto endpoint = "AVSEndpoint";
-    EXPECT_CALL(*m_messageRouter, getAVSEndpoint()).Times(1).WillOnce(Return(endpoint));
-    ASSERT_EQ(endpoint, m_avsConnectionManager->getAVSEndpoint());
+TEST_F(AVSConnectionManagerTest, getAVSGatewayTest) {
+    auto gateway = "AVSGateway";
+    EXPECT_CALL(*m_messageRouter, getAVSGateway()).Times(1).WillOnce(Return(gateway));
+    ASSERT_EQ(gateway, m_avsConnectionManager->getAVSGateway());
 }
 
 /**
- * Test that onConnectionStatusChanged(false) results in a reconnect attempt when enabled.
+ * Test that onConnectionStatusChanged(false) results in prompting MessageRouter to verify the connection.
  */
 TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToFalse) {
     // Create a new MessageRouter so we don't get residual calls to m_messageRouter from SetUp().
@@ -249,8 +251,7 @@ TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToFalse) {
     {
         InSequence dummy;
         EXPECT_CALL(*messageRouter, enable());
-        EXPECT_CALL(*messageRouter, disable());
-        EXPECT_CALL(*messageRouter, enable());
+        EXPECT_CALL(*messageRouter, onWakeVerifyConnectivity());
     }
 
     m_avsConnectionManager = AVSConnectionManager::create(
@@ -264,7 +265,7 @@ TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToFalse) {
 }
 
 /**
- * Test that onConnectionStatusChanged(true) results in a no-op when enabled.
+ * Test that onConnectionStatusChanged(true) results in prompting MessageRouter to reconnect.
  */
 TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToTrue) {
     // Create a new MessageRouter so we don't get residual calls to m_messageRouter from SetUp().
@@ -272,9 +273,8 @@ TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToTrue) {
 
     {
         InSequence dummy;
-        EXPECT_CALL(*messageRouter, enable()).Times(1);
-        EXPECT_CALL(*messageRouter, disable()).Times(0);
-        EXPECT_CALL(*messageRouter, enable()).Times(0);
+        EXPECT_CALL(*messageRouter, enable());
+        EXPECT_CALL(*messageRouter, onWakeConnectionRetry());
     }
 
     m_avsConnectionManager = AVSConnectionManager::create(
@@ -288,7 +288,7 @@ TEST_F(AVSConnectionManagerTest, test_enabledOnConnectStatusChangedToTrue) {
 }
 
 /**
- * Test that onConnectionStatusChanged() results in no reconnect attempts when disabled.
+ * Test that onConnectionStatusChanged() results in no reconnect attempts or connectivity checks.
  */
 TEST_F(AVSConnectionManagerTest, test_disabledOnConnectStatusChanged) {
     // Create a new MessageRouter so we don't get residual calls to m_messageRouter from SetUp().
@@ -298,6 +298,8 @@ TEST_F(AVSConnectionManagerTest, test_disabledOnConnectStatusChanged) {
         InSequence dummy;
         EXPECT_CALL(*messageRouter, enable()).Times(0);
         EXPECT_CALL(*messageRouter, disable()).Times(0);
+        EXPECT_CALL(*messageRouter, onWakeVerifyConnectivity()).Times(0);
+        EXPECT_CALL(*messageRouter, onWakeConnectionRetry()).Times(0);
     }
 
     m_avsConnectionManager = AVSConnectionManager::create(

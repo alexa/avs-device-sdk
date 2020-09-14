@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,13 +23,14 @@
 
 #include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
-#include <ACL/Transport/PostConnectSynchronizerFactory.h>
+#include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <ContextManager/ContextManager.h>
+#include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"
@@ -48,7 +49,10 @@ using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs::initialization;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::libcurlUtils;
+using namespace contextManager;
 
 using alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;
 
@@ -130,7 +134,7 @@ private:
     /// Connection Manager for handling the communication between client.
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
     /// ContextManager object.
-    std::shared_ptr<contextManager::ContextManager> m_contextManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
     /// Pointer to message router so we can properly shutdown
     std::shared_ptr<MessageRouter> m_messageRouter;
 };
@@ -144,10 +148,27 @@ std::unique_ptr<AVSCommunication> AVSCommunication::create(std::shared_ptr<AuthD
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
         return nullptr;
     }
-    avsCommunication->m_contextManager = contextManager::ContextManager::create();
+
+    auto config = ConfigurationNode::getRoot();
+    EXPECT_TRUE(config);
+    if (!config) {
+        return nullptr;
+    }
+
+    auto deviceInfo = DeviceInfo::createFromConfiguration(std::make_shared<ConfigurationNode>(config));
+    EXPECT_TRUE(deviceInfo);
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "createDeviceInfoFailed"));
+        return nullptr;
+    }
+    avsCommunication->m_contextManager = ContextManager::createContextManagerInterface(std::move(deviceInfo));
     avsCommunication->m_connectionStatusObserver = std::make_shared<ConnectionStatusObserver>();
 
-    auto postConnectFactory = acl::PostConnectSynchronizerFactory::create(avsCommunication->m_contextManager);
+    auto synchronizeStateSenderFactory =
+        synchronizeStateSender::SynchronizeStateSenderFactory::create(avsCommunication->m_contextManager);
+    std::vector<std::shared_ptr<PostConnectOperationProviderInterface>> providers;
+    providers.push_back(synchronizeStateSenderFactory);
+    auto postConnectFactory = acl::PostConnectSequencerFactory::create(providers);
     auto http2ConnectionFactory = std::make_shared<LibcurlHTTP2ConnectionFactory>();
     auto transportFactory = std::make_shared<acl::HTTP2TransportFactory>(http2ConnectionFactory, postConnectFactory);
     avsCommunication->m_messageRouter = std::make_shared<MessageRouter>(

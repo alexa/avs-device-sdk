@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,56 +17,68 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CAPABILITIESDELEGATEINTERFACE_H_
 
 #include <memory>
+#include <vector>
 
+#include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
+#include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
 
 /**
- * CapabilitiesDelegateInterface is an interface with methods that provide clients a way to register capabilities
- * implemented by agents and publish them so that Alexa is aware of the device's capabilities.
+ * CapabilitiesDelegateInterface is an interface with methods that provide clients a way to register endpoints and their
+ * capabilities and publish them so that Alexa is aware of the device's capabilities.
  */
-class CapabilitiesDelegateInterface {
+class CapabilitiesDelegateInterface
+        : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface
+        , public avsCommon::sdkInterfaces::AVSGatewayObserverInterface
+        , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface {
 public:
-    enum class CapabilitiesPublishReturnCode {
-        /// The Capabilities API message went through without issues
-        SUCCESS,
-        /// The message did not go through because of issues that need fixing
-        FATAL_ERROR,
-        /// The message did not go through, but you can retry to see if you succeed
-        RETRIABLE_ERROR
-    };
-
     /**
      * Destructor
      */
     virtual ~CapabilitiesDelegateInterface() = default;
 
     /**
-     * Registers device capabilities that a component is implementing.
-     * This only updates a local registry and does not actually send out a message to the Capabilities API endpoint.
+     * Updates an existing endpoint's capabilities or, if the endpoint does not already exist, registers a new endpoint.
      *
-     * @param capability The capability configuration which houses the capabilities being implemented.
-     * @return true if registering was successful, else false.
+     * @param endpointAttributes The @c EndpointAttributes for the registering endpoint.
+     * @param capabilities The array of @c CapabilityConfiguration the endpoint supports.
+     * @return true if operation was successful, else false.
+     *
+     * @note This operation can fail at several stages before publishing the endpoint to AVS:
+     * if the capabilities are empty; if the attributes or capability configurations are invalid;
+     * if the endpoint is already pending deletion or registration. If this function returns true,
+     * the endpoint will be published to AVS. Callers can be notified of published endpoints using
+     * @c CapabilitiesObserverInterface.
      */
-    virtual bool registerCapability(
-        const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>& capability) = 0;
+    virtual bool addOrUpdateEndpoint(
+        const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+        const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) = 0;
 
     /**
-     * Publishes device capabilities that were registered.
-     * This function actually sends out a message to the Capabilities API endpoint.
+     * Deletes an existing endpoint.
      *
-     * @return A return code (CapabilitiesPublishReturnCode enum value) detailing the outcome of the publish message.
+     * @param endpointAttributes The @c EndpointAttributes for the deregistering endpoint.
+     * @param capabilities The array of @c CapabilityConfiguration the endpoint supports.
+     * @return true if operation was successful, else false.
+     *
+     * @note This operation can fail at several stages before publishing the endpoint to AVS:
+     * if the endpoint is not registered; if the capabilities are empty; if the attributes or capability
+     * configurations are invalid; if the endpoint is already pending deletion or registration. If this
+     * function returns true, the endpoint will be deregistered from AVS. Callers can be notified of
+     * deregistered endpoints using @c CapabilitiesObserverInterface.
      */
-    virtual CapabilitiesPublishReturnCode publishCapabilities() = 0;
-
-    /**
-     * Publishes capabilities asynchronously and will keep on retrying till it succeeds or there is a fatal error.
-     */
-    virtual void publishCapabilitiesAsyncWithRetries() = 0;
+    virtual bool deleteEndpoint(
+        const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
+        const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) = 0;
 
     /**
      * Specify an object to observe changes to the state of this CapabilitiesDelegate.
@@ -79,7 +91,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) = 0;
 
     /**
-     * Remove an observer
+     * Remove an observer.
      *
      * @param observer The observer to remove.
      */
@@ -91,6 +103,14 @@ public:
      * to the AVS during the next synchronization.
      */
     virtual void invalidateCapabilities() = 0;
+
+    /**
+     * Set the message sender to use for sending Discovery events to AVS when connected.
+     *
+     * @param messageSender The message sender.
+     */
+    virtual void setMessageSender(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) = 0;
 };
 
 }  // namespace sdkInterfaces

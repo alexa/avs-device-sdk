@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +54,13 @@ public:
     void removeSinkObserver(SinkObserverInterface* observer);
 
     /**
+     * Set the minimum level of entries to log.
+     *
+     * @param level The minimum level of entries to log.
+     */
+    void setLevel(Level level);
+
+    /**
      * Initialize the sink logger managed by the manager.
      * This function can be called only before any other threads in the process have been created by the
      * program.
@@ -79,6 +86,9 @@ private:
 
     /// The @c Logger to forward logs to.
     std::shared_ptr<Logger> m_sink;
+
+    /// The lowest level of entries to log.
+    Level m_level;
 };
 
 }  // namespace logger

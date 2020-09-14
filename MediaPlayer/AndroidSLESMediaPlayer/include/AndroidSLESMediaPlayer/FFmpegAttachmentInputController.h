@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -91,6 +91,13 @@ private:
      * @return The size read if the @c read call succeeded or the AVError code.
      */
     static int feedBuffer(void* userData, uint8_t* buffer, int bufferSize);
+
+    /*
+     * Whether the data input has encountered EOF. This is needed in order to know whether to ignore
+     * ffmpeg errors when ffmpeg probes the header for format; sometimes the entire attachment is empty,
+     * so ffmpeg cannot determine the format.
+     */
+    bool m_reachedEOF;
 
     /// Pointer to the data input.
     std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;

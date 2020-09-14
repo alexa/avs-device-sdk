@@ -1,4 +1,3 @@
-find_package(CURL ${CURL_PACKAGE_CONFIG})
 find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
 add_definitions("-DACSDK_LOG_MODULE=cblAuthDelegate")

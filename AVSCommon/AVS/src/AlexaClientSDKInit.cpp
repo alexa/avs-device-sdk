@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
 #include "AVSCommon/Utils/Configuration/ConfigurationNode.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/SDKVersion.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -37,11 +38,35 @@ static const std::string TAG("AlexaClientSdkInit");
 /// Tracks whether we've initialized the Alexa Client SDK or not
 std::atomic_int AlexaClientSDKInit::g_isInitialized{0};
 
+std::function<std::shared_ptr<AlexaClientSDKInit>(std::shared_ptr<utils::logger::Logger>)> AlexaClientSDKInit::
+    getCreateAlexaClientSDKInit(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
+    return [jsonStreams](std::shared_ptr<utils::logger::Logger> logger) -> std::shared_ptr<AlexaClientSDKInit> {
+        if (!logger) {
+            ACSDK_ERROR(LX("getCreateAlexaClientSDKInitFailed").d("reason", "nullLogger"));
+            return nullptr;
+        }
+        if (!initialize(jsonStreams)) {
+            ACSDK_ERROR(LX("getCreateAlexaClientSDKInitFailed").d("reason", "initializeFailed"));
+            return nullptr;
+        }
+        return std::shared_ptr<AlexaClientSDKInit>(new AlexaClientSDKInit);
+    };
+}
+
+/**
+ * Destructor.
+ */
+AlexaClientSDKInit::~AlexaClientSDKInit() {
+    uninitialize();
+}
+
 bool AlexaClientSDKInit::isInitialized() {
     return g_isInitialized > 0;
 }
 
 bool AlexaClientSDKInit::initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
+    ACSDK_INFO(LX(__func__).d("sdkversion", avsCommon::utils::sdkVersion::getCurrentVersion()));
+
     if (!(curl_version_info(CURLVERSION_NOW)->features & CURL_VERSION_HTTP2)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curlDoesNotSupportHTTP2"));
         return false;

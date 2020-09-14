@@ -7,7 +7,7 @@ target_include_directories(SpeechSynthesizer PUBLIC
         "${ContextManager_INCLUDE_DIRS}"
         "${SpeechSynthesizer_SOURCE_DIR}/include")
 
-target_link_libraries(SpeechSynthesizer AVSCommon)
+target_link_libraries(SpeechSynthesizer AVSCommon Captions)
 
 # install target
 asdk_install()

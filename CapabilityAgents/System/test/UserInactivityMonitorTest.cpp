@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
-#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockUserInactivityMonitorObserver.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <ADSL/DirectiveSequencer.h>
@@ -53,7 +53,7 @@ static const std::string USER_INACTIVITY_RESET_NAME = "ResetUserInactivity";
 /// This is the string for the message ID used in the directive.
 static const std::string USER_INACTIVITY_MESSAGE_ID = "ABC123DEF";
 static const std::string USER_INACTIVITY_PAYLOAD_KEY = "inactiveTimeInSeconds";
-static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{20};
+static const std::chrono::milliseconds USER_INACTIVITY_REPORT_PERIOD{100};
 
 /// This is the condition variable to be used to control the exit of the test case.
 std::condition_variable exitTrigger;
@@ -118,7 +118,7 @@ void UserInactivityMonitorTest::SetUp() {
 /**
  * This case tests if @c UserInactivityMonitor basic create function works properly
  */
-TEST_F(UserInactivityMonitorTest, test_createSuccessfully) {
+TEST_F(UserInactivityMonitorTest, testTimer_createSuccessfully) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     EXPECT_CALL(*m_mockMessageSender, sendMessage(ResultOf(&checkMessageRequestAndReleaseTrigger, Eq(true))));
@@ -142,7 +142,7 @@ TEST_F(UserInactivityMonitorTest, test_createWithError) {
 /**
  * This case tests if a directive is handled properly.
  */
-TEST_F(UserInactivityMonitorTest, test_handleDirectiveProperly) {
+TEST_F(UserInactivityMonitorTest, testTimer_handleDirectiveProperly) {
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);
     std::promise<void> notifyObserverPromise1;
@@ -188,7 +188,7 @@ TEST_F(UserInactivityMonitorTest, test_handleDirectiveProperly) {
 /**
  * This case tests if multiple requests are being sent up to AVS.
  */
-TEST_F(UserInactivityMonitorTest, test_sendMultipleReports) {
+TEST_F(UserInactivityMonitorTest, testTimer_sendMultipleReports) {
     InSequence s;
     std::mutex exitMutex;
     std::unique_lock<std::mutex> exitLock(exitMutex);

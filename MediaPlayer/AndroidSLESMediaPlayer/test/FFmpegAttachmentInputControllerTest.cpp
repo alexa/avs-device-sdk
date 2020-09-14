@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ extern "C" {
 
 #include <AVSCommon/AVS/Attachment/AttachmentReader.h>
 #include <AVSCommon/Utils/AudioFormat.h>
-#include <Audio/Data/med_alerts_notification_01._TTH_.mp3.h>
+#include <Audio/Data/med_alerts_notification_01.mp3.h>
 
 #include "AndroidSLESMediaPlayer/FFmpegAttachmentInputController.h"
 
@@ -44,11 +44,10 @@ using namespace avsCommon::utils;
 static constexpr size_t BUFFER_SIZE = 1024;
 
 /// The size of the input buffer.
-static constexpr size_t INPUT_SIZE =
-    applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3_len;
+static const size_t INPUT_SIZE = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3_len;
 
 /// An input buffer with an mp3 file.
-static const auto INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01__TTH__mp3;
+static const auto INPUT_CSTR = applicationUtilities::resources::audio::data::med_alerts_notification_01_mp3;
 
 class MockAttachmentReader : public AttachmentReader {
 public:
@@ -78,6 +77,30 @@ size_t MockAttachmentReader::read(
         m_index += numBytes;
         return numBytes;
     }
+    (*readStatus) = AttachmentReader::ReadStatus::CLOSED;
+    return 0;
+}
+
+/// A mock AttachmentReader that mocks reading from an empty attachment (immediate EOF).
+class MockEmptyAttachmentReader : public AttachmentReader {
+public:
+    MOCK_METHOD1(seek, bool(uint64_t offset));
+    MOCK_CONST_METHOD0(tell, uint64_t());
+    MOCK_METHOD0(getNumUnreadBytes, uint64_t());
+    MOCK_METHOD1(close, void(ClosePoint closePoint));
+
+    size_t read(
+        void* buf,
+        std::size_t numBytes,
+        AttachmentReader::ReadStatus* readStatus,
+        std::chrono::milliseconds timeoutMs);
+};
+
+size_t MockEmptyAttachmentReader::read(
+    void* buf,
+    std::size_t numBytes,
+    AttachmentReader::ReadStatus* readStatus,
+    std::chrono::milliseconds timeoutMs) {
     (*readStatus) = AttachmentReader::ReadStatus::CLOSED;
     return 0;
 }
@@ -128,6 +151,23 @@ TEST(FFmpegAttachmentInputControllerTest, test_readOk) {
     std::array<uint8_t, BUFFER_SIZE> buffer;
     auto read = avio_read(inputFormat->pb, buffer.data(), buffer.size());
     EXPECT_EQ(static_cast<size_t>(read), buffer.size());
+}
+
+/// Test opening empty input from attachment reader.
+TEST(FFmpegAttachmentInputControllerTest, test_getCurrentFormatContextOnEmptyInput) {
+    auto mockReader = std::make_shared<MockEmptyAttachmentReader>();
+    auto reader = FFmpegAttachmentInputController::create(mockReader);
+    ASSERT_NE(reader, nullptr);
+
+    auto currentFormatContext = reader->getCurrentFormatContext();
+
+    auto result = std::get<0>(currentFormatContext);
+    auto inputFormat = std::get<1>(currentFormatContext);
+    auto playbackPosition = std::get<2>(currentFormatContext);
+
+    EXPECT_EQ(result, FFmpegAttachmentInputController::Result::OK_EMPTY);
+    EXPECT_EQ(inputFormat, nullptr);
+    EXPECT_EQ(playbackPosition, std::chrono::milliseconds::zero());
 }
 
 /// Test read from stream until the end.

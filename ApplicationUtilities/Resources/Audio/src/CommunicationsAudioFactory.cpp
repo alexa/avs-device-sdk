@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,59 +17,76 @@
 
 #include <AVSCommon/Utils/Stream/StreamFunctions.h>
 
-#include <Audio/Data/system_comm_call_connected_.mp3.h>
-#include <Audio/Data/system_comm_call_disconnected_.mp3.h>
-#include <Audio/Data/system_comm_drop_in_connected_.mp3.h>
-#include <Audio/Data/system_comm_outbound_ringtone_.mp3.h>
-#include <Audio/Data/system_comm_call_incoming_ringtone_intro_.mp3.h>
+#include <Audio/Data/med_comms_call_connected.mp3.h>
+#include <Audio/Data/med_comms_call_disconnected.mp3.h>
+#include <Audio/Data/med_comms_call_incoming_ringtone.mp3.h>
+#include <Audio/Data/med_comms_drop_in_incoming.mp3.h>
+#include <Audio/Data/med_comms_outbound_ringtone.mp3.h>
 
 namespace alexaClientSDK {
 namespace applicationUtilities {
 namespace resources {
 namespace audio {
 
-static std::unique_ptr<std::istream> callConnectedRingtoneFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::system_comm_call_connected_mp3, sizeof(data::system_comm_call_connected_mp3));
+using namespace avsCommon::utils;
+
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> callConnectedRingtoneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_comms_call_connected_mp3, sizeof(data::med_comms_call_connected_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_comms_call_connected_mp3_mimetype));
 }
 
-static std::unique_ptr<std::istream> callDisconnectedRingtoneFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::system_comm_call_disconnected_mp3, sizeof(data::system_comm_call_disconnected_mp3));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> callDisconnectedRingtoneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_comms_call_disconnected_mp3, sizeof(data::med_comms_call_disconnected_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_comms_call_disconnected_mp3_mimetype));
 }
 
-static std::unique_ptr<std::istream> outboundRingtoneFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::system_comm_outbound_ringtone_mp3, sizeof(data::system_comm_outbound_ringtone_mp3));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> outboundRingtoneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_comms_outbound_ringtone_mp3, sizeof(data::med_comms_outbound_ringtone_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_comms_outbound_ringtone_mp3_mimetype));
 }
 
-static std::unique_ptr<std::istream> dropInConnectedRingtoneFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::system_comm_drop_in_connected_mp3, sizeof(data::system_comm_drop_in_connected_mp3));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> dropInIncomingFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_comms_drop_in_incoming_mp3, sizeof(data::med_comms_drop_in_incoming_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_comms_drop_in_incoming_mp3_mimetype));
 }
 
-static std::unique_ptr<std::istream> callIncomingRingtoneFactory() {
-    return avsCommon::utils::stream::streamFromData(
-        data::system_comm_call_incoming_ringtone_intro_mp3, sizeof(data::system_comm_call_incoming_ringtone_intro_mp3));
+static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> callIncomingRingtoneFactory() {
+    return std::make_pair(
+        avsCommon::utils::stream::streamFromData(
+            data::med_comms_call_incoming_ringtone_mp3, sizeof(data::med_comms_call_incoming_ringtone_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_comms_call_incoming_ringtone_mp3_mimetype));
 }
 
-std::function<std::unique_ptr<std::istream>()> CommunicationsAudioFactory::callConnectedRingtone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+CommunicationsAudioFactory::callConnectedRingtone() const {
     return callConnectedRingtoneFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> CommunicationsAudioFactory::callDisconnectedRingtone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+CommunicationsAudioFactory::callDisconnectedRingtone() const {
     return callDisconnectedRingtoneFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> CommunicationsAudioFactory::outboundRingtone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+CommunicationsAudioFactory::outboundRingtone() const {
     return outboundRingtoneFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> CommunicationsAudioFactory::dropInConnectedRingtone() const {
-    return dropInConnectedRingtoneFactory;
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+CommunicationsAudioFactory::dropInIncoming() const {
+    return dropInIncomingFactory;
 }
 
-std::function<std::unique_ptr<std::istream>()> CommunicationsAudioFactory::callIncomingRingtone() const {
+std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()>
+CommunicationsAudioFactory::callIncomingRingtone() const {
     return callIncomingRingtoneFactory;
 }
 

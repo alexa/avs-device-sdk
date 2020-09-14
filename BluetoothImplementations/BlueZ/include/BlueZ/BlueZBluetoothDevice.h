@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,6 +70,7 @@ public:
     std::string getMac() const override;
     std::string getFriendlyName() const override;
     avsCommon::sdkInterfaces::bluetooth::DeviceState getDeviceState() override;
+    MetaData getDeviceMetaData() override;
 
     bool isPaired() override;
     std::future<bool> pair() override;
@@ -81,11 +82,12 @@ public:
 
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::SDPRecordInterface>>
     getSupportedServices() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::A2DPSinkInterface> getA2DPSink() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::A2DPSourceInterface> getA2DPSource() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPTargetInterface> getAVRCPTarget() override;
-    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::AVRCPControllerInterface> getAVRCPController()
-        override;
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> getService(
+        std::string uuid) override;
+    avsCommon::utils::bluetooth::MediaStreamingState getStreamingState() override;
+    bool toggleServiceConnection(
+        bool enabled,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service) override;
     /// @}
 
     /**
@@ -207,6 +209,16 @@ private:
     bool executeIsConnected();
 
     /**
+     * Helper function to toggle a profile, which restricts the future connection/disconnection.
+     * @param enabled true if need to connect.
+     * @param service the Bluetooth profile needed to toggle.
+     * @return A bool indicating success.
+     */
+    bool executeToggleServiceConnection(
+        bool enabled,
+        std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> service);
+
+    /**
      * Queries BlueZ for the value of the property as reported by the adapter.
      *
      * @param name The name of the property.
@@ -273,6 +285,15 @@ private:
     template <typename ServiceType>
     std::shared_ptr<ServiceType> getService();
 
+    /**
+     * Helper function to initialize an existing service.
+     *
+     * @tparam BlueZServiceType the type of the @c BluetoothServiceInterface.
+     * @return bool Indicates whether the service initialization was successful.
+     */
+    template <typename BlueZServiceType>
+    bool initializeService();
+
     /// Proxy to interact with the org.bluez.Device1 interface.
     std::shared_ptr<DBusProxy> m_deviceProxy;
 
@@ -299,6 +320,9 @@ private:
 
     /// The current state of the device.
     BlueZDeviceState m_deviceState;
+
+    /// Used to store device metadata.
+    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData> m_metaData;
 
     /// The associated @c BlueZDeviceManager.
     std::shared_ptr<BlueZDeviceManager> m_deviceManager;

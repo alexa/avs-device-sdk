@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,9 @@ using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CapabilityAgent");
+
+/// Maximum number of directives that Can be Queued before we emit warning logs.
+static const int CAPABILITY_QUEUE_WARN_SIZE = 10;
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -81,6 +84,13 @@ void CapabilityAgent::preHandleDirective(
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_directiveInfoMap[messageId] = info;
+        if (m_directiveInfoMap.size() > CAPABILITY_QUEUE_WARN_SIZE) {
+            ACSDK_WARN(LX("Expected directiveInfoMap size exceeded")
+                           .d("namespace", directive->getNamespace())
+                           .d("name", directive->getName())
+                           .d("size", m_directiveInfoMap.size())
+                           .d("limit", CAPABILITY_QUEUE_WARN_SIZE));
+        }
     }
     preHandleDirective(info);
 }
@@ -141,19 +151,7 @@ void CapabilityAgent::removeDirective(const std::string& messageId) {
     m_directiveInfoMap.erase(messageId);
 }
 
-void CapabilityAgent::onFocusChanged(FocusState) {
-    // default no-op
-}
-
-void CapabilityAgent::provideState(const avsCommon::avs::NamespaceAndName& stateProviderName, const unsigned int) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextAvailable(const std::string&) {
-    // default no-op
-}
-
-void CapabilityAgent::onContextFailure(const sdkInterfaces::ContextRequestError) {
+void CapabilityAgent::onFocusChanged(FocusState, MixingBehavior) {
     // default no-op
 }
 
@@ -161,7 +159,7 @@ const std::pair<std::string, std::string> CapabilityAgent::buildJsonEventString(
     const std::string& eventName,
     const std::string& dialogRequestIdString,
     const std::string& payload,
-    const std::string& context) {
+    const std::string& context) const {
     return avs::buildJsonEventString(m_namespace, eventName, dialogRequestIdString, payload, context);
 }
 

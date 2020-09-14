@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -107,11 +107,11 @@ protected:
     std::deque<std::chrono::time_point<std::chrono::steady_clock>> m_timestamps;
 
     /// The timer to use in the tests.
-    std::unique_ptr<Timer> m_timer;
+    std::shared_ptr<Timer> m_timer;
 };
 
 void TimerTest::SetUp() {
-    m_timer = std::unique_ptr<Timer>(new Timer);
+    m_timer = std::shared_ptr<Timer>(new Timer);
 }
 
 void TimerTest::simpleTask(std::chrono::milliseconds duration) {
@@ -458,6 +458,27 @@ TEST_F(TimerTest, testTimer_startRunningAfterStopDuringTask) {
         std::future_status::ready);
     ASSERT_TRUE(waitForInactive());
     verifyTimestamps(t0, MEDIUM_DELAY, MEDIUM_DELAY, Timer::PeriodType::ABSOLUTE, NO_DELAY);
+}
+
+/**
+ * This test verifies that multiple calls to stop does not result in a deadlock.
+ */
+TEST_F(TimerTest, testTimer_multipleStopsDoesntDeadlock) {
+    ASSERT_TRUE(m_timer->start(MEDIUM_DELAY, std::bind(&TimerTest::simpleTask, this, NO_DELAY)).valid());
+    ASSERT_TRUE(m_timer->isActive());
+    std::this_thread::sleep_for(SHORT_DELAY);
+    ASSERT_TRUE(m_timer->isActive());
+
+    // Start multiple calls to stop on different threads
+    std::thread t(&Timer::stop, m_timer);
+    std::thread t2(&Timer::stop, m_timer);
+    t.join();
+    t2.join();
+    ASSERT_TRUE(waitForInactive());
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        ASSERT_TRUE(m_timestamps.empty());
+    }
 }
 
 }  // namespace test

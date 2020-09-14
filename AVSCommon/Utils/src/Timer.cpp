@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ namespace avsCommon {
 namespace utils {
 namespace timing {
 
-const std::string Timer::TAG = "Timer";
-
 Timer::Timer() : m_running(false), m_stopping(false) {
 }
 
@@ -31,13 +29,14 @@ Timer::~Timer() {
 
 void Timer::stop() {
     {
-        std::lock_guard<std::mutex> lock(m_waitMutex);
+        std::lock_guard<std::mutex> waitLock(m_waitMutex);
         if (m_running) {
             m_stopping = true;
         }
         m_waitCondition.notify_all();
     }
 
+    std::lock_guard<std::mutex> joinLock(m_joinMutex);
     if (std::this_thread::get_id() != m_thread.get_id() && m_thread.joinable()) {
         m_thread.join();
     }

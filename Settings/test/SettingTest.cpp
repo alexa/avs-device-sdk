@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -130,6 +130,17 @@ TEST_F(SettingTest, test_localChangeRevert) {
 
     setting->setLocalChange(NEW_VALUE);
     EXPECT_EQ(setting->get(), INIT_VALUE);
+}
+
+/// Test clearData.
+TEST_F(SettingTest, test_clearData) {
+    m_protocol = std::unique_ptr<MockSettingProtocol>(new MockSettingProtocol(INIT_VALUE_STR, true, true));
+    MockSettingProtocol* protocolSpy = m_protocol.get();
+    auto setting = createSetting();
+    ASSERT_NE(setting, nullptr);
+
+    setting->clearData(INIT_VALUE);
+    EXPECT_TRUE(protocolSpy->isDataCleared());
 }
 
 /// Test observer notification.

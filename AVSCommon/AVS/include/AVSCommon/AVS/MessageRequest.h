@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -66,6 +66,21 @@ public:
     MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension = "");
 
     /**
+     * Constructor.
+     *
+     * @param jsonContent The message to be sent to AVS.
+     * @param isSerialized True if sending this message must be serialized with sending other serialized messages.
+     * @param uriPathExtension An optional uri path extension which will be appended to the base url of the AVS.
+     * @param headers key/value pairs of extra HTTP headers to use with this request.
+     * endpoint.  If not specified, the default AVS path extension should be used by the sender implementation.
+     */
+    MessageRequest(
+        const std::string& jsonContent,
+        bool isSerialized,
+        const std::string& uriPathExtension = "",
+        std::vector<std::pair<std::string, std::string>> headers = {});
+
+    /**
      * Destructor.
      */
     virtual ~MessageRequest();
@@ -86,21 +101,28 @@ public:
      *
      * @return The JSON content to be sent to AVS.
      */
-    std::string getJsonContent();
+    std::string getJsonContent() const;
+
+    /**
+     * Return true if sending this message must be serialized with sending other serialized messages.
+     *
+     * @return True if sending this message must be serialized with sending other serialized messages.
+     */
+    bool getIsSerialized() const;
 
     /**
      * Retrieves the path extension to be appended to the base URL when sending.
      *
      * @return The path extension to be appended to the base URL when sending.
      */
-    std::string getUriPathExtension();
+    std::string getUriPathExtension() const;
 
     /**
      * Gets the number of @c AttachmentReaders in this message.
      *
      * @return The number of readers in this message.
      */
-    int attachmentReadersCount();
+    int attachmentReadersCount() const;
 
     /**
      * Retrieves the ith AttachmentReader in the message.
@@ -138,6 +160,13 @@ public:
      */
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
 
+    /**
+     * Get additional HTTP headers for this request
+     *
+     * @return key/value pairs of extra HTTP headers to use with this request.
+     */
+    const std::vector<std::pair<std::string, std::string>>& getHeaders() const;
+
 protected:
     /// Mutex to guard access of m_observers.
     std::mutex m_observerMutex;
@@ -148,11 +177,17 @@ protected:
     /// The JSON content to be sent to AVS.
     std::string m_jsonContent;
 
+    /// True if sending this message must be serialized with sending other serialized messages.
+    bool m_isSerialized;
+
     /// The path extension to be appended to the base URL when sending.
     std::string m_uriPathExtension;
 
     /// The AttachmentReaders of the Attachments data to be sent to AVS.
     std::vector<std::shared_ptr<NamedReader>> m_readers;
+
+    /// Optional headers to send with this request to AVS.
+    std::vector<std::pair<std::string, std::string>> m_headers;
 };
 
 }  // namespace avs
