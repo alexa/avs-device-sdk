@@ -23,7 +23,7 @@
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
 
-CLONE_URL=${CLONE_URL:- 'git://github.com/lucianomartin/avs-device-sdk.git'}
+CLONE_URL=${CLONE_URL:- 'git://github.com/xmos/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
@@ -367,7 +367,7 @@ cat << EOF > "$OUTPUT_CONFIG_FILE"
     },
 EOF
 
-cd $INSTALL_BASE
+cd $CURRENT_DIR
 bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE \
   -DSDK_CONFIG_MANUFACTURER_NAME="$DEVICE_MANUFACTURER_NAME" -DSDK_CONFIG_DEVICE_DESCRIPTION="$DEVICE_DESCRIPTION"
 
