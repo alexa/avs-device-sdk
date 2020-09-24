@@ -630,9 +630,23 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    const int opPoint
+#ifdef XMOS_AVS_TESTS
+    ,
+    const bool isFileStream
+#endif // XMOS_AVS_TESTS
+    ) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
+#ifdef XMOS_AVS_TESTS
+    PortAudioMicrophoneWrapper::setIsFileStream(isFileStream);
+    InteractionManager::setIsFileStream(isFileStream);
+#endif // XMOS_AVS_TESTS
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    )) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -714,7 +728,12 @@ bool SampleApplication::initialize(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    const int opPoint
+#ifdef XMOS_AVS_TESTS
+    ,
+    const bool isFileStream
+#endif // XMOS_AVS_TESTS
+    ) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
 
     if (!logLevel.empty()) {
@@ -811,7 +830,13 @@ bool SampleApplication::initialize(
     }
 #endif
 
-    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer");
+    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer"
+#ifdef XMOS_AVS_TESTS
+    ,
+    false, /* enableLiveMode */
+    isFileStream
+#endif // XMOS_AVS_TESTS;
+    );
     if (!speakerMediaInterfaces) {
         ACSDK_CRITICAL(LX("Failed to create application media interfaces for speech!"));
         return false;
@@ -1472,7 +1497,12 @@ bool SampleApplication::initialize(
 #endif
         ,
         nullptr,
-        diagnostics);
+        diagnostics
+#ifdef XMOS_AVS_TESTS
+        ,
+        isFileStream
+#endif // XMOS_AVS_TESTS
+        );
     // clang-format on
 #endif
 
@@ -1508,7 +1538,12 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
     bool enableEqualizer,
     const std::string& name,
-    bool enableLiveMode) {
+    bool enableLiveMode
+#ifdef XMOS_AVS_TESTS
+    ,
+    const bool isFileStream
+#endif // XMOS_AVS_TESTS
+    ) {
 #ifdef GSTREAMER_MEDIA_PLAYER
     /*
      * For the SDK, the MediaPlayer happens to also provide volume control functionality.
@@ -1516,7 +1551,12 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
      * more actions needed for these beyond setting the volume control on the MediaPlayer.
      */
     auto mediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode);
+        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode
+#ifdef XMOS_AVS_TESTS
+    ,
+    isFileStream
+#endif // XMOS_AVS_TESTS
+    );
     if (!mediaPlayer) {
         return nullptr;
     }
