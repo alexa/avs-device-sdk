@@ -630,23 +630,9 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    const int opPoint) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-#ifdef XMOS_AVS_TESTS
-    PortAudioMicrophoneWrapper::setIsFileStream(isFileStream);
-    InteractionManager::setIsFileStream(isFileStream);
-#endif // XMOS_AVS_TESTS
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
-#ifdef XMOS_AVS_TESTS
-    ,
-    isFileStream
-#endif // XMOS_AVS_TESTS
-    )) {
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }

@@ -69,6 +69,7 @@ public:
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
      * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param opPoint Optional operating point of the Sensory KWD engine.
      * @return A new @c SampleApplication, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SampleApplication> create(
@@ -150,6 +151,7 @@ private:
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
      * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param opPoint Operating point of the Sensory KWD engine.
      * @return @c true if initialization succeeded, else @c false.
      */
     bool initialize(
