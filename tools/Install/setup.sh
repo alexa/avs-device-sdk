@@ -248,6 +248,8 @@ echo
 AUTOSTART_SESSION="avsrun"
 AUTOSTART_DIR=$HOME/.config/lxsession/LXDE-pi
 AUTOSTART=$AUTOSTART_DIR/autostart
+AVSRUN_CMD="$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models NONE 12"
+
 if [ ! -f $AUTOSTART ]; then
     mkdir -p $AUTOSTART_DIR
     cp /etc/xdg/lxsession/LXDE-pi/autostart $AUTOSTART
@@ -255,7 +257,7 @@ fi
 STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
 cat << EOF > "$STARTUP_SCRIPT"
 #!/bin/bash
-$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models
+$AVSRUN_CMD
 \$SHELL
 EOF
 chmod a+rx $STARTUP_SCRIPT
@@ -410,7 +412,7 @@ sed -i '/AVS/d' $ALIASES > /dev/null
 sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
 sed -i '/Remove/d' $ALIASES > /dev/null
 
-echo "alias avsrun=\"$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models\" NONE 12" >> $ALIASES
+echo "alias avsrun=\"$AVSRUN_CMD\"" >> $ALIASES
 echo "alias avsunit=\"bash $TEST_SCRIPT\"" >> $ALIASES
 echo "alias avssetup=\"cd $CURRENT_DIR; bash setup.sh\"" >> $ALIASES
 echo "echo "Available AVS aliases:"" >> $ALIASES
