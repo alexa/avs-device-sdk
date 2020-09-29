@@ -64,9 +64,6 @@ ALIASES="$HOME/.bash_aliases"
 # Default value for XMOS device
 XMOS_DEVICE="xvf3510"
 
-# Default value for XMOS AVS test flag
-XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
-
 # Default device serial number if nothing is specified
 DEVICE_SERIAL_NUMBER="123456"
 
@@ -142,6 +139,7 @@ fi
 XMOS_TAG=$2
 
 shift 2
+
 OPTIONS=s:a:m:d:hx:
 while getopts "$OPTIONS" opt ; do
     case $opt in
@@ -290,8 +288,10 @@ done
 if [ $XMOS_DEVICE = "xvf3510" ]
 then
   PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
+  XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
 else
   PI_HAT_FLAG=""
+  XMOS_AVS_TESTS_FLAG=""
 fi
 
 if [ ! -d "$BUILD_PATH" ]
