@@ -47,8 +47,6 @@ using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::configuration;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
-static const unsigned SAMPLE_RATE = 16000;
-
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
 
@@ -668,6 +666,7 @@ bool MediaPlayer::init(
 #ifdef XMOS_AVS_TESTS
 GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
 {
+    static const unsigned SAMPLE_RATE = 16000;
     MediaPlayer *player = (MediaPlayer*)data;
     GstSample *sample;
     GstBuffer *buffer;
