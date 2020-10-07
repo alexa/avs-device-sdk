@@ -728,7 +728,7 @@ private:
     const bool m_isLiveMode;
 #ifdef XMOS_AVS_TESTS
     /**
-     * HACK Write to file instead of a real audio device.
+     * Write to file instead of a real audio device.
      */
     std::ofstream *m_fileStream;
     unsigned m_samplesWritten;

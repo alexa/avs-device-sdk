@@ -140,7 +140,7 @@ private:
 
 #ifdef XMOS_AVS_TESTS
     /**
-     * HACK Read from file instead of a real audio device.
+     * Read from file instead of a real audio device.
      */
     static bool m_isFileStream;
     std::thread *m_readerThread;
