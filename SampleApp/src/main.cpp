@@ -157,7 +157,9 @@ int main(int argc, char* argv[]) {
             logLevel
 #ifdef DIAGNOSTICS
             ,
-            std::move(diagnostics));
+            std::move(diagnostics)
+#endif
+);
 
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create SampleApplication!");

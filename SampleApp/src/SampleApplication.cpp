@@ -955,7 +955,7 @@ bool SampleApplication::initialize(
     /*
      * Creating notifications storage object to be used for storing notification indicators.
      */
-    auto notificationsStorage = alexaClientSDK::a/csdkNotifications::SQLiteNotificationsStorage::create(config);
+    auto notificationsStorage = alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage::create(config);
 
     /*
      * Creating new device settings storage object to be used for storing AVS Settings.

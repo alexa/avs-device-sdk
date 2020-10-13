@@ -54,20 +54,6 @@ public:
             keyWordDetectorStateObservers,
         const std::string& pathToInputFolder);
 
-#ifdef SENSORY_OP_POINT
-    /**
-     * Set Sensory operating point value
-     */
-    static void setSensoryOpPoint(int value) {
-        m_sensoryOpPoint = value;
-    }
-private:
-     /*
-     * Operating point of the Sensory KWD engine.
-     */
-    static int m_sensoryOpPoint;
-#endif // SENSORY_OP_POINT
-
 };
 
 

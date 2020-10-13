@@ -35,10 +35,6 @@ static const bool KITT_AI_APPLY_FRONT_END_PROCESSING = true;
 using namespace alexaClientSDK;
 using namespace alexaClientSDK::kwd;
 
-#ifdef SENSORY_OP_POINT
-int KeywordDetectorProvider::m_sensoryOpPoint = 0;
-#endif // SENSORY_OP_POINT
-
 std::unique_ptr<kwd::AbstractKeywordDetector> KeywordDetectorProvider::create(
     std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
     avsCommon::utils::AudioFormat audioFormat,

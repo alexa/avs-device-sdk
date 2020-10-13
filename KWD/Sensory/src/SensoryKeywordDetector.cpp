@@ -24,6 +24,10 @@ namespace kwd {
 
 using namespace avsCommon::utils::logger;
 
+//#ifdef SENSORY_OP_POINT
+int AbstractKeywordDetector::m_sensoryOpPoint = 0;
+//#endif // SENSORY_OP_POINT
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("SensoryKeywordDetector");
 
@@ -302,7 +306,7 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
         return false;
     }
 
-    result = snsrSetInt(*session, SNSR_OPERATING_POINT, KeywordDetectorProvider::m_sensoryOpPoint);
+    result = snsrSetInt(*session, SNSR_OPERATING_POINT, AbstractKeywordDetector::m_sensoryOpPoint);
     if (result != SNSR_RC_OK)
     {
         ACSDK_ERROR(LX("setUpRuntimeSettingsFailed")
