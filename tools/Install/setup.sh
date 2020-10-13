@@ -285,6 +285,7 @@ while true; do
     esac
 done
 
+SENSORY_OP_POINT_FLAG="-DSENSORY_OP_POINT=ON"
 if [ $XMOS_DEVICE = "xvf3510" ]
 then
   PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
@@ -345,6 +346,7 @@ then
   mkdir -p $BUILD_PATH
   cd $BUILD_PATH
   cmake "$SOURCE_PATH/avs-device-sdk" \
+      $SENSORY_OP_POINT_FLAG \
       $PI_HAT_FLAG \
       $XMOS_AVS_TESTS_FLAG \
       -DCMAKE_BUILD_TYPE=DEBUG \
