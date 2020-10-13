@@ -102,9 +102,11 @@ int main(int argc, char* argv[]) {
             if (4 <= argc) {
                 logLevel = std::string(argv[3]);
             }
+#ifdef SENSORY_OP_POINT
             if (5 <= argc) {
                 sensoryOpPoint = atoi(argv[4]);
             }
+#endif // SENSORY_OP_POINT
 #ifdef XMOS_AVS_TESTS
             if (6 <= argc) {
                 if (argv[5] == std::string("XMOS_AVS_TESTS")) {
