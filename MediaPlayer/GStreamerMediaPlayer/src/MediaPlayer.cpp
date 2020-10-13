@@ -47,6 +47,10 @@ using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::configuration;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
+#ifdef XMOS_AVS_TESTS
+bool MediaPlayer::m_isFileStream = false;
+#endif // XMOS_AVS_TESTS
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
 
@@ -112,6 +116,10 @@ static char GSTREAMER_TREBLE_BAND_NAME[] = "band2";
 /// ensure that the whole of SDS buffer is conserved until the seek() is called.
 static constexpr size_t NUM_OF_CONTENT_READERS = 2;
 
+#ifdef XMOS_AVS_TESTS
+bool MediaPlayer::m_isFileStream = false;
+#endif // XMOS_AVS_TESTS
+
 /**
  * Processes tags found in the tagList.
  * Called through gst_tag_list_foreach.
@@ -167,20 +175,11 @@ std::shared_ptr<MediaPlayer> MediaPlayer::create(
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory,
     bool enableEqualizer,
     std::string name,
-    bool enableLiveMode
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    bool enableLiveMode) {
     ACSDK_DEBUG9(LX("createCalled").d("name", name));
     std::shared_ptr<MediaPlayer> mediaPlayer(
         new MediaPlayer(contentFetcherFactory, enableEqualizer, name, enableLiveMode));
-    if (mediaPlayer->init(
-#ifdef XMOS_AVS_TESTS
-        isFileStream
-#endif // XMOS_AVS_TESTS
-    )) {
+    if (mediaPlayer->init()) {
         return mediaPlayer;
     } else {
         return nullptr;
@@ -623,11 +622,7 @@ void MediaPlayer::workerLoop() {
     g_main_context_pop_thread_default(m_workerContext);
 }
 
-bool MediaPlayer::init(
-#ifdef XMOS_AVS_TESTS
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+bool MediaPlayer::init() {
     m_workerContext = g_main_context_new();
     if (!m_workerContext) {
         ACSDK_ERROR(LX("initPlayerFailed").d("name", RequiresShutdown::name()).d("reason", "nullWorkerContext"));
@@ -644,7 +639,7 @@ bool MediaPlayer::init(
         return false;
     }
 #ifdef XMOS_AVS_TESTS
-    if (isFileStream && name() == "SpeakMediaPlayer") {
+    if (m_isFileStream && name() == "SpeakMediaPlayer") {
         m_fileStream = new std::ofstream{"/tmp/out.raw", std::ios::binary};
         if (!m_fileStream->is_open()) {
             ACSDK_ERROR(LX("Failed to open output audio file"));

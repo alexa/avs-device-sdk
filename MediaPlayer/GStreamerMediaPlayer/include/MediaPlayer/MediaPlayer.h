@@ -84,12 +84,7 @@ public:
             nullptr,
         bool enableEqualizer = false,
         std::string name = "",
-        bool enableLiveMode = false
-#ifdef XMOS_AVS_TESTS
-        ,
-        const bool isFileStream = false
-#endif // XMOS_AVS_TESTS
-    );
+        bool enableLiveMode = false);
     /**
      * Destructor.
      */
@@ -164,6 +159,15 @@ public:
     /// @}
 
     void doShutdown() override;
+
+#ifdef XMOS_AVS_TESTS
+     /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif // XMOS_AVS_TESTS
 
 private:
     /**
@@ -263,11 +267,7 @@ private:
      *
      * @return @c SUCCESS if initialization was successful. Else @c FAILURE.
      */
-    bool init(
-#ifdef XMOS_AVS_TESTS
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    );
+    bool init();
 
     /**
      * Notification of a callback to execute on the worker thread.
@@ -730,6 +730,7 @@ private:
     /**
      * Write to file instead of a real audio device.
      */
+    static bool m_isFileStream;
     std::ofstream *m_fileStream;
     unsigned m_samplesWritten;
 

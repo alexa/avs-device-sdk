@@ -139,6 +139,9 @@ int main(int argc, char* argv[]) {
 #endif
 
     do {
+#ifdef XMOS_AVS_TESTS
+        SampleApplication::setIsFileStream(isFileStream);
+#endif // XMOS_AVS_TESTS
         sampleApplication = SampleApplication::create(
             consoleReader,
             configFiles,
@@ -152,13 +155,7 @@ int main(int argc, char* argv[]) {
             nullptr
 #endif
             ,
-            opPoint
-#ifdef XMOS_AVS_TESTS
-            ,
-            isFileStream
-#endif // XMOS_AVS_TESTS
-
-        );
+            opPoint);
 
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create SampleApplication!");

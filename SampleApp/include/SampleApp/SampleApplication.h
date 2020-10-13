@@ -78,12 +78,7 @@ public:
         const std::string& pathToInputFolder,
         const std::string& logLevel = "",
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
-        const int opPoint = 5
-#ifdef XMOS_AVS_TESTS
-        ,
-        const bool isFileStream = false
-#endif // XMOS_AVS_TESTS
-    );
+        const int opPoint = 5);
 
     /**
      * Runs the application, blocking until the user asks the application to quit or a device reset is triggered.
@@ -141,6 +136,15 @@ public:
             avsCommon::sdkInterfaces::ChannelVolumeInterface::Type speakerType);
     };
 
+#ifdef XMOS_AVS_TESTS
+     /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif // XMOS_AVS_TESTS
+
 private:
     /**
      * Initialize a SampleApplication.
@@ -160,12 +164,7 @@ private:
         const std::string& pathToInputFolder,
         const std::string& logLevel,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-        const int opPoint
-#ifdef XMOS_AVS_TESTS
-        ,
-        const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    );
+        const int opPoint);
 
     /**
      * Create an application media player.
@@ -180,12 +179,7 @@ private:
         std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
         bool enableEqualizer,
         const std::string& name,
-        bool enableLiveMode = false
-#ifdef XMOS_AVS_TESTS
-        ,
-        const bool isFileStream = false
-#endif // XMOS_AVS_TESTS
-    );
+        bool enableLiveMode = false);
 
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
     /**
@@ -308,6 +302,14 @@ private:
     /// The @c PeripheralEndpointModeControllerHandler used by @c InteractionManager
     std::shared_ptr<PeripheralEndpointModeControllerHandler> m_peripheralEndpointModeHandler;
 #endif
+
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Write to file instead of a real audio device.
+     */
+    static bool m_isFileStream;
+#endif // XMOS_AVS_TESTS
+
 };
 
 }  // namespace sampleApp

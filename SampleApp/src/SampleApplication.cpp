@@ -630,16 +630,12 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    const int opPoint) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
 #ifdef XMOS_AVS_TESTS
-    PortAudioMicrophoneWrapper::setIsFileStream(isFileStream);
-    InteractionManager::setIsFileStream(isFileStream);
+    MediaPlayer::setIsFileStream(m_isFileStream);
+    PortAudioMicrophoneWrapper::setIsFileStream(m_isFileStream);
+    InteractionManager::setIsFileStream(m_isFileStream);
 #endif // XMOS_AVS_TESTS
     if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
 #ifdef XMOS_AVS_TESTS
