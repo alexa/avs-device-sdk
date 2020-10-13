@@ -152,6 +152,10 @@ std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ApplicationMediaInterf
 namespace alexaClientSDK {
 namespace sampleApp {
 
+#ifdef XMOS_AVS_TESTS
+bool SampleApplication::m_isFileStream = false;
+#endif // XMOS_AVS_TESTS  
+
 /// The sample rate of microphone audio data.
 static const unsigned int SAMPLE_RATE_HZ = 16000;
 
@@ -633,16 +637,11 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const int opPoint) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
 #ifdef XMOS_AVS_TESTS
-    MediaPlayer::setIsFileStream(m_isFileStream);
+    alexaClientSDK::mediaPlayer::MediaPlayer::setIsFileStream(m_isFileStream);
     PortAudioMicrophoneWrapper::setIsFileStream(m_isFileStream);
     InteractionManager::setIsFileStream(m_isFileStream);
 #endif // XMOS_AVS_TESTS
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint
-#ifdef XMOS_AVS_TESTS
-    ,
-    isFileStream
-#endif // XMOS_AVS_TESTS
-    )) {
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -724,12 +723,7 @@ bool SampleApplication::initialize(
     const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    const int opPoint) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
 
     if (!logLevel.empty()) {
@@ -826,13 +820,7 @@ bool SampleApplication::initialize(
     }
 #endif
 
-    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer"
-#ifdef XMOS_AVS_TESTS
-    ,
-    false, /* enableLiveMode */
-    isFileStream
-#endif // XMOS_AVS_TESTS;
-    );
+    auto speakerMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "SpeakMediaPlayer");
     if (!speakerMediaInterfaces) {
         ACSDK_CRITICAL(LX("Failed to create application media interfaces for speech!"));
         return false;
@@ -1493,12 +1481,7 @@ bool SampleApplication::initialize(
 #endif
         ,
         nullptr,
-        diagnostics
-#ifdef XMOS_AVS_TESTS
-        ,
-        isFileStream
-#endif // XMOS_AVS_TESTS
-        );
+        diagnostics);
     // clang-format on
 #endif
 
@@ -1534,12 +1517,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
     std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
     bool enableEqualizer,
     const std::string& name,
-    bool enableLiveMode
-#ifdef XMOS_AVS_TESTS
-    ,
-    const bool isFileStream
-#endif // XMOS_AVS_TESTS
-    ) {
+    bool enableLiveMode) {
 #ifdef GSTREAMER_MEDIA_PLAYER
     /*
      * For the SDK, the MediaPlayer happens to also provide volume control functionality.
@@ -1547,12 +1525,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
      * more actions needed for these beyond setting the volume control on the MediaPlayer.
      */
     auto mediaPlayer = alexaClientSDK::mediaPlayer::MediaPlayer::create(
-        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode
-#ifdef XMOS_AVS_TESTS
-    ,
-    isFileStream
-#endif // XMOS_AVS_TESTS
-    );
+        httpContentFetcherFactory, enableEqualizer, name, enableLiveMode);
     if (!mediaPlayer) {
         return nullptr;
     }
