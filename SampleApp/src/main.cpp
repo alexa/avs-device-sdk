@@ -55,7 +55,9 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> configFiles;
     std::string pathToKWDInputFolder;
     std::string logLevel;
-    int opPoint = 5;
+#ifdef SENSORY_OP_POINT
+    int sensoryOpPoint = 5;
+#endif // SENSORY_OP_POINT
 #ifdef XMOS_AVS_TESTS
     bool isFileStream = false;
 #endif // XMOS_AVS_TESTS
@@ -101,7 +103,7 @@ int main(int argc, char* argv[]) {
                 logLevel = std::string(argv[3]);
             }
             if (5 <= argc) {
-                opPoint = atoi(argv[4]);
+                sensoryOpPoint = atoi(argv[4]);
             }
 #ifdef XMOS_AVS_TESTS
             if (6 <= argc) {
@@ -139,9 +141,15 @@ int main(int argc, char* argv[]) {
 #endif
 
     do {
+
+#ifdef SENSORY_OP_POINT
+      SampleApplication::setSensoryOpPoint(sensoryOpPoint);
+#endif // SENSORY_OP_POINT
+
 #ifdef XMOS_AVS_TESTS
         SampleApplication::setIsFileStream(isFileStream);
 #endif // XMOS_AVS_TESTS
+
         sampleApplication = SampleApplication::create(
             consoleReader,
             configFiles,
@@ -149,13 +157,7 @@ int main(int argc, char* argv[]) {
             logLevel
 #ifdef DIAGNOSTICS
             ,
-            std::move(diagnostics)
-#else
-            ,
-            nullptr
-#endif
-            ,
-            opPoint);
+            std::move(diagnostics));
 
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create SampleApplication!");

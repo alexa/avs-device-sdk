@@ -69,7 +69,6 @@ public:
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
      * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
-     * @param opPoint Optional operating point of the Sensory KWD engine.
      * @return A new @c SampleApplication, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SampleApplication> create(
@@ -77,8 +76,7 @@ public:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel = "",
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
-        const int opPoint = 5);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
     /**
      * Runs the application, blocking until the user asks the application to quit or a device reset is triggered.
@@ -136,6 +134,15 @@ public:
             avsCommon::sdkInterfaces::ChannelVolumeInterface::Type speakerType);
     };
 
+#ifdef SENSORY_OP_POINT
+    /**
+     * Set Sensory operating point value
+     */
+    static void setSensoryOpPoint(int value) {
+        m_sensoryOpPoint = value;
+    }
+#endif // SENSORY_OP_POINT
+
 #ifdef XMOS_AVS_TESTS
     /**
      * Set flag to indicate if the audio is streamed from a file.
@@ -155,7 +162,6 @@ private:
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
      * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
-     * @param opPoint Operating point of the Sensory KWD engine.
      * @return @c true if initialization succeeded, else @c false.
      */
     bool initialize(
@@ -163,8 +169,7 @@ private:
         const std::vector<std::string>& configFiles,
         const std::string& pathToInputFolder,
         const std::string& logLevel,
-        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-        const int opPoint);
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics);
 
     /**
      * Create an application media player.
@@ -302,6 +307,14 @@ private:
     /// The @c PeripheralEndpointModeControllerHandler used by @c InteractionManager
     std::shared_ptr<PeripheralEndpointModeControllerHandler> m_peripheralEndpointModeHandler;
 #endif
+
+
+#ifdef SENSORY_OP_POINT
+    /*
+     * Operating point of the Sensory KWD engine.
+     */
+    static int m_sensoryOpPoint;
+#endif // SENSORY_OP_POINT
 
 #ifdef XMOS_AVS_TESTS
     /**
