@@ -120,3 +120,8 @@ endif()
 if(PI_HAT_CTRL)
     add_definitions(-DPI_HAT_CTRL)
 endif()
+
+if(SENSORY_OP_POINT)
+    add_definitions(-DSENSORY_OP_POINT)
+endif()
+

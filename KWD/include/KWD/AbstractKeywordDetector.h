@@ -140,6 +140,7 @@ protected:
     static bool isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat);
 
 #ifdef SENSORY_OP_POINT
+    jjjj
     /*
      * Operating point of the Sensory KWD engine.
      */

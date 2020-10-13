@@ -20,3 +20,6 @@ elseif(CUSTOM_MEDIA_PLAYER)
     message("Building with Custom media player enabled")
 endif()
 
+if(XMOS_AVS_TESTS)
+    add_definitions(-DXMOS_AVS_TESTS)
+endif()
