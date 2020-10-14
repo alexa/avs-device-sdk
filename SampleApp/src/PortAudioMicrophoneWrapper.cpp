@@ -227,6 +227,12 @@ bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
 
 bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
+#ifdef XMOS_AVS_TESTS
+    if (m_fileStream) {
+        m_isStreaming = false;
+        return true;
+    }
+#endif
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StopStream(m_paStream);
     if (err != paNoError) {
