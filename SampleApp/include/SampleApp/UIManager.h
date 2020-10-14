@@ -409,7 +409,7 @@ public:
     /**
      *  Return connection status
      */
-    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() {
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() const {
         return m_connectionStatus;
     }
 #endif
