@@ -95,7 +95,11 @@ int main(int argc, char* argv[]) {
         if (argc < 3) {
             ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) +
+#ifndef XMOS_AVS_TESTS
+                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
+#else
                 " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level] [op_point]");
+#endif // XMOS_AVS_TESTS
             return SampleAppReturnCode::ERROR;
         } else {
             pathToKWDInputFolder = std::string(argv[2]);
