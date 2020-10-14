@@ -63,6 +63,14 @@ public:
      * Destructor.
      */
     virtual ~AbstractKeywordDetector() = default;
+#ifdef SENSORY_OP_POINT
+    /**
+     * Set Sensory operating point value
+     */
+    static void setSensoryOpPoint(int value) {
+        m_sensoryOpPoint = value;
+    }
+#endif
 
 protected:
     /**
@@ -128,6 +136,14 @@ protected:
      * @return @c true if the endiannesses don't match and @c false otherwise.
      */
     static bool isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat);
+
+#ifdef SENSORY_OP_POINT
+
+    /*
+     * Operating point of the Sensory KWD engine.
+     */
+    static int m_sensoryOpPoint;
+#endif
 
 private:
     /**

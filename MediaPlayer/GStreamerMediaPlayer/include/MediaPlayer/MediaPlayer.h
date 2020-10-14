@@ -27,6 +27,10 @@
 #include <thread>
 #include <unordered_set>
 #include <vector>
+#ifdef XMOS_AVS_TESTS
+#include <iostream>
+#include <fstream>
+#endif
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -155,6 +159,15 @@ public:
     /// @}
 
     void doShutdown() override;
+
+#ifdef XMOS_AVS_TESTS
+     /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif
 
 private:
     /**
@@ -632,6 +645,17 @@ private:
      */
     int clampEqualizerLevel(int level);
 
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Callback function to write audio samples to the output audio file
+     *
+     * @param sink GStreamer element with the audio to copy
+     * @param data Mediaplayer object
+     * @return GstFlowReturn code
+     */
+    static GstFlowReturn WriterCallback(GstElement *sink, void *data);
+
+#endif
     /// Mutex used to synchronize @c operations that notify observers.
     std::mutex m_operationMutex;
 
@@ -713,6 +737,14 @@ private:
 
     /// Flag to indicate if the player is in live mode.
     const bool m_isLiveMode;
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Write to file instead of a real audio device.
+     */
+    static bool m_isFileStream;
+    std::ofstream *m_fileStream;
+    unsigned m_samplesWritten;
+#endif
 };
 
 }  // namespace mediaPlayer

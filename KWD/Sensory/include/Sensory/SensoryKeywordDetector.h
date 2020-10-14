@@ -48,7 +48,6 @@ public:
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
      * @param modelFilePath The path to the model file.
      * @param msToPushPerIteration The amount of data in milliseconds to push to Sensory at a time. Smaller sizes will
-     * @param opPoint Optional operating point of the Sensory KWD engine.
      * lead to less delay but more CPU usage. Additionally, larger amounts of data fed into the engine per iteration
      * might lead longer delays before receiving keyword detection events. This has been defaulted to 10 milliseconds
      * as it is a good trade off between CPU usage and recognition delay. Additionally, this was the amount used by
@@ -61,8 +60,7 @@ public:
         std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
         const std::string& modelFilePath,
-        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10),
-        const int opPoint = 5);
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
 
     /**
      * Destructor.
@@ -79,7 +77,6 @@ private:
      * @param keyWordObservers The observers to notify of keyword detections.
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
      * @param msToPushPerIteration The amount of data in milliseconds to push to Sensory at a time. Smaller sizes will
-     * @param opPoint Operating point of the Sensory KWD engine.
      * lead to less delay but more CPU usage. Additionally, larger amounts of data fed into the engine per iteration
      * might lead longer delays before receiving keyword detection events. This has been defaulted to 10 milliseconds
      * as it is a good trade off between CPU usage and recognition delay. Additionally, this was the amount used by
@@ -90,8 +87,7 @@ private:
         std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
         avsCommon::utils::AudioFormat audioFormat,
-        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10),
-        const int opPoint = 5);
+        std::chrono::milliseconds msToPushPerIteration = std::chrono::milliseconds(10));
 
     /**
      * Initializes the stream reader, sets up the Sensory engine, and kicks off a thread to begin processing data from
@@ -150,11 +146,6 @@ private:
      * sampling rate of the audio data passed in.
      */
     const size_t m_maxSamplesPerPush;
-
-    /**
-     * Operating point of the Sensory KWD engine
-     */
-    int m_opPoint;
 };
 
 }  // namespace kwd

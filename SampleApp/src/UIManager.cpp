@@ -1211,12 +1211,13 @@ void UIManager::onActiveDeviceDisconnected(const DeviceAttributes& deviceAttribu
     });
 }
 
-UIManager::~UIManager() {
+
 #ifdef PI_HAT_CTRL
+UIManager::~UIManager() {
     //Turn LED off
     system("/home/pi/sdk-folder/third-party/pi_hat_ctrl/pi_hat_ctrl SET_LED_RGB 0 0 0");
-#endif
 }
+#endif
 
 }  // namespace sampleApp
 }  // namespace alexaClientSDK

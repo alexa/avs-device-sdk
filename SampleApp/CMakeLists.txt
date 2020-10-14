@@ -30,3 +30,4 @@ if (VALID)
 else()
     message("To build the sample app, please enable microphone and media player modules.")
 endif()
+

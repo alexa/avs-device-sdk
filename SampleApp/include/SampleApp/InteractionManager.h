@@ -629,6 +629,15 @@ public:
      */
     void clearProtocolTrace();
 
+#ifdef XMOS_AVS_TESTS
+     /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -721,6 +730,10 @@ private:
 
     /// sends Gui Toggle event
     void sendGuiToggleEvent(const std::string& toggleName, avsCommon::avs::PlaybackToggle toggleType);
+
+#ifdef  XMOS_AVS_TESTS
+    static bool m_isFileStream;
+#endif
 };
 
 }  // namespace sampleApp

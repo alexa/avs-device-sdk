@@ -13,6 +13,10 @@
  * permissions and limitations under the License.
  */
 
+#ifdef XMOS_AVS_TESTS
+#include <unistd.h> // needed for sleep() and usleep()
+#endif
+
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "RegistrationManager/CustomerDataManager.h"
@@ -43,6 +47,10 @@ static const std::string TAG("InteractionManager");
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+
+#ifdef XMOS_AVS_TESTS
+bool InteractionManager::m_isFileStream = false;
+#endif
 
 InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
@@ -110,9 +118,19 @@ InteractionManager::InteractionManager(
         m_friendlyNameToggle{true},
 #endif
         m_diagnostics{diagnostics} {
-    if (m_wakeWordAudioProvider) {
-        m_micWrapper->startStreamingMicrophoneData();
-    }
+
+        // this flag is set to true only if XMOS_AVS_TESTS is defined
+        bool skipStreaming = false;
+#ifdef XMOS_AVS_TESTS
+        // Do not start streaming the audio now, the SDK is not ready to process the audio:
+        // wait for the device to be authorized
+        if (!m_isFileStream) {
+            skipStreaming = true;
+        }
+#endif
+        if (m_wakeWordAudioProvider && !skipStreaming) {
+            m_micWrapper->startStreamingMicrophoneData();
+        }
 };
 
 void InteractionManager::begin() {
@@ -123,6 +141,19 @@ void InteractionManager::begin() {
         }
         m_userInterface->printHelpScreen();
     });
+#ifdef XMOS_AVS_TESTS
+    if (m_isFileStream) {
+        // wait for the device to be authorized
+        while (m_userInterface->getConnectionStatus() != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+            usleep(50000);
+        }
+        sleep(2);
+        // start streaming the audio
+        if (m_wakeWordAudioProvider) {
+            m_micWrapper->startStreamingMicrophoneData();
+        }
+    }
+#endif
 }
 
 void InteractionManager::help() {
