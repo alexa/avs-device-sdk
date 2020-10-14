@@ -70,7 +70,7 @@ public:
     static void setSensoryOpPoint(int value) {
         m_sensoryOpPoint = value;
     }
-#endif // SENSORY_OP_POINT
+#endif
 
 protected:
     /**
@@ -143,7 +143,7 @@ protected:
      * Operating point of the Sensory KWD engine.
      */
     static int m_sensoryOpPoint;
-#endif // SENSORY_OP_POINT
+#endif
 
 private:
     /**

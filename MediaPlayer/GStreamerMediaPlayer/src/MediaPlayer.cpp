@@ -49,7 +49,7 @@ using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 #ifdef XMOS_AVS_TESTS
 bool MediaPlayer::m_isFileStream = false;
-#endif // XMOS_AVS_TESTS
+#endif
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("MediaPlayer");
@@ -202,7 +202,7 @@ MediaPlayer::~MediaPlayer() {
         m_fileStream = nullptr;
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileClosed"));
     }
-#endif // XMOS_AVS_TESTS
+#endif
 }
 
 MediaPlayer::SourceId MediaPlayer::setSource(
@@ -601,7 +601,7 @@ MediaPlayer::MediaPlayer(
         ,
         m_fileStream{nullptr},
         m_samplesWritten{0}
-#endif // XMOS_AVS_TESTS
+#endif
 {
 }
 
@@ -644,7 +644,7 @@ bool MediaPlayer::init() {
         }
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "fileOpen"));
     }
-#endif // XMOS_AVS_TESTS
+#endif
     if (!setupPipeline()) {
         ACSDK_ERROR(LX("initPlayerFailed").d("name", RequiresShutdown::name()).d("reason", "setupPipelineFailed"));
         return false;
@@ -676,7 +676,7 @@ GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
 
     return GST_FLOW_OK;
 }
-#endif // XMOS_AVS_TESTS
+#endif
 
 bool MediaPlayer::setupPipeline() {
     m_pipeline.decodedQueue = gst_element_factory_make("queue2", "decodedQueue");
@@ -723,7 +723,7 @@ bool MediaPlayer::setupPipeline() {
     if (m_fileStream) {
         audioSinkElement = "appsink";
     }
-#endif // XMOS_AVS_TESTS
+#endif
     m_pipeline.audioSink = gst_element_factory_make(audioSinkElement.c_str(), "audio_sink");
 
     /// If the sink is a fakesink, set sync to true so that it uses system clock for consuming the buffer
@@ -814,7 +814,7 @@ bool MediaPlayer::setupPipeline() {
             return false;
         }
     }
-#endif // XMOS_AVS_TESTS
+#endif
     // clean up caps object
     gst_caps_unref(caps);
 

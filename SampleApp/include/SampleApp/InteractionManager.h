@@ -636,7 +636,7 @@ public:
     static void setIsFileStream(bool value) {
         m_isFileStream = value;
     }
-#endif // XMOS_AVS_TESTS
+#endif
 
 private:
     /// The default SDK client.
@@ -733,7 +733,7 @@ private:
 
 #ifdef  XMOS_AVS_TESTS
     static bool m_isFileStream;
-#endif //  XMOS_AVS_TESTS
+#endif
 };
 
 }  // namespace sampleApp

@@ -15,7 +15,7 @@
 
 #ifdef XMOS_AVS_TESTS
 #include <unistd.h> // needed for sleep() and usleep()
-#endif // XMOS_AVS_TESTS
+#endif
 
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -50,7 +50,7 @@ using namespace avsCommon::sdkInterfaces;
 
 #ifdef XMOS_AVS_TESTS
 bool InteractionManager::m_isFileStream = false;
-#endif // XMOS_AVS_TESTS
+#endif
 
 InteractionManager::InteractionManager(
     std::shared_ptr<defaultClient::DefaultClient> client,
@@ -127,7 +127,7 @@ InteractionManager::InteractionManager(
         if (!m_isFileStream) {
             startStreanming = true;
         }
-#endif // XMOS_AVS_TESTS
+#endif
         if (m_wakeWordAudioProvider && !skipStreanming) {
             m_micWrapper->startStreamingMicrophoneData();
         }
@@ -153,7 +153,7 @@ void InteractionManager::begin() {
             m_micWrapper->startStreamingMicrophoneData();
         }
     }
-#endif // XMOS_AVS_TESTS
+#endif
 }
 
 void InteractionManager::help() {

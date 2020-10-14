@@ -154,11 +154,11 @@ namespace sampleApp {
 
 #ifdef SENSORY_OP_POINT
 int SampleApplication::m_sensoryOpPoint = 0;
-#endif // SENSORY_OP_POINT
+#endif
 
 #ifdef XMOS_AVS_TESTS
 bool SampleApplication::m_isFileStream = false;
-#endif // XMOS_AVS_TESTS  
+#endif  
 
 /// The sample rate of microphone audio data.
 static const unsigned int SAMPLE_RATE_HZ = 16000;
@@ -641,12 +641,12 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
 #ifdef SENSORY_OP_POINT
     alexaClientSDK::kwd::AbstractKeywordDetector::setSensoryOpPoint(SampleApplication::m_sensoryOpPoint);
-#endif // SENSORY_OP_POINT
+#endif
 #ifdef XMOS_AVS_TESTS
     alexaClientSDK::mediaPlayer::MediaPlayer::setIsFileStream(m_isFileStream);
     PortAudioMicrophoneWrapper::setIsFileStream(m_isFileStream);
     InteractionManager::setIsFileStream(m_isFileStream);
-#endif // XMOS_AVS_TESTS
+#endif
     if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;

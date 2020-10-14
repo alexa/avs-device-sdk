@@ -57,10 +57,10 @@ int main(int argc, char* argv[]) {
     std::string logLevel;
 #ifdef SENSORY_OP_POINT
     int sensoryOpPoint = 5;
-#endif // SENSORY_OP_POINT
+#endif
 #ifdef XMOS_AVS_TESTS
     bool isFileStream = false;
-#endif // XMOS_AVS_TESTS
+#endif
 
     if (usesOptStyleArgs(argc, argv)) {
         for (int i = 1; i < argc; i++) {
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
                 " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
 #else
                 " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level] [op_point]");
-#endif // XMOS_AVS_TESTS
+#endif
             return SampleAppReturnCode::ERROR;
         } else {
             pathToKWDInputFolder = std::string(argv[2]);
@@ -110,14 +110,14 @@ int main(int argc, char* argv[]) {
             if (5 <= argc) {
                 sensoryOpPoint = atoi(argv[4]);
             }
-#endif // SENSORY_OP_POINT
+#endif
 #ifdef XMOS_AVS_TESTS
             if (6 <= argc) {
                 if (argv[5] == std::string("XMOS_AVS_TESTS")) {
                     isFileStream = true;
                 }
             }
-#endif // XMOS_AVS_TESTS
+#endif
         }
 #else
         if (argc < 2) {
@@ -150,11 +150,11 @@ int main(int argc, char* argv[]) {
 
 #ifdef SENSORY_OP_POINT
       SampleApplication::setSensoryOpPoint(sensoryOpPoint);
-#endif // SENSORY_OP_POINT
+#endif
 
 #ifdef XMOS_AVS_TESTS
         SampleApplication::setIsFileStream(isFileStream);
-#endif // XMOS_AVS_TESTS
+#endif
 
         sampleApplication = SampleApplication::create(
             consoleReader,

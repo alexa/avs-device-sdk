@@ -30,7 +30,7 @@
 #ifdef XMOS_AVS_TESTS
 #include <iostream>
 #include <fstream>
-#endif // XMOS_AVS_TESTS
+#endif
 
 #include <gst/gst.h>
 #include <gst/app/gstappsrc.h>
@@ -167,7 +167,7 @@ public:
     static void setIsFileStream(bool value) {
         m_isFileStream = value;
     }
-#endif // XMOS_AVS_TESTS
+#endif
 
 private:
     /**
@@ -735,7 +735,7 @@ private:
     unsigned m_samplesWritten;
 
     static GstFlowReturn WriterCallback(GstElement *sink, void *data);
-#endif // XMOS_AVS_TESTS
+#endif
 };
 
 }  // namespace mediaPlayer

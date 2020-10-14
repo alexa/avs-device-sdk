@@ -26,7 +26,7 @@ using namespace avsCommon::utils::logger;
 
 #ifdef SENSORY_OP_POINT
 int AbstractKeywordDetector::m_sensoryOpPoint = 0;
-#endif // SENSORY_OP_POINT
+#endif
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SensoryKeywordDetector");

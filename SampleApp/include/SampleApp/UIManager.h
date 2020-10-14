@@ -412,7 +412,7 @@ public:
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() {
         return m_connectionStatus;
     }
-#endif // XMOS_AVS_TESTS
+#endif
 
 private:
     /**

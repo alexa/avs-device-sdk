@@ -141,7 +141,7 @@ public:
     static void setSensoryOpPoint(int value) {
         m_sensoryOpPoint = value;
     }
-#endif // SENSORY_OP_POINT
+#endif
 
 #ifdef XMOS_AVS_TESTS
     /**
@@ -150,7 +150,7 @@ public:
     static void setIsFileStream(bool value) {
         m_isFileStream = value;
     }
-#endif // XMOS_AVS_TESTS
+#endif
 
 private:
     /**
@@ -313,14 +313,14 @@ private:
      * Operating point of the Sensory KWD engine.
      */
     static int m_sensoryOpPoint;
-#endif // SENSORY_OP_POINT
+#endif
 
 #ifdef XMOS_AVS_TESTS
     /**
      * Write to file instead of a real audio device.
      */
     static bool m_isFileStream;
-#endif // XMOS_AVS_TESTS
+#endif
 
 };
 

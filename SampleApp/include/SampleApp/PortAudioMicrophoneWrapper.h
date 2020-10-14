@@ -23,7 +23,7 @@
 #include <fstream>
 #include <future>
 #include <chrono>
-#endif // XMOS_AVS_TESTS
+#endif
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 
@@ -72,7 +72,7 @@ public:
     static void setIsFileStream(bool value) {
         m_isFileStream = value;
     }
-#endif // XMOS_AVS_TESTS
+#endif
 
     /**
      * Destructor.
@@ -149,7 +149,7 @@ private:
     std::future<void> *m_threadFuture;
     unsigned m_samplesRead;
     bool m_eofReached;
-#endif // XMOS_AVS_TESTS
+#endif
     static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
 };
 
