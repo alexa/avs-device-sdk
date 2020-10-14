@@ -152,6 +152,14 @@ std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ApplicationMediaInterf
 namespace alexaClientSDK {
 namespace sampleApp {
 
+#ifdef SENSORY_OP_POINT
+int SampleApplication::m_sensoryOpPoint = 0;
+#endif
+
+#ifdef XMOS_AVS_TESTS
+bool SampleApplication::m_isFileStream = false;
+#endif  
+
 /// The sample rate of microphone audio data.
 static const unsigned int SAMPLE_RATE_HZ = 16000;
 
@@ -629,10 +637,17 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     const std::vector<std::string>& configFiles,
     const std::string& pathToInputFolder,
     const std::string& logLevel,
-    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics, opPoint)) {
+#ifdef SENSORY_OP_POINT
+    alexaClientSDK::kwd::AbstractKeywordDetector::setSensoryOpPoint(SampleApplication::m_sensoryOpPoint);
+#endif
+#ifdef XMOS_AVS_TESTS
+    alexaClientSDK::mediaPlayer::MediaPlayer::setIsFileStream(m_isFileStream);
+    PortAudioMicrophoneWrapper::setIsFileStream(m_isFileStream);
+    InteractionManager::setIsFileStream(m_isFileStream);
+#endif
+    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -713,8 +728,7 @@ bool SampleApplication::initialize(
     const std::vector<std::string>& configFiles,
     const std::string& pathToInputFolder,
     const std::string& logLevel,
-    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
-    const int opPoint) {
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
 
     if (!logLevel.empty()) {
@@ -1395,8 +1409,7 @@ bool SampleApplication::initialize(
         {keywordObserver},
         std::unordered_set<
             std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>(),
-        pathToInputFolder,
-        opPoint);
+        pathToInputFolder);
     if (!m_keywordDetector) {
         ACSDK_CRITICAL(LX("Failed to create keyword detector!"));
     }

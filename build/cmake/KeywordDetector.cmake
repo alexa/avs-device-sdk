@@ -15,7 +15,7 @@
 #       -DKITTAI_KEY_WORD_DETECTOR=ON
 #           -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>
 #           -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-kittai-include-dir>
-#       -DSENSORY_KEY_WORD_DETECTOR=ON
+#       -DSENSORY_KEY_WORD_DETECTOR=ON 
 #           -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=<path-to-sensory-lib>
 #           -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-sensory-include-dir>
 #
@@ -120,3 +120,8 @@ endif()
 if(PI_HAT_CTRL)
     add_definitions(-DPI_HAT_CTRL)
 endif()
+
+if(SENSORY_OP_POINT)
+    add_definitions(-DSENSORY_OP_POINT)
+endif()
+

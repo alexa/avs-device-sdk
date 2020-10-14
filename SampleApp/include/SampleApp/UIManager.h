@@ -356,8 +356,10 @@ public:
      * Prints menu for do not disturb mode.
      */
     void printDoNotDisturbScreen();
-    
+
+#ifdef PI_HAT_CTRL
     ~UIManager();
+#endif
 
     /**
      * Prints menu for diagnostics screen.
@@ -403,6 +405,14 @@ public:
      *  Prints audio injection failure message.
      */
     void printAudioInjectionFailureMessage();
+#ifdef XMOS_AVS_TESTS
+    /**
+     *  Return connection status
+     */
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getConnectionStatus() const {
+        return m_connectionStatus;
+    }
+#endif
 
 private:
     /**

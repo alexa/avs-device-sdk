@@ -40,6 +40,10 @@ static const std::string PORTAUDIO_CONFIG_SUGGESTED_LATENCY_KEY("suggestedLatenc
 /// String to identify log entries originating from this file.
 static const std::string TAG("PortAudioMicrophoneWrapper");
 
+#ifdef XMOS_AVS_TESTS
+    bool PortAudioMicrophoneWrapper::m_isFileStream = false;
+#endif
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -64,13 +68,42 @@ std::unique_ptr<PortAudioMicrophoneWrapper> PortAudioMicrophoneWrapper::create(
 PortAudioMicrophoneWrapper::PortAudioMicrophoneWrapper(std::shared_ptr<AudioInputStream> stream) :
         m_audioInputStream{stream},
         m_paStream{nullptr},
-        m_isStreaming{false} {
+        m_isStreaming{false}
+#ifdef XMOS_AVS_TESTS
+        ,
+        m_readerThread{nullptr},
+        m_fileStream{nullptr},
+        m_threadPromise{nullptr},
+        m_threadFuture{nullptr},
+        m_samplesRead{0},
+        m_eofReached{false}
+#endif
+{
 }
 
 PortAudioMicrophoneWrapper::~PortAudioMicrophoneWrapper() {
     Pa_StopStream(m_paStream);
     Pa_CloseStream(m_paStream);
     Pa_Terminate();
+#ifdef XMOS_AVS_TESTS
+    if (m_readerThread) {
+        m_threadPromise->set_value();
+        m_readerThread->join();
+        delete m_readerThread;
+        delete m_threadFuture;
+        delete m_threadPromise;
+        m_readerThread = nullptr;
+        m_threadFuture = nullptr;
+        m_threadPromise = nullptr;
+        PortAudioMicrophoneWrapper::m_isFileStream = false;
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadDestroyed"));
+    }
+    if (m_fileStream) {
+        delete m_fileStream;
+        m_fileStream = nullptr;
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "fileClosed"));
+    }
+#endif
 }
 
 bool PortAudioMicrophoneWrapper::initialize() {
@@ -79,6 +112,18 @@ bool PortAudioMicrophoneWrapper::initialize() {
         ACSDK_CRITICAL(LX("Failed to create stream writer"));
         return false;
     }
+#ifdef XMOS_AVS_TESTS
+    if (PortAudioMicrophoneWrapper::m_isFileStream) {
+        const char* audio_file = "/tmp/in.raw";
+        m_fileStream = new std::ifstream{audio_file, std::ios::binary};
+        if (!m_fileStream->is_open()) {
+            ACSDK_ERROR(LX("Failed to open input audio file").d("path", audio_file));
+            return false;
+        }
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "fileOpen"));
+        return true;
+    }
+#endif
     PaError err;
     err = Pa_Initialize();
     if (err != paNoError) {
@@ -128,9 +173,48 @@ bool PortAudioMicrophoneWrapper::initialize() {
     }
     return true;
 }
+#ifdef XMOS_AVS_TESTS
+void PortAudioMicrophoneWrapper::ReaderThread(PortAudioMicrophoneWrapper *wrapper)
+{
+    ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadAlive"));
+    signed short block[128];
+    const unsigned period = sizeof(block) / 2 * 1000 / (unsigned)SAMPLE_RATE;
+    while (wrapper->m_threadFuture->wait_for(std::chrono::milliseconds(period)) == std::future_status::timeout) {
+        wrapper->m_fileStream->read((char*)block, sizeof(block));
+        if (wrapper->m_fileStream->fail() || wrapper->m_fileStream->eof()) {
+            if (!wrapper->m_eofReached) {
+                ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "eofReached"));
+                wrapper->m_eofReached = true;
+            }
+            std::memset(block, 0, sizeof(block));
+        }
+        ssize_t returnCode = wrapper->m_writer->write(block, sizeof(block) / 2);
+        if (returnCode <= 0) {
+            ACSDK_CRITICAL(LX("Failed to write to stream."));
+        }
+        if (wrapper->m_samplesRead % (unsigned)SAMPLE_RATE == 0) {
+            ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "timeElapsedApprox").d("seconds", wrapper->m_samplesRead / (unsigned)SAMPLE_RATE));
+        }
+        wrapper->m_samplesRead += sizeof(block) / 2;
+    }
+    ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadShuttingDown"));
+}
+#endif
 
 bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
+#ifdef XMOS_AVS_TESTS
+    if (m_fileStream) {
+        m_threadPromise = new std::promise<void>;
+        m_threadFuture = new std::future<void>{m_threadPromise->get_future()};
+        m_readerThread = new std::thread{ReaderThread, this};
+        m_samplesRead = 0;
+        m_eofReached = false;
+        ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileInput", "threadCreated"));
+        m_isStreaming = true;
+        return true;
+    }
+#endif
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StartStream(m_paStream);
     if (err != paNoError) {
@@ -143,6 +227,12 @@ bool PortAudioMicrophoneWrapper::startStreamingMicrophoneData() {
 
 bool PortAudioMicrophoneWrapper::stopStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
+#ifdef XMOS_AVS_TESTS
+    if (m_fileStream) {
+        m_isStreaming = false;
+        return true;
+    }
+#endif
     std::lock_guard<std::mutex> lock{m_mutex};
     PaError err = Pa_StopStream(m_paStream);
     if (err != paNoError) {

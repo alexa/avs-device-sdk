@@ -55,7 +55,12 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> configFiles;
     std::string pathToKWDInputFolder;
     std::string logLevel;
-    int opPoint = 5;
+#ifdef SENSORY_OP_POINT
+    int sensoryOpPoint = 5;
+#endif
+#ifdef XMOS_AVS_TESTS
+    bool isFileStream = false;
+#endif
 
     if (usesOptStyleArgs(argc, argv)) {
         for (int i = 1; i < argc; i++) {
@@ -90,16 +95,29 @@ int main(int argc, char* argv[]) {
         if (argc < 3) {
             ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) +
+#ifndef XMOS_AVS_TESTS
+                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
+#else
                 " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level] [op_point]");
+#endif
             return SampleAppReturnCode::ERROR;
         } else {
             pathToKWDInputFolder = std::string(argv[2]);
             if (4 <= argc) {
                 logLevel = std::string(argv[3]);
             }
+#ifdef SENSORY_OP_POINT
             if (5 <= argc) {
-                opPoint = atoi(argv[4]);
+                sensoryOpPoint = atoi(argv[4]);
             }
+#endif
+#ifdef XMOS_AVS_TESTS
+            if (6 <= argc) {
+                if (argv[5] == std::string("XMOS_AVS_TESTS")) {
+                    isFileStream = true;
+                }
+            }
+#endif
         }
 #else
         if (argc < 2) {
@@ -129,6 +147,15 @@ int main(int argc, char* argv[]) {
 #endif
 
     do {
+
+#ifdef SENSORY_OP_POINT
+      SampleApplication::setSensoryOpPoint(sensoryOpPoint);
+#endif
+
+#ifdef XMOS_AVS_TESTS
+        SampleApplication::setIsFileStream(isFileStream);
+#endif
+
         sampleApplication = SampleApplication::create(
             consoleReader,
             configFiles,
@@ -136,13 +163,9 @@ int main(int argc, char* argv[]) {
             logLevel
 #ifdef DIAGNOSTICS
             ,
-            std::move(diagnostics),
-#else
-            ,
-            nullptr,
+            std::move(diagnostics)
 #endif
-            opPoint
-        );
+    );
 
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create SampleApplication!");

@@ -18,6 +18,12 @@
 
 #include <mutex>
 #include <thread>
+#ifdef XMOS_AVS_TESTS
+#include <iostream>
+#include <fstream>
+#include <future>
+#include <chrono>
+#endif
 
 #include <AVSCommon/AVS/AudioInputStream.h>
 
@@ -58,6 +64,15 @@ public:
      * @return Whether the microphone is streaming.
      */
     bool isStreaming() override;
+
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Set flag to indicate if the audio is streamed from a file.
+     */
+    static void setIsFileStream(bool value) {
+        m_isFileStream = value;
+    }
+#endif
 
     /**
      * Destructor.
@@ -103,6 +118,17 @@ private:
      */
     bool getConfigSuggestedLatency(PaTime& suggestedLatency);
 
+#ifdef XMOS_AVS_TESTS
+    /**
+     *      */
+    /**
+     * Callback function to Read audio from file stream and write it to the audio input stream
+     *
+     * @param wrapper reference to PortAudioMicrophoneWrapper
+     * @return none
+     */
+    static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
+#endif
     /// The stream of audio data.
     const std::shared_ptr<avsCommon::avs::AudioInputStream> m_audioInputStream;
 
@@ -122,6 +148,19 @@ private:
      * Whether the microphone is currently streaming.
      */
     bool m_isStreaming;
+
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Read from file instead of a real audio device.
+     */
+    static bool m_isFileStream;
+    std::thread *m_readerThread;
+    std::ifstream *m_fileStream;
+    std::promise<void> *m_threadPromise;
+    std::future<void> *m_threadFuture;
+    unsigned m_samplesRead;
+    bool m_eofReached;
+#endif
 };
 
 }  // namespace sampleApp

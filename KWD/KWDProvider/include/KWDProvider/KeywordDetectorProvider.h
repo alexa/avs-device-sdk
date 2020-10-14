@@ -43,7 +43,6 @@ public:
      * @param keyWordObservers The observers to notify of keyword detections.
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
      * @param pathToInputFolder The path to the inputs folder containing data files needed by this application.
-     * @param opPoint Operating point of the Sensory KWD engine.
      *
      * @return An @c KeywordDetector based on CMake configurations on success or @c nullptr if creation failed.
      */
@@ -53,8 +52,7 @@ public:
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
             keyWordDetectorStateObservers,
-        const std::string& pathToInputFolder,
-        const int opPoint);
+        const std::string& pathToInputFolder);
 };
 
 }  // namespace kwd

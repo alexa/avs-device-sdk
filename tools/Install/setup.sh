@@ -23,7 +23,7 @@
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
 
-CLONE_URL=${CLONE_URL:- 'git://github.com/xmos/avs-device-sdk.git'}
+CLONE_URL=${CLONE_URL:- 'https://github.com/xmos/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
@@ -138,9 +138,9 @@ fi
 
 XMOS_TAG=$2
 
-shift 1
+shift 2
 
-OPTIONS=s:a:m:d:h:x
+OPTIONS=s:a:m:d:hx:
 while getopts "$OPTIONS" opt ; do
     case $opt in
         s )
@@ -246,6 +246,8 @@ echo
 AUTOSTART_SESSION="avsrun"
 AUTOSTART_DIR=$HOME/.config/lxsession/LXDE-pi
 AUTOSTART=$AUTOSTART_DIR/autostart
+AVSRUN_CMD="$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models NONE 12"
+
 if [ ! -f $AUTOSTART ]; then
     mkdir -p $AUTOSTART_DIR
     cp /etc/xdg/lxsession/LXDE-pi/autostart $AUTOSTART
@@ -253,7 +255,7 @@ fi
 STARTUP_SCRIPT=$CURRENT_DIR/.avsrun-startup.sh
 cat << EOF > "$STARTUP_SCRIPT"
 #!/bin/bash
-$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models
+$AVSRUN_CMD
 \$SHELL
 EOF
 chmod a+rx $STARTUP_SCRIPT
@@ -283,12 +285,20 @@ while true; do
     esac
 done
 
+SENSORY_OP_POINT_FLAG="-DSENSORY_OP_POINT=ON"
+if [ $XMOS_DEVICE = "xvf3510" ]
+then
+  PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
+  XMOS_AVS_TESTS_FLAG="-DXMOS_AVS_TESTS=ON"
+else
+  PI_HAT_FLAG=""
+  XMOS_AVS_TESTS_FLAG=""
+fi
 
 if [ ! -d "$BUILD_PATH" ]
 then
 
   # Make sure required packages are installed
-  echo
   echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
   echo
 
@@ -305,13 +315,6 @@ then
   mkdir -p $DB_PATH
 
   run_os_specifics
-
-  if [ $XMOS_DEVICE = "xvf3510" ]
-  then
-    PI_HAT_FLAG="-DPI_HAT_CTRL=ON"
-  else
-    PI_HAT_FLAG=""
-  fi
 
   if [ ! -d "${SOURCE_PATH}/avs-device-sdk" ]
   then
@@ -339,11 +342,12 @@ then
   echo
   echo "==============> BUILDING SDK =============="
   echo
-
   mkdir -p $BUILD_PATH
   cd $BUILD_PATH
   cmake "$SOURCE_PATH/avs-device-sdk" \
+      $SENSORY_OP_POINT_FLAG \
       $PI_HAT_FLAG \
+      $XMOS_AVS_TESTS_FLAG \
       -DCMAKE_BUILD_TYPE=DEBUG \
       "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
@@ -409,7 +413,7 @@ sed -i '/AVS/d' $ALIASES > /dev/null
 sed -i '/AlexaClientSDKConfig.json/d' $ALIASES > /dev/null
 sed -i '/Remove/d' $ALIASES > /dev/null
 
-echo "alias avsrun=\"$BUILD_PATH/SampleApp/src/SampleApp $OUTPUT_CONFIG_FILE $THIRD_PARTY_PATH/alexa-rpi/models\" NONE 12" >> $ALIASES
+echo "alias avsrun=\"$AVSRUN_CMD\"" >> $ALIASES
 echo "alias avsunit=\"bash $TEST_SCRIPT\"" >> $ALIASES
 echo "alias avssetup=\"cd $CURRENT_DIR; bash setup.sh\"" >> $ALIASES
 echo "echo "Available AVS aliases:"" >> $ALIASES
@@ -418,4 +422,3 @@ echo "echo "If authentication fails, please check $BUILD_PATH/Integration/AlexaC
 echo "echo "Remove .bash_aliases and open a new terminal to remove bindings"" >> $ALIASES
 
 echo " **** Completed Configuration/Build ***"
-
