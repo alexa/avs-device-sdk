@@ -640,7 +640,7 @@ std::unique_ptr<SampleApplication> SampleApplication::create(
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
 #ifdef SENSORY_OP_POINT
-    KeywordDetectorProvider::setSensoryOpPoint(SampleApplication::m_sensoryOpPoint);
+    alexaClientSDK::kwd::AbstractKeywordDetector::setSensoryOpPoint(SampleApplication::m_sensoryOpPoint);
 #endif // SENSORY_OP_POINT
 #ifdef XMOS_AVS_TESTS
     alexaClientSDK::mediaPlayer::MediaPlayer::setIsFileStream(m_isFileStream);
