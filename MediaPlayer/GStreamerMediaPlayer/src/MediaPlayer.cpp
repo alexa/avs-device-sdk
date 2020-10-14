@@ -663,10 +663,14 @@ GstFlowReturn MediaPlayer::WriterCallback(GstElement *sink, void *data)
     GstSample *sample;
     GstBuffer *buffer;
     GstMapInfo map;
+    // Get next audio sample from GStreamer
     g_signal_emit_by_name(sink, "pull-sample", &sample);
     buffer = gst_sample_get_buffer(sample);
     gst_buffer_map(buffer, &map, GST_MAP_READ);
+
+    // Write sample to output audio file
     player->m_fileStream->write((char*)map.data, map.size);
+    // print information every second
     if (player->m_samplesWritten % SAMPLE_RATE == 0) {
         ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, alexaClientSDK::avsCommon::utils::logger::LogEntry("FileOutput", "timeElapsed").d("seconds", player->m_samplesWritten / SAMPLE_RATE));
     }
