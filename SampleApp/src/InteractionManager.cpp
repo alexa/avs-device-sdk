@@ -125,10 +125,10 @@ InteractionManager::InteractionManager(
         // Do not start streaming the audio now, the SDK is not ready to process the audio:
         // wait for the device to be authorized
         if (!m_isFileStream) {
-            startStreanming = true;
+            skipStreaming = true;
         }
 #endif
-        if (m_wakeWordAudioProvider && !skipStreanming) {
+        if (m_wakeWordAudioProvider && !skipStreaming) {
             m_micWrapper->startStreamingMicrophoneData();
         }
 };
