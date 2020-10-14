@@ -72,8 +72,6 @@ public:
     }
 #endif // SENSORY_OP_POINT
 
-
-
 protected:
     /**
      * Constructor.

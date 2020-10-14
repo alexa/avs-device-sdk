@@ -15,7 +15,7 @@
 #       -DKITTAI_KEY_WORD_DETECTOR=ON
 #           -DKITTAI_KEY_WORD_DETECTOR_LIB_PATH=<path-to-kittai-lib>
 #           -DKITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-kittai-include-dir>
-#       -DSENSORY_KEY_WORD_DETECTOR=ON
+#       -DSENSORY_KEY_WORD_DETECTOR=ON 
 #           -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=<path-to-sensory-lib>
 #           -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-sensory-include-dir>
 #

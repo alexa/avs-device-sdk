@@ -299,7 +299,6 @@ if [ ! -d "$BUILD_PATH" ]
 then
 
   # Make sure required packages are installed
-  echo
   echo "==============> INSTALLING REQUIRED TOOLS AND PACKAGE ============"
   echo
 

@@ -53,9 +53,7 @@ public:
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
             keyWordDetectorStateObservers,
         const std::string& pathToInputFolder);
-
 };
-
 
 }  // namespace kwd
 }  // namespace alexaClientSDK

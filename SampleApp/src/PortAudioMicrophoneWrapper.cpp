@@ -15,6 +15,7 @@
 
 #include <cstring>
 #include <string>
+
 #include <rapidjson/document.h>
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>

@@ -116,7 +116,6 @@ static char GSTREAMER_TREBLE_BAND_NAME[] = "band2";
 /// ensure that the whole of SDS buffer is conserved until the seek() is called.
 static constexpr size_t NUM_OF_CONTENT_READERS = 2;
 
-
 /**
  * Processes tags found in the tagList.
  * Called through gst_tag_list_foreach.

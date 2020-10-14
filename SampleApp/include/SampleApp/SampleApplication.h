@@ -308,7 +308,6 @@ private:
     std::shared_ptr<PeripheralEndpointModeControllerHandler> m_peripheralEndpointModeHandler;
 #endif
 
-
 #ifdef SENSORY_OP_POINT
     /*
      * Operating point of the Sensory KWD engine.

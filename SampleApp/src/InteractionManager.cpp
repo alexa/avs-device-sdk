@@ -117,8 +117,7 @@ InteractionManager::InteractionManager(
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
         m_friendlyNameToggle{true},
 #endif
-        m_diagnostics{diagnostics}
-{
+        m_diagnostics{diagnostics} {
 
 #ifdef XMOS_AVS_TESTS
     // Do not start streaming the audio now, the SDK is not ready to process the audio:

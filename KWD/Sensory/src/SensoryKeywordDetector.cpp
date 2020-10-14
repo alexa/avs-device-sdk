@@ -306,6 +306,7 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
         return false;
     }
 
+#ifdef SENSORY_OP_POINT
     result = snsrSetInt(*session, SNSR_OPERATING_POINT, AbstractKeywordDetector::m_sensoryOpPoint);
     if (result != SNSR_RC_OK)
     {
@@ -325,6 +326,7 @@ bool SensoryKeywordDetector::setUpRuntimeSettings(SnsrSession* session) {
     }
     printf("Sensory operating point = %d\n",op);
     return true;
+#endif// SENSORY_OP_POINT
 }
 
 void SensoryKeywordDetector::detectionLoop() {
