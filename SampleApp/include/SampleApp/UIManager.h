@@ -356,8 +356,10 @@ public:
      * Prints menu for do not disturb mode.
      */
     void printDoNotDisturbScreen();
-    
+
+#ifdef PI_HAT_CTRL
     ~UIManager();
+#endif
 
     /**
      * Prints menu for diagnostics screen.

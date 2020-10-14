@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
             ,
             std::move(diagnostics)
 #endif
-);
+    );
 
         if (!sampleApplication) {
             ConsolePrinter::simplePrint("Failed to create SampleApplication!");
