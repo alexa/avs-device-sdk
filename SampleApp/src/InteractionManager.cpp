@@ -119,18 +119,18 @@ InteractionManager::InteractionManager(
 #endif
         m_diagnostics{diagnostics} {
 
+        // this flag is set to true only if XMOS_AVS_TESTS is defined
+        bool skipStreaming = false;
 #ifdef XMOS_AVS_TESTS
-    // Do not start streaming the audio now, the SDK is not ready to process the audio:
-    // wait for the device to be authorized
-    if (!m_isFileStream) {
+        // Do not start streaming the audio now, the SDK is not ready to process the audio:
+        // wait for the device to be authorized
+        if (!m_isFileStream) {
+            startStreanming = true;
+        }
 #endif // XMOS_AVS_TESTS
-        if (m_wakeWordAudioProvider) {
+        if (m_wakeWordAudioProvider && !skipStreanming) {
             m_micWrapper->startStreamingMicrophoneData();
         }
-#ifdef XMOS_AVS_TESTS
-    }
-#endif // XMOS_AVS_TESTS
-
 };
 
 void InteractionManager::begin() {
