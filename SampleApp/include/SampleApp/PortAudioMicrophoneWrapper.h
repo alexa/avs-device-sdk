@@ -120,7 +120,12 @@ private:
 
 #ifdef XMOS_AVS_TESTS
     /**
-     * Read audio from file stream and write to the audio input stream
+     *      */
+    /**
+     * Callback function to Read audio from file stream and write it to the audio input stream
+     *
+     * @param wrapper reference to PortAudioMicrophoneWrapper
+     * @return none
      */
     static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
 #endif

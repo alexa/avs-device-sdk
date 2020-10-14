@@ -645,6 +645,17 @@ private:
      */
     int clampEqualizerLevel(int level);
 
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Callback function to write audio samples to the output audio file
+     *
+     * @param sink GStreamer element with the audio to copy
+     * @param data Mediaplayer object
+     * @return GstFlowReturn code
+     */
+    static GstFlowReturn WriterCallback(GstElement *sink, void *data);
+
+#endif
     /// Mutex used to synchronize @c operations that notify observers.
     std::mutex m_operationMutex;
 
@@ -733,8 +744,6 @@ private:
     static bool m_isFileStream;
     std::ofstream *m_fileStream;
     unsigned m_samplesWritten;
-
-    static GstFlowReturn WriterCallback(GstElement *sink, void *data);
 #endif
 };
 
