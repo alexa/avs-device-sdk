@@ -118,6 +118,12 @@ private:
      */
     bool getConfigSuggestedLatency(PaTime& suggestedLatency);
 
+#ifdef XMOS_AVS_TESTS
+    /**
+     * Read audio from file stream and write to the audio input stream
+     */
+    static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
+#endif
     /// The stream of audio data.
     const std::shared_ptr<avsCommon::avs::AudioInputStream> m_audioInputStream;
 
@@ -150,7 +156,6 @@ private:
     unsigned m_samplesRead;
     bool m_eofReached;
 #endif
-    static void ReaderThread(PortAudioMicrophoneWrapper *wrapper);
 };
 
 }  // namespace sampleApp
