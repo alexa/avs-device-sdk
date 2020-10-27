@@ -82,6 +82,11 @@ public:
     void setCaptionPresenter(const std::shared_ptr<CaptionPresenterInterface>& presenter) override;
     void setMediaPlayers(
         const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& mediaPlayers) override;
+    void addMediaPlayer(
+        const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) override;
+    void removeMediaPlayer(
+        const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) override;
+    bool isEnabled() const override;
     ///@}
 
     /// @name CaptionFrameParseListenerInterface methods

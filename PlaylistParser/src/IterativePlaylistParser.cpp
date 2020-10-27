@@ -115,7 +115,7 @@ PlaylistEntry IterativePlaylistParser::next() {
             std::string playlistContent;
             auto contentFetcher = m_contentFetcherFactory->create(playlistURL);
             contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort)) {
+            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort, &playlistURL)) {
                 ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
                 return PlaylistEntry::createErrorEntry(playlistURL);
             }
@@ -193,7 +193,7 @@ PlaylistEntry IterativePlaylistParser::next() {
             std::string playlistContent;
             auto contentFetcher = m_contentFetcherFactory->create(playlistURL);
             contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort)) {
+            if (!readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_abort, &playlistURL)) {
                 ACSDK_ERROR(LX("nextFailed").d("reason", "failedToRetrieveContent").sensitive("url", playlistURL));
                 return PlaylistEntry::createErrorEntry(playlistURL);
             }

@@ -17,10 +17,13 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_CONNECTIONSTATUSOBSERVERINTERFACE_H_
 
 #include <iostream>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
+
+static const int ENGINE_TYPE_ALEXA_VOICE_SERVICES = 1;
 
 /**
  * This class allows a client to be notified of changes to connection status to AVS.
@@ -97,6 +100,23 @@ public:
         SERVER_ENDPOINT_CHANGED
     };
 
+    struct EngineConnectionStatus {
+        /**
+         * Constructor
+         */
+        EngineConnectionStatus(const int connectEngineType, ChangedReason connectReason, Status connectStatus) :
+                engineType{connectEngineType},
+                reason{connectReason},
+                status{connectStatus} {
+        }
+        // The engine type
+        int engineType;
+        // Reason for connection state change
+        ChangedReason reason;
+        // State of connection
+        Status status;
+    };
+
     /**
      * Destructor.
      */
@@ -109,6 +129,18 @@ public:
      * @param reason The reason the status change occurred.
      */
     virtual void onConnectionStatusChanged(const Status status, const ChangedReason reason) = 0;
+
+    /**
+     * Called when any of the connection state changes.
+     *
+     * @param status A summarized status based on one or more engines' connection status. Most applications should use
+     * this to identify Alexa connectivity.
+     * @param engineStatuses Detailed status for each connection. Gives more granular connection status when more than
+     * one connection is possible.
+     */
+    virtual void onConnectionStatusChanged(
+        const Status status,
+        const std::vector<EngineConnectionStatus>& engineStatuses){};
 };
 
 /**

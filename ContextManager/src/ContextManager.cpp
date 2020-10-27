@@ -264,7 +264,6 @@ void ContextManager::provideStateResponse(
         }
         /// Callback method should be called outside the lock.
         contextAvailableCallback();
-
     });
 }
 

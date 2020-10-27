@@ -15,12 +15,14 @@
 
 #include "AFML/Channel.h"
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 
 namespace alexaClientSDK {
 namespace afml {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("Channel");
@@ -45,6 +47,12 @@ Channel::Channel(const std::string& name, const unsigned int priority, bool isVi
         m_priority{priority},
         m_isVirtual{isVirtual},
         m_state{name} {
+    /// Non-refcounted.
+    m_powerResource = power::PowerResource::create(
+        TAG + ":" + name,
+        power::PowerMonitor::getInstance()->getPowerResourceManager(),
+        PowerResourceManagerInterface::PowerResourceLevel::STANDBY_MED,
+        false);
 }
 
 const std::string& Channel::getName() const {
@@ -93,6 +101,10 @@ void Channel::setPrimaryActivity(std::shared_ptr<FocusManagerInterface::Activity
     if (!activity) {
         ACSDK_ERROR(LX("setPrimaryActivityFailed").m("Null Activity"));
         return;
+    }
+
+    if (m_powerResource) {
+        m_powerResource->acquire();
     }
 
     ACSDK_DEBUG5(LX(__func__).d("Interface", activity->getInterface()));
@@ -266,6 +278,12 @@ bool Channel::removeActivityHelperLocked(
     (*activityToRemoveIt)->notifyObserver(FocusState::NONE, MixingBehavior::MUST_STOP);
     m_activities.erase(activityToRemoveIt);
     updateChannelInterfaceLocked();
+
+    if (m_activities.empty()) {
+        if (m_powerResource) {
+            m_powerResource->release();
+        }
+    }
 
     return true;
 }

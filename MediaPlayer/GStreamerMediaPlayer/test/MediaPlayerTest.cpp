@@ -111,6 +111,10 @@ public:
         return m_url;
     }
 
+    std::string getEffectiveUrl() const override {
+        return m_url;
+    }
+
     HTTPContentFetcherInterface::Header getHeader(std::atomic<bool>* shouldShutdown) override {
         HTTPContentFetcherInterface::Header header;
         auto urlAndContentType = urlsToContentTypes.find(m_url);

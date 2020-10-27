@@ -28,6 +28,8 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 
+#include <AVSCommon/Utils/Power/PowerResource.h>
+
 namespace alexaClientSDK {
 namespace afml {
 
@@ -286,6 +288,9 @@ private:
 
     /// Activity to track the receiver of patience.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface::Activity> m_patienceReceiver;
+
+    /// Used to manage power levels.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 };
 }  // namespace afml
 }  // namespace alexaClientSDK

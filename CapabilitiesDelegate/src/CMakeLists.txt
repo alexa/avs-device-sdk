@@ -11,7 +11,14 @@ target_include_directories(CapabilitiesDelegate PUBLIC
     ${CapabilitiesDelegate_SOURCE_DIR}/include)
 target_include_directories(CapabilitiesDelegate PRIVATE
     ${RAPIDJSON_INCLUDE_DIR})
-target_link_libraries(CapabilitiesDelegate AVSCommon RegistrationManager SQLiteStorage Endpoints)
+target_link_libraries(CapabilitiesDelegate
+    acsdkAlexaEventProcessedNotifierInterfaces
+    acsdkPostConnectOperationProviderRegistrarInterfaces
+    acsdkShutdownManager
+    AVSCommon
+    RegistrationManager
+    SQLiteStorage
+    Endpoints)
 
 # install target
 asdk_install()

@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 
+#include <Alexa/AlexaInterfaceMessageSender.h>
 #include <Alexa/AlexaInterfaceMessageSenderInternalInterface.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/SDKInterfaces/AlexaInterfaceMessageSenderInterface.h>
@@ -40,6 +41,8 @@ namespace endpoints {
 /**
  * Interface for an endpoint builder.
  *
+ * For the default endpoint, use @c DefaultEndpointBuilder.
+ *
  * The builder is responsible for configuring and building an endpoint object. Once built,
  * @c EndpointRegistrationManagerInterface should be used to register the endpoint with AVS
  * for it to be ready to use.
@@ -59,6 +62,23 @@ public:
     /**
      * Creates an EndpointBuilder.
      *
+     * @param deviceInfo Structure with information about the Alexa client device.
+     * @param contextManager Object used to retrieve the current state of an endpoint.
+     * @param exceptionSender Object used to send exceptions.
+     * @param alexaInterfaceMessageSender Object used to send AlexaInterface events.
+     * @return A pointer to the new builder if it succeeds; otherwise, return @c nullptr.
+     */
+    static std::unique_ptr<EndpointBuilder> create(
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+        const std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface>&
+            alexaMessageSender);
+
+    /**
+     * Creates an EndpointBuilder.
+     *
+     * @deprecated
      * @param deviceInfo Structure with information about the Alexa client device.
      * @param contextManager Object used to retrieve the current state of an endpoint.
      * @param exceptionSender Object used to send exceptions.
@@ -104,6 +124,9 @@ public:
         bool isProactivelyReported,
         bool isRetrievable,
         bool isNonControllable = false) override;
+    EndpointBuilder& withEndpointCapabilitiesBuilder(
+        const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesBuilderInterface>&
+            endpointCapabilitiesBuilder) override;
     EndpointBuilder& withModeController(
         std::shared_ptr<avsCommon::sdkInterfaces::modeController::ModeControllerInterface> modeController,
         const std::string& instance,
@@ -118,61 +141,30 @@ public:
         bool isProactivelyReported,
         bool isRetrievable,
         bool isNonControllable = false) override;
+    EndpointBuilder& withCapability(
+        const CapabilityConfiguration& configuration,
+        std::shared_ptr<DirectiveHandlerInterface> directiveHandler) override;
+    EndpointBuilder& withCapability(
+        const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>& configurationInterface,
+        std::shared_ptr<DirectiveHandlerInterface> directiveHandler) override;
+    EndpointBuilder& withCapabilityConfiguration(
+        const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>& configurationInterface)
+        override;
     std::unique_ptr<EndpointInterface> build() override;
     /// @}
 
     /**
-     * Adds a capability that has already been built.
+     * Finalize attributes.
      *
-     * @param configuration The capability configuration.
-     * @param directiveHandler The handler for the directives in the given namespace.
-     * @return This builder which can be used to nest configuration function calls.
+     * Once called, this builder will no longer allow endpoint attribute related configurations to be set. This allows
+     * applications to add more capabilities to the endpoint without changing its attributes.
      */
-    EndpointBuilder& withCapability(
-        const CapabilityConfiguration& configuration,
-        std::shared_ptr<DirectiveHandlerInterface> directiveHandler);
-
-    /**
-     * Adds a capability that has already been built.
-     *
-     * @param configuration The object used to retrieve the capability configurations.
-     * @param directiveHandler The handler for the directives in the given namespace.
-     * @deprecated CapabilityConfigurationInterface is deprecated.
-     * @return This builder which can be used to nest configuration function calls.
-     */
-    EndpointBuilder& withCapability(
-        const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>& configurationInterface,
-        std::shared_ptr<DirectiveHandlerInterface> directiveHandler);
-
-    /**
-     * Adds a capability configuration that doesn't have any associated @c DirectiveHandler.
-     *
-     * @param configurationInterface The object used to retrieve the capability configurations.
-     * @deprecated CapabilityConfigurationInterface is deprecated.
-     * @return This builder which can be used to nest configuration function calls.
-     */
-    EndpointBuilder& withCapabilityConfiguration(
-        const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>& configurationInterface);
-
-    /**
-     * Finish the default client endpoint configurations.
-     *
-     * Once called, this builder will no longer allow endpoint attribute related configurations to be set. This allow
-     * applications to add more capabilities to the default endpoint without changing its attributes.
-     *
-     * @return @c true if configuration is valid; @c false otherwise.
-     */
-    bool finishDefaultEndpointConfiguration();
-
-    /**
-     * Builds the default endpoint.
-     *
-     * This will ensure that only the owner of this builder can actually build the default endpoint.
-     * @return The default endpoint.
-     */
-    std::unique_ptr<EndpointInterface> buildDefaultEndpoint();
+    void finalizeAttributes();
 
 private:
+    /// @c DefaultEndpointBuilder wraps this class to provide functionality specific to building the default endpoint.
+    friend class DefaultEndpointBuilder;
+
     /// Defines a function that can be used to build a capability.
     using CapabilityBuilder =
         std::function<std::pair<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>>()>;
@@ -186,21 +178,25 @@ private:
      * @param alexaInterfaceMessageSender Object used to send AlexaInterface events.
      */
     EndpointBuilder(
-        const avsCommon::utils::DeviceInfo& deviceInfo,
+        std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender);
 
     /**
-     * Implements the build logic used by @c buildDefaultEndpoint() and @c build().
+     * Configures the endpoint builder for the default endpoint.
+     */
+    void configureDefaultEndpoint();
+
+    /**
+     * Implements the build logic used by @c build().
      *
      * @return A unique pointer to an endpoint if the build succeeds; otherwise, nullptr.
      */
     std::unique_ptr<EndpointInterface> buildImplementation();
 
-    /// Flag used to identify the default endpoint builder.
-    /// We use this flag to restrict the amount of customization available for the default endpoint.
-    bool m_isDefaultEndpoint;
+    /// Flag used to indicate whether attribute configuration has been finalized.
+    bool m_isConfigurationFinalized;
 
     /// Flag used to indicate whether this builder has already been used to build an endpoint.
     bool m_hasBeenBuilt;
@@ -208,8 +204,12 @@ private:
     /// Flag used to indicate whether any unrecoverable error was found.
     bool m_invalidConfiguration;
 
+    /// Flag used to indicate whether the builder is building the default endpoint, as some validation
+    /// rules apply differently.
+    bool m_isDefaultEndpoint;
+
     /// The client endpoint id that is used to build the default endpoint and generate derived endpoints.
-    const avsCommon::utils::DeviceInfo m_deviceInfo;
+    std::shared_ptr<avsCommon::utils::DeviceInfo> m_deviceInfo;
 
     /// The attributes used to build the endpoint.
     EndpointAttributes m_attributes;

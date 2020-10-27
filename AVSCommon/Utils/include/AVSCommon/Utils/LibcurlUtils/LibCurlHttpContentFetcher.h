@@ -41,6 +41,7 @@ public:
     /// @{
     State getState() override;
     std::string getUrl() const override;
+    std::string getEffectiveUrl() const override;
     Header getHeader(std::atomic<bool>* shouldShutdown) override;
     bool getBody(std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) override;
     void shutdown() override;
@@ -82,6 +83,12 @@ private:
 
     /// The URL to fetch from.
     const std::string m_url;
+
+    /// Mutex to synchronize access to m_effectiveUrl.
+    mutable std::mutex m_effectiveUrlMutex;
+
+    /// The last used url to fetch content from.
+    std::string m_effectiveUrl;
 
     /// A libcurl wrapper.
     CurlEasyHandleWrapper m_curlWrapper;
@@ -153,6 +160,12 @@ private:
      * @return @c true if it is still waiting for the method call.
      */
     bool waitingForBodyRequest();
+
+    /**
+     * Updates the effective URL using CURL's inbuilt functions.
+     * @note: This method should only be called after the curl multi perform method.
+     */
+    void updateEffectiveURL();
 };
 
 }  // namespace libcurlUtils

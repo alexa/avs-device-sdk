@@ -13,20 +13,23 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKAUDIOPLAYER_AUDIOPLAYER_H_
-#define ACSDKAUDIOPLAYER_AUDIOPLAYER_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYER_INCLUDE_ACSDKAUDIOPLAYER_AUDIOPLAYER_H_
+#define ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYER_INCLUDE_ACSDKAUDIOPLAYER_AUDIOPLAYER_H_
 
 #include <deque>
 #include <list>
 #include <memory>
 
 #include <acsdkAudioPlayerInterfaces/AudioPlayerInterface.h>
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/PlayerActivity.h>
 #include <AVSCommon/AVS/PlayRequestor.h>
 #include <AVSCommon/SDKInterfaces/Audio/MixingBehavior.h>
+#include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
@@ -35,8 +38,11 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderRegistrarInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/ErrorTypes.h>
-#include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryObserverInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
@@ -81,30 +87,64 @@ public:
     virtual ~AudioPlayer() = default;
 
     /**
+     * Factory method to create a new @c AudioPlayerInterface.
+     *
+     * @param mediaResourceProvider The instance of the @c PooledMediaResourceProviderInterface used to manage players
+     * for playing audio.
+     * @param messageSender The object to use for sending events.
+     * @param annotatedFocusManager The annotated audio focus manager used to manage usage of the dialog channel.
+     * @param contextManager The AVS Context manager used to generate system context for events.
+     * @param exceptionSender The object to use for sending AVS Exception messages.
+     * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
+     * @param captionManager The @c CaptionManagerInterface instance to use for handling captions.
+     * @param metricRecorder The metric recorder.
+     * @param shutdownNotifier The object to notify this AudioPlayer when to shut down.
+     * @param endpointCapabilitiesRegistrar The object with which to register this AudioPlayer's capabilities for the
+     * default endpoint.
+     * @param renderPlayerInfoCardsProviderRegistrar The object with which to register this AudioPlayer as a
+     * @c RenderPlayerInfoCardsProviderInterface.
+     * @return A shared_ptr to a new @c AudioPlayerInterface.
+     */
+    static std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface> createAudioPlayerInterface(
+        const std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface>&
+            mediaResourceProvider,
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+        const acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::AudioFocusAnnotation,
+            avsCommon::sdkInterfaces::FocusManagerInterface>& annotatedFocusManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+        const std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface>& playbackRouter,
+        const std::shared_ptr<captions::CaptionManagerInterface>& captionManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
+        const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>&
+            renderPlayerInfoCardsProviderRegistrar);
+
+    /**
      * Creates a new @c AudioPlayer instance.
      *
-     * @param mediaPlayerFactory The instance of the @c MediaPlayerFactoryInterface used to manage players for playing
-     * audio.
+     * @param mediaResourceProvider The instance of the @c PooledMediaResourceProviderInterface used to manage players
+     * for playing audio.
      * @param messageSender The object to use for sending events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param contextManager The AVS Context manager used to generate system context for events.
      * @param exceptionSender The object to use for sending AVS Exception messages.
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
-     * @param audioChannelVolumeInterfaces A list of @c ChannelVolumeInterface instances to use to control/attenuate
-     * channel volume. These instances are required for controlling volume for the @c MediaPlayerInterface instances
-     * created by @param mediaPlayerFactory.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     static std::shared_ptr<AudioPlayer> create(
-        std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> mediaPlayerFactory,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface> mediaResourceProvider,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
-        std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> audioChannelVolumeInterfaces,
         std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
@@ -241,6 +281,9 @@ private:
         /// so if we get the 'buffer complete' notification before the track is playing, cache the info here
         bool isBuffered;
 
+        /// True if audio normalization should be enabled for this track
+        bool normalizationEnabled;
+
         /// Duration builder for queue time metric
         avsCommon::utils::metrics::DataPointDurationBuilder queueTimeMetricData;
 
@@ -255,8 +298,8 @@ private:
     /**
      * Constructor.
      *
-     * @param mediaPlayerFactory The instance of the @c MediaPlayerFactoryInterface used to manage players for playing
-     * audio.
+     * @param mediaResourceProvider The instance of the @c PooledMediaResourceProviderInterface used to manage players
+     * for playing audio.
      * @param messageSender The object to use for sending events.
      * @param focusManager The channel focus manager used to manage usage of the dialog channel.
      * @param contextManager The AVS Context manager used to generate system context for events.
@@ -264,13 +307,13 @@ private:
      * @param playbackRouter The playback router used for switching playback buttons handler to default.
      * @param audioChannelVolumeInterfaces A list of @c ChannelVolumeInterface instances to use to control/attenuate
      * channel volume. These instances are required for controlling volume for the @c MediaPlayerInterface instances
-     * created by @param mediaPlayerFactory.
+     * provided by @param mediaResourceProvider.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @param metricRecorder The metric recorder.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     AudioPlayer(
-        std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> mediaPlayerFactory,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface> mediaResourceProvider,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
@@ -648,7 +691,6 @@ private:
      *
      * @param state Metadata about the media player state
      */
-    ;
     void sendPlaybackStoppedEvent(const avsCommon::utils::mediaPlayer::MediaPlayerState& state);
 
     /**
@@ -696,6 +738,19 @@ private:
 
     /// Notify AudioPlayerObservers of state changes.
     void notifyObserver();
+
+    /**
+     * send AudioPlayerObservers an AudioPlayerObserverInterface::Notification
+     *
+     * @param notification the type of Notification to send
+     */
+    void notifySeekActivity(
+        const acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::SeekStatus& seekStatus,
+        std::chrono::milliseconds offset);
+
+    /// get an AudioPlayerObserverInterface::Context describing the current player state
+    acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::Context getObserverContext(
+        std::chrono::milliseconds offset = std::chrono::milliseconds(-1));
 
     /**
      * Get the current offset in the audio stream.
@@ -790,15 +845,35 @@ private:
      * Parse Http Headers from the play directive.
      *
      * @param httpHeaders JSON content with httpHeaders
-     * @param audioItem audioItem in which the headers will be saved
+     * @param[out] audioItem audioItem in which the headers will be saved
      */
-    void parseHeadersFromPlayDirective(const rapidjson::Value& httpHeaders, AudioItem& audioItem);
+    void parseHeadersFromPlayDirective(const rapidjson::Value& httpHeaders, AudioItem* audioItem);
+
+    /**
+     * Return track protection name.
+     *
+     * @param mediaPlayerProtection media player protection
+     *
+     * @return protection name
+     */
+    std::string getTrackProtectionName(
+        const avsCommon::utils::mediaPlayer::MediaPlayerState::MediaPlayerProtection& mediaPlayerProtection) const;
+
+    /**
+     * Return track protection name.
+     *
+     * @param mediaPlayaerState media player state
+     *
+     * @return protection name
+     */
+    std::string getTrackProtectionName(const avsCommon::utils::mediaPlayer::MediaPlayerState& mediaPlayerState) const;
 
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
 
-    /// MediaPlayerFactoryInterface instance is used to generate Players used to play tracks.
-    std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> m_mediaPlayerFactory;
+    /// PooledMediaResourceProviderInterface instance is used to generate Players used to play tracks as well as
+    /// access the other media resources associated with those players.
+    std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface> m_mediaResourceProvider;
 
     /// The object to use for sending events.
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
@@ -897,6 +972,13 @@ private:
      * A flag used to indicated the window in which it is OK to send a playbackNearlyFinished event
      */
     bool m_okToRequestNextTrack;
+
+    /**
+     * Current Track's protection information. Track Protection information is available at the time of playback
+     * start or playback error. It doesn't change once we have it. Therefore, we pick up the
+     * mediaprotection on playback started or on error.
+     */
+    avsCommon::utils::mediaPlayer::MediaPlayerState::MediaPlayerProtection m_currentMediaPlayerProtection;
     /// @}
 
     /**
@@ -924,6 +1006,12 @@ private:
     /// Duration builder for Autoprogress metric
     avsCommon::utils::metrics::DataPointDurationBuilder m_autoProgressTimeMetricData;
 
+    /// Duration builder for "directiveReceiveToPlaying" metric
+    avsCommon::utils::metrics::DataPointDurationBuilder m_playCommandToPlayingTimeMetricData;
+
+    /// Flag that we are recording a timer for directiveReceiveToPlaying
+    bool m_isRecordingTimeToPlayback;
+
     /// Flag Autoprogression started
     bool m_isAutoProgressing;
 
@@ -935,6 +1023,9 @@ private:
 
     /// Set to true if next item mediaPlayer->play() called, but response not received yet
     bool m_isStartingPlayback;
+
+    /// Set to true if next item mediaPlayer->pause() called, but response not received yet
+    bool m_isPausingPlayback;
 
     /// @c ChannelVolumeInterface instance to do volume adjustments with.
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> m_audioChannelVolumeInterfaces;
@@ -951,4 +1042,4 @@ private:
 }  // namespace acsdkAudioPlayer
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKAUDIOPLAYER_AUDIOPLAYER_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYER_INCLUDE_ACSDKAUDIOPLAYER_AUDIOPLAYER_H_

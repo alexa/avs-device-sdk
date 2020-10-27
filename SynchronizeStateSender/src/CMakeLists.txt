@@ -7,7 +7,9 @@ target_include_directories(SynchronizeStateSender PUBLIC
         "${AVSCommon_SOURCE_DIR}"
         "${SynchronizeStateSender_SOURCE_DIR}/include")
 
-target_link_libraries(SynchronizeStateSender AVSCommon)
+target_link_libraries(SynchronizeStateSender
+    acsdkPostConnectOperationProviderRegistrarInterfaces
+    AVSCommon)
 
 # install target
 asdk_install()

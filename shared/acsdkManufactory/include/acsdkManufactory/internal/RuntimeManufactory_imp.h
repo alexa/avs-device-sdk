@@ -36,12 +36,12 @@ inline Type RuntimeManufactory::get() {
 }
 
 template <typename Type>
-std::unique_ptr<Type> RuntimeManufactory::innerGet(std::unique_ptr<Type>*) {
+inline std::unique_ptr<Type> RuntimeManufactory::innerGet(std::unique_ptr<Type>*) {
     return m_cookBook->createUniquePointer<Type>(*this);
 }
 
 template <typename Type>
-std::shared_ptr<Type> RuntimeManufactory::innerGet(std::shared_ptr<Type>*) {
+inline std::shared_ptr<Type> RuntimeManufactory::innerGet(std::shared_ptr<Type>*) {
     using ResultType = std::shared_ptr<Type>;
 
     auto resultTypeIndex = getTypeIndex<ResultType>();
@@ -58,7 +58,7 @@ std::shared_ptr<Type> RuntimeManufactory::innerGet(std::shared_ptr<Type>*) {
 }
 
 template <typename Annotation, typename Type>
-Annotated<Annotation, Type> RuntimeManufactory::innerGet(Annotated<Annotation, Type>*) {
+inline Annotated<Annotation, Type> RuntimeManufactory::innerGet(Annotated<Annotation, Type>*) {
     using ResultType = Annotated<Annotation, Type>;
 
     auto resultTypeIndex = getTypeIndex<ResultType>();

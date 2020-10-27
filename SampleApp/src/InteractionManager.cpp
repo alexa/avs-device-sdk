@@ -876,14 +876,6 @@ void InteractionManager::injectWavFile(const std::string& absoluteFilePath) {
             return;
         }
 
-        // Notify DefaultClient of tap-to-talk if wakeword is disabled.
-        if (!m_wakeWordAudioProvider) {
-            if (!m_client->notifyOfTapToTalk(m_tapToTalkAudioProvider).get()) {
-                m_userInterface->printAudioInjectionFailureMessage();
-                return;
-            }
-        }
-
         if (!audioInjector->injectAudio(absoluteFilePath)) {
             m_userInterface->printAudioInjectionFailureMessage();
             return;

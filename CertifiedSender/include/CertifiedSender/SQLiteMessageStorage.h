@@ -37,6 +37,15 @@ public:
      * @param configurationRoot The global config object.
      * @return Pointer to the SQLiteMessagetStorge object, nullptr if there's an error creating it.
      */
+    static std::shared_ptr<MessageStorageInterface> createMessageStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Factory method for creating a storage object for Messages based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteMessagetStorge object, nullptr if there's an error creating it.
+     */
     static std::unique_ptr<SQLiteMessageStorage> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 

@@ -19,6 +19,7 @@
 #include <list>
 #include <utility>
 
+#include <acsdkExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <AIP/AudioInputProcessor.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
@@ -37,9 +38,9 @@
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <CertifiedSender/CertifiedSender.h>
-#include <ExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
+#include <SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h>
 #include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <System/ReportStateHandler.h>
 #include <System/UserInactivityMonitor.h>
@@ -155,15 +156,16 @@ public:
      * @param sharedDataStream The stream to use which has the audio from microphone.
 #endif
      * @param powerResourceManager Object to manage power resource.
+     * @param softwareComponentReporter Object to report adapters' versions.
      * @return A list with all capabilities as well as objects that require explicit shutdown. Shutdown will be
      * performed in the reverse order of occurrence.
      */
     virtual std::pair<std::list<Capability>, std::list<std::shared_ptr<avsCommon::utils::RequiresShutdown>>>
     buildCapabilities(
-        std::shared_ptr<capabilityAgents::externalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
+        std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<avsCommon::avs::ExceptionEncounteredSender> exceptionSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<certifiedSender::CertifiedSender> certifiedSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
@@ -182,7 +184,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
         std::shared_ptr<avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) = 0;
 };
 
 }  // namespace defaultClient

@@ -15,6 +15,7 @@
 
 #include "ToggleController/ToggleControllerCapabilityAgent.h"
 
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
@@ -61,14 +62,17 @@ static const std::string TOGGLESTATE_OFF{R"("OFF")"};
 /// The capabilityResources key
 static const std::string CAPABILITY_RESOURCES_KEY{"capabilityResources"};
 
+/// The semantics key
+static const std::string CAPABILITY_SEMANTICS_KEY{"semantics"};
+
 /**
  *  Helper function to validate the toggle controller attributes.
  *
- * @param toggleControllerAttributes The range controller attribute to be validated.
+ * @param toggleControllerAttributes The toggle controller attribute to be validated.
  * @result @c true if valid, otherwise @c false.
  */
 static bool isToggleControllerAttributeValid(const ToggleControllerAttributes& toggleControllerAttributes) {
-    if (!toggleControllerAttributes.isValid()) {
+    if (!toggleControllerAttributes.capabilityResources.isValid()) {
         ACSDK_ERROR(LX("isToggleControllerAttributeValidFailed").d("reason", "friendlyNamesInvalid"));
         return false;
     }
@@ -286,7 +290,10 @@ DirectiveHandlerConfiguration ToggleControllerCapabilityAgent::getConfiguration(
 avsCommon::avs::CapabilityConfiguration ToggleControllerCapabilityAgent::getCapabilityConfiguration() {
     ACSDK_DEBUG5(LX(__func__));
     auto additionalConfigurations = CapabilityConfiguration::AdditionalConfigurations();
-    additionalConfigurations[CAPABILITY_RESOURCES_KEY] = m_toggleControllerAttributes.toJson();
+    additionalConfigurations[CAPABILITY_RESOURCES_KEY] = m_toggleControllerAttributes.capabilityResources.toJson();
+    if (m_toggleControllerAttributes.semantics.hasValue()) {
+        additionalConfigurations[CAPABILITY_SEMANTICS_KEY] = m_toggleControllerAttributes.semantics.value().toJson();
+    }
     CapabilityConfiguration configuration{CapabilityConfiguration::ALEXA_INTERFACE_TYPE,
                                           NAMESPACE,
                                           INTERFACE_VERSION,

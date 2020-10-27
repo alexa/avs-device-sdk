@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_
-#define ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_
 
 #include <memory>
 #include <mutex>
@@ -22,6 +22,7 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
@@ -88,6 +89,12 @@ public:
     virtual void onCallStateChange(bool active) = 0;
 
     /**
+     * Function to be called when the DialogUXState has been changed.
+     */
+    virtual void onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) = 0;
+
+    /**
      * Function to set the RenderPlayerInfoCardsProviderInterface.
      *
      * @param observer The RenderPlayerInfoCardsObserverInterface to be set.
@@ -104,4 +111,4 @@ inline MRMHandlerInterface::MRMHandlerInterface(const std::string& shutdownName)
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMHANDLERINTERFACE_H_

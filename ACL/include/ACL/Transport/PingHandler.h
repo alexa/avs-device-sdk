@@ -20,6 +20,7 @@
 
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestSourceInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ResponseSinkInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 
 #include "ACL/Transport/ExchangeHandler.h"
 
@@ -40,11 +41,18 @@ public:
      *
      * @param context The ExchangeContext in which this ping handler will operate.
      * @param authToken The token to use to authorize the request.
+     * @param powerResource The optional powerResource object to prevent the device from going into LPM.
      * @return A new PingHandler or nullptr if the operation fails.
      */
     static std::shared_ptr<PingHandler> create(
         std::shared_ptr<ExchangeHandlerContextInterface> context,
-        const std::string& authToken);
+        const std::string& authToken,
+        const std::shared_ptr<avsCommon::utils::power::PowerResource>& powerResource = nullptr);
+
+    /**
+     * Destructor.
+     */
+    ~PingHandler();
 
 private:
     /**
@@ -52,8 +60,12 @@ private:
      *
      * @param context The ExchangeContext in which this ping handler will operate.
      * @param authToken The token to use to authorize the request.
+     * @param powerResource The optional @c PowerResource object to prevent the device from going into LPM.
      */
-    PingHandler(std::shared_ptr<ExchangeHandlerContextInterface> context, const std::string& authToken);
+    PingHandler(
+        std::shared_ptr<ExchangeHandlerContextInterface> context,
+        const std::string& authToken,
+        const std::shared_ptr<avsCommon::utils::power::PowerResource>& powerResource);
 
     /**
      * Report that the ping was acknowledged.
@@ -79,6 +91,9 @@ private:
 
     /// Response code received through @c onReciveResponseCode (or zero).
     long m_responseCode;
+
+    /// The power resource to prevent device from going to LPM.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 };
 
 }  // namespace acl

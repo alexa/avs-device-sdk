@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_RANGECONTROLLER_RANGECONTROLLERATTRIBUTES_H_
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/AVS/AlexaUnitOfMeasure.h>
 #include <AVSCommon/Utils/Optional.h>
 
@@ -54,6 +55,20 @@ struct RangeControllerAttributes {
         const utils::Optional<avsCommon::avs::resources::AlexaUnitOfMeasure>& unitOfMeasure,
         const std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>>& presets);
 
+    /**
+     *  Constructor to build the @c RangeControllerAttributes using provided values.
+     *
+     *  @param capabilityResources The capability resources.
+     *  @param unitOfMeasure The unit of measure of range defined using @c AlexaUnitOfMeasure
+     *  @param presets presets of the range controller.
+     *  @param semantics The optional semantics definition.
+     */
+    RangeControllerAttributes(
+        const avsCommon::avs::CapabilityResources& capabilityResources,
+        const utils::Optional<avsCommon::avs::resources::AlexaUnitOfMeasure>& unitOfMeasure,
+        const std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>>& presets,
+        avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics);
+
     /// A capability resource @c CapabilityResources
     const avsCommon::avs::CapabilityResources capabilityResources;
 
@@ -65,6 +80,9 @@ struct RangeControllerAttributes {
      * PresetResources.
      */
     std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>> presets;
+
+    /// A semantics definition as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics;
 };
 
 inline RangeControllerAttributes::RangeControllerAttributes() {
@@ -76,7 +94,19 @@ inline RangeControllerAttributes::RangeControllerAttributes(
     const std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>>& presets) :
         capabilityResources{capabilityResources},
         unitOfMeasure{unitOfMeasure},
-        presets{presets} {
+        presets{presets},
+        semantics{avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics>()} {
+}
+
+inline RangeControllerAttributes::RangeControllerAttributes(
+    const avsCommon::avs::CapabilityResources& capabilityResources,
+    const utils::Optional<avsCommon::avs::resources::AlexaUnitOfMeasure>& unitOfMeasure,
+    const std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>>& presets,
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics) :
+        capabilityResources{capabilityResources},
+        unitOfMeasure{unitOfMeasure},
+        presets{presets},
+        semantics{semantics} {
 }
 
 }  // namespace rangeController

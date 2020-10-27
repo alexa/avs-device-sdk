@@ -40,7 +40,10 @@ std::unique_ptr<ModeControllerAttributeBuilder> ModeControllerAttributeBuilder::
     return std::unique_ptr<ModeControllerAttributeBuilder>(new ModeControllerAttributeBuilder());
 }
 
-ModeControllerAttributeBuilder::ModeControllerAttributeBuilder() : m_invalidAttribute{false}, m_ordered{false} {
+ModeControllerAttributeBuilder::ModeControllerAttributeBuilder() :
+        m_invalidAttribute{false},
+        m_ordered{false},
+        m_semantics(Optional<capabilitySemantics::CapabilitySemantics>()) {
 }
 
 ModeControllerAttributeBuilder& ModeControllerAttributeBuilder::withCapabilityResources(
@@ -88,6 +91,17 @@ ModeControllerAttributeBuilder& ModeControllerAttributeBuilder::setOrdered(bool 
     return *this;
 }
 
+ModeControllerAttributeBuilder& ModeControllerAttributeBuilder::withSemantics(
+    const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) {
+    if (!semantics.isValid()) {
+        ACSDK_ERROR(LX("withSemanticsFailed").d("reason", "invalidSemantics"));
+        m_invalidAttribute = true;
+        return *this;
+    }
+    m_semantics = avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics>(semantics);
+    return *this;
+}
+
 avsCommon::utils::Optional<ModeControllerAttributes> ModeControllerAttributeBuilder::build() {
     ACSDK_DEBUG5(LX(__func__));
     auto controllerAttribute = avsCommon::utils::Optional<ModeControllerAttributes>();
@@ -103,7 +117,7 @@ avsCommon::utils::Optional<ModeControllerAttributes> ModeControllerAttributeBuil
     ACSDK_DEBUG5(LX(__func__).sensitive("capabilityResources", m_capabilityResources.toJson()));
     ACSDK_DEBUG5(LX(__func__).d("#modes", m_modes.size()));
 
-    return avsCommon::utils::Optional<ModeControllerAttributes>({m_capabilityResources, m_modes, m_ordered});
+    return Optional<ModeControllerAttributes>({m_capabilityResources, m_modes, m_ordered, m_semantics});
 }
 
 }  // namespace modeController

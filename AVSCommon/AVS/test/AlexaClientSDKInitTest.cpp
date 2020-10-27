@@ -26,6 +26,8 @@ namespace avs {
 namespace initialization {
 namespace test {
 
+static std::vector<std::shared_ptr<std::istream>> EMPTY_JSON_STREAMS;
+
 using namespace std;
 
 /**
@@ -34,7 +36,7 @@ using namespace std;
  * @note This test also validates whether libcurl supports HTTP2.
  */
 TEST(AlexaClientSDKInitTest, test_initializeNoJSONConfig) {
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({}));
+    ASSERT_TRUE(AlexaClientSDKInit::initialize(EMPTY_JSON_STREAMS));
     AlexaClientSDKInit::uninitialize();
 }
 
@@ -72,7 +74,7 @@ TEST(AlexaClientSDKInitTest, test_uninitializedIsInitialized) {
  * Tests @c isInitialized when the SDK is initialized, expecting it to return @c true.
  */
 TEST(AlexaClientSDKInitTest, test_isInitialized) {
-    ASSERT_TRUE(AlexaClientSDKInit::initialize({}));
+    ASSERT_TRUE(AlexaClientSDKInit::initialize(EMPTY_JSON_STREAMS));
     // Expect used to ensure we uninitialize.
     EXPECT_TRUE(AlexaClientSDKInit::isInitialized());
     AlexaClientSDKInit::uninitialize();

@@ -19,6 +19,8 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -34,6 +36,8 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace speakerManager {
 
+using namespace acsdkManufactory;
+using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::speakerConstants;
 using namespace avsCommon::sdkInterfaces;
@@ -41,6 +45,8 @@ using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::metrics;
 using namespace rapidjson;
+
+using DefaultEndpointAnnotation = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation;
 
 /// Speaker capability constants
 /// Speaker interface type
@@ -118,6 +124,37 @@ static void submitMetric(
  * @return The Speaker capability configuration.
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeakerCapabilityConfiguration();
+
+std::shared_ptr<SpeakerManagerInterface> SpeakerManager::createSpeakerManagerCapabilityAgent(
+    const std::shared_ptr<ContextManagerInterface>& contextManager,
+    const std::shared_ptr<MessageSenderInterface>& messageSender,
+    const std::shared_ptr<ExceptionEncounteredSenderInterface>& exceptionEncounteredSender,
+    const std::shared_ptr<ShutdownNotifierInterface>& shutdownNotifier,
+    const Annotated<DefaultEndpointAnnotation, endpoints::EndpointCapabilitiesRegistrarInterface>&
+        endpointCapabilitiesRegistrar,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder) {
+    if (!shutdownNotifier || !endpointCapabilitiesRegistrar) {
+        ACSDK_ERROR(LX("createSpeakerManagerCapabilityAgentFailed")
+                        .d("reason", "nullParameter")
+                        .d("isContextManagerNull", !contextManager)
+                        .d("isDefaultEndpointCapabilitiesRegistrarNull", !endpointCapabilitiesRegistrar));
+        return nullptr;
+    }
+
+    std::vector<std::shared_ptr<ChannelVolumeInterface>> speakers;
+    auto speakerManager =
+        SpeakerManager::create(speakers, contextManager, messageSender, exceptionEncounteredSender, metricRecorder);
+
+    if (!speakerManager) {
+        ACSDK_ERROR(LX("createSpeakerManagerCapabilityAgentFailed"));
+        return nullptr;
+    }
+
+    shutdownNotifier->addObserver(speakerManager);
+    endpointCapabilitiesRegistrar->withCapability(speakerManager, speakerManager);
+
+    return speakerManager;
+}
 
 std::shared_ptr<SpeakerManager> SpeakerManager::create(
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
@@ -969,10 +1006,18 @@ void SpeakerManager::addChannelVolumeInterface(
         ACSDK_ERROR(LX("addChannelVolumeInterfaceFailed").d("reason", "channelVolumeInterface cannot be nullptr"));
         return;
     }
-    m_executor.submit([this, channelVolumeInterface] {
-        m_speakerMap.insert(std::pair<ChannelVolumeInterface::Type, std::shared_ptr<ChannelVolumeInterface>>(
-            channelVolumeInterface->getSpeakerType(), channelVolumeInterface));
-    });
+
+    m_speakerMap.insert(std::pair<ChannelVolumeInterface::Type, std::shared_ptr<ChannelVolumeInterface>>(
+        channelVolumeInterface->getSpeakerType(), channelVolumeInterface));
+
+    // If we have at least one AVS_SPEAKER_VOLUME speaker, update the Context initially.
+    const auto type = ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME;
+    if (m_speakerMap.count(type) == 1) {
+        SpeakerInterface::SpeakerSettings settings;
+        if (!validateSpeakerSettingsConsistency(type, &settings) || !updateContextManager(type, settings)) {
+            ACSDK_ERROR(LX("initialUpdateContextManagerFailed"));
+        }
+    }
 }
 
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SpeakerManager::

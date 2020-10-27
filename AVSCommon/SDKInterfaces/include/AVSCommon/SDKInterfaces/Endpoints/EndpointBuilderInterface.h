@@ -19,6 +19,10 @@
 #include <memory>
 #include <string>
 
+#include "AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h"
+#include "AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h"
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesBuilderInterface.h"
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h"
 #include "AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h"
 #include "AVSCommon/SDKInterfaces/ModeController/ModeControllerAttributes.h"
 #include "AVSCommon/SDKInterfaces/ModeController/ModeControllerInterface.h"
@@ -59,7 +63,7 @@ namespace endpoints {
  * build.
  *
  */
-class EndpointBuilderInterface {
+class EndpointBuilderInterface : public EndpointCapabilitiesRegistrarInterface {
 public:
     /**
      * Destructor.
@@ -196,6 +200,8 @@ public:
     /**
      * Configures builder to use a @c PowerControllerInterface
      *
+     * @deprecated use the new @c withEndpointCapabilitiesBuilder() method instead.
+     *
      * @param powerController An interface that provides the power operations.
      * @param isProactivelyReported Whether the property state change is proactively reported.
      * @param isRetrievable Whether the property state is retrievable.
@@ -210,6 +216,8 @@ public:
      * Configures builder to use a @c ToggleControllerInterface with @c instance identifier.
      *
      * @note The builder will fail if the instance name is already used in that endpoint.
+     *
+     * @deprecated use the new @c withEndpointCapabilitiesBuilder() method instead.
      *
      * @param toggleController An interface that performs the toggle operations.
      * @param instance A non-empty string identifying an instance of a toggle controller uniquely in a endpoint.
@@ -233,6 +241,8 @@ public:
      *
      * @note The builder will fail if the instance name is already used in that endpoint.
      *
+     * @deprecated use the new @c withEndpointCapabilitiesBuilder() method instead.
+     *
      * @param modeController An interface that provides the mode operations.
      * @param instance A non-empty string identifying an instance of a mode controller uniquely in a endpoint.
      * @param modeControllerAttributes The attributes used in capability discovery message.
@@ -255,6 +265,8 @@ public:
      *
      * @note The builder will fail if the instance name is already used in that endpoint.
      *
+     * @deprecated use the new @c withEndpointCapabilitiesBuilder() method instead.
+     *
      * @param rangeController An interface that provides the range operations.
      * @param instance A non-empty string identifying an instance of a range controller uniquely in a endpoint.
      * @param rangeControllerAttributes The attributes used in capability discovery message.
@@ -271,6 +283,19 @@ public:
         bool isProactivelyReported,
         bool isRetrievable,
         bool isNonControllable = false) = 0;
+
+    /**
+     * Configures builder to use a @c EndpointCapabilitiesBuilder object that can be used to build multiple capability
+     * agents.
+     *
+     * @note The builder will fail if the endpointCapabilitiesBuilder fails in generating valid capability agents.
+     *
+     * @param endpointCapabilitiesBuilder A @c EndpointCapabilitiesBuilder object.
+     * @return This builder which can be used to nest configuration function calls.
+     */
+    virtual EndpointBuilderInterface& withEndpointCapabilitiesBuilder(
+        const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesBuilderInterface>&
+            endpointCapabilitiesBuilder) = 0;
 
     /**
      * Builds an endpoint with the configured properties / components.

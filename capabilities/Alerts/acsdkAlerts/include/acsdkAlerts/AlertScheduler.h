@@ -19,6 +19,7 @@
 #include "acsdkAlerts/Storage/AlertStorageInterface.h"
 
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
@@ -92,6 +93,23 @@ public:
     bool scheduleAlert(std::shared_ptr<Alert> alert);
 
     /**
+     * Save the currently active alert as an offline stopped alert
+     * @param alertToken the alert token of the offline stopped alert
+     * @param scheduledTime the scheduled time of the offline stopepd alert
+     * @return Whether the offline alert was successfully saved.
+     */
+    bool saveOfflineStoppedAlert(const std::string& alertToken, const std::string& scheduledTime);
+
+    /**
+     * Get list of offline stopped alerts
+     *
+     * @param alertContainer rapidJson array to load alerts into
+     * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
+     * rapidjson::Value objects.
+     */
+    bool getOfflineStoppedAlerts(rapidjson::Value* alertContainer, rapidjson::Document::AllocatorType& allocator);
+
+    /**
      * Reload alerts from database, then update expired alerts and set a timer for the next alert if desired. If there
      * is an active alert, it will not interrupted or modified in any way.
      *
@@ -131,6 +149,14 @@ public:
     bool deleteAlerts(const std::list<std::string>& tokenList);
 
     /**
+     * Delete an offline stopped alert from list of offline stopped alerts
+     *
+     * @param token The alertToken of the alert to be deleted
+     * @param id The alert Id of the alert to be deleted
+     */
+    void deleteOfflineStoppedAlert(const std::string& token, int id);
+
+    /**
      * Utility function to determine if an alert is currently active.
      *
      * @param alert The alert being queried.
@@ -139,11 +165,19 @@ public:
     bool isAlertActive(std::shared_ptr<Alert> alert);
 
     /**
+     * Gets the current active alert.
+     *
+     * @return the current active alert, else nullptr.
+     */
+    std::shared_ptr<Alert> getActiveAlert();
+
+    /**
      * Update our state of channel focus.
      *
      * @param focusState The state we now have.
+     * @param behavior The mixing behavior.
      */
-    void updateFocus(avsCommon::avs::FocusState focusState);
+    void updateFocus(avsCommon::avs::FocusState focusState, avsCommon::avs::MixingBehavior behavior);
 
     /**
      * Provide our current channel focus state.
@@ -277,6 +311,13 @@ private:
     std::shared_ptr<Alert> getAlertLocked(const std::string& token) const;
 
     /**
+     * A utility function to retreive the currently active alert.  This function requires @c m_mutex be locked.
+     *
+     * @return The currently active alert, otherwise nullptr.
+     */
+    std::shared_ptr<Alert> getActiveAlertLocked() const;
+
+    /**
      * A utility function to deactivate the currently active alert.  This function requires @c m_mutex be locked.
      *
      * @param The reason the alert is being stopped.
@@ -315,7 +356,8 @@ private:
     std::chrono::seconds m_alertPastDueTimeLimit;
     /// The current focus state for the Alerts channel.
     avsCommon::avs::FocusState m_focusState;
-
+    /// The current behavior state for the Alerts channel.
+    avsCommon::avs::MixingBehavior m_mixingBehavior;
     /// The alert, if any, which is currently active.
     std::shared_ptr<Alert> m_activeAlert;
     /// All alerts which are scheduled to occur, ordered ascending by time.

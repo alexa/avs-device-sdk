@@ -33,6 +33,27 @@ static const std::string TAG("SynchronizeStateSenderFactory");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface> SynchronizeStateSenderFactory::
+    createPostConnectOperationProviderInterface(
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager) {
+    if (!providerRegistrar) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullProviderRegistrar"));
+        return nullptr;
+    }
+    if (!contextManager) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
+        return nullptr;
+    }
+    std::shared_ptr<SynchronizeStateSenderFactory> provider(new SynchronizeStateSenderFactory(contextManager));
+    if (!providerRegistrar->registerProvider(provider)) {
+        return nullptr;
+    }
+    return provider;
+}
+
 std::shared_ptr<SynchronizeStateSenderFactory> SynchronizeStateSenderFactory::create(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) {
     ACSDK_DEBUG5(LX(__func__));

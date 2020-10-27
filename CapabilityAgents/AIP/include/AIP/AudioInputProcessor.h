@@ -35,6 +35,7 @@
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/ExpectSpeechTimeoutHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
@@ -82,6 +83,26 @@ public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
     using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
 
+    /**
+     * This function allows applications to tell the @c AudioInputProcessor that the @c ExpectSpeech directive's timeout
+     * will be handled externally and stops the @c AudioInputProcessor from starting an internal timer to handle it.
+     *
+     * @param timeout The timeout of the @c ExpectSpeech directive.
+     * @param expectSpeechTimedOut An @c std::function that applications may call if the timeout expires. This results
+     * in an @c ExpectSpeechTimedOut event being sent to AVS if no @c recognize() call is made prior to the timeout
+     * expiring. This function will return a future which is @c true if called in the correct state and an
+     * @c ExpectSpeechTimeout Event was sent successfully, or @c false otherwise.
+     * @return @c true if the @c ExpectSpeech directive's timeout will be handled externally and should not be handled
+     * via an internal timer owned by the @c AudioInputProcessor.
+     *
+     * @note This function will be called after any calls to the @c AudioInputProcessorObserverInterface's
+     * onStateChanged() method to notify of a state change to @c EXPECTING_SPEECH.
+     * @note Implementations are not required to be thread-safe.
+     * @note If the @cAudioInputProcessor object that this call came from is destroyed, the @c expectSpeechTimedOut
+     * parameter is no longer valid.
+     */
+    using ExpectSpeechTimeoutHandler = avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface;
+
     /// A special keyword sent by supported wakeword engines for "Alexa, Stop".
     static constexpr const char* KEYWORD_TEXT_STOP = "STOP";
 
@@ -111,6 +132,9 @@ public:
      *     defaults to an invalid @c avsCommon::AudioProvider.
      * @param powerResourceManager Power Resource Manager.
      * @param metricRecorder The metric recorder.
+     * @param expectSpeechTimeoutHandler An optional interface that applications may provide to specify external
+     * handling of the @c ExpectSpeech directive's timeout. If provided, this function must remain valid for the
+     * lifetime of the @c AudioInputProcessor.
      * @return A @c std::shared_ptr to the new @c AudioInputProcessor instance.
      */
     static std::shared_ptr<AudioInputProcessor> create(
@@ -129,7 +153,8 @@ public:
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null(),
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
+        const std::shared_ptr<ExpectSpeechTimeoutHandler>& expectSpeechTimeoutHandler = nullptr);
 
     /**
      * Adds an observer to be notified of AudioInputProcessor state changes.
@@ -309,6 +334,9 @@ private:
      * @param capabilitiesConfiguration The SpeechRecognizer capabilities configuration.
      * @param powerResourceManager Power Resource Manager.
      * @param metricRecorder The metric recorder.
+     * @param expectSpeechTimeoutHandler An optional interface that applications may provide to specify external
+     * handling of the @c ExpectSpeech directive's timeout. If provided, this function must remain valid for the
+     * lifetime of the @c AudioInputProcessor.
      *
      * @note This constructor is private so that users are forced to use the @c create() factory function.  The primary
      *     reason for this is to ensure that a @c std::shared_ptr to the instance exists, which is a requirement for
@@ -329,7 +357,8 @@ private:
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
         std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        const std::shared_ptr<ExpectSpeechTimeoutHandler>& expectSpeechTimeoutHandler);
 
     /// @name RequiresShutdown Functions
     /// @{
@@ -730,6 +759,12 @@ private:
 
     /// StopCapture received time
     std::chrono::steady_clock::time_point m_stopCaptureReceivedTime;
+
+    /**
+     * An optional interface that applications may provide to specify external handling of the @c ExpectSpeech
+     * directive's timeout.
+     */
+    std::shared_ptr<ExpectSpeechTimeoutHandler> m_expectSpeechTimeoutHandler;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

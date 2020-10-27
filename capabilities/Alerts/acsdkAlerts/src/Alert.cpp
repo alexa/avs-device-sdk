@@ -81,6 +81,7 @@ Alert::Alert(
     std::shared_ptr<settings::DeviceSettingsManager> settingsManager) :
         m_stopReason{StopReason::UNSET},
         m_focusState{avsCommon::avs::FocusState::NONE},
+        m_mixingBehavior{avsCommon::avs::MixingBehavior::UNDEFINED},
         m_hasTimerExpired{false},
         m_observer{nullptr},
         m_defaultAudioFactory{defaultAudioFactory},
@@ -252,7 +253,8 @@ void Alert::setObserver(AlertObserverInterface* observer) {
     m_observer = observer;
 }
 
-void Alert::setFocusState(FocusState focusState) {
+void Alert::setFocusState(FocusState focusState, MixingBehavior behavior) {
+    ACSDK_INFO(LX("SetFocusState").d("focusState", focusState).d("mixingBehavior", behavior));
     std::lock_guard<std::mutex> lock(m_mutex);
     auto alertState = m_dynamicData.state;
 
@@ -261,15 +263,29 @@ void Alert::setFocusState(FocusState focusState) {
     }
 
     m_focusState = focusState;
+    MixingBehavior previousBehavior = m_mixingBehavior;
+    m_mixingBehavior = behavior;
 
     if (State::ACTIVATING == alertState) {
+        if (avsCommon::avs::FocusState::FOREGROUND == m_focusState &&
+            avsCommon::avs::MixingBehavior::MUST_PAUSE == previousBehavior) {
+            startRendererLocked();
+            return;
+        }
+
         m_focusChangedDuringAlertActivation = true;
         return;
     }
 
     if (State::ACTIVE == alertState) {
-        m_startRendererAgainAfterFullStop = true;
-        m_renderer->stop();
+        // if the previous mixingBehavior was MUST_PAUSE, we must manually restart the renderer.
+        if (avsCommon::avs::FocusState::FOREGROUND == m_focusState &&
+            avsCommon::avs::MixingBehavior::MUST_PAUSE == previousBehavior) {
+            startRendererLocked();
+        } else {
+            m_startRendererAgainAfterFullStop = true;
+            m_renderer->stop();
+        }
     }
 }
 
@@ -291,7 +307,7 @@ void Alert::reset() {
 }
 
 void Alert::activate() {
-    ACSDK_DEBUG9(LX("activate"));
+    ACSDK_DEBUG5(LX("activate").d("token", getToken()));
     std::unique_lock<std::mutex> lock(m_mutex);
 
     if (Alert::State::ACTIVATING == m_dynamicData.state || Alert::State::ACTIVE == m_dynamicData.state) {
@@ -318,6 +334,12 @@ void Alert::deactivate(StopReason reason) {
     m_dynamicData.state = Alert::State::STOPPING;
     m_stopReason = reason;
     m_maxLengthTimer.stop();
+
+    if (isAlertPaused()) {
+        m_dynamicData.state = Alert::State::STOPPED;
+        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::STOPPED);
+    }
+
     m_renderer->stop();
 }
 
@@ -408,7 +430,8 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
                      .d("state", state)
                      .d("reason", reason)
                      .d("m_hasTimerExpired", m_hasTimerExpired)
-                     .d("m_dynamicData.state", m_dynamicData.state));
+                     .d("m_dynamicData.state", m_dynamicData.state)
+                     .d("token", getToken()));
     bool shouldNotifyObserver = false;
     bool shouldRetryRendering = false;
     AlertObserverInterface::State notifyState = AlertObserverInterface::State::ERROR;
@@ -503,7 +526,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
     }
 
     if (shouldRetryRendering) {
-        // DEE-153001: This is a temporary fix for R39 in which we sleep between retries to fix a
+        // This is a temporary fix in which we sleep between retries to fix a
         // race condition that would otherwise require a media player change that could add risk to
         // more CAs than just Alerts/Reminders.
         std::this_thread::sleep_for(std::chrono::milliseconds(75));
@@ -568,8 +591,15 @@ bool Alert::snooze(const std::string& updatedScheduledTime) {
     }
 
     m_dynamicData.state = State::SNOOZING;
+    m_maxLengthTimer.stop();
+
+    if (isAlertPaused()) {
+        m_dynamicData.state = Alert::State::SNOOZED;
+        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::SNOOZED);
+    }
 
     m_renderer->stop();
+
     return true;
 }
 
@@ -614,8 +644,14 @@ void Alert::startRenderer() {
 }
 
 void Alert::startRendererLocked() {
-    ACSDK_DEBUG9(LX("startRenderer"));
+    ACSDK_DEBUG5(LX("startRenderer"));
     std::vector<std::string> urls;
+
+    if (isAlertPaused()) {
+        ACSDK_INFO(
+            LX("startRenderer early exit due to focus being in background, and mixing behavior being MUST_PAUSE"));
+        return;
+    }
 
     auto loopCount = m_dynamicData.loopCount;
     auto loopPause = m_dynamicData.assetConfiguration.loopPause;
@@ -635,6 +671,8 @@ void Alert::startRendererLocked() {
         if (State::ACTIVATING != m_dynamicData.state) {
             startWithPause = true;
         }
+        // If alert is in background, we want to keep looping short alert.
+        loopCount = std::numeric_limits<int>::max();
     } else if (!m_dynamicData.assetConfiguration.assets.empty() && !m_dynamicData.hasRenderingFailed) {
         // Only play the named timer urls when it's in foreground.
         for (auto item : m_dynamicData.assetConfiguration.assetPlayOrderItems) {
@@ -658,10 +696,15 @@ void Alert::startRendererLocked() {
 }
 
 void Alert::onMaxTimerExpiration() {
-    ACSDK_DEBUG1(LX("onMaxTimerExpiration"));
+    ACSDK_DEBUG1(LX("onMaxTimerExpiration").d("token", getToken()));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_dynamicData.state = Alert::State::STOPPING;
     m_hasTimerExpired = true;
+
+    if (isAlertPaused()) {
+        m_dynamicData.state = Alert::State::STOPPED;
+        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::STOPPED);
+    }
 
     m_renderer->stop();
 }
@@ -688,6 +731,11 @@ Alert::ContextInfo Alert::getContextInfo() const {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     return ContextInfo(m_staticData.token, getTypeName(), getScheduledTime_ISO_8601Locked());
+}
+
+bool Alert::isAlertPaused() const {
+    return avsCommon::avs::FocusState::BACKGROUND == m_focusState &&
+           avsCommon::avs::MixingBehavior::MUST_PAUSE == m_mixingBehavior;
 }
 
 std::string Alert::stateToString(Alert::State state) {

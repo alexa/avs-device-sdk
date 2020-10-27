@@ -58,11 +58,15 @@ enum HTTPResponseCode {
     CLIENT_ERROR_BAD_REQUEST = 400,
     /// HTTP code for forbidden request by user.
     CLIENT_ERROR_FORBIDDEN = 403,
+    /// HTTP code for too many requests to the service.
+    CLIENT_ERROR_THROTTLING_EXCEPTION = 429,
 
     /// HTTP code for internal error by server which didn't fulfill the request.
     SERVER_ERROR_INTERNAL = 500,
     /// HTTP code for internal error by server for not supporting the facility requested.
     SERVER_ERROR_NOT_IMPLEMENTED = 501,
+    /// HTTP code for service not available
+    SERVER_UNAVAILABLE = 503,
 
     /// First success code
     SUCCESS_START_CODE = SUCCESS_OK,
@@ -136,8 +140,12 @@ inline HTTPResponseCode intToHTTPResponseCode(int code) {
             return HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST;
         case 403:
             return HTTPResponseCode::CLIENT_ERROR_FORBIDDEN;
+        case 429:
+            return HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION;
         case 500:
             return HTTPResponseCode::SERVER_ERROR_INTERNAL;
+        case 503:
+            return HTTPResponseCode::SERVER_UNAVAILABLE;
     }
     logger::acsdkError(
         logger::LogEntry("HttpResponseCodes", __func__).d("code", code).m("Unknown HTTP response code."));
@@ -192,10 +200,14 @@ inline std::string responseCodeToString(HTTPResponseCode responseCode) {
             return "CLIENT_ERROR_BAD_REQUEST";
         case HTTPResponseCode::CLIENT_ERROR_FORBIDDEN:
             return "CLIENT_ERROR_FORBIDDEN";
+        case HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION:
+            return "CLIENT_ERROR_THROTTLING_EXCEPTION";
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
             return "SERVER_ERROR_INTERNAL";
         case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
             return "SERVER_ERROR_NOT_IMPLEMENTED";
+        case HTTPResponseCode::SERVER_UNAVAILABLE:
+            return "SERVER_UNAVAILABLE";
     }
     logger::acsdkError(logger::LogEntry("HttpResponseCodes", __func__)
                            .d("longValue", static_cast<long>(responseCode))

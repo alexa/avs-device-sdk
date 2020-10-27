@@ -22,6 +22,7 @@
 #include <unordered_set>
 #include <deque>
 
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/PlayBehavior.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
@@ -50,6 +51,9 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace speechSynthesizer {
 
+/// String to identify the speak media player to render audio.
+static const constexpr char* SPEAK_MEDIA_PLAYER_NAME = "SpeakMediaPlayer";
+
 /**
  * This class implements the SpeechSynthesizer capability agent.
  * @see https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechsynthesizer
@@ -64,6 +68,35 @@ class SpeechSynthesizer
 public:
     /// Alias to the @c SpeechSynthesizerObserverInterface for brevity.
     using SpeechSynthesizerObserverInterface = avsCommon::sdkInterfaces::SpeechSynthesizerObserverInterface;
+
+    /**
+     * Create a new @c SpeechSynthesizer instance.
+     *
+     * @param audioPipelineFactory The instance of @c ApplicationAudioPipelineFactoryInterface to create the speak
+     * media player and related interfaces.
+     * @param messageSender The instance of the @c MessageSenderInterface used to send events to AVS.
+     * @param focusManager The instance of the @c FocusManagerInterface used to acquire focus of a channel.
+     * @param contextManager The instance of the @c ContextObserverInterface to use to set the context
+     * of the @c SpeechSynthesizer.
+     * @param metricRecorder The instance of the @c MetricRecorderInterface used to record metrics
+     * @param exceptionSender The instance of the @c ExceptionEncounteredSenderInterface to use to notify AVS
+     * when a directive cannot be processed.
+     * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
+     * @param powerResourceManager Power Resource Manager.
+     *
+     * @return Returns a new @c SpeechSynthesizer, or @c nullptr if the operation failed.
+     */
+    static std::shared_ptr<SpeechSynthesizer> createSpeechSynthesizer(
+        std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
+            audioPipelineFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+        std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr);
 
     /**
      * Create a new @c SpeechSynthesizer instance.

@@ -21,7 +21,7 @@
 #include <memory>
 #include <tuple>
 
-#include <ACL/AVSConnectionManager.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
@@ -56,7 +56,7 @@ public:
     DeviceSettingsManagerBuilder(
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<acl::AVSConnectionManager> connectionManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
 
     /**
@@ -177,7 +177,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
     /// The connection manager that manages the connection with AVS.
-    std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> m_connectionManager;
 
     /// The dataManager object that will track the CustomerDataHandler.
     std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;

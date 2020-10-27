@@ -35,6 +35,22 @@ static const std::string TAG("AVSConnectionManager");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<MessageSenderInterface> AVSConnectionManager::createMessageSenderInterface(
+    const std::shared_ptr<AVSConnectionManagerInterface>& connectionManager) {
+    return connectionManager;
+}
+
+std::shared_ptr<AVSConnectionManagerInterface> AVSConnectionManager::createAVSConnectionManagerInterface(
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const std::shared_ptr<MessageRouterInterface>& messageRouter,
+    const std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>& internetConnectionMonitor) {
+    auto avsConnectionManager = create(messageRouter, false, {}, {}, internetConnectionMonitor);
+    if (avsConnectionManager) {
+        shutdownNotifier->addObserver(avsConnectionManager);
+    }
+    return avsConnectionManager;
+}
+
 std::shared_ptr<AVSConnectionManager> AVSConnectionManager::create(
     std::shared_ptr<MessageRouterInterface> messageRouter,
     bool isEnabled,
@@ -154,7 +170,7 @@ void AVSConnectionManager::setAVSGateway(const std::string& avsGateway) {
     m_messageRouter->setAVSGateway(avsGateway);
 }
 
-std::string AVSConnectionManager::getAVSGateway() {
+std::string AVSConnectionManager::getAVSGateway() const {
     return m_messageRouter->getAVSGateway();
 }
 
@@ -193,8 +209,10 @@ void AVSConnectionManager::removeMessageObserver(
 
 void AVSConnectionManager::onConnectionStatusChanged(
     const ConnectionStatusObserverInterface::Status status,
-    const ConnectionStatusObserverInterface::ChangedReason reason) {
-    updateConnectionStatus(status, reason);
+    const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
+        engineConnectionStatuses) {
+    ACSDK_DEBUG(LX(__func__).d("status", status).d("engine_count", engineConnectionStatuses.size()));
+    updateConnectionStatus(status, engineConnectionStatuses);
 }
 
 void AVSConnectionManager::receive(const std::string& contextId, const std::string& message) {

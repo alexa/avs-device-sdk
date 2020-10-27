@@ -109,6 +109,9 @@ public:
     MOCK_METHOD1(
         removeMessageObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
+    MOCK_METHOD1(sendMessage, void(std::shared_ptr<avsCommon::avs::MessageRequest> request));
+    MOCK_METHOD1(setAVSGateway, void(const std::string& avsGateway));
+    MOCK_CONST_METHOD0(getAVSGateway, std::string());
 
     bool isConnected() const;
 
@@ -133,7 +136,9 @@ bool MockConnection::isConnected() const {
 void MockConnection::updateConnectionStatus(
     ConnectionStatusObserverInterface::Status status,
     ConnectionStatusObserverInterface::ChangedReason reason) {
-    AbstractAVSConnectionManager::updateConnectionStatus(status, reason);
+    std::vector<ConnectionStatusObserverInterface::EngineConnectionStatus> engineStatuses;
+    engineStatuses.emplace_back(avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES, reason, status);
+    AbstractAVSConnectionManager::updateConnectionStatus(status, engineStatuses);
 }
 
 /// Test harness for @c SoftwareInfoSender class.

@@ -192,43 +192,49 @@ void GuiRenderer::renderPlayerInfoCard(
     // Add GUI Playback Controller Button command info based on PlayerInfo payload
     rapidjson::Value::ConstMemberIterator controlsNode;
     if (jsonUtils::findNode(payload, CONTROLS_NODE, &controlsNode)) {
-        const rapidjson::Value& controls = payload[CONTROLS_NODE];
-        for (rapidjson::SizeType i = 0; i < controls.Size(); i++) {
-            std::string controlName;
-            if (!jsonUtils::retrieveValue(controls[i], CONTROLS_NAME_KEY, &controlName)) {
-                ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has controls field");
-                break;
-            }
+        controlsNode = payload.FindMember(CONTROLS_NODE);
+        if (controlsNode->value.IsArray()) {
+            auto controls = controlsNode->value.GetArray();
+            for (rapidjson::SizeType i = 0; i < controls.Size(); i++) {
+                std::string controlName;
+                if (!jsonUtils::retrieveValue(controls[i], CONTROLS_NAME_KEY, &controlName)) {
+                    ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has controls field");
+                    break;
+                }
 
-            bool controlSelected;
-            if (!jsonUtils::retrieveValue(controls[i], CONTROLS_SELECTED_KEY, &controlSelected)) {
-                ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has controls selected field");
-                break;
-            } else if (BUTTON_NAME_SKIPFORWARD == controlName) {
-                buffer += "# Press '5' for a '" + BUTTON_NAME_SKIPFORWARD + "' button press.\n";
-            } else if (BUTTON_NAME_SKIPBACKWARD == controlName) {
-                buffer += "# Press '6' for a '" + BUTTON_NAME_SKIPBACKWARD + "' button press.\n";
-            } else if (TOGGLE_NAME_SHUFFLE == controlName) {
-                m_guiToggleStateMap[controlName] = controlSelected;
-                buffer += "# Press '7' for a '" + TOGGLE_NAME_SHUFFLE + "' toggle press.     " + TOGGLE_NAME_SHUFFLE +
-                          " state: " + boolToSelectedString(controlSelected) + "\n";
-            } else if (TOGGLE_NAME_LOOP == controlName) {
-                m_guiToggleStateMap[controlName] = controlSelected;
-                buffer += "# Press '8' for a '" + TOGGLE_NAME_LOOP + "' toggle press.        " + TOGGLE_NAME_LOOP +
-                          " state: " + boolToSelectedString(controlSelected) + "\n";
-            } else if (TOGGLE_NAME_REPEAT == controlName) {
-                m_guiToggleStateMap[controlName] = controlSelected;
-                buffer += "# Press '9' for a '" + TOGGLE_NAME_REPEAT + "' toggle Pressess.   " + TOGGLE_NAME_REPEAT +
-                          " state: " + boolToSelectedString(controlSelected) + "\n";
-            } else if (TOGGLE_NAME_THUMBSDOWN == controlName) {
-                m_guiToggleStateMap[controlName] = controlSelected;
-                buffer += "# Press '-' for a '" + TOGGLE_NAME_THUMBSDOWN + "' toggle press. " + TOGGLE_NAME_THUMBSDOWN +
-                          " state: " + boolToSelectedString(controlSelected) + "\n";
-            } else if (TOGGLE_NAME_THUMBSUP == controlName) {
-                m_guiToggleStateMap[controlName] = controlSelected;
-                buffer += "# Press '+' for a '" + TOGGLE_NAME_THUMBSUP + "' toggle press.   " + TOGGLE_NAME_THUMBSUP +
-                          " state: " + boolToSelectedString(controlSelected) + "\n";
+                bool controlSelected;
+                if (!jsonUtils::retrieveValue(controls[i], CONTROLS_SELECTED_KEY, &controlSelected)) {
+                    ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has controls selected field");
+                    break;
+                } else if (BUTTON_NAME_SKIPFORWARD == controlName) {
+                    buffer += "# Press '5' for a '" + BUTTON_NAME_SKIPFORWARD + "' button press.\n";
+                } else if (BUTTON_NAME_SKIPBACKWARD == controlName) {
+                    buffer += "# Press '6' for a '" + BUTTON_NAME_SKIPBACKWARD + "' button press.\n";
+                } else if (TOGGLE_NAME_SHUFFLE == controlName) {
+                    m_guiToggleStateMap[controlName] = controlSelected;
+                    buffer += "# Press '7' for a '" + TOGGLE_NAME_SHUFFLE + "' toggle press.     " +
+                              TOGGLE_NAME_SHUFFLE + " state: " + boolToSelectedString(controlSelected) + "\n";
+                } else if (TOGGLE_NAME_LOOP == controlName) {
+                    m_guiToggleStateMap[controlName] = controlSelected;
+                    buffer += "# Press '8' for a '" + TOGGLE_NAME_LOOP + "' toggle press.        " + TOGGLE_NAME_LOOP +
+                              " state: " + boolToSelectedString(controlSelected) + "\n";
+                } else if (TOGGLE_NAME_REPEAT == controlName) {
+                    m_guiToggleStateMap[controlName] = controlSelected;
+                    buffer += "# Press '9' for a '" + TOGGLE_NAME_REPEAT + "' toggle Pressess.   " +
+                              TOGGLE_NAME_REPEAT + " state: " + boolToSelectedString(controlSelected) + "\n";
+                } else if (TOGGLE_NAME_THUMBSDOWN == controlName) {
+                    m_guiToggleStateMap[controlName] = controlSelected;
+                    buffer += "# Press '-' for a '" + TOGGLE_NAME_THUMBSDOWN + "' toggle press. " +
+                              TOGGLE_NAME_THUMBSDOWN + " state: " + boolToSelectedString(controlSelected) + "\n";
+                } else if (TOGGLE_NAME_THUMBSUP == controlName) {
+                    m_guiToggleStateMap[controlName] = controlSelected;
+                    buffer += "# Press '+' for a '" + TOGGLE_NAME_THUMBSUP + "' toggle press.   " +
+                              TOGGLE_NAME_THUMBSUP + " state: " + boolToSelectedString(controlSelected) + "\n";
+                }
             }
+        } else {
+            ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has unexpected controls field");
+            return;
         }
     }
     buffer += RENDER_FOOTER;

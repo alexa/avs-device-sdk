@@ -20,6 +20,7 @@
 #include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 
 #include "ADSL/DirectiveProcessor.h"
 
@@ -39,6 +40,7 @@ namespace adsl {
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
 
 std::mutex DirectiveProcessor::m_handleMapMutex;
 DirectiveProcessor::ProcessorHandle DirectiveProcessor::m_nextProcessorHandle = 0;
@@ -51,6 +53,11 @@ DirectiveProcessor::DirectiveProcessor(DirectiveRouter* directiveRouter) :
     std::lock_guard<std::mutex> lock(m_handleMapMutex);
     m_handle = ++m_nextProcessorHandle;
     m_handleMap[m_handle] = this;
+    m_powerResource = power::PowerMonitor::getInstance()->createLocalPowerResource(TAG);
+
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
     m_processingThread = std::thread(&DirectiveProcessor::processingLoop, this);
 }
 
@@ -117,7 +124,7 @@ bool DirectiveProcessor::onDirective(std::shared_ptr<AVSDirective> directive) {
 
     auto item = std::make_pair(directive, policy);
     m_handlingQueue.push_back(item);
-    m_wakeProcessingLoop.notify_one();
+    m_wakeProcessingLoop.notifyOne();
 
     return true;
 }
@@ -131,7 +138,7 @@ void DirectiveProcessor::shutdown() {
         std::lock_guard<std::mutex> lock(m_mutex);
         queueAllDirectivesForCancellationLocked();
         m_isShuttingDown = true;
-        m_wakeProcessingLoop.notify_one();
+        m_wakeProcessingLoop.notifyOne();
     }
     if (m_processingThread.joinable()) {
         m_processingThread.join();
@@ -143,7 +150,7 @@ void DirectiveProcessor::disable() {
     ACSDK_DEBUG(LX("disable"));
     queueAllDirectivesForCancellationLocked();
     m_isEnabled = false;
-    m_wakeProcessingLoop.notify_one();
+    m_wakeProcessingLoop.notifyOne();
 }
 
 bool DirectiveProcessor::enable() {
@@ -230,7 +237,7 @@ void DirectiveProcessor::removeDirectiveLocked(std::shared_ptr<AVSDirective> dir
     }
 
     if (!m_cancelingQueue.empty() || !m_handlingQueue.empty()) {
-        m_wakeProcessingLoop.notify_one();
+        m_wakeProcessingLoop.notifyOne();
     }
 }
 
@@ -320,6 +327,8 @@ std::deque<DirectiveProcessor::DirectiveAndPolicy>::iterator DirectiveProcessor:
 void DirectiveProcessor::processingLoop() {
     ACSDK_DEBUG9(LX("processingLoop"));
 
+    power::PowerMonitor::getInstance()->assignThreadPowerResource(m_powerResource);
+
     auto haveUnblockedDirectivesToHandle = [this] {
         return getNextUnblockedDirectiveLocked() != m_handlingQueue.end();
     };
@@ -346,6 +355,11 @@ void DirectiveProcessor::processingLoop() {
         } while (cancelHandled || queuedHandled);
 
     } while (!m_isShuttingDown);
+
+    power::PowerMonitor::getInstance()->removeThreadPowerResource();
+    if (m_powerResource) {
+        m_powerResource->release();
+    }
 }
 
 bool DirectiveProcessor::processCancelingQueueLocked(std::unique_lock<std::mutex>& lock) {
@@ -484,7 +498,7 @@ void DirectiveProcessor::scrubDialogRequestIdLocked(const std::string& dialogReq
     // If there were any changes, wake up the processing loop.
     if (changed) {
         ACSDK_DEBUG9(LX("notifyingProcessingLoop").d("size:", m_cancelingQueue.size()));
-        m_wakeProcessingLoop.notify_one();
+        m_wakeProcessingLoop.notifyOne();
     }
 }
 
@@ -521,7 +535,7 @@ void DirectiveProcessor::queueAllDirectivesForCancellationLocked() {
     if (changed) {
         ACSDK_DEBUG9(LX("notifyingProcessingLoop"));
 
-        m_wakeProcessingLoop.notify_one();
+        m_wakeProcessingLoop.notifyOne();
     }
 }
 

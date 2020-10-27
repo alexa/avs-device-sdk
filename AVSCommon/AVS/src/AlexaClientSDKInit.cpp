@@ -16,8 +16,12 @@
 #include <curl/curl.h>
 
 #include "AVSCommon/AVS/Initialization/AlexaClientSDKInit.h"
+#include "AVSCommon/AVS/Initialization/InitializationParametersBuilder.h"
+#include "AVSCommon/AVS/Initialization/SDKPrimitivesProvider.h"
 #include "AVSCommon/Utils/Configuration/ConfigurationNode.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
+#include "AVSCommon/Utils/Power/NoOpPowerResourceManager.h"
+#include "AVSCommon/Utils/Power/PowerMonitor.h"
 #include "AVSCommon/Utils/SDKVersion.h"
 
 namespace alexaClientSDK {
@@ -53,6 +57,22 @@ std::function<std::shared_ptr<AlexaClientSDKInit>(std::shared_ptr<utils::logger:
     };
 }
 
+std::function<std::shared_ptr<AlexaClientSDKInit>(std::shared_ptr<utils::logger::Logger>)> AlexaClientSDKInit::
+    getCreateAlexaClientSDKInit(const std::shared_ptr<InitializationParameters>& initParams) {
+    return [initParams](std::shared_ptr<utils::logger::Logger> logger) -> std::shared_ptr<AlexaClientSDKInit> {
+        if (!logger) {
+            ACSDK_ERROR(LX("getCreateAlexaClientSDKInitFailed").d("reason", "nullLogger"));
+            return nullptr;
+        }
+
+        if (!initialize(initParams)) {
+            ACSDK_ERROR(LX("getCreateAlexaClientSDKInitFailed").d("reason", "initializeFailed"));
+            return nullptr;
+        }
+        return std::shared_ptr<AlexaClientSDKInit>(new AlexaClientSDKInit);
+    };
+}
+
 /**
  * Destructor.
  */
@@ -65,14 +85,33 @@ bool AlexaClientSDKInit::isInitialized() {
 }
 
 bool AlexaClientSDKInit::initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams) {
+    auto builder = InitializationParametersBuilder::create();
+    if (!builder) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullBuilder"));
+        return false;
+    }
+
+    // Copy to preserve backwards compatibility.
+    auto jsonStreamsPtr = std::make_shared<std::vector<std::shared_ptr<std::istream>>>(jsonStreams);
+    builder->withJsonStreams(jsonStreamsPtr);
+    auto initParams = builder->build();
+    return initialize(std::move(initParams));
+}
+
+bool AlexaClientSDKInit::initialize(const std::shared_ptr<InitializationParameters>& initParams) {
     ACSDK_INFO(LX(__func__).d("sdkversion", avsCommon::utils::sdkVersion::getCurrentVersion()));
+
+    if (!initParams) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullInitParams"));
+        return false;
+    }
 
     if (!(curl_version_info(CURLVERSION_NOW)->features & CURL_VERSION_HTTP2)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curlDoesNotSupportHTTP2"));
         return false;
     }
 
-    if (!utils::configuration::ConfigurationNode::initialize(jsonStreams)) {
+    if (!utils::configuration::ConfigurationNode::initialize(*initParams->jsonStreams)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "ConfigurationNode::initializeFailed"));
         return false;
     }
@@ -80,6 +119,41 @@ bool AlexaClientSDKInit::initialize(const std::vector<std::shared_ptr<std::istre
     if (CURLE_OK != curl_global_init(CURL_GLOBAL_ALL)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curl_global_initFailed"));
         utils::configuration::ConfigurationNode::uninitialize();
+        return false;
+    }
+
+    auto timerDelegateFactory = initParams->timerDelegateFactory;
+    if (!timerDelegateFactory) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullTimerDelegateFactory"));
+        return false;
+    }
+
+#ifdef ENABLE_LPM
+    auto powerResourceManager = initParams->powerResourceManager;
+    if (powerResourceManager) {
+        utils::power::PowerMonitor::getInstance()->activate(powerResourceManager);
+
+        if (!timerDelegateFactory->supportsLowPowerMode()) {
+            ACSDK_ERROR(LX("initializeFailed")
+                            .d("reason", "unsupportedTimerDelegateFactory")
+                            .d("missing", "lowPowerModeSupport"));
+            return false;
+        }
+    } else {
+        // Logic in PowerMonitor has fallback for the non active case.
+        ACSDK_ERROR(
+            LX(__func__).d("reason", "nullPowerResourceManager").m("Falling back to non-activated PowerMonitor"));
+    }
+#endif
+
+    auto primitivesProvider = SDKPrimitivesProvider::getInstance();
+    if (!primitivesProvider) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSDKPrimitivesProvider"));
+        return false;
+    }
+
+    primitivesProvider->withTimerDelegateFactory(timerDelegateFactory);
+    if (!primitivesProvider->initialize()) {
         return false;
     }
 
@@ -95,6 +169,11 @@ void AlexaClientSDKInit::uninitialize() {
     g_isInitialized--;
     curl_global_cleanup();
     utils::configuration::ConfigurationNode::uninitialize();
+    utils::power::PowerMonitor::getInstance()->deactivate();
+    auto primitivesProvider = SDKPrimitivesProvider::getInstance();
+    if (primitivesProvider) {
+        primitivesProvider->terminate();
+    }
 }
 
 }  // namespace initialization

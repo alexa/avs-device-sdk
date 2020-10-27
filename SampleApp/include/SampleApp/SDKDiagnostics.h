@@ -39,7 +39,8 @@ public:
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::ProtocolTracerInterface> getProtocolTracer() override;
     void setDiagnosticDependencies(
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> sequencer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager) override;
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager) override;
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::AudioInjectorInterface> getAudioInjector() override;
     /// @}
 

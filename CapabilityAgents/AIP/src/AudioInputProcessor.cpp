@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <functional>
 #include <list>
 #include <sstream>
 
@@ -56,8 +57,13 @@ using namespace std::chrono;
 static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
 /// SpeechRecognizer interface name
 static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME = "SpeechRecognizer";
+
 /// SpeechRecognizer interface version
+#ifdef OVERRIDE_SPEECHRECOGNIZER_VERSION
+static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = OVERRIDE_SPEECHRECOGNIZER_VERSION;
+#else
 static const std::string SPEECHRECOGNIZER_CAPABILITY_INTERFACE_VERSION = "2.3";
+#endif
 
 /// Configuration key used to give more details about the device configuration.
 static const std::string CAPABILITY_INTERFACE_CONFIGURATIONS_KEY = "configurations";
@@ -321,7 +327,8 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
     AudioProvider defaultAudioProvider,
     std::shared_ptr<PowerResourceManagerInterface> powerResourceManager,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    const std::shared_ptr<ExpectSpeechTimeoutHandler>& expectSpeechTimeoutHandler) {
     if (!directiveSequencer) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullDirectiveSequencer"));
         return nullptr;
@@ -381,7 +388,8 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         wakeWordsSetting,
         capabilitiesConfiguration,
         powerResourceManager,
-        std::move(metricRecorder)));
+        std::move(metricRecorder),
+        expectSpeechTimeoutHandler));
 
     if (aip) {
         dialogUXStateAggregator->addObserver(aip);
@@ -569,7 +577,8 @@ AudioInputProcessor::AudioInputProcessor(
     std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
     std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
     std::shared_ptr<PowerResourceManagerInterface> powerResourceManager,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    const std::shared_ptr<ExpectSpeechTimeoutHandler>& expectSpeechTimeoutHandler) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"AudioInputProcessor"},
         m_metricRecorder{metricRecorder},
@@ -592,7 +601,8 @@ AudioInputProcessor::AudioInputProcessor(
         m_wakeWordConfirmation{wakeWordConfirmation},
         m_speechConfirmation{speechConfirmation},
         m_wakeWordsSetting{wakeWordsSetting},
-        m_powerResourceManager{powerResourceManager} {
+        m_powerResourceManager{powerResourceManager},
+        m_expectSpeechTimeoutHandler{expectSpeechTimeoutHandler} {
     m_capabilityConfigurations.insert(capabilitiesConfiguration);
 }
 
@@ -655,6 +665,7 @@ void AudioInputProcessor::doShutdown() {
     m_focusManager.reset();
     m_userInactivityMonitor.reset();
     m_observers.clear();
+    m_expectSpeechTimeoutHandler.reset();
 }
 
 std::future<bool> AudioInputProcessor::expectSpeechTimedOut() {
@@ -1244,15 +1255,24 @@ bool AudioInputProcessor::executeExpectSpeech(milliseconds timeout, std::shared_
         *m_precedingExpectSpeechInitiator = "";
     }
 
-    // Start the ExpectSpeech timer.
-    if (!m_expectingSpeechTimer.start(timeout, std::bind(&AudioInputProcessor::expectSpeechTimedOut, this)).valid()) {
-        ACSDK_ERROR(LX("executeExpectSpeechFailed").d("reason", "startTimerFailed"));
-    }
     setState(ObserverInterface::State::EXPECTING_SPEECH);
     if (info->result) {
         info->result->setCompleted();
     }
     removeDirective(info);
+
+    if (m_expectSpeechTimeoutHandler &&
+        m_expectSpeechTimeoutHandler->handleExpectSpeechTimeout(timeout, [this]() { return expectSpeechTimedOut(); })) {
+        ACSDK_DEBUG(LX(__func__).m("Expect speech timeout being handled externally"));
+        // Let the ExpectSpeech timeout will be handled externally.
+    } else {
+        ACSDK_DEBUG(LX(__func__).m("Expect speech timeout being handled internally"));
+        // Start the ExpectSpeech timer.
+        if (!m_expectingSpeechTimer.start(timeout, std::bind(&AudioInputProcessor::expectSpeechTimedOut, this))
+                 .valid()) {
+            ACSDK_ERROR(LX("executeExpectSpeechFailed").d("reason", "startTimerFailed"));
+        }
+    }
 
     // If possible, start recognizing immediately.
     if (m_lastAudioProvider && m_lastAudioProvider.alwaysReadable) {
@@ -1509,7 +1529,8 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
     switch (newState) {
         case ObserverInterface::State::RECOGNIZING:
         case ObserverInterface::State::EXPECTING_SPEECH:
-            m_powerResourceManager->acquirePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            m_powerResourceManager->acquirePowerResource(
+                POWER_RESOURCE_COMPONENT_NAME, PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH);
             break;
         case ObserverInterface::State::BUSY:
         case ObserverInterface::State::IDLE:

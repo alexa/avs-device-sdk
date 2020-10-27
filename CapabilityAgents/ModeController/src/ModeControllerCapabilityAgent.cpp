@@ -70,6 +70,9 @@ static const std::string CAPABILITY_RESOURCES_KEY{"capabilityResources"};
 /// The configuration key
 static const std::string CAPABILITY_CONFIGURATION_KEY{"configuration"};
 
+/// The semantics key
+static const std::string CAPABILITY_SEMANTICS_KEY{"semantics"};
+
 /// The key in the directive payload
 static const char MODE_KEY[] = "mode";
 
@@ -377,6 +380,9 @@ avsCommon::avs::CapabilityConfiguration ModeControllerCapabilityAgent::getCapabi
     auto additionalConfigurations = CapabilityConfiguration::AdditionalConfigurations();
     additionalConfigurations[CAPABILITY_RESOURCES_KEY] = m_modeControllerAttributes.capabilityResources.toJson();
     additionalConfigurations[CAPABILITY_CONFIGURATION_KEY] = buildModeConfigurationJson();
+    if (m_modeControllerAttributes.semantics.hasValue()) {
+        additionalConfigurations[CAPABILITY_SEMANTICS_KEY] = m_modeControllerAttributes.semantics.value().toJson();
+    }
     return {CapabilityConfiguration::ALEXA_INTERFACE_TYPE,
             NAMESPACE,
             INTERFACE_VERSION,

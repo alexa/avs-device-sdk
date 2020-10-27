@@ -36,6 +36,13 @@ public:
      * @param avsGateway AVS gateway to set.
      */
     virtual void setAVSGateway(const std::string& avsGateway) = 0;
+
+    /**
+     * Gets the current gateway URL for AVS connection.
+     *
+     * @return The current gateway URL for AVS connection.
+     */
+    virtual std::string getAVSGateway() const = 0;
 };
 
 }  // namespace sdkInterfaces

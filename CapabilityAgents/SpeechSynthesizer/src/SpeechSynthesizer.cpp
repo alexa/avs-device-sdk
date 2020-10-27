@@ -164,6 +164,40 @@ static const std::string BUFFER_UNDERRUN = "ERROR.TTS_BUFFER_UNDERRUN";
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeechSynthesizerCapabilityConfiguration();
 
+std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::createSpeechSynthesizer(
+    std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
+        audioPipelineFactory,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator,
+    std::shared_ptr<captions::CaptionManagerInterface> captionManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) {
+    if (!audioPipelineFactory) {
+        ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "audioPipelineFactoryNullReference"));
+        return nullptr;
+    }
+
+    auto applicationMediaInterfaces =
+        audioPipelineFactory->createApplicationMediaInterfaces(SPEAK_MEDIA_PLAYER_NAME, false, false, true);
+    if (!applicationMediaInterfaces) {
+        ACSDK_ERROR(LX("SpeechSynthesizerCreationFailed").d("reason", "failed to create application media interfaces"));
+        return nullptr;
+    }
+    return create(
+        applicationMediaInterfaces->mediaPlayer,
+        messageSender,
+        focusManager,
+        contextManager,
+        exceptionSender,
+        metricRecorder,
+        dialogUXStateAggregator,
+        captionManager,
+        powerResourceManager);
+}
+
 std::shared_ptr<SpeechSynthesizer> SpeechSynthesizer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -652,8 +686,8 @@ void SpeechSynthesizer::executePreHandleAfterValidation(std::shared_ptr<SpeakDir
         speakInfo->playBehavior = PlayBehavior::REPLACE_ALL;
     }
 
-    if (!m_captionManager) {
-        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captionManagerIsNull"));
+    if (!m_captionManager || !m_captionManager->isEnabled()) {
+        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captions disabled"));
     } else {
         auto captionIterator = payload.FindMember(KEY_CAPTION);
         if (payload.MemberEnd() != captionIterator) {
@@ -1045,7 +1079,7 @@ void SpeechSynthesizer::startPlaying() {
     ACSDK_DEBUG9(LX("startPlaying"));
     std::shared_ptr<AttachmentReader> attachmentReader = std::move(m_currentInfo->attachmentReader);
     m_mediaSourceId = m_speechPlayer->setSource(std::move(attachmentReader));
-    if (m_captionManager && m_currentInfo->captionData.isValid()) {
+    if (m_captionManager && m_captionManager->isEnabled() && m_currentInfo->captionData.isValid()) {
         m_captionManager->onCaption(m_mediaSourceId, m_currentInfo->captionData);
     }
     if (MediaPlayerInterface::ERROR == m_mediaSourceId) {

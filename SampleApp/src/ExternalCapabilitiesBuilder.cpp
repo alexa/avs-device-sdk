@@ -36,6 +36,10 @@
 #endif  // ENABLE_MRM_STANDALONE_APP
 #endif  // ENABLE_MRM
 
+#ifdef ENABLE_COMMS
+#define COMMS_NAMESPACE "com.amazon.avs-comms-adapter"
+#endif
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -95,10 +99,10 @@ std::pair<
     std::list<ExternalCapabilitiesBuilder::Capability>,
     std::list<std::shared_ptr<alexaClientSDK::avsCommon::utils::RequiresShutdown>>>
 ExternalCapabilitiesBuilder::buildCapabilities(
-    std::shared_ptr<alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
+    std::shared_ptr<alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-    std::shared_ptr<alexaClientSDK::avsCommon::avs::ExceptionEncounteredSender> exceptionSender,
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<alexaClientSDK::certifiedSender::CertifiedSender> certifiedSender,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
     std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManager> dataManager,
@@ -117,7 +121,8 @@ ExternalCapabilitiesBuilder::buildCapabilities(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) {
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) {
     ACSDK_DEBUG5(LX(__func__));
     std::pair<
         std::list<ExternalCapabilitiesBuilder::Capability>,
@@ -144,7 +149,6 @@ ExternalCapabilitiesBuilder::buildCapabilities(
             exceptionSender,
             audioFactory->communications(),
             avsGatewayURL,
-            nullptr,
             speakerManager,
             ringtoneChannelVolumeInterface)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateCallManager"));
@@ -155,6 +159,10 @@ ExternalCapabilitiesBuilder::buildCapabilities(
 
     m_callManager = callManager;
 
+    const std::string commsVersion = capabilityAgents::callManager::CallManager::getCommsAdapterVersion();
+    std::shared_ptr<avsCommon::avs::ComponentConfiguration> commsConfig =
+        avsCommon::avs::ComponentConfiguration::createComponentConfiguration(COMMS_NAMESPACE, commsVersion);
+    softwareComponentReporter->addConfiguration(commsConfig);
     connectionManager->addConnectionStatusObserver(callManager);
     avsGatewayManager->addObserver(m_callManager);
 

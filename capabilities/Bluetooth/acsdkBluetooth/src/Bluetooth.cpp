@@ -399,16 +399,6 @@ static std::string truncateWithDefault(const std::string& mac, const std::string
 }
 
 /**
- * Utility function to truncate a Bluetooth device friendly name.
- *
- * @param friendlyName The Bluetooth device friendly name.
- * @return The truncated friendly name.
- */
-static std::string truncateFriendlyName(const std::string& friendlyName) {
-    return truncateWithDefault(friendlyName, friendlyName);
-}
-
-/**
  * Utility function to evaluate whether a device supports a specific AVS profile.
  *
  * @param device The device.
@@ -822,9 +812,7 @@ void Bluetooth::clearData() {
             if (device->isPaired()) {
                 auto unpairFuture = device->unpair();
                 waitOnFuture(std::move(unpairFuture), "Unpair device");
-                ACSDK_DEBUG5(LX("clearData")
-                                 .d("action", "unpairDevice")
-                                 .d("device", truncateFriendlyName(device->getFriendlyName())));
+                ACSDK_DEBUG5(LX("clearData").d("action", "unpairDevice").d("device", device->getFriendlyName()));
             }
         }
 
@@ -992,7 +980,7 @@ void Bluetooth::executeUpdateContext() {
 
     for (const auto& device : m_deviceManager->getDiscoveredDevices()) {
         ACSDK_DEBUG9(LX(__func__)
-                         .d("friendlyName", truncateFriendlyName(device->getFriendlyName()))
+                         .d("friendlyName", device->getFriendlyName())
                          .d("mac", device->getMac())
                          .d("paired", device->isPaired()));
         if (!device->isPaired()) {
@@ -3054,10 +3042,8 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                 return;
             }
 
-            ACSDK_INFO(LX(__func__)
-                           .d("reason", "DEVICE_DISCOVERED")
-                           .d("deviceName", truncateFriendlyName(device->getFriendlyName()))
-                           .d("mac", truncateWithDefault(device->getMac())));
+            ACSDK_INFO(LX(__func__).d("reason", "DEVICE_DISCOVERED").d("mac", truncateWithDefault(device->getMac())));
+            ACSDK_DEBUG5(LX(__func__).d("friendlyName", device->getFriendlyName()));
             m_executor.submit([this] {
                 if (ScanningTransitionState::ACTIVE == m_scanningTransitionState) {
                     executeSendScanDevicesReport(m_deviceManager->getDiscoveredDevices(), true);
@@ -3093,9 +3079,9 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
 
             ACSDK_INFO(LX(__func__)
                            .d("event", "DEVICE_STATE_CHANGED")
-                           .d("deviceName", truncateFriendlyName(device->getFriendlyName()))
                            .d("mac", truncateWithDefault(device->getMac()))
                            .d("state", event.getDeviceState()));
+            ACSDK_DEBUG5(LX(__func__).d("friendlyName", device->getFriendlyName()));
 
             switch (event.getDeviceState()) {
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::FOUND:
@@ -3167,8 +3153,8 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                                 ACSDK_ERROR(LX(__func__)
                                                 .d("reason", "disconnectDeviceFailed")
                                                 .d("error", "deviceNotConnectedBefore")
-                                                .d("deviceName", truncateFriendlyName(device->getFriendlyName()))
                                                 .d("mac", truncateWithDefault(device->getMac())));
+                                ACSDK_DEBUG5(LX(__func__).d("friendlyName", device->getFriendlyName()));
                             }
                         }
                     });
@@ -3247,8 +3233,8 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                                 ACSDK_ERROR(LX(__func__)
                                                 .d("reason", "connectDeviceFailed")
                                                 .d("error", "deviceAlreadyConnectedBefore")
-                                                .d("deviceName", truncateFriendlyName(device->getFriendlyName()))
                                                 .d("mac", truncateWithDefault(device->getMac())));
+                                ACSDK_DEBUG5(LX(__func__).d("friendlyName", device->getFriendlyName()));
                             }
                         }
                     });

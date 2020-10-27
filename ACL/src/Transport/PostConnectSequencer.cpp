@@ -13,14 +13,18 @@
  * permissions and limitations under the License.
  */
 
-#include "ACL/Transport/PostConnectSequencer.h"
-
+#include <AVSCommon/Utils/Error/FinallyGuard.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
+
+#include "ACL/Transport/PostConnectSequencer.h"
 
 namespace alexaClientSDK {
 namespace acl {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::error;
+using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating form this file.
 static const std::string TAG("PostConnectSequencer");
@@ -46,6 +50,11 @@ std::shared_ptr<PostConnectSequencer> PostConnectSequencer::create(
 PostConnectSequencer::PostConnectSequencer(const PostConnectOperationsSet& postConnectOperations) :
         m_isStopping{false},
         m_postConnectOperations{postConnectOperations} {
+    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_mainLoop");
+
+    if (m_mainLoopPowerResource) {
+        m_mainLoopPowerResource->acquire();
+    }
 }
 
 PostConnectSequencer::~PostConnectSequencer() {
@@ -84,6 +93,15 @@ void PostConnectSequencer::mainLoop(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
     ACSDK_DEBUG5(LX(__func__));
+
+    PowerMonitor::getInstance()->assignThreadPowerResource(m_mainLoopPowerResource);
+
+    FinallyGuard removePowerResource([this] {
+        PowerMonitor::getInstance()->removeThreadPowerResource();
+        if (m_mainLoopPowerResource) {
+            m_mainLoopPowerResource->release();
+        }
+    });
 
     if (!postConnectSender) {
         ACSDK_ERROR(LX("mainLoopError").d("reason", "nullPostConnectSender"));

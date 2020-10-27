@@ -44,7 +44,8 @@ std::unique_ptr<RangeControllerAttributeBuilder> RangeControllerAttributeBuilder
 
 RangeControllerAttributeBuilder::RangeControllerAttributeBuilder() :
         m_invalidAttribute{false},
-        m_unitOfMeasure{Optional<resources::AlexaUnitOfMeasure>()} {
+        m_unitOfMeasure{Optional<resources::AlexaUnitOfMeasure>()},
+        m_semantics(Optional<capabilitySemantics::CapabilitySemantics>()) {
 }
 
 RangeControllerAttributeBuilder& RangeControllerAttributeBuilder::withCapabilityResources(
@@ -88,6 +89,17 @@ RangeControllerAttributeBuilder& RangeControllerAttributeBuilder::addPreset(
     return *this;
 }
 
+RangeControllerAttributeBuilder& RangeControllerAttributeBuilder::withSemantics(
+    const capabilitySemantics::CapabilitySemantics& semantics) {
+    if (!semantics.isValid()) {
+        ACSDK_ERROR(LX("withSemanticsFailed").d("reason", "invalidSemantics"));
+        m_invalidAttribute = true;
+        return *this;
+    }
+    m_semantics = avsCommon::utils::Optional<capabilitySemantics::CapabilitySemantics>(semantics);
+    return *this;
+}
+
 avsCommon::utils::Optional<RangeControllerAttributes> RangeControllerAttributeBuilder::build() {
     ACSDK_DEBUG5(LX(__func__));
     avsCommon::utils::Optional<RangeControllerAttributes> controllerAttribute;
@@ -100,7 +112,8 @@ avsCommon::utils::Optional<RangeControllerAttributes> RangeControllerAttributeBu
     ACSDK_DEBUG5(LX(__func__).sensitive("unitOfMeasure", m_unitOfMeasure.valueOr("")));
     ACSDK_DEBUG5(LX(__func__).d("#presets", m_presets.size()));
 
-    return avsCommon::utils::Optional<RangeControllerAttributes>({m_capabilityResources, m_unitOfMeasure, m_presets});
+    return avsCommon::utils::Optional<RangeControllerAttributes>(
+        {m_capabilityResources, m_unitOfMeasure, m_presets, m_semantics});
 }
 
 }  // namespace rangeController

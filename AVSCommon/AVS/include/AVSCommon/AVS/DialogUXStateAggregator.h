@@ -47,6 +47,24 @@ class DialogUXStateAggregator
         , public sdkInterfaces::InteractionModelRequestProcessingObserverInterface {
 public:
     /**
+     * This timeout will be used to avoid going to the IDLE state immediately after receiving a message from AVS so
+     * that other UX states (such as speech starting) may be processed and propagated before going to IDLE.
+     */
+    static constexpr std::chrono::milliseconds SHORT_TIMEOUT_FOR_THINKING_TO_IDLE = std::chrono::milliseconds{200};
+
+    /**
+     * This timeout will be used to time out from the THINKING state in case no messages arrive from AVS so that the
+     * client may move back to an IDLE state.
+     */
+    static constexpr std::chrono::seconds LONG_TIMEOUT_FOR_THINKING_TO_IDLE = std::chrono::seconds{8};
+
+    /**
+     * This timeout will be used to time out from the LISTENING state in case the Request Processing Started (RPS)
+     * directive is not received from AVS so that the client may move back to an IDLE state.
+     */
+    static constexpr std::chrono::seconds LONG_TIMEOUT_FOR_LISTENING_TO_IDLE = std::chrono::seconds{8};
+
+    /**
      * Constructor.
      *
      * Note: Additional parameters to this class must be added before the timeout parameters
@@ -56,11 +74,13 @@ public:
      * arrive from AVS.
      * @param timeoutForListeningToIdle This timeout will be used to time out from the LISTENING state in case the
      * Request Processing Started (RPS) directive is not received from AVS.
+     * @param shortTimeoutForThinkingToIdle This timeout will be used to avoid going to the IDLE state immediately
      */
     DialogUXStateAggregator(
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
-        std::chrono::milliseconds timeoutForThinkingToIdle = std::chrono::seconds{8},
-        std::chrono::milliseconds timeoutForListeningToIdle = std::chrono::seconds{8});
+        std::chrono::milliseconds timeoutForThinkingToIdle = LONG_TIMEOUT_FOR_THINKING_TO_IDLE,
+        std::chrono::milliseconds timeoutForListeningToIdle = LONG_TIMEOUT_FOR_LISTENING_TO_IDLE,
+        std::chrono::milliseconds shortTimeoutForThinkingToIdle = SHORT_TIMEOUT_FOR_THINKING_TO_IDLE);
 
     /**
      * Adds an observer to be notified of UX state changes.
@@ -111,13 +131,20 @@ private:
      * Sets the internal state to the new state.
      *
      * @param newState The new Alexa UX state.
+     * @return Whether the state transition was successful.
      */
-    void setState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
+    bool executeSetState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
 
     /**
      * Sets the internal state to @c IDLE if both @c SpeechSynthesizer and @c AudioInputProcessor are in idle state.
      */
     void tryEnterIdleState();
+
+    /**
+     * An event has occurred which may transition @c DialogUXStateAggregator out of THINKING mode. This function
+     * evaluates if the transition is valid and performs the necessary logic to prepare for the transition.
+     */
+    void tryExitThinkingState();
 
     /**
      * Transitions the internal state from THINKING to IDLE.
@@ -164,6 +191,12 @@ private:
     /// The timeout to be used for transitioning away from the THINKING state in case no messages are received.
     const std::chrono::milliseconds m_timeoutForThinkingToIdle;
 
+    /**
+     * This timeout will be used to avoid going to the IDLE state immediately after receiving a message from AVS so
+     * that other UX states (such as speech starting) may be processed and propagated.
+     */
+    const std::chrono::milliseconds m_shortTimeoutForThinkingToIdle;
+
     /// A timer to transition out of the THINKING state.
     avsCommon::utils::timing::Timer m_thinkingTimeoutTimer;
 
@@ -172,7 +205,7 @@ private:
 
     /// The timeout to be used for transitioning away form the LISTENING state in case RPS (Request Processing Started)
     /// directive is not received.
-    const std::chrono::microseconds m_timeoutForListeningToIdle;
+    const std::chrono::milliseconds m_timeoutForListeningToIdle;
 
     /// A timer to transition out of the LISTENING state to IDLE state in case RPS (Request Processing Started)
     /// directive is not received.

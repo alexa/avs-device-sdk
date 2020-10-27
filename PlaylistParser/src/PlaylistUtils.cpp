@@ -61,7 +61,8 @@ static const std::chrono::minutes PLAYLIST_FETCH_TIMEOUT{5};
 bool readFromContentFetcher(
     std::unique_ptr<HTTPContentFetcherInterface> contentFetcher,
     std::string* content,
-    std::atomic<bool>* shouldShutDown) {
+    std::atomic<bool>* shouldShutDown,
+    std::string* playlistURL) {
     ACSDK_DEBUG9(LX(__func__));
     if (!contentFetcher) {
         ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "nullContentFetcher"));
@@ -75,6 +76,11 @@ bool readFromContentFetcher(
 
     if (*shouldShutDown) {
         ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "shouldShutdown"));
+        return false;
+    }
+
+    if (!playlistURL) {
+        ACSDK_ERROR(LX("readFromContentFetcherFailed").d("reason", "nullPlaylistURL"));
         return false;
     }
 
@@ -123,6 +129,13 @@ bool readFromContentFetcher(
     }
 
     ACSDK_DEBUG9(LX("bodyReceived"));
+
+    // check if the playlistURL should be updated
+    auto effectiveURL = contentFetcher->getEffectiveUrl();
+    if (effectiveURL != *playlistURL) {
+        ACSDK_DEBUG7(LX("updating playlist URL").d("original URL", *playlistURL).d("new URL", effectiveURL));
+        *playlistURL = effectiveURL;
+    }
 
     std::unique_ptr<AttachmentReader> reader = stream->createReader(ReaderPolicy::NONBLOCKING);
 

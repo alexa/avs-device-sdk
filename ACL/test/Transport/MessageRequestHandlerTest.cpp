@@ -81,7 +81,7 @@ TEST_F(MessageRequestHandlerTest, test_headers) {
         AUTH_TOKEN,
         messageRequest,
         std::shared_ptr<MessageConsumerInterface>(),
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager>(),
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>(),
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>());
 
     const std::vector<std::string> actual = classUnderTest->getRequestHeaderLines();

@@ -19,6 +19,7 @@
 #include <memory>
 
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/AudioInjectorInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/DevicePropertyAggregatorInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/ProtocolTracerInterface.h>
@@ -56,10 +57,12 @@ public:
      *
      * @param sequencer An instance of the @c DirectiveSequencerInterface.
      * @param attachmentManager An instance of the @c AttachmentManager.
+     * @param avsConnectionManager An instance of the @c AVSConnectionManager.
      */
     virtual void setDiagnosticDependencies(
         std::shared_ptr<DirectiveSequencerInterface> sequencer,
-        std::shared_ptr<avs::attachment::AttachmentManagerInterface> attachmentManager) = 0;
+        std::shared_ptr<avs::attachment::AttachmentManagerInterface> attachmentManager,
+        std::shared_ptr<AVSConnectionManagerInterface> avsConnectionManager) = 0;
 
     /**
      * An API to inject audio utterances into the SDK.

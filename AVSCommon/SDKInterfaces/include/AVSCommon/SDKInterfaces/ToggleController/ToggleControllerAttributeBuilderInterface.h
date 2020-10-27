@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_TOGGLECONTROLLER_TOGGLECONTROLLERATTRIBUTEBUILDERINTERFACE_H_
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/Utils/Optional.h>
 
 #include "ToggleControllerAttributes.h"
@@ -51,6 +52,16 @@ public:
      */
     virtual ToggleControllerAttributeBuilderInterface& withCapabilityResources(
         const avsCommon::avs::CapabilityResources& capabilityResources) = 0;
+
+    /**
+     * Configures the builder to use the specified semantics definition.
+     * @see https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/alexa-togglecontroller.html
+     *
+     * @param semantics The @c CapabilitySemantics representing the semantics definition.
+     * @return This builder, which can be used to nest configuration function calls.
+     */
+    virtual ToggleControllerAttributeBuilderInterface& withSemantics(
+        const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) = 0;
 
     /**
      * Builds a @c ToggleControllerAttributes with the configured properties.

@@ -18,7 +18,7 @@ private:
 	static const char HYPHEN = 45;
 	static const char COLON  = 58;
 	static const size_t UNMARKED = (size_t) -1;
-	
+
 	enum State {
 		ERROR,
 		START,
@@ -127,8 +127,8 @@ private:
 		state = ERROR;
 		errorReason = message;
 	}
-	
-	void processPartData(size_t &prevIndex, size_t &index, const char *buffer,
+
+	bool processPartData(size_t &prevIndex, size_t &index, const char *buffer,
 		size_t len, size_t boundaryEnd, size_t &i, char c, State &state, int &flags)
 	{
 		prevIndex = index;
@@ -143,9 +143,21 @@ private:
 				i += boundary.size();
 			}
 			if (i == len) {
-				return;
+				return true;
 			}
 			c = buffer[i];
+		}
+		// do not consider the trailing CR LF to detect the end of the part
+		// let the rest of the flow detect if this is going to be an end, part begin, etc.
+		if ( (index == boundary.size()-1) && (boundary[index] == c)) {
+			/* an optimization is being done where we do not wait for the
+			trailing CRLF to detect a part end. This can lead to problems
+			if the boundary is part of the text (against the rfc rules)
+			so we will call onPartEnd and keep an state to detect the
+			CRLF after the boundary (usually part of the next header)
+			raising an error in the case that this doesn't happen
+			*/
+			callback(onPartEnd);
 		}
 		
 		if (index < boundary.size()) {
@@ -167,6 +179,8 @@ private:
 				flags |= LAST_BOUNDARY;
 			} else {
 				index = 0;
+				setError("Boundary is not followed by CR or -");
+				return false;
 			}
 		} else if (index - 1 == boundary.size()) {
 			if (flags & PART_BOUNDARY) {
@@ -174,18 +188,22 @@ private:
 				if (c == LF) {
 					// unset the PART_BOUNDARY flag
 					flags &= ~PART_BOUNDARY;
-					callback(onPartEnd);
 					callback(onPartBegin);
 					state = HEADER_START;
-					return;
+					return true;
+				}else{
+					setError("Boundary is not followed by LF");
+					return false;
 				}
 			} else if (flags & LAST_BOUNDARY) {
 				if (c == HYPHEN) {
-					callback(onPartEnd);
 					callback(onEnd);
 					state = END;
+					return true;
 				} else {
 					index = 0;
+					setError("Boundary is not followed by --");
+					return false;
 				}
 			} else {
 				index = 0;
@@ -199,10 +217,9 @@ private:
 		} else if (index - boundary.size() == 3) {
 			index = 0;
 			if (c == LF) {
-				callback(onPartEnd);
 				callback(onEnd);
 				state = END;
-				return;
+				return true;
 			}
 		}
 		
@@ -225,11 +242,12 @@ private:
 			callback(onPartData, lookbehind.data(), 0, prevIndex);
 			prevIndex = 0;
 			partDataMark = i;
-			
+
 			// reconsider the current character even so it interrupted the sequence
 			// it could be the beginning of a new sequence
 			i--;
 		}
+		return true;
 	}
 	
 public:
@@ -277,10 +295,10 @@ public:
 	}
 	
 	size_t feed(const char *buffer, size_t len) {
-		if (state == ERROR || len == 0) {
+		if (state == ERROR || state== END || len == 0) {
+			//stop processing after an end or error
 			return 0;
 		}
-		
 		State state         = this->state;
 		int flags           = this->flags;
 		size_t prevIndex    = this->index;
@@ -299,8 +317,9 @@ public:
 		while (i < len) {
 
 			c = buffer[i];
-			
 			switch (state) {
+			case END:
+				break;
 			case ERROR:
 				return i;
 			case START:
@@ -332,6 +351,7 @@ public:
 				break;
 			case DUPLICATE_BOUNDARY_START:
 			case CRLF_DUPLICATE_BOUNDARY_START: {
+				headerFieldMark = UNMARKED;
 				size_t offset = (state == DUPLICATE_BOUNDARY_START ? 2 : 0);
 				size_t duplicateIndex = index + offset;
 				if (c != duplicateBoundary[duplicateIndex]) {
@@ -438,7 +458,9 @@ public:
 				state = PART_DATA;
 				partDataMark = i;
 			case PART_DATA:
-				processPartData(prevIndex, index, buffer, len, boundaryEnd, i, c, state, flags);
+				if (!processPartData(prevIndex, index, buffer, len, boundaryEnd, i, c, state, flags)) {
+					return i;
+				}
 				break;
 			default:
 				return i;
@@ -457,11 +479,9 @@ public:
 				}
 			}
 		}
-		
 		this->index = index;
 		this->state = state;
 		this->flags = flags;
-		
 		return len;
 	}
 	

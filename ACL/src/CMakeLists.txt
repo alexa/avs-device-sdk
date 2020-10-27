@@ -6,7 +6,12 @@ target_include_directories(ACL PUBLIC "${MultipartParser_SOURCE_DIR}")
 target_include_directories(ACL PUBLIC ${CURL_INCLUDE_DIRS})
 target_include_directories(ACL PUBLIC "${ACL_SOURCE_DIR}/include")
 target_include_directories(ACL PUBLIC "${AVSCommon_INCLUDE_DIRS}")
-target_link_libraries(ACL ${CURL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} AVSCommon)
+target_link_libraries(ACL
+    ${CURL_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    acsdkPostConnectOperationProviderRegistrarInterfaces
+    acsdkShutdownManagerInterfaces
+    AVSCommon)
 
 if(NOT MSVC)
     find_package(Threads ${THREADS_PACKAGE_CONFIG})

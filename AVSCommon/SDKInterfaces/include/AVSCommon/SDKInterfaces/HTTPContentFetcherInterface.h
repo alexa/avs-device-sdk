@@ -100,6 +100,16 @@ public:
     virtual std::string getUrl() const = 0;
 
     /**
+     * Gets the effective URL associated with this content fetcher.
+     *
+     * @note This is useful in the case of redirects where the first URL used redirects to a different URL to fetch the
+     * content.
+     *
+     * @return The content fetcher's effective URL.
+     */
+    virtual std::string getEffectiveUrl() const = 0;
+
+    /**
      * Waits until the header was fetched successfully. If any problem happened during header, returns @c false. After
      * the header was already fetched, this method can be called multiple times and will return immediately.
      *

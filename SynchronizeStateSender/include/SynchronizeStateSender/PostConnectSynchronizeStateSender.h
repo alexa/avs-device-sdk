@@ -16,7 +16,6 @@
 #ifndef ALEXA_CLIENT_SDK_SYNCHRONIZESTATESENDER_INCLUDE_SYNCHRONIZESTATESENDER_POSTCONNECTSYNCHRONIZESTATESENDER_H_
 #define ALEXA_CLIENT_SDK_SYNCHRONIZESTATESENDER_INCLUDE_SYNCHRONIZESTATESENDER_POSTCONNECTSYNCHRONIZESTATESENDER_H_
 
-#include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -25,6 +24,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 
 namespace alexaClientSDK {
 namespace synchronizeStateSender {
@@ -96,7 +96,7 @@ private:
     std::shared_ptr<avsCommon::avs::WaitableMessageRequest> m_postConnectRequest;
 
     /// wake trigger to signal when data is ready.
-    std::condition_variable m_wakeTrigger;
+    avsCommon::utils::threading::ConditionVariableWrapper m_wakeTrigger;
 };
 
 }  // namespace synchronizeStateSender

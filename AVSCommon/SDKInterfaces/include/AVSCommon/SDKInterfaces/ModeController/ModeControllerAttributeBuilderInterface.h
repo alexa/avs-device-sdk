@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_MODECONTROLLER_MODECONTROLLERATTRIBUTEBUILDERINTERFACE_H_
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/Utils/Optional.h>
 
 #include "ModeControllerAttributes.h"
@@ -83,6 +84,16 @@ public:
      * @return This builder which can be used to nest configuration function calls.
      */
     virtual ModeControllerAttributeBuilderInterface& setOrdered(bool ordered) = 0;
+
+    /**
+     * Configures the builder to use the specified semantics definition.
+     * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-modecontroller.html
+     *
+     * @param semantics The @c CapabilitySemantics representing the semantics definition.
+     * @return This builder, which can be used to nest configuration function calls.
+     */
+    virtual ModeControllerAttributeBuilderInterface& withSemantics(
+        const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) = 0;
 
     /**
      * Builds a @c ModeControllerAttributes with the configured properties.

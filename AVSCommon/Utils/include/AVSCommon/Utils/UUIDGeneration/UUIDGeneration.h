@@ -16,12 +16,20 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_UUIDGENERATION_UUIDGENERATION_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_UUIDGENERATION_UUIDGENERATION_H_
 
+#include <functional>
 #include <string>
+#include <vector>
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace uuidGeneration {
+
+/**
+ * Set the customized function to read entropy value instead of the default.
+ * @param func Customized function used to read entropy value.
+ */
+void setEntropyReader(std::function<double(void)> func);
 
 /**
  * Generates a variant 1, version 4 universally unique identifier (UUID) consisting of 32 hexadecimal digits.
@@ -40,8 +48,19 @@ const std::string generateUUID();
  * Setting a salt will cause the next UUID to be generated with a new seed.
  *
  * @param newSalt  the salt to use
+ * @deprecated
  */
 void setSalt(const std::string& newSalt);
+
+/**
+ * Allows caller to add extra seeds to generate uuid. Good seeds should be random values,
+ * such as the time between two consecutive user interactions. UUIDGeneration uses one
+ * random_device value, lower 32bits of current time, time between two invocations, and
+ * lower 32bits memory address of temporary variable to feed seeds for random number generator.
+ *
+ * @param seeds  extra seeds from a random source.
+ */
+void addSeeds(const std::vector<uint32_t>& seeds);
 
 }  // namespace uuidGeneration
 }  // namespace utils

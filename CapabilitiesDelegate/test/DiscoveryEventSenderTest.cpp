@@ -20,7 +20,6 @@
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include <AVSCommon/Utils/PromiseFuturePair.h>
 #include <CapabilitiesDelegate/DiscoveryEventSender.h>
 
 #include "MockAuthDelegate.h"
@@ -44,14 +43,6 @@ static const std::string ADD_OR_UPDATE_REPORT_NAME = "AddOrUpdateReport";
 static const std::string DELETE_REPORT_NAME = "DeleteReport";
 /// The payload version of the discovery event.
 static const std::string DISCOVERY_PAYLOAD_VERSION = "3";
-/// The scope key in the discovery event.
-static const std::string SCOPE_KEY = "scope";
-/// The scope key in the discovery event.
-static const std::string TYPE_KEY = "type";
-/// The scope key in the discovery event.
-static const std::string BEARER_TOKEN_KEY = "bearerToken";
-/// The scope key in the discovery event.
-static const std::string TOKEN_KEY = "token";
 /// The scope key in the discovery event.
 static const std::string ENDPOINTS_KEY = "endpoints";
 /// The scope key in the discovery event.
@@ -89,9 +80,11 @@ static const std::vector<std::string> EXPECTED_DELETE_ENDPOINT_IDS = {TEST_ENDPO
 /// The test string for eventCorrelationToken sent in headers.
 static const std::string TEST_EVENT_CORRELATION_TOKEN = "TEST_EVENT_CORRELATION_TOKEN";
 /// The test retry count.
-static const int TEST_RETRY_COUNT = 2;
-/// Maximum number of endpoints that can be sent in a Discovery event.
-static const int MAX_ENDPOINTS_PER_EVENT = 300;
+static constexpr int TEST_RETRY_COUNT = 2;
+/// Maximum number of endpoints that can be sent in a Discovery.AddOrUpdateReport event.
+static constexpr int MAX_ENDPOINTS_PER_ADD_OR_UPDATE_REPORT_EVENT = 300;
+/// Maximum size of Discovery event (246KB)
+static constexpr int MAX_ENDPOINTS_SIZE_IN_PAYLOAD = 246 * 1024;
 
 /**
  * Structure to store event data from a discovery event JSON.
@@ -365,11 +358,24 @@ TEST_F(DiscoveryEventSenderTest, test_sendDiscoveryEventsFailsWithNullMessageSen
 /**
  * This method returns the number of Discovery Events the given endpoints will be split into.
  *
- * @param numEndpoints The total number of endpoints
+ * @param numEndpoints The total number of endpoints.
  * @return The number of discovery events these endpoints will be split into.
  */
-static int getExpectedNumberOfDiscoveryEvents(int numEndpoints) {
-    return numEndpoints / MAX_ENDPOINTS_PER_EVENT + ((numEndpoints % MAX_ENDPOINTS_PER_EVENT) != 0);
+static inline int getExpectedNumberOfDiscoveryEventsFromEndpointNum(int numEndpoints) {
+    return numEndpoints / MAX_ENDPOINTS_PER_ADD_OR_UPDATE_REPORT_EVENT +
+           ((numEndpoints % MAX_ENDPOINTS_PER_ADD_OR_UPDATE_REPORT_EVENT) != 0);
+}
+
+/**
+ * This method returns the number of Discovery Events the given endpoints will be spit into based on the endpoint
+ * payload size.
+ *
+ * @param endpointPayloadSize The total size of the endpoint payload.
+ * @return The number of discovery events that need to be created.
+ */
+static inline int getExpectedNumberOfDiscoveryEventFromPayloadSize(int endpointPayloadSize) {
+    return endpointPayloadSize / MAX_ENDPOINTS_SIZE_IN_PAYLOAD +
+           ((endpointPayloadSize % MAX_ENDPOINTS_SIZE_IN_PAYLOAD) != 0);
 }
 
 /**
@@ -379,7 +385,7 @@ TEST_F(DiscoveryEventSenderTest, test_sendDiscoveryEventsSplitsEventsWithMaxEndp
     std::unordered_map<std::string, std::string> addOrUpdateReportEndpoints, deleteReportEndpoints;
     std::string endpointIdPrefix = "ENDPOINT_ID_";
     int testNumAddOrUpdateReportEndpoints = 1400;
-    int testNumDeleteReportEndpoints = 299;
+    int testNumDeleteReportEndpoints = 400;
 
     for (int i = 1; i <= testNumAddOrUpdateReportEndpoints; ++i) {
         std::string endpointId = endpointIdPrefix + std::to_string(i);
@@ -415,8 +421,80 @@ TEST_F(DiscoveryEventSenderTest, test_sendDiscoveryEventsSplitsEventsWithMaxEndp
         request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
     };
 
-    int expectedNumOfAddOrUpdateReportEvents = getExpectedNumberOfDiscoveryEvents(testNumAddOrUpdateReportEndpoints);
-    int expectedNumOfDeleteReportEvents = getExpectedNumberOfDiscoveryEvents(testNumDeleteReportEndpoints);
+    int expectedNumOfAddOrUpdateReportEvents =
+        getExpectedNumberOfDiscoveryEventsFromEndpointNum(testNumAddOrUpdateReportEndpoints);
+    int expectedNumOfDeleteReportEvents = 1;
+    {
+        InSequence s;
+        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+            .Times(expectedNumOfAddOrUpdateReportEvents)
+            .WillRepeatedly(Invoke(handleAddOrUpdateReport));
+        EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+            .Times(expectedNumOfDeleteReportEvents)
+            .WillRepeatedly(Invoke(handleDeleteReport));
+    }
+
+    EXPECT_CALL(*m_mockDiscoveryStatusObserver, onDiscoveryCompleted(addOrUpdateReportEndpoints, deleteReportEndpoints))
+        .WillOnce(Return());
+
+    EXPECT_CALL(*m_mockAuthDelegate, getAuthToken()).WillRepeatedly(Return(TEST_AUTH_TOKEN));
+
+    ASSERT_TRUE(discoveryEventSender->sendDiscoveryEvents(m_mockMessageSender));
+
+    // Cleanup.
+    discoveryEventSender->removeDiscoveryStatusObserver(m_mockDiscoveryStatusObserver);
+}
+
+/**
+ * Test if multiple discovery events are sent if the max payload size is reached.
+ */
+TEST_F(DiscoveryEventSenderTest, test_sendDiscoveryEventsSplitsEventsWhenMaxPayloadSizeIsReached) {
+    std::unordered_map<std::string, std::string> addOrUpdateReportEndpoints, deleteReportEndpoints;
+    std::string endpointIdPrefix = "ENDPOINT_ID_";
+    int testNumAddOrUpdateReportEndpoints = 400;
+    int testNumDeleteReportEndpoints = 301;
+
+    /// Create a large endpointConfig string (2KB)
+    std::string testLargeEndpointConfig(2048, 'X');
+
+    for (int i = 1; i <= testNumAddOrUpdateReportEndpoints; ++i) {
+        std::string endpointId = endpointIdPrefix + std::to_string(i);
+        std::string endpointIdConfig = "{\"endpointId\":\"" + testLargeEndpointConfig + "\"}";
+        addOrUpdateReportEndpoints.insert({endpointId, endpointIdConfig});
+    }
+
+    for (int i = 1; i <= testNumDeleteReportEndpoints; ++i) {
+        std::string endpointId = endpointIdPrefix + std::to_string(i);
+        std::string endpointIdConfig = "{\"endpointId\":\"" + testLargeEndpointConfig + "\"}";
+        deleteReportEndpoints.insert({endpointId, endpointIdConfig});
+    }
+
+    auto discoveryEventSender =
+        DiscoveryEventSender::create(addOrUpdateReportEndpoints, deleteReportEndpoints, m_mockAuthDelegate);
+    discoveryEventSender->addDiscoveryStatusObserver(m_mockDiscoveryStatusObserver);
+    validateCallsToAuthDelegate(discoveryEventSender);
+    discoveryEventSender->addDiscoveryStatusObserver(m_mockDiscoveryStatusObserver);
+
+    auto handleAddOrUpdateReport = [discoveryEventSender](std::shared_ptr<MessageRequest> request) {
+        EventData eventData;
+        ASSERT_TRUE(parseEventJson(request->getJsonContent(), &eventData));
+        validateDiscoveryEvent(eventData, ADD_OR_UPDATE_REPORT_NAME);
+
+        request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+        discoveryEventSender->onAlexaEventProcessedReceived(eventData.eventCorrelationTokenString);
+    };
+
+    auto handleDeleteReport = [](std::shared_ptr<MessageRequest> request) {
+        EventData eventData;
+        ASSERT_TRUE(parseEventJson(request->getJsonContent(), &eventData));
+        validateDiscoveryEvent(eventData, DELETE_REPORT_NAME);
+        request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+    };
+
+    int expectedNumOfAddOrUpdateReportEvents =
+        getExpectedNumberOfDiscoveryEventFromPayloadSize(testNumAddOrUpdateReportEndpoints * 2048);
+    int expectedNumOfDeleteReportEvents =
+        getExpectedNumberOfDiscoveryEventFromPayloadSize(testNumDeleteReportEndpoints * 2048);
     {
         InSequence s;
         EXPECT_CALL(*m_mockMessageSender, sendMessage(_))

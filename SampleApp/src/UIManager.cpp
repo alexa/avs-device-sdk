@@ -604,7 +604,6 @@ UIManager::UIManager(
     const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) :
         m_dialogState{DialogUXState::IDLE},
         m_authState{AuthObserverInterface::State::UNINITIALIZED},
-        m_authCheckCounter{0},
         m_connectionStatus{avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::DISCONNECTED},
         m_localeAssetsManager{localeAssetsManager},
         m_defaultEndpointId{deviceInfo->getDefaultEndpointId()} {
@@ -676,22 +675,8 @@ void UIManager::onSetIndicator(avsCommon::avs::IndicatorState state) {
     });
 }
 
-void UIManager::onRequestAuthorization(const std::string& url, const std::string& code) {
-    m_executor.submit([this, url, code]() {
-        m_authCheckCounter = 0;
-        ConsolePrinter::prettyPrint("NOT YET AUTHORIZED");
-        std::ostringstream oss;
-        oss << "To authorize, browse to: '" << url << "' and enter the code: " << code;
-        ConsolePrinter::prettyPrint(oss.str());
-    });
-}
-
-void UIManager::onCheckingForAuthorization() {
-    m_executor.submit([this]() {
-        std::ostringstream oss;
-        oss << "Checking for authorization (" << ++m_authCheckCounter << ")...";
-        ConsolePrinter::prettyPrint(oss.str());
-    });
+void UIManager::printMessage(const std::string& message) {
+    m_executor.submit([message]() { ConsolePrinter::prettyPrint(message); });
 }
 
 void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) {

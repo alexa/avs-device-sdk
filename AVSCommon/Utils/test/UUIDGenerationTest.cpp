@@ -111,25 +111,24 @@ TEST_F(UUIDGenerationTest, test_uUIDVariant) {
 }
 
 /**
- * Call @c setSalt without error, with various inputs
+ * Call @c addSeed without error, with various inputs
  */
-TEST_F(UUIDGenerationTest, setSaltTest) {
-    setSalt("");
+TEST_F(UUIDGenerationTest, addSeedTest) {
+    std::vector<uint32_t> seeds;
+    addSeeds(seeds);
     auto uuid = generateUUID();
     ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
     ASSERT_EQ(UUID_LENGTH, uuid.length());
-    setSalt("G2A14Q02920602PT");
-    uuid = generateUUID();
-    ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
-    ASSERT_EQ(UUID_LENGTH, uuid.length());
-    setSalt("123456789");
+    seeds.push_back(0xafd0f00a);
+    seeds.push_back(0xbf32d31f);
+    addSeeds(seeds);
     uuid = generateUUID();
     ASSERT_EQ(UUID_VERSION, uuid.substr(UUID_VERSION_OFFSET, 1));
     ASSERT_EQ(UUID_LENGTH, uuid.length());
 }
 
 /**
- * Call @c generateUUID and setSalt from multiple threads and check that all are able to complete
+ * Call @c generateUUID and addSeed from multiple threads and check that all are able to complete
  * successfully Check for uniqueness of the UUIDs generated.
  */
 TEST_F(UUIDGenerationTest, test_multipleConcurrentSaltSettings) {
@@ -147,7 +146,9 @@ TEST_F(UUIDGenerationTest, test_multipleConcurrentSaltSettings) {
             auto future_seed = std::async(
                 std::launch::async,
                 [](int i) {
-                    setSalt(std::to_string(i));
+                    std::vector<uint32_t> vec;
+                    vec.push_back(i);
+                    addSeeds(vec);
                     return generateUUID();
                 },
                 i);

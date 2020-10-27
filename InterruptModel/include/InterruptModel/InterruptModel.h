@@ -39,7 +39,17 @@ class InterruptModel {
 public:
     /**
      * Creates an instance of @c InterruptModel
+     *
+     * @param config Root configuration node.
+     * @return instance of @c InterruptModel.
+     */
+    static std::shared_ptr<InterruptModel> createInterruptModel(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& config);
+
+    /**
+     * Creates an instance of @c InterruptModel
      * @param interactionConfiguration interrupt model configuration for device.
+     * @deprecated Use createInterruptModel
      * @return instance of @c InterruptModel.
      */
     static std::shared_ptr<InterruptModel> create(

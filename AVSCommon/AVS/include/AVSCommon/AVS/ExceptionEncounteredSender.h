@@ -33,8 +33,19 @@ namespace avs {
 class ExceptionEncounteredSender : public avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface {
 public:
     /**
+     * Creates a new @c ExceptionEncounteredSenderInterface instance.
+     *
+     * @param messageSender The object to use for sending events.
+     * @return A @c std::shared_ptr to the new @c ExceptionEncounteredSenderInterface instance.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>
+    createExceptionEncounteredSenderInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender);
+
+    /**
      * Creates a new @c ExceptionEncounteredSender instance.
      *
+     * @deprecated Use createExceptionEncounteredSenderInterface instead.
      * @param messageSender The object to use for sending events.
      * @return A @c std::unique_ptr to the new @c ExceptionEncounteredSender instance.
      */

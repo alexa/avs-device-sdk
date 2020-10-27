@@ -23,6 +23,7 @@
 #include <AVSCommon/Utils/File/FileUtils.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
 #include <Settings/Setting.h>
@@ -30,12 +31,21 @@
 #include <Settings/SettingEventSender.h>
 #include <Settings/SharedAVSSettingProtocol.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
+#include <Settings/Types/AlarmVolumeRampTypes.h>
 
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
-#include <fstream>
 #include <algorithm>
+#include <chrono>
+#include <cstdio>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <stdio.h>
+#include <string.h>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -62,7 +72,7 @@ static const std::string ALERTS_CAPABILITY_INTERFACE_TYPE = "AlexaInterface";
 /// Alerts interface name
 static const std::string ALERTS_CAPABILITY_INTERFACE_NAME = "Alerts";
 /// Alerts interface version
-static const std::string ALERTS_CAPABILITY_INTERFACE_VERSION = "1.4";
+static const std::string ALERTS_CAPABILITY_INTERFACE_VERSION = "1.5";
 
 /// The value for Type which we need for json parsing.
 static const std::string KEY_TYPE = "type";
@@ -116,6 +126,10 @@ static const std::string ALERT_REPORT_ALARM_VOLUME_RAMP_EVENT_NAME = "AlarmVolum
 static const std::string EVENT_PAYLOAD_TOKEN_KEY = "token";
 /// The value of the event payload key for multiple tokens.
 static const std::string EVENT_PAYLOAD_TOKENS_KEY = "tokens";
+/// The value of the event payload key for scheduled time.
+static const std::string EVENT_PAYLOAD_SCHEDULED_TIME_KEY = "scheduledTime";
+/// The value of the event payload key for event time.
+static const std::string EVENT_PAYLOAD_EVENT_TIME_KEY = "eventTime";
 /// The value of Token text in a Directive we may receive.
 static const std::string DIRECTIVE_PAYLOAD_TOKEN_KEY = "token";
 /// The value of Token list key in a Directive we may receive.
@@ -150,6 +164,13 @@ static const std::string AVS_PAYLOAD_ERROR_TYPE_KEY = "type";
 /// The JSON key for the error message in the payload of error events.
 static const std::string AVS_PAYLOAD_ERROR_MESSAGE_KEY = "message";
 
+/// The value of the offline stopped alert token key.
+static const std::string OFFLINE_STOPPED_ALERT_TOKEN_KEY = "token";
+/// The value of the offline stopped alert scheduledTime key.
+static const std::string OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY = "scheduledTime";
+/// The value of the offline stopped alert id key.
+static const std::string OFFLINE_STOPPED_ALERT_ID_KEY = "id";
+
 /// An empty dialogRequestId.
 static const std::string EMPTY_DIALOG_REQUEST_ID = "";
 
@@ -173,12 +194,40 @@ static const std::string TAG("AlertsCapabilityAgent");
 
 /// Metric Activity Name Prefix for ALERT metric source
 static const std::string ALERT_METRIC_SOURCE_PREFIX = "ALERT-";
+/// Metric names
+static const std::string ALERT_STARTED_METRIC_NAME = "NotificationStartedRinging";
+static const std::string ALERT_CANCELED_METRIC_NAME = "NotificationCanceled";
+/// Metric metadata keys
+static const std::string METRIC_METADATA_TYPE_KEY = "NotificationType";
+static const std::string METRIC_METADATA_TOKEN_KEY = "NotificationId";
+static const std::string METRIC_METADATA_VERSION_KEY = "NotificationMetadataVersion";
+static const std::string METRIC_METADATA_DEVICE_STATE_KEY = "DeviceState";
+static const std::string METRIC_METADATA_ACTUAL_TRIGGER_TIME_KEY = "ActualTriggerTime";
+static const std::string METRIC_METADATA_SCHEDULED_TRIGGER_TIME_KEY = "ScheduledTriggerTime";
+static const std::string METRIC_METADATA_MONOTONIC_TIME_KEY = "MonotonicTime";
+
+static const std::string METRIC_METADATA_IS_ASCENDING_KEY = "IsAscending";
+static const std::string METRIC_METADATA_ALERT_VOLUME_KEY = "NotificationVolume";
+static const std::string METRIC_METADATA_IS_QUEUED_KEY = "IsNotificationQueued";
+
+static const std::string METRIC_METADATA_CANCELED_REASON_KEY = "CanceledReason";
+/// Metric metadata values
+static const int METRIC_METADATA_VERSION_VALUE = 2;
+static const int MILLISECONDS_IN_A_SECOND = 1000;
+static const std::string METRIC_METADATA_IS_QUEUED_VALUE = "false";
+static const std::string METRIC_METADATA_DEVICE_STATE_ONLINE = "ONLINE";
+static const std::string METRIC_METADATA_DEVICE_STATE_OFFLINE = "OFFLINE";
+static const std::string METRIC_METADATA_CANCELED_REASON_VALUE = "TriggerTimeInThePast";
 
 /// Metric constants related to Alerts
 static const std::string FAILED_SNOOZE_ALERT = "failedToSnoozeAlert";
 static const std::string FAILED_SCHEDULE_ALERT = "failedToScheduleAlert";
 static const std::string INVALID_PAYLOAD_FOR_SET_ALARM_VOLUME = "invalidPayloadToSetAlarmRamping";
 static const std::string INVALID_PAYLOAD_FOR_CHANGE_ALARM_VOLUME = "invalidPayloadToChangeAlarmVolume";
+static const std::string ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME =
+    "alertTriggeredAtLessThan30PercentMaxAlertVolume";
+static const std::string ALERT_RINGING_ZERO_VOLUME = "alertTriggeredAtZeroAlertVolume";
+static const int ALERT_VOLUME_METRIC_LIMIT = 30;
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -217,6 +266,20 @@ static rapidjson::Value buildAllAlertsContext(
     }
 
     return alertArray;
+}
+
+/**
+ * Generate a UTC ISO8601-formatted timestamp
+ * @return UTC ISO8601-formatted timestamp as std::string
+ */
+static std::string currentISO8601TimeUTC() {
+    char buf[sizeof("2011-10-08T07:07:09Z")];
+    auto now = std::chrono::system_clock::now();
+    auto itt = std::chrono::system_clock::to_time_t(now);
+    std::ostringstream ss;
+    strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%SZ", gmtime(&itt));
+    ss << buf;
+    return ss.str();
 }
 
 /**
@@ -373,12 +436,43 @@ void AlertsCapabilityAgent::onConnectionStatusChanged(const Status status, const
 void AlertsCapabilityAgent::onFocusChanged(
     avsCommon::avs::FocusState focusState,
     avsCommon::avs::MixingBehavior behavior) {
-    ACSDK_DEBUG9(LX("onFocusChanged").d("focusState", focusState));
-    m_executor.submit([this, focusState]() { executeOnFocusChanged(focusState); });
+    ACSDK_DEBUG1(LX("onFocusChanged").d("focusState", focusState).d("mixingBehavior", behavior));
+
+    m_alertScheduler.updateFocus(focusState, behavior);
 }
 
 void AlertsCapabilityAgent::onFocusChanged(const std::string& channelName, avsCommon::avs::FocusState newFocus) {
-    m_executor.submit([this, channelName, newFocus]() { executeOnFocusManagerFocusChanged(channelName, newFocus); });
+    bool stateIsActive = newFocus != FocusState::NONE;
+
+    if (FocusManagerInterface::CONTENT_CHANNEL_NAME == channelName) {
+        m_contentChannelIsActive = stateIsActive;
+    } else if (FocusManagerInterface::COMMUNICATIONS_CHANNEL_NAME == channelName) {
+        m_commsChannelIsActive = stateIsActive;
+    } else {
+        return;
+    }
+
+    if (m_alertIsSounding) {
+        if (!m_commsChannelIsActive && !m_contentChannelIsActive) {
+            // All lower channels of interest are stopped playing content. Return alert volume to base value
+            // if needed.
+            SpeakerInterface::SpeakerSettings speakerSettings;
+            if (!getAlertVolumeSettings(&speakerSettings)) {
+                ACSDK_ERROR(LX("executeOnFocusChangedFailed").d("reason", "Failed to get speaker settings."));
+                return;
+            }
+
+            if (speakerSettings.volume > m_lastReportedSpeakerSettings.volume) {
+                // Alert is sounding with volume higher than Base Volume. Assume that it was adjusted because of
+                // content being played and reset it to the base one. Keep lower values, though.
+                m_speakerManager->setVolume(
+                    ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
+                    m_lastReportedSpeakerSettings.volume,
+                    SpeakerManagerInterface::NotificationProperties(
+                        SpeakerManagerObserverInterface::Source::DIRECTIVE));
+            }
+        }
+    }
 }
 
 void AlertsCapabilityAgent::onAlertStateChange(
@@ -452,6 +546,7 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
         m_contentChannelIsActive{false},
         m_commsChannelIsActive{false},
         m_alertIsSounding{false},
+        m_startSystemClock{std::clock()},
         m_alarmVolumeRampSetting{alarmVolumeRampSetting},
         m_settingsManager{settingsManager} {
     m_capabilityConfigurations.insert(getAlertsCapabilityConfiguration());
@@ -464,6 +559,65 @@ std::shared_ptr<CapabilityConfiguration> getAlertsCapabilityConfiguration() {
     configMap.insert({CAPABILITY_INTERFACE_VERSION_KEY, ALERTS_CAPABILITY_INTERFACE_VERSION});
 
     return std::make_shared<CapabilityConfiguration>(configMap);
+}
+
+static void addGenericMetadata(
+    std::unordered_map<std::string, std::string>& metadata,
+    const std::string& alertToken,
+    const std::string& alertType,
+    bool isConnected,
+    long monotonicTime,
+    const std::string& scheduledTriggerTime,
+    const std::string& actualTriggerTime) {
+    metadata.insert({METRIC_METADATA_TYPE_KEY, alertType});
+    metadata.insert({METRIC_METADATA_TOKEN_KEY, alertToken});
+    metadata.insert({METRIC_METADATA_VERSION_KEY, std::to_string(METRIC_METADATA_VERSION_VALUE)});
+    metadata.insert(
+        {METRIC_METADATA_DEVICE_STATE_KEY,
+         std::string(((isConnected ? METRIC_METADATA_DEVICE_STATE_ONLINE : METRIC_METADATA_DEVICE_STATE_OFFLINE)))});
+    metadata.insert({METRIC_METADATA_ACTUAL_TRIGGER_TIME_KEY, actualTriggerTime});
+    metadata.insert({METRIC_METADATA_SCHEDULED_TRIGGER_TIME_KEY, scheduledTriggerTime});
+    metadata.insert({METRIC_METADATA_MONOTONIC_TIME_KEY, std::to_string(monotonicTime)});
+}
+
+static void addAlertStartedRingingMetadata(
+    std::unordered_map<std::string, std::string>& metadata,
+    const std::string& ascending,
+    int volume) {
+    metadata.insert({METRIC_METADATA_IS_ASCENDING_KEY, ascending});
+    metadata.insert({METRIC_METADATA_ALERT_VOLUME_KEY, std::to_string(volume)});
+    metadata.insert({METRIC_METADATA_IS_QUEUED_KEY, METRIC_METADATA_IS_QUEUED_VALUE});
+}
+
+static void addAlertCanceledMetadata(std::unordered_map<std::string, std::string>& metadata) {
+    metadata.insert({METRIC_METADATA_CANCELED_REASON_KEY, METRIC_METADATA_CANCELED_REASON_VALUE});
+}
+
+static void submitMetricWithMetadata(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    const std::string& eventName,
+    std::unordered_map<std::string, std::string> metadata) {
+    if (!metricRecorder) {
+        return;
+    }
+
+    std::vector<DataPoint> dataPoints;
+
+    for (auto const& pair : metadata) {
+        dataPoints.push_back(DataPointStringBuilder{}.setName(pair.first).setValue(pair.second).build());
+    }
+
+    auto metricEvent = MetricEventBuilder{}
+                           .setActivityName("ALERT-" + eventName)
+                           .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(1).build())
+                           .addDataPoints(dataPoints)
+                           .build();
+
+    if (metricEvent == nullptr) {
+        ACSDK_ERROR(LX("Error creating metric."));
+        return;
+    }
+    metricRecorder->recordMetric(metricEvent);
 }
 
 void AlertsCapabilityAgent::doShutdown() {
@@ -504,6 +658,16 @@ settings::SettingEventMetadata AlertsCapabilityAgent::getAlarmVolumeRampMetadata
         ALERT_REPORT_ALARM_VOLUME_RAMP_EVENT_NAME,
         AVS_PAYLOAD_ALARM_VOLUME_RAMP_KEY,
     };
+}
+
+int AlertsCapabilityAgent::getAlertVolume() {
+    SpeakerInterface::SpeakerSettings speakerSettings;
+    if (!getAlertVolumeSettings(&speakerSettings)) {
+        ACSDK_ERROR(LX("getAlertVolume").d("reason", "Failed to get speaker settings."));
+        return -1;
+    } else {
+        return speakerSettings.volume;
+    }
 }
 
 bool AlertsCapabilityAgent::handleSetAlert(
@@ -716,17 +880,29 @@ bool AlertsCapabilityAgent::handleSetAlarmVolumeRamp(
     return m_alarmVolumeRampSetting->setAvsChange(value);
 }
 
-void AlertsCapabilityAgent::sendEvent(const std::string& eventName, const std::string& alertToken, bool isCertified) {
+void AlertsCapabilityAgent::sendEvent(
+    const std::string& eventName,
+    const std::string& alertToken,
+    bool isCertified,
+    const std::string& scheduledTime) {
     submitMetric(m_metricRecorder, eventName, 1);
     rapidjson::Document payload(kObjectType);
     rapidjson::Document::AllocatorType& alloc = payload.GetAllocator();
 
     payload.AddMember(StringRef(EVENT_PAYLOAD_TOKEN_KEY), alertToken, alloc);
 
+    if (ALERT_STARTED_EVENT_NAME == eventName || ALERT_STOPPED_EVENT_NAME == eventName) {
+        payload.AddMember(StringRef(EVENT_PAYLOAD_SCHEDULED_TIME_KEY), scheduledTime, alloc);
+        payload.AddMember(StringRef(EVENT_PAYLOAD_EVENT_TIME_KEY), currentISO8601TimeUTC(), alloc);
+        if (!m_isConnected && (ALERT_STOPPED_EVENT_NAME == eventName)) {
+            m_alertScheduler.saveOfflineStoppedAlert(alertToken, scheduledTime);
+            return;
+        }
+    }
+
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     if (!payload.Accept(writer)) {
-        ACSDK_ERROR(LX("sendEventFailed").m("Could not construct payload."));
         return;
     }
 
@@ -877,45 +1053,22 @@ void AlertsCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<Di
 
 void AlertsCapabilityAgent::executeOnConnectionStatusChanged(const Status status, const ChangedReason reason) {
     ACSDK_DEBUG1(LX("executeOnConnectionStatusChanged").d("status", status).d("reason", reason));
+    int wasConnected = m_isConnected;
     m_isConnected = (Status::CONNECTED == status);
-}
-
-void AlertsCapabilityAgent::executeOnFocusChanged(avsCommon::avs::FocusState focusState) {
-    ACSDK_DEBUG1(LX("executeOnFocusChanged").d("focusState", focusState));
-    m_alertScheduler.updateFocus(focusState);
-}
-
-void AlertsCapabilityAgent::executeOnFocusManagerFocusChanged(
-    const std::string& channelName,
-    avsCommon::avs::FocusState focusState) {
-    bool stateIsActive = focusState != FocusState::NONE;
-
-    if (FocusManagerInterface::CONTENT_CHANNEL_NAME == channelName) {
-        m_contentChannelIsActive = stateIsActive;
-    } else if (FocusManagerInterface::COMMUNICATIONS_CHANNEL_NAME == channelName) {
-        m_commsChannelIsActive = stateIsActive;
-    } else {
-        return;
-    }
-
-    if (m_alertIsSounding) {
-        if (!m_commsChannelIsActive && !m_contentChannelIsActive) {
-            // All lower channels of interest are stopped playing content. Return alert volume to base value
-            // if needed.
-            SpeakerInterface::SpeakerSettings speakerSettings;
-            if (!getAlertVolumeSettings(&speakerSettings)) {
-                ACSDK_ERROR(LX("executeOnFocusChangedFailed").d("reason", "Failed to get speaker settings."));
-                return;
-            }
-
-            if (speakerSettings.volume > m_lastReportedSpeakerSettings.volume) {
-                // Alert is sounding with volume higher than Base Volume. Assume that it was adjusted because of
-                // content being played and reset it to the base one. Keep lower values, though.
-                m_speakerManager->setVolume(
-                    ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
-                    m_lastReportedSpeakerSettings.volume,
-                    SpeakerManagerInterface::NotificationProperties(
-                        SpeakerManagerObserverInterface::Source::DIRECTIVE));
+    if (m_isConnected && !wasConnected) {
+        rapidjson::Value offlineStoppedAlerts(rapidjson::kArrayType);
+        rapidjson::Document jsonDoc;
+        jsonDoc.SetObject();
+        rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+        if (m_alertScheduler.getOfflineStoppedAlerts(&offlineStoppedAlerts, allocator)) {
+            for (rapidjson::Value::ConstValueIterator itr = offlineStoppedAlerts.Begin();
+                 itr != offlineStoppedAlerts.End();
+                 ++itr) {
+                std::string token = (*itr)[OFFLINE_STOPPED_ALERT_TOKEN_KEY].GetString();
+                std::string scheduledTime = (*itr)[OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY].GetString();
+                int id = (*itr)[OFFLINE_STOPPED_ALERT_ID_KEY].GetInt();
+                sendEvent(ALERT_STOPPED_EVENT_NAME, token, true, scheduledTime);
+                m_alertScheduler.deleteOfflineStoppedAlert(token, id);
             }
         }
     }
@@ -929,6 +1082,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
     ACSDK_DEBUG1(LX("executeOnAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
 
     bool alertIsActive = false;
+    int alertVolume;
 
     switch (state) {
         case AlertObserverInterface::State::READY:
@@ -936,7 +1090,15 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             break;
 
         case AlertObserverInterface::State::STARTED:
-            sendEvent(ALERT_STARTED_EVENT_NAME, alertToken, true);
+            sendEvent(ALERT_STARTED_EVENT_NAME, alertToken, true, reason);
+            alertVolume = getAlertVolume();
+            if ((alertVolume != -1) && (alertVolume < ALERT_VOLUME_METRIC_LIMIT)) {
+                submitMetric(m_metricRecorder, ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME, 1);
+                if (alertVolume == 0) {
+                    submitMetric(m_metricRecorder, ALERT_RINGING_ZERO_VOLUME, 1);
+                }
+            }
+            submitAlertStartedMetricWithMetadata(alertToken, alertType);
             updateContextManager();
             alertIsActive = true;
             break;
@@ -947,13 +1109,13 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             break;
 
         case AlertObserverInterface::State::STOPPED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true);
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true, reason);
             releaseChannel();
             updateContextManager();
             break;
 
         case AlertObserverInterface::State::COMPLETED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true);
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true, reason);
             releaseChannel();
             updateContextManager();
             break;
@@ -965,6 +1127,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
 
         case AlertObserverInterface::State::PAST_DUE:
             sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true);
+            submitAlertCanceledMetricWithMetadata(alertToken, alertType, reason);
             break;
 
         case AlertObserverInterface::State::FOCUS_ENTERED_FOREGROUND:
@@ -992,7 +1155,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
                     // Adjust alerts volume to be at least as loud as content volume
                     m_speakerManager->setVolume(
                         ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
-                        m_lastReportedSpeakerSettings.volume,
+                        contentSpeakerSettings.volume,
                         SpeakerManagerInterface::NotificationProperties(
                             SpeakerManagerObserverInterface::Source::DIRECTIVE));
                 }
@@ -1146,6 +1309,38 @@ void AlertsCapabilityAgent::setNextAlertVolume(int64_t volume) {
 
     // Always notify AVS of volume changes here
     updateAVSWithLocalVolumeChanges(static_cast<int8_t>(volume), true);
+}
+
+void AlertsCapabilityAgent::submitAlertStartedMetricWithMetadata(
+    const std::string& alertToken,
+    const std::string& alertType) {
+    std::unordered_map<std::string, std::string> metricMetadata;
+    std::string ascending =
+        ((m_alarmVolumeRampSetting->get() == types::AlarmVolumeRampTypes::ASCENDING) ? "true" : "false");
+    long monotonicTime = ((std::clock() - m_startSystemClock) / (double)CLOCKS_PER_SEC) * MILLISECONDS_IN_A_SECOND;
+    std::shared_ptr<Alert> alert = m_alertScheduler.getActiveAlert();
+    addGenericMetadata(
+        metricMetadata,
+        alertToken,
+        alertType,
+        m_isConnected,
+        monotonicTime,
+        ((alert == nullptr) ? "" : alert->getScheduledTime_ISO_8601()),
+        currentISO8601TimeUTC());
+    addAlertStartedRingingMetadata(metricMetadata, ascending, getAlertVolume());
+    submitMetricWithMetadata(m_metricRecorder, ALERT_STARTED_METRIC_NAME, metricMetadata);
+}
+
+void AlertsCapabilityAgent::submitAlertCanceledMetricWithMetadata(
+    const std::string& alertToken,
+    const std::string& alertType,
+    const std::string& scheduledTime) {
+    std::unordered_map<std::string, std::string> metricMetadata;
+    long monotonicTime = ((std::clock() - m_startSystemClock) / (double)CLOCKS_PER_SEC) * MILLISECONDS_IN_A_SECOND;
+    addGenericMetadata(
+        metricMetadata, alertToken, alertType, m_isConnected, monotonicTime, scheduledTime, currentISO8601TimeUTC());
+    addAlertCanceledMetadata(metricMetadata);
+    submitMetricWithMetadata(m_metricRecorder, ALERT_CANCELED_METRIC_NAME, metricMetadata);
 }
 
 void AlertsCapabilityAgent::executeOnSpeakerSettingsChanged(

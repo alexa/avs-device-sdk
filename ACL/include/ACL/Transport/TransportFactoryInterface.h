@@ -20,7 +20,7 @@
 #include <string>
 
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 
 #include "ACL/Transport/TransportInterface.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -48,7 +48,7 @@ public:
      */
     virtual std::shared_ptr<TransportInterface> createTransport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<TransportObserverInterface> transportObserverInterface,

@@ -28,6 +28,8 @@
 namespace alexaClientSDK {
 namespace afml {
 
+using namespace acsdkManufactory;
+using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 using namespace avsCommon::avs;
@@ -65,6 +67,33 @@ static const char INTERFACE_KEY[] = "interface";
  * @return The AudioActivityTracker capability configuration.
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioActivityTrackerCapabilityConfiguration();
+
+Annotated<AudioFocusAnnotation, ActivityTrackerInterface> AudioActivityTracker::createAudioActivityTrackerInterface(
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<ShutdownNotifierInterface> shutdownNotifier,
+    Annotated<endpoints::DefaultEndpointAnnotation, endpoints::EndpointCapabilitiesRegistrarInterface>
+        defaultEndpointCapabilitiesRegistrar) {
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createAudioActivityTrackerInterfaceFailed").d("reason", "nullShutdownNotifier"));
+        return nullptr;
+    }
+    if (!defaultEndpointCapabilitiesRegistrar) {
+        ACSDK_ERROR(
+            LX("createAudioActivityTrackerInterfaceFailed").d("reason", "nullDefaultEndpointCapabilitiesRegistrar"));
+        return nullptr;
+    }
+
+    auto audioActivityTracker = AudioActivityTracker::create(contextManager);
+    if (!audioActivityTracker) {
+        ACSDK_ERROR(LX("createAudioActivityTrackerInterfaceFailed"));
+        return nullptr;
+    }
+
+    defaultEndpointCapabilitiesRegistrar->withCapabilityConfiguration(audioActivityTracker);
+    shutdownNotifier->addObserver(audioActivityTracker);
+
+    return Annotated<AudioFocusAnnotation, ActivityTrackerInterface>(audioActivityTracker);
+}
 
 std::shared_ptr<AudioActivityTracker> AudioActivityTracker::create(
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) {

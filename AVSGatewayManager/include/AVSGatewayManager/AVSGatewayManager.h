@@ -21,6 +21,7 @@
 #include <string>
 #include <unordered_set>
 
+#include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
@@ -47,8 +48,26 @@ class AVSGatewayManager
         , public registrationManager::CustomerDataHandler {
 public:
     /**
+     * Creates an instance of the @c AVSGatewayManagerInterface.
+     *
+     * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
+     * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
+     * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.
+     * @param providerRegistrar Object with which to register the new instance as a post connect operation provider.
+     * @return A new instance of the @c AVSGatewayManager.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> createAVSGatewayManagerInterface(
+        std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar);
+
+    /**
      * Creates an instance of the @c AVSGatewayManager.
      *
+     * @deprecated
      * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
      * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.

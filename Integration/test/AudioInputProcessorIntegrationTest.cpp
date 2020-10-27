@@ -1316,7 +1316,7 @@ TEST_F(AudioInputProcessorTest, test_tapToTalkMultiturn) {
  * and ExpectSpeech directive. Audio of "...." is then fed into the stream and another recognize event is sent
  * but no directives are given in response.
  */
-TEST_F(AudioInputProcessorTest, test_tapToTalkMultiturnWithoutUserResponse) {
+TEST_F(AudioInputProcessorTest, DISABLED_test_tapToTalkMultiturnWithoutUserResponse) {
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_tapToTalkButton->startRecognizing(m_AudioInputProcessor, m_TapToTalkAudioProvider));
 

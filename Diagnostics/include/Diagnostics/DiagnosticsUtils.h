@@ -19,28 +19,11 @@
 #include <string>
 #include <vector>
 
+#include <AVSCommon/Utils/WavUtils.h>
+
 namespace alexaClientSDK {
 namespace diagnostics {
 namespace utils {
-
-/**
- * Structure defining the WavFileHeader contents.
- */
-struct WavFileHeader {
-    uint8_t riffHeader[4];
-    uint32_t chunkSize;
-    uint8_t waveHeader[4];
-    uint8_t fmtHeader[4];
-    uint32_t subChunk1Size;
-    uint16_t audioFormat;
-    uint16_t numberOfChannels;
-    uint32_t samplesPerSec;
-    uint32_t bytesPerSec;
-    uint16_t blockAlign;
-    uint16_t bitsPerSample;
-    uint8_t subchunk2ID[4];
-    uint32_t subchunk2Size;
-};
 
 /**
  * Validates the audio format.
@@ -55,7 +38,7 @@ struct WavFileHeader {
  * @param wavFileHeader The header of a wav file.
  * @return true if successful, else false.
  */
-bool validateAudioFormat(const WavFileHeader& wavFileHeader);
+bool validateAudioFormat(const avsCommon::utils::WavHeader& wavHeader);
 
 /**
  * Reads the wav file into the audio buffer vector.

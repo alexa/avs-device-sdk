@@ -96,6 +96,7 @@ if(BUILD_TESTING)
         if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             target_link_libraries(${testName} atomic)
         endif()
+        add_rpath_to_target("${testName}")
         add_test(NAME ${testName}
             COMMAND ${testName} ${SDK_CONFIG_FILE_TARGET} ${INTEGRATION_INPUTS}
             CONFIGURATIONS Integration)

@@ -12,6 +12,10 @@ target_include_directories(Alexa PUBLIC
 target_link_libraries(
         Alexa
         AVSCommon
+        acsdkAlexaEventProcessedNotifierInterfaces
+        acsdkNotifier
+        acsdkManufactory
+        acsdkShutdownManagerInterfaces
 )
 
 # install target

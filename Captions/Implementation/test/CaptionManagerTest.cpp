@@ -76,7 +76,7 @@ void CaptionManagerTest::SetUp() {
 
     caption_manager = CaptionManager::create(m_parser, m_timingFactory);
 
-    caption_manager->setMediaPlayers({m_player});
+    caption_manager->addMediaPlayer(m_player);
 
     caption_manager->setCaptionPresenter(m_presenter);
 }
@@ -285,6 +285,84 @@ TEST_F(CaptionManagerTest, test_splitCaptionFrameAtSpaceIndex) {
     lines.emplace_back(line1);
     auto captionFrame = CaptionFrame(1, std::chrono::milliseconds(1), std::chrono::milliseconds(0), lines);
     caption_manager->onParsed(captionFrame);
+}
+
+/**
+ * Test that CaptionManager::addMediaPlayer() does not add the same media player twice.
+ */
+TEST_F(CaptionManagerTest, test_testAddDuplicateMediaPlayerFails) {
+    auto mockTimingAdapter = m_timingFactory->getMockTimingAdapter();
+
+    EXPECT_CALL(*mockTimingAdapter, pause()).Times(1);
+
+    // Re-add the player added in Setup() (a duplicate add).
+    caption_manager->addMediaPlayer(m_player);
+
+    // test that the media player is still bound
+    auto sourceID2 = m_player->setSource("http://fake.url.com", std::chrono::milliseconds(0));
+
+    caption_manager->onParsed(CaptionFrame(sourceID2));
+
+    // trigger the finished event from the media player
+    m_player->mockPause(sourceID2);
+}
+
+/**
+ * Test that CaptionManager::addMediaPlayer() adds a media player that is bound to media events.
+ */
+TEST_F(CaptionManagerTest, test_testAddMediaPlayerBindsMediaPlayer) {
+    auto playerToAdd = MockMediaPlayer::create();
+    auto mockTimingAdapter = m_timingFactory->getMockTimingAdapter();
+    auto sourceID1 = playerToAdd->setSource("http://fake.url", std::chrono::milliseconds(0));
+
+    EXPECT_CALL(*mockTimingAdapter, pause()).Times(2);
+
+    caption_manager->addMediaPlayer(playerToAdd);
+
+    // in order to check this, the timing adapter needs to be pre-loaded.
+    caption_manager->onParsed(CaptionFrame(sourceID1));
+
+    // trigger the finished event from the media player
+    playerToAdd->mockPause(sourceID1);
+
+    // test that the other media players are also still bound
+    auto sourceID2 = m_player->setSource("http://fake.url.com", std::chrono::milliseconds(0));
+
+    caption_manager->onParsed(CaptionFrame(sourceID2));
+
+    // trigger the finished event from the media player
+    m_player->mockPause(sourceID2);
+}
+
+/**
+ * Test that CaptionManager::removeMediaPlayer() removes a media player bound to media events.
+ */
+TEST_F(CaptionManagerTest, test_testRemoveMediaPlayerUnbindsMediaPlayer) {
+    auto mockTimingAdapter = m_timingFactory->getMockTimingAdapter();
+    auto sourceID1 = m_player->setSource("http://fake.url", std::chrono::milliseconds(0));
+
+    caption_manager->removeMediaPlayer(m_player);
+
+    // in order to check this, the timing adapter needs to be pre-loaded.
+    caption_manager->onParsed(CaptionFrame(sourceID1));
+
+    // no calls expected now that the media player was removed
+    EXPECT_CALL(*mockTimingAdapter, pause()).Times(0);
+
+    // trigger the finished event from the media player
+    m_player->mockPause(sourceID1);
+}
+
+/**
+ * Tests that the caption manager is enabled after construction when
+ * captions are enabled.
+ */
+TEST_F(CaptionManagerTest, test_isEnabled) {
+#ifdef ENABLE_CAPTIONS
+    ASSERT_TRUE(caption_manager->isEnabled());
+#else
+    ASSERT_FALSE(caption_manager->isEnabled());
+#endif
 }
 
 }  // namespace test

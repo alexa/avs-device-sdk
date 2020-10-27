@@ -121,6 +121,15 @@ static std::string getValueTypeString(SQLiteMiscStorage::ValueType valueType);
  */
 static std::string getDBDataType(const std::string& keyValueType);
 
+std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> SQLiteMiscStorage::createMiscStorageInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    if (!configurationRoot) {
+        ACSDK_ERROR(LX("createMiscStorageInterfaceFailed").d("reason", "nullConfigurationRoot"));
+        return nullptr;
+    }
+    return create(*configurationRoot);
+}
+
 std::unique_ptr<SQLiteMiscStorage> SQLiteMiscStorage::create(const ConfigurationNode& configurationRoot) {
     auto miscDatabaseConfigurationRoot = configurationRoot[MISC_DATABASE_CONFIGURATION_ROOT_KEY];
     if (!miscDatabaseConfigurationRoot) {

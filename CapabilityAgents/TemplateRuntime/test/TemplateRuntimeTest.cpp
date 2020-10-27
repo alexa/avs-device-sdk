@@ -126,6 +126,16 @@ public:
         void(std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface> observer));
 };
 
+class MockRenderInfoCardsPlayerRegistrar : public RenderPlayerInfoCardsProviderRegistrarInterface {
+public:
+    MOCK_METHOD1(
+        registerProvider,
+        bool(const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>& provider));
+    MOCK_METHOD0(
+        getProviders,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>());
+};
+
 class MockGui : public TemplateRuntimeObserverInterface {
 public:
     MOCK_METHOD2(renderTemplateCard, void(const std::string& jsonPayload, avsCommon::avs::FocusState focusState));
@@ -301,7 +311,20 @@ void TemplateRuntimeTest::wakeOnReleaseChannel() {
  * Tests creating the TemplateRuntime with a null audioPlayerInterface.
  */
 TEST_F(TemplateRuntimeTest, test_nullAudioPlayerInterface) {
-    auto templateRuntime = TemplateRuntime::create({nullptr}, m_mockFocusManager, m_mockExceptionSender);
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>> providers = {
+        nullptr};
+    auto templateRuntime = TemplateRuntime::create(providers, m_mockFocusManager, m_mockExceptionSender);
+    ASSERT_EQ(templateRuntime, nullptr);
+}
+
+/**
+ * Tests creating the TemplateRuntime with a null provider registrar.
+ */
+TEST_F(TemplateRuntimeTest, test_nullProviderRegistrar) {
+    std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface> providerRegistrar =
+        nullptr;
+    auto templateRuntime =
+        TemplateRuntime::createTemplateRuntime(providerRegistrar, m_mockFocusManager, m_mockExceptionSender);
     ASSERT_EQ(templateRuntime, nullptr);
 }
 
@@ -320,6 +343,35 @@ TEST_F(TemplateRuntimeTest, test_nullFocusManagerInterface) {
 TEST_F(TemplateRuntimeTest, test_nullExceptionSender) {
     auto templateRuntime = TemplateRuntime::create({m_mockRenderPlayerInfoCardsProvider}, m_mockFocusManager, nullptr);
     ASSERT_EQ(templateRuntime, nullptr);
+}
+
+/**
+ * Tests that the TemplateRuntime will add itself to the providers registered with the RenderInfoCardsPlayerRegistrar at
+ * constructor time, and remove itself from them during shutdown.
+ */
+TEST_F(TemplateRuntimeTest, test_renderInfoCardsPlayersFromRegistrarAddRemoveObserver) {
+    auto mockRenderInfoCardsProvider1 = std::make_shared<NiceMock<MockRenderInfoCardsPlayer>>();
+    auto mockRenderInfoCardsProvider2 = std::make_shared<NiceMock<MockRenderInfoCardsPlayer>>();
+
+    auto mockRenderInfoCardsPlayerRegistrar = std::make_shared<StrictMock<MockRenderInfoCardsPlayerRegistrar>>();
+    EXPECT_CALL(*mockRenderInfoCardsPlayerRegistrar, getProviders())
+        .WillOnce(Invoke([mockRenderInfoCardsProvider1, mockRenderInfoCardsProvider2]() {
+            std::unordered_set<std::shared_ptr<RenderPlayerInfoCardsProviderInterface>> providers = {
+                mockRenderInfoCardsProvider1, mockRenderInfoCardsProvider2};
+            return providers;
+        }));
+
+    auto mockExceptionSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
+    auto mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
+
+    Expectation setObserver1 = EXPECT_CALL(*mockRenderInfoCardsProvider1, setObserver(NotNull())).Times(Exactly(1));
+    EXPECT_CALL(*mockRenderInfoCardsProvider1, setObserver(IsNull())).Times(Exactly(1)).After(setObserver1);
+    Expectation setObserver2 = EXPECT_CALL(*mockRenderInfoCardsProvider2, setObserver(NotNull())).Times(Exactly(1));
+    EXPECT_CALL(*mockRenderInfoCardsProvider2, setObserver(IsNull())).Times(Exactly(1)).After(setObserver2);
+
+    auto templateRuntime = TemplateRuntime::createTemplateRuntime(
+        mockRenderInfoCardsPlayerRegistrar, mockFocusManager, mockExceptionSender);
+    templateRuntime->shutdown();
 }
 
 /**

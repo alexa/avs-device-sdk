@@ -15,6 +15,11 @@
 
 #include <acsdkManufactory/ComponentAccumulator.h>
 #include <acsdkManufactory/ConstructorAdapter.h>
+#include <acsdkNotifier/Notifier.h>
+#include <acsdkShutdownManager/ShutdownManager.h>
+#include <acsdkShutdownManager/ShutdownNotifier.h>
+#include <acsdkStartupManager/StartupManager.h>
+#include <acsdkStartupManager/StartupNotifier.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 
 #include "acsdkShared/SharedComponent.h"
@@ -23,21 +28,25 @@ namespace alexaClientSDK {
 namespace acsdkShared {
 
 using namespace acsdkManufactory;
+using namespace acsdkShutdownManager;
+using namespace acsdkShutdownManagerInterfaces;
+using namespace acsdkStartupManager;
+using namespace acsdkStartupManagerInterfaces;
 using namespace avsCommon;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::libcurlUtils;
 using namespace avsCommon::utils::timing;
 
-Component<
-    std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
-    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>,
-    std::shared_ptr<avsCommon::utils::timing::MultiTimer>>
-getComponent() {
+SharedComponent getComponent() {
     return ComponentAccumulator<>()
         .addRetainedFactory(ConfigurationNode::createRoot)
+        .addRetainedFactory(ConstructorAdapter<MultiTimer>::get())
         .addUniqueFactory(HttpPost::createHttpPostInterface)
-        .addRetainedFactory(ConstructorAdapter<MultiTimer>::get());
+        .addRetainedFactory(ShutdownManager::createShutdownManagerInterface)
+        .addRetainedFactory(ConstructorAdapter<ShutdownNotifierInterface, ShutdownNotifier>::get())
+        .addRetainedFactory(StartupManager::createStartupManagerInterface)
+        .addRetainedFactory(ConstructorAdapter<StartupNotifierInterface, StartupNotifier>::get());
 }
 
 }  // namespace acsdkShared

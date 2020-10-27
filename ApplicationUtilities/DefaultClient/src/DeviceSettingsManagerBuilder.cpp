@@ -67,7 +67,7 @@ static inline bool checkPointer(const std::shared_ptr<PointerT>& pointer, const 
 DeviceSettingsManagerBuilder::DeviceSettingsManagerBuilder(
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-    std::shared_ptr<acl::AVSConnectionManager> connectionManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
     std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
         m_settingStorage{settingStorage},
         m_messageSender{messageSender},

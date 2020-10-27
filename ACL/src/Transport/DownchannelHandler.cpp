@@ -16,6 +16,7 @@
 #include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 
 #include "ACL/Transport/DownchannelHandler.h"
 #include "ACL/Transport/HTTP2Transport.h"
@@ -26,6 +27,7 @@ namespace acl {
 
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
+using namespace avsCommon::utils::power;
 
 /// Downchannel URL
 const static std::string AVS_DOWNCHANNEL_URL_PATH_EXTENSION = "/v20160207/directives";
@@ -50,7 +52,7 @@ std::shared_ptr<DownchannelHandler> DownchannelHandler::create(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager) {
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager) {
     ACSDK_DEBUG9(LX(__func__).d("context", context.get()));
 
     if (!context) {
@@ -98,6 +100,10 @@ DownchannelHandler::DownchannelHandler(
     const std::string& authToken) :
         ExchangeHandler{context, authToken} {
     ACSDK_DEBUG9(LX(__func__).d("context", context.get()));
+    m_powerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG);
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
 }
 
 void DownchannelHandler::onActivity() {
@@ -120,7 +126,9 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
         case HTTPResponseCode::REDIRECTION_TEMPORARY_REDIRECT:
         case HTTPResponseCode::REDIRECTION_PERMANENT_REDIRECT:
         case HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST:
+        case HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION:
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
+        case HTTPResponseCode::SERVER_UNAVAILABLE:
         case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
             break;
         case HTTPResponseCode::SUCCESS_OK:
@@ -129,6 +137,9 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
         case HTTPResponseCode::CLIENT_ERROR_FORBIDDEN:
             m_context->onForbidden(m_authToken);
             break;
+    }
+    if (m_powerResource) {
+        m_powerResource->release();
     }
     return true;
 }

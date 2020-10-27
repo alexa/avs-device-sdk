@@ -20,6 +20,8 @@
 #include <AVSCommon/AVS/ExceptionErrorType.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
+#include <AVSCommon/Utils/Power/WakeGuard.h>
 
 #include "ADSL/DirectiveSequencer.h"
 
@@ -82,7 +84,7 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
     }
     ACSDK_INFO(LX("onDirective").d("directive", directive->getHeaderAsString()));
     m_receivingQueue.push_back(directive);
-    m_wakeReceivingLoop.notify_one();
+    m_wakeReceivingLoop.notifyOne();
     return true;
 }
 
@@ -94,7 +96,12 @@ DirectiveSequencer::DirectiveSequencer(
         m_exceptionSender{exceptionSender},
         m_isShuttingDown{false},
         m_isEnabled{true},
-        m_directiveRouter{metricRecorder} {
+        m_directiveRouter{metricRecorder},
+        m_powerResource{power::PowerMonitor::getInstance()->createLocalPowerResource(TAG)} {
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
+
     m_directiveProcessor = std::make_shared<DirectiveProcessor>(&m_directiveRouter);
     m_receivingThread = std::thread(&DirectiveSequencer::receivingLoop, this);
 }
@@ -104,7 +111,7 @@ void DirectiveSequencer::doShutdown() {
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_isShuttingDown = true;
-        m_wakeReceivingLoop.notify_one();
+        m_wakeReceivingLoop.notifyOne();
     }
     if (m_receivingThread.joinable()) {
         m_receivingThread.join();
@@ -120,7 +127,7 @@ void DirectiveSequencer::disable() {
     m_isEnabled = false;
     m_directiveProcessor->setDialogRequestId("");
     m_directiveProcessor->disable();
-    m_wakeReceivingLoop.notify_one();
+    m_wakeReceivingLoop.notifyOne();
 }
 
 void DirectiveSequencer::enable() {
@@ -128,11 +135,13 @@ void DirectiveSequencer::enable() {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_isEnabled = true;
     m_directiveProcessor->enable();
-    m_wakeReceivingLoop.notify_one();
+    m_wakeReceivingLoop.notifyOne();
 }
 
 void DirectiveSequencer::receivingLoop() {
     auto wake = [this]() { return !m_receivingQueue.empty() || m_isShuttingDown; };
+
+    power::PowerMonitor::getInstance()->assignThreadPowerResource(m_powerResource);
 
     std::unique_lock<std::mutex> lock(m_mutex);
     while (true) {
@@ -141,6 +150,11 @@ void DirectiveSequencer::receivingLoop() {
             break;
         }
         receiveDirectiveLocked(lock);
+    }
+
+    power::PowerMonitor::getInstance()->removeThreadPowerResource();
+    if (m_powerResource) {
+        m_powerResource->release();
     }
 }
 

@@ -24,6 +24,7 @@
 namespace alexaClientSDK {
 namespace acsdkNotifications {
 
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
@@ -141,6 +142,31 @@ void NotificationRenderer::onFocusChanged(FocusState newFocus, MixingBehavior be
             ACSDK_ERROR(LX("renderNotification").m("UnableToReleaseChannel"));
         }
     });
+}
+
+std::shared_ptr<NotificationRenderer> NotificationRenderer::create(
+    const std::shared_ptr<ApplicationAudioPipelineFactoryInterface>& audioPipelineFactory,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!audioPipelineFactory) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullAudioPipelineFactory"));
+        return nullptr;
+    }
+
+    auto applicationMediaInterfaces = audioPipelineFactory->createApplicationMediaInterfaces(
+        NOTIFICATIONS_MEDIA_PLAYER_NAME,
+        false,
+        false,
+        false,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME);
+
+    if (!applicationMediaInterfaces) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "failed to create media player or related interfaces"));
+        return nullptr;
+    }
+
+    return create(applicationMediaInterfaces->mediaPlayer, focusManager);
 }
 
 std::shared_ptr<NotificationRenderer> NotificationRenderer::create(

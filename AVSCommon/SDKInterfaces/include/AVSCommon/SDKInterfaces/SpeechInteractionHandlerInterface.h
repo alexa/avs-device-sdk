@@ -78,11 +78,14 @@ public:
      * @param holdToTalkAudioProvider The audio provider containing the audio data stream along with its metadata.
      * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
      * and it is used to measure user perceived latency.
+     * @param beginIndex An optional parameter indicating where in the stream to start reading from.
      * @return A future indicating whether the interaction was successfully started.
      */
     virtual std::future<bool> notifyOfHoldToTalkStart(
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now()) = 0;
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now(),
+        avsCommon::avs::AudioInputStream::Index beginIndex =
+            capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX) = 0;
 
     /**
      * Ends a hold to talk interaction by forcing the client to stop streaming audio data to the cloud and ending any

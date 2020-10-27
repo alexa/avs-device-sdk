@@ -43,16 +43,44 @@ static constexpr const char* KEY_SIZEOF_TRANSPORTS = "sizeOf m_transports";
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<MessageRouterInterface> MessageRouter::createMessageRouterInterface(
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+    const std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>& attachmentManager,
+    const std::shared_ptr<TransportFactoryInterface>& transportFactory) {
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createMessageRouterInterfaceFailed").d("reason", "nullShutdownNotifier"));
+        return nullptr;
+    }
+    if (!authDelegate) {
+        ACSDK_ERROR(LX("createMessageRouterInterfaceFailed").d("reason", "nullAuthDelegate"));
+        return nullptr;
+    }
+    if (!attachmentManager) {
+        ACSDK_ERROR(LX("createMessageRouterInterfaceFailed").d("reason", "nullAttachmentManager"));
+        return nullptr;
+    }
+    if (!transportFactory) {
+        ACSDK_ERROR(LX("createMessageRouterInterfaceFailed").d("reason", "nullTransportFactory"));
+        return nullptr;
+    }
+    auto messageRouter = std::make_shared<MessageRouter>(authDelegate, attachmentManager, transportFactory);
+    shutdownNotifier->addObserver(messageRouter);
+    return messageRouter;
+}
+
 MessageRouter::MessageRouter(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
-    std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<TransportFactoryInterface> transportFactory,
-    const std::string& avsGateway) :
+    const std::string& avsGateway,
+    int engineType) :
         MessageRouterInterface{"MessageRouter"},
         m_avsGateway{avsGateway},
         m_authDelegate{authDelegate},
         m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
         m_connectionReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
+        m_engineType{engineType},
         m_isEnabled{false},
         m_attachmentManager{attachmentManager},
         m_transportFactory{transportFactory},
@@ -273,7 +301,9 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
     auto task = [this, status, reason]() {
         auto observer = getObserver();
         if (observer) {
-            observer->onConnectionStatusChanged(status, reason);
+            std::vector<ConnectionStatusObserverInterface::EngineConnectionStatus> statuses;
+            statuses.emplace_back(m_engineType, reason, status);
+            observer->onConnectionStatusChanged(status, statuses);
         }
     };
     m_executor.submit(task);

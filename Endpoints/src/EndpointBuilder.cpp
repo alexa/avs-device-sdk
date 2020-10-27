@@ -14,8 +14,10 @@
  */
 
 #include <Alexa/AlexaInterfaceCapabilityAgent.h>
+#include <Alexa/AlexaInterfaceMessageSender.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
+
 #ifdef POWER_CONTROLLER
 #include <PowerController/PowerControllerCapabilityAgent.h>
 #endif
@@ -27,6 +29,7 @@
 #endif
 #ifdef RANGE_CONTROLLER
 #include <RangeController/RangeControllerCapabilityAgent.h>
+
 #endif
 
 #include "Endpoints/Endpoint.h"
@@ -36,7 +39,9 @@
 namespace alexaClientSDK {
 namespace endpoints {
 
+using namespace acsdkManufactory;
 using namespace avsCommon::sdkInterfaces::endpoints;
+using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("EndpointBuilder");
@@ -58,6 +63,25 @@ static constexpr size_t MAX_SUFFIX_LENGTH = 10;
 const std::string ALEXA_DISPLAY_CATEGORY = "ALEXA_VOICE_ENABLED";
 
 std::unique_ptr<EndpointBuilder> EndpointBuilder::create(
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+    const std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface>& alexaMessageSender) {
+    if (!deviceInfo || !contextManager || !alexaMessageSender || !exceptionSender) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("reason", "nullParameter")
+                        .d("isDeviceInfoNull", !deviceInfo)
+                        .d("isContextManagerNull", !contextManager)
+                        .d("isExceptionSenderNull", !exceptionSender)
+                        .d("isAlexaMessageSenderNull", !alexaMessageSender));
+        return nullptr;
+    }
+
+    return std::unique_ptr<EndpointBuilder>(
+        new EndpointBuilder(deviceInfo, contextManager, exceptionSender, alexaMessageSender));
+}
+
+std::unique_ptr<EndpointBuilder> EndpointBuilder::create(
     const avsCommon::utils::DeviceInfo& deviceInfo,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
@@ -71,18 +95,21 @@ std::unique_ptr<EndpointBuilder> EndpointBuilder::create(
         return nullptr;
     }
 
+    auto deviceInfoPtr = std::make_shared<DeviceInfo>(deviceInfo);
+
     return std::unique_ptr<EndpointBuilder>(
-        new EndpointBuilder(deviceInfo, contextManager, exceptionSender, alexaMessageSender));
+        new EndpointBuilder(deviceInfoPtr, contextManager, exceptionSender, alexaMessageSender));
 }
 
 EndpointBuilder::EndpointBuilder(
-    const avsCommon::utils::DeviceInfo& deviceInfo,
+    std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender) :
-        m_isDefaultEndpoint{false},
+        m_isConfigurationFinalized{false},
         m_hasBeenBuilt{false},
         m_invalidConfiguration{false},
+        m_isDefaultEndpoint{false},
         m_deviceInfo{deviceInfo},
         m_contextManager{contextManager},
         m_exceptionSender{exceptionSender},
@@ -95,8 +122,26 @@ EndpointBuilder::~EndpointBuilder() {
     }
 }
 
+void EndpointBuilder::configureDefaultEndpoint() {
+    m_isDefaultEndpoint = true;
+    m_attributes.endpointId = m_deviceInfo->getDefaultEndpointId();
+    m_attributes.manufacturerName = m_deviceInfo->getManufacturerName();
+    m_attributes.description = m_deviceInfo->getDeviceDescription();
+    m_attributes.displayCategories = {ALEXA_DISPLAY_CATEGORY};
+
+    m_attributes.registration.set(EndpointAttributes::Registration(
+        m_deviceInfo->getProductId(),
+        m_deviceInfo->getDeviceSerialNumber(),
+        m_deviceInfo->getRegistrationKey(),
+        m_deviceInfo->getProductIdKey()));
+
+    if (!m_deviceInfo->getFriendlyName().empty()) {
+        m_attributes.friendlyName = m_deviceInfo->getFriendlyName();
+    }
+}
+
 EndpointBuilder& EndpointBuilder::withDerivedEndpointId(const std::string& suffix) {
-    if (m_isDefaultEndpoint) {
+    if (m_isConfigurationFinalized) {
         ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
         return *this;
     }
@@ -106,12 +151,12 @@ EndpointBuilder& EndpointBuilder::withDerivedEndpointId(const std::string& suffi
         return *this;
     }
 
-    m_attributes.endpointId = m_deviceInfo.getDefaultEndpointId() + ENDPOINT_ID_CONCAT + suffix;
+    m_attributes.endpointId = m_deviceInfo->getDefaultEndpointId() + ENDPOINT_ID_CONCAT + suffix;
     return *this;
 }
 
 EndpointBuilder& EndpointBuilder::withEndpointId(const EndpointIdentifier& endpointId) {
-    if (m_isDefaultEndpoint) {
+    if (m_isConfigurationFinalized) {
         ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
         return *this;
     }
@@ -126,25 +171,17 @@ EndpointBuilder& EndpointBuilder::withEndpointId(const EndpointIdentifier& endpo
     return *this;
 }
 
-bool EndpointBuilder::finishDefaultEndpointConfiguration() {
-    m_attributes.registration.set(EndpointAttributes::Registration(
-        m_deviceInfo.getProductId(),
-        m_deviceInfo.getDeviceSerialNumber(),
-        m_deviceInfo.getRegistrationKey(),
-        m_deviceInfo.getProductIdKey()));
-    m_attributes.endpointId = m_deviceInfo.getDefaultEndpointId();
-    m_attributes.displayCategories = {ALEXA_DISPLAY_CATEGORY};
-    m_attributes.manufacturerName = m_deviceInfo.getManufacturerName();
-    m_attributes.description = m_deviceInfo.getDeviceDescription();
-    if (!m_deviceInfo.getFriendlyName().empty()) {
-        m_attributes.friendlyName = m_deviceInfo.getFriendlyName();
-    }
-    m_isDefaultEndpoint = true;
-    auto attributes = m_attributes;
-    return !m_invalidConfiguration;
+void EndpointBuilder::finalizeAttributes() {
+    ACSDK_DEBUG5(LX(__func__));
+    m_isConfigurationFinalized = true;
 }
 
 EndpointBuilder& EndpointBuilder::withFriendlyName(const std::string& friendlyName) {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
     if (!isFriendlyNameValid(friendlyName)) {
         ACSDK_ERROR(LX(__func__).d("reason", "invalidFriendlyName"));
         return *this;
@@ -155,6 +192,11 @@ EndpointBuilder& EndpointBuilder::withFriendlyName(const std::string& friendlyNa
 }
 
 EndpointBuilder& EndpointBuilder::withDescription(const std::string& description) {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
     if (!isDescriptionValid(description)) {
         ACSDK_ERROR(LX(__func__).d("reason", "invalidDescription"));
         m_invalidConfiguration = true;
@@ -166,6 +208,11 @@ EndpointBuilder& EndpointBuilder::withDescription(const std::string& description
 }
 
 EndpointBuilder& EndpointBuilder::withManufacturerName(const std::string& manufacturerName) {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
     if (!isManufacturerNameValid(manufacturerName)) {
         ACSDK_ERROR(LX(__func__).d("reason", "invalidManufacturerName"));
         m_invalidConfiguration = true;
@@ -177,6 +224,11 @@ EndpointBuilder& EndpointBuilder::withManufacturerName(const std::string& manufa
 }
 
 EndpointBuilder& EndpointBuilder::withDisplayCategory(const std::vector<std::string>& displayCategories) {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
     if (displayCategories.empty()) {
         ACSDK_DEBUG5(LX(__func__).d("reason", "invalidDisplayCategories"));
         m_invalidConfiguration = true;
@@ -194,6 +246,11 @@ EndpointBuilder& EndpointBuilder::withAdditionalAttributes(
     const std::string& firmwareVersion,
     const std::string& softwareVersion,
     const std::string& customIdentifier) {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
     EndpointAttributes::AdditionalAttributes additionalAttributes;
     additionalAttributes.manufacturer = manufacturer;
     additionalAttributes.model = model;
@@ -365,6 +422,47 @@ EndpointBuilder& EndpointBuilder::withRangeController(
     return *this;
 }
 
+EndpointBuilder& EndpointBuilder::withEndpointCapabilitiesBuilder(
+    const std::shared_ptr<EndpointCapabilitiesBuilderInterface>& endpointCapabilitiesBuilder) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    auto capabilitiesPair = endpointCapabilitiesBuilder->buildCapabilities(
+        m_attributes.endpointId, m_contextManager, m_alexaMessageSender, m_exceptionSender);
+
+    // Check if the constructed directive handlers are valid
+    for (auto& capability : capabilitiesPair.first) {
+        if (!capability.directiveHandler) {
+            ACSDK_ERROR(LX("withEndpointCapabilitiesBuilderFailed").d("reason", "invalid directiveHandler"));
+            m_invalidConfiguration = true;
+            return *this;
+        }
+    }
+
+    // Check if the required shutdown objects are valid.
+    for (auto& shutdownObject : capabilitiesPair.second) {
+        if (!shutdownObject) {
+            ACSDK_ERROR(LX("withEndpointCapabilitiesBuilderFailed").d("reason", "invalid requiredShutdown"));
+            m_invalidConfiguration = true;
+            return *this;
+        }
+    }
+
+    ACSDK_DEBUG5(LX(__func__)
+                     .d("number of capabilities built", capabilitiesPair.first.size())
+                     .d("number of required shutdown objects built", capabilitiesPair.second.size()));
+
+    for (auto& capability : capabilitiesPair.first) {
+        m_capabilitiesBuilders.push_back(
+            [capability] { return std::make_pair(capability.configuration, capability.directiveHandler); });
+    }
+
+    for (auto& shutdownObject : capabilitiesPair.second) {
+        m_requireShutdownObjects.push_back(shutdownObject);
+    }
+
+    return *this;
+}
+
 EndpointBuilder& EndpointBuilder::withCapability(
     const EndpointBuilder::CapabilityConfiguration& configuration,
     std::shared_ptr<DirectiveHandlerInterface> directiveHandler) {
@@ -425,18 +523,6 @@ alexaClientSDK::endpoints::EndpointBuilder& alexaClientSDK::endpoints::EndpointB
 }
 
 std::unique_ptr<EndpointInterface> EndpointBuilder::build() {
-    if (m_isDefaultEndpoint) {
-        ACSDK_ERROR(LX("buildFailed").d("reason", "buildDefaultEndpointNotAllowed"));
-    }
-    return buildImplementation();
-}
-
-std::unique_ptr<EndpointInterface> EndpointBuilder::buildDefaultEndpoint() {
-    if (!m_isDefaultEndpoint) {
-        ACSDK_ERROR(LX("buildDefaultEndpointFailed").d("reason", "notDefaultEndpoint"));
-        return nullptr;
-    }
-
     return buildImplementation();
 }
 
@@ -459,8 +545,8 @@ std::unique_ptr<EndpointInterface> EndpointBuilder::buildImplementation() {
 
     auto endpoint = avsCommon::utils::memory::make_unique<Endpoint>(m_attributes);
 
-    // Every non-default endpoint needs an AlexaInterfaceCapabilityAgent.
     if (!m_isDefaultEndpoint) {
+        // Every non-default endpoint needs an AlexaInterfaceCapabilityAgent.
         auto alexaCapabilityAgent = capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::create(
             m_deviceInfo, m_attributes.endpointId, m_exceptionSender, m_alexaMessageSender);
         if (!alexaCapabilityAgent) {
@@ -473,7 +559,6 @@ std::unique_ptr<EndpointInterface> EndpointBuilder::buildImplementation() {
     for (auto& capabilityBuilder : m_capabilitiesBuilders) {
         auto capability = capabilityBuilder();
         if (!capability.second) {
-            // Default endpoint might have capability configurations without a directive handler.
             if (!m_isDefaultEndpoint) {
                 ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "buildCapabilityFailed"));
                 return nullptr;

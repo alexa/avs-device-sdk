@@ -28,7 +28,7 @@ MessageRouterFactory::MessageRouterFactory() = default;
 
 std::shared_ptr<MessageRouterInterface> MessageRouterFactory::createMessageRouter(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
-    std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<TransportFactoryInterface> transportFactory) {
     return std::make_shared<MessageRouter>(
         std::move(authDelegate), std::move(attachmentManager), std::move(transportFactory));

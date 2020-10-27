@@ -32,6 +32,15 @@ namespace storage {
 class AVSGatewayManagerStorage : public AVSGatewayManagerStorageInterface {
 public:
     /**
+     * Creates an instance of @ AVSGatewayManagerStorageInterface.
+     *
+     * @param miscStorage The underlying miscellaneous storage to store gateway verification data.
+     * @return A unique pointer to the instance of the newly created @c AVSGatewayManagerStorage.
+     */
+    static std::unique_ptr<AVSGatewayManagerStorageInterface> createAVSGatewayManagerStorageInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& miscStorage);
+
+    /**
      * Creates an instance of the @c AVSGatewayManagerStorage.
      *
      * @param miscStorage The underlying miscellaneous storage to store gateway verification data.

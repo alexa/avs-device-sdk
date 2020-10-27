@@ -148,7 +148,15 @@ public:
         return true;
     }
 
+    bool storeOfflineAlert(const std::string&, const std::string&) override {
+        return true;
+    }
+
     bool load(std::vector<std::shared_ptr<Alert>>*, std::shared_ptr<settings::DeviceSettingsManager>) override {
+        return true;
+    }
+
+    bool loadOfflineAlerts(rapidjson::Value*, rapidjson::Document::AllocatorType&) override {
         return true;
     }
 
@@ -157,6 +165,10 @@ public:
     }
 
     bool erase(std::shared_ptr<Alert>) override {
+        return true;
+    }
+
+    bool eraseOffline(const std::string&, int) override {
         return true;
     }
 
@@ -178,9 +190,12 @@ public:
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
     MOCK_METHOD1(store, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD2(storeOfflineAlert, bool(const std::string&, const std::string&));
     MOCK_METHOD2(load, bool(std::vector<std::shared_ptr<Alert>>*, std::shared_ptr<settings::DeviceSettingsManager>));
+    MOCK_METHOD2(loadOfflineAlerts, bool(rapidjson::Value*, rapidjson::Document::AllocatorType&));
     MOCK_METHOD1(modify, bool(std::shared_ptr<Alert>));
     MOCK_METHOD1(erase, bool(std::shared_ptr<Alert>));
+    MOCK_METHOD2(eraseOffline, bool(const std::string&, int));
     MOCK_METHOD1(bulkErase, bool(const std::list<std::shared_ptr<Alert>>&));
     MOCK_METHOD0(clearDatabase, bool());
 };
@@ -359,9 +374,12 @@ void AlertsCapabilityAgentTest::SetUp() {
     ON_CALL(*(m_alertStorage), createDatabase()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), open()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), store(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), storeOfflineAlert(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), load(_, _)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), loadOfflineAlerts(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), modify(_)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), erase(_)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), eraseOffline(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), bulkErase(_)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), clearDatabase()).WillByDefault(Return(true));
 

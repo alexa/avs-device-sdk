@@ -58,16 +58,18 @@ protected:
      * Utility function to update our local status variables.
      *
      * @param status The Connection Status.
-     * @param reason The reason the Connection Status changed.
+     * @param engineConnectionStatuses The detailed connection status for each engine.
      */
     void updateConnectionStatus(
         ConnectionStatusObserverInterface::Status status,
-        ConnectionStatusObserverInterface::ChangedReason reason);
+        const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
+            engineConnectionStatuses);
 
     /**
-     * Utility function to notify all observers of the current Connection Status and Reason.
+     * Utility function to notify all observers of the current Connection Status of engines.
+     * @param avsConnectionStatusChanged value to indicate if default status changed or not
      */
-    void notifyObservers();
+    void notifyObservers(bool avsConnectionStatusChanged);
 
     /**
      * Removes all observers registered for Connection status notifications.
@@ -80,8 +82,12 @@ protected:
     /// The current connection status.  @c m_mutex must be acquired before access.
     ConnectionStatusObserverInterface::Status m_connectionStatus;
 
-    /// The reason we changed to the current connection status.  @c m_mutex must be acquired before access.
-    ConnectionStatusObserverInterface::ChangedReason m_connectionChangedReason;
+    /// The current Alexa Voice Services connection status. TODO STAR-562: once migrate to use new
+    /// onConnectionStatusChange API, this member variable should be removed.
+    ConnectionStatusObserverInterface::Status m_avsConnectionStatus;
+
+    /// The detailed connection statuses for each engine
+    std::vector<ConnectionStatusObserverInterface::EngineConnectionStatus> m_engineConnectionStatuses;
 
     /// Set of observers to notify when the connection status changes.  @c m_mutex must be acquired before access.
     std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> m_connectionStatusObservers;

@@ -36,6 +36,17 @@ public:
      * @param configurationRoot The global config object.
      * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
      */
+    static std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> createMiscStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Factory method for creating a storage object for a SQLite database.
+     * Note that the actual database will not be created by this function.
+     *
+     * @deprecated
+     * @param configurationRoot The global config object.
+     * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
+     */
     static std::unique_ptr<SQLiteMiscStorage> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 

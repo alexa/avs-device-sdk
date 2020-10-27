@@ -47,8 +47,10 @@ struct Fingerprint {
 };
 
 /**
- * A @c MediaPlayerFactoryInterface allows access to @c MediaPlayerInterface instances as needed (and if availible)
- * This is a capability needed to support pre-buffering
+ * A @c MediaPlayerFactoryInterface allows access to @c MediaPlayerInterface instances as needed (and if available).
+ * This is a capability needed to support pre-buffering.
+ *
+ * @deprecated Use PooledMediaResourceProviderInterface instead.
  *
  * Instances are not expected to be Thread-safe.
  */

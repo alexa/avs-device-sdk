@@ -39,6 +39,11 @@ static const std::string NONE{"NONE"};
 /// Timeout value to wait for asynchronous operations.
 static const std::chrono::seconds TIMEOUT{2};
 
+/// The list of Synchronous Properties that need to be retrieved before returning all device properties.
+static const std::set<std::string> listOfSynchronousProperties = {
+    DevicePropertyAggregator::DevicePropertyAggregatorInterface::DO_NOT_DISTURB,
+    DevicePropertyAggregator::DevicePropertyAggregatorInterface::LOCALE};
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -46,12 +51,24 @@ static const std::chrono::seconds TIMEOUT{2};
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/**
+ * Standard method to convert bool to string.
+ *
+ * @param value The boolean value.
+ * @return The string representation.
+ */
+static std::string toString(bool value) {
+    std::stringstream ss;
+    ss << std::boolalpha << value;
+    return ss.str();
+}
+
 std::shared_ptr<DevicePropertyAggregator> DevicePropertyAggregator::create() {
     return std::shared_ptr<DevicePropertyAggregator>(new DevicePropertyAggregator());
 }
 
 DevicePropertyAggregator::DevicePropertyAggregator() {
-    initializePropertyMap();
+    initializeAsyncPropertyMap();
 }
 
 void DevicePropertyAggregator::setContextManager(
@@ -59,6 +76,12 @@ void DevicePropertyAggregator::setContextManager(
     ACSDK_DEBUG5(LX(__func__));
 
     m_contextManager = contextManager;
+}
+
+void DevicePropertyAggregator::setDeviceSettingsManager(
+    std::shared_ptr<settings::DeviceSettingsManager> settingManager) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_deviceSettingsManager = settingManager;
 }
 
 void DevicePropertyAggregator::initializeVolume(
@@ -82,33 +105,75 @@ void DevicePropertyAggregator::initializeVolume(
     }
 }
 
-void DevicePropertyAggregator::initializePropertyMap() {
-    m_propertyMap[DevicePropertyAggregatorInterface::TTS_PLAYER_STATE] = IDLE;
-    m_propertyMap[DevicePropertyAggregatorInterface::AUDIO_PLAYER_STATE] = IDLE;
-    m_propertyMap[DevicePropertyAggregatorInterface::CONTENT_ID] = NONE;
-    m_propertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = IDLE;
+void DevicePropertyAggregator::onAuthStateChange(
+    AuthObserverInterface::State newState,
+    AuthObserverInterface::Error error) {
+    ACSDK_DEBUG5(LX(__func__).d("newState", newState).d("error", error));
+
+    bool registered = false;
+
+    switch (newState) {
+        case AuthObserverInterface::State::REFRESHED:
+            if (AuthObserverInterface::Error::SUCCESS == error) {
+                registered = true;
+            }
+            break;
+        case AuthObserverInterface::State::UNINITIALIZED:
+        case AuthObserverInterface::State::EXPIRED:
+            registered = false;
+            break;
+        default:
+            break;
+    }
+
+    m_executor.submit([this, registered]() {
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::REGISTRATION_STATUS] = toString(registered);
+    });
+}
+
+void DevicePropertyAggregator::initializeAsyncPropertyMap() {
+    m_asyncPropertyMap[DevicePropertyAggregatorInterface::TTS_PLAYER_STATE] = IDLE;
+    m_asyncPropertyMap[DevicePropertyAggregatorInterface::AUDIO_PLAYER_STATE] = IDLE;
+    m_asyncPropertyMap[DevicePropertyAggregatorInterface::CONTENT_ID] = NONE;
+    m_asyncPropertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = IDLE;
+    m_asyncPropertyMap[DevicePropertyAggregatorInterface::REGISTRATION_STATUS] = toString(false);
 
     auto contextOptional = getDeviceContextJson();
     if (contextOptional.hasValue()) {
-        m_propertyMap[DevicePropertyAggregatorInterface::DEVICE_CONTEXT] = contextOptional.value();
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::DEVICE_CONTEXT] = contextOptional.value();
     }
 }
 
 std::unordered_map<std::string, std::string> DevicePropertyAggregator::getAllDeviceProperties() {
-    auto future = m_executor.submit([this]() { return m_propertyMap; });
+    auto future = m_executor.submit([this]() {
+        auto allPropertyMap = getSyncDeviceProperties();
+        allPropertyMap.insert(m_asyncPropertyMap.begin(), m_asyncPropertyMap.end());
+        return allPropertyMap;
+    });
 
     return future.get();
 }
-
+std::unordered_map<std::string, std::string> DevicePropertyAggregator::getSyncDeviceProperties() {
+    std::unordered_map<std::string, std::string> syncDeviceProperties;
+    for (auto property : listOfSynchronousProperties) {
+        auto settingValue = getDeviceSetting(property);
+        if (settingValue.hasValue()) {
+            syncDeviceProperties[property] = settingValue.value();
+        }
+    }
+    return syncDeviceProperties;
+}
 Optional<std::string> DevicePropertyAggregator::getDeviceProperty(const std::string& propertyKey) {
     auto maybePropertyValueFuture = m_executor.submit([this, propertyKey]() {
         Optional<std::string> maybePropertyValue;
 
         if (DevicePropertyAggregatorInterface::DEVICE_CONTEXT == propertyKey) {
             maybePropertyValue = getDeviceContextJson();
+        } else if (listOfSynchronousProperties.find(propertyKey) != listOfSynchronousProperties.end()) {
+            maybePropertyValue = getDeviceSetting(propertyKey);
         } else {
-            auto it = m_propertyMap.find(propertyKey);
-            if (it != m_propertyMap.end()) {
+            auto it = m_asyncPropertyMap.find(propertyKey);
+            if (it != m_asyncPropertyMap.end()) {
                 maybePropertyValue = it->second;
             }
         }
@@ -126,6 +191,32 @@ Optional<std::string> DevicePropertyAggregator::getDeviceProperty(const std::str
     return maybePropertyValue;
 }
 
+Optional<std::string> DevicePropertyAggregator::getDeviceSetting(const std::string& propertyKey) {
+    Optional<std::string> maybePropertyValue;
+    if (!m_deviceSettingsManager) {
+        ACSDK_ERROR(LX(__func__).d("reason", "Device Setting Manager is null"));
+        return maybePropertyValue;
+    }
+    if (DevicePropertyAggregator::DO_NOT_DISTURB == propertyKey) {
+        auto doNotDisturbSetting =
+            m_deviceSettingsManager->getValue<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(false);
+
+        if (doNotDisturbSetting.first) {
+            std::stringstream ss;
+            ss << std::boolalpha << doNotDisturbSetting.second;
+            maybePropertyValue = ss.str();
+        }
+    }
+    if (DevicePropertyAggregator::LOCALE == propertyKey) {
+        auto localeSetting = m_deviceSettingsManager->getValue<settings::DeviceSettingsIndex::LOCALE>();
+        if (localeSetting.first) {
+            auto localeSettingString = settings::toSettingString<settings::DeviceLocales>(localeSetting.second).second;
+            maybePropertyValue = localeSettingString;
+        }
+    }
+    ACSDK_ERROR(LX(__func__).d("reason", "no matching parameter"));
+    return maybePropertyValue;
+}
 void DevicePropertyAggregator::onContextFailure(const ContextRequestError error) {
     ACSDK_ERROR(LX(__func__).d("reason", error));
     m_contextWakeTrigger.notify_all();
@@ -137,7 +228,6 @@ void DevicePropertyAggregator::onContextAvailable(const std::string& jsonContext
     m_deviceContext.set(jsonContext);
     m_contextWakeTrigger.notify_all();
 }
-
 Optional<std::string> DevicePropertyAggregator::getDeviceContextJson() {
     ACSDK_DEBUG5(LX(__func__));
 
@@ -162,7 +252,7 @@ void DevicePropertyAggregator::onAlertStateChange(
     m_executor.submit([this, alertType, state]() {
         std::stringstream ss;
         ss << alertType << ":" << state;
-        m_propertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = ss.str();
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = ss.str();
     });
 }
 
@@ -172,8 +262,8 @@ void DevicePropertyAggregator::onPlayerActivityChanged(
     ACSDK_DEBUG5(LX(__func__));
     m_executor.submit([this, state, context]() {
         std::string playerActivityState = avsCommon::avs::playerActivityToString(state);
-        m_propertyMap[DevicePropertyAggregatorInterface::AUDIO_PLAYER_STATE] = playerActivityState;
-        m_propertyMap[DevicePropertyAggregatorInterface::CONTENT_ID] = context.audioItemId;
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::AUDIO_PLAYER_STATE] = playerActivityState;
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::CONTENT_ID] = context.audioItemId;
     });
 }
 
@@ -182,7 +272,7 @@ void DevicePropertyAggregator::onConnectionStatusChanged(const Status status, co
     m_executor.submit([this, status]() {
         std::stringstream ss;
         ss << status;
-        m_propertyMap[DevicePropertyAggregatorInterface::CONNECTION_STATE] = ss.str();
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::CONNECTION_STATE] = ss.str();
     });
 }
 
@@ -191,7 +281,7 @@ void DevicePropertyAggregator::onSetIndicator(IndicatorState state) {
     m_executor.submit([this, state]() {
         std::stringstream ss;
         ss << state;
-        m_propertyMap[DevicePropertyAggregatorInterface::NOTIFICATION_INDICATOR] = ss.str();
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::NOTIFICATION_INDICATOR] = ss.str();
     });
 }
 
@@ -202,7 +292,7 @@ void DevicePropertyAggregator::onNotificationReceived() {
 void DevicePropertyAggregator::onDialogUXStateChanged(DialogUXStateObserverInterface::DialogUXState newState) {
     ACSDK_DEBUG5(LX(__func__));
     m_executor.submit([this, newState]() {
-        m_propertyMap[DevicePropertyAggregatorInterface::TTS_PLAYER_STATE] =
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::TTS_PLAYER_STATE] =
             DialogUXStateObserverInterface::stateToString(newState);
     });
 }
@@ -221,18 +311,16 @@ void DevicePropertyAggregator::updateSpeakerSettingsInPropertyMap(
     ACSDK_DEBUG5(LX(__func__));
     std::string volumeAsString = std::to_string(settings.volume);
 
-    std::stringstream ss;
-    ss << std::boolalpha << settings.mute;
-    std::string isMuteAsString = ss.str();
+    std::string isMuteAsString = toString(settings.mute);
 
     switch (type) {
         case ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME:
-            m_propertyMap[DevicePropertyAggregatorInterface::AVS_SPEAKER_VOLUME] = volumeAsString;
-            m_propertyMap[DevicePropertyAggregatorInterface::AVS_SPEAKER_MUTE] = isMuteAsString;
+            m_asyncPropertyMap[DevicePropertyAggregatorInterface::AVS_SPEAKER_VOLUME] = volumeAsString;
+            m_asyncPropertyMap[DevicePropertyAggregatorInterface::AVS_SPEAKER_MUTE] = isMuteAsString;
             break;
         case ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME:
-            m_propertyMap[DevicePropertyAggregatorInterface::AVS_ALERTS_VOLUME] = volumeAsString;
-            m_propertyMap[DevicePropertyAggregatorInterface::AVS_ALERTS_MUTE] = isMuteAsString;
+            m_asyncPropertyMap[DevicePropertyAggregatorInterface::AVS_ALERTS_VOLUME] = volumeAsString;
+            m_asyncPropertyMap[DevicePropertyAggregatorInterface::AVS_ALERTS_MUTE] = isMuteAsString;
             break;
     }
 }

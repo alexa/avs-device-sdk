@@ -194,6 +194,13 @@ public:
      */
     static settings::SettingEventMetadata getAlarmVolumeRampMetadata();
 
+    /**
+     * Returns the alert volume.
+     *
+     * @return The alert volume.
+     */
+    int getAlertVolume();
+
 private:
     /**
      * Constructor.
@@ -273,22 +280,6 @@ private:
      * @param reason The reason the connection status changed.
      */
     void executeOnConnectionStatusChanged(const Status status, const ChangedReason reason);
-
-    /**
-     * A handler function which will be called by our internal executor when the channel focus changes.
-     *
-     * @param focusState The current focus of the channel.
-     */
-    void executeOnFocusChanged(avsCommon::avs::FocusState focusState);
-
-    /**
-     * A handler function which will be called by our internal executor when the FocusManager reports channel focus
-     * changes.
-     *
-     * @param channelName Name of the channel whose focus is changed.
-     * @param focusState The current focus of the channel.
-     */
-    void executeOnFocusManagerFocusChanged(const std::string& channelName, avsCommon::avs::FocusState focusState);
 
     /**
      * A handler function which will be called by our internal executor when the SpeakerManager reports volume
@@ -430,8 +421,13 @@ private:
      * @param eventName The name of the Event to be sent.
      * @param alertToken The token of the Alert being sent to AVS within the Event.
      * @param isCertified Whether the event must be guaranteed to be sent.  See function description for details.
+     * @param scheduledTime Time the alert was scheduled to go off
      */
-    void sendEvent(const std::string& eventName, const std::string& alertToken, bool isCertified = false);
+    void sendEvent(
+        const std::string& eventName,
+        const std::string& alertToken,
+        bool isCertified = false,
+        const std::string& scheduledTime = std::string());
 
     /**
      * Utility function to send a multiple alerts related Event to AVS. If isCertified is set to true, then the Event
@@ -509,6 +505,26 @@ private:
     void setNextAlertVolume(int64_t volume);
 
     /**
+     * Submits alertStarted metric with metadata
+     *
+     * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
+     */
+    void submitAlertStartedMetricWithMetadata(const std::string& alertToken, const std::string& alertType);
+
+    /**
+     * Submits alertCanceled metric with metadata
+     *
+     * @param alertToken The AVS token identifying the alert.
+     * @param alertType The type of the alert.
+     * @param scheduledTime the scheduled time of the alert.
+     */
+    void submitAlertCanceledMetricWithMetadata(
+        const std::string& alertToken,
+        const std::string& alertType,
+        const std::string& scheduledTime);
+
+    /**
      * @name Executor Thread Variables
      *
      * These variables are only accessed by the @c m_executor, with the exception of initialization, and shutdown.
@@ -557,6 +573,9 @@ private:
 
     /// Flag indicating if there is an active alert sounding at the moment.
     bool m_alertIsSounding;
+
+    /// Variable to capture when the last restart was.
+    std::clock_t m_startSystemClock;
 
     /**
      * The @c Executor which queues up operations from asynchronous API calls.

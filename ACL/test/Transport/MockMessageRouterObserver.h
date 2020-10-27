@@ -62,11 +62,20 @@ public:
 private:
     virtual void onConnectionStatusChanged(
         const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override {
+        const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
+            engineConnectionStatuses) override {
+        if (engineConnectionStatuses.empty()) {
+            return;
+        }
         notifiedOfStatusChanged = true;
         m_status = status;
-        m_reason = reason;
+        for (auto connectionStatus : engineConnectionStatuses) {
+            if (connectionStatus.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
+                m_reason = connectionStatus.reason;
+            }
+        }
     }
+
     virtual void receive(const std::string& contextId, const std::string& message) override {
         notifiedOfReceive = true;
         m_attachmentContextId = contextId;

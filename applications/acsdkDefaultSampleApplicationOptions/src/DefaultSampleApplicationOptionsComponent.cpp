@@ -14,33 +14,75 @@
  */
 
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <acsdkCore/CoreComponent.h>
+#include <acsdkMetricRecorder/MetricRecorderComponent.h>
 #include <acsdkShared/SharedComponent.h>
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 
 #include "acsdkDefaultSampleApplicationOptions/DefaultSampleApplicationOptionsComponent.h"
-#include "acsdkDefaultSampleApplicationOptions/NullMetricRecorder.h"
 
 namespace alexaClientSDK {
-namespace acsdkDefaultSampleApplicationOptions {
+namespace acsdkSampleApplication {
 
 using namespace acsdkManufactory;
 using namespace authorization::cblAuthDelegate;
 
-Component<
-    acsdkManufactory::Import<std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>>,
-    acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
+/**
+ * Returns a component for @c MetricRecorderInterface, using a pre-built implementation if available but otherwise
+ * using the Sample App's default.
+ *
+ * @param metricRecorder Optional @c MetricRecorderInterface implementation to inject to the manufactory.
+ * @return A component that exports the @c MetricRecorderInterface.
+ */
+static acsdkManufactory::Component<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>
+getMetricRecorderComponent(const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
+    /// If a custom metricRecorder is provided, add that implementation. Otherwise, use defaults.
+    if (metricRecorder) {
+        return ComponentAccumulator<>().addInstance(metricRecorder);
+    }
+
+    return ComponentAccumulator<>().addComponent(acsdkMetricRecorder::getComponent());
+}
+
+/**
+ * Returns a component for @c AuthDelegateInterface, using a pre-built implementation if available but otherwise
+ * using the Sample App's default.
+ *
+ * @param authDelegate Optional @c AuthDelegateInterface implementation to inject to the manufactory.
+ * @return A component that exports the @c AuthDelegateInterface.
+ */
+static acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
-    std::shared_ptr<avsCommon::utils::logger::Logger>,
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>
-getComponent() {
+    acsdkManufactory::Import<std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>>,
+    acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>>
+getAuthDelegateComponent(const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate) {
+    /// If a custom authDelegate is provided, add that implementation. Otherwise, use defaults.
+    if (authDelegate) {
+        return ComponentAccumulator<>().addInstance(authDelegate);
+    }
+
     return ComponentAccumulator<>()
-        .addComponent(acsdkShared::getComponent())
-        .addComponent(acsdkCore::getComponent())
         .addRetainedFactory(CBLAuthDelegate::createAuthDelegateInterface)
-        .addRetainedFactory(NullMetricRecorder::createMetricRecorderInterface)
-        .addRetainedFactory(SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface)
+        .addRetainedFactory(SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface);
+}
+
+/**
+ * Returns a component for @c Logger, using a pre-built implementation if available but otherwise
+ * using the Sample App's default.
+ *
+ * @param logger Optional @c Logger implementation to inject to the manufactory.
+ * @return A component that exports the @c Logger.
+ */
+static acsdkManufactory::Component<std::shared_ptr<avsCommon::utils::logger::Logger>> getLoggerComponent(
+    const std::shared_ptr<avsCommon::utils::logger::Logger>& logger) {
+    if (logger) {
+        return ComponentAccumulator<>().addInstance(logger);
+    }
+
+    return ComponentAccumulator<>()
 #ifdef ANDROID_LOGGER
         .addPrimaryFactory(applicationUtilities::androidUtilities::AndroidLogger::getAndroidLogger)
 #else
@@ -49,5 +91,16 @@ getComponent() {
         ;
 }
 
-}  // namespace acsdkDefaultSampleApplicationOptions
+SampleApplicationOptionsComponent getSampleApplicationOptionsComponent(
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::shared_ptr<avsCommon::utils::logger::Logger>& logger) {
+    return ComponentAccumulator<>()
+        .addComponent(getAuthDelegateComponent(authDelegate))
+        .addComponent(getLoggerComponent(logger))
+        .addComponent(getMetricRecorderComponent(metricRecorder))
+        .addComponent(acsdkShared::getComponent());
+}
+
+}  // namespace acsdkSampleApplication
 }  // namespace alexaClientSDK

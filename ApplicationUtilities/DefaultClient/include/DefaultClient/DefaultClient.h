@@ -16,9 +16,9 @@
 #ifndef ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEFAULTCLIENT_H_
 #define ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEFAULTCLIENT_H_
 
-#include <ACL/AVSConnectionManager.h>
 #include <ACL/Transport/MessageRouter.h>
 #include <ACL/Transport/MessageRouterFactory.h>
+#include <acsdkManufactory/Manufactory.h>
 #include <ADSL/DirectiveSequencer.h>
 #include <AFML/AudioActivityTracker.h>
 #include <AFML/FocusManager.h>
@@ -28,19 +28,19 @@
 #include <acsdkAlerts/AlertsCapabilityAgent.h>
 #include <acsdkAlerts/Renderer/Renderer.h>
 #include <acsdkAlerts/Storage/AlertStorageInterface.h>
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <Alexa/AlexaInterfaceCapabilityAgent.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <ApiGateway/ApiGatewayCapabilityAgent.h>
 #include <acsdkAudioPlayer/AudioPlayer.h>
 #include <acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerConfigurationInterface.h>
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h>
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
 #include <AVSCommon/SDKInterfaces/CallManagerInterface.h>
@@ -49,9 +49,11 @@
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h>
+#include <AVSCommon/SDKInterfaces/ExpectSpeechTimeoutHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
@@ -71,20 +73,24 @@
 #include <acsdkBluetooth/BluetoothStorageInterface.h>
 #include <acsdkNotifications/NotificationRenderer.h>
 #include <acsdkNotifications/NotificationsCapabilityAgent.h>
+#include <Captions/CaptionManagerInterface.h>
 #include <Captions/CaptionPresenterInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
 #include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
-#include <Endpoints/EndpointBuilder.h>
 #include <Endpoints/EndpointRegistrationManager.h>
-#include <Equalizer/EqualizerCapabilityAgent.h>
-#include <EqualizerImplementations/EqualizerController.h>
-#include <ExternalMediaPlayer/ExternalMediaPlayer.h>
+#include <acsdkEqualizer/EqualizerCapabilityAgent.h>
+#include <acsdkEqualizerImplementations/EqualizerController.h>
+#include <acsdkEqualizerInterfaces/EqualizerConfigurationInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerRuntimeSetupInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerStorageInterface.h>
+#include <acsdkExternalMediaPlayer/ExternalMediaPlayer.h>
+#include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterHandlerInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h>
+#include <acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerInterface.h>
+#include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
 #include <InteractionModel/InteractionModelCapabilityAgent.h>
-
-#ifdef ENABLE_CAPTIONS
-#include <Captions/CaptionManager.h>
-#endif
 
 #ifdef ENABLE_PCC
 #include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
@@ -130,10 +136,156 @@ namespace defaultClient {
  */
 class DefaultClient : public avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface {
 public:
+    using DefaultClientManufactory = acsdkManufactory::Manufactory<
+        std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
+        std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+        std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
+        std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,  /// Applications should not use this export.
+        std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
+        std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
+        std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
+        std::shared_ptr<afml::interruptModel::InterruptModel>,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
+        std::shared_ptr<avsCommon::utils::DeviceInfo>,
+        std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
+        std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
+        std::shared_ptr<captions::CaptionManagerInterface>,
+        std::shared_ptr<certifiedSender::CertifiedSender>,
+        std::shared_ptr<registrationManager::CustomerDataManager>>;
+
     /**
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
      * connect() after creation.
      *
+     * @param manufactory @c Manufactory for creating various instances used by DefaultlClient.
+     * @param alertsMediaPlayer The media player to use to play alerts from.
+     * @param bluetoothMediaPlayer The media player to play bluetooth content.
+     * @param ringtoneMediaPlayer The media player to play Comms ringtones.
+     * @param systemSoundMediaPlayer The media player to play system sounds.
+     * @param alertsSpeaker The speaker to control volume of alerts.
+     * @param bluetoothSpeaker The speaker to control volume of bluetooth.
+     * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
+     * @param systemSoundSpeaker The speaker to control volume of system sounds.
+     * @param additionalSpeakers A map of additional speakers to receive volume changes.
+#ifdef ENABLE_PCC
+     * @param phoneSpeaker Interface to speaker for phone calls.
+     * @param phoneCaller Interface for making phone calls.
+#endif
+#ifdef ENABLE_MCC
+     * @param meetingSpeaker Interface to speaker for meetings.
+     * @param meetingClient Meeting client for meeting client controller.
+     * @param calendarClient Calendar client for meeting client controller.
+#endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+     * @param commsMediaPlayer The media player to play Comms calling audio.
+     * @param commsSpeaker The speaker to control volume of Comms calling audio.
+     * @param sharedDataStream The stream to use which has the audio from microphone.
+#endif
+     * @param audioFactory The audioFactory is a component that provides unique audio streams.
+     * @param alertStorage The storage interface that will be used to store alerts.
+     * @param notificationsStorage The storage interface that will be used to store notification indicators.
+     * @param deviceSettingStorage The storage interface that will be used to store device settings.
+     * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
+     * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
+     * changes.
+     * @param connectionObservers Observers that can be used to be notified of connection status changes.
+     * @param isGuiSupported Whether the device supports GUI.
+     * @param enabledConnectionRules The set of @c BluetoothDeviceConnectionRuleInterface instances used to
+     * create the Bluetooth CA.
+     * @param systemTimezone Optional object used to set the system timezone.
+     * @param firmwareVersion The firmware version to report to @c AVS or @c INVALID_FIRMWARE_VERSION.
+     * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
+     * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
+     * @param bluetoothDeviceManager The @c BluetoothDeviceManager instance used to create the Bluetooth CA.
+     * @param diagnostics Diagnostics interface which provides suite of APIs for diagnostic insight into SDK.
+     * @param externalCapabilitiesBuilder Optional object used to build capabilities that are not included in the SDK.
+     * @param startAlertSchedulingOnInitialization Whether to start scheduling alerts after client initialization. If
+     * this is set to false, no alert scheduling will occur until onSystemClockSynchronized is called.
+     * @param firstInteractionAudioProvider Optional object used in the first interaction started from
+     * the alexa voice service
+     * @return A @c std::unique_ptr to a DefaultClient if all went well or @c nullptr otherwise.
+     */
+    static std::unique_ptr<DefaultClient> create(
+        const std::shared_ptr<DefaultClientManufactory>& manufactory,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
+        const std::multimap<
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
+            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
+#ifdef ENABLE_PCC
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+#endif
+#ifdef ENABLE_MCC
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
+        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+#endif
+#ifdef ENABLE_COMMS_AUDIO_PROXY
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
+        std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
+#endif
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
+        std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface> alertStorage,
+        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
+        std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
+        std::shared_ptr<acsdkBluetooth::BluetoothStorageInterface> bluetoothStorage,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
+            alexaDialogStateObservers,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
+            connectionObservers,
+        bool isGuiSupported,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
+            enabledConnectionRules = std::unordered_set<
+                std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>(),
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone = nullptr,
+        avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion =
+            avsCommon::sdkInterfaces::softwareInfo::INVALID_FIRMWARE_VERSION,
+        bool sendSoftwareInfoOnConnected = false,
+        std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver =
+            nullptr,
+        std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager =
+            nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
+        const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder = nullptr,
+        bool startAlertSchedulingOnInitialization = true,
+        capabilityAgents::aip::AudioProvider firstInteractionAudioProvider =
+            capabilityAgents::aip::AudioProvider::null());
+
+    /**
+     * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
+     * connect() after creation.
+     *
+     * @deprecated
      * @param deviceInfo DeviceInfo which reflects the device setup credentials.
      * @param customerDataManager CustomerDataManager instance to be used by RegistrationManager and instances of
      * all classes extending CustomDataHandler.
@@ -198,9 +350,12 @@ public:
      * @param startAlertSchedulingOnInitialization Whether to start scheduling alerts after client initialization. If
      * this is set to false, no alert scheduling will occur until onSystemClockSynchronized is called.
      * @param messageRouterFactory Object used to instantiate @c MessageRouter in the SDK.
+     * @param expectSpeechTimeoutHandler An optional object that applications may provide to specify external handling
+of the @c ExpectSpeech directive's timeout. If provided, this function must remain valid for the lifetime of the @c
+AudioInputProcessor.
+     * @param firstInteractionAudioProvider Optional object used in the first interaction started from
+     * the alexa voice service
      * @return A @c std::unique_ptr to a DefaultClient if all went well or @c nullptr otherwise.
-     *
-     * TODO: Allow the user to pass in a MediaPlayer factory rather than each media player individually.
      */
     static std::unique_ptr<DefaultClient> create(
         std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
@@ -209,7 +364,7 @@ public:
             externalMusicProviderMediaPlayers,
         const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
             externalMusicProviderSpeakers,
-        const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
+        const acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
         std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
@@ -280,7 +435,12 @@ public:
             std::make_shared<alexaClientSDK::capabilityAgents::speakerManager::DefaultChannelVolumeFactory>(),
         bool startAlertSchedulingOnInitialization = true,
         std::shared_ptr<alexaClientSDK::acl::MessageRouterFactoryInterface> messageRouterFactory =
-            std::make_shared<alexaClientSDK::acl::MessageRouterFactory>());
+            std::make_shared<alexaClientSDK::acl::MessageRouterFactory>(),
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>&
+            expectSpeechTimeoutHandler = nullptr,
+        capabilityAgents::aip::AudioProvider firstInteractionAudioProvider =
+            capabilityAgents::aip::AudioProvider::null());
+
     /**
      * Connects the client to AVS. After this call, users can observe the state of the connection asynchronously by
      * using a connectionObserver that was passed in to the create() function.
@@ -460,7 +620,7 @@ public:
      * @param observer The observer to add.
      */
     void addExternalMediaPlayerObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer);
+        std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerObserverInterface> observer);
 
     /**
      * Removes an observer to be notified of ExternalMediaPlayer changes.
@@ -468,7 +628,7 @@ public:
      * @param observer The observer to remove.
      */
     void removeExternalMediaPlayerObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaPlayerObserverInterface> observer);
+        std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerObserverInterface> observer);
 
     /**
      * Adds an observer to be notified of bluetooth device changes.
@@ -489,6 +649,8 @@ public:
     /**
      * Adds a presenter responsible for displaying formatted captions content.
      *
+     * @deprecated Applications should use the manufactory to create their CaptionPresenterInterface and
+     * inject it with the CaptionManagerInterface. See the SampleApplicationComponent for an example.
      * @param presenter The @c CaptionPresenterInterface to add.
      */
     void addCaptionPresenter(std::shared_ptr<captions::CaptionPresenterInterface> presenter);
@@ -496,6 +658,9 @@ public:
     /**
      * Sets the media players that can produce or control captioned content.
      *
+     * @deprecated Applications should use an ApplicationAudioPipelineFactoryInterface to instantiate media players
+     * and register them with the CaptionManager when they transition to the manufactory (e.g. see
+     * GstreamerAudioPipelineFactory).
      * @param mediaPlayers The @c MediaPlayerInterface instances to add.
      */
     void setCaptionMediaPlayers(
@@ -576,7 +741,7 @@ public:
      * reference to the @c DefaultClient.
      * @return shared_ptr to the EqualizerController.
      */
-    std::shared_ptr<equalizer::EqualizerController> getEqualizerController();
+    std::shared_ptr<acsdkEqualizer::EqualizerController> getEqualizerController();
 
     /**
      * Adds a EqualizerControllerListener to be notified of Equalizer state changes.
@@ -584,7 +749,7 @@ public:
      * @param listener The listener to be notified of Equalizer state changes.
      */
     void addEqualizerControllerListener(
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerControllerListenerInterface> listener);
+        std::shared_ptr<acsdkEqualizerInterfaces::EqualizerControllerListenerInterface> listener);
 
     /**
      * Removes a EqualizerControllerListener to be notified of Equalizer state changes.
@@ -592,7 +757,7 @@ public:
      * @param listener The listener to no longer be notified of Equalizer state changes.
      */
     void removeEqualizerControllerListener(
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerControllerListenerInterface> listener);
+        std::shared_ptr<acsdkEqualizerInterfaces::EqualizerControllerListenerInterface> listener);
 
     /**
      * Adds a ContextManagerObserver to be notified of Context state changes.
@@ -634,7 +799,9 @@ public:
 
     std::future<bool> notifyOfHoldToTalkStart(
         capabilityAgents::aip::AudioProvider holdToTalkAudioProvider,
-        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now()) override;
+        std::chrono::steady_clock::time_point startOfSpeechTimestamp = std::chrono::steady_clock::now(),
+        avsCommon::avs::AudioInputStream::Index beginIndex =
+            capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX) override;
 
     std::future<bool> notifyOfHoldToTalkEnd() override;
 
@@ -655,7 +822,7 @@ public:
      *
      * @return An endpoint builder.
      */
-    std::unique_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> createEndpointBuilder();
+    std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> createEndpointBuilder();
 
     /**
      * Registers an endpoint with the @c EndpointRegistrationManagerInterface.
@@ -685,6 +852,22 @@ public:
      * the client has been connected will fail.
      */
     std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> getDefaultEndpointBuilder();
+
+    /**
+     * Adds an @c AudioInputProcessorObserver to be alerted on @c AudioInputProcessor related state changes.
+     *
+     * @param observer The observer to be notified upon @c AudioInputProcessor related state changes.
+     */
+    void addAudioInputProcessorObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface>& observer);
+
+    /**
+     * Removes an @c AudioInputProcessorObserver to be alerted on @c AudioInputProcessor related state changes.
+     *
+     * @param observer The observer to be removed as an @c AudioInputProcessor observer.
+     */
+    void removeAudioInputProcessorObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface>& observer);
 
     /**
      * Adds an observer to be notified when the call state has changed.
@@ -752,64 +935,52 @@ public:
     void onSystemClockSynchronized();
 
     /**
+     * Register an ExternalMediaPlayerAdapterHandler with the ExternalMediaPlayer CA
+     * Multiple adapter handlers can be added to the ExternalMediaPlayer by repeatedly calling this function.
+     *
+     * @param externalMediaPlayerAdapterHandler Pointer to the EMPAdapterHandler to register
+     */
+    void registerExternalMediaPlayerAdapterHandler(
+        std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterHandlerInterface>
+            externalMediaPlayerAdapterHandler);
+
+    /**
+     * Gets the @c ShutdownManagerInterface for when it is time to shut down the SDK.
+     *
+     * This method is required to support legacy applications that have not transitioned to fully integrating
+     * the manufactory.
+     * @return A shared_ptr to the @c ShutdownManagerInterface.
+     */
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> getShutdownManager();
+
+    /**
      * Destructor.
      */
     ~DefaultClient();
 
 private:
     /**
-     * Constructor.
-     *
-     * @param deviceInfo DeviceInfo which reflects the device setup credentials.
-     */
-    DefaultClient(const avsCommon::utils::DeviceInfo& deviceInfo);
-
-    /**
      * Initializes the SDK and "glues" all the components together.
      *
-     * @param customerDataManager CustomerDataManager instance to be used by RegistrationManager and instances of
-     * all classes extending CustomDataHandler.
-     * @param externalMusicProviderMediaPlayers The map of <PlayerId, mediaPlayer> to use to play content from each
-     * external music provider.
-     * @param externalMusicProviderSpeakers The map of <players, speaker> to use to track volume of each
-     * external music provider media player.
-     * @param adapterCreationMap The map of <players, adapterCreationMethod> to use when creating the adapters for the
-     * different music providers supported by ExternalMediaPlayer.
-     * @param speakMediaPlayer The media player to use to play Alexa speech from.
-     * @param audioMediaPlayerFactory The media player to use to generate players for Alexa audio content.
+     * @param manufactory @c Manufactory for creating various instances used by DefaultlClient.
      * @param alertsMediaPlayer The media player to use to play alerts from.
-     * @param notificationsMediaPlayer The media player to play notification indicators.
      * @param bluetoothMediaPlayer The media player to play bluetooth content.
      * @param ringtoneMediaPlayer The media player to play Comms ringtones.
      * @param systemSoundPlayer The media player to play system sounds.
-     * @param speakSpeaker The speaker to control volume of Alexa speech.
-     * @param audioSpeakers A list of speakers to control volume of Alexa audio content.
      * @param alertsSpeaker The speaker to control volume of alerts.
-     * @param notificationsSpeaker The speaker to control volume of notifications.
      * @param bluetoothSpeaker The speaker to control bluetooth volume.
      * @param ringtoneSpeaker The speaker to control volume of Comms ringtones.
      * @param systemSoundSpeaker The speaker to control volume of system sounds.
      * @param additionalSpeakers A map of additional speakers to receive volume changes.
-     * @param equalizerRuntimeSetup Equalizer component runtime setup
      * @param audioFactory The audioFactory is a component the provides unique audio streams.
-     * @param authDelegate The component that provides the client with valid LWA authorization.
      * @param alertStorage The storage interface that will be used to store alerts.
-     * @param messageStorage The storage interface that will be used to store certified sender messages.
      * @param notificationsStorage The storage interface that will be used to store notification indicators.
      * @param deviceSettingsStorage The storage interface that will be used to store device settings.
      * @param bluetoothStorage The storage interface that will be used to store bluetooth data.
-     * @param miscStorage The storage interface that will be used to store key / value pairs.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
      * @param isGuiSupported Whether the device supports GUI.
-     * @param capabilitiesDelegate The component that provides the client with the ability to send messages to the
-     * Capabilities API.
-     * @param contextManager The @c ContextManager which will provide the context for various components.
-     * @param transportFactory The object passed in here will be used whenever a new transport object
-     * for AVS communication is needed.
-     * @param avsGatewayManager The @c AVSGatewayManager instance used to create the ApiGateway CA.
-     * @param localeAssetsManager The device locale assets manager.
      * @param enabledConnectionRules The set of @c BluetoothDeviceConnectionRuleInterface instances used to
      * create the Bluetooth CA.
      * @param systemTimezone Optional object used to set the system timezone.
@@ -817,34 +988,22 @@ private:
      * @param sendSoftwareInfoOnConnected Whether to send SoftwareInfo upon connecting to @c AVS.
      * @param softwareInfoSenderObserver Object to receive notifications about sending SoftwareInfo.
      * @param bluetoothDeviceManager The @c BluetoothDeviceManager instance used to create the Bluetooth CA.
-     * @param metricRecorder The optional metric recorder object used to capture metrics.
-     * @param powerResourceManager Object to manage power resource.
      * @param diagnostics Diagnostics interface that provides suite of APIs for insights into SDK.
      * @param externalCapabilitiesBuilder Object used to build capabilities that are not included in the SDK.
      * @param channelVolumeFactory Optional object used to build @c ChannelVolumeInterface in the SDK.
      * @param startAlertSchedulingOnInitialization Whether to start scheduling alerts after client initialization. If
      * this is set to false, no alert scheduling will occur until onSystemClockSynchronized is called.
-     * @param messageRouterFactory Object used to instantiate @c MessageRouter in the SDK.
+     * @param firstInteractionAudioProvider Optional object used in the first interaction started from
+     * the alexa voice service
      * @return Whether the SDK was initialized properly.
      */
     bool initialize(
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
-        const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
-            externalMusicProviderMediaPlayers,
-        const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
-            externalMusicProviderSpeakers,
-        const capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> speakMediaPlayer,
-        std::unique_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface> audioMediaPlayerFactory,
+        const std::shared_ptr<DefaultClientManufactory>& manufactory,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> alertsMediaPlayer,
-        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> notificationsMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speakSpeaker,
-        std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> audioSpeakers,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> alertsSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> notificationsSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
@@ -865,26 +1024,16 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
         std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-        std::shared_ptr<EqualizerRuntimeSetup> equalizerRuntimeSetup,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory,
-        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface> alertStorage,
-        std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
         std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
         std::shared_ptr<acsdkBluetooth::BluetoothStorageInterface> bluetoothStorage,
-        std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
             connectionObservers,
-        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor,
         bool isGuiSupported,
-        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<alexaClientSDK::acl::TransportFactoryInterface> transportFactory,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
             enabledConnectionRules,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone,
@@ -892,25 +1041,19 @@ private:
         bool sendSoftwareInfoOnConnected,
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
         std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
-        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
         const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
-        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface> channelVolumeFactory,
         bool startAlertSchedulingOnInitialization,
-        std::shared_ptr<alexaClientSDK::acl::MessageRouterFactoryInterface> messageRouterFactory);
+        capabilityAgents::aip::AudioProvider firstInteractionAudioProvider);
 
     /// The directive sequencer.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
 
     /// The focus manager for audio channels.
-    std::shared_ptr<afml::FocusManager> m_audioFocusManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_audioFocusManager;
 
     /// The focus manager for visual channels.
     std::shared_ptr<afml::FocusManager> m_visualFocusManager;
-
-    /// The audio activity tracker.
-    std::shared_ptr<afml::AudioActivityTracker> m_audioActivityTracker;
 
     /// The visual activity tracker.
     std::shared_ptr<afml::VisualActivityTracker> m_visualActivityTracker;
@@ -919,17 +1062,15 @@ private:
     std::shared_ptr<acl::MessageRouterInterface> m_messageRouter;
 
     /// The connection manager.
-    std::shared_ptr<acl::AVSConnectionManager> m_connectionManager;
+    std::shared_ptr<acl::AVSConnectionManagerInterface> m_connectionManager;
 
     std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 
-#ifdef ENABLE_CAPTIONS
     /// The captions manager.
-    std::shared_ptr<captions::CaptionManager> m_captionManager;
-#endif
+    std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
 
     /// The exception sender.
-    std::shared_ptr<avsCommon::avs::ExceptionEncounteredSender> m_exceptionSender;
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> m_exceptionSender;
 
     /// The certified sender.
     std::shared_ptr<certifiedSender::CertifiedSender> m_certifiedSender;
@@ -941,16 +1082,13 @@ private:
     std::shared_ptr<capabilityAgents::speechSynthesizer::SpeechSynthesizer> m_speechSynthesizer;
 
     /// The audio player.
-    std::shared_ptr<acsdkAudioPlayer::AudioPlayer> m_audioPlayer;
+    std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface> m_audioPlayer;
 
     /// The external media player.
-    std::shared_ptr<capabilityAgents::externalMediaPlayer::ExternalMediaPlayer> m_externalMediaPlayer;
+    std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface> m_externalMediaPlayer;
 
     /// The alexa interface message sender.
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender> m_alexaMessageSender;
-
-    /// The alexa interface capability agent.
-    std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceCapabilityAgent> m_alexaCapabilityAgent;
 
     /// The api gateway capability agent.
     std::shared_ptr<capabilityAgents::apiGateway::ApiGatewayCapabilityAgent> m_apiGatewayCapabilityAgent;
@@ -991,13 +1129,10 @@ private:
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
 
     /// The playbackRouter.
-    std::shared_ptr<capabilityAgents::playbackController::PlaybackRouter> m_playbackRouter;
-
-    /// The playbackController capability agent.
-    std::shared_ptr<capabilityAgents::playbackController::PlaybackController> m_playbackController;
+    std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> m_playbackRouter;
 
     /// The speakerManager. Used for controlling the volume and mute settings of @c SpeakerInterface objects.
-    std::shared_ptr<capabilityAgents::speakerManager::SpeakerManager> m_speakerManager;
+    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
 
     /// The TemplateRuntime capability agent.
     std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> m_templateRuntime;
@@ -1006,13 +1141,13 @@ private:
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent> m_dndCapabilityAgent;
 
     /// The Equalizer capability agent.
-    std::shared_ptr<capabilityAgents::equalizer::EqualizerCapabilityAgent> m_equalizerCapabilityAgent;
+    std::shared_ptr<acsdkEqualizer::EqualizerCapabilityAgent> m_equalizerCapabilityAgent;
 
     /// The @c EqualizerController instance.
-    std::shared_ptr<equalizer::EqualizerController> m_equalizerController;
+    std::shared_ptr<acsdkEqualizer::EqualizerController> m_equalizerController;
 
     /// Equalizer runtime setup to be used in the SDK.
-    std::shared_ptr<EqualizerRuntimeSetup> m_equalizerRuntimeSetup;
+    std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface> m_equalizerRuntimeSetup;
 
     /// Mutex to serialize access to m_softwareInfoSender.
     std::mutex m_softwareInfoSenderMutex;
@@ -1024,6 +1159,9 @@ private:
     /// The System.RevokeAuthorizationHandler directive handler.
     std::shared_ptr<capabilityAgents::system::RevokeAuthorizationHandler> m_revokeAuthorizationHandler;
 #endif
+
+    /// The @c AuthDelegateInterface used for authorization events.
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// The RegistrationManager used to control customer registration.
     std::shared_ptr<registrationManager::RegistrationManager> m_registrationManager;
@@ -1038,7 +1176,7 @@ private:
     std::shared_ptr<alexaClientSDK::settings::storage::DeviceSettingStorageInterface> m_deviceSettingStorage;
 
     /// DeviceInfo which reflects the device setup credentials.
-    avsCommon::utils::DeviceInfo m_deviceInfo;
+    std::shared_ptr<avsCommon::utils::DeviceInfo> m_deviceInfo;
 
     /// The device context manager.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
@@ -1047,7 +1185,7 @@ private:
     std::shared_ptr<endpoints::EndpointRegistrationManager> m_endpointRegistrationManager;
 
     /// The endpoint builder for the default endpoint with AVS Capabilities.
-    std::shared_ptr<endpoints::EndpointBuilder> m_defaultEndpointBuilder;
+    std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> m_defaultEndpointBuilder;
 
     /// The @c AVSGatewayManager instance used in the AVS Gateway connection sequence.
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> m_avsGatewayManager;
@@ -1074,6 +1212,9 @@ private:
     /// The SoftwareComponentReporter Capability Agent.
     std::shared_ptr<capabilityAgents::softwareComponentReporter::SoftwareComponentReporterCapabilityAgent>
         m_softwareReporterCapabilityAgent;
+
+    /// The @c ShutdownManagerInterface for shutting down the SDK.
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> m_shutdownManager;
 };
 
 }  // namespace defaultClient

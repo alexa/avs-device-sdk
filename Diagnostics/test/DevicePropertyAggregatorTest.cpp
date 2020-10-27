@@ -22,6 +22,8 @@
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <Diagnostics/DevicePropertyAggregator.h>
+#include <RegistrationManager/CustomerDataManager.h>
+#include <Settings/DeviceSettingsManager.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -48,6 +50,38 @@ static const std::string DEVICE_CONTEXT_VALUE = "TEST_DEVICE_CONTEXT";
 
 /// Request token used to mock getContext return value.
 static const ContextRequestToken MOCK_CONTEXT_REQUEST_TOKEN = 1;
+
+/// string indicating device setting do not disturb disabled
+static const std::string DO_NOT_DISTURB_DISABLED = "false";
+
+/// string indicating device setting do not disturb enabled
+static const std::string DO_NOT_DISTURB_ENABLED = "true";
+
+/// Settings stub that just set the value immediately.
+template <typename ValueT>
+class SettingStub : public settings::SettingInterface<ValueT> {
+public:
+    SetSettingResult setLocalChange(const ValueT& value) override {
+        this->m_value = value;
+        this->notifyObservers(settings::SettingNotifications::LOCAL_CHANGE);
+        return SetSettingResult::ENQUEUED;
+    }
+
+    SetSettingResult failLocalChange(const ValueT& value) {
+        this->notifyObservers(settings::SettingNotifications::LOCAL_CHANGE_FAILED);
+        return SetSettingResult::INTERNAL_ERROR;
+    }
+    bool setAvsChange(const ValueT& value) override {
+        return false;
+    }
+
+    bool clearData(const ValueT& value) override {
+        return true;
+    }
+
+    SettingStub(const ValueT& value) : settings::SettingInterface<ValueT>{value} {
+    }
+};
 
 class DevicePropertyAggregatorTest : public ::testing::Test {
 public:
@@ -80,11 +114,26 @@ public:
 
     /// The thread to process the @c ContextManager requests on.
     std::thread m_mockContextMangerThread;
+
+    /// The @c SettingsManager.
+    std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
+
+    /// The @c SettingStub for the DoNotDisturb setting.
+    std::shared_ptr<SettingStub<settings::DoNotDisturbSetting ::ValueType>> m_DNDSetting;
+
+    /// The nummber of values in the propertyMap before adding device settings
+    int m_propertyMapSizeBeforeDeviceSetting;
 };
 
 void DevicePropertyAggregatorTest::SetUp() {
     m_mockContextManager = std::make_shared<MockContextManager>();
     m_mockSpeakerManager = std::make_shared<MockSpeakerManager>();
+
+    auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(customerDataManager);
+
+    m_DNDSetting = std::make_shared<SettingStub<settings::DoNotDisturbSetting::ValueType>>(true);
+    m_deviceSettingsManager->addSetting<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(m_DNDSetting);
 
     m_avsVolumeSetting.volume = 10;
     m_avsVolumeSetting.mute = false;
@@ -113,6 +162,8 @@ void DevicePropertyAggregatorTest::SetUp() {
     m_devicePropertyAggregator = DevicePropertyAggregator::create();
     m_devicePropertyAggregator->setContextManager(m_mockContextManager);
     m_devicePropertyAggregator->initializeVolume(m_mockSpeakerManager);
+    m_propertyMapSizeBeforeDeviceSetting = m_devicePropertyAggregator->getAllDeviceProperties().size();
+    m_devicePropertyAggregator->setDeviceSettingsManager(m_deviceSettingsManager);
 }
 
 void DevicePropertyAggregatorTest::TearDown() {
@@ -198,6 +249,36 @@ TEST_F(DevicePropertyAggregatorTest, test_getContextSuccessful) {
 
     ASSERT_EQ(
         m_devicePropertyAggregator->getDeviceProperty(DevicePropertyAggregator::DEVICE_CONTEXT), DEVICE_CONTEXT_VALUE);
+}
+/**
+ * Test if to see if DeviceSettingsManager is null there isn't value for a do not disturb.
+ */
+TEST_F(DevicePropertyAggregatorTest, test_getDoNotDisturbWhenSettingsManagerIsNull) {
+    std::shared_ptr<settings::DeviceSettingsManager> deviceSettingManager = nullptr;
+    m_devicePropertyAggregator->setDeviceSettingsManager(deviceSettingManager);
+    auto value = m_devicePropertyAggregator->getDeviceProperty(DevicePropertyAggregator::DO_NOT_DISTURB);
+    ASSERT_FALSE(value.hasValue());
+    m_devicePropertyAggregator->setDeviceSettingsManager(m_deviceSettingsManager);
+}
+/**
+ * Test if to see if property map stays the same when setting DoNotDisturb fails
+ */
+TEST_F(DevicePropertyAggregatorTest, test_getDoNotDisturbWhenSettingFailed) {
+    auto changeStatus = m_DNDSetting->failLocalChange(false);
+    ASSERT_EQ(changeStatus, SetSettingResult::INTERNAL_ERROR);
+    auto value = m_devicePropertyAggregator->getDeviceProperty(DevicePropertyAggregator::DO_NOT_DISTURB);
+    ASSERT_EQ(value.value(), DO_NOT_DISTURB_ENABLED);
+}
+/**
+ * Test successful setting and getting doNotDisturb setting
+ */
+TEST_F(DevicePropertyAggregatorTest, test_getDoNotDisturb) {
+    m_deviceSettingsManager->setValue<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(false);
+    auto value = m_devicePropertyAggregator->getDeviceProperty(DevicePropertyAggregator::DO_NOT_DISTURB);
+    ASSERT_EQ(value.value(), DO_NOT_DISTURB_DISABLED);
+    m_deviceSettingsManager->setValue<settings::DeviceSettingsIndex::DO_NOT_DISTURB>(true);
+    value = m_devicePropertyAggregator->getDeviceProperty(DevicePropertyAggregator::DO_NOT_DISTURB);
+    ASSERT_EQ(value.value(), DO_NOT_DISTURB_ENABLED);
 }
 
 /**
@@ -298,6 +379,28 @@ TEST_F(DevicePropertyAggregatorTest, test_getAlarmStatusProperty) {
         "TEST_TOKEN", "TEST_ALERT_TYPE", AlertObserverInterface::State::STARTED, "TEST_ALERT_REASON");
 
     ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::ALERT_TYPE_AND_STATE, "TEST_ALERT_TYPE:STARTED"));
+}
+
+/**
+ * Test if authorized, registration status is true.
+ */
+TEST_F(DevicePropertyAggregatorTest, test_getRegistationStatusPropertyTrue) {
+    m_devicePropertyAggregator->onAuthStateChange(
+        AuthObserverInterface::State::REFRESHED, AuthObserverInterface::Error::SUCCESS);
+    ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::REGISTRATION_STATUS, "true"));
+}
+
+/**
+ * Test if de-authorized, registration status is false.
+ */
+TEST_F(DevicePropertyAggregatorTest, test_getRegistationStatusPropertyFalse) {
+    m_devicePropertyAggregator->onAuthStateChange(
+        AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS);
+    ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::REGISTRATION_STATUS, "false"));
+
+    m_devicePropertyAggregator->onAuthStateChange(
+        AuthObserverInterface::State::EXPIRED, AuthObserverInterface::Error::SUCCESS);
+    ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::REGISTRATION_STATUS, "false"));
 }
 
 }  // namespace test

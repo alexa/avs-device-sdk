@@ -24,13 +24,15 @@
 #include <unordered_set>
 #include <vector>
 
+#include <acsdkManufactory/Annotated.h>
+#include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
+#include <InterruptModel/InterruptModel.h>
 
 #include "AFML/Channel.h"
 #include "AFML/ActivityTrackerInterface.h"
-#include "AVSCommon/Utils/Threading/Executor.h"
-#include "InterruptModel/InterruptModel.h"
 
 namespace alexaClientSDK {
 namespace afml {

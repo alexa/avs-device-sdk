@@ -21,10 +21,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h"
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 
 #include <acsdkNotifications/NotificationRenderer.h>
 
@@ -33,6 +34,8 @@ namespace acsdkNotifications {
 namespace test {
 
 using namespace ::testing;
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces::test;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces::test;
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -122,6 +125,9 @@ public:
 
     void TearDown() override;
 
+    /// Mock audio pipeline factory with which to exercise NotificationRenderer.
+    std::shared_ptr<MockApplicationAudioPipelineFactory> m_audioPipelineFactory;
+
     /// Mock player with which to exercise NotificationRenderer.
     std::shared_ptr<MockMediaPlayer> m_player;
 
@@ -138,6 +144,7 @@ public:
 void NotificationRendererTest::SetUp() {
     avsCommon::utils::logger::getConsoleLogger()->setLevel(avsCommon::utils::logger::Level::DEBUG9);
 
+    m_audioPipelineFactory = std::make_shared<MockApplicationAudioPipelineFactory>();
     m_player = MockMediaPlayer::create();
     m_focusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
     m_renderer = NotificationRenderer::create(m_player, m_focusManager);
@@ -162,7 +169,17 @@ void NotificationRendererTest::TearDown() {
  * Test that create fails with a null MediaPlayer
  */
 TEST_F(NotificationRendererTest, test_createWithNullMediaPlayer) {
-    auto renderer = NotificationRenderer::create(nullptr, m_focusManager);
+    std::shared_ptr<MediaPlayerInterface> mediaPlayer = nullptr;
+    auto renderer = NotificationRenderer::create(mediaPlayer, m_focusManager);
+    ASSERT_FALSE(renderer);
+}
+
+/**
+ * Test that create fails with a null AudioPipelineFactory.
+ */
+TEST_F(NotificationRendererTest, test_createWithNullApplicationAudioPipelineFactory) {
+    std::shared_ptr<MockApplicationAudioPipelineFactory> factory = nullptr;
+    auto renderer = NotificationRenderer::create(factory, m_focusManager);
     ASSERT_FALSE(renderer);
 }
 
@@ -172,6 +189,31 @@ TEST_F(NotificationRendererTest, test_createWithNullMediaPlayer) {
 TEST_F(NotificationRendererTest, test_createWithNullFocusManager) {
     auto renderer = NotificationRenderer::create(m_player, nullptr);
     ASSERT_FALSE(renderer);
+
+    renderer = NotificationRenderer::create(m_audioPipelineFactory, nullptr);
+    ASSERT_FALSE(renderer);
+}
+
+/**
+ * Test that renderer creates a correctly-configured notifications application media interfaces with the
+ * audio pipeline factory.
+ */
+TEST_F(NotificationRendererTest, test_createNotificationsMediaPlayerWithAudioPipelineFactory) {
+    bool equalizerAvailable = false;
+    bool enableLiveMode = false;
+    bool isCaptionable = false;
+    avsCommon::sdkInterfaces::ChannelVolumeInterface::Type channelVolumeType =
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME;
+
+    EXPECT_CALL(
+        *(m_audioPipelineFactory.get()),
+        createApplicationMediaInterfaces(
+            NOTIFICATIONS_MEDIA_PLAYER_NAME, equalizerAvailable, enableLiveMode, isCaptionable, channelVolumeType, _))
+        .Times(1)
+        .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
+            m_player, nullptr, nullptr, nullptr)));
+    auto renderer = NotificationRenderer::create(m_audioPipelineFactory, m_focusManager);
+    ASSERT_TRUE(renderer);
 }
 
 /**

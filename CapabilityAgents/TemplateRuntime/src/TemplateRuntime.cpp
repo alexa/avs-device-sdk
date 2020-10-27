@@ -101,6 +101,23 @@ static const std::chrono::milliseconds DEFAULT_AUDIO_STOPPED_PAUSED_TIMEOUT_MS{6
  */
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getTemplateRuntimeCapabilityConfiguration();
 
+std::shared_ptr<TemplateRuntime> TemplateRuntime::createTemplateRuntime(
+    const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>&
+        renderPlayerInfoCardsProviderRegistrar,
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender) {
+    if (!renderPlayerInfoCardsProviderRegistrar || !focusManager || !exceptionSender) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("isRenderPlayerInfoCardsProviderRegistrarNull", !renderPlayerInfoCardsProviderRegistrar)
+                        .d("isFocusManagerNull", !focusManager)
+                        .d("isExceptionSenderNull", !exceptionSender));
+        return nullptr;
+    }
+
+    auto providers = renderPlayerInfoCardsProviderRegistrar->getProviders();
+    return TemplateRuntime::create(providers, focusManager, exceptionSender);
+}
+
 std::shared_ptr<TemplateRuntime> TemplateRuntime::create(
     const std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface>>&
         renderPlayerInfoCardInterface,

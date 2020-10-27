@@ -5,4 +5,4 @@ set(INCLUDE_PATH
 	"${AVSCommon_SOURCE_DIR}/Utils/test"
 	"${CaptionsTestLib_INCLUDE_DIRS}")
 
-discover_unit_tests("${INCLUDE_PATH}" "acsdkAudioPlayer;CaptionsTestLib;UtilsCommonTestLib;SDKInterfacesTests")
+discover_unit_tests("${INCLUDE_PATH}" "acsdkAudioPlayer;CaptionsTestLib;UtilsCommonTestLib;AVSCommon;SDKInterfacesTests")

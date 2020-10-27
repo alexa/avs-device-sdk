@@ -47,7 +47,7 @@ public:
      */
     virtual std::shared_ptr<MessageRouterInterface> createMessageRouter(
         std::shared_ptr<AuthDelegateInterface> authDelegate,
-        std::shared_ptr<AttachmentManager> attachmentManager,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> transportFactory) = 0;
 };
 

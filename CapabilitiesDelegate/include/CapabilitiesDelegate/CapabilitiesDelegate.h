@@ -24,6 +24,9 @@
 #include "CapabilitiesDelegate/DiscoveryEventSender.h"
 #include "CapabilitiesDelegate/Storage/CapabilitiesDelegateStorageInterface.h"
 
+#include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
+#include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
@@ -67,8 +70,31 @@ class CapabilitiesDelegate
         , public std::enable_shared_from_this<CapabilitiesDelegate> {
 public:
     /**
+     * Create an instance of CapabilitiesDelegateInterface.
+     *
+     * @param authDelegate The auth delegate instance needed for CapabilitiesDelegate.
+     * @param storage The storage instance needed for CapabilitiesDelegate.
+     * @param customerDataManager Object that will track the CustomerDataHandler.
+     * @param providerRegistrar Object with which to register the new instance as a post connect operation provider.
+     * @param shutdownNotifier The object to register with to be notified when it is time to shut down.
+     * @param alexaEventProcessedNotifier The object to register with to be notified of AlexaEventProcessed directives.
+     * @return If successful, returns a new CapabilitiesDelegate, otherwise @c nullptr.
+     */
+    static std::shared_ptr<CapabilitiesDelegateInterface> createCapabilitiesDelegateInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+        std::unique_ptr<storage::CapabilitiesDelegateStorageInterface> storage,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
+            alexaEventProcessedNotifier);
+
+    /**
      * Create an CapabilitiesDelegate.
      *
+     * @deprecated
      * @param authDelegate The auth delegate instance needed for CapabilitiesDelegate.
      * @param storage The storage instance needed for CapabilitiesDelegate.
      * @param customerDataManager Object that will track the CustomerDataHandler.
@@ -140,9 +166,9 @@ public:
     /// @}
 
     /**
-     * Adds the event sender used to send Discovery events.
+     * Sets the event sender used to send Discovery events.
      */
-    void addDiscoveryEventSender(const std::shared_ptr<DiscoveryEventSenderInterface>& discoveryEventSender);
+    void setDiscoveryEventSender(const std::shared_ptr<DiscoveryEventSenderInterface>& discoveryEventSender);
 
 private:
     /**
@@ -203,9 +229,16 @@ private:
         const std::unordered_map<std::string, std::string>& deleteReportEndpoints);
 
     /**
-     * Resets the discovery event sender.
+     * Resets m_currentDiscoveryEventSender. @c m_currentDiscoveryEventSenderMutex must not be held when this
+     * function is called.
      */
-    void resetDiscoveryEventSender();
+    void resetCurrentDiscoveryEventSender();
+
+    /**
+     * Resets a given @c DiscoveryEventSenderInterface.
+     * @sender The @c DiscoveryEventSenderInterface to stop.
+     */
+    void resetDiscoveryEventSender(const std::shared_ptr<DiscoveryEventSenderInterface>& sender);
 
     /**
      * Executes sending the CapabilitiesDelegate's pending endpoints.

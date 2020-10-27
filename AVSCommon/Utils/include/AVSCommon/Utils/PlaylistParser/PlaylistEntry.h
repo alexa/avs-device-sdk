@@ -100,6 +100,9 @@ struct EncryptionInfo {
 
     /// The initilization vector used for encryption.
     std::string initVector;
+
+    /// The total duration of the content from the playlist
+    std::chrono::milliseconds totalDuration;
 };
 
 /**

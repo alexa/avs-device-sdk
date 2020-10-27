@@ -15,12 +15,13 @@
 
 #include <functional>
 
+#include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "CapabilitiesDelegate/CapabilitiesDelegate.h"
 #include "CapabilitiesDelegate/DiscoveryEventSender.h"
 #include "CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h"
 #include "CapabilitiesDelegate/Utils/DiscoveryUtils.h"
-
-#include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
@@ -59,6 +60,41 @@ static std::vector<EndpointIdentifier> getEndpointIdentifiers(
     }
 
     return identifiers;
+}
+
+std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapabilitiesDelegateInterface(
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+    std::unique_ptr<storage::CapabilitiesDelegateStorageInterface> storage,
+    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+    const std::shared_ptr<
+        acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+        providerRegistrar,
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
+        alexaEventProcessedNotifier) {
+    if (!providerRegistrar) {
+        ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "nullProviderRegistrar"));
+        return nullptr;
+    }
+
+    if (!alexaEventProcessedNotifier) {
+        ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "nullAlexaEventProcessedNotifier"));
+        return nullptr;
+    }
+
+    auto capabilitiesDelegate = create(authDelegate, std::move(storage), customerDataManager);
+    if (!capabilitiesDelegate) {
+        ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "createFailed"));
+        return nullptr;
+    }
+    shutdownNotifier->addObserver(capabilitiesDelegate);
+    alexaEventProcessedNotifier->addObserver(capabilitiesDelegate);
+
+    if (!providerRegistrar->registerProvider(capabilitiesDelegate)) {
+        ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "registerProviderFailed"));
+        return nullptr;
+    }
+    return capabilitiesDelegate;
 }
 
 std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
@@ -112,7 +148,7 @@ void CapabilitiesDelegate::doShutdown() {
     }
 
     m_executor.shutdown();
-    resetDiscoveryEventSender();
+    resetCurrentDiscoveryEventSender();
 }
 
 void CapabilitiesDelegate::clearData() {
@@ -261,6 +297,13 @@ bool CapabilitiesDelegate::addOrUpdateEndpoint(
         }
 
         std::string endpointConfigJson = getEndpointConfigJson(endpointAttributes, capabilities);
+
+        // Check for endpoint configuration.
+        if (endpointConfigJson.size() > MAX_ENDPOINTS_SIZE_IN_PAYLOAD) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed").d("reason", "endpointConfiguration too big"));
+            return false;
+        }
+
         m_addOrUpdateEndpoints.pending.insert(std::make_pair(endpointId, endpointConfigJson));
     }
 
@@ -392,7 +435,7 @@ void CapabilitiesDelegate::executeSendPendingEndpoints() {
         return;
     }
 
-    addDiscoveryEventSender(discoveryEventSender);
+    setDiscoveryEventSender(discoveryEventSender);
     discoveryEventSender->sendDiscoveryEvents(m_messageSender);
 }
 
@@ -415,7 +458,7 @@ void CapabilitiesDelegate::onAlexaEventProcessedReceived(const std::string& even
 std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostConnectOperation() {
     ACSDK_DEBUG5(LX(__func__));
 
-    resetDiscoveryEventSender();
+    resetCurrentDiscoveryEventSender();
 
     /// We track the original pending endpoints in order to notify observers of their registration,
     /// even if CapabilitiesDelegate does not need to actually send the events since they are already
@@ -497,21 +540,23 @@ std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostC
                      .d("num endpoints to add", addOrUpdateEndpointsToSend.size())
                      .d("num endpoints to delete", deleteEndpointsToSend.size()));
 
-    std::shared_ptr<DiscoveryEventSenderInterface> currentEventSender =
+    std::shared_ptr<DiscoveryEventSenderInterface> newEventSender =
         DiscoveryEventSender::create(addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate);
-
-    if (currentEventSender) {
-        addDiscoveryEventSender(currentEventSender);
-    } else {
+    if (!newEventSender) {
         ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not create DiscoveryEventSender."));
         return nullptr;
     }
 
-    auto instance = PostConnectCapabilitiesPublisher::create(currentEventSender);
-    if (!instance) {
-        resetDiscoveryEventSender();
+    auto publisher = PostConnectCapabilitiesPublisher::create(newEventSender);
+    if (!publisher) {
+        ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not create PostConnectCapabilitiesPublisher."));
+        resetDiscoveryEventSender(newEventSender);
+        return nullptr;
     }
-    return instance;
+
+    setDiscoveryEventSender(newEventSender);
+
+    return publisher;
 }
 
 void CapabilitiesDelegate::onDiscoveryCompleted(
@@ -538,7 +583,7 @@ void CapabilitiesDelegate::onDiscoveryCompleted(
     }
 
     moveInFlightEndpointsToRegisteredEndpoints();
-    resetDiscoveryEventSender();
+    resetCurrentDiscoveryEventSender();
 
     setCapabilitiesState(
         CapabilitiesObserverInterface::State::SUCCESS,
@@ -565,7 +610,7 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
         case MessageRequestObserverInterface::Status::INVALID_AUTH:
             m_addOrUpdateEndpoints.inFlight.clear();
             m_deleteEndpoints.inFlight.clear();
-            resetDiscoveryEventSender();
+            resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::FATAL_ERROR,
@@ -576,7 +621,7 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
         case MessageRequestObserverInterface::Status::BAD_REQUEST:
             m_addOrUpdateEndpoints.inFlight.clear();
             m_deleteEndpoints.inFlight.clear();
-            resetDiscoveryEventSender();
+            resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
                 CapabilitiesObserverInterface::State::FATAL_ERROR,
@@ -586,7 +631,7 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             break;
         case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
             if (isShuttingDown()) {
-                resetDiscoveryEventSender();
+                resetCurrentDiscoveryEventSender();
             }
 
             setCapabilitiesState(
@@ -597,7 +642,7 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             break;
         default:
             if (isShuttingDown()) {
-                resetDiscoveryEventSender();
+                resetCurrentDiscoveryEventSender();
             }
 
             setCapabilitiesState(
@@ -631,34 +676,47 @@ bool CapabilitiesDelegate::updateEndpointConfigInStorage(
     return true;
 }
 
-void CapabilitiesDelegate::addDiscoveryEventSender(
+void CapabilitiesDelegate::setDiscoveryEventSender(
     const std::shared_ptr<DiscoveryEventSenderInterface>& discoveryEventSender) {
     ACSDK_DEBUG5(LX(__func__));
+
     if (!discoveryEventSender) {
-        ACSDK_ERROR(LX("addDiscoveryEventSenderFailed").d("reason", "invalid sender"));
+        ACSDK_ERROR(LX("addDiscoveryEventSenderFailed").d("reason", "nullDiscoveryEventSender"));
         return;
     }
 
-    resetDiscoveryEventSender();
-
-    std::lock_guard<std::mutex> lock{m_currentDiscoveryEventSenderMutex};
+    std::unique_lock<std::mutex> lock(m_currentDiscoveryEventSenderMutex);
+    auto previousSender = m_currentDiscoveryEventSender;
     discoveryEventSender->addDiscoveryStatusObserver(shared_from_this());
     m_currentDiscoveryEventSender = discoveryEventSender;
+    lock.unlock();
+
+    if (previousSender) {
+        resetDiscoveryEventSender(previousSender);
+    }
 }
 
-void CapabilitiesDelegate::resetDiscoveryEventSender() {
+void CapabilitiesDelegate::resetCurrentDiscoveryEventSender() {
     ACSDK_DEBUG5(LX(__func__));
-    std::shared_ptr<DiscoveryEventSenderInterface> currentDiscoveryEventSender;
-    {
-        std::lock_guard<std::mutex> lock{m_currentDiscoveryEventSenderMutex};
-        currentDiscoveryEventSender = m_currentDiscoveryEventSender;
-        m_currentDiscoveryEventSender.reset();
+
+    std::unique_lock<std::mutex> lock(m_currentDiscoveryEventSenderMutex);
+    auto currentSender = m_currentDiscoveryEventSender;
+    m_currentDiscoveryEventSender.reset();
+    lock.unlock();
+
+    if (currentSender) {
+        resetDiscoveryEventSender(currentSender);
+    }
+}
+
+void CapabilitiesDelegate::resetDiscoveryEventSender(const std::shared_ptr<DiscoveryEventSenderInterface>& sender) {
+    if (!sender) {
+        ACSDK_ERROR(LX("resetDiscoveryEventSenderFailed").d("reason", "nullSender"));
+        return;
     }
 
-    if (currentDiscoveryEventSender) {
-        currentDiscoveryEventSender->removeDiscoveryStatusObserver(shared_from_this());
-        currentDiscoveryEventSender->stop();
-    }
+    sender->removeDiscoveryStatusObserver(shared_from_this());
+    sender->stop();
 }
 
 void CapabilitiesDelegate::onAVSGatewayChanged(const std::string& avsGateway) {

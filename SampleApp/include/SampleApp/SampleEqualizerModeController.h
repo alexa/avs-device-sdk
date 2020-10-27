@@ -20,7 +20,7 @@
 #include <memory>
 #include <mutex>
 
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -28,11 +28,20 @@ namespace sampleApp {
 /**
  * Sample implementation of @c EqualizerModeControllerInterface that prints the mode requested to console.
  */
-class SampleEqualizerModeController : public avsCommon::sdkInterfaces::audio::EqualizerModeControllerInterface {
+class SampleEqualizerModeController : public acsdkEqualizerInterfaces::EqualizerModeControllerInterface {
 public:
+    /**
+     * Factory method to create an instance of @c EqualizerModeControllerInterface.
+     *
+     * @return An instance of @c EqualizerModeControllerInterface.
+     */
+    static std::shared_ptr<acsdkEqualizerInterfaces::EqualizerModeControllerInterface>
+    createEqualizerModeControllerInterface();
+
     /**
      * Factory method.
      *
+     * @deprecated
      * @return An instance of @c SampleEqualizerModeController.
      */
     static std::shared_ptr<SampleEqualizerModeController> create();
@@ -40,7 +49,7 @@ public:
     /// @name EqualizerModeControllerInterface methods
     /// @{
 
-    bool setEqualizerMode(avsCommon::sdkInterfaces::audio::EqualizerMode mode) override;
+    bool setEqualizerMode(acsdkEqualizerInterfaces::EqualizerMode mode) override;
 
     ///@}
 

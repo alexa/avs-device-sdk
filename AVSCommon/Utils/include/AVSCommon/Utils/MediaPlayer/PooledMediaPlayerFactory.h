@@ -19,7 +19,7 @@
 #include <vector>
 #include <unordered_set>
 
-#include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
@@ -33,9 +33,10 @@ namespace mediaPlayer {
 class PooledMediaPlayerFactory : public avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface {
 public:
     /**
-     * Create a PooledMediaPlayerFactory from a pre-created set of Players.
+     * Create a @c PooledMediaPlayerFactory from a pre-created set of Players.
      *
-     * @param pool pre-created collection of MediaPlayers.  Ownership is not transferred.
+     * @deprecated Use adaptMediaPlayerFactoryInterface.
+     * @param pool pre-created collection of MediaPlayers. Ownership is not transferred.
      */
     static std::unique_ptr<PooledMediaPlayerFactory> create(
         const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
@@ -43,7 +44,7 @@ public:
 
     virtual ~PooledMediaPlayerFactory();
 
-    /// @name MediaPlayerFactoryInterface methods.
+    /// @name PooledMediaResourceProviderInterface methods.
     ///@{
     avsCommon::utils::mediaPlayer::Fingerprint getFingerprint() override;
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> acquireMediaPlayer() override;
@@ -57,13 +58,16 @@ public:
 
 protected:
     /**
-     * Constructor used to create a PooledMediaPlayerFactory from a pre-created set of Players.
+     * Constructor used to create a PooledMediaPlayerFactory from a pre-created set of players and their associated
+     * speakers, channel volumes, and equalizers.
      *
-     * @param pool pre-created collection of MediaPlayers.  Ownership is not transferred.
+     * @param mediaPlayerPool Pre-created collection of MediaPlayers.
+     * @param fingerprint Optional fingerprint argument to send to AVS.
      */
     PooledMediaPlayerFactory(
-        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
-        const avsCommon::utils::mediaPlayer::Fingerprint& fingerprint);
+        const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& mediaPlayerPool,
+        const avsCommon::utils::mediaPlayer::Fingerprint& fingerprint = {});
+
     /**
      * Synchronously notify all observers that a player is available
      */
@@ -73,6 +77,7 @@ protected:
     std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> m_availablePlayerPool;
     /// The collection of players in use
     std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>> m_inUsePlayerPool;
+    /// The collection of @c ChannelVolumeInterfaces associated with the media players managed by this factory..
     /// Factory observers
     std::unordered_set<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerFactoryObserverInterface>> m_observers;
     /// MediaPlayer version information

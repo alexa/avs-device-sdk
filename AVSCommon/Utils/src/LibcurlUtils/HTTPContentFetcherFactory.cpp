@@ -33,6 +33,11 @@ static const std::string TAG("HTTPContentFetcherFactory");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> HTTPContentFetcherFactory::
+    createHTTPContentFetcherInterfaceFactoryInterface() {
+    return std::make_shared<HTTPContentFetcherFactory>();
+}
+
 std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> HTTPContentFetcherFactory::create(
     const std::string& url) {
     ACSDK_DEBUG9(LX(__func__).sensitive("URL", url).m("Creating a new http content fetcher"));

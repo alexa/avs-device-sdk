@@ -17,7 +17,7 @@
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
-#include "AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h"
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 
 #include "Alexa/AlexaInterfaceMessageSender.h"
 #include "Alexa/AlexaInterfaceConstants.h"
@@ -117,6 +117,32 @@ static const std::map<AlexaStateChangeCauseType, std::string> causeTypeMap = {
  * @param The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+std::shared_ptr<AlexaInterfaceMessageSender> AlexaInterfaceMessageSender::createAlexaInterfaceMessageSender(
+    const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier) {
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createAlexaInterfaceMessageSenderFailed").d("reason", "shutdownNotifierNull"));
+        return nullptr;
+    }
+
+    auto alexaMessageSender = create(contextManager, messageSender);
+    if (!alexaMessageSender) {
+        ACSDK_ERROR(LX("createAlexaInterfaceMessageSenderFailed"));
+        return nullptr;
+    }
+
+    shutdownNotifier->addObserver(alexaMessageSender);
+
+    return alexaMessageSender;
+}
+
+std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> AlexaInterfaceMessageSender::
+    createAlexaInterfaceMessageSenderInternalInterface(
+        const std::shared_ptr<AlexaInterfaceMessageSender>& messageSender) {
+    return messageSender;
+}
 
 std::shared_ptr<AlexaInterfaceMessageSender> AlexaInterfaceMessageSender::create(
     std::shared_ptr<ContextManagerInterface> contextManager,

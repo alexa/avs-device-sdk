@@ -26,9 +26,35 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
 
+/// String to identify log entries originating from this file.
+static const std::string TAG("HTTP2TransportFactory");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+std::shared_ptr<TransportFactoryInterface> HTTP2TransportFactory::createTransportFactoryInterface(
+    const std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface>& connectionFactory,
+    const std::shared_ptr<PostConnectFactoryInterface>& postConnectFactory,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface>& eventTracer) {
+    if (!connectionFactory) {
+        ACSDK_ERROR(LX("createTransportFactoryInterfaceFailed").d("reason", "nullConnectionFactory"));
+        return nullptr;
+    }
+    if (!postConnectFactory) {
+        ACSDK_ERROR(LX("createTransportFactoryInterfaceFailed").d("reason", "nullPostConnectFactory"));
+        return nullptr;
+    }
+    return std::make_shared<HTTP2TransportFactory>(connectionFactory, postConnectFactory, metricRecorder, eventTracer);
+}
+
 std::shared_ptr<TransportInterface> HTTP2TransportFactory::createTransport(
     std::shared_ptr<AuthDelegateInterface> authDelegate,
-    std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     const std::string& avsGateway,
     std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
     std::shared_ptr<TransportObserverInterface> transportObserverInterface,

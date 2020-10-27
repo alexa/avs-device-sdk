@@ -21,7 +21,7 @@ target_link_libraries(AndroidSLESMediaPlayer
         AVSCommon
         PlaylistParser
         OpenSLES
-        EqualizerImplementations
+        acsdkEqualizerImplementations
         # FFmpeg libraries
         avcodec
         avutil

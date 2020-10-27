@@ -8,7 +8,6 @@ set(CAPABILITY_AGENTS
         "Alexa"
         "ApiGateway"
         "Equalizer"
-        "ExternalMediaPlayer"
         "InteractionModel"
         "Notifications"
         "PlaybackController"

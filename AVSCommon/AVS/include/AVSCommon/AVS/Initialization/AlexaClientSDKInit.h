@@ -21,6 +21,8 @@
 #include <memory>
 #include <vector>
 
+#include <AVSCommon/AVS/Initialization/InitializationParameters.h>
+#include <AVSCommon/Utils/Timing/TimerDelegateFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
@@ -34,6 +36,7 @@ namespace initialization {
 class AlexaClientSDKInit {
 public:
     /**
+     * @deprecated v1.21.0. This method does not support some new features, such as low power mode.
      * Get a function to create an instance of AlexaClientSDKInit.
      *
      * @param jsonStreams Vector of @c istreams containing JSON documents from which
@@ -49,6 +52,17 @@ public:
     getCreateAlexaClientSDKInit(const std::vector<std::shared_ptr<std::istream>>& jsonStreams);
 
     /**
+     * Get a function to create an instance of AlexaClientSDKInit.
+     *
+     * @note To enable low power mode, the PowerResourceManager must be added to the @c InitializationParameters.
+     *
+     * @param initParams The @c InitializationParameters.
+     * @return A function to create an instance of AlexaClientSDKInit.
+     */
+    static std::function<std::shared_ptr<AlexaClientSDKInit>(std::shared_ptr<utils::logger::Logger>)>
+    getCreateAlexaClientSDKInit(const std::shared_ptr<InitializationParameters>& initParams);
+
+    /**
      * Destructor.
      */
     ~AlexaClientSDKInit();
@@ -61,6 +75,7 @@ public:
     static bool isInitialized();
 
     /**
+     * @deprecated v1.21.0
      * Initialize the Alexa Client SDK. This must be called before any Alexa Client SDK modules are created.
      *
      * This function must be called before any threads in the process have been created by the
@@ -79,6 +94,19 @@ public:
      * @return Whether the initialization was successful.
      */
     static bool initialize(const std::vector<std::shared_ptr<std::istream>>& jsonStreams);
+
+    /**
+     * Initialize the Alexa Client SDK. This must be called before any Alexa Client SDK modules are created.
+     *
+     * This function must be called before any threads in the process have been created by the
+     * program; this function is not thread safe. This requirement is present because initialize()
+     * calls functions of other libraries that have the same requirements and thread safety.
+     * terminate() must be called for each initialize() called.
+     *
+     * @param initParams The @c InitializationParameters.
+     * @return Whether the initialization was successful.
+     */
+    static bool initialize(const std::shared_ptr<InitializationParameters>& initParams);
 
     /**
      * Uninitialize the Alexa Client SDK.

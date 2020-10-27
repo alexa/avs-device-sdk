@@ -26,6 +26,10 @@ std::string InterruptModelConfiguration::configurationJsonDuckingNotSupported = 
                 {
                     "name" : "Earcon",
                     "priority" : 250
+                },
+                {
+                    "name" : "HighPriorityDucking",
+                    "priority" : 175
                 }
             ],
             "visualChannels" : [
@@ -58,6 +62,26 @@ std::string InterruptModelConfiguration::configurationJsonDuckingNotSupported = 
                     }
                 }
             },
+            "HighPriorityDucking" : {
+                "contentType":
+                {
+                    "MIXABLE" : {
+                        "incomingChannel" : {
+                            "Dialog" : {
+                                "incomingContentType" : {
+                                    "MIXABLE" : "MUST_PAUSE"
+                                }
+                            },
+                            "Communications" : {
+                                "incomingContentType" : {
+                                    "MIXABLE" : "MUST_PAUSE",
+                                    "NONMIXABLE" : "MUST_PAUSE"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "Alert" : {
                 "contentType" :
                 {
@@ -72,6 +96,11 @@ std::string InterruptModelConfiguration::configurationJsonDuckingNotSupported = 
                                   "incomingContentType" : {
                                     "MIXABLE" : "MUST_PAUSE",
                                     "NONMIXABLE" : "MUST_PAUSE"
+                                }
+                            },
+                            "HighPriorityDucking" : {
+                                  "incomingContentType" : {
+                                    "MIXABLE" : "MUST_PAUSE"
                                 }
                             }
                         }
@@ -104,6 +133,11 @@ std::string InterruptModelConfiguration::configurationJsonDuckingNotSupported = 
                                     "MIXABLE" : "MUST_PAUSE",
                                     "NONMIXABLE" : "MUST_PAUSE"
                                 }
+                            },
+                            "HighPriorityDucking" : {
+                                "incomingContentType" : {
+                                    "MIXABLE" : "MUST_PAUSE"
+                                }
                             }
                         }
                     },
@@ -130,6 +164,11 @@ std::string InterruptModelConfiguration::configurationJsonDuckingNotSupported = 
                                     "MIXABLE" : "MUST_PAUSE",
                                     "NONMIXABLE" : "MUST_PAUSE"
                                 }
+                            },
+                            "HighPriorityDucking" : {
+                                "incomingContentType" : {
+                                    "MIXABLE" : "MUST_PAUSE"
+                                }
                             }
                         }
                     }
@@ -144,6 +183,10 @@ std::string InterruptModelConfiguration::configurationJsonSupportsDucking = R"( 
                     {
                         "name" : "Earcon",
                         "priority" : 250
+                    },
+                    {
+                       "name" : "HighPriorityDucking",
+                        "priority" : 175
                     }
                 ],
                 "visualChannels" : [
@@ -176,6 +219,26 @@ std::string InterruptModelConfiguration::configurationJsonSupportsDucking = R"( 
                         }
                     }
                 },
+                "HighPriorityDucking" : {
+                    "contentType":
+                    {
+                        "MIXABLE" : {
+                            "incomingChannel" : {
+                                "Dialog" : {
+                                    "incomingContentType" : {
+                                        "MIXABLE" : "MAY_DUCK"
+                                    }
+                                },
+                                "Communications" : {
+                                    "incomingContentType" : {
+                                        "MIXABLE" : "MAY_DUCK",
+                                        "NONMIXABLE" : "MUST_PAUSE"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "Alert" : {
                     "contentType" :
                     {
@@ -190,6 +253,11 @@ std::string InterruptModelConfiguration::configurationJsonSupportsDucking = R"( 
                                       "incomingContentType" : {
                                         "MIXABLE" : "MAY_DUCK",
                                         "NONMIXABLE" : "MAY_DUCK"
+                                    }
+                                },
+                                "HighPriorityDucking" : {
+                                      "incomingContentType" : {
+                                        "MIXABLE" : "MAY_DUCK"
                                     }
                                 }
                             }
@@ -222,6 +290,11 @@ std::string InterruptModelConfiguration::configurationJsonSupportsDucking = R"( 
                                         "MIXABLE" : "MAY_DUCK",
                                         "NONMIXABLE" : "MUST_PAUSE"
                                     }
+                                },
+                                "HighPriorityDucking" : {
+                                    "incomingContentType" : {
+                                        "MIXABLE" : "MAY_DUCK"
+                                    }
                                 }
                             }
                         },
@@ -247,6 +320,11 @@ std::string InterruptModelConfiguration::configurationJsonSupportsDucking = R"( 
                                     "incomingContentType" : {
                                         "MIXABLE" : "MUST_PAUSE",
                                         "NONMIXABLE" : "MUST_PAUSE"
+                                    }
+                                },
+                                "HighPriorityDucking": {
+                                    "incomingContentType" : {
+                                        "MIXABLE" : "MUST_PAUSE"
                                     }
                                 }
                             }

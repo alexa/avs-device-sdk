@@ -23,7 +23,7 @@ namespace acl {
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::http2;
 
-#ifdef DEBUG
+#ifdef ACSDK_DEBUG_LOG_ENABLED
 /// Carriage return
 static const char CR = 0x0D;
 #endif
@@ -82,7 +82,7 @@ static std::string sanitizeContentId(const std::string& mimeContentId) {
 MimeResponseSink::MimeResponseSink(
     std::shared_ptr<MimeResponseStatusHandlerInterface> handler,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
     std::string attachmentContextId) :
         m_handler{handler},
         m_messageConsumer{messageConsumer},
@@ -108,7 +108,7 @@ bool MimeResponseSink::onReceiveHeaderLine(const std::string& line) {
         m_handler->onActivity();
     }
 
-#ifdef DEBUG
+#ifdef ACSDK_DEBUG_LOG_ENABLED
     if (0 == line.find(X_AMZN_REQUESTID_PREFIX)) {
         auto end = line.find(CR);
         ACSDK_DEBUG0(LX("receivedRequestId").d("value", line.substr(0, end)));

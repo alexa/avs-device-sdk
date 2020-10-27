@@ -43,6 +43,9 @@ public:
     MOCK_METHOD1(
         setMediaPlayers,
         void(const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&));
+    MOCK_METHOD1(addMediaPlayer, void(const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>&));
+    MOCK_METHOD1(removeMediaPlayer, void(const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>&));
+    MOCK_CONST_METHOD0(isEnabled, bool());
     ///@}
 
     /// @name MediaPlayerObserverInterface methods

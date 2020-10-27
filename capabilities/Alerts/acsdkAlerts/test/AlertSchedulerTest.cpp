@@ -31,6 +31,7 @@ namespace test {
 
 using namespace acsdkAlertsInterfaces;
 using namespace testing;
+using namespace rapidjson;
 
 /// Tokens for alerts.
 static const std::string ALERT1_TOKEN = "token1";
@@ -128,8 +129,11 @@ public:
         m_isOpenRetVal = true;
         m_alertExistsRetVal = true;
         m_storeRetVal = true;
+        m_storeOfflineRetVal = true;
         m_loadRetVal = true;
+        m_loadOfflineRetVal = true;
         m_eraseRetVal = true;
+        m_eraseOfflineRetVal = true;
     }
 
     bool createDatabase() {
@@ -149,6 +153,11 @@ public:
     bool store(std::shared_ptr<Alert> alert) {
         return m_storeRetVal;
     }
+
+    bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime) {
+        return m_storeOfflineRetVal;
+    }
+
     bool load(
         std::vector<std::shared_ptr<Alert>>* alertContainer,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager) {
@@ -160,8 +169,27 @@ public:
         }
         return m_loadRetVal;
     }
+
+    bool loadOfflineAlerts(rapidjson::Value* alertContainer, rapidjson::Document::AllocatorType& allocator) {
+        if (m_loadRetVal) {
+            alertContainer->Clear();
+            for (std::shared_ptr<Alert> alertToAdd : m_alertsInStorage) {
+                rapidjson::Value alertJson;
+                alertJson.SetObject();
+                alertJson.AddMember(StringRef("alertToken"), alertToAdd->getToken(), allocator);
+                alertJson.AddMember(StringRef("scheduledTime"), alertToAdd->getScheduledTime_ISO_8601(), allocator);
+                alertJson.AddMember(StringRef("id"), alertToAdd->getId(), allocator);
+                alertContainer->PushBack(alertJson, allocator);
+            }
+        }
+        return m_loadRetVal;
+    }
+
     bool erase(const std::vector<int>& alertDbIds) {
         return m_eraseRetVal;
+    }
+    bool eraseOffline(const std::string& token, int id) {
+        return m_eraseOfflineRetVal;
     }
     void setCreateDatabaseRetVal(bool retVal) {
         m_createDatabaseRetVal = retVal;
@@ -203,8 +231,11 @@ private:
     bool m_isOpenRetVal;
     bool m_alertExistsRetVal;
     bool m_storeRetVal;
+    bool m_storeOfflineRetVal;
     bool m_loadRetVal;
+    bool m_loadOfflineRetVal;
     bool m_eraseRetVal;
+    bool m_eraseOfflineRetVal;
 };
 
 class TestAlertObserver : public AlertObserverInterface {
@@ -214,12 +245,20 @@ public:
         return m_conditionVariable.wait_for(lock, TEST_TIMEOUT, [this, newState] { return m_state == newState; });
     }
 
+    bool waitForPreviousState(AlertScheduler::State newState) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        return m_previousConditionVariable.wait_for(
+            lock, TEST_TIMEOUT, [this, newState] { return m_previousState == newState; });
+    }
+
     void onAlertStateChange(
         const std::string& alertToken,
         const std::string& alertType,
         AlertScheduler::State newState,
         const std::string& reason) {
         std::lock_guard<std::mutex> lock(m_mutex);
+        m_previousState = m_state;
+        m_previousConditionVariable.notify_all();
         m_state = newState;
         m_conditionVariable.notify_all();
     }
@@ -228,6 +267,8 @@ private:
     std::mutex m_mutex;
     std::condition_variable m_conditionVariable;
     AlertScheduler::State m_state;
+    std::condition_variable m_previousConditionVariable;
+    AlertScheduler::State m_previousState;
 };
 
 class AlertSchedulerTest : public ::testing::Test {
@@ -306,7 +347,7 @@ std::shared_ptr<TestAlert> AlertSchedulerTest::doSimpleTestSetup(bool activateAl
 
     if (activateAlert) {
         alert->activate();
-        m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
+        m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
     }
 
     return alert;
@@ -340,15 +381,15 @@ TEST_F(AlertSchedulerTest, test_updateGetFocus) {
     std::shared_ptr<TestAlert> alert = doSimpleTestSetup();
 
     // check if focus changes to foreground
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::FOREGROUND);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
     ASSERT_EQ(m_alertScheduler->getFocusState(), avsCommon::avs::FocusState::FOREGROUND);
 
     // check if focus changes to background
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
     ASSERT_EQ(m_alertScheduler->getFocusState(), avsCommon::avs::FocusState::BACKGROUND);
 
     // check alert state change if focus is gone
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::NONE);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::NONE, avsCommon::avs::MixingBehavior::UNDEFINED);
     ASSERT_EQ(alert->getState(), Alert::State::STOPPING);
 }
 
@@ -589,7 +630,7 @@ TEST_F(AlertSchedulerTest, test_deleteAlertSingle) {
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
     m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
 
     // if active alert and the token matches, ensure that we dont delete it (we deactivate the alert actually)
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(0);
@@ -761,7 +802,7 @@ TEST_F(AlertSchedulerTest, test_isAlertActive) {
     alertsToAdd.push_back(alert1);
     m_alertStorage->setAlerts(alertsToAdd);
     m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
 
     /// inactive alert
     std::shared_ptr<TestAlert> alert2 = std::make_shared<TestAlert>(ALERT2_TOKEN, getFutureInstant(1));
@@ -790,7 +831,7 @@ TEST_F(AlertSchedulerTest, test_getContextInfo) {
     alertsToAdd.push_back(alert2);
     m_alertStorage->setAlerts(alertsToAdd);
     m_alertScheduler->initialize(alertSchedulerObs, m_settingsManager);
-    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
 
     AlertScheduler::AlertsContextInfo resultContextInfo = m_alertScheduler->getContextInfo();
 
@@ -873,13 +914,21 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeStartedInactiveAlert) {
 TEST_F(AlertSchedulerTest, test_onAlertStateChangeStartedActiveAlert) {
     const std::string testReason = "stateStarted";
     auto testState = AlertScheduler::State::STARTED;
+    auto focusState = AlertScheduler::State::FOCUS_ENTERED_FOREGROUND;
 
     doSimpleTestSetup(true, true);
 
     /// active alerts should be handled
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
+    m_alertScheduler->updateFocus(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
     m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
-    ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
+
+    /// when an alert starts, we wait for an Alert to send a STARTED event
+    /// followed by the focus state FOCUS_ENTERED_FOREGROUND. So we'll check
+    /// that the state gets changed to FOCUS_ENTERED_FOREGROUND, then check
+    /// that the previous state was STARTED.
+    ASSERT_TRUE(m_testAlertObserver->waitFor(focusState));
+    ASSERT_TRUE(m_testAlertObserver->waitForPreviousState(testState));
 }
 
 /**

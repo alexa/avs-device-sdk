@@ -20,6 +20,7 @@ fi
 
 LIB_SUFFIX="dll.a"
 START_SCRIPT="$INSTALL_BASE/startsample.bat"
+START_PREVIEW_SCRIPT="$INSTALL_BASE/startpreview.bat"
 CMAKE_PLATFORM_SPECIFIC=(-G 'MSYS Makefiles' -Dgtest_disable_pthreads=ON \
     -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
     -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
@@ -61,6 +62,13 @@ generate_start_script() {
   set path=`cygpath.exe -m $MSYSTEM_PREFIX/bin`;%path%;
   cd `cygpath.exe -m $BUILD_PATH/bin`
   SampleApp.exe `cygpath.exe -m $OUTPUT_CONFIG_FILE` DEBUG9
+  pause
+EOF
+
+  cat << EOF > "$START_PREVIEW_SCRIPT"
+  set path=`cygpath.exe -m $MSYSTEM_PREFIX/bin`;%path%;
+  cd `cygpath.exe -m $BUILD_PATH/bin`
+  PreviewAlexaClient.exe `cygpath.exe -m $OUTPUT_CONFIG_FILE` DEBUG9
   pause
 EOF
 }

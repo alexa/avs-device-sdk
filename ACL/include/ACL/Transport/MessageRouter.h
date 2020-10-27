@@ -21,12 +21,12 @@
 #include <string>
 #include <vector>
 
-#include "AVSCommon/Utils/Threading/Executor.h"
-
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/AVS/MessageRequest.h>
+#include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/Utils/Threading/Executor.h>
 
-#include "AVSCommon/SDKInterfaces/AuthDelegateInterface.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
 #include "ACL/Transport/MessageRouterObserverInterface.h"
@@ -50,7 +50,24 @@ class MessageRouter
         , public std::enable_shared_from_this<MessageRouter> {
 public:
     /**
+     * Factory function for creating an instance of MessageRouterInterface.
+     *
+     * @param shutdownNotifier The object with which to register to be told when to shut down.
+     * @param authDelegate An implementation of an AuthDelegate, which will provide valid access tokens with which
+     * the MessageRouter can authorize the client to AVS.
+     * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
+     * @param transportFactory Factory used to create new transport objects.
+     */
+    static std::shared_ptr<MessageRouterInterface> createMessageRouterInterface(
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+        const std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>& attachmentManager,
+        const std::shared_ptr<TransportFactoryInterface>& transportFactory);
+
+    /**
      * Constructor.
+     *
+     * @deprecated
      * @param authDelegate An implementation of an AuthDelegate, which will provide valid access tokens with which
      * the MessageRouter can authorize the client to AVS.
      * @param attachmentManager The AttachmentManager, which allows ACL to write attachments received from AVS.
@@ -58,12 +75,15 @@ public:
      * @param avsGateway The gateway to connect to AVS. The value will be set by the @c AVSGatewayManager based on
      * either the previously verified gateway or a value from the config file. If both are not present, a default value
      * is used.
+     * @param engineType optional parameter of engine type associated with this MessageRouter. Default to be
+     * ENGINE_TYPE_ALEXA_VOICE_SERVICES.
      */
     MessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> transportFactory,
-        const std::string& avsGateway = "");
+        const std::string& avsGateway = "",
+        int engineType = avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES);
 
     /// @name MessageRouterInterface methods.
     /// @{
@@ -184,6 +204,9 @@ private:
     /// The current connection reason. Access serialized with @c m_connectionMutex.
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_connectionReason;
 
+    /// The engine type associated with this MessageRouter
+    int m_engineType;
+
     /**
      * When the MessageRouter is enabled, any disconnect should automatically trigger a reconnect with AVS.
      * Access serialized with @c m_connectionMutex.
@@ -197,7 +220,7 @@ private:
     std::shared_ptr<TransportInterface> m_activeTransport;
 
     /// The attachment manager.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// The transport factory.
     std::shared_ptr<TransportFactoryInterface> m_transportFactory;

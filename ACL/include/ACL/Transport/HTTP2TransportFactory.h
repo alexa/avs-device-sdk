@@ -19,7 +19,7 @@
 #include <memory>
 #include <string>
 
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h>
@@ -39,8 +39,23 @@ namespace acl {
 class HTTP2TransportFactory : public TransportFactoryInterface {
 public:
     /**
+     * Factory to create instances of TransportFactoryInterface.
+     *
+     * @param connectionFactory Object used to create instances of HTTP2ConnectionInterface.
+     * @param postConnectFactory Object used to create instances of the PostConnectInterface.
+     * @param metricRecorder The metric recorder.
+     * @param eventTracer Object used to trace events sent to AVS.
+     */
+    static std::shared_ptr<TransportFactoryInterface> createTransportFactoryInterface(
+        const std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface>& connectionFactory,
+        const std::shared_ptr<PostConnectFactoryInterface>& postConnectFactory,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+        const std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface>& eventTracer);
+
+    /**
      * HTTP2TransportFactory constructor.
      *
+     * @deprecated
      * @param connectionFactory Object used to create instances of HTTP2ConnectionInterface.
      * @param postConnectFactory Object used to create instances of the PostConnectInterface.
      * @param metricRecorder The metric recorder.
@@ -56,7 +71,7 @@ public:
     /// @{
     std::shared_ptr<TransportInterface> createTransport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<TransportObserverInterface> transportObserverInterface,

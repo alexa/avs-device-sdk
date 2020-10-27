@@ -232,6 +232,7 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> DoN
 }
 
 void DoNotDisturbCapabilityAgent::doShutdown() {
+    m_executor.shutdown();
     m_dndModeSetting.reset();
 }
 

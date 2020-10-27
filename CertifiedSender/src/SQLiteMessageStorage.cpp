@@ -64,6 +64,11 @@ static const std::string CREATE_MESSAGES_TABLE_SQL_STRING = std::string("CREATE 
 
 // clang-format on
 
+std::shared_ptr<MessageStorageInterface> SQLiteMessageStorage::createMessageStorageInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    return create((*configurationRoot));
+}
+
 std::unique_ptr<SQLiteMessageStorage> SQLiteMessageStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     auto certifiedSenderConfigurationRoot = configurationRoot[CERTIFIED_SENDER_CONFIGURATION_ROOT_KEY];

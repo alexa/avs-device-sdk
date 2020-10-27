@@ -16,7 +16,6 @@
 #ifndef ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_POSTCONNECTSEQUENCER_H_
 #define ALEXA_CLIENT_SDK_ACL_INCLUDE_ACL_TRANSPORT_POSTCONNECTSEQUENCER_H_
 
-#include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <set>
@@ -24,11 +23,11 @@
 
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "ACL/Transport/PostConnectInterface.h"
 #include "ACL/Transport/TransportObserverInterface.h"
-#include "ACL/Transport/HTTP2Transport.h"
 
 namespace alexaClientSDK {
 namespace acl {
@@ -127,6 +126,9 @@ private:
 
     /// Thread upon which @c mainLoop() runs.
     std::thread m_mainLoopThread;
+
+    /// The mainloop thread power resource.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_mainLoopPowerResource;
 };
 
 }  // namespace acl

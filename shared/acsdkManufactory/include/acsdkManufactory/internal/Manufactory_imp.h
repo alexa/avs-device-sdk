@@ -27,7 +27,8 @@ namespace acsdkManufactory {
 
 template <typename... Exports>
 template <typename... Parameters>
-std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(const Component<Parameters...>& component) {
+inline std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
+    const Component<Parameters...>& component) {
     static_assert(!internal::HasImport<Parameters...>::value, "Parameters... includes Import<Type>.");
 
     using MissingExports = typename internal::RemoveTypes<std::tuple<Exports...>, std::tuple<Parameters...>>::type;
@@ -46,7 +47,7 @@ std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(const C
 
 template <typename... Exports>
 template <typename... Subset>
-std::unique_ptr<Manufactory<Subset...>> Manufactory<Exports...>::createSubsetManufactory() {
+inline std::unique_ptr<Manufactory<Subset...>> Manufactory<Exports...>::createSubsetManufactory() {
     using MissingExports = typename internal::RemoveTypes<std::tuple<Subset...>, std::tuple<Exports...>>::type;
 
     ACSDK_STATIC_ASSERT_IS_SAME(std::tuple<>, MissingExports, "Manufactory does not export all types in Subset...");
@@ -56,7 +57,7 @@ std::unique_ptr<Manufactory<Subset...>> Manufactory<Exports...>::createSubsetMan
 
 template <typename... Exports>
 template <typename Type>
-Type Manufactory<Exports...>::get() {
+inline Type Manufactory<Exports...>::get() {
     static_assert(
         internal::ContainsType<std::tuple<Exports...>, Type>::value,
         "Manufactory::get() does not support requested Type");
@@ -65,7 +66,7 @@ Type Manufactory<Exports...>::get() {
 }
 
 template <typename... Exports>
-std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
+inline std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
     const std::shared_ptr<internal::RuntimeManufactory>& runtimeManufactory) {
     // Perhaps add run-time check here that runtimeManufactory supports Exports...
 
@@ -73,12 +74,12 @@ std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
 }
 
 template <typename... Exports>
-Manufactory<Exports...>::Manufactory(const internal::CookBook& cookBook) {
+inline Manufactory<Exports...>::Manufactory(const internal::CookBook& cookBook) {
     m_runtimeManufactory.reset(new internal::RuntimeManufactory(cookBook));
 }
 
 template <typename... Exports>
-Manufactory<Exports...>::Manufactory(const std::shared_ptr<internal::RuntimeManufactory>& runtimeManufactory) :
+inline Manufactory<Exports...>::Manufactory(const std::shared_ptr<internal::RuntimeManufactory>& runtimeManufactory) :
         m_runtimeManufactory{runtimeManufactory} {
 }
 

@@ -33,6 +33,11 @@ static const std::string TAG("LibcurlHTTP2ConnectionFactory");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> LibcurlHTTP2ConnectionFactory::
+    createHTTP2ConnectionFactoryInterface() {
+    return std::make_shared<LibcurlHTTP2ConnectionFactory>();
+}
+
 std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> LibcurlHTTP2ConnectionFactory::
     createHTTP2Connection() {
     ACSDK_DEBUG5(LX(__func__));

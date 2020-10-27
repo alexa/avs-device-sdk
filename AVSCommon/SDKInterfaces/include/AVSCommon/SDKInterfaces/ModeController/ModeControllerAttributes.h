@@ -19,6 +19,8 @@
 #include <unordered_map>
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
+#include <AVSCommon/Utils/Optional.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -54,6 +56,20 @@ struct ModeControllerAttributes {
         const std::unordered_map<std::string, ModeResources>& modes,
         bool ordered);
 
+    /**
+     *  Constructor to build the @c ModeControllerAttributes using provided values.
+     *
+     *  @param capabilityResources The capability resources.
+     *  @param modes A map of controller modes and mode resources.
+     *  @param ordered A boolean indicating the ordering of @c modes.
+     *  @param semantics The optional semantics definition.
+     */
+    ModeControllerAttributes(
+        const avsCommon::avs::CapabilityResources& capabilityResources,
+        const std::unordered_map<std::string, ModeResources>& modes,
+        bool ordered,
+        avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics);
+
     /// A capability resource @c CapabilityResources
     const avsCommon::avs::CapabilityResources capabilityResources;
 
@@ -62,6 +78,9 @@ struct ModeControllerAttributes {
 
     /// If @c true indicates that the modes in @c modes are ordered.
     const bool ordered;
+
+    /// A semantics definition as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics;
 };
 
 inline ModeControllerAttributes::ModeControllerAttributes() :
@@ -77,7 +96,19 @@ inline ModeControllerAttributes::ModeControllerAttributes(
     bool ordered) :
         capabilityResources{capabilityResources},
         modes{modes},
-        ordered{ordered} {
+        ordered{ordered},
+        semantics{avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics>()} {
+}
+
+inline ModeControllerAttributes::ModeControllerAttributes(
+    const avsCommon::avs::CapabilityResources& capabilityResources,
+    const std::unordered_map<std::string, ModeResources>& modes,
+    bool ordered,
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics) :
+        capabilityResources{capabilityResources},
+        modes{modes},
+        ordered{ordered},
+        semantics{semantics} {
 }
 
 }  // namespace modeController

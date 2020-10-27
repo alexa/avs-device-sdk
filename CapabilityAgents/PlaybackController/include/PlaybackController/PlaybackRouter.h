@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_PLAYBACKCONTROLLER_INCLUDE_PLAYBACKCONTROLLER_PLAYBACKROUTER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_PLAYBACKCONTROLLER_INCLUDE_PLAYBACKCONTROLLER_PLAYBACKROUTER_H_
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -30,9 +31,21 @@ class PlaybackRouter
         , public std::enable_shared_from_this<PlaybackRouter> {
 public:
     /**
+     * Create an instance of @ PlaybackRouterInterface.
+     *
+     * @param defaultHandler The default playback handler.
+     * @param shutdownNotifier The @c ShutdownNotifierInterface to notify this instance when to shut down.
+     * @return A @c std::shared_ptr to the new @ PlaybackRouterInterface instance.
+     */
+    static std::shared_ptr<PlaybackRouterInterface> createPlaybackRouterInterface(
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackHandlerInterface> defaultHandler,
+        std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier);
+
+    /**
      * Create an instance of @ PlaybackRouter.
      *
      * @param defaultHandler The default playback handler.
+     * @deprecated Use createPlaybackRouterInterface.
      * @return A @c std::shared_ptr to the new @ PlaybackRouter instance.
      */
     static std::shared_ptr<PlaybackRouter> create(

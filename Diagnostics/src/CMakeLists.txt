@@ -17,8 +17,10 @@ target_link_libraries(Diagnostics
         acsdkAlertsInterfaces
         acsdkAudioPlayerInterfaces
         acsdkNotificationsInterfaces
+        acsdkEqualizerInterfaces
         AudioResources
         AVSCommon
+        DeviceSettings
         )
 
 # install target

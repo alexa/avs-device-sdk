@@ -20,6 +20,7 @@
 #include "acsdkAlerts/Renderer/RendererObserverInterface.h"
 
 #include <AVSCommon/AVS/FocusState.h>
+#include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/Utils/Timing/TimePoint.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
@@ -343,8 +344,9 @@ public:
      * Sets the focus state for the alert.
      *
      * @param focusState The focus state.
+     * @param behavior The mixing behavior.
      */
-    void setFocusState(avsCommon::avs::FocusState focusState);
+    void setFocusState(avsCommon::avs::FocusState focusState, avsCommon::avs::MixingBehavior behavior);
 
     /**
      * Sets the state of this alert to active.  Only has effect if the Alert's state is State::ACTIVATING.
@@ -484,6 +486,13 @@ private:
      */
     void onMaxTimerExpiration();
 
+    /**
+     * Function to determine whether an alert is in a paused state.
+     *
+     * @return Whether alert is paused
+     */
+    bool isAlertPaused() const;
+
     /// The mutex that enforces thread safety for all member variables.
     mutable std::mutex m_mutex;
     /// Persistable Alert attributes that are expected to remain constant.
@@ -494,6 +503,8 @@ private:
     StopReason m_stopReason;
     /// The current focus state of the alert.
     avsCommon::avs::FocusState m_focusState;
+    /// The current mixing behavior of the alert.
+    avsCommon::avs::MixingBehavior m_mixingBehavior;
     /// A flag to capture if the maximum time timer has expired for this alert.
     bool m_hasTimerExpired;
     /// The timer to ensure this alert is not active longer than a maximum length of time.

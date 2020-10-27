@@ -18,8 +18,9 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestSourceInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 
 #include "ACL/Transport/ExchangeHandler.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
@@ -52,7 +53,7 @@ public:
         std::shared_ptr<ExchangeHandlerContextInterface> context,
         const std::string& authToken,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager);
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager);
 
 private:
     /**
@@ -76,6 +77,9 @@ private:
     void onResponseFinished(avsCommon::utils::http2::HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody)
         override;
     /// @}
+
+    /// The power resource to prevent device from going to LPM.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 };
 
 }  // namespace acl

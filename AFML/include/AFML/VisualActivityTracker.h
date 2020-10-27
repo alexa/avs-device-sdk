@@ -20,12 +20,17 @@
 #include <memory>
 #include <vector>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/StateProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 
 #include "AFML/Channel.h"
 #include "AFML/ActivityTrackerInterface.h"

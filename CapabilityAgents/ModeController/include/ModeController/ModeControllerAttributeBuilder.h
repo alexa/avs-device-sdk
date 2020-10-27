@@ -18,6 +18,7 @@
 
 #include <unordered_map>
 
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/SDKInterfaces/ModeController/ModeControllerAttributeBuilderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 
@@ -52,6 +53,8 @@ public:
         const std::string& mode,
         const avsCommon::sdkInterfaces::modeController::ModeResources& modeResources) override;
     ModeControllerAttributeBuilder& setOrdered(bool ordered) override;
+    ModeControllerAttributeBuilder& withSemantics(
+        const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) override;
     avsCommon::utils::Optional<avsCommon::sdkInterfaces::modeController::ModeControllerAttributes> build() override;
     /// @}
 
@@ -72,6 +75,9 @@ private:
 
     /// Indicates whether modes in the controller are ordered or not.
     bool m_ordered;
+
+    /// The semantics represented as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> m_semantics;
 };
 
 }  // namespace modeController

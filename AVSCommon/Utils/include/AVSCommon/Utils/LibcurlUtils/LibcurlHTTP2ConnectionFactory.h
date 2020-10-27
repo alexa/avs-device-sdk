@@ -28,6 +28,14 @@ namespace libcurlUtils {
  */
 class LibcurlHTTP2ConnectionFactory : public avsCommon::utils::http2::HTTP2ConnectionFactoryInterface {
 public:
+    /**
+     * Create a new instance of @c LibcurlHTTP2ConnectionFactory.
+     *
+     * @return A new instance of @c LibcurlHTTP2ConnectionFactory.
+     */
+    static std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface>
+    createHTTP2ConnectionFactoryInterface();
+
     /// @name HTTP2ConnectionFactoryInterface methods.
     /// @{
     std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> createHTTP2Connection() override;

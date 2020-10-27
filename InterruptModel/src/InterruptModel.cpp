@@ -27,9 +27,20 @@ using namespace avsCommon::utils::configuration;
 static const std::string TAG{"InterruptModel"};
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/// Key for the interrupt model configuration
+static const std::string INTERRUPT_MODEL_CONFIG_KEY = "interruptModel";
+
 static const std::string CURRENT_CHANNEL_CONTENT_TYPE_CONFIG_KEY = "contentType";
 static const std::string HIGHPRIORITY_CHANNEL_CONFIG_ROOT_KEY = "incomingChannel";
 static const std::string HIGHPRIORITY_CHANNEL_CONTENT_TYPE_CONFIG_KEY = "incomingContentType";
+
+std::shared_ptr<InterruptModel> InterruptModel::createInterruptModel(const std::shared_ptr<ConfigurationNode>& config) {
+    if (!config) {
+        ACSDK_ERROR(LX("createInterruptModelFailed").m("invalid config"));
+        return nullptr;
+    }
+    return InterruptModel::create((*config)[INTERRUPT_MODEL_CONFIG_KEY]);
+}
 
 std::shared_ptr<InterruptModel> InterruptModel::create(ConfigurationNode interactionConfiguration) {
     if (!interactionConfiguration) {

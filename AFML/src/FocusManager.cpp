@@ -15,8 +15,10 @@
 
 #include <algorithm>
 
-#include "AFML/FocusManager.h"
+#include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+
+#include "AFML/FocusManager.h"
 
 namespace alexaClientSDK {
 namespace afml {

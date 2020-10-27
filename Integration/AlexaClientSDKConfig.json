@@ -57,8 +57,12 @@
         "defaultLocale":"en-US",
         // The list of locale combinations supported on this device.
         "localeCombinations":[
-            ["en-CA", "fr-CA"],
-            ["fr-CA", "en-CA"]
+            ["en-US", "es-US"],
+            ["es-US", "en-US"],
+            ["en-IN", "hi-IN"],
+            ["hi-IN", "en-IN"],
+            ["fr-CA", "en-CA"],
+            ["en-CA", "fr-CA"]
         ],
         // The default timezone of this device.  This is an optional parameter; if it isn't specified, Etc/GMT is set as
         // the default timezone.
@@ -86,13 +90,24 @@
         "databaseFilePath":"${SDK_NOTIFICATIONS_DATABASE_FILE_PATH}"
     },
     "diagnostics":{
+        // Flag for allowing tracing from SDK start up (By default, it's false)
+        "protocolTraceFromStartup": false,
         // The maximum number of directive/event messages to store. If exceeded, additional messages will not be stored.
-        // "maxTracedMessages":1
+        "maxTracedMessages":1
     },
     "externalMediaPlayer": {
         // Agent identifier provided by AlexaMusic.
         // Developers creating their own adaptors must use an Agent ID assigned to them by Alexa Music
         "agentString": "CQCAFYNYDC"
+    },
+    "audioPlayer": {
+        // To specify the number of MediaPlayer instances for AudioPlayer to use,
+        // a value of '1' will result in limited pre-buffering:  It will buffer during introductory TTS, but not
+        // the next track.
+        // A value of '2' will allow next track buffering as well.  If multiple Play directives are expected to be enqueued,
+        // at the same time, and the memory is available, a value of 3 or more will allow additional buffering.
+        // The default is '2'.
+        // "audioMediaPlayerPoolSize": 1
     },
     "sampleApp": {
         // To specify if the SampleApp supports display cards.
@@ -111,14 +126,6 @@
         //"portAudio":{
         //    "suggestedLatency": 0.150
         //}
-
-        // To specify the number of MediaPlayer instances for AudioPlayer to use,
-        // a value of '1' will result in limited pre-buffering:  It will buffer during introductory TTS, but not
-        // the next track.
-        // A value of '2' will allow next track buffering as well.  If multiple Play directives are expected to be enqueued,
-        // at the same time, and the memory is available, a value of 3 or more will allow additional buffering.
-        // The default is '2'.
-        // "audioMediaPlayerPoolSize": 1
     }
 
     // Example of specifying output format and the audioSink for the gstreamer-based MediaPlayer bundled with the SDK.

@@ -259,10 +259,12 @@ then
 
   cd $BUILD_PATH
   make SampleApp -j2
+  make PreviewAlexaClient -j2
 
 else
   cd $BUILD_PATH
   make SampleApp -j2
+  make PreviewAlexaClient -j2
 fi
 
 echo

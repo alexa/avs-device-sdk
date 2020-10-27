@@ -53,10 +53,20 @@ static const std::string VALIDATION_STRING = "81ce4465-7167-4dcb-835b-dcc9e44c11
 /// Process attachment ID prefix
 static const std::string PROCESS_ATTACHMENT_ID_PREFIX = "download:";
 
+std::shared_ptr<sdkInterfaces::InternetConnectionMonitorInterface> InternetConnectionMonitor::
+    createInternetConnectionMonitorInterface(
+        const std::shared_ptr<sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>& contentFetcherFactory) {
+    if (!contentFetcherFactory) {
+        ACSDK_ERROR(LX("createInternetConnectionMonitorInterfaceFailed").d("reason", "nullContentFetcherFactory"));
+        return nullptr;
+    }
+    return std::shared_ptr<InternetConnectionMonitorInterface>(new InternetConnectionMonitor(contentFetcherFactory));
+}
+
 std::unique_ptr<InternetConnectionMonitor> InternetConnectionMonitor::create(
     std::shared_ptr<sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> contentFetcherFactory) {
     if (!contentFetcherFactory) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "contentFetcherFactory was nullptr"));
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullContentFetcherFactory"));
         return nullptr;
     }
 

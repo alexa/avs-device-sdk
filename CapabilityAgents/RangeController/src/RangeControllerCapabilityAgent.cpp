@@ -23,6 +23,7 @@
 #include <rapidjson/writer.h>
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -69,6 +70,9 @@ static const std::string CAPABILITY_RESOURCES_KEY{"capabilityResources"};
 
 /// The configuration key
 static const std::string CAPABILITY_CONFIGURATION_KEY{"configuration"};
+
+/// The semantics key
+static const std::string CAPABILITY_SEMANTICS_KEY{"semantics"};
 
 /// The key in the directive payload
 static const char RANGE_VALUE_KEY[] = "rangeValue";
@@ -388,6 +392,9 @@ avsCommon::avs::CapabilityConfiguration RangeControllerCapabilityAgent::getCapab
     auto additionalConfigurations = CapabilityConfiguration::AdditionalConfigurations();
     additionalConfigurations[CAPABILITY_RESOURCES_KEY] = m_rangeControllerAttributes.capabilityResources.toJson();
     additionalConfigurations[CAPABILITY_CONFIGURATION_KEY] = buildRangeConfigurationJson();
+    if (m_rangeControllerAttributes.semantics.hasValue()) {
+        additionalConfigurations[CAPABILITY_SEMANTICS_KEY] = m_rangeControllerAttributes.semantics.value().toJson();
+    }
 
     CapabilityConfiguration configuration{CapabilityConfiguration::ALEXA_INTERFACE_TYPE,
                                           NAMESPACE,

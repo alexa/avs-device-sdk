@@ -21,6 +21,7 @@
 #include <sstream>
 #include <string>
 
+#include "AVSCommon/AVS/Attachment/AttachmentManager.h"
 #include "AVSCommon/Utils/Threading/Executor.h"
 #include "AVSCommon/Utils/Memory/Memory.h"
 
@@ -46,7 +47,7 @@ class TestableMessageRouter : public MessageRouter {
 public:
     TestableMessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<AttachmentManager> attachmentManager,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> factory,
         const std::string& avsGateway) :
             MessageRouter(authDelegate, attachmentManager, factory, avsGateway) {
@@ -77,7 +78,7 @@ public:
 private:
     std::shared_ptr<TransportInterface> createTransport(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
-        std::shared_ptr<AttachmentManager> attachmentManager,
+        std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         const std::string& avsGateway,
         std::shared_ptr<MessageConsumerInterface> messageConsumerInterface,
         std::shared_ptr<TransportObserverInterface> transportObserverInterface,
@@ -138,7 +139,7 @@ public:
 
     std::shared_ptr<MockMessageRouterObserver> m_mockMessageRouterObserver;
     std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
-    std::shared_ptr<AttachmentManager> m_attachmentManager;
+    std::shared_ptr<AttachmentManagerInterface> m_attachmentManager;
     std::shared_ptr<NiceMock<MockTransport>> m_mockTransport;
     std::shared_ptr<MockTransportFactory> m_transportFactory;
     std::shared_ptr<TestableMessageRouter> m_router;

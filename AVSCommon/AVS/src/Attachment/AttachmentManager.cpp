@@ -50,6 +50,10 @@ AttachmentManager::AttachmentManagementDetails::AttachmentManagementDetails() :
         creationTime{std::chrono::steady_clock::now()} {
 }
 
+std::shared_ptr<AttachmentManagerInterface> AttachmentManager::createInProcessAttachmentManagerInterface() {
+    return std::make_shared<AttachmentManager>(AttachmentType::IN_PROCESS);
+}
+
 AttachmentManager::AttachmentManager(AttachmentType attachmentType) :
         m_attachmentType{attachmentType},
         m_attachmentExpirationMinutes{ATTACHMENT_MANAGER_TIMOUT_MINUTES_DEFAULT} {

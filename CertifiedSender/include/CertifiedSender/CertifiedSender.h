@@ -22,6 +22,8 @@
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -146,7 +148,7 @@ private:
         /// Mutex used to enforce thread safety.
         std::mutex m_requestMutex;
         /// The condition variable used when waiting for the @c MessageRequest to be processed.
-        std::condition_variable m_requestCv;
+        avsCommon::utils::threading::ConditionVariableWrapper m_requestCv;
         /// The database id associated with this @c MessageRequest.
         int m_dbId;
         /// A control so we may allow the message to stop waiting to be sent.
@@ -214,7 +216,7 @@ private:
     std::mutex m_mutex;
 
     /// A condition variable with which to notify the worker thread that a new item was added to the queue.
-    std::condition_variable m_workerThreadCV;
+    avsCommon::utils::threading::ConditionVariableWrapper m_workerThreadCV;
 
     /// A variable to capture if we are currently connected to AVS.
     bool m_isConnected;
@@ -237,11 +239,14 @@ private:
     /// Where we will store the messages we wish to send.
     std::shared_ptr<MessageStorageInterface> m_storage;
 
+    /// Object for power management.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
+
     /// Executor to decouple the public-facing api from possibly inefficient persistent storage implementations.
     avsCommon::utils::threading::Executor m_executor;
 
     // A condition variable for the main loop to wait for during back-off.
-    std::condition_variable m_backoffWaitCV;
+    avsCommon::utils::threading::ConditionVariableWrapper m_backoffWaitCV;
 };
 
 }  // namespace certifiedSender

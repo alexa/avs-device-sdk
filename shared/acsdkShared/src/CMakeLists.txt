@@ -5,8 +5,11 @@ add_library(acsdkShared SHARED
 target_include_directories(acsdkShared PUBLIC
     "${acsdkShared_SOURCE_DIR}/include")
 
-target_link_libraries(acsdkShared
+target_link_libraries(acsdkShared PUBLIC
     acsdkManufactory
+    acsdkNotifier
+    acsdkShutdownManager
+    acsdkStartupManager
     AVSCommon)
 
 # install target

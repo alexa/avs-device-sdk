@@ -44,12 +44,12 @@ std::unique_ptr<PooledMediaPlayerFactory> PooledMediaPlayerFactory::create(
 }
 
 PooledMediaPlayerFactory::PooledMediaPlayerFactory(
-    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& pool,
+    const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& mediaPlayerPool,
     const Fingerprint& fingerprint) :
         // Parenthesis are used for initializing @c m_fingerprint to work-around a bug in the C++ specification.  see:
         // http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#1288
         m_fingerprint(fingerprint) {
-    m_availablePlayerPool.insert(m_availablePlayerPool.end(), pool.begin(), pool.end());
+    m_availablePlayerPool.insert(m_availablePlayerPool.end(), mediaPlayerPool.begin(), mediaPlayerPool.end());
 }
 
 PooledMediaPlayerFactory::~PooledMediaPlayerFactory() {

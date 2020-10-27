@@ -116,7 +116,8 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
     // Download and cache Media Initialization Section for SAMPLE-AES content.
     if (playlistEntry.type == PlaylistEntry::Type::MEDIA_INIT_INFO &&
         encryptionInfo.method == EncryptionInfo::Method::SAMPLE_AES) {
-        m_executor.submit([this, url, headers, playlistEntry]() {
+        auto totalDuration = encryptionInfo.totalDuration;
+        m_executor.submit([this, url, headers, totalDuration, playlistEntry]() {
             ByteVector mediaInitSection;
             if (!download(url, headers, &mediaInitSection, playlistEntry.contentFetcher)) {
                 closeStreamWriter();
@@ -124,7 +125,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
                 return;
             }
             if (!m_shuttingDown) {
-                m_contentDecrypter->writeMediaInitSection(mediaInitSection, m_streamWriter);
+                m_contentDecrypter->setMediaInitToDecryptedContent(mediaInitSection, totalDuration);
             }
         });
         return;
@@ -352,7 +353,10 @@ bool UrlContentToAttachmentConverter::download(
         }
     }
 
-    localContentFetcher->getBody(streamWriter);
+    if (!localContentFetcher->getBody(streamWriter)) {
+        ACSDK_ERROR(LX("downloadFailed").d("reason", "getBodyFailed"));
+        return false;
+    }
 
     while (localContentFetcher->getState() == HTTPContentFetcherInterface::State::FETCHING_BODY) {
         if (m_shuttingDown) {

@@ -60,13 +60,19 @@ public:
 
     bool store(std::shared_ptr<Alert> alert) override;
 
+    bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime) override;
+
     bool load(
         std::vector<std::shared_ptr<Alert>>* alertContainer,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager) override;
 
+    bool loadOfflineAlerts(rapidjson::Value* alertContainer, rapidjson::Document::AllocatorType& allocator) override;
+
     bool modify(std::shared_ptr<Alert> alert) override;
 
     bool erase(std::shared_ptr<Alert> alert) override;
+
+    bool eraseOffline(const std::string& token, int id) override;
 
     bool bulkErase(const std::list<std::shared_ptr<Alert>>& alertList) override;
 
@@ -102,18 +108,6 @@ private:
         const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
 
     /**
-     * Utility function to migrate an existing V1 Alerts database file to the V2 format.
-     *
-     * The expectation for V2 is that a table with the name 'alerts_v2' exists.
-     *
-     * If this table does not exist, then this function will create it, and the additional tables that V2 expects,
-     * and then load all alerts from the V1 table and save them into the V2 table.
-     *
-     * @return Whether the migration was successful.  Returns true by default if the db is already V2.
-     */
-    bool migrateAlertsDbFromV1ToV2();
-
-    /**
      * A utility function to help us load alerts from different versions of the alerts table.  Currently, versions
      * 1 and 2 are supported.
      *
@@ -128,12 +122,20 @@ private:
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager);
 
     /**
-     * Query whether an alert is currently stored with the given token.
+     * Query whether an alert is currently stored in the alerts table with the given token.
      *
      * @param token The AVS token which uniquely identifies an alert.
-     * @return @c true If the alert is stored in the database, @c false otherwise.
+     * @return @c true If the alert is stored in the alerts database, @c false otherwise.
      */
     bool alertExists(const std::string& token);
+
+    /**
+     * Query whether an alert is currently stored in the offline alerts table with the given token.
+     *
+     * @param token The AVS token which uniquely identifies an alert.
+     * @return @c true If the alert is stored in the offline alerts database, @c false otherwise.
+     */
+    bool offlineAlertExists(const std::string& token);
 
     /// A member that stores a factory that produces audio streams for alerts.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;

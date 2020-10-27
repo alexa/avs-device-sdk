@@ -13,13 +13,23 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "acsdkManufactory/internal/CookBook.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
 namespace internal {
 
-const std::string TAG = "CookBook";
+/// String to identify log entries originating from this file.
+static const std::string TAG("Cookbook");
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 bool CookBook::checkForCyclicDependencies() {
     // Check for cyclic dependencies is performed via depth first search of the dependency graph, marking visited
@@ -59,6 +69,7 @@ bool CookBook::checkForCyclicDependencies() {
                 auto recipeIt = m_recipes.find(typeIndex);
                 if (m_recipes.end() == recipeIt) {
                     markInvalid(__func__, "type not in m_recipes", typeIndex.getName());
+                    logDependencies();
                     return false;
                 }
                 completedIt = typeToCompletedMap.insert({typeIndex, false}).first;
@@ -74,14 +85,24 @@ bool CookBook::checkForCyclicDependencies() {
                                                              .d("type", top.typeToCompletedIt->first.getName()));
                     positions.pop();
                 }
+                logDependencies();
                 return false;
             }
         }
         positions.top().typeToCompletedIt->second = true;
         positions.pop();
     }
-
     return true;
+}
+
+void CookBook::logDependencies() const {
+    ACSDK_INFO(LX(__func__));
+    for (const auto& item : m_recipes) {
+        ACSDK_INFO(LX("recipe").d("type", item.first.getName()));
+        for (auto ix = item.second->begin(); ix < item.second->end(); ix++) {
+            ACSDK_INFO(LX("dependency").d("type", ix->getName()));
+        }
+    }
 }
 
 std::string CookBook::getLoggerTag() {

@@ -164,7 +164,8 @@ void PlaylistParser::doDepthFirstSearch(
         // Checking the HTTP content type to see if the URL is a playlist.
         if (lowerCaseContentType.find(M3U_CONTENT_TYPE) != std::string::npos) {
             std::string playlistContent;
-            if (!playlistParser::readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_shuttingDown)) {
+            if (!playlistParser::readFromContentFetcher(
+                    std::move(contentFetcher), &playlistContent, &m_shuttingDown, &playlistURL)) {
                 ACSDK_ERROR(LX("failedToRetrieveContent").sensitive("url", playlistURL));
                 observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
                 return;
@@ -333,7 +334,8 @@ void PlaylistParser::doDepthFirstSearch(
                 continue;
             }
             std::string playlistContent;
-            if (!playlistParser::readFromContentFetcher(std::move(contentFetcher), &playlistContent, &m_shuttingDown)) {
+            if (!playlistParser::readFromContentFetcher(
+                    std::move(contentFetcher), &playlistContent, &m_shuttingDown, &playlistURL)) {
                 observer->onPlaylistEntryParsed(id, PlaylistEntry::createErrorEntry(playlistURL));
                 return;
             }

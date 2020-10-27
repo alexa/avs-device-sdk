@@ -52,7 +52,7 @@ static const std::vector<int> RETRY_TABLE = {
 static avsCommon::utils::RetryTimer RETRY_TIMER{RETRY_TABLE};
 
 /// Maximum number of endpoints per event.
-static const int MAX_ENDPOINTS_PER_EVENT = 300;
+static constexpr int MAX_ENDPOINTS_PER_ADD_OR_UPDATE_REPORT_EVENT = 300;
 
 /// The timeout for the Asynchronous response directive (Alexa.EventProcessed) to be received.
 static const auto ASYNC_RESPONSE_TIMEOUT = std::chrono::seconds(2);
@@ -126,7 +126,7 @@ void DiscoveryEventSender::onAuthStateChange(
     std::lock_guard<std::mutex> lock(m_authStatusMutex);
     m_currentAuthState = newState;
     if ((AuthObserverInterface::State::REFRESHED == m_currentAuthState)) {
-        m_authStatusReady.notify_one();
+        m_authStatusReady.notifyOne();
     }
 }
 
@@ -163,7 +163,7 @@ void DiscoveryEventSender::stop() {
 
     {
         std::lock_guard<std::mutex> lock{m_authStatusMutex};
-        m_authStatusReady.notify_one();
+        m_authStatusReady.notifyOne();
     }
 
     m_retryWait.wakeUp();
@@ -261,21 +261,46 @@ bool DiscoveryEventSender::sendDiscoveryEvents(
     const std::vector<std::string>& endpointConfigurations,
     const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
     bool isAddOrUpdateReportEvent) {
-    int numFullEndpoints = endpointConfigurations.size() / MAX_ENDPOINTS_PER_EVENT;
+    int currentEventSize = 0;
+    std::vector<std::string> currentEndpointConfigurationsBuffer;
+    auto currentEndpointConfigIt = endpointConfigurations.begin();
 
-    /// Send events with MAX_ENDPOINTS_PER_EVENT.
-    auto it = endpointConfigurations.begin();
-    for (int num = 0; num < numFullEndpoints; ++num) {
-        std::vector<std::string> endpointConfigs(it, it + MAX_ENDPOINTS_PER_EVENT);
-        if (!sendDiscoveryEventWithRetries(messageSender, endpointConfigs, isAddOrUpdateReportEvent)) {
-            return false;
+    while (currentEndpointConfigIt != endpointConfigurations.end()) {
+        int currentEndpointConfigSize = currentEndpointConfigIt->size();
+
+        bool sendEvent = false;
+
+        // Check for maximum allowed endpoints in Discovery.AddOrUpdateReport event.
+        if (isAddOrUpdateReportEvent) {
+            if (currentEndpointConfigurationsBuffer.size() == MAX_ENDPOINTS_PER_ADD_OR_UPDATE_REPORT_EVENT) {
+                sendEvent = true;
+            }
         }
-        it += MAX_ENDPOINTS_PER_EVENT;
+
+        // Check for endpoint config size in payload
+        if (currentEventSize + currentEndpointConfigSize > MAX_ENDPOINTS_SIZE_IN_PAYLOAD) {
+            sendEvent = true;
+        }
+
+        if (sendEvent) {
+            if (!sendDiscoveryEventWithRetries(
+                    messageSender, currentEndpointConfigurationsBuffer, isAddOrUpdateReportEvent)) {
+                return false;
+            }
+
+            // Reset buffer
+            currentEventSize = 0;
+            currentEndpointConfigurationsBuffer.clear();
+        }
+
+        currentEndpointConfigurationsBuffer.push_back(*currentEndpointConfigIt);
+        currentEventSize += currentEndpointConfigSize;
+
+        currentEndpointConfigIt++;
     }
 
-    /// Send events with the remaining endpoints.
-    std::vector<std::string> endpointConfigs(it, endpointConfigurations.end());
-    return sendDiscoveryEventWithRetries(messageSender, endpointConfigs, isAddOrUpdateReportEvent);
+    // Send the remaining endpoints.
+    return sendDiscoveryEventWithRetries(messageSender, currentEndpointConfigurationsBuffer, isAddOrUpdateReportEvent);
 }
 
 bool DiscoveryEventSender::sendAddOrUpdateReportEvents(

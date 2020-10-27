@@ -4,6 +4,7 @@ set(LIBS
         "AttachmentCommonTestLib"
         "acsdkNotifications"
         "UtilsCommonTestLib"
-        "SDKInterfacesTests")
+        "SDKInterfacesTests"
+        "ApplicationAudioPipelineFactoryTestLib")
 
 discover_unit_tests("${INCLUDE_PATH}" "${LIBS}")

@@ -17,6 +17,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_TOGGLECONTROLLER_TOGGLECONTROLLERATTRIBUTES_H_
 
 #include <AVSCommon/AVS/CapabilityResources.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
+#include <AVSCommon/Utils/Optional.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -24,12 +26,55 @@ namespace sdkInterfaces {
 namespace toggleController {
 
 /**
- * The toggle controller attribute containing the capability resources required for
+ * The Toggle Controller attributes containing the capability resources required for
  * Capability Agent discovery.
  *
  * @see https://developer.amazon.com/docs/alexa/alexa-voice-service/alexa-togglecontroller.html#capability-assertion
  */
-using ToggleControllerAttributes = avsCommon::avs::CapabilityResources;
+struct ToggleControllerAttributes {
+    /**
+     * Default constructor.
+     *
+     * @note Avoid using this method. This was added only to enable the to use @c Optional::value().
+     */
+    ToggleControllerAttributes() = default;
+
+    /**
+     * Constructor to build the @c ToggleControllerAttributes using provided values.
+     *
+     * @param capabilityResources The capability resources.
+     */
+    ToggleControllerAttributes(const avsCommon::avs::CapabilityResources& capabilityResources);
+
+    /**
+     * Constructor to build the @c ToggleControllerAttributes using provided values.
+     *
+     * @param capabilityResources The capability resources.
+     * @param semantics The optional semantics definition.
+     */
+    ToggleControllerAttributes(
+        const avsCommon::avs::CapabilityResources& capabilityResources,
+        avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics);
+
+    /// The capability resources as @c CapabilityResources
+    const avsCommon::avs::CapabilityResources capabilityResources;
+
+    /// A semantics definition as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics;
+};
+
+inline ToggleControllerAttributes::ToggleControllerAttributes(
+    const avsCommon::avs::CapabilityResources& capabilityResources) :
+        capabilityResources{capabilityResources},
+        semantics{avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics>()} {
+}
+
+inline ToggleControllerAttributes::ToggleControllerAttributes(
+    const avsCommon::avs::CapabilityResources& capabilityResources,
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics) :
+        capabilityResources{capabilityResources},
+        semantics{semantics} {
+}
 
 }  // namespace toggleController
 }  // namespace sdkInterfaces

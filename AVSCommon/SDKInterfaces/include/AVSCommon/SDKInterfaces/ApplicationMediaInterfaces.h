@@ -16,7 +16,8 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_APPLICATIONMEDIAINTERFACES_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_APPLICATIONMEDIAINTERFACES_H_
 
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerInterface.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -36,12 +37,14 @@ struct ApplicationMediaInterfaces {
      * @param speaker Speaker
      * @param equalizer Equalizer
      * @param requiresShutdown Components requiring shutdown
+     * @param channelVolume Channel volume interface. Optional; default is a nullptr.
      */
     ApplicationMediaInterfaces(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerInterface> equalizer,
-        std::shared_ptr<avsCommon::utils::RequiresShutdown> requiresShutdown);
+        std::shared_ptr<acsdkEqualizerInterfaces::EqualizerInterface> equalizer,
+        std::shared_ptr<avsCommon::utils::RequiresShutdown> requiresShutdown,
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolume = nullptr);
 
     /// Media Player
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer;
@@ -50,21 +53,26 @@ struct ApplicationMediaInterfaces {
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker;
 
     /// Equalizer implementation
-    std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerInterface> equalizer;
+    std::shared_ptr<acsdkEqualizerInterfaces::EqualizerInterface> equalizer;
 
     /// Requires Shutdown implementation
     std::shared_ptr<avsCommon::utils::RequiresShutdown> requiresShutdown;
+
+    /// ChannelVolume implementation
+    std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolume;
 };
 
 inline ApplicationMediaInterfaces::ApplicationMediaInterfaces(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerInterface> equalizer,
-    std::shared_ptr<avsCommon::utils::RequiresShutdown> requiresShutdown) :
+    std::shared_ptr<acsdkEqualizerInterfaces::EqualizerInterface> equalizer,
+    std::shared_ptr<avsCommon::utils::RequiresShutdown> requiresShutdown,
+    std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolume) :
         mediaPlayer{mediaPlayer},
         speaker{speaker},
         equalizer{equalizer},
-        requiresShutdown{requiresShutdown} {
+        requiresShutdown{requiresShutdown},
+        channelVolume{channelVolume} {
 }
 
 }  // namespace sdkInterfaces

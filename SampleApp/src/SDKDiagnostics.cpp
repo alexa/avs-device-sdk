@@ -91,7 +91,8 @@ std::shared_ptr<ProtocolTracerInterface> SDKDiagnostics::getProtocolTracer() {
 
 void SDKDiagnostics::setDiagnosticDependencies(
     std::shared_ptr<DirectiveSequencerInterface> sequencer,
-    std::shared_ptr<AttachmentManagerInterface> attachmentManager) {
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
+    std::shared_ptr<AVSConnectionManagerInterface> connectionManager) {
     ACSDK_DEBUG5(LX(__func__));
 }
 

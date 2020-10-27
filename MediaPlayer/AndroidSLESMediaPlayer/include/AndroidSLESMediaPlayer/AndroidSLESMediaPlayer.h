@@ -20,10 +20,11 @@
 
 #include <SLES/OpenSLES.h>
 
+#include <acsdkEqualizerImplementations/EqualizerBandMapperInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerInterface.h>
 #include <AndroidUtilities/AndroidSLESEngine.h>
 #include <AndroidUtilities/AndroidSLESObject.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -31,7 +32,6 @@
 #include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/PlaylistParser/IterativePlaylistParserInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
-#include <EqualizerImplementations/EqualizerBandMapperInterface.h>
 #include <PlaylistParser/UrlContentToAttachmentConverter.h>
 
 #include "AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h"
@@ -49,7 +49,7 @@ namespace android {
  */
 class AndroidSLESMediaPlayer
         : public avsCommon::utils::mediaPlayer::MediaPlayerInterface
-        , public avsCommon::sdkInterfaces::audio::EqualizerInterface
+        , public acsdkEqualizerInterfaces::EqualizerInterface
         , public avsCommon::utils::RequiresShutdown {
 public:
     /**
@@ -70,7 +70,7 @@ public:
 
     /// @name EqualizerInterface methods.
     ///@{
-    void setEqualizerBandLevels(avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap bandLevelMap) override;
+    void setEqualizerBandLevels(acsdkEqualizerInterfaces::EqualizerBandLevelMap bandLevelMap) override;
 
     int getMinimumBandLevel() override;
 
@@ -279,7 +279,7 @@ private:
     std::vector<int> m_growingFrequenceBandMap;
 
     /// Equalizer band mapper to map AVS bands into OpenSL ES bands.
-    std::shared_ptr<equalizer::EqualizerBandMapperInterface> m_bandMapper;
+    std::shared_ptr<acsdkEqualizer::EqualizerBandMapperInterface> m_bandMapper;
 
     /// Number of equalizer bands supported by the device.
     int m_numberOfEqualizerBands;

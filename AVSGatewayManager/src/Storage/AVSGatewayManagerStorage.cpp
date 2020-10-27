@@ -51,6 +51,11 @@ static const std::string GATEWAY_URL_KEY = "gatewayURL";
 /// Json key for isGatewayVerified.
 static const std::string IS_VERIFIED_KEY = "isVerified";
 
+std::unique_ptr<AVSGatewayManagerStorageInterface> AVSGatewayManagerStorage::createAVSGatewayManagerStorageInterface(
+    const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& miscStorage) {
+    return create(miscStorage);
+}
+
 std::unique_ptr<AVSGatewayManagerStorage> AVSGatewayManagerStorage::create(
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage) {
     if (!miscStorage) {
@@ -158,12 +163,6 @@ void AVSGatewayManagerStorage::clear() {
                                 .d("table", VERIFICATION_STATE_TABLE)
                                 .d("component", COMPONENT_NAME)
                                 .m("Please clear the table for proper future functioning."));
-            } else if (!m_miscStorage->deleteTable(COMPONENT_NAME, VERIFICATION_STATE_TABLE)) {
-                ACSDK_ERROR(LX("clearFailed")
-                                .d("reason", "Unable to delete the table")
-                                .d("table", VERIFICATION_STATE_TABLE)
-                                .d("component", COMPONENT_NAME)
-                                .m("Please delete the table for proper future functioning."));
             }
         }
     } else {

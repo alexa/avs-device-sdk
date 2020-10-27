@@ -32,7 +32,25 @@ namespace libcurlUtils {
  */
 class HTTPContentFetcherFactory : public avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface {
 public:
+    /**
+     * Factory for creating instances of avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface
+     *
+     * @return A new instance of avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>
+    createHTTPContentFetcherInterfaceFactoryInterface();
+
+    /**
+     * Constructor.
+     *
+     * @deprecated
+     */
+    HTTPContentFetcherFactory() = default;
+
+    /// @name HTTPContentFetcherInterfaceFactoryInterface methods
+    /// @{
     std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) override;
+    /// @}
 };
 
 }  // namespace libcurlUtils

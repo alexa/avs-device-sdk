@@ -245,6 +245,12 @@ void MRMCapabilityAgent::onCallStateChange(avsCommon::sdkInterfaces::CallStateOb
     m_executor.submit([this, callState]() { executeOnCallStateChange(callState); });
 }
 
+void MRMCapabilityAgent::onDialogUXStateChanged(
+    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState state) {
+    ACSDK_DEBUG5(LX(__func__).d("state", state));
+    m_executor.submit([this, state]() { executeOnDialogUXStateChanged(state); });
+}
+
 std::string MRMCapabilityAgent::getVersionString() const {
     ACSDK_DEBUG5(LX(__func__));
     return m_mrmHandler->getVersionString();
@@ -310,6 +316,12 @@ void MRMCapabilityAgent::executeOnCallStateChange(
     } else {
         ACSDK_WARN(LX(__func__).m("call active state didn't actually change"));
     }
+}
+
+void MRMCapabilityAgent::executeOnDialogUXStateChanged(
+    avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState state) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_mrmHandler->onDialogUXStateChanged(state);
 }
 
 void MRMCapabilityAgent::executeSetObserver(

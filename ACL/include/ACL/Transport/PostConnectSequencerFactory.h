@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "ACL/Transport/PostConnectFactoryInterface.h"
+#include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
 
 namespace alexaClientSDK {
@@ -36,6 +37,18 @@ public:
     /**
      * Creates a new instance of the @c PostConnectSequencer.
      *
+     * @param providerRegistrar Registrar from which to get @c PostConnectOperationProviders.
+     * @return A new instance of the @c PostConnectSequencer.
+     */
+    static std::shared_ptr<PostConnectFactoryInterface> createPostConnectFactoryInterface(
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar);
+
+    /**
+     * Creates a new instance of the @c PostConnectSequencer.
+     *
+     * @deprecated
      * @param postConnectOperationProviders The vector of @c PostConnectOperationProviders.
      * @return a new instance of the @c PostConnectSequencer.
      */
@@ -51,13 +64,17 @@ private:
     /**
      * Constructor.
      *
-     * @param postConnectOperationProviders The vector of @c PostConnectOperationProviders.
+     * @param postConnectOperationProviders The source of post connect providers.
      */
     PostConnectSequencerFactory(
-        const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& postConnectOperationProviders);
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar);
 
-    /// The vector of @c PostConnectOperationProviders.
-    std::vector<std::shared_ptr<PostConnectOperationProviderInterface>> m_postConnectOperationProviders;
+    /// Source of post connect providers
+    std::shared_ptr<
+        acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>
+        m_registrar;
 };
 
 }  // namespace acl

@@ -45,6 +45,23 @@ public:
 
         /// The @c PlayRequestor object in @c Play directive.
         avsCommon::avs::PlayRequestor playRequestor;
+
+        /// Track protection name of the @c AudioItem
+        std::string trackProtectionName;
+
+        /// The start offset in millisecond for the @c AudioItem in @c Play directive
+        std::chrono::milliseconds startOffset;
+
+        /// The end offset in millisecond for the @c AudioItem in @c Play directive
+        std::chrono::milliseconds endOffset;
+    };
+
+    /// Enum representing Seek activities
+    enum class SeekStatus {
+        /// Initiating a seek to another play position within the current track
+        SEEK_START,
+        /// Finished seeking within the current track
+        SEEK_COMPLETE,
     };
 
     /**
@@ -54,7 +71,17 @@ public:
      * @param context The @c Context of the @c AudioPlayer.
      */
     virtual void onPlayerActivityChanged(avsCommon::avs::PlayerActivity state, const Context& context) = 0;
+
+    /**
+     * Used to notify the observer when the @c AudioPlayer is seeking within the current track.
+     *
+     * @param seekStatus Type of activity being performed, represented by @c SeekStatus
+     * @param context The @c Context of the @c AudioPlayer at the time of the seek activity.
+     */
+    virtual void onSeekActivity(const SeekStatus seekStatus, const Context& context);
 };
+
+inline void AudioPlayerObserverInterface::onSeekActivity(const SeekStatus seekStatus, const Context& context){};
 
 }  // namespace acsdkAudioPlayerInterfaces
 }  // namespace alexaClientSDK

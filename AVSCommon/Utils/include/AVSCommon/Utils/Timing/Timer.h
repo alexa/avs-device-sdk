@@ -23,7 +23,10 @@
 #include <mutex>
 #include <thread>
 
+#include "AVSCommon/Utils/Error/FinallyGuard.h"
+#include "AVSCommon/AVS/Initialization/SDKPrimitivesProvider.h"
 #include "AVSCommon/Utils/Logger/LoggerUtils.h"
+#include "AVSCommon/Utils/Timing/TimerDelegate.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -62,8 +65,12 @@ public:
 
     /**
      * Contructs a @c Timer.
+     *
+     * @param timerDelegateFactory A factory to create the @c TimerDelegate.
      */
-    Timer();
+    Timer(
+        std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> timerDelegateFactory =
+            avs::initialization::SDKPrimitivesProvider::getInstance()->getTimerDelegateFactory());
 
     /**
      * Destructs a @c Timer.
@@ -212,26 +219,14 @@ private:
         size_t maxCount,
         std::function<void()> task);
 
-    /// The condition variable used to wait for @c stop() or period timeouts.
-    std::condition_variable m_waitCondition;
+    /// The mutex to protect the @c TimerDelegate.
+    mutable std::mutex m_mutex;
 
-    /// The mutex for @c m_waitCondition.
-    std::mutex m_waitMutex;
-
-    /// The mutex to join @c m_thread.
-    std::mutex m_joinMutex;
+    /// The @c TimerDelegateInterface which contains timer related logic.
+    std::unique_ptr<sdkInterfaces::timing::TimerDelegateInterface> m_timer;
 
     /// The thread to execute tasks on.
     std::thread m_thread;
-
-    /// Flag which indicates that a @c Timer is active.
-    std::atomic<bool> m_running;
-
-    /**
-     * Flag which requests that the active @c Timer be stopped.  @c m_waitMutex must be locked when modifying this
-     * variable.
-     */
-    bool m_stopping;
 };
 
 template <typename Rep, typename Period, typename Task, typename... Args>
@@ -251,15 +246,10 @@ bool Timer::start(
         return false;
     }
 
-    // Can't start if already running.
+    // Don't start if already running.
     if (!activate()) {
         logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "timerAlreadyActive"));
         return false;
-    }
-
-    // Join old timer thread (if any).
-    if (m_thread.joinable()) {
-        m_thread.join();
     }
 
     // Remove arguments from the task's type by binding the arguments to the task.
@@ -270,8 +260,7 @@ bool Timer::start(
     auto translatedTask = [boundTask]() { boundTask->operator()(); };
 
     // Kick off the new timer thread.
-    m_thread = std::thread{
-        std::bind(&Timer::callTask<Rep, Period>, this, delay, period, periodType, maxCount, translatedTask)};
+    callTask<Rep, Period>(delay, period, periodType, maxCount, translatedTask);
 
     return true;
 }
@@ -289,16 +278,11 @@ bool Timer::start(
 template <typename Rep, typename Period, typename Task, typename... Args>
 auto Timer::start(const std::chrono::duration<Rep, Period>& delay, Task task, Args&&... args)
     -> std::future<decltype(task(args...))> {
-    // Can't start if already running.
+    // Don't start if already running.
     if (!activate()) {
         logger::acsdkError(logger::LogEntry(Timer::getTag(), "startFailed").d("reason", "timerAlreadyActive"));
         using FutureType = decltype(task(args...));
         return std::future<FutureType>();
-    }
-
-    // Join old timer thread (if any).
-    if (m_thread.joinable()) {
-        m_thread.join();
     }
 
     // Remove arguments from the task's type by binding the arguments to the task.
@@ -317,8 +301,7 @@ auto Timer::start(const std::chrono::duration<Rep, Period>& delay, Task task, Ar
 
     // Kick off the new timer thread.
     static const size_t once = 1;
-    m_thread = std::thread{
-        std::bind(&Timer::callTask<Rep, Period>, this, delay, delay, PeriodType::ABSOLUTE, once, translatedTask)};
+    callTask<Rep, Period>(delay, delay, PeriodType::ABSOLUTE, once, translatedTask);
 
     return packagedTask->get_future();
 }
@@ -330,51 +313,28 @@ void Timer::callTask(
     PeriodType periodType,
     size_t maxCount,
     std::function<void()> task) {
-    // Timepoint to measure delay/period against.
-    auto now = std::chrono::steady_clock::now();
-
-    // Flag indicating whether we've drifted off schedule.
-    bool offSchedule = false;
-
-    for (size_t count = 0; maxCount == FOREVER || count < maxCount; ++count) {
-        auto waitTime = (0 == count) ? delay : period;
-        {
-            std::unique_lock<std::mutex> lock(m_waitMutex);
-
-            // Wait for stop() or a delay/period to elapse.
-            if (m_waitCondition.wait_until(lock, now + waitTime, [this]() { return m_stopping; })) {
-                m_stopping = false;
-                m_running = false;
-                return;
-            }
-        }
-
-        switch (periodType) {
-            case PeriodType::ABSOLUTE:
-                // Update our estimate of where we should be after the delay.
-                now += waitTime;
-
-                // Run the task if we're still on schedule.
-                if (!offSchedule) {
-                    task();
-                }
-
-                // If the task runtime put us off schedule, skip the next task run.
-                if (now + period < std::chrono::steady_clock::now()) {
-                    offSchedule = true;
-                } else {
-                    offSchedule = false;
-                }
-                break;
-
-            case PeriodType::RELATIVE:
-                task();
-                now = std::chrono::steady_clock::now();
-                break;
-        }
+    if (!m_timer) {
+        logger::acsdkError(logger::LogEntry(Timer::getTag(), "callTaskFailed").d("reason", "nullTimerDelegate"));
+        return;
     }
-    m_stopping = false;
-    m_running = false;
+
+    auto delegatePeriodType = sdkInterfaces::timing::TimerDelegateInterface::PeriodType::ABSOLUTE;
+
+    switch (periodType) {
+        case PeriodType::ABSOLUTE:
+            delegatePeriodType = sdkInterfaces::timing::TimerDelegateInterface::PeriodType::ABSOLUTE;
+            break;
+        case PeriodType::RELATIVE:
+            delegatePeriodType = sdkInterfaces::timing::TimerDelegateInterface::PeriodType::RELATIVE;
+            break;
+    }
+
+    m_timer->start(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(delay),
+        std::chrono::duration_cast<std::chrono::nanoseconds>(period),
+        delegatePeriodType,
+        maxCount,
+        task);
 }
 
 }  // namespace timing

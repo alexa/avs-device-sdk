@@ -224,6 +224,239 @@ TEST_F(MIMEParserTest, test_encodingSanity) {
     ASSERT_EQ(index, encodedSize);
 }
 
+/*
+ * Helper method to run boundary check tests.
+ */
+void runDecodingBoundariesTest(
+    std::vector<std::pair<std::string, size_t>> partsToIndex,
+    std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders,
+    std::vector<std::string> testCaseExpectedData,
+    std::string boundary,
+    HTTP2ReceiveDataStatus expectedStatus = HTTP2ReceiveDataStatus::SUCCESS) {
+    const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
+    auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
+    HTTP2MimeResponseDecoder decoder{sink};
+    HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
+    bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
+    ASSERT_TRUE(resp);
+    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    // send the data part by part like the cloud does.
+    for (auto part : partsToIndex) {
+        status = decoder.onReceiveData(part.first.c_str(), part.first.size());
+        // the class MockHTTP2MimeResponseDecodeSink is not a real gtest mock so we cannot use EXPECT_CALL
+        // this assertion is trying to detect if a partEnd call happened, we use m_index to detect that
+        ASSERT_EQ(sink->m_index, part.second);
+    }
+    ASSERT_EQ(expectedStatus, status);
+    ASSERT_EQ(sink->m_index, partsToIndex.back().second);
+    ASSERT_EQ(sink->m_headers, testCaseExpectedHeaders);
+    ASSERT_EQ(sink->m_data, testCaseExpectedData);
+}
+
+/*
+ * Test: Sends the boundary without a CRLF and more data, this should raise an issue as the boundary is required to be
+ *       terminated by CRLF
+ * Expected Result: an ABORT error should be returned
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithoutCRLF) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {{"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+                                                         {"Part1", 0},
+                                                         {"\r\n--wooohoooMorePart1", 1},
+                                                         {"\r\n--wooohooo", 1},
+                                                         {"\r\ncontent-type: multipart/related\r\n\r\n", 1},
+                                                         {"Part2\r\n", 1},
+                                                         {"--wooohooo--\r\n", 1}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"Part1"};
+    runDecodingBoundariesTest(
+        parts, testCaseExpectedHeaders, testCaseExpectedData, boundary, HTTP2ReceiveDataStatus::ABORT);
+}
+
+/*
+ * Test: sends a -- after the boundary which will terminate the transfer considering everything else as a epilogue.
+ * Expected Result: consider everything before -- as data and discard everything after --
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithTerminatorShouldIgnoreEpilogue) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {{"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+                                                         {"Part1", 0},
+                                                         {"\r\n--wooohooo", 1},
+                                                         {"--hello", 1},  // this will end the transfer (--wooohooo--)
+                                                         {"\r\ncontent-type: multipart/related\r\n\r\n", 1},
+                                                         {"Part2\r\n", 1},
+                                                         {"--wooohooo--\r\n", 1}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"Part1"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: sends a double boundary, the second one will be ignored
+ * Expected Result: second boundary ignored
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendDuplicatedBoundaryAsHeader) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {{"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+                                                         {"Part1", 0},
+                                                         {"\r\n--wooohooo\r\n", 1},
+                                                         {"\r\n--wooohooo", 1},
+                                                         {"\r\ncontent-type: multipart2/related\r\n\r\n", 1},
+                                                         {"Part2\r\n", 1},
+                                                         {"--wooohooo--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart2/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"Part1", "Part2"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: simulates what the AVS does when sending multipart files the boundary is usually sent alone without a trailing
+ * CRLF in a standalone message. Expected Result: it should be successful
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesAvs) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"2222", 0},
+        {"3333", 0},
+        {"\r\n--wooohooo", 1},  // the boundary is sent on its own and we want to detect a part end here.
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--wooohooo", 2},
+        {"--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: sends the boundary (using the same length as the real boundary) as a data part with other data.
+ * Expected Result: the fake boundary should not be interpreted as such, instead it should be part of the data.
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendFakeBoundaryAsData) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"aa--wooohooo", 0},  // try to set the parser off
+        {"2222", 0},
+        {"\r\n--wooohooo", 1},
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--wooohooo", 2},
+        {"--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"1111aa--wooohooo2222", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: sends the boundary (using the same length as the real boundary) as a data part with no other data.
+ * Expected Result: the fake boundary should not be interpreted as such, instead it should be part of the data.
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendFakeBoundaryAsOnlyData) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"aa--wooohooo", 0},    // try to set the parser off
+        {"\r\n--wooohooo", 1},  //<CRLF>--boundary
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--wooohooo", 2},
+        {"--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"aa--wooohooo", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: sends the boundary with a trailing/ending CRLF in the same chunk instead in the chunk of the header, this is
+ * slightly different than what the AVS server does, it should still work as the chars are the same Expected Result: it
+ * should work
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithCRLF) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"2222", 0},
+        {"3333", 0},
+        {"\r\n--wooohooo\r\n", 1},  //<CRLF>--boundary<CRLF>
+        {"content-type: multipart/related\r\n\r\nlast\r\n--wooohooo", 2},
+        {"--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: Send the last boundary without CRLF
+ * Expected Result: It should work
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendEndBoundaryWithoutCRLF) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"2222", 0},
+        {"3333", 0},
+        {"\r\n--wooohooo", 1},
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--wooohooo--", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+}
+
+/*
+ * Test: Send the boundary without a trailing CR LF or --
+ * Expected Result: It should raise an error (ABORT) because boundaries are required to have -- or CRLF after it
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithData) {
+    /* this a structure to workaround the lack of a real mock
+        the indexes after each part denotes what is the expected m_index in our MockHTTP2MimeResponseDecoderSink.
+        in the mock the m_index attribute is incremented every time we receive a new part end.
+    */
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--wooohooo\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"\r\n--wooohooo", 1},
+        {"3333", 1},
+        {"\r\n--wooohooo", 1},
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--wooohooo--", 1}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"1111"};
+    runDecodingBoundariesTest(
+        parts, testCaseExpectedHeaders, testCaseExpectedData, boundary, HTTP2ReceiveDataStatus::ABORT);
+}
+
 TEST_F(MIMEParserTest, test_decodingSanity) {
     /// We choose an arbitrary buffer size
     const int bufferSize{25};

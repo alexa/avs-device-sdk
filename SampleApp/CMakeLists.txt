@@ -13,20 +13,10 @@ elseif (AUDIO_INJECTION AND (GSTREAMER_MEDIA_PLAYER OR ANDROID_MEDIA_PLAYER OR C
 endif()
 
 if (VALID)
-    if (PORTAUDIO)
-      add_definitions("-DPORTAUDIO")
-    endif()
-
-    if (GSTREAMER_MEDIA_PLAYER)
-      add_definitions("-DGSTREAMER_MEDIA_PLAYER")
-    elseif (CUSTOM_MEDIA_PLAYER)
-      add_definitions("-DCUSTOM_MEDIA_PLAYER")
-    endif()
-
     project(SampleApp LANGUAGES CXX)
-    include(../build/BuildDefaults.cmake)
+    include("${AVS_CORE}/build/BuildDefaults.cmake")
 
     add_subdirectory("src")
 else()
-    message("To build the sample app, please enable microphone and media player modules.")
+    message("To build the Sample App, please enable microphone and media player modules.")
 endif()

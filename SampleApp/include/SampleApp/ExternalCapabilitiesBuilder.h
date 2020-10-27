@@ -61,10 +61,10 @@ public:
 
     std::pair<std::list<Capability>, std::list<std::shared_ptr<alexaClientSDK::avsCommon::utils::RequiresShutdown>>>
     buildCapabilities(
-        std::shared_ptr<alexaClientSDK::capabilityAgents::externalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
+        std::shared_ptr<alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer> externalMediaPlayer,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
-        std::shared_ptr<alexaClientSDK::avsCommon::avs::ExceptionEncounteredSender> exceptionSender,
+        std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<alexaClientSDK::certifiedSender::CertifiedSender> certifiedSender,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
         std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManager> dataManager,
@@ -84,7 +84,8 @@ public:
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
         std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) override;
     /// @}
 
 private:

@@ -16,8 +16,8 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_WAITEVENT_H_
 
 #include <chrono>
-#include <condition_variable>
 #include <mutex>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -59,7 +59,7 @@ public:
 
 private:
     /// The condition variable used to wake up the thread that is waiting.
-    std::condition_variable m_condition;
+    avsCommon::utils::threading::ConditionVariableWrapper m_condition;
 
     /// The mutex used to lock the condition.
     std::mutex m_mutex;

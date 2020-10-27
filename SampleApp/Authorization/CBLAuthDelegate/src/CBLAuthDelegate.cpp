@@ -212,12 +212,24 @@ static AuthObserverInterface::Error mapHTTPCodeToError(long code) {
             break;
 
         case HTTPResponseCode::SERVER_ERROR_INTERNAL:
+        case HTTPResponseCode::SERVER_UNAVAILABLE:
             error = AuthObserverInterface::Error::SERVER_ERROR;
             break;
 
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
         case HTTPResponseCode::SUCCESS_NO_CONTENT:
-        default:
+        case HTTPResponseCode::SUCCESS_CREATED:
+        case HTTPResponseCode::SUCCESS_ACCEPTED:
+        case HTTPResponseCode::SUCCESS_PARTIAL_CONTENT:
+        case HTTPResponseCode::REDIRECTION_MULTIPLE_CHOICES:
+        case HTTPResponseCode::REDIRECTION_MOVED_PERMANENTLY:
+        case HTTPResponseCode::REDIRECTION_FOUND:
+        case HTTPResponseCode::REDIRECTION_SEE_ANOTHER:
+        case HTTPResponseCode::REDIRECTION_TEMPORARY_REDIRECT:
+        case HTTPResponseCode::REDIRECTION_PERMANENT_REDIRECT:
+        case HTTPResponseCode::CLIENT_ERROR_FORBIDDEN:
+        case HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION:
+        case HTTPResponseCode::SERVER_ERROR_NOT_IMPLEMENTED:
             error = AuthObserverInterface::Error::UNKNOWN_ERROR;
             break;
     }

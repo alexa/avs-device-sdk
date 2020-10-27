@@ -4,8 +4,10 @@ add_definitions("-DACSDK_LOG_MODULE=defaultClient")
 add_library(DefaultClient SHARED
     ConnectionRetryTrigger.cpp
     DefaultClient.cpp
+    DefaultClientComponent.cpp
     DeviceSettingsManagerBuilder.cpp
     EqualizerRuntimeSetup.cpp
+    StubApplicationAudioPipelineFactory.cpp
     )
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
@@ -19,6 +21,10 @@ endif()
 
 target_link_libraries(DefaultClient
     ACL
+    acsdkApplicationAudioPipelineFactoryInterfaces
+    acsdkCore
+    acsdkManufactory
+    acsdkShared
     ADSL
     AFML
     AIP
@@ -28,12 +34,11 @@ target_link_libraries(DefaultClient
     AVSCommon
     AVSSystem
     Captions
+    CaptionsComponent
     ContextManager
     DeviceSettings
     acsdkDoNotDisturb
     Endpoints
-    Equalizer
-    ExternalMediaPlayer
     InteractionModel
     InterruptModel
     acsdkNotifications
@@ -48,6 +53,9 @@ target_link_libraries(DefaultClient
     acsdkAlerts
     acsdkAudioPlayer
     acsdkBluetooth
+    acsdkEqualizer
+    acsdkExternalMediaPlayer
+    acsdkStartupManagerInterfaces
     )
 
 if (CAPTIONS)

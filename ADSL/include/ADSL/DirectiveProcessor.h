@@ -29,6 +29,8 @@
 
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 
 #include "ADSL/DirectiveRouter.h"
 
@@ -310,7 +312,7 @@ private:
     std::deque<DirectiveAndPolicy> m_handlingQueue;
 
     /// Condition variable used to wake @c processingLoop() when it is waiting.
-    std::condition_variable m_wakeProcessingLoop;
+    avsCommon::utils::threading::ConditionVariableWrapper m_wakeProcessingLoop;
 
     /// Thread processing elements on @c m_handlingQueue and @c m_cancelingQueue.
     std::thread m_processingThread;
@@ -338,6 +340,9 @@ private:
      */
     std::array<std::shared_ptr<avsCommon::avs::AVSDirective>, avsCommon::avs::BlockingPolicy::Medium::COUNT>
         m_directivesBeingHandled;
+
+    /// The @c PowerResource associated with this thread.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 };
 
 }  // namespace adsl

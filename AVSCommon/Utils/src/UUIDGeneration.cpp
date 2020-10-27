@@ -23,6 +23,7 @@
 #include <climits>
 #include <algorithm>
 #include <functional>
+#include <list>
 
 #include "AVSCommon/Utils/Logger/Logger.h"
 #include "AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h"
@@ -63,18 +64,40 @@ static bool g_seedNeeded = true;
 /// Lock to avoid collisions in generationing uuid and setting seed.
 static std::mutex g_mutex;
 
-/// Unique g_salt to use, settable by caller. Must not be accessed unless g_mutex is locked.
-static std::string g_salt("default");
-
 /// Entropy Threshold for sufficient uniqueness. Value chosen by experiment.
 static const double ENTROPY_THRESHOLD = 600;
+
+/// extra seeds
+static const size_t MAX_SEEDS_POOL_SIZE = 1024;
+
+/// pool of seeds
+static std::list<uint32_t> seedsPool;
+
+/// last time generateUUID was invoked
+static uint64_t lastInvokeTime;
 
 /// Catch for platforms where entropy is a hard coded value. Value chosen by experiment.
 static const int ENTROPY_REPEAT_THRESHOLD = 16;
 
+/// The default read entropy function. This can be customized using UUIDGeneration::setEntropyReader().
+static std::function<double(void)> readEntropyFunc = []() {
+    std::random_device rd;
+    return rd.entropy();
+};
+
+void setEntropyReader(std::function<double(void)> func) {
+    readEntropyFunc = func;
+}
+
 void setSalt(const std::string& newSalt) {
     std::unique_lock<std::mutex> lock(g_mutex);
-    g_salt = newSalt;
+    std::copy_n(newSalt.begin(), std::min(newSalt.size(), MAX_SEEDS_POOL_SIZE), std::front_inserter(seedsPool));
+    g_seedNeeded = true;
+}
+
+void addSeeds(const std::vector<uint32_t>& seeds) {
+    std::unique_lock<std::mutex> lock(g_mutex);
+    std::copy_n(seeds.begin(), std::min(seeds.size(), MAX_SEEDS_POOL_SIZE), std::front_inserter(seedsPool));
     g_seedNeeded = true;
 }
 
@@ -91,10 +114,10 @@ void setSalt(const std::string& newSalt) {
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHexWithReplacement(
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t>& ibe,
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint32_t>& ibe,
     unsigned int numDigits,
     uint8_t replacementBits,
-    uint16_t numReplacementBits) {
+    uint8_t numReplacementBits) {
     if (numReplacementBits > MAX_NUM_REPLACEMENT_BITS) {
         ACSDK_ERROR(LX("generateHexWithReplacementFailed")
                         .d("reason", "replacingMoreBitsThanProvided")
@@ -113,15 +136,9 @@ static const std::string generateHexWithReplacement(
 
     const size_t arrayLen = (numDigits + 1) / 2;
 
-    std::vector<uint16_t> shorts(arrayLen);
-    std::generate(shorts.begin(), shorts.end(), std::ref(ibe));
-
-    // Makes assumption that 1 digit = 4 bits.
     std::vector<uint8_t> bytes(arrayLen);
+    std::generate(bytes.begin(), bytes.end(), std::ref(ibe));
 
-    for (size_t i = 0; i < arrayLen; i++) {
-        bytes[i] = static_cast<uint8_t>(shorts[i]);
-    }
     // Replace the specified number of bits from the first byte.
     bytes.at(0) &= (0xff >> numReplacementBits);
     replacementBits &= (0xff << (MAX_NUM_REPLACEMENT_BITS - numReplacementBits));
@@ -148,22 +165,44 @@ static const std::string generateHexWithReplacement(
  * @return A hex string of length @c numDigits.
  */
 static const std::string generateHex(
-    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t>& ibe,
+    std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint32_t>& ibe,
     unsigned int numDigits) {
     return generateHexWithReplacement(ibe, numDigits, 0, 0);
 }
 
-const std::string generateUUID() {
-    static std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t> ibe;
-    std::unique_lock<std::mutex> lock(g_mutex);
+/**
+ * Add default seed to the pool, should only be used in generateUUID and locked by g_mutex.
+ */
+static void addDefaultSeedLocked() {
+    std::random_device rd;
+    uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    if (lastInvokeTime > 0) {
+        seedsPool.push_front((uint32_t)(timeSeed - lastInvokeTime));  // interval between two invocations
+    }
+    lastInvokeTime = timeSeed;
+    seedsPool.push_front((uint32_t)timeSeed);  // lower 32bits of current time
+    seedsPool.push_front(rd());                // random device
+    seedsPool.push_front(
+        reinterpret_cast<std::intptr_t>(&timeSeed));  // lower 32bits of memory address of temporary variable
 
+    if (seedsPool.size() > MAX_SEEDS_POOL_SIZE) {
+        seedsPool.resize(MAX_SEEDS_POOL_SIZE);
+    }
+}
+
+const std::string generateUUID() {
+    static std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint32_t> ibe;
+    std::unique_lock<std::mutex> lock(g_mutex);
     static int consistentEntropyReports = 0;
     static double priorEntropyResult = 0;
 
     if (g_seedNeeded) {
-        std::random_device rd;
+        addDefaultSeedLocked();
+        std::seed_seq seed(seedsPool.begin(), seedsPool.end());
+        ibe.seed(seed);
 
-        double currentEntropy = rd.entropy();
+        double currentEntropy = readEntropyFunc();
+
         if (std::fabs(currentEntropy - priorEntropyResult) < std::numeric_limits<double>::epsilon()) {
             ++consistentEntropyReports;
         } else {
@@ -171,24 +210,16 @@ const std::string generateUUID() {
         }
         priorEntropyResult = currentEntropy;
 
-        long randomTimeComponent = rd() + std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                              std::chrono::steady_clock::now().time_since_epoch())
-                                              .count();
-        std::string fullSeed = g_salt + std::to_string(randomTimeComponent);
-        std::seed_seq seed(fullSeed.begin(), fullSeed.end());
-        ibe.seed(seed);
-
         if (currentEntropy > ENTROPY_THRESHOLD) {
             g_seedNeeded = false;
         } else {
             ACSDK_WARN(LX("low entropy on call to generate UUID").d("current entropy", currentEntropy));
-        }
-
-        if (consistentEntropyReports > ENTROPY_REPEAT_THRESHOLD) {
-            g_seedNeeded = false;
-            ACSDK_WARN(LX("multiple repeat values for entropy")
-                           .d("current entropy", currentEntropy)
-                           .d("consistent entropy reports", consistentEntropyReports));
+            if (consistentEntropyReports > ENTROPY_REPEAT_THRESHOLD) {
+                g_seedNeeded = false;
+                ACSDK_WARN(LX("multiple repeat values for entropy")
+                               .d("current entropy", currentEntropy)
+                               .d("consistent entropy reports", consistentEntropyReports));
+            }
         }
     }
 

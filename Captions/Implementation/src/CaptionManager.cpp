@@ -132,6 +132,77 @@ void CaptionManager::setMediaPlayers(const std::vector<std::shared_ptr<MediaPlay
     ACSDK_DEBUG5(LX("mediaPlayersAdded").d("count", mediaPlayers.size()));
 }
 
+void CaptionManager::addMediaPlayer(
+    const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) {
+    ACSDK_DEBUG7(LX(__func__));
+
+    if (!mediaPlayer) {
+        ACSDK_ERROR(LX("addMediaPlayerFailed").d("reason", "nullMediaPlayer"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+    auto it = m_mediaPlayers.begin();
+    while (it != m_mediaPlayers.end()) {
+        auto currentMediaPlayer = *it;
+        if (currentMediaPlayer == mediaPlayer) {
+            ACSDK_ERROR(LX("addMediaPlayerFailed").d("reason", "already added"));
+            return;
+        }
+        it++;
+    }
+
+    m_mediaPlayers.push_back(mediaPlayer);
+    mediaPlayer->addObserver(shared_from_this());
+    ACSDK_DEBUG5(LX("mediaPlayerAdded").d("new count", m_mediaPlayers.size()));
+}
+
+void CaptionManager::removeMediaPlayer(
+    const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) {
+    ACSDK_DEBUG7(LX(__func__));
+
+    if (!mediaPlayer) {
+        ACSDK_ERROR(LX("removeMediaPlayerFailed").d("reason", "nullMediaPlayer"));
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    bool removed = false;
+
+    // Although the captionable media players are expected to be a set, that is not enforced in the API.
+    // Any stored media player that matches the parameter will be removed.
+    auto it = m_mediaPlayers.begin();
+    while (it != m_mediaPlayers.end()) {
+        auto currentMediaPlayer = *it;
+
+        if (currentMediaPlayer == mediaPlayer) {
+            currentMediaPlayer->removeObserver(shared_from_this());
+            currentMediaPlayer.reset();
+            it = m_mediaPlayers.erase(it);
+            removed = true;
+        } else {
+            ++it;
+        }
+    }
+
+    if (!removed) {
+        ACSDK_WARN(LX("removeMediaPlayerFailed").m("mediaPlayerNotFound"));
+    } else {
+        ACSDK_DEBUG5(LX("mediaPlayerRemoved").d("new count", m_mediaPlayers.size()));
+    }
+}
+
+bool CaptionManager::isEnabled() const {
+// Sanity check.
+#ifdef ENABLE_CAPTIONS
+    return true;
+#else
+    ACSDK_WARN(LX(__func__).m("Unexpected use of CaptionManager implementation when captions are disabled"));
+    return false;
+#endif
+}
+
 void CaptionManager::onParsed(const CaptionFrame& captionFrame) {
     ACSDK_DEBUG3(LX(__func__));
     // This function must handle the text wrapping mechanic, using the @c CaptionPresenterInterface::getWrapIndex()

@@ -20,11 +20,16 @@
 #include <mutex>
 #include <set>
 
+#include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
+#include <acsdkManufactory/Annotated.h>
 #include <Alexa/AlexaInterfaceMessageSenderInternalInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
@@ -38,8 +43,50 @@ namespace alexa {
 class AlexaInterfaceCapabilityAgent : public avsCommon::avs::CapabilityAgent {
 public:
     /**
+     * Creates an instance of @c AlexaInterfaceCapabilityAgent for the default endpoint.
+     *
+     * @param deviceInfo Structure with information about the Alexa client device.
+     * @param exceptionEncounteredSender The @c ExceptionEncounteredSender to send exceptions.
+     * @param alexaMessageSender The @c AlexaInterfaceMessageSender to send AlexaInterface events.
+     * @param alexaEventProcessedNotifier The @c AlexaEventProcessedNotifierInterface to notify observers of
+     * AlexaEventProcessed events.
+     * @param endpointCapabilitiesRegistrar The @c EndpointCapabilitiesRegistrarInterface for the default endpoint
+     * (annotated with DefaultEndpointAnnotation), so that the SpeakerManager can register itself as a capability
+     * with the default endpoint.
+     * @return an instance of @c AlexaInterfaceCapabilityAgent on success, @c nullptr otherwise.
+     */
+    static std::shared_ptr<AlexaInterfaceCapabilityAgent> createDefaultAlexaInterfaceCapabilityAgent(
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
+            exceptionEncounteredSender,
+        const std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface>& alexaMessageSender,
+        const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
+            alexaEventProcessedNotifier,
+        const acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>&
+            endpointCapabilitiesRegistrar);
+
+    /**
      * Creates an instance of @c AlexaInterfaceCapabilityAgent.
      *
+     * @param deviceInfo Structure with information about the Alexa client device.
+     * @param endpointId The @c EndpointIdentifier for the endpoint that will own this capability.
+     * @param exceptionEncounteredSender The @c ExceptionEncounteredSender to send exceptions.
+     * @param alexaMessageSender The @c AlexaInterfaceMessageSender to send AlexaInterface events.
+     * @return an instance of @c AlexaInterfaceCapabilityAgent on success, @c nullptr otherwise.
+     */
+    static std::shared_ptr<AlexaInterfaceCapabilityAgent> create(
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
+            exceptionEncounteredSender,
+        const std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface>& alexaMessageSender);
+
+    /**
+     * Creates an instance of @c AlexaInterfaceCapabilityAgent.
+     *
+     * @deprecated
      * @param deviceInfo Structure with information about the Alexa client device.
      * @param endpointId The endpoint to which this capability is associated.
      * @param exceptionEncounteredSender The @c ExceptionEncounteredSender to send exceptions.
@@ -68,22 +115,6 @@ public:
      */
     avsCommon::avs::CapabilityConfiguration getCapabilityConfiguration();
 
-    /**
-     * Adds an observer which implements @c AlexaEventProcessedObserverInterface.
-     *
-     * @param observer The @c AlexaEventProcessedObserverInterface.
-     */
-    void addEventProcessedObserver(
-        const std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>& observer);
-
-    /**
-     * Removes the observer which implements the @c AlexaEventProcessedObserverInterface.
-     *
-     * @param observer The @c AlexaEventProcessedObserverInterface.
-     */
-    void removeEventProcessedObserver(
-        const std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>& observer);
-
 private:
     /**
      * Constructor.
@@ -92,12 +123,16 @@ private:
      * @param endpointId The endpoint to which this capability is associated.
      * @param exceptionEncounteredSender The @c ExceptionEncounteredSender to send exceptions.
      * @param alexaMessageSender The @c AlexaInterfaceMessageSender to send AlexaInterface events.
+     * @param alexaEventProcessedNotifier The @c AlexaEventProcessedNotifierInterface used for notifying observers of
+     * AlexaEventProcessed directives.
      */
     AlexaInterfaceCapabilityAgent(
-        const avsCommon::utils::DeviceInfo& deviceInfo,
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
         const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender);
+        std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender,
+        const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
+            alexaEventProcessedNotifier);
 
     /**
      * Handles the @c EventProcessed directive.
@@ -139,7 +174,7 @@ private:
         const std::string& errorMessage);
 
     /// The device information which contains the default endpoint ID for the device.
-    const avsCommon::utils::DeviceInfo m_deviceInfo;
+    std::shared_ptr<avsCommon::utils::DeviceInfo> m_deviceInfo;
 
     /// The endpoint to which this capability instance is associated.
     avsCommon::sdkInterfaces::endpoints::EndpointIdentifier m_endpointId;
@@ -147,11 +182,9 @@ private:
     /// The instance of @c AlexaInterfaceMessageSender to send AlexaInterface events.
     std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> m_alexaMessageSender;
 
-    /// Mutex to protect access to the observer list.
-    std::mutex m_observerMutex;
-
-    /// Set of observers that get notified when an EventProcessed directive is received.
-    std::set<std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>> m_observers;
+    /// The instance of @c AlexaEventProcessedNotifierInterface to send AlexaInterface events.
+    std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>
+        m_alexaEventProcessedNotifier;
 
     /// An executor used for serializing requests on a standalone thread of execution.
     avsCommon::utils::threading::Executor m_executor;

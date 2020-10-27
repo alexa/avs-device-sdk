@@ -20,6 +20,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <Alexa/AlexaInterfaceMessageSenderInternalInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
@@ -53,8 +54,33 @@ public:
      * Factory method to create a @c AlexaInterfaceMessageSender.
      *
      * @param contextManager Interface to access AVS state.
+     * @param connectionManager Interface to send events to AVS.
+     * @param shutdownNotifier Interface to notify of shutdown.
+     * @return A new instance of @c AlexaInterfaceMessageSender on success, @c nullptr otherwise.
+     */
+    static std::shared_ptr<AlexaInterfaceMessageSender> createAlexaInterfaceMessageSender(
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier);
+
+    /**
+     * Factory method to forward an instance of @c AlexaInterfaceMessageSender to @c
+     * AlexaInterfaceMessageSenderInternalInterface.
+     *
+     * @param messageSender The instance to forward.
+     * @return A forwarded instance of @c AlexaInterfaceMessageSenderInternalInterface.
+     */
+    static std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface>
+    createAlexaInterfaceMessageSenderInternalInterface(
+        const std::shared_ptr<AlexaInterfaceMessageSender>& messageSender);
+
+    /**
+     * Factory method to create a @c AlexaInterfaceMessageSender.
+     *
+     * @deprecated Use createAlexaInterfaceMessageSender.
+     * @param contextManager Interface to access AVS state.
      * @param messageSender Interface to send events to AVS.
-     * @return A new instance of @c ReportStateCapabilityAgent on success, @c nullptr otherwise.
+     * @return A new instance of @c AlexaInterfaceMessageSender on success, @c nullptr otherwise.
      */
     static std::shared_ptr<AlexaInterfaceMessageSender> create(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,

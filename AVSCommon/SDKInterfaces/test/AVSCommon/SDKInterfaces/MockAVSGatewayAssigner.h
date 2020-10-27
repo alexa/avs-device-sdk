@@ -30,6 +30,7 @@ namespace test {
 class MockAVSGatewayAssigner : public AVSGatewayAssignerInterface {
 public:
     MOCK_METHOD1(setAVSGateway, void(const std::string& avsGateway));
+    MOCK_CONST_METHOD0(getAVSGateway, std::string());
 };
 
 }  // namespace test

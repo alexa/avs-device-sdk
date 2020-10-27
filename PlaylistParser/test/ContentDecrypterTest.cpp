@@ -108,6 +108,28 @@ TEST_F(ContentDecrypterTest, test_unsupportedEncryption) {
     EXPECT_FALSE(result);
 }
 
+TEST_F(ContentDecrypterTest, test_invalidKeyEncryption) {
+    /// Test key: aaaaaaaaaaaaaaa. Length is invalid.
+    static const ByteVector INVALID_KEY(15, 0x61);
+
+    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, INVALID_KEY, AES_ENCRYPTION_INFO, m_writer);
+
+    EXPECT_FALSE(result);
+}
+
+TEST_F(ContentDecrypterTest, test_invalidIVEncryption) {
+    /// Test initialization vector: AAAAAAAAAAAAAAA. Length is invalid.
+    static const std::string INVALID_HEX_IV = "0x414141414141414141414141414141";
+
+    /// AES-128 EncryptionInfo with KEY key and INVALID_IV iv.
+    static const auto INVALID_AES_ENCRYPTION_INFO =
+        EncryptionInfo(EncryptionInfo::Method::AES_128, "https://wwww.amazon.com/key.txt", INVALID_HEX_IV);
+
+    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, INVALID_AES_ENCRYPTION_INFO, m_writer);
+
+    EXPECT_FALSE(result);
+}
+
 TEST_F(ContentDecrypterTest, test_aESDecryption) {
     auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO, m_writer);
 

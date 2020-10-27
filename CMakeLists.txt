@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 1.20.1 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 1.21.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 
 # This variable should be used by extension packages to include cmake files from this project.
@@ -37,7 +37,6 @@ add_subdirectory("CertifiedSender")
 add_subdirectory("Endpoints")
 add_subdirectory("Settings")
 add_subdirectory("BluetoothImplementations")
-add_subdirectory("EqualizerImplementations")
 add_subdirectory("ContextManager")
 add_subdirectory("CapabilitiesDelegate")
 if (DIAGNOSTICS)

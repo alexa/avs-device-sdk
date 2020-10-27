@@ -35,6 +35,23 @@ static const std::string TAG("PlaybackRouter");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<PlaybackRouterInterface> PlaybackRouter::createPlaybackRouterInterface(
+    std::shared_ptr<PlaybackHandlerInterface> defaultHandler,
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier) {
+    ACSDK_DEBUG5(LX("createPlaybackRouterInterface"));
+
+    if (!defaultHandler || !shutdownNotifier) {
+        ACSDK_ERROR(LX("createFailed")
+                        .d("isDefaultHandlerNull", !defaultHandler)
+                        .d("isShutdownNotifierNull", !shutdownNotifier));
+        return nullptr;
+    }
+
+    auto playbackRouter = PlaybackRouter::create(defaultHandler);
+    shutdownNotifier->addObserver(playbackRouter);
+    return playbackRouter;
+}
+
 std::shared_ptr<PlaybackRouter> PlaybackRouter::create(std::shared_ptr<PlaybackHandlerInterface> defaultHandler) {
     ACSDK_DEBUG9(LX("create").m("called"));
 

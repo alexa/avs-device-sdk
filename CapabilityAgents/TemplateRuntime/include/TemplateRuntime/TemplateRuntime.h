@@ -30,6 +30,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -60,6 +61,20 @@ class TemplateRuntime
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public std::enable_shared_from_this<TemplateRuntime> {
 public:
+    /**
+     * Create an instance of @c TemplateRuntime.
+     *
+     * @param renderPlayerInfoCardsProviderRegistrar The registrar containing the set of @c
+     * RenderPlayerInfoCardsProviders.
+     * @param exceptionSender The object to use for sending AVS Exception messages.
+     * @return @c nullptr if the inputs are not defined, else a new instance of @c TemplateRuntime.
+     */
+    static std::shared_ptr<TemplateRuntime> createTemplateRuntime(
+        const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>&
+            renderPlayerInfoCardsInterfaces,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender);
+
     /**
      * Create an instance of @c TemplateRuntime.
      *

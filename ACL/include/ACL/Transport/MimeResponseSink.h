@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/AVS/Attachment/AttachmentWriter.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseSinkInterface.h>
 
@@ -47,7 +47,7 @@ public:
     MimeResponseSink(
         std::shared_ptr<MimeResponseStatusHandlerInterface> handler,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::string attachmentContextId);
 
     /**
@@ -93,7 +93,7 @@ private:
     std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
 
     /// The attachment manager.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// Type of content in the current part.
     ContentType m_contentType;

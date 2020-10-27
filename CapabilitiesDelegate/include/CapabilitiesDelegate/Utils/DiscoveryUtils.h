@@ -28,6 +28,15 @@ namespace alexaClientSDK {
 namespace capabilitiesDelegate {
 namespace utils {
 
+/// Maximum size of the Discovery event (256 KB)
+static constexpr int MAX_DISCOVERY_PAYLOAD_SIZE = 256 * 1024;
+
+/// Maximum size of header and scope fields in the Discovery event (Choosing a sufficiently large size of 10KB).
+static constexpr int MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE = 10 * 1024;
+
+/// Maximum size of endpoint configurations in Event payload.
+static constexpr int MAX_ENDPOINTS_SIZE_IN_PAYLOAD = MAX_DISCOVERY_PAYLOAD_SIZE - MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE;
+
 /**
  * Validates if all the required fields are available for the given @c CapabilityConfiguration.
  *

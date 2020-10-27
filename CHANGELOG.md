@@ -1,5 +1,8 @@
 ## ChangeLog
 
+### Version 1.21.0 - October 26 2020
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal].(https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
+
 ### Version 1.20.1 - August 6 2020
 Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
 
@@ -843,7 +846,7 @@ Feature enhancements, updates, and resolved issues from all releases are availab
 * The `Sample App` has been updated with several small fixes and improvements.
 * `ADSL` was updated such that all directives are now blocked while the handling of previous `SpeechSynthesizer.Speak` directives complete. Because any directive may now be blocked, the `preHandleDirective() / handleDirective()` path is now used for handling all directives.
 * Fixes for the following GitHub issues:
- * [EXPECTING_SPEECH + SPEAK directive simultaneously on multi-turn conversation](https://github.com/alexa/alexa-client-sdk/issues/44).
+ * [EXPECTING_SPEECH + SPEAK directive simultaneously on multi-turn conversation](https://github.com/alexa/avs-device-sdk/issues/44).
 * A bug causing `ACL` to not send a ping to AVS every 5 minutes, leading to periodic server disconnects, was fixed.
 * Subtle race condition issues were addressed in the `Executor` class, resolving some intermittent crashes.
 * Known Issues
@@ -903,8 +906,8 @@ Feature enhancements, updates, and resolved issues from all releases are availab
 * Fixed compile errors in KITT.ai, `DirectiveHandler` and compiler warnings in `AIP` tests.
 * Corrected formatting of code in many files.
 * Fixes for the following GitHub issues:
- * [MessageRequest callbacks never triggered if disconnected](https://github.com/alexa/alexa-client-sdk/issues/21)
- * [AttachmentReader::read() returns ReadStatus::CLOSED if an AttachmentWriter has not been created yet](https://github.com/alexa/alexa-client-sdk/issues/25)
+ * [MessageRequest callbacks never triggered if disconnected](https://github.com/alexa/avs-device-sdk/issues/21)
+ * [AttachmentReader::read() returns ReadStatus::CLOSED if an AttachmentWriter has not been created yet](https://github.com/alexa/avs-device-sdk/issues/25)
 
 ### [0.4.1] - 2017-06-09
 
@@ -925,12 +928,12 @@ Feature enhancements, updates, and resolved issues from all releases are availab
 * Updated `MediaPlayer` to use `autoaudiosink` instead of requiring `pulseaudio`.
 * Updated `MediaPlayer` build to suppport local builds of GStreamer.
 * Fixes for the following GitHub issues:
- * [MessageRouter::send() does not take the m_connectionMutex](https://github.com/alexa/alexa-client-sdk/issues/5)
- * [MessageRouter::disconnectAllTransportsLocked flow leads to erase while iterating transports vector](https://github.com/alexa/alexa-client-sdk/issues/8)
- * [Build errors when building with KittAi enabled](https://github.com/alexa/alexa-client-sdk/issues/9)
- * [HTTP2Transport race may lead to deadlock](https://github.com/alexa/alexa-client-sdk/issues/10)
- * [Crash in HTTP2Transport::cleanupFinishedStreams()](https://github.com/alexa/alexa-client-sdk/issues/17)
- * [The attachment writer interface should take a `const void*` instead of `void*`](https://github.com/alexa/alexa-client-sdk/issues/24)
+ * [MessageRouter::send() does not take the m_connectionMutex](https://github.com/alexa/avs-device-sdk/issues/5)
+ * [MessageRouter::disconnectAllTransportsLocked flow leads to erase while iterating transports vector](https://github.com/alexa/avs-device-sdk/issues/8)
+ * [Build errors when building with KittAi enabled](https://github.com/alexa/avs-device-sdk/issues/9)
+ * [HTTP2Transport race may lead to deadlock](https://github.com/alexa/avs-device-sdk/issues/10)
+ * [Crash in HTTP2Transport::cleanupFinishedStreams()](https://github.com/alexa/avs-device-sdk/issues/17)
+ * [The attachment writer interface should take a `const void*` instead of `void*`](https://github.com/alexa/avs-device-sdk/issues/24)
 
 ### [0.4.0] - 2017-05-31 (patch)
 

@@ -16,14 +16,15 @@
 #include <acsdkManufactory/Manufactory.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
 #include <ACL/Transport/PostConnectSequencerFactory.h>
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
+#include <AVSCommon/AVS/Initialization/InitializationParametersBuilder.h>
+#include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/Utils/LibcurlUtils/LibcurlHTTP2ConnectionFactory.h>
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSGatewayManager/AVSGatewayManager.h>
 #include <AVSGatewayManager/Storage/AVSGatewayManagerStorage.h>
-#include <ContextManager/ContextManager.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
-#include "SampleApp/ConnectionObserver.h"
 #include "SampleApp/ExternalCapabilitiesBuilder.h"
 #include "SampleApp/KeywordObserver.h"
 #include "SampleApp/LocaleAssetsManager.h"
@@ -101,6 +102,10 @@
 #include "SampleApp/DefaultEndpoint/DefaultEndpointModeControllerHandler.h"
 #endif
 
+#ifdef ENABLE_LPM
+#include <AVSCommon/Utils/Power/NoOpPowerResourceManager.h>
+#endif
+
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
@@ -127,9 +132,10 @@
 #include <SampleApp/SampleEqualizerModeController.h>
 #include <Settings/Storage/SQLiteDeviceSettingStorage.h>
 
-#include <EqualizerImplementations/InMemoryEqualizerConfiguration.h>
-#include <EqualizerImplementations/MiscDBEqualizerStorage.h>
-#include <EqualizerImplementations/SDKConfigEqualizerConfiguration.h>
+#include <acsdkEqualizerImplementations/InMemoryEqualizerConfiguration.h>
+#include <acsdkEqualizerImplementations/MiscDBEqualizerStorage.h>
+#include <acsdkEqualizerImplementations/SDKConfigEqualizerConfiguration.h>
+#include <acsdkEqualizerInterfaces/EqualizerInterface.h>
 #include <InterruptModel/config/InterruptModelConfiguration.h>
 
 #include <algorithm>
@@ -195,8 +201,9 @@ static const std::string AUDIO_MEDIAPLAYER_POOL_SIZE_KEY("audioMediaPlayerPoolSi
 using namespace acsdkManufactory;
 using namespace acsdkSampleApplication;
 using namespace avsCommon;
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
-using namespace capabilityAgents::externalMediaPlayer;
+using namespace acsdkExternalMediaPlayer;
 using MediaPlayerInterface = alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface;
 using ApplicationMediaInterfaces = alexaClientSDK::avsCommon::sdkInterfaces::ApplicationMediaInterfaces;
 
@@ -235,7 +242,8 @@ static const double DEFAULT_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW = 1;
 #endif  // RANGE_CONTROLLER
 
 // Note: Discoball is an imaginary peripheral endpoint that is connected to the device with the following
-// capabilities : power, light (toggle), rotation speed (range) and the color of light (mode).
+// capabilities : power, light (toggle), height (range), and the color of light (mode).
+// Discoball uses semantic annotations to enable additional natural utterances.
 
 /// The derived endpoint Id used in endpoint creation.
 static const std::string PERIPHERAL_ENDPOINT_DERIVED_ENDPOINT_ID("Discoball");
@@ -259,10 +267,10 @@ static const std::string PERIPHERAL_ENDPOINT_TOGGLE_CONTROLLER_INSTANCE_NAME("Di
 static const std::string PERIPHERAL_ENDPOINT_TOGGLE_CONTROLLER_FRIENDLY_NAME("Light");
 
 /// The instance name for the range controller peripheral endpoint.
-static const std::string PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_INSTANCE_NAME("Discoball.Speed");
+static const std::string PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_INSTANCE_NAME("Discoball.Height");
 
 /// The friendly name of the range controller on peripheral endpoint.
-static const std::string PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_FRIENDLY_NAME("Speed");
+static const std::string PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_FRIENDLY_NAME("Height");
 
 /// The instance name for the mode controller peripheral endpoint.
 static const std::string PERIPHERAL_ENDPOINT_MODE_CONTROLLER_INSTANCE_NAME("Discoball.Mode");
@@ -294,6 +302,24 @@ static const double PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_MEDIUM = 5;
 
 /// The range controller preset 'low' in peripheral endpoint.
 static const double PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW = 1;
+
+/// The action ID for "raise" semantic annotations.
+static const std::string SEMANTICS_ACTION_ID_RAISE("Alexa.Actions.Raise");
+
+/// The action ID for "lower" semantic annotations.
+static const std::string SEMANTICS_ACTION_ID_LOWER("Alexa.Actions.Lower");
+
+/// The range controller SetRangeValue directive name.
+static const std::string SETRANGE_DIRECTIVE_NAME("SetRangeValue");
+
+/// The range controller SetRangeValue payload mapped to the raise action.
+static const std::string PERIPHERAL_ENDPOINT_RAISE_PAYLOAD =
+    R"({"rangeValue":)" + std::to_string(PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_HIGH) + R"(})";
+
+/// The range controller SetRangeValue payload mapped to the lower action.
+static const std::string PERIPHERAL_ENDPOINT_LOWER_PAYLOAD =
+    R"({"rangeValue":)" + std::to_string(PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW) + R"(})";
+
 #endif  // RANGE_CONTROLLER
 
 /// US English locale string.
@@ -454,13 +480,16 @@ buildToggleControllerAttributes(const CapabilityResources& capabilityResources) 
  *
  * @param capabilityResources The @c CapabilityResources containing friendly names of controller.
  * @param rangeControllerPresetResources A vector representing the preset resources used for building the configuration.
+ * @param semantics An optional @c CapabilitySemantics for the range controller.
  * @return A non optional @c RangeControllerAttributes if the build succeeds; otherwise, an empty
  * @c RangeControllerAttributes object.
  */
 static avsCommon::utils::Optional<avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes>
 buildRangeControllerAttributes(
     const CapabilityResources& capabilityResources,
-    const std::vector<RangeControllerPresetResources>& rangeControllerPresetResources) {
+    const std::vector<RangeControllerPresetResources>& rangeControllerPresetResources,
+    const avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> semantics =
+        avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics>()) {
     auto controllerAttribute =
         avsCommon::utils::Optional<avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes>();
 
@@ -529,6 +558,14 @@ buildRangeControllerAttributes(
             }
             rangeControllerAttributeBuilder->addPreset(std::make_pair(presetResource.presetValue, presetResources));
         }
+    }
+
+    if (semantics.hasValue()) {
+        if (!semantics.value().isValid()) {
+            ACSDK_ERROR(LX("buildRangeControllerAttributes").m("invalidSemantics"));
+            return controllerAttribute;
+        }
+        rangeControllerAttributeBuilder->withSemantics(semantics.value());
     }
 
     return rangeControllerAttributeBuilder->build();
@@ -670,6 +707,10 @@ SampleAppReturnCode SampleApplication::run() {
 }
 
 SampleApplication::~SampleApplication() {
+    if (m_shutdownManager) {
+        m_shutdownManager->shutdown();
+    }
+
     // First clean up anything that depends on the the MediaPlayers.
     m_userInputManager.reset();
     m_externalMusicProviderMediaPlayersMap.clear();
@@ -685,9 +726,10 @@ SampleApplication::~SampleApplication() {
 }
 
 bool SampleApplication::createMediaPlayersForAdapters(
-    std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+    const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
+        httpContentFetcherFactory,
     std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup) {
-    bool equalizerEnabled = nullptr != equalizerRuntimeSetup;
+    bool equalizerEnabled = equalizerRuntimeSetup->isEnabled();
 
     for (auto& entry : m_playerToSpeakerTypeMap) {
         auto applicationMediaInterfaces = createApplicationMediaPlayer(
@@ -734,7 +776,7 @@ bool SampleApplication::initialize(
 
     alexaClientSDK::avsCommon::utils::logger::LoggerSinkManager::instance().setLevel(logLevelValue);
 
-    std::vector<std::shared_ptr<std::istream>> configJsonStreams;
+    auto configJsonStreams = std::make_shared<std::vector<std::shared_ptr<std::istream>>>();
 
     for (auto configFile : configFiles) {
         if (configFile.empty()) {
@@ -749,24 +791,60 @@ bool SampleApplication::initialize(
             return false;
         }
 
-        configJsonStreams.push_back(configInFile);
+        configJsonStreams->push_back(configInFile);
     }
 
-    // Add the InterruptModel Configuration.
-    configJsonStreams.push_back(alexaClientSDK::afml::interruptModel::InterruptModelConfiguration::getConfig());
+    bool enableDucking = true;
 
-    auto sampleAppComponent = acsdkSampleApplication::getComponent(configJsonStreams);
+#ifdef DISABLE_DUCKING
+    enableDucking = false;
+#endif
+
+    // Add the InterruptModel Configuration.
+    configJsonStreams->push_back(
+        alexaClientSDK::afml::interruptModel::InterruptModelConfiguration::getConfig(enableDucking));
+
+    auto builder = initialization::InitializationParametersBuilder::create();
+    if (!builder) {
+        ACSDK_ERROR(LX("createInitializeParamsFailed").d("reason", "nullBuilder"));
+        return false;
+    }
+
+    builder->withJsonStreams(configJsonStreams);
+
+#ifdef ENABLE_LPM
+    auto powerResourceManager = std::make_shared<avsCommon::utils::power::NoOpPowerResourceManager>();
+    builder->withPowerResourceManager(powerResourceManager);
+#endif
+
+    auto initParams = builder->build();
+
+    /**
+     * If you wish to specify custom implementations for @c AuthDelegateInterface or @c MetricRecorderInterface,
+     * you can pass those objects to the sampleAppComponent via acsdkSampleApplication::getComponent.
+     *
+     * For example:
+     * auto sampleAppComponent = acsdkSampleApplication::getComponent(std::move(initParams), myCustomAuthDelegate,
+     * myCustomMetricRecorder, myCustomLogger);
+     *
+     */
+    SampleApplicationComponent sampleAppComponent = acsdkSampleApplication::getComponent(std::move(initParams));
     auto manufactory = Manufactory<
         std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
-        std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
         std::shared_ptr<avsCommon::utils::DeviceInfo>,
+        std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
         std::shared_ptr<registrationManager::CustomerDataManager>,
         std::shared_ptr<UIManager>>::create(sampleAppComponent);
 
     m_sdkInit = manufactory->get<std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>>();
+    if (!m_sdkInit) {
+        ACSDK_CRITICAL(LX("Failed to get SDKInit!"));
+        return false;
+    }
 
     auto configPtr = manufactory->get<std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>>();
     if (!configPtr) {
@@ -786,14 +864,15 @@ bool SampleApplication::initialize(
      * Creating Equalizer specific implementations
      */
     auto equalizerConfigBranch = config[EQUALIZER_CONFIG_KEY];
-    auto equalizerConfiguration = equalizer::SDKConfigEqualizerConfiguration::create(equalizerConfigBranch);
-    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup = nullptr;
+    auto equalizerConfiguration = acsdkEqualizer::SDKConfigEqualizerConfiguration::create(equalizerConfigBranch);
+    std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup =
+        std::make_shared<defaultClient::EqualizerRuntimeSetup>(false);
 
     bool equalizerEnabled = false;
     if (equalizerConfiguration && equalizerConfiguration->isEnabled()) {
         equalizerEnabled = true;
         equalizerRuntimeSetup = std::make_shared<defaultClient::EqualizerRuntimeSetup>();
-        auto equalizerStorage = equalizer::MiscDBEqualizerStorage::create(miscStorage);
+        auto equalizerStorage = acsdkEqualizer::MiscDBEqualizerStorage::create(miscStorage);
         auto equalizerModeController = sampleApp::SampleEqualizerModeController::create();
 
         equalizerRuntimeSetup->setStorage(equalizerStorage);
@@ -823,7 +902,7 @@ bool SampleApplication::initialize(
     for (int index = 0; index < poolSize; index++) {
         std::shared_ptr<MediaPlayerInterface> mediaPlayer;
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker;
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::EqualizerInterface> equalizer;
+        std::shared_ptr<acsdkEqualizerInterfaces::EqualizerInterface> equalizer;
 
         auto audioMediaInterfaces =
             createApplicationMediaPlayer(httpContentFetcherFactory, equalizerEnabled, "AudioMediaPlayer");
@@ -834,7 +913,7 @@ bool SampleApplication::initialize(
         m_audioMediaPlayerPool.push_back(audioMediaInterfaces->mediaPlayer);
         audioSpeakers.push_back(audioMediaInterfaces->speaker);
         // Creating equalizers
-        if (nullptr != equalizerRuntimeSetup) {
+        if (equalizerRuntimeSetup->isEnabled()) {
             equalizerRuntimeSetup->addEqualizer(audioMediaInterfaces->equalizer);
         }
     }
@@ -964,6 +1043,10 @@ bool SampleApplication::initialize(
      * Creating the UI component that observes various components and prints to the console accordingly.
      */
     auto userInterfaceManager = manufactory->get<std::shared_ptr<alexaClientSDK::sampleApp::UIManager>>();
+    if (!userInterfaceManager) {
+        ACSDK_CRITICAL(LX("Failed to get UIManager!"));
+        return false;
+    }
 
     /*
      * Create the presentation layer for the captions.
@@ -975,6 +1058,10 @@ bool SampleApplication::initialize(
      * CustomerDataHandler
      */
     auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManager>>();
+    if (!customerDataManager) {
+        ACSDK_CRITICAL(LX("Failed to get CustomerDataManager!"));
+        return false;
+    }
 
 #ifdef ENABLE_PCC
     auto phoneCaller = std::make_shared<alexaClientSDK::sampleApp::PhoneCaller>();
@@ -1099,8 +1186,11 @@ bool SampleApplication::initialize(
         if (deviceProtocolTracer) {
             const std::string DIAGNOSTICS_KEY = "diagnostics";
             const std::string MAX_TRACED_MESSAGES_KEY = "maxTracedMessages";
+            const std::string TRACE_FROM_STARTUP = "protocolTraceFromStartup";
 
             int configMaxValue = -1;
+            bool configProtocolTraceEnabled = false;
+
             if (alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode::getRoot()[DIAGNOSTICS_KEY].getInt(
                     MAX_TRACED_MESSAGES_KEY, &configMaxValue)) {
                 if (configMaxValue < 0) {
@@ -1109,6 +1199,14 @@ bool SampleApplication::initialize(
                                    .d("maxTracedMessages", configMaxValue));
                 } else {
                     deviceProtocolTracer->setMaxMessages(static_cast<unsigned int>(configMaxValue));
+                }
+            }
+
+            if (alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode::getRoot()[DIAGNOSTICS_KEY].getBool(
+                    TRACE_FROM_STARTUP, &configProtocolTraceEnabled)) {
+                if (configProtocolTraceEnabled) {
+                    deviceProtocolTracer->setProtocolTraceFlag(configProtocolTraceEnabled);
+                    ACSDK_DEBUG9(LX("Protocol Trace has been enabled at startup"));
                 }
             }
         }
@@ -1163,6 +1261,47 @@ bool SampleApplication::initialize(
 
     bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
 #endif
+
+    alexaClientSDK::avsCommon::utils::AudioFormat compatibleAudioFormat;
+    compatibleAudioFormat.sampleRateHz = SAMPLE_RATE_HZ;
+    compatibleAudioFormat.sampleSizeInBits = WORD_SIZE * CHAR_BIT;
+    compatibleAudioFormat.numChannels = NUM_CHANNELS;
+    compatibleAudioFormat.endianness = alexaClientSDK::avsCommon::utils::AudioFormat::Endianness::LITTLE;
+    compatibleAudioFormat.encoding = alexaClientSDK::avsCommon::utils::AudioFormat::Encoding::LPCM;
+
+    /*
+     * Creating each of the audio providers. An audio provider is a simple package of data consisting of the stream
+     * of audio data, as well as metadata about the stream. For each of the three audio providers created here, the same
+     * stream is used since this sample application will only have one microphone.
+     */
+
+    // Creating tap to talk audio provider
+    bool tapAlwaysReadable = true;
+    bool tapCanOverride = true;
+    bool tapCanBeOverridden = true;
+
+    alexaClientSDK::capabilityAgents::aip::AudioProvider tapToTalkAudioProvider(
+        sharedDataStream,
+        compatibleAudioFormat,
+        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
+        tapAlwaysReadable,
+        tapCanOverride,
+        tapCanBeOverridden);
+
+    // Creating hold to talk audio provider
+    bool holdAlwaysReadable = false;
+    bool holdCanOverride = true;
+    bool holdCanBeOverridden = false;
+
+    alexaClientSDK::capabilityAgents::aip::AudioProvider holdToTalkAudioProvider(
+        sharedDataStream,
+        compatibleAudioFormat,
+        alexaClientSDK::capabilityAgents::aip::ASRProfile::CLOSE_TALK,
+        holdAlwaysReadable,
+        holdCanOverride,
+        holdCanBeOverridden);
+
+    auto metricRecorder = manufactory->get<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>();
 
     /*
      * Creating the DefaultClient - this component serves as an out-of-box default object that instantiates and "glues"
@@ -1228,13 +1367,19 @@ bool SampleApplication::initialize(
             true,
             nullptr,
             std::move(bluetoothDeviceManager),
+            metricRecorder,
+#ifdef ENABLE_LPM
+            powerResourceManager,
+#else
             nullptr,
-            nullptr,
+#endif
             diagnostics,
             std::make_shared<alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder>(deviceInfo),
             std::make_shared<alexaClientSDK::capabilityAgents::speakerManager::DefaultChannelVolumeFactory>(),
             true,
-            std::make_shared<alexaClientSDK::acl::MessageRouterFactory>());
+            std::make_shared<alexaClientSDK::acl::MessageRouterFactory>(),
+            nullptr,
+            tapToTalkAudioProvider);
     if (!client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));
         return false;
@@ -1245,6 +1390,12 @@ bool SampleApplication::initialize(
     client->addNotificationsObserver(userInterfaceManager);
 
     client->addBluetoothDeviceObserver(userInterfaceManager);
+
+    m_shutdownManager = client->getShutdownManager();
+    if (!m_shutdownManager) {
+        ACSDK_CRITICAL(LX("Failed to get ShutdownManager!"));
+        return false;
+    }
 
 #ifdef ENABLE_CAPTIONS
     std::vector<std::shared_ptr<MediaPlayerInterface>> captionableMediaSources = m_audioMediaPlayerPool;
@@ -1262,45 +1413,6 @@ bool SampleApplication::initialize(
         m_guiRenderer = std::make_shared<GuiRenderer>();
         client->addTemplateRuntimeObserver(m_guiRenderer);
     }
-
-    alexaClientSDK::avsCommon::utils::AudioFormat compatibleAudioFormat;
-    compatibleAudioFormat.sampleRateHz = SAMPLE_RATE_HZ;
-    compatibleAudioFormat.sampleSizeInBits = WORD_SIZE * CHAR_BIT;
-    compatibleAudioFormat.numChannels = NUM_CHANNELS;
-    compatibleAudioFormat.endianness = alexaClientSDK::avsCommon::utils::AudioFormat::Endianness::LITTLE;
-    compatibleAudioFormat.encoding = alexaClientSDK::avsCommon::utils::AudioFormat::Encoding::LPCM;
-
-    /*
-     * Creating each of the audio providers. An audio provider is a simple package of data consisting of the stream
-     * of audio data, as well as metadata about the stream. For each of the three audio providers created here, the same
-     * stream is used since this sample application will only have one microphone.
-     */
-
-    // Creating tap to talk audio provider
-    bool tapAlwaysReadable = true;
-    bool tapCanOverride = true;
-    bool tapCanBeOverridden = true;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider tapToTalkAudioProvider(
-        sharedDataStream,
-        compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
-        tapAlwaysReadable,
-        tapCanOverride,
-        tapCanBeOverridden);
-
-    // Creating hold to talk audio provider
-    bool holdAlwaysReadable = false;
-    bool holdCanOverride = true;
-    bool holdCanBeOverridden = false;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider holdToTalkAudioProvider(
-        sharedDataStream,
-        compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::CLOSE_TALK,
-        holdAlwaysReadable,
-        holdCanOverride,
-        holdCanBeOverridden);
 
 #ifdef PORTAUDIO
     std::shared_ptr<PortAudioMicrophoneWrapper> micWrapper = PortAudioMicrophoneWrapper::create(sharedDataStream);
@@ -1470,7 +1582,7 @@ bool SampleApplication::initialize(
         ,
         nullptr,
         diagnostics);
-    // clang-format on
+// clang-format on
 #endif
 
     m_shutdownRequiredList.push_back(m_interactionManager);
@@ -1502,7 +1614,8 @@ bool SampleApplication::initialize(
 }
 
 std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplicationMediaPlayer(
-    std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+    const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
+        httpContentFetcherFactory,
     bool enableEqualizer,
     const std::string& name,
     bool enableLiveMode) {
@@ -1518,8 +1631,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
         return nullptr;
     }
     auto speaker = std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface>(mediaPlayer);
-    auto equalizer =
-        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerInterface>(mediaPlayer);
+    auto equalizer = std::static_pointer_cast<acsdkEqualizerInterfaces::EqualizerInterface>(mediaPlayer);
     auto requiresShutdown = std::static_pointer_cast<alexaClientSDK::avsCommon::utils::RequiresShutdown>(mediaPlayer);
     auto applicationMediaInterfaces =
         std::make_shared<ApplicationMediaInterfaces>(mediaPlayer, speaker, equalizer, requiresShutdown);
@@ -1536,8 +1648,7 @@ std::shared_ptr<ApplicationMediaInterfaces> SampleApplication::createApplication
         return nullptr;
     }
     auto speaker = mediaPlayer->getSpeaker();
-    auto equalizer =
-        std::static_pointer_cast<alexaClientSDK::avsCommon::sdkInterfaces::audio::EqualizerInterface>(mediaPlayer);
+    auto equalizer = std::static_pointer_cast<acsdkEqualizerInterfaces::EqualizerInterface>(mediaPlayer);
     auto requiresShutdown = std::static_pointer_cast<alexaClientSDK::avsCommon::utils::RequiresShutdown>(mediaPlayer);
     auto applicationMediaInterfaces =
         std::make_shared<ApplicationMediaInterfaces>(mediaPlayer, speaker, equalizer, requiresShutdown);
@@ -1704,6 +1815,23 @@ bool SampleApplication::addControllersToPeripheralEndpoint(
         return false;
     }
 
+    // Enables "raise" and "lower" utterances for the peripheral endpoint by mapping actions to directives.
+    auto raiseActionMapping = capabilitySemantics::ActionsToDirectiveMapping();
+    raiseActionMapping.addAction(SEMANTICS_ACTION_ID_RAISE);
+    raiseActionMapping.setDirective(SETRANGE_DIRECTIVE_NAME, PERIPHERAL_ENDPOINT_RAISE_PAYLOAD);
+
+    auto lowerActionMapping = capabilitySemantics::ActionsToDirectiveMapping();
+    lowerActionMapping.addAction(SEMANTICS_ACTION_ID_LOWER);
+    lowerActionMapping.setDirective(SETRANGE_DIRECTIVE_NAME, PERIPHERAL_ENDPOINT_LOWER_PAYLOAD);
+
+    auto peripheralEndpointRangeSemantics = capabilitySemantics::CapabilitySemantics();
+    peripheralEndpointRangeSemantics.addActionsToDirectiveMapping(raiseActionMapping);
+    peripheralEndpointRangeSemantics.addActionsToDirectiveMapping(lowerActionMapping);
+    if (!peripheralEndpointRangeSemantics.isValid()) {
+        ACSDK_CRITICAL(LX("Failed to create peripheral endpoint semantic annotations!"));
+        return false;
+    }
+
     auto peripheralEndpointRangeControllerAttributes = buildRangeControllerAttributes(
         {{{FriendlyName::Type::TEXT, PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_FRIENDLY_NAME}}},
         {{PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_HIGH,
@@ -1713,7 +1841,8 @@ bool SampleApplication::addControllersToPeripheralEndpoint(
           {{FriendlyName::Type::ASSET, avsCommon::avs::resources::ASSET_ALEXA_VALUE_MEDIUM}}},
          {PERIPHERAL_ENDPOINT_RANGE_CONTROLLER_PRESET_LOW,
           {{FriendlyName::Type::ASSET, avsCommon::avs::resources::ASSET_ALEXA_VALUE_MINIMUM},
-           {FriendlyName::Type::ASSET, avsCommon::avs::resources::ASSET_ALEXA_VALUE_LOW}}}});
+           {FriendlyName::Type::ASSET, avsCommon::avs::resources::ASSET_ALEXA_VALUE_LOW}}}},
+        utils::Optional<capabilitySemantics::CapabilitySemantics>(peripheralEndpointRangeSemantics));
 
     if (!peripheralEndpointRangeControllerAttributes.hasValue()) {
         ACSDK_CRITICAL(LX("Failed to create peripheral endpoint range controller attributes!"));

@@ -27,7 +27,7 @@
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
-#include <EqualizerImplementations/EqualizerLinearBandMapper.h>
+#include <acsdkEqualizerImplementations/EqualizerLinearBandMapper.h>
 #include <PlaylistParser/IterativePlaylistParser.h>
 
 #include "AndroidSLESMediaPlayer/AndroidSLESMediaPlayer.h"
@@ -53,8 +53,8 @@ namespace android {
 
 using namespace applicationUtilities::androidUtilities;
 using namespace avsCommon::utils::mediaPlayer;
-using namespace avsCommon::sdkInterfaces::audio;
-using namespace equalizer;
+using namespace alexaClientSDK::acsdkEqualizerInterfaces;
+using namespace alexaClientSDK::acsdkEqualizer;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// The playback audio sample rate in HZ.
@@ -113,13 +113,13 @@ SLDataFormat_PCM convertFormat(const PlaybackConfiguration& playbackConfiguratio
     auto rate = playbackConfiguration.sampleRate() * 1000;
     auto containerSize = convertSampleSize(playbackConfiguration.sampleFormat());
     auto layout = convertLayout(playbackConfiguration.channelLayout());
-    return SLDataFormat_PCM{SL_DATAFORMAT_PCM,                       // Output format
-                            playbackConfiguration.numberChannels(),  // Number of channels
-                            rate,                                    // Sample rate in mHZ
-                            containerSize,                           // Bits per sample
-                            containerSize,                           // Container size
-                            layout,                                  // Speaker layout
-                            endianness};                             // Audio endianness;
+    return SLDataFormat_PCM{SL_DATAFORMAT_PCM,                                              // Output format
+                            static_cast<SLuint32>(playbackConfiguration.numberChannels()),  // Number of channels
+                            static_cast<SLuint32>(rate),                                    // Sample rate in mHZ
+                            containerSize,                                                  // Bits per sample
+                            containerSize,                                                  // Container size
+                            layout,                                                         // Speaker layout
+                            endianness};                                                    // Audio endianness
 }
 
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
@@ -820,8 +820,7 @@ bool AndroidSLESMediaPlayer::initializeEqualizer() {
     return true;
 }
 
-void AndroidSLESMediaPlayer::setEqualizerBandLevels(
-    avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap bandLevelMap) {
+void AndroidSLESMediaPlayer::setEqualizerBandLevels(acsdkEqualizerInterfaces::EqualizerBandLevelMap bandLevelMap) {
     ACSDK_DEBUG5(LX(__func__));
 
     if (nullptr == m_bandMapper) {

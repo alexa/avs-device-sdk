@@ -62,6 +62,31 @@ public:
      */
     virtual void setMediaPlayers(
         const std::vector<std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>& mediaPlayers) = 0;
+
+    /**
+     * Adds a @c MediaPlayerInterface instance responsible for producing caption content. This media player will
+     * be appended to the list of active media players.
+     *
+     * @param mediaPlayer The media player which should be observed for media state changes.
+     */
+    virtual void addMediaPlayer(
+        const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) = 0;
+
+    /**
+     * Removes the @c MediaPlayerInterface instance from the list of media players responsible for producing caption
+     * content. The rest of the list remains unchanged.
+     *
+     * @param mediaPlayer The media player to remove.
+     */
+    virtual void removeMediaPlayer(
+        const std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>& mediaPlayer) = 0;
+
+    /**
+     * Whether captions are enabled. Capability Agents may skip unnecessary processing if captions are disabled.
+     *
+     * @return Whether captions is enabled.
+     */
+    virtual bool isEnabled() const = 0;
 };
 
 }  // namespace captions

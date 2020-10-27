@@ -40,10 +40,15 @@ const std::string PlaybackContext::HTTP_AUDIOSEGMENT_HEADERS = "audioSegment";
 const std::string PlaybackContext::HTTP_ALL_HEADERS = "all";
 static const std::string AUTHORIZATION = "Authorization";
 static const std::string ALLOWED_PREFIX = "x-";
+static const std::string COOKIE = "Cookie";
 static const unsigned int MIN_KEY_LENGTH = 3;
 static const unsigned int MAX_KEY_LENGTH = 256;
 static const unsigned int MAX_VALUE_LENGTH = 4096;
 static const unsigned int MAX_ENTRIES_PER_CONFIG = 20;
+
+bool validateIfNotMalicious(const std::string& header) {
+    return (!header.empty() && header.find("\r") == std::string::npos && header.find("\n") == std::string::npos);
+}
 
 /**
  * Helper function to validate the headers.
@@ -54,9 +59,11 @@ static const unsigned int MAX_ENTRIES_PER_CONFIG = 20;
 static bool validatePlaybackContextHeadersInternal(HeaderConfig* headerConfig) {
     bool foundInvalidHeaders = false;
     for (auto entry = headerConfig->begin(); entry != headerConfig->end();) {
-        if ((entry->first.find(ALLOWED_PREFIX) == 0 && entry->first.length() >= MIN_KEY_LENGTH &&
-             entry->first.length() <= MAX_KEY_LENGTH && entry->second.length() <= MAX_VALUE_LENGTH) ||
-            (entry->first.compare(AUTHORIZATION) == 0 && entry->second.length() <= MAX_VALUE_LENGTH)) {
+        if (((entry->first.find(ALLOWED_PREFIX) == 0 && entry->first.length() >= MIN_KEY_LENGTH &&
+              entry->first.length() <= MAX_KEY_LENGTH && entry->second.length() <= MAX_VALUE_LENGTH) ||
+             (entry->first.compare(AUTHORIZATION) == 0 && entry->second.length() <= MAX_VALUE_LENGTH) ||
+             (entry->first.compare(COOKIE) == 0 && entry->second.length() <= MAX_VALUE_LENGTH)) &&
+            (validateIfNotMalicious(entry->first) && validateIfNotMalicious(entry->second))) {
             entry++;
         } else {
             entry = headerConfig->erase(entry);

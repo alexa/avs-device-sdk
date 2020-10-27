@@ -22,6 +22,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -30,6 +32,8 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -64,6 +68,31 @@ class SpeakerManager
         , public avsCommon::sdkInterfaces::SpeakerManagerInterface
         , public avsCommon::utils::RequiresShutdown {
 public:
+    /**
+     * Create an instance of @c SpeakerManagerInterface. @c ChannelVolumeInterfaces can be registered via
+     * addChannelVolumeInterface.
+     *
+     * @param contextManager A @c ContextManagerInterface to manage the context.
+     * @param messageSender A @c MessageSenderInterface to send messages to AVS.
+     * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
+     * directive processing exceptions to AVS.
+     * @param shutdownNotifier A @c ShutdownNotifierInterface to notify the SpeakerManager when it's time to shut down.
+     * @param endpointCapabilitiesRegistrar The @c EndpointCapabilitiesRegistrarInterface for the default endpoint
+     * (annotated with DefaultEndpointAnnotation), so that the SpeakerManager can register itself as a capability
+     * with the default endpoint.
+     * @param metricRecorder The metric recorder.
+     */
+    static std::shared_ptr<SpeakerManagerInterface> createSpeakerManagerCapabilityAgent(
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
+            exceptionEncounteredSender,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
+
     /**
      * Create an instance of @c SpeakerManager, and register the @c ChannelVolumeInterfaces that will be controlled
      * by it. ChannelVolumeInterfaces will be grouped by @c ChannelVolumeInterface::Type.

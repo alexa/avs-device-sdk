@@ -59,6 +59,12 @@ static const char ERROR_TYPE_KEY[] = "type";
 /// JSON key for the ExceptionEncountered event's error message.
 static const char ERROR_MESSAGE_KEY[] = "message";
 
+std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> ExceptionEncounteredSender::
+    createExceptionEncounteredSenderInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) {
+    return create(messageSender);
+}
+
 std::unique_ptr<ExceptionEncounteredSender> ExceptionEncounteredSender::create(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messagesender) {
     if (!messagesender) {

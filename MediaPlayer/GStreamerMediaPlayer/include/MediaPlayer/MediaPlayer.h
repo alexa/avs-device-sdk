@@ -33,7 +33,7 @@
 #include <gst/base/gstbasesink.h>
 #include <gst/controller/gsttimedvaluecontrolsource.h>
 
-#include <AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h>
+#include <acsdkEqualizerInterfaces/EqualizerInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -60,7 +60,7 @@ class MediaPlayer
         , public avsCommon::utils::mediaPlayer::MediaPlayerInterface
         , public avsCommon::sdkInterfaces::SpeakerInterface
         , private PipelineInterface
-        , public avsCommon::sdkInterfaces::audio::EqualizerInterface
+        , public acsdkEqualizerInterfaces::EqualizerInterface
         , public playlistParser::UrlContentToAttachmentConverter::ErrorObserverInterface
         , public playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface
         , public SourceObserverInterface
@@ -619,7 +619,7 @@ private:
 
     /// @name Overridden EqualizerInterface methods.
     /// @{
-    void setEqualizerBandLevels(avsCommon::sdkInterfaces::audio::EqualizerBandLevelMap bandLevelMap) override;
+    void setEqualizerBandLevels(acsdkEqualizerInterfaces::EqualizerBandLevelMap bandLevelMap) override;
     int getMinimumBandLevel() override;
     int getMaximumBandLevel() override;
     /// }@

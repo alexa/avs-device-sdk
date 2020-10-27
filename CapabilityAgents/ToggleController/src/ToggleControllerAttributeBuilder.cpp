@@ -40,7 +40,9 @@ std::unique_ptr<ToggleControllerAttributeBuilder> ToggleControllerAttributeBuild
     return std::unique_ptr<ToggleControllerAttributeBuilder>(new ToggleControllerAttributeBuilder());
 }
 
-ToggleControllerAttributeBuilder::ToggleControllerAttributeBuilder() : m_invalidAttribute{false} {
+ToggleControllerAttributeBuilder::ToggleControllerAttributeBuilder() :
+        m_invalidAttribute{false},
+        m_semantics(Optional<capabilitySemantics::CapabilitySemantics>()) {
 }
 
 ToggleControllerAttributeBuilder& ToggleControllerAttributeBuilder::withCapabilityResources(
@@ -55,6 +57,17 @@ ToggleControllerAttributeBuilder& ToggleControllerAttributeBuilder::withCapabili
     return *this;
 }
 
+ToggleControllerAttributeBuilder& ToggleControllerAttributeBuilder::withSemantics(
+    const capabilitySemantics::CapabilitySemantics& semantics) {
+    if (!semantics.isValid()) {
+        ACSDK_ERROR(LX("withSemanticsFailed").d("reason", "invalidSemantics"));
+        m_invalidAttribute = true;
+        return *this;
+    }
+    m_semantics = avsCommon::utils::Optional<capabilitySemantics::CapabilitySemantics>(semantics);
+    return *this;
+}
+
 avsCommon::utils::Optional<ToggleControllerAttributes> ToggleControllerAttributeBuilder::build() {
     ACSDK_DEBUG5(LX(__func__));
     if (m_invalidAttribute) {
@@ -63,7 +76,7 @@ avsCommon::utils::Optional<ToggleControllerAttributes> ToggleControllerAttribute
     }
 
     ACSDK_DEBUG5(LX(__func__).sensitive("capabilityResources", m_capabilityResources.toJson()));
-    return avsCommon::utils::Optional<ToggleControllerAttributes>({m_capabilityResources});
+    return avsCommon::utils::Optional<ToggleControllerAttributes>({m_capabilityResources, m_semantics});
 }
 
 }  // namespace toggleController

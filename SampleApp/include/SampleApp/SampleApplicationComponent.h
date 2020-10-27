@@ -38,21 +38,40 @@ namespace alexaClientSDK {
 namespace acsdkSampleApplication {
 
 /**
- * Get the manufactory @c Component for acsdkSampleApp.
+ * Definition of the Manufactory component for the Sample App.
  *
- * @return The manufactory @c Component for acsdkSampleApp.
  */
-acsdkManufactory::Component<
+using SampleApplicationComponent = acsdkManufactory::Component<
     std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>,
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
-    std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
+    std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
     std::shared_ptr<registrationManager::CustomerDataManager>,
-    std::shared_ptr<sampleApp::UIManager>>
-getComponent(const std::vector<std::shared_ptr<std::istream>>& jsonStreams);
+    std::shared_ptr<sampleApp::UIManager>>;
+
+/**
+ * Get the manufactory @c Component for acsdkSampleApp.
+ *
+ * For applications that have not transitioned to using the manufactory to instantiate SDK components, they can
+ * provide pre-built custom implementations of the @c AuthDelegateInterface and @c MetricRecorderInterface.
+ *
+ * param initParams The @c InitializationParameters to use when initializing the SDK Sample App.
+ * @param authDelegate Optional pre-built implementation of @c AuthDelegateInterface to add to the manufactory. Default
+ * is nullptr.
+ * @param MetricRecorderInterface Optional pre-built implementation of @c MetricRecorderInterface to add to the
+ * manufactory. Default is nullptr.
+ * @param logger Optional pre-built implementation of @c Logger to add to the manufactory. Default is nullptr.
+ * @return The manufactory @c Component for acsdkSampleApp.
+ */
+SampleApplicationComponent getComponent(
+    std::unique_ptr<avsCommon::avs::initialization::InitializationParameters> initParams,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate = nullptr,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr,
+    const std::shared_ptr<avsCommon::utils::logger::Logger>& logger = nullptr);
 
 }  // namespace acsdkSampleApplication
 }  // namespace alexaClientSDK

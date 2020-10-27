@@ -29,6 +29,14 @@ namespace speakerManager {
  */
 class DefaultChannelVolumeFactory : public alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface {
 public:
+    /**
+     * Creates a new @c ChannelVolumeFactoryInterface implementation.
+     *
+     * @return A shared ptr to a new @c ChannelVolumeFactoryInterface.
+     */
+    static std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>
+    createChannelVolumeFactoryInterface();
+
     /// ChannelVolumeFactoryInterface Functions.
     /// @{
     virtual std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface>

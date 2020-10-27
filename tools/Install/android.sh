@@ -47,6 +47,9 @@ CURL_CA_BUNDLE=${CURL_CA_BUNDLE:-"${DEVICE_INSTALL_PATH}/cacert.pem"}
 # Path to the start script that may be used to start the sample app.
 START_SCRIPT="${INSTALL_BASE}/startsample.sh"
 
+# Path to the start script that may be used to start the preview app.
+START_PREVIEW_SCRIPT="${INSTALL_BASE}/startpreview.sh"
+
 # Path to the sdk sqllite databases.
 CONFIG_DB_PATH="${DEVICE_INSTALL_PATH}/databases"
 
@@ -83,8 +86,13 @@ set_cmake_var() {
         -DCURL_INCLUDE_DIR="${CURL_INCLUDE_DIR}" \
         -DCURL_LIBRARY="${CURL_LIBRARY}" \
         -DLOCAL_MODULE_RELATIVE_PATH="asan" \
-        -DFFMPEG_LIB_PATH=${INSTALL_TARGET}/lib \
-        -DFFMPEG_INCLUDE_DIR=${INSTALL_TARGET}/include)
+        -DCRYPTO_LIBRARY="${CRYPTO_LIBRARY}" \
+        -DCRYPTO_INCLUDE_DIR="${CRYPTO_INCLUDE_DIR}" \
+        -DSQLITE_LIBRARY="${SQLITE3_LIBRARY}" \
+        -DSQLITE_INCLUDE_DIR="${SQLITE3_INCLUDE_DIR}" \
+        -DFFMPEG_LIB_PATH=${INSTALL_TARGET_LIB} \
+        -DFFMPEG_INCLUDE_DIR=${INSTALL_TARGET}/include \
+        -DTARGET_RPATH=${INSTALL_TARGET_LIB})
         #-DBUILD_SHARED_LIBS="ON" \
 }
 
@@ -106,10 +114,20 @@ generate_start_script() {
   make_install > /dev/null
   adb_push
   CONFIG_BASENAME=$(basename ${OUTPUT_CONFIG_FILE})
+
+  # Script for starting the Sample App.
   cat << EOF > "${START_SCRIPT}"
 
   ${ADB} shell LD_LIBRARY_PATH=${DEVICE_INSTALL_PATH}/lib \
       ${DEVICE_BIN_PATH}/SampleApp \
+      ${DEVICE_INSTALL_PATH}/${CONFIG_BASENAME} DEBUG9
+EOF
+
+  # Script for starting the Preview App.
+  cat << EOF > "${START_PREVIEW_SCRIPT}"
+
+  ${ADB} shell LD_LIBRARY_PATH=${DEVICE_INSTALL_PATH}/lib \
+      ${DEVICE_BIN_PATH}/PreviewAlexaClient \
       ${DEVICE_INSTALL_PATH}/${CONFIG_BASENAME} DEBUG9
 EOF
 }
@@ -195,15 +213,21 @@ configure_host() {
       "arm" | "armeabi-v7a" )
           TARGET_SYSTEM="arm"
           ;;
+      "arm64" )
+          TARGET_SYSTEM="arm64"
+          ;;
       "x86" )
           TARGET_SYSTEM="x86"
+          ;;
+      "x86_64" )
+          TARGET_SYSTEM="x86_64"
           ;;
       * ) echo "$0: Unknown host system: ${TARGET_SYSTEM}"
           exit 1
           ;;
   esac
 
-  if [ "${TARGET_SYSTEM}" == "x86" ]; then
+  if [ "${TARGET_SYSTEM}" == "x86" ] || [ "${TARGET_SYSTEM}" == "x86_64" ]; then
       ANDROID_ABI="${TARGET_SYSTEM}"
   else
       if [ "${TARGET_SYSTEM}" == "arm" ]; then
@@ -229,16 +253,16 @@ configure_host() {
   ANDROID_STL="c++_shared"
   ANDROID_TOOLCHAIN="clang"
 
-  # Standalone toolchain
   if [ "${TARGET_SYSTEM}" == "x86" ]; then
       TOOLCHAIN_HOST="i686-linux-android"
+  elif [ "${TARGET_SYSTEM}" == "x86_64" ]; then
+      TOOLCHAIN_HOST="x86_64-linux-android"
+  elif [ "${TARGET_SYSTEM}" == "arm" ]; then
+      TOOLCHAIN_HOST="arm-linux-androideabi"
   else
-      if [ "${TARGET_SYSTEM}" == "arm" ]; then
-          TOOLCHAIN_HOST="arm-linux-androideabi"
-      else
-          TOOLCHAIN_HOST="aarch64-linux-android"
-      fi
+      TOOLCHAIN_HOST="aarch64-linux-android"
   fi
+
   TOOLCHAIN="${ANDROID_HOME}/ndk/toolchains/${NDK_PACKAGE}/toolchain-${ANDROID_ABI}/${ANDROID_PLATFORM}"
   if [ ! -d "${TOOLCHAIN}" ]; then
       if [ ! -d "${ANDROID_NDK}" ]; then
@@ -286,7 +310,11 @@ configure_host() {
       fi
   fi
   CMAKE_TOOLCHAIN_FILE="${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
-  CXX_SHARED_LIBRARY="${TOOLCHAIN}/${TOOLCHAIN_HOST}/lib/lib${ANDROID_STL}.so"
+  if [ "${TARGET_SYSTEM}" == "x86_64" ]; then
+    CXX_SHARED_LIBRARY="${TOOLCHAIN}/${TOOLCHAIN_HOST}/lib64/lib${ANDROID_STL}.so"
+  else
+    CXX_SHARED_LIBRARY="${TOOLCHAIN}/${TOOLCHAIN_HOST}/lib/lib${ANDROID_STL}.so"
+  fi
   export AR="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-ar"
   export CC="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-clang"
   export CPP="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-cpp"
@@ -410,14 +438,23 @@ install_dependencies() {
       # android-x86
       OPENSSL_MACHINE="i686"
       OPENSSL_TARGET="android-x86"
-  else
+  elif [ "${TARGET_SYSTEM}" == "x86_64" ]; then
+      # android-x86_64
+      OPENSSL_MACHINE="x86_64"
+      OPENSSL_TARGET="android-x86"
+  elif [ "${TARGET_SYSTEM}" == "arm" ]; then
       # android-armeabi
       OPENSSL_MACHINE="armv7"
       OPENSSL_TARGET="android-armeabi"
+  else
+      OPENSSL_MACHINE="aarch64"
+      OPENSSL_TARGET="android64-aarch64"
   fi
   OPENSSL_RELEASE="2.6.37"
   OPENSSL_SYSTEM="android"
 
+  CRYPTO_LIBRARY="${INSTALL_TARGET_LIB}/libcrypto.so"
+  CRYPTO_INCLUDE_DIR="${INSTALL_TARGET_INCLUDE}"
   OPENSSL_BUILD_TARGET="${BUILD_TARGET}/openssl"
   DONE_FILE="${OPENSSL_BUILD_TARGET}/.done"
   if [ -d "${OPENSSL_LIBRARY_SOURCE}" ] && [ ! -f "${DONE_FILE}" ]; then
@@ -531,7 +568,7 @@ install_dependencies() {
           fi
           CFLAGS="-fstack-protector-strong" \
           CPPFLAGS="-D_FORTIFY_SOURCE=2 -fstack-protector-strong -I\"${INSTALL_TARGET_INCLUDE}\"" \
-          LDFLAGS="-L\"${INSTALL_TARGET_LIB}\"" "${CURL_LIBRARY_SOURCE}/configure" \
+          LDFLAGS="-L${INSTALL_TARGET_LIB} -Wl,-rpath=${INSTALL_TARGET_LIB}" "${CURL_LIBRARY_SOURCE}/configure" \
                   ${DISABLE_RPATH} \
                   --prefix="${INSTALL_TARGET}" \
                   --with-sysroot="${SYSROOT}" \
@@ -581,6 +618,8 @@ install_dependencies() {
   ##################################################
   # Build sqlite3
   ##################################################
+  SQLITE3_INCLUDE_DIR="${INSTALL_TARGET_INCLUDE}"
+  SQLITE3_LIBRARY="${INSTALL_TARGET_LIB}/libsqlite3.so"
   SQLITE3_BUILD_TARGET="${BUILD_TARGET}/sqlite3"
   DONE_FILE="${SQLITE3_BUILD_TARGET}/.done"
   if [ -d "${SQLITE3_LIBRARY_SOURCE}" ] && [ ! -f "${DONE_FILE}" ]; then
@@ -615,8 +654,12 @@ install_dependencies() {
   ##################################################
   if [ "${TARGET_SYSTEM}" == "x86" ]; then
       FFMPEG_ARCH="x86"
-  else
+  elif [ "${TARGET_SYSTEM}" == "x86_64" ]; then
+      FFMPEG_ARCH="x86"
+  elif [ "${TARGET_SYSTEM}" == "arm" ]; then
       FFMPEG_ARCH="armv7-a"
+  else
+      FFMPEG_ARCH="arm64"
   fi
 
   FFMPEG_DEBUG_OPS=""
@@ -633,7 +676,7 @@ install_dependencies() {
           pushd "${FFMPEG_BUILD_TARGET}"
           # TODO: Prune unused options
           CPPFLAGS="-I${INSTALL_TARGET_INCLUDE}"
-          LDFLAGS="-L${INSTALL_TARGET_LIB} -lssl"
+          LDFLAGS="-L${INSTALL_TARGET_LIB} -Wl,-rpath=${INSTALL_TARGET_LIB} -lssl"
           "${FFMPEG_LIBRARY_SOURCE}/configure" \
                   ${DISABLE_RPATH} \
                   --prefix="${INSTALL_TARGET}" \
@@ -713,6 +756,7 @@ adb_push() {
 
   ${ADB} push ${INSTALL_TARGET_LIB} ${DEVICE_INSTALL_PATH}
   ${ADB} push ${BUILD_PATH}/SampleApp/src/SampleApp ${DEVICE_BIN_PATH}
+  ${ADB} push ${BUILD_PATH}/applications/acsdkPreviewAlexaClient/src/PreviewAlexaClient ${DEVICE_BIN_PATH}
   ${ADB} push ${OUTPUT_CONFIG_FILE} ${DEVICE_INSTALL_PATH}
 }
 

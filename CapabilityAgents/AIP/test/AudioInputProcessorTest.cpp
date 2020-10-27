@@ -30,6 +30,7 @@
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequestToken.h>
+#include <AVSCommon/SDKInterfaces/ExpectSpeechTimeoutHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/MockAVSConnectionManager.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
@@ -619,6 +620,13 @@ void TestDialogUXStateObserver::onDialogUXStateChanged(DialogUXState newState) {
     }
 }
 
+class MockExpectSpeechTimeoutHandler : public avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface {
+public:
+    MOCK_METHOD2(
+        handleExpectSpeechTimeout,
+        bool(std::chrono::milliseconds timeout, const std::function<std::future<bool>()>& expectSpeechTimedOut));
+};
+
 /// Test harness for @c AudioInputProcessor class.
 class AudioInputProcessorTest : public ::testing::Test {
 public:
@@ -735,6 +743,15 @@ protected:
     bool testExpectSpeechWaits(bool withDialogRequestId, bool verifyTimeout);
 
     /**
+     * Function to send an expect speech event and verify that that external handling does not result in an internal
+     * timeout.
+     *
+     * @param notifyBackOfTimeout Whether to notify the AIP of the ExpectSpeech timing out
+     * @return @c true if the call works correctly, else @c false.
+     */
+    bool testExpectSpeechExternalHandling(bool notifyBackOfTimeout);
+
+    /**
      * Function to send an expect speech event and optionally verify that it fails.
      *
      * @param withDialogRequestId A flag indicating whether to send the event with a dialog request ID.
@@ -797,6 +814,11 @@ protected:
      * @c alwaysReadable.
      */
     void makeDefaultAudioProviderNotAlwaysReadable();
+
+    /**
+     * This function adds a custom ExpectSpeechHandler.
+     */
+    void addExpectSpeechTimeoutHandler();
 
     /**
      * Function to call @c onFocusChanged() and verify that @c AudioInputProcessor responds correctly.
@@ -865,6 +887,9 @@ protected:
     /// The @c AudioProvider to test with.
     std::unique_ptr<AudioProvider> m_audioProvider;
 
+    /// A mock @c ExpectSpeechHandler to test with.
+    std::shared_ptr<MockExpectSpeechTimeoutHandler> m_mockExpectSpeechTimeoutHandler;
+
     /// The @c AudioInputProcessor to test.
     std::shared_ptr<AudioInputProcessor> m_audioInputProcessor;
 
@@ -927,6 +952,8 @@ void AudioInputProcessorTest::SetUp() {
                                             avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED};
     m_audioProvider = avsCommon::utils::memory::make_unique<AudioProvider>(
         std::move(stream), format, ASRProfile::NEAR_FIELD, ALWAYS_READABLE, CAN_OVERRIDE, CAN_BE_OVERRIDDEN);
+
+    m_mockExpectSpeechTimeoutHandler = std::make_shared<MockExpectSpeechTimeoutHandler>();
 
     ON_CALL(*m_mockAssetsManager, getSupportedWakeWords(_))
         .WillByDefault(InvokeWithoutArgs([]() -> avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::WakeWordsSets {
@@ -1307,6 +1334,48 @@ bool AudioInputProcessorTest::testExpectSpeechWaits(bool withDialogRequestId, bo
     return conditionVariable.wait_for(lock, TEST_TIMEOUT, [&done] { return done; });
 }
 
+bool AudioInputProcessorTest::testExpectSpeechExternalHandling(bool notifyBackOfTimeout) {
+    std::mutex mutex;
+    std::condition_variable conditionVariable;
+    bool done = false;
+
+    auto avsDirective = createAVSDirective(EXPECT_SPEECH, true);
+    auto result = avsCommon::utils::memory::make_unique<avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult>();
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler = m_audioInputProcessor;
+
+    EXPECT_CALL(*result, setCompleted());
+
+    if (notifyBackOfTimeout) {
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
+        EXPECT_CALL(
+            *m_mockExpectSpeechTimeoutHandler,
+            handleExpectSpeechTimeout(std::chrono::milliseconds(EXPECT_SPEECH_TIMEOUT_IN_MILLISECONDS), _))
+            // invoke func passed in
+            .WillOnce(DoAll(IgnoreResult(InvokeArgument<1>()), Return(true)));
+        EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).WillOnce(Invoke(&verifyExpectSpeechTimedOut));
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
+            .WillOnce(InvokeWithoutArgs([&] {
+                std::lock_guard<std::mutex> lock(mutex);
+                done = true;
+                conditionVariable.notify_one();
+            }));
+    } else {
+        EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH))
+            .WillOnce(InvokeWithoutArgs([&] {
+                std::lock_guard<std::mutex> lock(mutex);
+                done = true;
+                conditionVariable.notify_one();
+            }));
+        EXPECT_CALL(*m_mockExpectSpeechTimeoutHandler, handleExpectSpeechTimeout(_, _)).WillOnce(Return(false));
+    }
+
+    directiveHandler->preHandleDirective(avsDirective, std::move(result));
+    EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
+
+    std::unique_lock<std::mutex> lock(mutex);
+    return conditionVariable.wait_for(lock, TEST_TIMEOUT, [&done] { return done; });
+}
+
 bool AudioInputProcessorTest::testExpectSpeechFails(bool withDialogRequestId) {
     std::mutex mutex;
     std::condition_variable conditionVariable;
@@ -1529,6 +1598,31 @@ void AudioInputProcessorTest::makeDefaultAudioProviderNotAlwaysReadable() {
     m_audioInputProcessor->addObserver(m_mockObserver);
     m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
 }
+
+void AudioInputProcessorTest::addExpectSpeechTimeoutHandler() {
+    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
+    m_audioInputProcessor = AudioInputProcessor::create(
+        m_mockDirectiveSequencer,
+        m_mockMessageSender,
+        m_mockContextManager,
+        m_mockFocusManager,
+        m_dialogUXStateAggregator,
+        m_mockExceptionEncounteredSender,
+        m_mockUserInactivityMonitor,
+        m_mockSystemSoundPlayer,
+        m_mockAssetsManager,
+        m_mockWakeWordConfirmation,
+        m_mockSpeechConfirmation,
+        m_mockWakeWordSetting,
+        nullptr,
+        *m_audioProvider,
+        m_mockPowerResourceManager,
+        m_metricRecorder,
+        m_mockExpectSpeechTimeoutHandler);
+    EXPECT_NE(m_audioInputProcessor, nullptr);
+    m_audioInputProcessor->addObserver(m_mockObserver);
+    m_audioInputProcessor->addObserver(m_dialogUXStateAggregator);
+};
 
 bool AudioInputProcessorTest::testFocusChange(
     avsCommon::avs::FocusState state,
@@ -2293,6 +2387,49 @@ TEST_F(AudioInputProcessorTest, test_expectSpeechWithInitiatorTimedOut) {
     removeDefaultAudioProvider();
     ASSERT_TRUE(testExpectSpeechWaits(WITH_DIALOG_REQUEST_ID, VERIFY_TIMEOUT));
     ASSERT_TRUE(testRecognizeSucceeds(*m_audioProvider, Initiator::TAP));
+}
+
+/**
+ * This function verifies that ExpectSpeech directives can be handled externally and that AIP may be notified back of
+ * an ExpectSpeech timeout with an @c AudioProvider that is not always readable.
+ */
+TEST_F(AudioInputProcessorTest, handleExpectSpeechTimeoutExternallyWithTimeout) {
+    m_audioProvider->alwaysReadable = false;
+    addExpectSpeechTimeoutHandler();
+    ASSERT_TRUE(testExpectSpeechExternalHandling(true));
+}
+
+/**
+ * This function verifies that ExpectSpeech directives can be handled externally and that AIP remains in an @c
+ * EXPECTING_SPEECH state if no call is made back to AIP to notify of an ExpectSpeech timeout with an @c AudioProvider
+ * that is not always readable.
+ */
+TEST_F(AudioInputProcessorTest, handleExpectSpeechTimeoutExternallyWithoutTimeout) {
+    m_audioProvider->alwaysReadable = false;
+    addExpectSpeechTimeoutHandler();
+    ASSERT_TRUE(testExpectSpeechExternalHandling(false));
+}
+
+/**
+ * This function verifies that ExpectSpeech directives that are not handled externally with an always readable @c
+ * AudioProvider will result in an automatic transition to RECOGNIZING.
+ */
+TEST_F(AudioInputProcessorTest, handleExpectSpeechTimeoutInternallyWithAlwaysReadableAudioProviderResultsInRecognize) {
+    m_audioProvider->alwaysReadable = true;
+    addExpectSpeechTimeoutHandler();
+    EXPECT_CALL(*m_mockExpectSpeechTimeoutHandler, handleExpectSpeechTimeout(_, _)).WillOnce(Return(false));
+    ASSERT_TRUE(testExpectSpeechSucceeds(WITH_DIALOG_REQUEST_ID));
+}
+
+/**
+ * This function verifies that ExpectSpeech directives that are handled externally with an always readable @c
+ * AudioProvider will result in an automatic transition to RECOGNIZING.
+ */
+TEST_F(AudioInputProcessorTest, handleExpectSpeechTimeoutExternallyWithAlwaysReadableAudioProviderResultsInRecognize) {
+    m_audioProvider->alwaysReadable = true;
+    addExpectSpeechTimeoutHandler();
+    EXPECT_CALL(*m_mockExpectSpeechTimeoutHandler, handleExpectSpeechTimeout(_, _)).WillOnce(Return(true));
+    ASSERT_TRUE(testExpectSpeechSucceeds(WITH_DIALOG_REQUEST_ID));
 }
 
 /// This function verifies that a focus change to @c FocusState::BACKGROUND causes the @c AudioInputProcessor to

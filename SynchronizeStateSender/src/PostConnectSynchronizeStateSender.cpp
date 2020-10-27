@@ -80,7 +80,7 @@ unsigned int PostConnectSynchronizeStateSender::getOperationPriority() {
 
 void PostConnectSynchronizeStateSender::onContextFailure(const avsCommon::sdkInterfaces::ContextRequestError error) {
     ACSDK_ERROR(LX(__func__).d("reason", error));
-    m_wakeTrigger.notify_all();
+    m_wakeTrigger.notifyAll();
 }
 
 void PostConnectSynchronizeStateSender::onContextAvailable(const std::string& jsonContext) {
@@ -89,7 +89,7 @@ void PostConnectSynchronizeStateSender::onContextAvailable(const std::string& js
         std::lock_guard<std::mutex> lock{m_mutex};
         m_contextString = jsonContext;
     }
-    m_wakeTrigger.notify_all();
+    m_wakeTrigger.notifyAll();
 }
 
 bool PostConnectSynchronizeStateSender::fetchContext() {
@@ -100,7 +100,7 @@ bool PostConnectSynchronizeStateSender::fetchContext() {
 
     auto pred = [this] { return !m_contextString.empty() || m_isStopping; };
 
-    if (!m_wakeTrigger.wait_for(lock, CONTEXT_FETCH_TIMEOUT, pred)) {
+    if (!m_wakeTrigger.waitFor(lock, CONTEXT_FETCH_TIMEOUT, pred)) {
         ACSDK_DEBUG5(LX(__func__).d("reason", "context fetch timeout"));
         return false;
     }
@@ -155,7 +155,7 @@ bool PostConnectSynchronizeStateSender::performOperation(const std::shared_ptr<M
         /// Retry with backoff.
         std::unique_lock<std::mutex> lock{m_mutex};
         auto timeout = RETRY_TIMER.calculateTimeToRetry(retryAttempt++);
-        if (m_wakeTrigger.wait_for(lock, timeout, [this] { return m_isStopping; })) {
+        if (m_wakeTrigger.waitFor(lock, timeout, [this] { return m_isStopping; })) {
             return false;
         }
     }
@@ -186,7 +186,7 @@ void PostConnectSynchronizeStateSender::abortOperation() {
         requestCopy->shutdown();
     }
 
-    m_wakeTrigger.notify_all();
+    m_wakeTrigger.notifyAll();
 }
 
 }  // namespace synchronizeStateSender

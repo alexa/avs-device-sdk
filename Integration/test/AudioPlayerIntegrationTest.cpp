@@ -38,7 +38,6 @@
 #include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
-#include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <Captions/CaptionManagerInterface.h>
 #ifdef GSTREAMER_MEDIA_PLAYER
@@ -55,6 +54,7 @@
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaResourceProvider.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -397,17 +397,18 @@ protected:
 #endif
 
         std::vector<std::shared_ptr<MediaPlayerInterface>> players = {m_contentMediaPlayer};
-        auto mockFactory = mediaPlayer::PooledMediaPlayerFactory::create(players);
+        auto mockMediaResourceProvider =
+            avsCommon::utils::mediaPlayer::PooledMediaResourceProvider::createPooledMediaResourceProviderInterface(
+                players, {m_speakerInterface});
 
         // Create and register the AudioPlayer.
         m_audioPlayer = acsdkAudioPlayer::AudioPlayer::create(
-            std::move(mockFactory),
+            mockMediaResourceProvider,
             m_avsConnectionManager,
             m_focusManager,
             m_context->getContextManager(),
             m_exceptionEncounteredSender,
             m_playbackRouter,
-            {m_speakerInterface},
             m_captionManager,
             m_metricRecorder);
         ASSERT_NE(nullptr, m_audioPlayer);

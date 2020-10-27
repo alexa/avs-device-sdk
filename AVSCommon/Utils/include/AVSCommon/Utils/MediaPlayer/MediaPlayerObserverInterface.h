@@ -232,7 +232,11 @@ public:
  * @return The @c ostream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const MediaPlayerState& state) {
-    return stream << "MediaPlayerState: offsetInMilliseconds=" << state.offset.count();
+    stream << "MediaPlayerState: offsetInMilliseconds=" << state.offset.count();
+    if (state.mediaPlayerProtection.hasValue()) {
+        stream << "," << state.mediaPlayerProtection.value();
+    }
+    return stream;
 }
 
 }  // namespace mediaPlayer

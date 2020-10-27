@@ -34,6 +34,9 @@ include_once(CodeCoverage/CodeCoverage)
 # Setup package requirement variables.
 include_once(PackageConfigs)
 
+# Allow for overriden library names
+include_once(DefaultLibNames)
+
 # Setup logging variables.
 include_once(Logger)
 
@@ -103,9 +106,6 @@ include_once(Diagnostics)
 # Setup Endpoint Controller capabilities
 include_once(EndpointControllers)
 
-# Functions to ExternalMediaPlayer Adapters
-include_once(ExternalMediaPlayerAdapters)
-
 # Speed up compilation using ccache
 include_once(Ccache)
 
@@ -115,5 +115,17 @@ include_once(ACSUtils)
 # Allow use of RTTI
 include_once(UseRTTI)
 
+# Setup rpath for target
+include_once(Rpath)
+
 # Setup rapidjson memory options.
 include_once(Rapidjson)
+
+# Setup Low Power Mode variables.
+include_once(LowPowerMode)
+
+# Setup External Media Player Adapters variables.
+include_once(ExternalMediaPlayerAdapters)
+
+# Setup ducking options.
+include_once(LocalDucking)

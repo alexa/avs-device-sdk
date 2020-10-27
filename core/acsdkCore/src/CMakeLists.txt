@@ -7,10 +7,16 @@ target_include_directories(acsdkCore PUBLIC
 
 target_link_libraries(acsdkCore
     acsdkManufactory
+    acsdkPostConnectOperationProviderRegistrar
     acsdkShared
+    AFML
     AVSCommon
+    AVSGatewayManager
+    CapabilitiesDelegate
     ContextManager
-    RegistrationManager)
+    RegistrationManager
+    SQLiteStorage
+    SynchronizeStateSender)
 
 # install target
 asdk_install()

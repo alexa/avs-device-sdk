@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
     SampleAppReturnCode returnCode = SampleAppReturnCode::OK;
 
 #ifdef DIAGNOSTICS
-    std::unique_ptr<SDKDiagnostics> diagnostics = SDKDiagnostics::create();
+    std::shared_ptr<SDKDiagnostics> diagnostics = SDKDiagnostics::create();
     if (!diagnostics) {
         return SampleAppReturnCode::ERROR;
     }
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
             logLevel
 #ifdef DIAGNOSTICS
             ,
-            std::move(diagnostics)
+            diagnostics
 #endif
         );
 

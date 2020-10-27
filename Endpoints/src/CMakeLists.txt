@@ -4,7 +4,8 @@ add_library(Endpoints SHARED
         Endpoint.cpp
         EndpointAttributeValidation.cpp
         EndpointBuilder.cpp
-        EndpointRegistrationManager.cpp)
+        EndpointRegistrationManager.cpp
+        DefaultEndpointBuilder.cpp)
 
 target_include_directories(Endpoints PUBLIC
         $<BUILD_INTERFACE:${Endpoints_SOURCE_DIR}/include>

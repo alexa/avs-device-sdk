@@ -550,8 +550,7 @@ TEST_F(JSONUtilTest, test_retrieveArrayOfElementsWithKeySucceed) {
 TEST_F(JSONUtilTest, test_retrieveStringMapFromArrayOnlyKeyEntry) {
     std::string key{"manifest"};
     std::map<std::string, std::string> elements;
-    std::string json =
-        R"({"httpHeaders" : {"manifest":[{"name": "one"}]}})";
+    std::string json = R"({"httpHeaders" : {"manifest":[{"name": "one"}]}})";
     rapidjson::Document document;
     ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
     rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
@@ -858,8 +857,7 @@ TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayInvalidKey) {
 TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayEmptyArray) {
     std::string key{"manifest"};
     std::vector<std::map<std::string, std::string>> elements;
-    std::string json =
-        R"({"httpHeaders" : {"manifest":[]} })";
+    std::string json = R"({"httpHeaders" : {"manifest":[]} })";
     rapidjson::Document document;
     ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
     rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");
@@ -875,8 +873,7 @@ TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayEmptyArray) {
 TEST_F(JSONUtilTest, test_retrieveArrayStringMapFromArrayEmptyMap) {
     std::string key{"manifest"};
     std::vector<std::map<std::string, std::string>> elements;
-    std::string json =
-        R"({"httpHeaders" : {"manifest":[ {}]}})";
+    std::string json = R"({"httpHeaders" : {"manifest":[ {}]}})";
     rapidjson::Document document;
     ASSERT_TRUE(jsonUtils::parseJSON(json, &document));
     rapidjson::Value::ConstMemberIterator headerIterator = document.FindMember("httpHeaders");

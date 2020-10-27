@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(acsdkPostConnectOperationProviderRegistrarInterfaces LANGUAGES CXX)
+
+add_library(acsdkPostConnectOperationProviderRegistrarInterfaces INTERFACE)
+
+target_include_directories(acsdkPostConnectOperationProviderRegistrarInterfaces INTERFACE
+    "${acsdkPostConnectOperationProviderRegistrarInterfaces_SOURCE_DIR}/include")
+
+target_link_libraries(acsdkPostConnectOperationProviderRegistrarInterfaces INTERFACE
+    AVSCommon)
+
+# install interface
+asdk_install_interface()

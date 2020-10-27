@@ -18,7 +18,6 @@
 
 #include <atomic>
 #include <chrono>
-#include <condition_variable>
 #include <deque>
 #include <memory>
 #include <mutex>
@@ -26,13 +25,16 @@
 #include <thread>
 #include <unordered_set>
 
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionObserverInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
+#include <AVSCommon/Utils/Timing/DistantFuture.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/PingHandler.h"
@@ -90,7 +92,7 @@ public:
         const std::string& avsGateway,
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportObserverInterface> transportObserver,
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
         std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
@@ -223,7 +225,7 @@ private:
         const std::string& avsGateway,
         std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> http2Connection,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportObserverInterface> transportObserver,
         std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
         std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
@@ -309,8 +311,7 @@ private:
      */
     State monitorSharedQueueWhileWaiting(
         State whileState,
-        std::chrono::time_point<std::chrono::steady_clock> maxWakeTime =
-            std::chrono::time_point<std::chrono::steady_clock>::max());
+        std::chrono::time_point<std::chrono::steady_clock> maxWakeTime = avsCommon::utils::timing::getDistantFuture());
 
     /**
      * Handle sending @c MessageRequests and pings while in @c State::POST_CONNECTING or @c State::CONNECTED.
@@ -377,7 +378,7 @@ private:
     std::mutex m_mutex;
 
     /// Condition variable use to wake the @c m_thread from various waits.
-    std::condition_variable m_wakeEvent;
+    avsCommon::utils::threading::ConditionVariableWrapper m_wakeEvent;
 
     /// The current state of this HTTP2Transport.
     State m_state;
@@ -395,7 +396,7 @@ private:
     std::shared_ptr<MessageConsumerInterface> m_messageConsumer;
 
     /// Object for creating and accessing attachments.
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> m_attachmentManager;
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> m_attachmentManager;
 
     /// Factory for creating @c PostConnectInterface instances.
     std::shared_ptr<PostConnectFactoryInterface> m_postConnectFactory;
@@ -441,6 +442,12 @@ private:
 
     /// The reason for disconnecting.
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_disconnectReason;
+
+    /// The mainloop thread power resource.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_mainLoopPowerResource;
+
+    /// The power resource to prevent the device from going into LPM when a messageRequest is active.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_requestActivityPowerResource;
 };
 
 }  // namespace acl

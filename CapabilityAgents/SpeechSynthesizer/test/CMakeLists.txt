@@ -7,4 +7,4 @@ set(INCLUDE_PATH
 
 discover_unit_tests(
     "${INCLUDE_PATH}"
-    "SpeechSynthesizer;CaptionsTestLib;UtilsCommonTestLib;SDKInterfacesTests")
+    "SpeechSynthesizer;CaptionsTestLib;UtilsCommonTestLib;SDKInterfacesTests;ApplicationAudioPipelineFactoryTestLib")

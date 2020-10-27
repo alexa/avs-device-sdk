@@ -22,13 +22,12 @@
 #include <string>
 #include <unordered_set>
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/MessageRequest.h>
-#include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "ACL/Transport/MessageRouterInterface.h"
@@ -69,22 +68,44 @@ namespace acl {
  */
 class AVSConnectionManager
         : public avsCommon::avs::AbstractAVSConnectionManager
-        , public avsCommon::sdkInterfaces::MessageSenderInterface
-        , public avsCommon::sdkInterfaces::AVSGatewayAssignerInterface
         , public MessageRouterObserverInterface
         , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<AVSConnectionManager> {
 public:
     /**
+     * A factory function that forwards an instance of @c AVSConnectionManagerInterface to a @c MessageSenderInterface.
+     *
+     * @param connectionManager The @c MessageSenderInterface implementation to forward.
+     * @return A shared pointer to a @c MessageSenderInterface.
+     */
+    static std::shared_ptr<MessageSenderInterface> createMessageSenderInterface(
+        const std::shared_ptr<AVSConnectionManagerInterface>& connectionManager);
+
+    /**
+     * A factory function that creates an instance of AVSConnectionManagerInterface.
+     *
+     * @param shutdownNotifier The object with which to register to be told when to shut down.
+     * @param messageRouter The entity which handles sending and receiving of AVS messages.
+     * @param internetConnectionMonitor The iobject to use to monitor connectivity with the internet.
+     * @return The created AVSConnectionManager object.
+     */
+    static std::shared_ptr<AVSConnectionManagerInterface> createAVSConnectionManagerInterface(
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<MessageRouterInterface>& messageRouter,
+        const std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>& internetConnectionMonitor);
+
+    /**
      * A factory function that creates an AVSConnectionManager object.
      *
+     * @deprecated in release 1.21
      * @param messageRouter The entity which handles sending and receiving of AVS messages.
      * @param isEnabled The enablement setting.  If true, then the created object will attempt to connect to AVS.
      * @param connectionStatusObservers An optional set of observers which will be notified when the connection status
      *     changes. The observers cannot be a nullptr.
      * @param messageObservers An optional set of observer which will be sent messages that arrive from AVS.
      *      The observers cannot be a nullptr.
+     * @param internetConnectionMonitor The object to use to monitor connectivity with the internet.
      * @return The created AVSConnectionManager object.
      */
     static std::shared_ptr<AVSConnectionManager> create(
@@ -110,18 +131,16 @@ public:
     void removeMessageObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) override;
     /// @}
 
+    /// @name MessageSenderInterface methods.
+    /// @{
     void sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) override;
+    /// @}
 
-    /**
-     * @note Set the gateway URL for the AVS connection.  Calling this function with a new value will cause the
-     * current active connection to be closed, and a new one opened to the new gateway.
-     */
+    /// @name AVSGatewayAssignerInterface methods.
+    /// @{
     void setAVSGateway(const std::string& avsGateway) override;
-
-    /**
-     * @return The current gateway URL for AVS connection.
-     */
-    std::string getAVSGateway();
+    std::string getAVSGateway() const override;
+    /// @}
 
     /// @name InternetConnectionObserverInterface method overrides.
     /// @{
@@ -136,6 +155,7 @@ private:
      * @param connectionStatusObservers An optional set of observers which will be notified when the connection status
      *     changes.
      * @param messageObserver An optional observer which will be sent messages that arrive from AVS.
+     * @param internetConnectionMonitor Interner connection status monitor
      */
     AVSConnectionManager(
         std::shared_ptr<MessageRouterInterface> messageRouter,
@@ -150,8 +170,9 @@ private:
     void doShutdown() override;
 
     void onConnectionStatusChanged(
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+        const ConnectionStatusObserverInterface::Status status,
+        const std::vector<ConnectionStatusObserverInterface::EngineConnectionStatus>& engineConnectionStatuses)
+        override;
 
     void receive(const std::string& contextId, const std::string& message) override;
 

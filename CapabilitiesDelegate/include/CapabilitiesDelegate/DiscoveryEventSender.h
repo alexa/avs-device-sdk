@@ -16,7 +16,6 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_DISCOVERYEVENTSENDER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITIESDELEGATE_INCLUDE_CAPABILITIESDELEGATE_DISCOVERYEVENTSENDER_H_
 
-#include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -27,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 
 #include "DiscoveryEventSenderInterface.h"
@@ -196,7 +196,7 @@ private:
     std::mutex m_authStatusMutex;
 
     /// Used to check if the auth delegate is ready.
-    std::condition_variable m_authStatusReady;
+    avsCommon::utils::threading::ConditionVariableWrapper m_authStatusReady;
 
     /// The current event correlation token.
     /// @note Access to this member is serialized by sendDiscoveryEvents() method which is only called once.

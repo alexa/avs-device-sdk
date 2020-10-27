@@ -10,7 +10,7 @@ add_library(PlaylistParser SHARED
     UrlContentToAttachmentConverter.cpp)
 
 target_include_directories(PlaylistParser PUBLIC
-    "${PlaylistParser_SOURCE_DIR}/include" 
+    "${PlaylistParser_SOURCE_DIR}/include"
     "${ACL_SOURCE_DIR}/include"
     "${CRYPTO_INCLUDE_DIRS}"
     "${FFMPEG_INCLUDE_DIR}")

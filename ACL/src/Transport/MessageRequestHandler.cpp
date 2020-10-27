@@ -37,6 +37,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::metrics;
+using namespace avsCommon::utils::power;
 
 /// URL to send events to
 const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
@@ -118,6 +119,9 @@ static void collectSendDataResultMetric(
 MessageRequestHandler::~MessageRequestHandler() {
     reportMessageRequestAcknowledged();
     reportMessageRequestFinished();
+    if (m_powerResource) {
+        m_powerResource->release();
+    }
 }
 
 std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
@@ -125,9 +129,10 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     const std::string& authToken,
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<MetricRecorderInterface> metricRecorder,
-    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer) {
+    std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer,
+    const std::shared_ptr<PowerResource>& powerResource) {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (!context) {
@@ -141,7 +146,7 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     }
 
     std::shared_ptr<MessageRequestHandler> handler(
-        new MessageRequestHandler(context, authToken, messageRequest, std::move(metricRecorder)));
+        new MessageRequestHandler(context, authToken, messageRequest, std::move(metricRecorder), powerResource));
 
     // Allow custom path extension, if provided by the sender of the MessageRequest
 
@@ -183,7 +188,8 @@ MessageRequestHandler::MessageRequestHandler(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken,
     std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
-    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    const std::shared_ptr<PowerResource>& powerResource) :
         ExchangeHandler{context, authToken},
         m_messageRequest{messageRequest},
         m_json{messageRequest->getJsonContent()},
@@ -193,8 +199,13 @@ MessageRequestHandler::MessageRequestHandler(
         m_metricRecorder{metricRecorder},
         m_wasMessageRequestAcknowledgeReported{false},
         m_wasMessageRequestFinishedReported{false},
-        m_responseCode{0} {
+        m_responseCode{0},
+        m_powerResource{powerResource} {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
 }
 
 void MessageRequestHandler::reportMessageRequestAcknowledged() {
@@ -363,7 +374,9 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
         {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
         {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
         {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},
-        {HTTPResponseCode::SERVER_ERROR_INTERNAL, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2}};
+        {HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION, MessageRequestObserverInterface::Status::THROTTLED},
+        {HTTPResponseCode::SERVER_ERROR_INTERNAL, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2},
+        {HTTPResponseCode::SERVER_UNAVAILABLE, MessageRequestObserverInterface::Status::REFUSED}};
 
     auto result = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
 

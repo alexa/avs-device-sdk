@@ -230,8 +230,7 @@ void NotificationsCapabilityAgent::executeInit() {
     }
 
     m_isEnabled = (queueSize > 0 || (IndicatorState::ON == currentIndicatorState));
-    // relevant state has been updated here (m_isEnabled and
-    // currentIndicatorState)
+    // relevant state has been updated here (m_isEnabled and currentIndicatorState)
     executeProvideState();
 
     if (queueSize > 0) {
@@ -487,10 +486,8 @@ void NotificationsCapabilityAgent::executeSetIndicator(
 
     notifyObserversOfNotificationReceived();
 
-    // m_isEnabled needs to be true until we are sure that the user has been
-    // properly notified, so despite the possibility of immediately calling
-    // executeRenderNotification(), m_isEnabled should only be set to false upon
-    // calling dequeue()
+    // m_isEnabled needs to be true until we are sure that the user has been properly notified.
+    // API doc states: "Any indicator that has not been cleared is considered enabled."
     m_isEnabled = true;
     executeProvideState();
 }
@@ -548,7 +545,10 @@ void NotificationsCapabilityAgent::executeClearIndicator(std::shared_ptr<Directi
 }
 
 void NotificationsCapabilityAgent::executeProvideState(bool sendToken, unsigned int stateRequestToken) {
-    ACSDK_DEBUG5(LX("executeProvideState").d("sendToken", sendToken).d("stateRequestToken", stateRequestToken));
+    ACSDK_DEBUG5(LX("executeProvideState")
+                     .d("sendToken", sendToken)
+                     .d("stateRequestToken", stateRequestToken)
+                     .d("isEnabled", m_isEnabled));
     auto policy = StateRefreshPolicy::ALWAYS;
 
     rapidjson::Document state(rapidjson::kObjectType);
@@ -649,9 +649,6 @@ void NotificationsCapabilityAgent::executePlayFinishedZeroQueued() {
                                "NotificationsCapabilityAgent was shutdown"));
             break;
     }
-    // if there are zero NotificationIndicators queued, this flag needs to be
-    // false
-    m_isEnabled = false;
     executeProvideState();
 }
 
@@ -669,9 +666,6 @@ void NotificationsCapabilityAgent::executePlayFinishedOneQueued() {
                     LX("executePlayFinishedOneQueuedFailed").d("reason", "failed to dequeue NotificationIndicator"));
             }
             executeSetState(NotificationsCapabilityAgentState::IDLE);
-
-            // queue size should now be 0
-            m_isEnabled = false;
             executeProvideState();
             return;
         case NotificationsCapabilityAgentState::CANCELING_PLAY:

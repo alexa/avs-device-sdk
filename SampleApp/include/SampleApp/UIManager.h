@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
@@ -56,7 +57,7 @@ class UIManager
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public acsdkNotificationsInterfaces::NotificationsObserverInterface
         , public acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface
-        , public authorization::cblAuthDelegate::CBLAuthRequesterInterface {
+        , public acsdkSampleApplicationInterfaces::UIManagerInterface {
 public:
     using DeviceAttributes = acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface::DeviceAttributes;
 
@@ -100,10 +101,9 @@ public:
     void onNotificationReceived() override{};
     /// }
 
-    /// @name CBLAuthRequesterInterface Functions
+    /// @name UIManagerInterface Functions
     /// @{
-    void onRequestAuthorization(const std::string& url, const std::string& code) override;
-    void onCheckingForAuthorization() override;
+    void printMessage(const std::string& message) override;
     /// }
 
     /// @name AuthObserverInterface Methods
@@ -465,9 +465,6 @@ private:
 
     /// The current authorization state of the SDK.
     avsCommon::sdkInterfaces::AuthObserverInterface::State m_authState;
-
-    /// Counter used to make repeated messages about checking for authorization distinguishable from each other.
-    int m_authCheckCounter;
 
     /// The current connection state of the SDK.
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_connectionStatus;

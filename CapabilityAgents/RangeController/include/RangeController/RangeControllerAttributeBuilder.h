@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_RANGECONTROLLER_INCLUDE_RANGECONTROLLER_RANGECONTROLLERATTRIBUTEBUILDER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_RANGECONTROLLER_INCLUDE_RANGECONTROLLER_RANGECONTROLLERATTRIBUTEBUILDER_H_
 
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/SDKInterfaces/RangeController/RangeControllerAttributeBuilderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 
@@ -50,6 +51,8 @@ public:
         const avsCommon::avs::resources::AlexaUnitOfMeasure& unitOfMeasure) override;
     RangeControllerAttributeBuilder& addPreset(
         const std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>& preset) override;
+    RangeControllerAttributeBuilder& withSemantics(
+        const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) override;
     avsCommon::utils::Optional<avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes> build() override;
     /// @}
 
@@ -73,6 +76,9 @@ private:
      * PresetResources.
      */
     std::vector<std::pair<double, avsCommon::sdkInterfaces::rangeController::PresetResources>> m_presets;
+
+    /// The semantics represented as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> m_semantics;
 };
 
 }  // namespace rangeController

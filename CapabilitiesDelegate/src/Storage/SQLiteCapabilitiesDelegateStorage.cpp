@@ -50,6 +50,16 @@ static const std::string CREATE_ENDPOINT_CONFIG_TABLE_SQL_STRING =
     std::string("CREATE TABLE ") + ENDPOINT_CONFIG_TABLE_NAME + " (" + DATABASE_COLUMN_ENDPOINT_ID_NAME +
     " TEXT NOT NULL UNIQUE," + DATABASE_COLUMN_ENDPOINT_CONFIG_NAME + " TEXT NOT NULL);";
 
+std::unique_ptr<CapabilitiesDelegateStorageInterface> SQLiteCapabilitiesDelegateStorage::
+    createCapabilitiesDelegateStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    if (!configurationRoot) {
+        ACSDK_ERROR(LX("createCapabilitiesDelegateStorageInterfaceFailed").d("reason", "nullConfigurationRoot"));
+        return nullptr;
+    }
+    return create(*configurationRoot);
+}
+
 std::unique_ptr<SQLiteCapabilitiesDelegateStorage> SQLiteCapabilitiesDelegateStorage::create(
     const ConfigurationNode& configurationRoot) {
     ACSDK_DEBUG5(LX(__func__));

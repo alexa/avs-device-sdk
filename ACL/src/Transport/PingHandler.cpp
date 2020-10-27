@@ -15,6 +15,7 @@
 
 #include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 
 #include "ACL/Transport/HTTP2Transport.h"
 #include "ACL/Transport/PingHandler.h"
@@ -24,6 +25,7 @@ namespace acl {
 
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
+using namespace avsCommon::utils::power;
 
 /// URL to send pings to
 const static std::string AVS_PING_URL_PATH_EXTENSION = "/ping";
@@ -49,7 +51,8 @@ static const std::string TAG("PingHandler");
 
 std::shared_ptr<PingHandler> PingHandler::create(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
-    const std::string& authToken) {
+    const std::string& authToken,
+    const std::shared_ptr<PowerResource>& powerResource) {
     ACSDK_DEBUG5(LX(__func__).d("context", context.get()));
 
     if (!context) {
@@ -62,7 +65,7 @@ std::shared_ptr<PingHandler> PingHandler::create(
         return nullptr;
     }
 
-    std::shared_ptr<PingHandler> handler(new PingHandler(context, authToken));
+    std::shared_ptr<PingHandler> handler(new PingHandler(context, authToken, powerResource));
 
     HTTP2RequestConfig cfg{
         HTTP2RequestType::GET, context->getAVSGateway() + AVS_PING_URL_PATH_EXTENSION, PING_ID_PREFIX};
@@ -81,11 +84,25 @@ std::shared_ptr<PingHandler> PingHandler::create(
     return handler;
 }
 
-PingHandler::PingHandler(std::shared_ptr<ExchangeHandlerContextInterface> context, const std::string& authToken) :
+PingHandler::PingHandler(
+    std::shared_ptr<ExchangeHandlerContextInterface> context,
+    const std::string& authToken,
+    const std::shared_ptr<PowerResource>& powerResource) :
         ExchangeHandler{context, authToken},
         m_wasPingAcknowledgedReported{false},
-        m_responseCode{0} {
+        m_responseCode{0},
+        m_powerResource{powerResource} {
     ACSDK_DEBUG5(LX(__func__).d("context", context.get()));
+
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
+}
+
+PingHandler::~PingHandler() {
+    if (m_powerResource) {
+        m_powerResource->release();
+    }
 }
 
 void PingHandler::reportPingAcknowledged() {

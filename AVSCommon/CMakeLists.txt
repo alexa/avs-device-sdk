@@ -13,7 +13,6 @@ add_library(AVSCommon SHARED
     AVS/src/AVSMessageHeader.cpp
     AVS/src/AbstractAVSConnectionManager.cpp
     AVS/src/BlockingPolicy.cpp
-    AVS/src/ExternalMediaPlayer/AdapterUtils.cpp
     AVS/src/AlexaClientSDKInit.cpp
     AVS/src/Attachment/Attachment.cpp
     AVS/src/Attachment/AttachmentManager.cpp
@@ -30,6 +29,12 @@ add_library(AVSCommon SHARED
     AVS/src/EventBuilder.cpp
     AVS/src/ExceptionEncounteredSender.cpp
     AVS/src/CapabilityResources.cpp
+    AVS/src/CapabilitySemantics/ActionsToDirectiveMapping.cpp
+    AVS/src/CapabilitySemantics/CapabilitySemantics.cpp
+    AVS/src/CapabilitySemantics/StatesToRangeMapping.cpp
+    AVS/src/CapabilitySemantics/StatesToValueMapping.cpp
+    AVS/src/Initialization/InitializationParametersBuilder.cpp
+    AVS/src/Initialization/SDKPrimitivesProvider.cpp
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
@@ -72,6 +77,7 @@ add_library(AVSCommon SHARED
     Utils/src/Logger/ThreadMoniker.cpp
     Utils/src/MacAddressString.cpp
     Utils/src/MediaPlayer/PooledMediaPlayerFactory.cpp
+    Utils/src/MediaPlayer/PooledMediaResourceProvider.cpp
     Utils/src/MediaPlayer/PlaybackContext.cpp
     Utils/src/Metrics.cpp
     Utils/src/Metrics/DataPoint.cpp
@@ -80,8 +86,13 @@ add_library(AVSCommon SHARED
     Utils/src/Metrics/DataPointStringBuilder.cpp
     Utils/src/Metrics/MetricEvent.cpp
     Utils/src/Metrics/MetricEventBuilder.cpp
+    Utils/src/Metrics/UplData.cpp
     Utils/src/MultiTimer.cpp
     Utils/src/Network/InternetConnectionMonitor.cpp
+    Utils/src/Power/AggregatedPowerResourceManager.cpp
+    Utils/src/Power/PowerMonitor.cpp
+    Utils/src/Power/PowerResource.cpp
+    Utils/src/Power/WakeGuard.cpp
     Utils/src/RequiresShutdown.cpp
     Utils/src/RetryTimer.cpp
     Utils/src/SafeCTimeAccess.cpp
@@ -92,11 +103,15 @@ add_library(AVSCommon SHARED
     Utils/src/SystemClockMonitor.cpp
     Utils/src/TaskThread.cpp
     Utils/src/ThreadPool.cpp
+    Utils/src/Threading/ConditionVariableWrapper.cpp
     Utils/src/TimePoint.cpp
     Utils/src/TimeUtils.cpp
     Utils/src/Timer.cpp
+    Utils/src/Timing/TimerDelegate.cpp
+    Utils/src/Timing/TimerDelegateFactory.cpp
     Utils/src/UUIDGeneration.cpp
     Utils/src/WaitEvent.cpp
+    Utils/src/WavUtils.cpp
     Utils/src/WorkerThread.cpp)
 
 target_include_directories(AVSCommon PUBLIC
@@ -122,7 +137,9 @@ target_link_libraries(AVSCommon ${CUSTOMSDSTRAITS_LIB_NAME})
 endif ()
 
 target_link_libraries(AVSCommon
-    ${CURL_LIBRARIES})
+    ${CURL_LIBRARIES}
+    acsdkEqualizerInterfaces
+    acsdkApplicationAudioPipelineFactoryInterfaces)
 
 # install target
 LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/AVS/include")

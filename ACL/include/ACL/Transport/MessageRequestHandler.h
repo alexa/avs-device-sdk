@@ -18,9 +18,10 @@
 
 #include <memory>
 
-#include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
@@ -55,6 +56,7 @@ public:
      * @param attachmentManager Where to get attachments to write to.
      * @param metricRecorder The metric recorder.
      * @param eventTracer The object to trace events sent to AVS.
+     * @param powerResource The optional @c PowerResource to prevent device from going into LPM.
      * @return A new MessageRequestHandler or nullptr if the operation fails.
      */
     static std::shared_ptr<MessageRequestHandler> create(
@@ -62,9 +64,10 @@ public:
         const std::string& authToken,
         std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManager> attachmentManager,
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
-        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer = nullptr,
+        const std::shared_ptr<avsCommon::utils::power::PowerResource>& powerResource = nullptr);
 
     /// @name HTTP2MimeRequestSourceInterface methods
     /// @{
@@ -88,12 +91,14 @@ private:
      * @param authToken The token to use to authorize the request.
      * @param messageRequest The MessageRequest to send.
      * @param metricRecorder The metric recorder.
+     * @param powerResource The pointer to  @c PowerResource to prevent device from going into LPM.
      */
     MessageRequestHandler(
         std::shared_ptr<ExchangeHandlerContextInterface> context,
         const std::string& authToken,
         std::shared_ptr<avsCommon::avs::MessageRequest> messageRequest,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        const std::shared_ptr<avsCommon::utils::power::PowerResource>& powerResource);
 
     /**
      * Notify the associated HTTP2Transport instance that the message request failed or was acknowledged by AVS.
@@ -134,6 +139,9 @@ private:
 
     /// Response code received through @c onReceiveResponseCode (or zero).
     long m_responseCode;
+
+    /// The reference to @c PowerResource to prevent device from going into LPM.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 };
 
 }  // namespace acl

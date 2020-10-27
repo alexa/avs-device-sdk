@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/Diagnostics/DevicePropertyAggregatorInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <Settings/SettingCallbacks.h>
 
 namespace alexaClientSDK {
 namespace diagnostics {
@@ -48,6 +49,7 @@ public:
     avsCommon::utils::Optional<std::string> getDeviceProperty(const std::string& propertyKey) override;
     std::unordered_map<std::string, std::string> getAllDeviceProperties() override;
     void setContextManager(std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) override;
+    void setDeviceSettingsManager(std::shared_ptr<settings::DeviceSettingsManager> settingManager) override;
     void initializeVolume(std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager) override;
     /// @}
 
@@ -56,8 +58,13 @@ public:
     void onAlertStateChange(
         const std::string& alertToken,
         const std::string& alertType,
-        State state,
+        AlertObserverInterface::State state,
         const std::string& reason = "") override;
+    /// @}
+
+    /// @name AuthObserverInterface Functions
+    /// @{
+    virtual void onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error error) override;
     /// @}
 
     /// @name AudioPlayerObserverInterface Functions
@@ -107,12 +114,23 @@ private:
      * @return The device context as a JSON string. An empty optional will be returned.
      */
     avsCommon::utils::Optional<std::string> getDeviceContextJson();
+    /**
+     * Requests a specific Device Setting from the @c DeviceSettingManager
+     * @param propertyKey
+     * @return The property value as an Optional.
+     */
+    avsCommon::utils::Optional<std::string> getDeviceSetting(const std::string& propertyKey);
+    /**
+     * Request all of the synchronous device properties
+     * @return The synchronous device properties as an unordered map
+     */
+    std::unordered_map<std::string, std::string> getSyncDeviceProperties();
 
     /**
-     * Initializes the property map with default values.
+     * Initializes the asynchronous property map with default values.
      * Note: This method is not thread safe.
      */
-    void initializePropertyMap();
+    void initializeAsyncPropertyMap();
 
     /**
      * Updates the property map with the speaker settings passed in.
@@ -128,8 +146,8 @@ private:
     /// An internal executor that performs execution of callable objects passed to it sequentially but asynchronously.
     avsCommon::utils::threading::Executor m_executor;
 
-    /// The property map containing the property key and the corresponding value.
-    std::unordered_map<std::string, std::string> m_propertyMap;
+    /// The async property map containing the property key and the corresponding value to async values.
+    std::unordered_map<std::string, std::string> m_asyncPropertyMap;
 
     /// The mutex to synchronize device context.
     std::mutex m_deviceContextMutex;
@@ -142,6 +160,9 @@ private:
 
     /// The @c ContextManager to request the context from.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// The @c DeviceSettingsManager to request settings info from.
+    std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
 };
 
 }  // namespace diagnostics

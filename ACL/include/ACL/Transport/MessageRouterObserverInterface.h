@@ -39,11 +39,12 @@ public:
      * This function will be called when the connection status changes.
      *
      * @param status The current status of the connection.
-     * @param reason The reason the connection status changed.
+     * @param engineStatuses status of observed engine(s)
      */
     virtual void onConnectionStatusChanged(
         const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) = 0;
+        const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
+            engineStatuses) = 0;
 
     /**
      * This function will be called when a Message arrives from AVS.

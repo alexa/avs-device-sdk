@@ -18,11 +18,14 @@
 
 #include <functional>
 #include <sstream>
+#include <string>
 #include <typeindex>
 #include <type_traits>
-#include "acsdkManufactory/internal/TypeTraitsHelper.h"
 
-#include <string>
+#include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Logger/LoggerUtils.h>
+
+#include "acsdkManufactory/internal/TypeTraitsHelper.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -156,6 +159,25 @@ inline bool TypeIndex::operator!=(TypeIndex x) const {
 inline bool TypeIndex::operator<(TypeIndex x) const {
     return m_value < x.m_value;
 }
+
+/**
+ * Utility function to log a name for a given type.  This can be useful when TypeIndex<Type>::getName()
+ * does not return a string that is easy to correlate with C++ type names.
+ *
+ * @tparam Type The type to log
+ * @param name The name ot log for the type.
+ */
+template <typename Type>
+inline void logTypeIndex(const std::string& name) {
+    avsCommon::utils::logger::acsdkInfo(avsCommon::utils::logger::LogEntry("TypeIndex", __func__)
+                                            .d("name", name)
+                                            .d("TypeIndex", internal::getTypeIndex<Type>().getName()));
+}
+
+/**
+ * Helper macro for invoking logTypeIndex<Type> without specifying the type twice.
+ */
+#define ACSDK_LOG_TYPE_INDEX(type) logTypeIndex<type>(#type)
 
 }  // namespace internal
 }  // namespace acsdkManufactory

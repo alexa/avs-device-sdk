@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_CAPTIONPRESENTER_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_CAPTIONPRESENTER_H_
 
+#include <Captions/CaptionManagerInterface.h>
 #include <Captions/CaptionPresenterInterface.h>
 
 namespace alexaClientSDK {
@@ -26,6 +27,17 @@ namespace sampleApp {
  */
 class CaptionPresenter : public captions::CaptionPresenterInterface {
 public:
+    /**
+     * Factory method that returns a new instance of @c CaptionPresenterInterface.
+     *
+     * @param captionManager The @c CaptionManagerInterface to which we should add this new @c
+     * CaptionPresenterInterface. If null or if disabled, the CaptionPresenter is still created to satisfy manufactory
+     * exports, but will not be added to the CaptionManager.
+     * @return Pointer to a new @c CaptionPresenterInterface.
+     */
+    static std::shared_ptr<captions::CaptionPresenterInterface> createCaptionPresenterInterface(
+        const std::shared_ptr<captions::CaptionManagerInterface>& captionManager);
+
     /// @name CaptionPresenterInterface methods
     /// @{
     void onCaptionActivity(const captions::CaptionFrame& captionFrame, avsCommon::avs::FocusState focusState) override;

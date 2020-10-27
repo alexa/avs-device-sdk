@@ -89,8 +89,16 @@ AVSDiscoveryEndpointAttributes createEndpointAttributes(const std::string endpoi
  * Creates a test @c CapabilityConfiguration.
  * @return a @c CapabilityConfiguration structure.
  */
-CapabilityConfiguration createCapabilityConfiguration() {
-    return CapabilityConfiguration("TEST_TYPE", "TEST_INTERFACE", "TEST_VERSION");
+CapabilityConfiguration createCapabilityConfiguration(
+    const CapabilityConfiguration::AdditionalConfigurations& additionalConfigurationsIn =
+        CapabilityConfiguration::AdditionalConfigurations()) {
+    return CapabilityConfiguration(
+        "TEST_TYPE",
+        "TEST_INTERFACE",
+        "TEST_VERSION",
+        avsCommon::utils::Optional<std::string>(),
+        avsCommon::utils::Optional<CapabilityConfiguration::Properties>(),
+        additionalConfigurationsIn);
 }
 
 /**
@@ -290,7 +298,7 @@ TEST_F(CapabilitiesDelegateTest, test_clearData) {
 }
 
 /**
- * Test if the addDiscoveryObserver method gets triggered when the addDiscoveryEventSender method is called.
+ * Test if the addDiscoveryObserver method gets triggered when the setDiscoveryEventSender method is called.
  * Test if DiscoveryEventSender is stopped when the shutdown method is called.
  * Test if the removeDiscoveryObserver method gets triggered when the shutdown method is called.
  */
@@ -300,7 +308,7 @@ TEST_F(CapabilitiesDelegateTest, test_shutdown) {
         .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
             EXPECT_EQ(observer, m_capabilitiesDelegate);
         }));
-    m_capabilitiesDelegate->addDiscoveryEventSender(discoveryEventSender);
+    m_capabilitiesDelegate->setDiscoveryEventSender(discoveryEventSender);
 
     EXPECT_CALL(*discoveryEventSender, removeDiscoveryStatusObserver(_))
         .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
@@ -466,7 +474,6 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryFailure) {
  */
 TEST_F(CapabilitiesDelegateTest, test_addOrUpdateEndpointReturnsFalseWithInvalidInput) {
     /// Invalid AVSDiscoveryEndpointAttributes.
-
     auto attributes = createEndpointAttributes("endpointId");
     auto capabilityConfig = createCapabilityConfiguration();
 
@@ -481,9 +488,17 @@ TEST_F(CapabilitiesDelegateTest, test_addOrUpdateEndpointReturnsFalseWithInvalid
     attributes.endpointId = "";
     ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(attributes, {capabilityConfig}));
 
+    /// EndpointConfiguration too big
+    attributes = createEndpointAttributes("endpointId");
+    std::string hugeAdditionalAttribute(256 * 1024, 'X');
+    std::map<std::string, std::string> additionalAttributes;
+    additionalAttributes["test"] = "{\"test\":\"" + hugeAdditionalAttribute + "\"}";
+    capabilityConfig = createCapabilityConfiguration(additionalAttributes);
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(attributes, {capabilityConfig}));
+
     /// Return false if endpoint is a duplicate in pending list.
     attributes = createEndpointAttributes("duplicateId");
-    capabilityConfig.version = "1";
+    capabilityConfig = createCapabilityConfiguration();
     ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(attributes, {capabilityConfig}));
     ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(attributes, {capabilityConfig}));
 }
@@ -1075,6 +1090,54 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithReconnects) 
 }
 
 /**
+ * Tests if setDiscoveryEventSender always stops the previous DiscoveryEventSender. This is critical because
+ * even though an individual DiscoveryEventSender contains exponential backoff and timeout logic to avoid spamming
+ * the backend service, if *many* DiscoveryEventSender objects are created (e.g. in a re-connect loop with many
+ * post-connect operations) and any of these are failed to be stopped before creating the next one, there is a real risk
+ * of throttling.
+ *
+ * This test creates and adds many DiscoveryEventSenders asynchronously. We verify that every DiscoveryEventSender is
+ * stopped.
+ */
+TEST_F(CapabilitiesDelegateTest, test_setDiscoveryEventSenderStopsPreviousDiscoveryEventSender) {
+    const int numberOfSenders = 20;
+
+    /// Set up the CapabilitiesDelegate.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    ASSERT_NE(instance, nullptr);
+
+    /// Create the mock DiscoveryEventSenders.
+    std::vector<std::shared_ptr<StrictMock<MockDiscoveryEventSender>>> discoveryEventSenders(numberOfSenders);
+    for (int i = 0; i < numberOfSenders; i++) {
+        auto sender = std::make_shared<StrictMock<MockDiscoveryEventSender>>();
+        EXPECT_CALL(*sender, addDiscoveryStatusObserver(_));
+
+        /// The last DES to be added will only have stop() called on it in CapabilitiesDelegate's own shutdown
+        /// method. Non-mock DiscoveryEventSenders also call stop() on themselves in their own dtor, but
+        /// that is not the case here as we're using mocks.
+        EXPECT_CALL(*sender, removeDiscoveryStatusObserver(_));
+        EXPECT_CALL(*sender, stop());
+
+        discoveryEventSenders[i] = sender;
+    }
+
+    /// Spin up the threads that will all call setDiscoveryEventSender(...).
+    std::vector<std::thread> threads;
+    for (int j = 0; j < numberOfSenders; j++) {
+        threads.emplace_back(
+            [instance, &discoveryEventSenders, j]() { instance->setDiscoveryEventSender(discoveryEventSenders[j]); });
+    }
+
+    /// Wait for the threads.
+    for (auto& thread : threads) {
+        thread.join();
+    }
+
+    instance->shutdown();
+}
+
+/**
  * Test if the CapabilitiesDelegate calls the clearDatabase() method when the onAVSGatewayChanged() method is called.
  */
 TEST_F(CapabilitiesDelegateTest, test_onAVSGatewayChangedNotification) {
@@ -1198,7 +1261,7 @@ TEST_F(CapabilitiesDelegateTest, test_deferSendDiscoveryEventsWhileDiscoveryEven
             EXPECT_EQ(observer, m_capabilitiesDelegate);
         }));
     EXPECT_CALL(*discoveryEventSender, stop());
-    m_capabilitiesDelegate->addDiscoveryEventSender(discoveryEventSender);
+    m_capabilitiesDelegate->setDiscoveryEventSender(discoveryEventSender);
 
     /// Expect no callback to CapabilitiesObserver, since these endpoints remain in pending.
     EXPECT_CALL(
@@ -1263,7 +1326,6 @@ TEST_F(CapabilitiesDelegateTest, test_observerCallingIntoCapabilitiesDelegateOnS
                              CapabilitiesObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
-
             /// If the below is false with "endpoint not registered", this means that the CapabilitiesDelegate
             /// state is not correct when it notifies its observers.
             ASSERT_TRUE(m_capabilitiesDelegate->deleteEndpoint(endpointAttributes, {capabilityConfig}));

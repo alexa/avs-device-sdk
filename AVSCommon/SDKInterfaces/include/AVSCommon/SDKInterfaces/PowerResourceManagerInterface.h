@@ -16,6 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_POWERRESOURCEMANAGERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_POWERRESOURCEMANAGERINTERFACE_H_
 
+#include <chrono>
+#include <memory>
+#include <ostream>
+#include <string>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
@@ -71,7 +76,7 @@ public:
      */
     virtual void acquirePowerResource(
         const std::string& component,
-        const PowerResourceLevel level = PowerResourceLevel::ACTIVE_HIGH) = 0;
+        const PowerResourceLevel level = PowerResourceLevel::STANDBY_MED) = 0;
 
     /**
      * Release the acquired power resource of the specified component.
@@ -85,7 +90,107 @@ public:
      * @return true if the power resource had been acquired, otherwise return false.
      */
     virtual bool isPowerResourceAcquired(const std::string& component) = 0;
+
+    /**
+     * New APIs to support refcount and acquire with timeout.
+     * Use the below new APIs - create(), acquire(), release() and close()
+     * if you need refcounting or autorelease timeout support for your component.
+     * @warning Do not mix and match new and legacy APIs
+     */
+
+    /**
+     * Class PowerResourceId used to represent a power resource
+     */
+
+    class PowerResourceId {
+    public:
+        /// Getter for the resourceId string member
+        /// @return resourceId string member
+        std::string getResourceId() const {
+            return m_resourceId;
+        }
+        /// Constructor
+        PowerResourceId(const std::string& resourceId) : m_resourceId(resourceId) {
+        }
+
+    private:
+        /// string member denoting resourceId used to key this object
+        const std::string m_resourceId;
+    };
+
+    /**
+     * Create a power resource keyed by the unique string resourceId.
+     * @param resourceId mentions what the resource is for.
+     * @param isRefCounted whether refcounting is enabled for this resource
+     * @param level power resource level.
+     * @return shared pointer of type PowerResourceId representing the resource
+     */
+    virtual std::shared_ptr<PowerResourceId> create(
+        const std::string& resourceId,
+        bool isRefCounted = true,
+        const PowerResourceLevel level = PowerResourceLevel::STANDBY_MED) = 0;
+
+    /**
+     * Acquire a power resource.
+     * @param id shared pointer of type PowerResourceId representing the resource.
+     * @param autoReleaseTimeout auto release timeout value. Zero denotes auto release disabled.
+     * @return true if acquire was successful, false if it failed.
+     */
+    virtual bool acquire(
+        const std::shared_ptr<PowerResourceId>& id,
+        const std::chrono::milliseconds autoReleaseTimeout = std::chrono::milliseconds::zero()) = 0;
+
+    /**
+     * Release a power resource.
+     * @param id shared pointer of type PowerResourceId representing the resource.
+     * @return true if release was successful, false if it failed.
+     */
+    virtual bool release(const std::shared_ptr<PowerResourceId>& id) = 0;
+
+    /**
+     * Close a power resource.
+     * @param id shared pointer of type PowerResourceId representing the resource.
+     * @return true if close was successful, false if it failed.
+     */
+    virtual bool close(const std::shared_ptr<PowerResourceId>& id) = 0;
 };
+
+/**
+ * Converts the @c PowerResourceLevel enum to a string.
+ *
+ * @param The level to convert.
+ * @return A string representation of the level.
+ */
+inline std::string powerResourceLevelToString(PowerResourceManagerInterface::PowerResourceLevel level) {
+    switch (level) {
+        case PowerResourceManagerInterface::PowerResourceLevel::STANDBY_LOW:
+            return "STANDBY_LOW";
+        case PowerResourceManagerInterface::PowerResourceLevel::STANDBY_MED:
+            return "STANDBY_MED";
+        case PowerResourceManagerInterface::PowerResourceLevel::STANDBY_HIGH:
+            return "STANDBY_HIGH";
+        case PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_LOW:
+            return "ACTIVE_LOW";
+        case PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_MED:
+            return "ACTIVE_MED";
+        case PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH:
+            return "ACTIVE_HIGH";
+    }
+
+    return "UNKNOWN";
+}
+
+/**
+ * Overload for the @c PowerResourceLevel enum. This will write the @c PowerResourceLevel as a string to the provided
+ * stream.
+ *
+ * @param An ostream to send the level as a string.
+ * @param The level to convert.
+ * @return The stream.
+ */
+inline std::ostream& operator<<(std::ostream& stream, PowerResourceManagerInterface::PowerResourceLevel level) {
+    return stream << powerResourceLevelToString(level);
+}
 
 }  // namespace sdkInterfaces
 }  // namespace avsCommon

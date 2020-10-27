@@ -19,6 +19,7 @@
 #include <mutex>
 #include <unordered_set>
 
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -31,6 +32,9 @@
 
 namespace alexaClientSDK {
 namespace acsdkNotifications {
+
+/// String to identify the notifications media player to render audio.
+static const constexpr char* NOTIFICATIONS_MEDIA_PLAYER_NAME = "NotificationsMediaPlayer";
 
 /**
  * Implementation of NotificationRendererInterface using the @c
@@ -45,6 +49,21 @@ class NotificationRenderer
 public:
     /// A type that identifies which source is currently being operated on.
     using SourceId = avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId;
+
+    /**
+     * Create a NotificationRenderer. The new NotificationRenderer starts life in
+     * the IDLE state, awaiting request to render notifications.
+     *
+     * @param audioPipelineFactory The @c ApplicationAudioPlayerInterface instance to use to create the notifications
+     * media player for rendering audio.
+     * @param focusManager The @c FocusManager instance to use to request audio
+     * focus.
+     * @return The new NotificationRenderer, or null if the operation fails.
+     */
+    static std::shared_ptr<NotificationRenderer> create(
+        const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
+            audioPipelineFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager);
 
     /**
      * Create a NotificationRenderer.  The new NotificationRenderer starts life in

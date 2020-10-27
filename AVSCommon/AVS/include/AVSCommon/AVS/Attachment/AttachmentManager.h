@@ -72,8 +72,16 @@ public:
     };
 
     /**
+     * Factory for creating IN_PROCESS instances of AttachmentManagerInterface.
+     *
+     * @return An IN_PROCESS instances of AttachmentManagerInterface.
+     */
+    static std::shared_ptr<AttachmentManagerInterface> createInProcessAttachmentManagerInterface();
+
+    /**
      * Constructor.
      *
+     * @deprecated
      * @param attachmentType The type of attachments which will be managed.
      */
     AttachmentManager(AttachmentType attachmentType);

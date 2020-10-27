@@ -36,6 +36,17 @@ class SQLiteCapabilitiesDelegateStorage : public CapabilitiesDelegateStorageInte
 public:
     /**
      * Creates an instance of the @c SQLiteCapabilitiesDelegate.
+     *
+     * @param configurationRoot The @c ConfigurationNode used to get database file configuration.
+     * @return A pointer to the @c SQLiteCapabilitiesDelegate.
+     */
+    static std::unique_ptr<CapabilitiesDelegateStorageInterface> createCapabilitiesDelegateStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Creates an instance of the @c SQLiteCapabilitiesDelegate.
+     *
+     * @deprecated
      * @param configurationRoot The @c ConfigurationNode used to get database file configuration.
      * @return A pointer to the @c SQLiteCapabilitiesDelegate.
      */

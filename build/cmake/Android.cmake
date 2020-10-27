@@ -38,7 +38,7 @@ if (ANDROID)
     if (ANDROID_MICROPHONE)
         add_definitions("-DANDROID_MICROPHONE")
     endif()
-    
+
     if (ANDROID_MEDIA_PLAYER)
         if (NOT FFMPEG_INCLUDE_DIR OR NOT FFMPEG_LIB_PATH)
             message(FATAL_ERROR "Cannot build Android Media Player without FFmpeg support.")

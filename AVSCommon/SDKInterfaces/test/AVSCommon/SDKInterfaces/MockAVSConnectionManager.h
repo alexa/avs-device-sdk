@@ -34,7 +34,6 @@ public:
     MOCK_METHOD0(reconnect, void());
     MOCK_CONST_METHOD0(isConnected, bool());
     MOCK_METHOD0(onWakeConnectionRetry, void());
-    MOCK_METHOD0(onWakeVerifyConnectivity, void());
     MOCK_METHOD1(
         addMessageObserver,
         void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
@@ -43,6 +42,9 @@ public:
         void(std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer));
     MOCK_METHOD1(addConnectionStatusObserver, void(std::shared_ptr<ConnectionStatusObserverInterface> observer));
     MOCK_METHOD1(removeConnectionStatusObserver, void(std::shared_ptr<ConnectionStatusObserverInterface> observer));
+    MOCK_METHOD1(sendMessage, void(std::shared_ptr<avs::MessageRequest> request));
+    MOCK_METHOD1(setAVSGateway, void(const std::string& avsGateway));
+    MOCK_CONST_METHOD0(getAVSGateway, std::string());
 };
 }  // namespace test
 }  // namespace sdkInterfaces

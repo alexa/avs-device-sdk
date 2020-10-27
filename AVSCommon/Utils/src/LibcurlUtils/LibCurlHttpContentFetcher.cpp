@@ -204,6 +204,7 @@ size_t LibCurlHttpContentFetcher::noopCallback(char* data, size_t size, size_t n
 LibCurlHttpContentFetcher::LibCurlHttpContentFetcher(const std::string& url) :
         m_state{HTTPContentFetcherInterface::State::INITIALIZED},
         m_url{url},
+        m_effectiveUrl{url},
         m_currentContentReceivedLength{0},
         m_totalContentReceivedLength{0},
         m_done{false},
@@ -373,6 +374,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                         ACSDK_ERROR(LX("curlEasyGetInfoFailed").d("error", curl_easy_strerror(curlReturnValue)));
                         break;
                     }
+
                     if (HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED != finalResponseCode &&
                         !isRedirect(finalResponseCode)) {
                         ACSDK_DEBUG9(LX("getContent").d("responseCode", finalResponseCode).sensitive("url", m_url));
@@ -397,6 +399,8 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                         break;
                     }
                 }
+
+                updateEffectiveURL();
 
                 // Free custom headers.
                 curl_slist_free_all(headerList);
@@ -492,6 +496,8 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                                          .d("restartingWithRange", ss.str()));
                     }
                 }
+
+                updateEffectiveURL();
 
                 /*
                  * If the writer was created locally, its job is done and can be safely closed.
@@ -680,6 +686,16 @@ void LibCurlHttpContentFetcher::stateTransition(State newState, bool value) {
 bool LibCurlHttpContentFetcher::waitingForBodyRequest() {
     State state = getState();
     return (State::INITIALIZED == state) || (State::FETCHING_HEADER == state) || (State::HEADER_DONE == state);
+}
+
+void LibCurlHttpContentFetcher::updateEffectiveURL() {
+    std::lock_guard<std::mutex> lock{m_effectiveUrlMutex};
+    m_effectiveUrl = m_curlWrapper.getEffectiveUrl();
+}
+
+std::string LibCurlHttpContentFetcher::getEffectiveUrl() const {
+    std::lock_guard<std::mutex> lock{m_effectiveUrlMutex};
+    return m_effectiveUrl;
 }
 
 }  // namespace libcurlUtils

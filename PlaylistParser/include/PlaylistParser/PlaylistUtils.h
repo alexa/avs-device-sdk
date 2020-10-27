@@ -47,6 +47,8 @@ void removeCarriageReturnFromLine(std::string* line);
  * @param contentFetcher Object used to retrieve url content.
  * @param [out] content The playlist content.
  * @param shouldShutDown A pointer to allow for the caller to cancel the content retrieval asynchronously
+ * @param [out] playlistURL A pointer to the playlist url. This will be updated in case the last used URL to fetch
+ * the content is different.
  * @return @c true if no error occured or @c false otherwise.
  * @note This function should be used to retrieve content specifically from playlist URLs. Attempting to use this
  * on a media URL could be blocking forever as the URL might point to a live stream.
@@ -54,7 +56,8 @@ void removeCarriageReturnFromLine(std::string* line);
 bool readFromContentFetcher(
     std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> contentFetcher,
     std::string* content,
-    std::atomic<bool>* shouldShutDown);
+    std::atomic<bool>* shouldShutDown,
+    std::string* playlistURL);
 
 /**
  * Determines whether the provided url is an absolute url as opposed to a relative url. This is done by simply

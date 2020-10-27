@@ -22,6 +22,17 @@ namespace sampleApp {
 using namespace avsCommon::utils;
 using namespace alexaClientSDK::avsCommon::avs;
 
+std::shared_ptr<captions::CaptionPresenterInterface> CaptionPresenter::createCaptionPresenterInterface(
+    const std::shared_ptr<captions::CaptionManagerInterface>& captionManager) {
+    auto captionPresenter = std::make_shared<alexaClientSDK::sampleApp::CaptionPresenter>();
+
+    if (captionManager && captionManager->isEnabled()) {
+        captionManager->setCaptionPresenter(captionPresenter);
+    }
+
+    return captionPresenter;
+}
+
 void CaptionPresenter::onCaptionActivity(const captions::CaptionFrame& captionFrame, FocusState focus) {
     // Note: due to the nature of console-driven text output, two concessions are being made:
     //  - The only type of focus that is handled is FOREGROUND. BACKGROUND and NONE should also be handled.

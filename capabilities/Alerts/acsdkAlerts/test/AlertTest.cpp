@@ -461,10 +461,10 @@ TEST_F(AlertTest, test_focusChangeDuringActivation) {
     // Activate alert
     EXPECT_CALL(*(m_renderer.get()), start(_, _, _, _, _, _, _)).WillRepeatedly(Return());
     EXPECT_CALL(*(m_renderer.get()), stop()).WillOnce(Return());
-    m_alert->setFocusState(avsCommon::avs::FocusState::BACKGROUND);
+    m_alert->setFocusState(avsCommon::avs::FocusState::BACKGROUND, avsCommon::avs::MixingBehavior::MAY_DUCK);
     m_alert->activate();
     ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVATING);
-    m_alert->setFocusState(avsCommon::avs::FocusState::FOREGROUND);
+    m_alert->setFocusState(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
 
     m_alert->onRendererStateChange(RendererObserverInterface::State::STARTED, "started");
 }

@@ -22,10 +22,15 @@
 #include <unordered_map>
 #include <vector>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/StateProviderInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
@@ -46,6 +51,25 @@ class AudioActivityTracker
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::StateProviderInterface {
 public:
+    /**
+     * Creates a new @c ActivityTrackerInterface instance, annotated with @c AudioFocusAnnotation.
+     *
+     * @param contextManager The AVS Context manager used to generate system context for events.
+     * @param shutdownNotifier The object to notify this instance when it is time to shut down.
+     * @param defaultEndpointCapabilitiesRegistrar The capabilities registrar for the default endpoint with which
+     * to register this capability.
+     * @return An @c Annotated @c std::shared_ptr to the new @c AudioActivityTracker instance, or @c nullptr if the
+     * operation failed.
+     */
+    static acsdkManufactory::Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, ActivityTrackerInterface>
+    createAudioActivityTrackerInterface(
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier,
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>
+            defaultEndpointCapabilitiesRegistrar);
+
     /**
      * Creates a new @c AudioActivityTracker instance.
      *

@@ -108,7 +108,7 @@ std::unique_ptr<FFmpegDecoder> FFmpegDecoder::create(
 
     AVSampleFormat format = convertFormat(outputConfig.sampleFormat());
     auto layout = convertLayout(outputConfig.channelLayout());
-    int sampleRate = outputConfig.sampleRate();
+    auto sampleRate = static_cast<int>(outputConfig.sampleRate());
 
     return std::unique_ptr<FFmpegDecoder>(
         new FFmpegDecoder(std::move(inputController), format, layout, sampleRate, config));

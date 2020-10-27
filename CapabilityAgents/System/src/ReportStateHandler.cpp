@@ -281,7 +281,6 @@ void ReportStateHandler::sendReportState() {
 void system::ReportStateHandler::clearData() {
     std::lock_guard<std::mutex> lock(m_stateMutex);
     m_storage->clearTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
-    m_storage->deleteTable(REPORT_STATE_COMPONENT_NAME, REPORT_STATE_TABLE);
 }
 
 void ReportStateHandler::addStateReportGenerator(const StateReportGenerator& generator) {

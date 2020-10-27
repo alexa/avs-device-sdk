@@ -35,21 +35,21 @@ namespace acsdkManufactory {
 namespace internal {
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addUniqueFactory(std::function<std::unique_ptr<Type>(Dependencies...)> factory) {
+inline CookBook& CookBook::addUniqueFactory(std::function<std::unique_ptr<Type>(Dependencies...)> factory) {
     addFunctionRecipe<UniquePointerFunctionRecipe<Type, Dependencies...>, std::unique_ptr<Type>, Dependencies...>(
         factory);
     return *this;
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addUniqueFactory(std::unique_ptr<Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addUniqueFactory(std::unique_ptr<Type> (*factory)(Dependencies...)) {
     addFactoryRecipe<UniquePointerFactoryRecipe<Type, Dependencies...>, std::unique_ptr<Type>, Dependencies...>(
         factory);
     return *this;
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
     using ResultType = std::shared_ptr<Type>;
 
     addFunctionRecipe<
@@ -63,7 +63,7 @@ CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>(Depend
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
     using ResultType = Annotated<Annotation, Type>;
 
     addFunctionRecipe<
@@ -77,7 +77,7 @@ CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation, Type>(
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
     using ResultType = std::shared_ptr<Type>;
 
     addFactoryRecipe<
@@ -91,7 +91,7 @@ CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(Dependenc
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
     using ResultType = Annotated<Annotation, Type>;
 
     addFactoryRecipe<
@@ -105,7 +105,7 @@ CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*factory)(Dep
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
     using ResultType = std::shared_ptr<Type>;
 
     addFunctionRecipe<
@@ -119,7 +119,7 @@ CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type>(Depen
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
     using ResultType = Annotated<Annotation, Type>;
 
     addFunctionRecipe<
@@ -133,7 +133,7 @@ CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation, Type>
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
     using ResultType = std::shared_ptr<Type>;
 
     addFactoryRecipe<
@@ -147,7 +147,7 @@ CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(Dependen
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
     using ResultType = Annotated<Annotation, Type>;
 
     addFactoryRecipe<
@@ -161,7 +161,7 @@ CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*factory)(De
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addRetainedFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addRetainedFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
     using ResultType = std::shared_ptr<Type>;
 
     return addFunctionRecipe<
@@ -170,7 +170,7 @@ CookBook& CookBook::addRetainedFactory(std::function<std::shared_ptr<Type>(Depen
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addRetainedFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addRetainedFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
     using ResultType = Annotated<Annotation, Type>;
 
     return addFunctionRecipe<
@@ -179,7 +179,7 @@ CookBook& CookBook::addRetainedFactory(std::function<Annotated<Annotation, Type>
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addRetainedFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addRetainedFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
     using ResultType = std::shared_ptr<Type>;
 
     return addFactoryRecipe<
@@ -188,7 +188,7 @@ CookBook& CookBook::addRetainedFactory(std::shared_ptr<Type> (*factory)(Dependen
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addRetainedFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addRetainedFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
     using ResultType = Annotated<Annotation, Type>;
 
     return addFactoryRecipe<
@@ -197,7 +197,7 @@ CookBook& CookBook::addRetainedFactory(Annotated<Annotation, Type> (*factory)(De
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addUnloadableFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addUnloadableFactory(std::function<std::shared_ptr<Type>(Dependencies...)> function) {
     using ResultType = std::shared_ptr<Type>;
 
     return addFunctionRecipe<
@@ -206,7 +206,7 @@ CookBook& CookBook::addUnloadableFactory(std::function<std::shared_ptr<Type>(Dep
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addUnloadableFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
+inline CookBook& CookBook::addUnloadableFactory(std::function<Annotated<Annotation, Type>(Dependencies...)> function) {
     using ResultType = Annotated<Annotation, Type>;
 
     return addFunctionRecipe<
@@ -215,7 +215,7 @@ CookBook& CookBook::addUnloadableFactory(std::function<Annotated<Annotation, Typ
 }
 
 template <typename Type, typename... Dependencies>
-CookBook& CookBook::addUnloadableFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addUnloadableFactory(std::shared_ptr<Type> (*factory)(Dependencies...)) {
     using ResultType = std::shared_ptr<Type>;
 
     return addFactoryRecipe<
@@ -224,7 +224,7 @@ CookBook& CookBook::addUnloadableFactory(std::shared_ptr<Type> (*factory)(Depend
 }
 
 template <typename Annotation, typename Type, typename... Dependencies>
-CookBook& CookBook::addUnloadableFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addUnloadableFactory(Annotated<Annotation, Type> (*factory)(Dependencies...)) {
     using ResultType = Annotated<Annotation, Type>;
 
     return addFactoryRecipe<
@@ -353,16 +353,19 @@ inline bool CookBook::checkCompleteness() {
 }
 
 template <typename RecipeType, typename ResultType, typename... Dependencies>
-CookBook& CookBook::addFunctionRecipe(std::function<ResultType(Dependencies...)> function) {
+inline CookBook& CookBook::addFunctionRecipe(std::function<ResultType(Dependencies...)> function) {
     if (!checkIsValid(__func__)) {
         return *this;
     }
     auto newRecipe = std::make_shared<RecipeType>(function);
     auto& RecipePtr = m_recipes[getTypeIndex<ResultType>()];
     if (RecipePtr) {
+/// Remove this check for Windows only.
+#ifndef _WIN32
         if (!RecipePtr->isEquivalent(newRecipe)) {
             markInvalid("addFunctionRecipeFiled", "Recipes are not equivalent", getTypeIndex<ResultType>().getName());
         }
+#endif
     } else {
         RecipePtr = newRecipe;
     }
@@ -371,16 +374,19 @@ CookBook& CookBook::addFunctionRecipe(std::function<ResultType(Dependencies...)>
 }
 
 template <typename RecipeType, typename ResultType, typename... Dependencies>
-CookBook& CookBook::addFactoryRecipe(ResultType (*factory)(Dependencies...)) {
+inline CookBook& CookBook::addFactoryRecipe(ResultType (*factory)(Dependencies...)) {
     if (!checkIsValid(__func__)) {
         return *this;
     }
     auto newRecipe = std::make_shared<RecipeType>(factory);
     auto& RecipePtr = m_recipes[getTypeIndex<ResultType>()];
     if (RecipePtr) {
+/// Remove this check for Windows only.
+#ifndef _WIN32
         if (!RecipePtr->isEquivalent(newRecipe)) {
             markInvalid("addFactoryRecipeFiled", "Recipes are not equivalent", getTypeIndex<ResultType>().getName());
         }
+#endif
     } else {
         RecipePtr = newRecipe;
     }
@@ -413,20 +419,7 @@ inline Type CookBook::invokeWithDependencies(
 
 template <typename Type, typename FunctionType, typename... Dependencies>
 inline Type CookBook::innerInvokeWithDependencies(FunctionType function, Dependencies... dependencies) {
-    if (!checkNonNull(dependencies...)) {
-        return Type();
-    }
-
     return function(std::move(dependencies)...);
-}
-
-template <typename First, typename... Remainder>
-inline bool CookBook::checkNonNull(const First& first, const Remainder&... remainder) {
-    return first && checkNonNull(remainder...);
-}
-
-inline bool CookBook::checkNonNull() {
-    return true;
 }
 
 ////////// CookBook::AbstractRecipe
@@ -449,25 +442,25 @@ TypeIndex CookBook::UniquePointerRecipe<Type>::getValueType() const {
 ////////// CookBook::UniquePointerFunctionRecipe
 
 template <typename Type, typename... Dependencies>
-CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::UniquePointerFunctionRecipe(
+inline CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::UniquePointerFunctionRecipe(
     std::function<std::unique_ptr<Type>(Dependencies...)> function) :
         m_function{function} {
     this->m_dependencies = {getTypeIndex<Dependencies>()...};
 }
 
 template <typename Type, typename... Dependencies>
-TypeIndex CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::getRecipeType() const {
+inline TypeIndex CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::getRecipeType() const {
     return getTypeIndex<CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>>();
 }
 
 template <typename Type, typename... Dependencies>
-bool CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::isEquivalent(
+inline bool CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::isEquivalent(
     const std::shared_ptr<AbstractRecipe>& recipe) const {
     return false;
 }
 
 template <typename Type, typename... Dependencies>
-std::unique_ptr<Type> CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::createUniquePointer(
+inline std::unique_ptr<Type> CookBook::UniquePointerFunctionRecipe<Type, Dependencies...>::createUniquePointer(
     RuntimeManufactory& runtimeManufactory) const {
     if (!m_function) {
         return std::unique_ptr<Type>();
@@ -483,19 +476,19 @@ std::unique_ptr<Type> CookBook::UniquePointerFunctionRecipe<Type, Dependencies..
 ////////// CookBook::UniquePointerFactoryRecipe
 
 template <typename Type, typename... Dependencies>
-CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::UniquePointerFactoryRecipe(
+inline CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::UniquePointerFactoryRecipe(
     std::unique_ptr<Type> (*factory)(Dependencies...)) :
         m_factory{factory} {
     this->m_dependencies = {getTypeIndex<Dependencies>()...};
 }
 
 template <typename Type, typename... Dependencies>
-TypeIndex CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::getRecipeType() const {
+inline TypeIndex CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::getRecipeType() const {
     return getTypeIndex<CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>>();
 }
 
 template <typename Type, typename... Dependencies>
-bool CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::isEquivalent(
+inline bool CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::isEquivalent(
     const std::shared_ptr<AbstractRecipe>& recipe) const {
     if (!recipe || recipe->getRecipeType() != getRecipeType()) {
         return false;
@@ -506,7 +499,7 @@ bool CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::isEquivalent(
 }
 
 template <typename Type, typename... Dependencies>
-std::unique_ptr<Type> CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::createUniquePointer(
+inline std::unique_ptr<Type> CookBook::UniquePointerFactoryRecipe<Type, Dependencies...>::createUniquePointer(
     RuntimeManufactory& runtimeManufactory) const {
     if (!m_factory) {
         return std::unique_ptr<Type>();
@@ -522,32 +515,32 @@ std::unique_ptr<Type> CookBook::UniquePointerFactoryRecipe<Type, Dependencies...
 ////////// CookBook::SharedPointerRecipe
 
 template <typename Type>
-TypeIndex CookBook::SharedPointerRecipe<Type>::getValueType() const {
+inline TypeIndex CookBook::SharedPointerRecipe<Type>::getValueType() const {
     return getTypeIndex<std::shared_ptr<Type>>();
 }
 
 ////////// CookBook::SharedPointerFunctionRecipe
 
 template <typename CacheType, typename Type, typename... Dependencies>
-CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::SharedPointerFunctionRecipe(
+inline CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::SharedPointerFunctionRecipe(
     std::function<Type(Dependencies...)> function) :
         m_function{function} {
     this->m_dependencies = {getTypeIndex<Dependencies>()...};
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::
+inline std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::
     createSharedPointerCache() const {
     return std::unique_ptr<CacheType>(new CacheType(m_function));
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-TypeIndex CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::getRecipeType() const {
+inline TypeIndex CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::getRecipeType() const {
     return getTypeIndex<CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>>();
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-bool CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::isEquivalent(
+inline bool CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::isEquivalent(
     const std::shared_ptr<AbstractRecipe>& recipe) const {
     return false;
 }
@@ -555,25 +548,25 @@ bool CookBook::SharedPointerFunctionRecipe<CacheType, Type, Dependencies...>::is
 ////////// CookBook::SharedPointerFactoryRecipe
 
 template <typename CacheType, typename Type, typename... Dependencies>
-CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::SharedPointerFactoryRecipe(
+inline CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::SharedPointerFactoryRecipe(
     Type (*factory)(Dependencies...)) :
         m_factory{factory} {
     this->m_dependencies = {getTypeIndex<Dependencies>()...};
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::
+inline std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::
     createSharedPointerCache() const {
     return std::unique_ptr<CacheType>(new CacheType(m_factory));
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-TypeIndex CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::getRecipeType() const {
+inline TypeIndex CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::getRecipeType() const {
     return getTypeIndex<CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>>();
 }
 
 template <typename CacheType, typename Type, typename... Dependencies>
-bool CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::isEquivalent(
+inline bool CookBook::SharedPointerFactoryRecipe<CacheType, Type, Dependencies...>::isEquivalent(
     const std::shared_ptr<AbstractRecipe>& recipe) const {
     if (!recipe || recipe->getRecipeType() != getRecipeType()) {
         return false;
@@ -592,7 +585,8 @@ inline CookBook::SharedPointerInstanceRecipe<Type>::SharedPointerInstanceRecipe(
 }
 
 template <typename Type>
-std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerInstanceRecipe<Type>::createSharedPointerCache() const {
+inline std::unique_ptr<PointerCache<Type>> CookBook::SharedPointerInstanceRecipe<Type>::createSharedPointerCache()
+    const {
     return std::unique_ptr<InstancePointerCache<Type>>(new InstancePointerCache<Type>(m_instance));
 }
 
@@ -616,13 +610,13 @@ inline bool CookBook::SharedPointerInstanceRecipe<Type>::isEquivalent(
 ////////// CookBook::RequiredPointerCache
 
 template <typename Type, typename... Dependencies>
-CookBook::RequiredPointerCache<Type, Dependencies...>::RequiredPointerCache(
+inline CookBook::RequiredPointerCache<Type, Dependencies...>::RequiredPointerCache(
     std::function<Type(Dependencies...)> factory) :
         m_factory{factory} {
 }
 
 template <typename Type, typename... Dependencies>
-Type CookBook::RequiredPointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
+inline Type CookBook::RequiredPointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
     if (!m_value) {
         InstanceGetter<Type, Dependencies...> getter = [this](Dependencies... dependencies) {
             return m_factory(std::move(dependencies)...);
@@ -637,13 +631,13 @@ Type CookBook::RequiredPointerCache<Type, Dependencies...>::get(RuntimeManufacto
 ////////// CookBook::RetainedPointerCache
 
 template <typename Type, typename... Dependencies>
-CookBook::RetainedPointerCache<Type, Dependencies...>::RetainedPointerCache(
+inline CookBook::RetainedPointerCache<Type, Dependencies...>::RetainedPointerCache(
     std::function<Type(Dependencies...)> factory) :
         m_factory{factory} {
 }
 
 template <typename Type, typename... Dependencies>
-Type CookBook::RetainedPointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
+inline Type CookBook::RetainedPointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
     if (!m_value) {
         InstanceGetter<Type, Dependencies...> getter = [this](Dependencies... dependencies) {
             return m_factory(std::move(dependencies)...);
@@ -658,13 +652,13 @@ Type CookBook::RetainedPointerCache<Type, Dependencies...>::get(RuntimeManufacto
 ////////// CookBook::UnloadablePointerCache
 
 template <typename Type, typename... Dependencies>
-CookBook::UnloadablePointerCache<Type, Dependencies...>::UnloadablePointerCache(
+inline CookBook::UnloadablePointerCache<Type, Dependencies...>::UnloadablePointerCache(
     std::function<Type(Dependencies...)> factory) :
         m_factory{factory} {
 }
 
 template <typename Type, typename... Dependencies>
-Type CookBook::UnloadablePointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
+inline Type CookBook::UnloadablePointerCache<Type, Dependencies...>::get(RuntimeManufactory& runtimeManufactory) {
     auto result = m_value.lock();
     if (!result) {
         InstanceGetter<Type, Dependencies...> getter = [this](Dependencies... dependencies) {
@@ -682,11 +676,11 @@ Type CookBook::UnloadablePointerCache<Type, Dependencies...>::get(RuntimeManufac
 ////////// CookBook::InstancePointerCache
 
 template <typename Type>
-CookBook::InstancePointerCache<Type>::InstancePointerCache(Type instance) : m_instance{instance} {
+inline CookBook::InstancePointerCache<Type>::InstancePointerCache(Type instance) : m_instance{instance} {
 }
 
 template <typename Type>
-Type CookBook::InstancePointerCache<Type>::get(RuntimeManufactory& runtimeManufactory) {
+inline Type CookBook::InstancePointerCache<Type>::get(RuntimeManufactory& runtimeManufactory) {
     return m_instance;
 }
 

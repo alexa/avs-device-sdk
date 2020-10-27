@@ -18,8 +18,10 @@
 
 #include <memory>
 
+#include "AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h"
 #include "AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h"
 #include "AVSCommon/SDKInterfaces/MessageObserverInterface.h"
+#include "AVSCommon/SDKInterfaces/MessageSenderInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -28,7 +30,9 @@ namespace sdkInterfaces {
 /**
  * This class reflects a connection to AVS and how it may be observed.
  */
-class AVSConnectionManagerInterface {
+class AVSConnectionManagerInterface
+        : public MessageSenderInterface
+        , public AVSGatewayAssignerInterface {
 public:
     /// Type alias for brevity.
     using ConnectionStatusObserverInterface = avsCommon::sdkInterfaces::ConnectionStatusObserverInterface;

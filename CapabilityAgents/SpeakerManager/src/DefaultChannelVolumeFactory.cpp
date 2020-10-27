@@ -18,6 +18,11 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace speakerManager {
 
+std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface> DefaultChannelVolumeFactory::
+    createChannelVolumeFactoryInterface() {
+    return std::make_shared<DefaultChannelVolumeFactory>();
+}
+
 std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface> DefaultChannelVolumeFactory::
     createChannelVolumeInterface(
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface> speaker,

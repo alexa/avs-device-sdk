@@ -354,6 +354,28 @@ long CurlEasyHandleWrapper::getHTTPResponseCode() {
     return 0;
 }
 
+std::string CurlEasyHandleWrapper::getEffectiveUrl() {
+    std::string effectiveUrl;
+    if (isValid()) {
+        char* temp = nullptr;
+        auto status = curl_easy_getinfo(m_handle, CURLINFO_EFFECTIVE_URL, &temp);
+        if (status != CURLE_OK) {
+            ACSDK_ERROR(LX("getEffectiveURLFailed").d("reason", "curlEasyGetinfoFailed").d("status", status));
+            return effectiveUrl;
+        }
+
+        if (temp) {
+            effectiveUrl = temp;
+            ACSDK_DEBUG7(LX(__func__).d("effectiveURL", effectiveUrl));
+        }
+
+    } else {
+        ACSDK_ERROR(LX("getEffectiveURLFailed").d("reason", "notValid"));
+    }
+
+    return effectiveUrl;
+}
+
 CURLcode CurlEasyHandleWrapper::perform() {
     if (isValid()) {
         return curl_easy_perform(m_handle);

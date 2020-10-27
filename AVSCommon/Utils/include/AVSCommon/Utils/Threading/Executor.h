@@ -27,6 +27,7 @@
 #include <utility>
 
 #include "AVSCommon/Utils/Threading/TaskThread.h"
+#include "AVSCommon/Utils/Power/PowerResource.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -139,8 +140,14 @@ private:
     /// A flag for whether or not the queue is expecting more tasks.
     std::atomic_bool m_shutdown;
 
+    /// A @c PowerResource.
+    std::shared_ptr<power::PowerResource> m_powerResource;
+
     /// The condition variable used to detect new job or timeout.
     std::condition_variable m_delayedCondition;
+
+    /// The id of this instance.
+    const uint64_t m_id;
 
     /// The thread to execute tasks on. The thread must be declared last to be destructed first.
     TaskThread m_taskThread;
@@ -227,6 +234,9 @@ auto Executor::pushTo(bool front, Task task, Args&&... args) -> std::future<decl
         std::lock_guard<std::mutex> queueLock{m_queueMutex};
         if (!m_shutdown) {
             restart = !m_threadRunning;
+            if (m_powerResource) {
+                m_powerResource->acquire();
+            }
             m_queue.emplace(front ? m_queue.begin() : m_queue.end(), std::move(translated_task));
         } else {
             using FutureType = decltype(task(args...));

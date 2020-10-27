@@ -21,7 +21,6 @@
 #include "acsdkAudioPlayer/AudioPlayer.h"
 
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -36,9 +35,11 @@ namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
 
 using namespace acsdkAudioPlayerInterfaces;
+using namespace acsdkManufactory;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::endpoints;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::logger;
@@ -203,6 +204,9 @@ static const std::string MID_PLAYBACK_FATAL = "PlaybackFatalError";
 /// Time spent on queue
 static const std::string TRACK_TIME_ON_QUEUE = "TrackTimeOnQueue";
 
+/// Latency between handleDirective command for a new play session and PLAYING state
+static const std::string HANDLE_PLAY_COMMAND_TO_PLAYING = "directiveReceiveToPlaying";
+
 /// whitelisted metadata to send to server.  This is done to avoid excessive traffic
 /// must be all lower-case
 static const std::vector<std::string> METADATA_WHITELIST = {"title"};
@@ -212,6 +216,12 @@ static const std::chrono::seconds METADATA_EVENT_RATE{1};
 
 /// Time to keep the pipeline open after a local pause.
 static const std::chrono::seconds LOCAL_STOP_DEFAULT_PIPELINE_OPEN_TIME(900);  // 15min
+
+/// Normalization enabled (HIGH level)
+static const std::string NORMALIZATION_LEVEL_HIGH = "HIGH";
+
+/// Normalization disabled
+static const std::string NORMALIZATION_LEVEL_OFF = "OFF";
 
 /**
  * Compare two URLs up to the 'query' portion, if one exists.
@@ -261,7 +271,8 @@ static void submitMetric(
     const DataPoint& dataPoint,
     const std::string& msgId,
     const std::string& trackId,
-    const std::string& requesterType = "") {
+    const std::string& requesterType = "",
+    const std::string& trackProtection = "") {
     auto metricBuilder = MetricEventBuilder{}.setActivityName(metricActivityName).addDataPoint(dataPoint);
     if (!msgId.empty()) {
         metricBuilder.addDataPoint(DataPointStringBuilder{}.setName("DIRECTIVE_MESSAGE_ID").setValue(msgId).build());
@@ -271,6 +282,10 @@ static void submitMetric(
     }
     if (!requesterType.empty()) {
         metricBuilder.addDataPoint(DataPointStringBuilder{}.setName("REQUESTER_TYPE").setValue(requesterType).build());
+    }
+    if (!trackProtection.empty()) {
+        metricBuilder.addDataPoint(
+            DataPointStringBuilder{}.setName("TrackProtectionName").setValue(trackProtection).build());
     }
 
     auto metric = metricBuilder.build();
@@ -298,21 +313,71 @@ AudioPlayer::PlayDirectiveInfo::PlayDirectiveInfo(const std::string& messageId) 
         messageId{messageId},
         playBehavior{PlayBehavior::ENQUEUE},
         sourceId{ERROR_SOURCE_ID},
-        isBuffered{false} {
+        isBuffered{false},
+        normalizationEnabled{false} {
+}
+
+std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface> AudioPlayer::createAudioPlayerInterface(
+    const std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface>& mediaResourceProvider,
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+    const acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::AudioFocusAnnotation,
+        avsCommon::sdkInterfaces::FocusManagerInterface>& annotatedFocusManager,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+    const std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface>& playbackRouter,
+    const std::shared_ptr<captions::CaptionManagerInterface>& captionManager,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
+    const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>&
+        renderPlayerInfoCardsProviderRegistrar) {
+    std::shared_ptr<FocusManagerInterface> focusManager = annotatedFocusManager;
+    if (!mediaResourceProvider || !shutdownNotifier || !endpointCapabilitiesRegistrar ||
+        !renderPlayerInfoCardsProviderRegistrar) {
+        ACSDK_ERROR(LX("createAudioPlayerInterfaceFailed")
+                        .d("isPooledMediaResourceProviderNull", !mediaResourceProvider)
+                        .d("isShutdownNotifierNull", !shutdownNotifier)
+                        .d("isEndpointCapabilitiesRegistrarNull", !endpointCapabilitiesRegistrar)
+                        .d("isRenderPlayerInfoCardsProviderRegistrarNull", !renderPlayerInfoCardsProviderRegistrar));
+        return nullptr;
+    }
+
+    auto audioPlayer = AudioPlayer::create(
+        mediaResourceProvider,
+        messageSender,
+        focusManager,
+        contextManager,
+        exceptionSender,
+        playbackRouter,
+        captionManager,
+        metricRecorder);
+
+    if (!audioPlayer) {
+        ACSDK_ERROR(LX("createAudioPlayerInterfaceFailed"));
+        return nullptr;
+    }
+
+    shutdownNotifier->addObserver(audioPlayer);
+    endpointCapabilitiesRegistrar->withCapability(audioPlayer, audioPlayer);
+    renderPlayerInfoCardsProviderRegistrar->registerProvider(audioPlayer);
+
+    return audioPlayer;
 }
 
 std::shared_ptr<AudioPlayer> AudioPlayer::create(
-    std::unique_ptr<MediaPlayerFactoryInterface> mediaPlayerFactory,
+    std::shared_ptr<avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface> mediaResourceProvider,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<PlaybackRouterInterface> playbackRouter,
-    std::vector<std::shared_ptr<ChannelVolumeInterface>> audioChannelVolumeInterfaces,
     std::shared_ptr<captions::CaptionManagerInterface> captionManager,
     std::shared_ptr<MetricRecorderInterface> metricRecorder) {
-    if (nullptr == mediaPlayerFactory) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullMediaPlayerFactory"));
+    if (nullptr == mediaResourceProvider) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullMediaResourceProvider"));
         return nullptr;
     } else if (nullptr == messageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageSender"));
@@ -329,13 +394,16 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
     } else if (nullptr == playbackRouter) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullPlaybackRouter"));
         return nullptr;
-    } else if (audioChannelVolumeInterfaces.empty()) {
+    }
+
+    auto audioChannelVolumeInterfaces = mediaResourceProvider->getSpeakers();
+    if (audioChannelVolumeInterfaces.empty()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "emptyAudioChannelVolumeInterfaces"));
         return nullptr;
     }
 
     auto audioPlayer = std::shared_ptr<AudioPlayer>(new AudioPlayer(
-        std::move(mediaPlayerFactory),
+        mediaResourceProvider,
         messageSender,
         focusManager,
         contextManager,
@@ -345,7 +413,7 @@ std::shared_ptr<AudioPlayer> AudioPlayer::create(
         captionManager,
         metricRecorder));
     contextManager->setStateProvider(STATE, audioPlayer);
-    audioPlayer->m_mediaPlayerFactory->addObserver(audioPlayer);
+    audioPlayer->m_mediaResourceProvider->addObserver(audioPlayer);
 
     return audioPlayer;
 }
@@ -538,12 +606,17 @@ void AudioPlayer::onFirstByteRead(SourceId id, const MediaPlayerState& state) {
 void AudioPlayer::onPlaybackStarted(SourceId id, const MediaPlayerState& state) {
     ACSDK_DEBUG(LX("onPlaybackStarted").d("id", id).d("state", state));
 
+    // m_currentMediaPlayerProtection can only be updated in the executor thread, hence
+    // using the MediaPlayerState instead of m_currentMediaPlayerProtection.
+    std::string trackProtectionName = getTrackProtectionName(state);
     submitMetric(
         m_metricRecorder,
         AUDIO_PLAYER_METRIC_PREFIX + PLAYBACK_STARTED,
         DataPointCounterBuilder{}.setName(PLAYBACK_STARTED).increment(1).build(),
         m_currentlyPlaying->messageId,
-        m_currentlyPlaying->audioItem.id);
+        m_currentlyPlaying->audioItem.id,
+        "",
+        trackProtectionName);
 
     m_executor.submit([this, id, state] { executeOnPlaybackStarted(id, state); });
 }
@@ -700,6 +773,7 @@ bool AudioPlayer::localOperation(PlaybackOperation op) {
     if (successFuture.wait_for(std::chrono::milliseconds(1000)) == std::future_status::ready) {
         return successFuture.get();
     }
+
     return false;
 }
 
@@ -710,7 +784,7 @@ bool AudioPlayer::localSeekTo(std::chrono::milliseconds location, bool fromStart
 }
 
 AudioPlayer::AudioPlayer(
-    std::unique_ptr<MediaPlayerFactoryInterface> mediaPlayerFactory,
+    std::shared_ptr<PooledMediaResourceProviderInterface> mediaResourceProvider,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<FocusManagerInterface> focusManager,
     std::shared_ptr<ContextManagerInterface> contextManager,
@@ -721,7 +795,7 @@ AudioPlayer::AudioPlayer(
     std::shared_ptr<MetricRecorderInterface> metricRecorder) :
         CapabilityAgent{NAMESPACE, exceptionSender},
         RequiresShutdown{"AudioPlayer"},
-        m_mediaPlayerFactory{std::move(mediaPlayerFactory)},
+        m_mediaResourceProvider{std::move(mediaResourceProvider)},
         m_messageSender{messageSender},
         m_focusManager{focusManager},
         m_contextManager{contextManager},
@@ -732,6 +806,7 @@ AudioPlayer::AudioPlayer(
         m_focus{FocusState::NONE},
         m_currentlyPlaying(std::make_shared<PlayDirectiveInfo>("")),
         m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}},
+        m_playNextItemAfterStopped{false},
         m_isStopCalled{false},
         m_okToRequestNextTrack{false},
         m_isAcquireChannelRequestPending{false},
@@ -740,8 +815,9 @@ AudioPlayer::AudioPlayer(
         m_isAutoProgressing{false},
         m_isLocalResumePending(false),
         m_isStartingPlayback{false},
+        m_isPausingPlayback{false},
         m_audioChannelVolumeInterfaces{audioChannelVolumeInterfaces} {
-    Fingerprint fingerprint = m_mediaPlayerFactory->getFingerprint();
+    Fingerprint fingerprint = m_mediaResourceProvider->getFingerprint();
     m_capabilityConfigurations.insert(getAudioPlayerCapabilityConfiguration(fingerprint));
     m_currentlyPlaying->sourceId = ERROR_SOURCE_ID;
 }
@@ -769,8 +845,8 @@ void AudioPlayer::doShutdown() {
     m_executor.shutdown();
     executeStop();
     releaseMediaPlayer(m_currentlyPlaying);
-    m_mediaPlayerFactory->removeObserver(shared_from_this());
-    m_mediaPlayerFactory.reset();
+    m_mediaResourceProvider->removeObserver(shared_from_this());
+    m_mediaResourceProvider.reset();
     m_messageSender.reset();
     m_focusManager.reset();
     m_contextManager->setStateProvider(STATE, nullptr);
@@ -830,12 +906,13 @@ static audio::MixingBehavior getMixingBehavior(
 
 void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("preHandlePlayDirective"));
-    ACSDK_DEBUG9(LX("prePLAY").d("payload", info->directive->getPayload()));
+    if (info) {
+        ACSDK_DEBUG9(LX("prePLAY").d("payload", info->directive->getPayload()));
+    }
     rapidjson::Document payload;
-    if (!parseDirectivePayload(info, &payload)) {
+    if (!info || !parseDirectivePayload(info, &payload)) {
         return;
     }
-
     std::shared_ptr<PlayDirectiveInfo> playItem = std::make_shared<PlayDirectiveInfo>(info->directive->getMessageId());
 
     if (!jsonUtils::retrieveValue(payload, "playBehavior", &playItem->playBehavior)) {
@@ -854,6 +931,13 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     if (!jsonUtils::retrieveValue(audioItemJson->value, "audioItemId", &audioItem.id)) {
         audioItem.id = "anonymous";
     }
+
+    std::string normalizationMode;
+    if (!jsonUtils::retrieveValue(audioItemJson->value, "normalizationLevel", &normalizationMode)) {
+        normalizationMode = NORMALIZATION_LEVEL_OFF;
+    }
+    playItem->normalizationEnabled = (normalizationMode == NORMALIZATION_LEVEL_HIGH);
+    ACSDK_INFO(LX("preHandlePlayDirective").d("normalizationMode", normalizationMode));
 
     rapidjson::Value::ConstMemberIterator stream;
     if (!jsonUtils::findNode(audioItemJson->value, "stream", &stream)) {
@@ -962,7 +1046,7 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     rapidjson::Value::ConstMemberIterator httpHeadersIterator;
     if (jsonUtils::findNode(stream->value, PlaybackContext::HTTP_HEADERS, &httpHeadersIterator)) {
-        parseHeadersFromPlayDirective(httpHeadersIterator->value, audioItem);
+        parseHeadersFromPlayDirective(httpHeadersIterator->value, &audioItem);
     }
     // Trigger play directive received after we have the track ID
     auto messageId = info->directive->getMessageId();
@@ -975,8 +1059,8 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
             audioItem.stream.token);
     }
 
-    if (!m_captionManager) {
-        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captionManagerIsNull"));
+    if (!m_captionManager || !m_captionManager->isEnabled()) {
+        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captions disabled"));
     } else {
         rapidjson::Value::ConstMemberIterator captionIterator;
         if (!jsonUtils::findNode(stream->value, CAPTION_KEY, &captionIterator)) {
@@ -1037,10 +1121,12 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
 void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("handlePlayDirective"));
-    ACSDK_DEBUG9(LX("PLAY").d("payload", info->directive->getPayload()));
+    if (info) {
+        ACSDK_DEBUG9(LX("PLAY").d("payload", info->directive->getPayload()));
+    }
 
     rapidjson::Document payload;
-    if (!parseDirectivePayload(info, &payload)) {
+    if (!info || !parseDirectivePayload(info, &payload)) {
         return;
     }
 
@@ -1079,7 +1165,7 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
     auto messageId = info->directive->getMessageId();
 
-    if (playBehavior != PlayBehavior::ENQUEUE && !messageId.empty()) {
+    if (playBehavior == PlayBehavior::REPLACE_ALL && !messageId.empty()) {
         rapidjson::Value::ConstMemberIterator playRequestorJson;
         std::string requestorType{};
         if (jsonUtils::findNode(payload, "playRequestor", &playRequestorJson)) {
@@ -1097,6 +1183,9 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
             messageId,
             token,
             requestorType);
+
+        m_isRecordingTimeToPlayback = true;
+        m_playCommandToPlayingTimeMetricData.startDurationTimer();
     }
 
     // Pass messageId so we can use it when the track is popped from the play queue
@@ -1105,6 +1194,9 @@ void AudioPlayer::handlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
 
 void AudioPlayer::handleStopDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("handleStopDirective"));
+    if (!info) {
+        return;
+    }
 
     submitMetric(
         m_metricRecorder,
@@ -1122,7 +1214,7 @@ void AudioPlayer::handleStopDirective(std::shared_ptr<DirectiveInfo> info) {
 void AudioPlayer::handleClearQueueDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("handleClearQueue"));
     rapidjson::Document payload;
-    if (!parseDirectivePayload(info, &payload)) {
+    if (!info || !parseDirectivePayload(info, &payload)) {
         return;
     }
 
@@ -1138,7 +1230,7 @@ void AudioPlayer::handleClearQueueDirective(std::shared_ptr<DirectiveInfo> info)
 void AudioPlayer::handleUpdateProgressReportIntervalDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG1(LX("handleUpdateProgressReportIntervalDirective"));
     rapidjson::Document payload;
-    if (!parseDirectivePayload(info, &payload)) {
+    if (!info || !parseDirectivePayload(info, &payload)) {
         return;
     }
 
@@ -1156,7 +1248,7 @@ void AudioPlayer::handleUpdateProgressReportIntervalDirective(std::shared_ptr<Di
 void AudioPlayer::removeDirective(std::shared_ptr<DirectiveInfo> info) {
     // Check result too, to catch cases where DirectiveInfo was created locally, without a nullptr result.
     // In those cases there is no messageId to remove because no result was expected.
-    if (info->directive && info->result) {
+    if (info && info->directive && info->result) {
         auto messageId = info->directive->getMessageId();
         CapabilityAgent::removeDirective(messageId);
     }
@@ -1304,6 +1396,19 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                     return;
                 case PlayerActivity::PLAYING:
                 case PlayerActivity::BUFFER_UNDERRUN:
+                    if (m_isPausingPlayback) {
+                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "resumeMediaPlayer"));
+                        if (!m_currentlyPlaying->mediaPlayer->resume(m_currentlyPlaying->sourceId)) {
+                            sendPlaybackFailedEvent(
+                                m_currentlyPlaying->audioItem.stream.token,
+                                ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+                                "failed to resume media player",
+                                getMediaPlayerState());
+                            ACSDK_ERROR(LX("executeOnFocusChangedFailed").d("reason", "resumeFailed"));
+                            m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                            return;
+                        }
+                    }
                     // We should already have foreground focus in these states; break out to the warning below.
                     break;
             }
@@ -1334,7 +1439,7 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                         // background We need also to start to play, the mixing behavior will decide to pause or play in
                         // duck
                         if (m_audioPlayQueue.front()->mixingBehavior == audio::MixingBehavior::BEHAVIOR_DUCK &&
-                            !m_isStartingPlayback) {
+                            !m_isStartingPlayback && MixingBehavior::MAY_DUCK == m_mixingBehavior) {
                             ACSDK_DEBUG1(LX("transitionToBackgroundWhileNotPlayingAndNextItemDuckable")
                                              .d("result", "playNextItemInDuck"));
                             playNextItem();
@@ -1382,6 +1487,7 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                     // Pause By Default Upon Receiving Background Focus
                     if (m_currentlyPlaying->mediaPlayer) {
                         m_currentlyPlaying->mediaPlayer->pause(m_currentlyPlaying->sourceId);
+                        m_isPausingPlayback = true;
                     }
                 }
                     return;
@@ -1432,6 +1538,9 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
         return;
     }
 
+    if (state.mediaPlayerProtection.hasValue()) {
+        m_currentMediaPlayerProtection = state.mediaPlayerProtection.value();
+    }
     // Race condition exists where focus can be lost before the executeOnPlaybackStarted callback.
     if (avsCommon::avs::FocusState::NONE == m_focus) {
         ACSDK_WARN(LX(__func__).d("reason", "callbackAfterFocusLost").d("action", "stopping"));
@@ -1460,9 +1569,23 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
             "",
             "");
     }
+
+    if (m_isRecordingTimeToPlayback) {
+        ACSDK_DEBUG(LX("directiveReceiveToPlaying"));
+        m_isRecordingTimeToPlayback = false;
+        submitMetric(
+            m_metricRecorder,
+            AUDIO_PLAYER_METRIC_PREFIX + HANDLE_PLAY_COMMAND_TO_PLAYING,
+            m_playCommandToPlayingTimeMetricData.setName(HANDLE_PLAY_COMMAND_TO_PLAYING).stopDurationTimer().build(),
+            "",
+            "",
+            m_currentlyPlaying->playRequestor.type,
+            getTrackProtectionName(m_currentMediaPlayerProtection));
+    }
+
     m_progressTimer.start();
 
-    if (m_mediaPlayerFactory->isMediaPlayerAvailable() && m_currentlyPlaying->isBuffered) {
+    if (m_mediaResourceProvider->isMediaPlayerAvailable() && m_currentlyPlaying->isBuffered) {
         sendPlaybackNearlyFinishedEvent(state);
     } else {
         m_okToRequestNextTrack = true;
@@ -1493,7 +1616,7 @@ void AudioPlayer::executeOnBufferingComplete(SourceId id, const MediaPlayerState
         return;
     }
 
-    if (m_mediaPlayerFactory->isMediaPlayerAvailable() && m_okToRequestNextTrack) {
+    if (m_mediaResourceProvider->isMediaPlayerAvailable() && m_okToRequestNextTrack) {
         sendPlaybackNearlyFinishedEvent(state);
         m_okToRequestNextTrack = false;
     } else {
@@ -1506,11 +1629,26 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id, const MediaPlayerState& 
     ACSDK_DEBUG1(LX("executeOnPlaybackStopped").d("id", id).d("state", state));
 
     if (id != m_currentlyPlaying->sourceId) {
+        // See if SourceId identifies a loading track. If so, send error now.
+        if (!m_audioPlayQueue.empty()) {
+            for (auto& it : m_audioPlayQueue) {
+                if (it->sourceId == id && !it->errorMsg.empty()) {
+                    ACSDK_ERROR(LX("executeOnPlaybackStopped").d("reportingPrebufferedError", id));
+                    sendPlaybackFailedEvent(
+                        it->audioItem.stream.token, it->errorType, it->errorMsg, MediaPlayerState());
+                    it->errorMsg.clear();  // make sure we only send once
+                    return;
+                }
+            }
+        }
+
         ACSDK_DEBUG(LX("executeOnPlaybackStopped")
                         .d("reason", "sourceIdDoesNotMatchCurrentTrack")
                         .d("id", id)
                         .d("state", state)
-                        .d("m_sourceId", m_currentlyPlaying->sourceId));
+                        .d("m_sourceId", m_currentlyPlaying->sourceId)
+                        .d("m_isStopCalled", m_isStopCalled)
+                        .d("m_playNextItemAfterStopped", m_playNextItemAfterStopped));
         return;
     }
 
@@ -1523,12 +1661,13 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id, const MediaPlayerState& 
             m_progressTimer.stop();
             sendPlaybackStoppedEvent(state);
             m_okToRequestNextTrack = false;
-            m_isStopCalled = false;
             if (!m_playNextItemAfterStopped || m_audioPlayQueue.empty()) {
                 handlePlaybackCompleted();
-            } else if (avsCommon::avs::FocusState::FOREGROUND == m_focus) {
+            } else if (avsCommon::avs::FocusState::FOREGROUND == m_focus && m_playNextItemAfterStopped) {
+                m_playNextItemAfterStopped = false;
                 playNextItem();
             }
+            m_isStopCalled = false;
             return;
         case PlayerActivity::IDLE:
         case PlayerActivity::STOPPED:
@@ -1616,6 +1755,11 @@ void AudioPlayer::handlePlaybackCompleted() {
     if (m_focus != avsCommon::avs::FocusState::NONE) {
         m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
     }
+    if (!m_isStopCalled) {
+        // If we initiated a stop, we want to bottom out on the STOPPED state.
+        // If we completed naturally, we should return to IDLE.
+        changeActivity(PlayerActivity::IDLE);
+    }
 }
 
 void AudioPlayer::executeOnPlaybackError(
@@ -1624,8 +1768,13 @@ void AudioPlayer::executeOnPlaybackError(
     std::string error,
     const MediaPlayerState& state) {
     ACSDK_DEBUG1(LX(__func__).d("id", id).d("state", state).d("type", type).d("error", error));
+    if (state.mediaPlayerProtection.hasValue()) {
+        m_currentMediaPlayerProtection = state.mediaPlayerProtection.value();
+    }
 
     m_isStartingPlayback = false;
+    m_isPausingPlayback = false;
+    m_playNextItemAfterStopped = false;
 
     if (id != m_currentlyPlaying->sourceId) {
         // See if SourceId identifies a loading track
@@ -1687,6 +1836,8 @@ void AudioPlayer::executeOnPlaybackError(
 
 void AudioPlayer::executeOnPlaybackPaused(SourceId id, const MediaPlayerState& state) {
     ACSDK_DEBUG1(LX("executeOnPlaybackPaused").d("id", id).d("state", state));
+
+    m_isPausingPlayback = false;
 
     if (id != m_currentlyPlaying->sourceId) {
         ACSDK_ERROR(LX("executeOnPlaybackPausedFailed")
@@ -1781,8 +1932,14 @@ void AudioPlayer::executeOnSeeked(SourceId id, const MediaPlayerState& startStat
         sendPlaybackStutterFinishedEvent(endState);
         m_progressTimer.resume();
         changeActivity(PlayerActivity::PLAYING);
+    } else if (m_currentActivity == PlayerActivity::STOPPED) {
+        // When stopped, the seek doesn't actually complete until playback restarts
+        // but we need to pretend it does, so set the current offset to the end position.
+        m_offset = endState.offset;
     }
+
     sendPlaybackSeekedEvent(startState, endState);
+    notifySeekActivity(AudioPlayerObserverInterface::SeekStatus::SEEK_COMPLETE, endState.offset);
 }
 
 void AudioPlayer::executeOnTags(
@@ -1827,6 +1984,8 @@ void AudioPlayer::clearPlayQueue(const bool stopCurrentPlayer) {
 
 void AudioPlayer::stopAndReleaseMediaPlayer(std::shared_ptr<PlayDirectiveInfo> playbackItem) {
     m_isStartingPlayback = false;
+    m_isPausingPlayback = false;
+
     if (playbackItem->mediaPlayer) {
         playbackItem->mediaPlayer->stop(playbackItem->sourceId);
     }
@@ -1837,7 +1996,8 @@ void AudioPlayer::releaseMediaPlayer(std::shared_ptr<PlayDirectiveInfo> playback
     if (playbackItem->mediaPlayer) {
         ACSDK_DEBUG5(LX(__func__).d("sourceId", playbackItem->sourceId));
         playbackItem->mediaPlayer->removeObserver(shared_from_this());
-        if (!m_mediaPlayerFactory->releaseMediaPlayer(playbackItem->mediaPlayer)) {
+        if ((m_mediaResourceProvider != nullptr) &&
+            !m_mediaResourceProvider->releaseMediaPlayer(playbackItem->mediaPlayer)) {
             ACSDK_ERROR(
                 LX(__func__).m("releaseMediaPlayerFailed").d("reason", "Factory Release Failed - Invalid MediaPlayer"));
             // This should never happen, but even if it does, the pointer should eb reset, so continue.
@@ -1859,7 +2019,7 @@ bool AudioPlayer::isMessageInQueue(const std::string& messageId) {
 bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playbackItem) {
     if (!playbackItem->mediaPlayer) {
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer =
-            m_mediaPlayerFactory->acquireMediaPlayer();
+            m_mediaResourceProvider->acquireMediaPlayer();
         AudioPlayer::SourceId sourceId = ERROR_SOURCE_ID;
         if (mediaPlayer == nullptr) {
             ACSDK_ERROR(LX("configureMediaPlayerFailed").d("reason", "nullMediaPlayer"));
@@ -1881,6 +2041,7 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
             ACSDK_DEBUG9(LX("configureMediaPlayer").d("offset", playbackItem->audioItem.stream.offset.count()));
             SourceConfig cfg = emptySourceConfig();
             cfg.endOffset = playbackItem->audioItem.stream.endOffset;
+            cfg.audioNormalizationConfig.enabled = playbackItem->normalizationEnabled;
             sourceId = mediaPlayer->setSource(
                 playbackItem->audioItem.stream.url,
                 playbackItem->audioItem.stream.offset,
@@ -1908,12 +2069,12 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
 void AudioPlayer::executeOnReadyToProvideNextPlayer() {
     ACSDK_DEBUG1(LX(__func__).d("queueSize", m_audioPlayQueue.size()));
 
-    if (!m_mediaPlayerFactory->isMediaPlayerAvailable()) {
+    if (!m_mediaResourceProvider->isMediaPlayerAvailable()) {
         ACSDK_DEBUG1(LX(__func__).m("AvailablePlayerInUse"));
         return;
     }
 
-    if (m_audioPlayQueue.empty() && m_okToRequestNextTrack) {
+    if (m_audioPlayQueue.empty() && m_okToRequestNextTrack && m_currentlyPlaying->isBuffered) {
         sendPlaybackNearlyFinishedEvent(getMediaPlayerState());
         m_okToRequestNextTrack = false;
     } else {
@@ -1983,7 +2144,7 @@ void AudioPlayer::executePrePlay(std::shared_ptr<PlayDirectiveInfo> info) {
 
     if (!isNextItem) {
         // Only configure the new MediaPlayer if a player is available, and the head of the queue already has one.
-        if (m_mediaPlayerFactory->isMediaPlayerAvailable() &&
+        if (m_mediaResourceProvider->isMediaPlayerAvailable() &&
             (m_audioPlayQueue.empty() || m_audioPlayQueue.front()->mediaPlayer)) {
             ACSDK_DEBUG(LX(__func__).m("acquiringPlayerSetSource"));
             if (!configureMediaPlayer(info)) {
@@ -2030,6 +2191,7 @@ void AudioPlayer::executePlay(const std::string& messageId) {
     }
 
     if (playItem->playBehavior == PlayBehavior::REPLACE_ALL) {
+        ACSDK_INFO(LX("executePlay").d("reason", "NewPlayQueue"));
         executeStop("", true);
     }
 
@@ -2126,7 +2288,7 @@ void AudioPlayer::playNextItem() {
     }
 
     if (!m_currentlyPlaying->mediaPlayer) {
-        if (m_mediaPlayerFactory->isMediaPlayerAvailable()) {
+        if (m_mediaResourceProvider->isMediaPlayerAvailable()) {
             if (!configureMediaPlayer(m_currentlyPlaying)) {
                 // error log already generated
                 return;
@@ -2164,7 +2326,7 @@ void AudioPlayer::playNextItem() {
     }
     m_isStartingPlayback = true;
 
-    if (m_captionManager && m_currentlyPlaying->audioItem.captionData.isValid()) {
+    if (m_captionManager && m_captionManager->isEnabled() && m_currentlyPlaying->audioItem.captionData.isValid()) {
         m_captionManager->onCaption(m_currentlyPlaying->sourceId, m_currentlyPlaying->audioItem.captionData);
     }
 
@@ -2212,10 +2374,11 @@ void AudioPlayer::executeClearQueue(ClearBehavior clearBehavior) {
     switch (clearBehavior) {
         case ClearBehavior::CLEAR_ALL:
             executeStop();
-            clearPlayQueue(false);
+            clearPlayQueue(true);
+            changeActivity(PlayerActivity::IDLE);
             break;
         case ClearBehavior::CLEAR_ENQUEUED:
-            clearPlayQueue(true);
+            clearPlayQueue(false);
             break;
     }
     sendPlaybackQueueClearedEvent();
@@ -2227,8 +2390,11 @@ void AudioPlayer::executeUpdateProgressReportInterval(std::chrono::milliseconds 
 }
 
 void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool> success) {
-    ACSDK_DEBUG1(
-        LX(__func__).d("m_currentActivity", m_currentActivity).d("sourceId", m_currentlyPlaying->sourceId).d("op", op));
+    ACSDK_DEBUG1(LX(__func__)
+                     .d("m_currentActivity", m_currentActivity)
+                     .d("sourceId", m_currentlyPlaying->sourceId)
+                     .d("op", op)
+                     .d("m_focus", focusStateToString(m_focus)));
 
     if (m_currentlyPlaying->mediaPlayer && m_currentlyPlaying->sourceId != ERROR_SOURCE_ID) {
         switch (m_currentActivity) {
@@ -2239,6 +2405,11 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                             NAMESPACE, shared_from_this(), std::chrono::milliseconds::zero(), m_currentMixability);
                         // If we don't currently have focus, acquire it now; playback will start when focus changes to
                         // FOREGROUND.
+                        if (m_isLocalResumePending) {
+                            // this should NEVER happen - but just in case...
+                            m_isLocalResumePending = false;
+                            m_localResumeSuccess.set_value(false);
+                        }
                         if (m_isAcquireChannelRequestPending) {
                             ACSDK_INFO(
                                 LX("executeLocalResume")
@@ -2272,8 +2443,12 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
 
             case PlayerActivity::IDLE:
             case PlayerActivity::FINISHED:
-                // cannot resume from this
-                success.set_value(false);
+                if (op == PlaybackOperation::STOP_PLAYBACK) {
+                    success.set_value(true);
+                } else {
+                    // cannot resume from this, and PAUSE implies being able to resume afterward
+                    success.set_value(false);
+                }
                 break;
 
             case PlayerActivity::PLAYING:
@@ -2283,6 +2458,7 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                     // Make sure we have the offset cached before stopping.
                     m_currentlyPlaying->initialOffset = getOffset();
                     // Request to stop.
+                    m_playNextItemAfterStopped = false;
                     if (op == PlaybackOperation::STOP_PLAYBACK) {
                         m_isStopCalled = m_currentlyPlaying->mediaPlayer->stop(m_currentlyPlaying->sourceId);
                     } else {
@@ -2293,7 +2469,14 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                 } else {
                     success.set_value(true);
                 }
+                break;
+            default:
+                ACSDK_ERROR(LX(__func__).d("UnknownActivity", m_currentActivity));
+                success.set_value(false);
         }
+    } else {
+        ACSDK_ERROR(LX(__func__).m("NoCurrentPlayer"));
+        success.set_value(false);
     }
 }
 
@@ -2315,7 +2498,13 @@ bool AudioPlayer::executeLocalSeekTo(std::chrono::milliseconds location, bool fr
         case PlayerActivity::PAUSED:
         case PlayerActivity::BUFFER_UNDERRUN:
             if (m_currentlyPlaying->mediaPlayer && m_currentlyPlaying->sourceId != ERROR_SOURCE_ID) {
-                return m_currentlyPlaying->mediaPlayer->seekTo(m_currentlyPlaying->sourceId, location, fromStart);
+                auto fromOffset = getOffset();
+                bool initiatedSeek =
+                    m_currentlyPlaying->mediaPlayer->seekTo(m_currentlyPlaying->sourceId, location, fromStart);
+                if (initiatedSeek) {
+                    notifySeekActivity(AudioPlayerObserverInterface::SeekStatus::SEEK_START, fromOffset);
+                }
+                return initiatedSeek;
             }
     }
     return false;
@@ -2336,7 +2525,7 @@ std::chrono::milliseconds AudioPlayer::getDuration() {
 }
 
 void AudioPlayer::changeActivity(PlayerActivity activity) {
-    ACSDK_DEBUG(LX("changeActivity").d("from", m_currentActivity).d("to", activity));
+    ACSDK_DEBUG(LX("changeActivity").d("fromActivity", m_currentActivity).d("toActivity", activity));
     std::unique_lock<std::mutex> lock(m_currentActivityMutex);
     auto oldActivity = m_currentActivity;
     m_currentActivity = activity;
@@ -2607,12 +2796,11 @@ void AudioPlayer::sendStreamMetadataExtractedEvent(
 }
 
 void AudioPlayer::notifyObserver() {
-    AudioPlayerObserverInterface::Context context;
-    context.audioItemId = m_currentlyPlaying->audioItem.id;
-    context.offset = getOffset();
-    context.playRequestor = m_currentlyPlaying->playRequestor;
+    AudioPlayerObserverInterface::Context context = getObserverContext();
 
-    ACSDK_DEBUG1(LX("notifyObserver").d("playerActivity", playerActivityToString(m_currentActivity)));
+    ACSDK_DEBUG1(LX("notifyObserver")
+                     .d("playerActivity", playerActivityToString(m_currentActivity))
+                     .d("trackProtectionScheme", context.trackProtectionName));
 
     for (const auto& observer : m_observers) {
         observer->onPlayerActivityChanged(m_currentActivity, context);
@@ -2627,9 +2815,41 @@ void AudioPlayer::notifyObserver() {
     }
 }
 
+void AudioPlayer::notifySeekActivity(
+    const AudioPlayerObserverInterface::SeekStatus& seekStatus,
+    std::chrono::milliseconds offset) {
+    AudioPlayerObserverInterface::Context context = getObserverContext(offset);
+
+    ACSDK_DEBUG1(LX("notifySeekActivity")
+                     .d("playerActivity", playerActivityToString(m_currentActivity))
+                     .d("offset", offset.count()));
+
+    for (const auto& observer : m_observers) {
+        observer->onSeekActivity(seekStatus, context);
+    }
+}
+
+AudioPlayerObserverInterface::Context AudioPlayer::getObserverContext(std::chrono::milliseconds offset) {
+    AudioPlayerObserverInterface::Context context;
+    context.audioItemId = m_currentlyPlaying->audioItem.id;
+    if (offset == std::chrono::milliseconds(-1)) {
+        context.offset = getOffset();
+    } else {
+        context.offset = offset;
+    }
+    context.playRequestor = m_currentlyPlaying->playRequestor;
+    context.trackProtectionName = getTrackProtectionName(m_currentMediaPlayerProtection);
+    context.startOffset = m_currentlyPlaying->audioItem.stream.offset;
+    context.endOffset = m_currentlyPlaying->audioItem.stream.endOffset;
+
+    return context;
+}
+
 std::chrono::milliseconds AudioPlayer::getOffset() {
     // If the mediaplayer / source id is not set, do not ask MediaPlayer for the offset.
-    if (m_currentlyPlaying->mediaPlayer && m_currentlyPlaying->sourceId != ERROR_SOURCE_ID) {
+    // Also, if stopped use the cached value.  The pipeline may still be open when stopped,
+    if (m_currentlyPlaying->mediaPlayer && m_currentlyPlaying->sourceId != ERROR_SOURCE_ID &&
+        m_currentActivity != PlayerActivity::STOPPED) {
         auto offset = m_currentlyPlaying->mediaPlayer->getOffset(m_currentlyPlaying->sourceId);
         if (offset != MEDIA_PLAYER_INVALID_OFFSET) {
             m_offset = offset;
@@ -2650,7 +2870,7 @@ void AudioPlayer::sendEvent(
 }
 
 MediaPlayerState AudioPlayer::getMediaPlayerState() {
-    MediaPlayerState state = MediaPlayerState(getOffset(), getDuration());
+    MediaPlayerState state = MediaPlayerState(getOffset(), m_currentMediaPlayerProtection, getDuration());
     return state;
 }
 
@@ -2718,19 +2938,47 @@ void AudioPlayer::attachPlaybackReportsIfAvailable(
     parent.AddMember(PLAYBACK_REPORTS_KEY, jsonPlaybackReports, allocator);
 }
 
-void AudioPlayer::parseHeadersFromPlayDirective(const rapidjson::Value& httpHeaders, AudioItem& audioItem) {
-    jsonUtils::retrieveStringMapFromArray(
-        httpHeaders, PlaybackContext::HTTP_KEY_HEADERS, audioItem.playbackContext.keyConfig);
-    jsonUtils::retrieveStringMapFromArray(
-        httpHeaders, PlaybackContext::HTTP_MANIFEST_HEADERS, audioItem.playbackContext.manifestConfig);
-    jsonUtils::retrieveStringMapFromArray(
-        httpHeaders, PlaybackContext::HTTP_AUDIOSEGMENT_HEADERS, audioItem.playbackContext.audioSegmentConfig);
-    jsonUtils::retrieveStringMapFromArray(
-        httpHeaders, PlaybackContext::HTTP_ALL_HEADERS, audioItem.playbackContext.allConfig);
-    if (validatePlaybackContextHeaders(&(audioItem.playbackContext))) {
-        ACSDK_WARN(
-            LX("validatePlaybackContext").m("Error in validation of headers-attempt to playback with valid data"));
+void AudioPlayer::parseHeadersFromPlayDirective(const rapidjson::Value& httpHeaders, AudioItem* audioItem) {
+    if (audioItem != nullptr) {
+        jsonUtils::retrieveStringMapFromArray(
+            httpHeaders, PlaybackContext::HTTP_KEY_HEADERS, audioItem->playbackContext.keyConfig);
+        jsonUtils::retrieveStringMapFromArray(
+            httpHeaders, PlaybackContext::HTTP_MANIFEST_HEADERS, audioItem->playbackContext.manifestConfig);
+        jsonUtils::retrieveStringMapFromArray(
+            httpHeaders, PlaybackContext::HTTP_AUDIOSEGMENT_HEADERS, audioItem->playbackContext.audioSegmentConfig);
+        jsonUtils::retrieveStringMapFromArray(
+            httpHeaders, PlaybackContext::HTTP_ALL_HEADERS, audioItem->playbackContext.allConfig);
+        if (!validatePlaybackContextHeaders(&(audioItem->playbackContext))) {
+            ACSDK_WARN(
+                LX("validatePlaybackContext").m("Error in validation of headers-attempt to playback with valid data"));
+        }
+    } else {
+        ACSDK_ERROR(LX(__FUNCTION__).m("audioItem is null"));
+        return;
     }
+}
+
+std::string AudioPlayer::getTrackProtectionName(
+    const MediaPlayerState::MediaPlayerProtection& mediaPlayerProtection) const {
+    static std::string TRACK_PROTECTION_TYPE_CLEAR = "CLEAR";
+    static std::string TRACK_PROTECTION_TYPE_CLEARLEAD = "CLEARLEAD";
+    if (mediaPlayerProtection.isProtected()) {
+        if (mediaPlayerProtection.clearLead) {
+            return mediaPlayerProtection.protectionScheme + "_" + TRACK_PROTECTION_TYPE_CLEARLEAD;
+        } else {
+            return mediaPlayerProtection.protectionScheme;
+        }
+    } else {
+        return TRACK_PROTECTION_TYPE_CLEAR;
+    }
+}
+
+std::string AudioPlayer::getTrackProtectionName(const MediaPlayerState& mediaPlayerState) const {
+    MediaPlayerState::MediaPlayerProtection mediaPlayerProtection;
+    if (mediaPlayerState.mediaPlayerProtection.hasValue()) {
+        mediaPlayerProtection = mediaPlayerState.mediaPlayerProtection.value();
+    }
+    return getTrackProtectionName(mediaPlayerProtection);
 }
 
 }  // namespace acsdkAudioPlayer

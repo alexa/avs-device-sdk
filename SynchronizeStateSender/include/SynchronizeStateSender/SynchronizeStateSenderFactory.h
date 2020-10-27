@@ -18,6 +18,7 @@
 
 #include <memory>
 
+#include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
 
@@ -30,8 +31,22 @@ namespace synchronizeStateSender {
 class SynchronizeStateSenderFactory : public avsCommon::sdkInterfaces::PostConnectOperationProviderInterface {
 public:
     /**
+     * Creates a new instance of the @c PostConnectOperationProviderInterface.
+     *
+     * @param contextManager The @c ContextManager used to construct the synchronize state sender.
+     * @return a new instance of the @c SynchronizeStateSenderFactory.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>
+    createPostConnectOperationProviderInterface(
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager);
+
+    /**
      * Creates a new instance of the @c SynchronizeStateSenderFactory.
      *
+     * @deprecated
      * @param contextManager The @c ContextManager used to construct the synchronize state sender.
      * @return a new instance of the @c SynchronizeStateSenderFactory.
      */

@@ -39,8 +39,18 @@ namespace network {
 class InternetConnectionMonitor : public sdkInterfaces::InternetConnectionMonitorInterface {
 public:
     /**
+     * Factory for creating instances of InternetConnectionMonitorInterface.
+     *
+     * @param contentFetcherFactory Factory for creating content fetchers with which to verify connectivity.
+     * @return An instance of InternetConnectionMonitor.
+     */
+    static std::shared_ptr<sdkInterfaces::InternetConnectionMonitorInterface> createInternetConnectionMonitorInterface(
+        const std::shared_ptr<sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>& contentFetcherFactory);
+
+    /**
      * Creates a InternetConnectionMonitor.
      *
+     * @deprecatd
      * @param contentFetcherFactory The content fetcher that will make the test run to an S3 endpoint.
      * @return A unique_ptr to the InternetConnectionMonitor instance.
      */

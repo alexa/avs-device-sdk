@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_TOGGLECONTROLLER_INCLUDE_TOGGLECONTROLLER_TOGGLECONTROLLERATTRIBUTEBUILDER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_TOGGLECONTROLLER_INCLUDE_TOGGLECONTROLLER_TOGGLECONTROLLERATTRIBUTEBUILDER_H_
 
+#include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributeBuilderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 
@@ -46,6 +47,8 @@ public:
     /// @{
     ToggleControllerAttributeBuilder& withCapabilityResources(
         const avsCommon::avs::CapabilityResources& capabilityResources) override;
+    ToggleControllerAttributeBuilder& withSemantics(
+        const avsCommon::avs::capabilitySemantics::CapabilitySemantics& semantics) override;
     avsCommon::utils::Optional<avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes> build() override;
     /// @}
 
@@ -60,6 +63,9 @@ private:
 
     /// The capability resources represented using @c CapabilityResources.
     avsCommon::avs::CapabilityResources m_capabilityResources;
+
+    /// The semantics represented as an @c Optional @c CapabilitySemantics
+    avsCommon::utils::Optional<avsCommon::avs::capabilitySemantics::CapabilitySemantics> m_semantics;
 };
 
 }  // namespace toggleController

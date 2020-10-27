@@ -73,6 +73,15 @@ public:
     virtual bool store(std::shared_ptr<Alert> alert) = 0;
 
     /**
+     * Stores a single @c Alert in the offline alerts database.
+     *
+     * @param token The alertToken of the alert to be erased.
+     * @param scheduledTime The scheduled time of the alert
+     * @return Whether the @c Alert was successfully stored.
+     */
+    virtual bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime) = 0;
+
+    /**
      * Loads all alerts in the database.
      *
      * @param[out] alertContainer The container where alerts should be stored.
@@ -82,6 +91,15 @@ public:
     virtual bool load(
         std::vector<std::shared_ptr<Alert>>* alertContainer,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager) = 0;
+
+    /**
+     * Loads all alerts in the offline database.
+     *
+     * @param[out] alertContainer The container where alerts should be stored.
+     * @param allocator The rapidjson allocator, required for the results of this function to be mergable with other
+     * rapidjson::Value objects.
+     */
+    virtual bool loadOfflineAlerts(rapidjson::Value* alertContainer, rapidjson::Document::AllocatorType& allocator) = 0;
 
     /**
      * Updates a database record of the @c Alert parameter.
@@ -100,6 +118,15 @@ public:
      * @return Whether the @c Alert was successfully erased.
      */
     virtual bool erase(std::shared_ptr<Alert> alert) = 0;
+
+    /**
+     * Erases a single alert from the offline database.
+     *
+     * @param token The alertToken of the alert to be erased.
+     * @param id The id of the alert to be erased
+     * @return Whether the alert was successfully erased.
+     */
+    virtual bool eraseOffline(const std::string& token, int id) = 0;
 
     /**
      * Erases multiple alerts from the database. This function must be atomic, no alert is to be deleted if there was

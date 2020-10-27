@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include "Alexa/AlexaInterfaceCapabilityAgent.h"
 #include "Alexa/AlexaInterfaceConstants.h"
 
@@ -20,8 +21,14 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace alexa {
 
+using namespace acsdkAlexaEventProcessedNotifierInterfaces;
+using namespace acsdkManufactory;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::endpoints;
+using namespace avsCommon::utils;
+
+using DefaultEndpointAnnotation = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"AlexaInterfaceCapabilityAgent"};
@@ -42,9 +49,61 @@ static const std::string EVENT_PROCESSED_DIRECTIVE_NAME = "EventProcessed";
 /// The Alexa.ReportState directive name.
 static const std::string REPORT_STATE_DIRECTIVE_NAME = "ReportState";
 
+std::shared_ptr<AlexaInterfaceCapabilityAgent> AlexaInterfaceCapabilityAgent::
+    createDefaultAlexaInterfaceCapabilityAgent(
+        const std::shared_ptr<DeviceInfo>& deviceInfo,
+        const std::shared_ptr<ExceptionEncounteredSenderInterface>& exceptionEncounteredSender,
+        const std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface>& alexaMessageSender,
+        const std::shared_ptr<AlexaEventProcessedNotifierInterface>& alexaEventProcessedNotifier,
+        const Annotated<DefaultEndpointAnnotation, endpoints::EndpointCapabilitiesRegistrarInterface>&
+            endpointCapabilitiesRegistrar) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!deviceInfo || !exceptionEncounteredSender || !alexaMessageSender || !alexaEventProcessedNotifier ||
+        !endpointCapabilitiesRegistrar) {
+        ACSDK_ERROR(LX("createDefaultAlexaInterfaceCapabilityCapabilityAgentFailed")
+                        .d("isDeviceInfoNull", !deviceInfo)
+                        .d("isExceptionEncounteredSenderNull", !exceptionEncounteredSender)
+                        .d("isAlexaMessageSenderNull", !alexaMessageSender)
+                        .d("isAlexaEventProcessedNotifierNull", !alexaEventProcessedNotifier)
+                        .d("isEndpointCapabilitiesRegistrarNull", !endpointCapabilitiesRegistrar));
+        return nullptr;
+    }
+
+    auto instance = std::shared_ptr<AlexaInterfaceCapabilityAgent>(new AlexaInterfaceCapabilityAgent(
+        deviceInfo,
+        deviceInfo->getDefaultEndpointId(),
+        exceptionEncounteredSender,
+        alexaMessageSender,
+        alexaEventProcessedNotifier));
+
+    endpointCapabilitiesRegistrar->withCapability(instance->getCapabilityConfiguration(), instance);
+
+    return instance;
+}
+
 std::shared_ptr<AlexaInterfaceCapabilityAgent> AlexaInterfaceCapabilityAgent::create(
-    const avsCommon::utils::DeviceInfo& deviceInfo,
-    const endpoints::EndpointIdentifier& endpointId,
+    const std::shared_ptr<DeviceInfo>& deviceInfo,
+    const EndpointIdentifier& endpointId,
+    const std::shared_ptr<ExceptionEncounteredSenderInterface>& exceptionEncounteredSender,
+    const std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface>& alexaMessageSender) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!deviceInfo) {
+        ACSDK_ERROR(LX("createAlexaInterfaceCapabilityAgentFailed").d("reason", "nullDeviceInfo"));
+    } else if (!exceptionEncounteredSender) {
+        ACSDK_ERROR(LX("createAlexaInterfaceCapabilityAgentailed").d("reason", "nullExceptionSender"));
+    } else if (!alexaMessageSender) {
+        ACSDK_ERROR(LX("createAlexaInterfaceCapabilityAgentFailed").d("reason", "nullAlexaMessageSender"));
+    } else {
+        auto instance = std::shared_ptr<AlexaInterfaceCapabilityAgent>(new AlexaInterfaceCapabilityAgent(
+            deviceInfo, endpointId, exceptionEncounteredSender, alexaMessageSender, nullptr));
+        return instance;
+    }
+    return nullptr;
+}
+
+std::shared_ptr<AlexaInterfaceCapabilityAgent> AlexaInterfaceCapabilityAgent::create(
+    const DeviceInfo& deviceInfo,
+    const EndpointIdentifier& endpointId,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender) {
     ACSDK_DEBUG5(LX(__func__));
@@ -53,22 +112,26 @@ std::shared_ptr<AlexaInterfaceCapabilityAgent> AlexaInterfaceCapabilityAgent::cr
     } else if (!alexaMessageSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAlexaMessageSender"));
     } else {
-        auto instance = std::shared_ptr<AlexaInterfaceCapabilityAgent>(
-            new AlexaInterfaceCapabilityAgent(deviceInfo, endpointId, exceptionEncounteredSender, alexaMessageSender));
+        auto deviceInfoPtr = std::make_shared<DeviceInfo>(deviceInfo);
+        auto instance = std::shared_ptr<AlexaInterfaceCapabilityAgent>(new AlexaInterfaceCapabilityAgent(
+            deviceInfoPtr, endpointId, exceptionEncounteredSender, alexaMessageSender, nullptr));
         return instance;
     }
     return nullptr;
 }
 
 AlexaInterfaceCapabilityAgent::AlexaInterfaceCapabilityAgent(
-    const avsCommon::utils::DeviceInfo& deviceInfo,
-    const endpoints::EndpointIdentifier& endpointId,
+    const std::shared_ptr<DeviceInfo>& deviceInfo,
+    const EndpointIdentifier& endpointId,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender) :
+    std::shared_ptr<AlexaInterfaceMessageSenderInternalInterface> alexaMessageSender,
+    const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
+        alexaEventProcessedNotifier) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         m_deviceInfo{deviceInfo},
         m_endpointId{endpointId},
-        m_alexaMessageSender{alexaMessageSender} {
+        m_alexaMessageSender{alexaMessageSender},
+        m_alexaEventProcessedNotifier{alexaEventProcessedNotifier} {
 }
 
 DirectiveHandlerConfiguration AlexaInterfaceCapabilityAgent::getConfiguration() const {
@@ -76,7 +139,7 @@ DirectiveHandlerConfiguration AlexaInterfaceCapabilityAgent::getConfiguration() 
     DirectiveHandlerConfiguration configuration;
 
     // If this is the default endpoint, register for Alexa.EventProcessed directives.
-    if (m_endpointId == m_deviceInfo.getDefaultEndpointId()) {
+    if (m_endpointId == m_deviceInfo->getDefaultEndpointId()) {
         ACSDK_DEBUG5(LX("registeringEventProcessedDirective").d("reason", "defaultEndpoint"));
         configuration[NamespaceAndName{NAMESPACE, EVENT_PROCESSED_DIRECTIVE_NAME}] =
             BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
@@ -203,33 +266,15 @@ bool AlexaInterfaceCapabilityAgent::executeHandleEventProcessed(const std::share
         return false;
     }
 
-    // Notify observers.
-    std::lock_guard<std::mutex> lock{m_observerMutex};
-    for (const auto& observer : m_observers) {
-        observer->onAlexaEventProcessedReceived(eventCorrelationToken);
+    if (m_alexaEventProcessedNotifier) {
+        m_alexaEventProcessedNotifier->notifyObservers(
+            [eventCorrelationToken](
+                std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface> observer) {
+                observer->onAlexaEventProcessedReceived(eventCorrelationToken);
+            });
     }
 
     return true;
-}
-
-void AlexaInterfaceCapabilityAgent::addEventProcessedObserver(
-    const std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>& observer) {
-    if (!observer) {
-        ACSDK_ERROR(LX("addEventProcessedObserver").d("reason", "nullObserver"));
-        return;
-    }
-    std::lock_guard<std::mutex> lock{m_observerMutex};
-    m_observers.insert(observer);
-}
-
-void AlexaInterfaceCapabilityAgent::removeEventProcessedObserver(
-    const std::shared_ptr<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>& observer) {
-    if (!observer) {
-        ACSDK_ERROR(LX("removeEventProcessedObserver").d("reason", "nullObserver"));
-        return;
-    }
-    std::lock_guard<std::mutex> lock{m_observerMutex};
-    m_observers.erase(observer);
 }
 
 }  // namespace alexa

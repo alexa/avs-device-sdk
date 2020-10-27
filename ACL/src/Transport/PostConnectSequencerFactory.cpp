@@ -24,6 +24,8 @@ namespace alexaClientSDK {
 namespace acl {
 
 using namespace avsCommon::sdkInterfaces;
+using namespace acsdkPostConnectOperationProviderRegistrarInterfaces;
+
 /// String to identify log entries originating from this file.
 static const std::string TAG("PostConnectSequencerFactory");
 
@@ -34,25 +36,84 @@ static const std::string TAG("PostConnectSequencerFactory");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/**
+ * An implementation of PostConnectOperationProviderRegistrarInterface that adapts the existing interface
+ * of PostConnectSequencerFactory that takes a vector of providers to the new PostConnectSequencerFactory
+ * that takes an instance of PostConnectOperationProviderRegistrarInterface.
+ */
+class LegacyProviderRegistrar : public PostConnectOperationProviderRegistrarInterface {
+public:
+    /**
+     * Constructor.
+     *
+     * @param postConnectOperationProviders The providers to (pre) register.
+     */
+    LegacyProviderRegistrar(
+        const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& postConnectOperationProviders);
+
+    /// @name PostConnectOperationProviderRegistrarInterface methods.
+    /// @{
+    bool registerProvider(
+        const std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>& provider) override;
+    avsCommon::utils::Optional<
+        std::vector<std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>>>
+    getProviders() override;
+    /// @}
+
+private:
+    /// The registered providers.
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>> m_providers;
+};
+
+LegacyProviderRegistrar::LegacyProviderRegistrar(
+    const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& providers) :
+        m_providers{providers} {
+}
+
+bool LegacyProviderRegistrar::registerProvider(const std::shared_ptr<PostConnectOperationProviderInterface>& provider) {
+    return false;
+}
+
+avsCommon::utils::Optional<
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>>>
+LegacyProviderRegistrar::getProviders() {
+    return m_providers;
+}
+
+std::shared_ptr<PostConnectFactoryInterface> PostConnectSequencerFactory::createPostConnectFactoryInterface(
+    const std::shared_ptr<PostConnectOperationProviderRegistrarInterface>& registrar) {
+    if (!registrar) {
+        ACSDK_ERROR(LX("createPostConectFactoryInterfaceFailed").d("reason", "nullRegistrar"));
+        return nullptr;
+    }
+    return std::shared_ptr<PostConnectSequencerFactory>(new PostConnectSequencerFactory(registrar));
+}
+
 std::shared_ptr<PostConnectSequencerFactory> PostConnectSequencerFactory::create(
-    const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& postConnectOperationProviders) {
-    for (auto& provider : postConnectOperationProviders) {
+    const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& providers) {
+    for (auto& provider : providers) {
         if (!provider) {
             ACSDK_ERROR(LX("createFailed").d("reason", "invalidProviderFound"));
             return nullptr;
         }
     }
-    return std::shared_ptr<PostConnectSequencerFactory>(new PostConnectSequencerFactory(postConnectOperationProviders));
+    auto registrar = std::make_shared<LegacyProviderRegistrar>(providers);
+    return std::shared_ptr<PostConnectSequencerFactory>(new PostConnectSequencerFactory(registrar));
 }
 
 PostConnectSequencerFactory::PostConnectSequencerFactory(
-    const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& postConnectOperationProviders) :
-        m_postConnectOperationProviders{postConnectOperationProviders} {
+    const std::shared_ptr<PostConnectOperationProviderRegistrarInterface>& registrar) :
+        m_registrar{registrar} {
 }
 
 std::shared_ptr<PostConnectInterface> PostConnectSequencerFactory::createPostConnect() {
+    auto providers = m_registrar->getProviders();
+    if (!providers.hasValue()) {
+        ACSDK_ERROR(LX("createPostConnectFailed").d("reason", "nullProviders"));
+        return nullptr;
+    }
     PostConnectSequencer::PostConnectOperationsSet postConnectOperationsSet;
-    for (auto& provider : m_postConnectOperationProviders) {
+    for (auto& provider : providers.value()) {
         auto postConnectOperation = provider->createPostConnectOperation();
         if (postConnectOperation) {
             postConnectOperationsSet.insert(postConnectOperation);

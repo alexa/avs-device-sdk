@@ -75,7 +75,9 @@ void Logger::setLevel(Level level) {
                 .d("level", m_level)
                 .m("\n"
                    "\nWARNING: By default DEBUG logs are compiled out of RELEASE builds."
-                   "\nRebuild with the cmake parameter -DCMAKE_BUILD_TYPE=DEBUG to enable debug logs."
+                   "\nTo enable debug logs, rebuild in DEBUG mode by using the cmake parameter "
+                   "-DCMAKE_BUILD_TYPE=DEBUG or (if you *really* want debug logs in a RELEASE build) use the cmake "
+                   "parameter -DACSDK_DEBUG_LOG=ON."
                    "\n"));
     }
 #endif

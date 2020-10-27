@@ -62,6 +62,14 @@ struct PlaybackContext {
 };
 
 /**
+ * Check for malicious characters(\r, \n, null) in the header string.
+ *
+ * @param header to be validated.
+ * @return @c true if not malicious, else @c false.
+ */
+bool validateIfNotMalicious(const std::string& header);
+
+/**
  * Validate the headers. Delete the invalid entries
  *
  * @param[out] playbackContext to be validated and the invalid entries will be deleted.

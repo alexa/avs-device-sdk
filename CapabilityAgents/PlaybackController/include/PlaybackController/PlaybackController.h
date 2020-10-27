@@ -20,6 +20,8 @@
 #include <queue>
 #include <string>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
@@ -27,6 +29,8 @@
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackHandlerInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
@@ -43,6 +47,22 @@ class PlaybackController
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<PlaybackController> {
 public:
+    /**
+     * Factory method to create an instance of @c PlaybackHandlerInterface.
+     *
+     * @param contextManager The @c ContextManagerInterface used to generate system context for events.
+     * @param messageSender The @c MessageSenderInterface that sends events to AVS.
+     * @return @c nullptr if the inputs are not defined, else a new instance of @c PlaybackController.
+     */
+    static std::shared_ptr<PlaybackHandlerInterface> createPlaybackHandlerInterface(
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier,
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>
+            defaultEndpointCapabilitiesRegistrar);
+
     /**
      * Create an instance of @c PlaybackController.
      *

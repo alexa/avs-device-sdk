@@ -13,14 +13,39 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/Utils/Logger/Logger.h>
+
 #include "AVSCommon/Utils/Timing/Timer.h"
+#include "AVSCommon/Utils/Timing/TimerDelegateFactory.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace timing {
 
-Timer::Timer() : m_running(false), m_stopping(false) {
+/// String to identify log entries originating from this file.
+static const std::string TAG(Timer::getTag());
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+Timer::Timer(std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> timerDelegateFactory) {
+    if (!timerDelegateFactory) {
+        timerDelegateFactory = std::make_shared<TimerDelegateFactory>();
+        if (!timerDelegateFactory) {
+            ACSDK_ERROR(LX(__func__).d("reason", "nullTimerDelegateFactory"));
+            return;
+        }
+    }
+
+    m_timer = timerDelegateFactory->getTimerDelegate();
+    if (!m_timer) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullTimerDelegate"));
+    }
 }
 
 Timer::~Timer() {
@@ -28,26 +53,17 @@ Timer::~Timer() {
 }
 
 void Timer::stop() {
-    {
-        std::lock_guard<std::mutex> waitLock(m_waitMutex);
-        if (m_running) {
-            m_stopping = true;
-        }
-        m_waitCondition.notify_all();
-    }
-
-    std::lock_guard<std::mutex> joinLock(m_joinMutex);
-    if (std::this_thread::get_id() != m_thread.get_id() && m_thread.joinable()) {
-        m_thread.join();
+    if (m_timer) {
+        m_timer->stop();
     }
 }
 
 bool Timer::isActive() const {
-    return m_running;
+    return m_timer && m_timer->isActive();
 }
 
 bool Timer::activate() {
-    return !m_running.exchange(true);
+    return m_timer && m_timer->activate();
 }
 
 }  // namespace timing

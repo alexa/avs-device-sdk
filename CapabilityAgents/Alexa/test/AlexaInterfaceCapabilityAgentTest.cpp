@@ -17,7 +17,9 @@
 #include <memory>
 #include <gmock/gmock.h>
 
+#include <Alexa/AlexaEventProcessedNotifier.h>
 #include <Alexa/AlexaInterfaceCapabilityAgent.h>
+#include <Alexa/AlexaInterfaceConstants.h>
 #include <Alexa/AlexaInterfaceMessageSenderInternalInterface.h>
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/NamespaceAndName.h>
@@ -25,6 +27,8 @@
 #include <AVSCommon/SDKInterfaces/MockAlexaInterfaceMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 
 namespace alexaClientSDK {
@@ -32,11 +36,18 @@ namespace capabilityAgents {
 namespace alexa {
 namespace test {
 
+using namespace acsdkManufactory;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces::test;
+using namespace avsCommon::sdkInterfaces::endpoints;
+using namespace avsCommon::sdkInterfaces::endpoints::test;
 using namespace avsCommon::utils::memory;
 
 using namespace ::testing;
+
+using ::testing::Matcher;
+
+using DefaultEndpointAnnotation = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation;
 
 /// The namespace for this capability agent.
 static const std::string NAMESPACE = "Alexa";
@@ -142,9 +153,9 @@ static std::chrono::milliseconds TIMEOUT(1000);
 /// A test @c EventProcessedObserver.
 class TestEventProcessedObserver : public avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface {
 public:
-    bool waitForEventProcessed(const std::string& eventConrrelationToken) {
+    bool waitForEventProcessed(const std::string& eventCorrelationToken) {
         std::unique_lock<std::mutex> lock{m_mutex};
-        auto predicate = [this, eventConrrelationToken] { return m_eventCorrelationToken == eventConrrelationToken; };
+        auto predicate = [this, eventCorrelationToken] { return m_eventCorrelationToken == eventCorrelationToken; };
         return m_wakeTrigger.wait_for(lock, TIMEOUT, predicate);
     }
 
@@ -351,6 +362,22 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testInvalidEventProcessedDirective) {
  * received.
  */
 TEST_F(AlexaInterfaceCapabilityAgentTest, testValidEventProcessedDirective) {
+    auto testNotifier = std::make_shared<AlexaEventProcessedNotifier>();
+    auto testObserver = std::make_shared<TestEventProcessedObserver>();
+
+    auto registrar = std::make_shared<MockEndpointCapabilitiesRegistrar>();
+    auto annotatedRegistrar = Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>(registrar);
+    EXPECT_CALL(
+        *registrar,
+        withCapability(CapabilityConfiguration(ALEXA_INTERFACE_TYPE, ALEXA_INTERFACE_NAME, ALEXA_INTERFACE_VERSION), _))
+        .WillOnce(ReturnRef(*registrar));
+
+    testNotifier->addObserver(testObserver);
+
+    /// Only the default endpoint handles AlexaEventProcessed directives.
+    m_alexaInterfaceCapabilityAgent = AlexaInterfaceCapabilityAgent::createDefaultAlexaInterfaceCapabilityAgent(
+        m_deviceInfo, m_mockExceptionSender, m_mockAlexaMessageSender, testNotifier, annotatedRegistrar);
+
     auto directivePair = AVSDirective::create(VALID_EVENT_PROCESSED_DIRECTIVE, nullptr, "");
     std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
     ASSERT_THAT(directive, NotNull());
@@ -360,8 +387,6 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testValidEventProcessedDirective) {
         .WillOnce(InvokeWithoutArgs(this, &AlexaInterfaceCapabilityAgentTest::wakeOnSetCompleted));
     EXPECT_CALL(*m_mockAlexaMessageSender, sendStateReportEvent(_, _, _)).Times(Exactly(0));
 
-    auto testObserver = std::make_shared<TestEventProcessedObserver>();
-    m_alexaInterfaceCapabilityAgent->addEventProcessedObserver(testObserver);
     m_alexaInterfaceCapabilityAgent->CapabilityAgent::preHandleDirective(
         directive, std::move(m_mockDirectiveHandlerResult));
     m_alexaInterfaceCapabilityAgent->CapabilityAgent::handleDirective(directive->getMessageId());
@@ -391,8 +416,6 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testValidReportStateDirective) {
             return true;
         }));
 
-    auto testObserver = std::make_shared<TestEventProcessedObserver>();
-    m_alexaInterfaceCapabilityAgent->addEventProcessedObserver(testObserver);
     m_alexaInterfaceCapabilityAgent->CapabilityAgent::preHandleDirective(
         directive, std::move(m_mockDirectiveHandlerResult));
     m_alexaInterfaceCapabilityAgent->CapabilityAgent::handleDirective(directive->getMessageId());

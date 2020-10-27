@@ -19,6 +19,10 @@
 #include <memory>
 
 #include <acsdkManufactory/Component.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
+#include <acsdkStartupManagerInterfaces/StartupNotifierInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h>
 #include <AVSCommon/Utils/Timing/MultiTimer.h>
@@ -27,15 +31,23 @@ namespace alexaClientSDK {
 namespace acsdkShared {
 
 /**
+ * Definition of a Manufactory component for shared types used throughout the SDK.
+ */
+using SharedComponent = acsdkManufactory::Component<
+    std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
+    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>,
+    std::shared_ptr<avsCommon::utils::timing::MultiTimer>,
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>,
+    std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
+    std::shared_ptr<acsdkStartupManagerInterfaces::StartupNotifierInterface>>;
+
+/**
  * Get the manufactory @c Component for acsdkShared.
  *
  * @return The manufactory @c Component for acsdkShared.
  */
-acsdkManufactory::Component<
-    std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
-    std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>,
-    std::shared_ptr<avsCommon::utils::timing::MultiTimer>>
-getComponent();
+SharedComponent getComponent();
 
 }  // namespace acsdkShared
 }  // namespace alexaClientSDK

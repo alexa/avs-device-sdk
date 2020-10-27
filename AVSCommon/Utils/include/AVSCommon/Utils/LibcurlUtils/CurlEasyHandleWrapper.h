@@ -239,6 +239,15 @@ public:
     long getHTTPResponseCode();
 
     /**
+     * Get the effective URL.
+     * @note In cases where CURLOPT_FOLLOWLOCATION is used, CURL follows the url it receives in the location header
+     * of the response until it reaches a URL with no location header. This last used url is the effective URL.
+     *
+     * @return The effective URL string.
+     */
+    std::string getEffectiveUrl();
+
+    /**
      * Perform whatever has been setup in the handle.
      *
      * @return The CURL response code.

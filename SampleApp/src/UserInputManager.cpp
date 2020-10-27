@@ -976,7 +976,16 @@ void UserInputManager::endpointControllerMenu() {
             double value;
             m_interactionManager->rangeController();
             std::cin >> value;
-            m_interactionManager->setRangeValue(value);
+            if (!std::cin.fail()) {
+                m_interactionManager->setRangeValue(value);
+            } else {
+                m_interactionManager->errorValue();
+                // Clear error flag on cin (so that future I/O operations will work correctly) in case of incorrect
+                // input.
+                std::cin.clear();
+                // Ignore anything else on the same line so that it does not cause another parse failure.
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             return;
         }
 #endif

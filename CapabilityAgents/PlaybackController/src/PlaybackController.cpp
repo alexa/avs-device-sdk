@@ -26,6 +26,8 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace playbackController {
 
+using namespace acsdkManufactory;
+using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
@@ -56,6 +58,34 @@ static const std::string PLAYBACK_CONTROLLER_NAMESPACE = "PlaybackController";
  * @return The PlaybackController capability configuration.
  */
 static std::shared_ptr<CapabilityConfiguration> getPlaybackControllerCapabilityConfiguration();
+
+std::shared_ptr<PlaybackHandlerInterface> PlaybackController::createPlaybackHandlerInterface(
+    std::shared_ptr<ContextManagerInterface> contextManager,
+    std::shared_ptr<MessageSenderInterface> messageSender,
+    std::shared_ptr<ShutdownNotifierInterface> shutdownNotifier,
+    Annotated<endpoints::DefaultEndpointAnnotation, endpoints::EndpointCapabilitiesRegistrarInterface>
+        defaultEndpointCapabilitiesRegistrar) {
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createPlaybackHandlerInterfaceFailed").d("reason", "nullShutdownNotifier"));
+        return nullptr;
+    }
+
+    if (!defaultEndpointCapabilitiesRegistrar) {
+        ACSDK_ERROR(LX("createPlaybackHandlerInterfaceFailed").d("reason", "nullDefaultEndpointCapabilitiesRegistrar"));
+        return nullptr;
+    }
+
+    auto controller = PlaybackController::create(contextManager, messageSender);
+    if (!controller) {
+        ACSDK_ERROR(LX("createPlaybackHandlerInterfaceFailed").m("nullPlaybackController"));
+        return nullptr;
+    }
+
+    shutdownNotifier->addObserver(controller);
+    defaultEndpointCapabilitiesRegistrar->withCapabilityConfiguration(controller);
+
+    return controller;
+}
 
 std::shared_ptr<PlaybackController> PlaybackController::create(
     std::shared_ptr<ContextManagerInterface> contextManager,

@@ -9,7 +9,7 @@ add_library(acsdkNotifications SHARED
 target_include_directories(acsdkNotifications PUBLIC
 		"${acsdkNotifications_SOURCE_DIR}/include")
 
-target_link_libraries(acsdkNotifications acsdkNotificationsInterfaces AudioResources AVSCommon SQLiteStorage RegistrationManager)
+target_link_libraries(acsdkNotifications acsdkNotificationsInterfaces acsdkApplicationAudioPipelineFactoryInterfaces AudioResources AVSCommon SQLiteStorage RegistrationManager)
 
 # install target
 asdk_install()

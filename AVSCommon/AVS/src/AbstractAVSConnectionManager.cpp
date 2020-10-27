@@ -35,8 +35,12 @@ static const std::string TAG("AbstractAVSConnectionManager");
 AbstractAVSConnectionManager::AbstractAVSConnectionManager(
     std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> observers) :
         m_connectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
-        m_connectionChangedReason{ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST},
+        m_avsConnectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
         m_connectionStatusObservers{observers} {
+    m_engineConnectionStatuses.emplace_back(
+        avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST,
+        ConnectionStatusObserverInterface::Status::DISCONNECTED);
 }
 
 void AbstractAVSConnectionManager::addConnectionStatusObserver(
@@ -48,12 +52,28 @@ void AbstractAVSConnectionManager::addConnectionStatusObserver(
 
     std::unique_lock<std::mutex> lock{m_mutex};
     auto localStatus = m_connectionStatus;
-    auto localReason = m_connectionChangedReason;
+    auto localEngineConnectionStatuses = m_engineConnectionStatuses;
     bool addedOk = m_connectionStatusObservers.insert(observer).second;
     lock.unlock();
 
     if (addedOk) {
-        observer->onConnectionStatusChanged(localStatus, localReason);
+        // call new onConnectionStatusChanged API
+        for (auto engineStatus : localEngineConnectionStatuses) {
+            (void)engineStatus;
+            ACSDK_DEBUG9(LX(__func__)
+                             .d("engineType", engineStatus.engineType)
+                             .d("status", engineStatus.status)
+                             .d("reason", engineStatus.reason));
+        }
+        observer->onConnectionStatusChanged(localStatus, localEngineConnectionStatuses);
+        // call old onConnectionStatusChanged API on AVS connection
+        for (const auto& status : localEngineConnectionStatuses) {
+            if (status.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
+                ACSDK_DEBUG9(LX(__func__).d("status", status.status).d("reason", status.reason));
+                observer->onConnectionStatusChanged(status.status, status.reason);
+                break;
+            }
+        }
     }
 }
 
@@ -69,25 +89,53 @@ void AbstractAVSConnectionManager::removeConnectionStatusObserver(
 }
 
 void AbstractAVSConnectionManager::updateConnectionStatus(
-    ConnectionStatusObserverInterface::Status status,
-    ConnectionStatusObserverInterface::ChangedReason reason) {
+    alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+    const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
+        engineConnectionStatuses) {
     std::unique_lock<std::mutex> lock{m_mutex};
     m_connectionStatus = status;
-    m_connectionChangedReason = reason;
+    bool avsConnectionStatusChanged = false;
+    for (const auto& engineStatus : engineConnectionStatuses) {
+        if (engineStatus.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
+            avsConnectionStatusChanged = m_avsConnectionStatus != engineStatus.status;
+            m_avsConnectionStatus = engineStatus.status;
+            break;
+        }
+    }
+    m_engineConnectionStatuses = engineConnectionStatuses;
     lock.unlock();
 
-    notifyObservers();
+    notifyObservers(avsConnectionStatusChanged);
 }
 
-void AbstractAVSConnectionManager::notifyObservers() {
+void AbstractAVSConnectionManager::notifyObservers(bool avsConnectionStatusChanged) {
     std::unique_lock<std::mutex> lock{m_mutex};
     auto observers = m_connectionStatusObservers;
     auto localStatus = m_connectionStatus;
-    auto localReason = m_connectionChangedReason;
+    auto localEngineConnectionStatuses = m_engineConnectionStatuses;
     lock.unlock();
 
-    for (auto observer : observers) {
-        observer->onConnectionStatusChanged(localStatus, localReason);
+    for (auto engineStatus : localEngineConnectionStatuses) {
+        (void)engineStatus;
+        ACSDK_DEBUG5(LX(__func__)
+                         .m("EngineConnectionStatusDetail")
+                         .d("engineType", engineStatus.engineType)
+                         .d("status", engineStatus.status)
+                         .d("reason", engineStatus.reason));
+    }
+    for (const auto& observer : observers) {
+        // call new onConnectionStatusChanged API
+        observer->onConnectionStatusChanged(localStatus, localEngineConnectionStatuses);
+        // call old onConnectionStatusChanged API on AVS connection
+        if (avsConnectionStatusChanged) {
+            for (const auto& status : localEngineConnectionStatuses) {
+                if (status.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
+                    ACSDK_DEBUG9(LX(__func__).d("status", status.status).d("reason", status.reason));
+                    observer->onConnectionStatusChanged(status.status, status.reason);
+                    break;
+                }
+            }
+        }
     }
 }
 

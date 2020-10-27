@@ -26,11 +26,16 @@
 
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/ApplicationMediaInterfaces.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
+#include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
+#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
+#include <DefaultClient/EqualizerRuntimeSetup.h>
+#include <acsdkExternalMediaPlayer/ExternalMediaPlayer.h>
 
 #include "ConsolePrinter.h"
 #include "ConsoleReader.h"
-#include "DefaultClient/EqualizerRuntimeSetup.h"
+
 #include "SampleApp/GuiRenderer.h"
 #include "SampleApplicationReturnCodes.h"
 #include "UserInputManager.h"
@@ -48,11 +53,6 @@
 #ifdef BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS
 #include <BlueZ/PulseAudioBluetoothInitializer.h>
 #endif
-
-#include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
-#include <CapabilitiesDelegate/CapabilitiesDelegate.h>
-#include <ExternalMediaPlayer/ExternalMediaPlayer.h>
-#include <AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -96,7 +96,8 @@ public:
      * @return @c true if the mediaPlayer of all the registered adapters could be created @c false otherwise.
      */
     bool createMediaPlayersForAdapters(
-        std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+        const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
+            httpContentFetcherFactory,
         std::shared_ptr<defaultClient::EqualizerRuntimeSetup> equalizerRuntimeSetup);
 
     /**
@@ -113,7 +114,7 @@ public:
          */
         AdapterRegistration(
             const std::string& playerId,
-            capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreateFunction createFunction);
+            acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreateFunction createFunction);
     };
 
     /**
@@ -163,7 +164,8 @@ private:
      * @return Application Media interface if it succeeds; otherwise, return @c nullptr.
      */
     std::shared_ptr<avsCommon::sdkInterfaces::ApplicationMediaInterfaces> createApplicationMediaPlayer(
-        std::shared_ptr<avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory> httpContentFetcherFactory,
+        const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
+            httpContentFetcherFactory,
         bool enableEqualizer,
         const std::string& name,
         bool enableLiveMode = false);
@@ -190,6 +192,8 @@ private:
     bool addControllersToPeripheralEndpoint(
         std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder);
 #endif
+    /// Object with which to trigger shutdown operations.
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> m_shutdownManager;
 
     /// Object to manage lifecycle of Alexa Client SDK initialization.
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit> m_sdkInit;
@@ -253,7 +257,7 @@ private:
         m_playerToSpeakerTypeMap;
 
     /// The singleton map from @c playerId to @c ExternalMediaAdapter creation functions.
-    static capabilityAgents::externalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap m_adapterToCreateFuncMap;
+    static acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap m_adapterToCreateFuncMap;
 
 #ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.

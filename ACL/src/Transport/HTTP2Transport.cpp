@@ -13,16 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#include <algorithm>
 #include <chrono>
 #include <functional>
-#include <random>
 
-#include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
+#include <AVSCommon/Utils/Error/FinallyGuard.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h>
-#include <AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/Timing/TimeUtils.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 #include <ACL/Transport/PostConnectInterface.h>
 
 #include "ACL/Transport/DownchannelHandler.h"
@@ -38,7 +35,9 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
+using namespace avsCommon::utils::error;
 using namespace avsCommon::utils::http2;
+using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("HTTP2Transport");
@@ -110,7 +109,7 @@ std::shared_ptr<HTTP2Transport> HTTP2Transport::create(
     const std::string& avsGateway,
     std::shared_ptr<HTTP2ConnectionInterface> http2Connection,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<TransportObserverInterface> transportObserver,
     std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
     std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
@@ -183,7 +182,7 @@ HTTP2Transport::HTTP2Transport(
     const std::string& avsGateway,
     std::shared_ptr<HTTP2ConnectionInterface> http2Connection,
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
-    std::shared_ptr<AttachmentManager> attachmentManager,
+    std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<TransportObserverInterface> transportObserver,
     std::shared_ptr<PostConnectFactoryInterface> postConnectFactory,
     std::shared_ptr<SynchronizedMessageRequestQueue> sharedRequestQueue,
@@ -206,6 +205,15 @@ HTTP2Transport::HTTP2Transport(
         m_configuration{configuration},
         m_disconnectReason{ConnectionStatusObserverInterface::ChangedReason::NONE} {
     m_observers.insert(transportObserver);
+
+    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_mainLoop");
+
+    m_requestActivityPowerResource =
+        PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_requestActivityResource");
+
+    if (m_mainLoopPowerResource) {
+        m_mainLoopPowerResource->acquire();
+    }
 }
 
 void HTTP2Transport::addObserver(std::shared_ptr<TransportObserverInterface> transportObserver) {
@@ -274,7 +282,7 @@ bool HTTP2Transport::isConnected() {
 void HTTP2Transport::onRequestEnqueued() {
     ACSDK_DEBUG7(LX_P(__func__));
     std::lock_guard<std::mutex> lock(m_mutex);
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 }
 
 void HTTP2Transport::onWakeConnectionRetry() {
@@ -295,7 +303,7 @@ void HTTP2Transport::onWakeVerifyConnectivity() {
     std::lock_guard<std::mutex> lock(m_mutex);
     if (!m_pingHandler) {
         m_timeOfLastActivity = m_timeOfLastActivity.min();
-        m_wakeEvent.notify_all();
+        m_wakeEvent.notifyAll();
     }
 }
 
@@ -324,7 +332,7 @@ void HTTP2Transport::sendMessage(std::shared_ptr<MessageRequest> request) {
 
     if (allowed) {
         m_requestQueue.enqueueRequest(request);
-        m_wakeEvent.notify_all();
+        m_wakeEvent.notifyAll();
     } else {
         ACSDK_ERROR(LX_P("enqueueRequestFailed").d("reason", "notInAllowedState").d("m_state", m_state));
         lock.unlock();
@@ -489,14 +497,14 @@ void HTTP2Transport::onMessageRequestAcknowledged(const std::shared_ptr<avsCommo
     if (request->getIsSerialized()) {
         m_sharedRequestQueue->clearWaitingForSendAcknowledgement();
     }
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 }
 
 void HTTP2Transport::onMessageRequestFinished() {
     std::lock_guard<std::mutex> lock(m_mutex);
     --m_countOfUnfinishedMessageHandlers;
     ACSDK_DEBUG7(LX_P(__func__).d("countOfUnfinishedMessageHandlers", m_countOfUnfinishedMessageHandlers));
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 }
 
 void HTTP2Transport::onPingRequestAcknowledged(bool success) {
@@ -507,7 +515,7 @@ void HTTP2Transport::onPingRequestAcknowledged(bool success) {
         setStateLocked(
             State::SERVER_SIDE_DISCONNECT, ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
     }
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 }
 
 void HTTP2Transport::onPingTimeout() {
@@ -515,7 +523,7 @@ void HTTP2Transport::onPingTimeout() {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_pingHandler.reset();
     setStateLocked(State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::PING_TIMEDOUT);
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 }
 
 void HTTP2Transport::onActivity() {
@@ -544,6 +552,16 @@ void HTTP2Transport::onGoawayReceived() {
 
 void HTTP2Transport::mainLoop() {
     ACSDK_DEBUG7(LX_P(__func__));
+
+    PowerMonitor::getInstance()->assignThreadPowerResource(m_mainLoopPowerResource);
+
+    FinallyGuard removePowerResource([this] {
+        PowerMonitor::getInstance()->removeThreadPowerResource();
+        if (m_mainLoopPowerResource) {
+            m_mainLoopPowerResource->release();
+        }
+    });
+
     m_http2Connection->addObserver(shared_from_this());
 
     m_postConnect = m_postConnectFactory->createPostConnect();
@@ -677,9 +695,8 @@ HTTP2Transport::State HTTP2Transport::handleDisconnecting() {
     ACSDK_INFO(LX_P(__func__));
 
     std::unique_lock<std::mutex> lock(m_mutex);
-    while (State::DISCONNECTING == m_state && m_countOfUnfinishedMessageHandlers > 0) {
-        m_wakeEvent.wait(lock);
-    }
+    m_wakeEvent.wait(
+        lock, [this]() { return (State::DISCONNECTING != m_state) || (m_countOfUnfinishedMessageHandlers == 0); });
     setStateLocked(State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
     return m_state;
 }
@@ -736,7 +753,7 @@ HTTP2Transport::State HTTP2Transport::monitorSharedQueueWhileWaiting(
         auto messageRequestTime = m_sharedRequestQueue->peekRequestTime();
 
         std::unique_lock<std::mutex> lock(m_mutex);
-        m_wakeEvent.wait_until(lock, wakeTime, [this, whileState, messageRequestTime] {
+        m_wakeEvent.waitUntil(lock, wakeTime, [this, whileState, messageRequestTime] {
             return m_state != whileState || m_sharedRequestQueue->peekRequestTime() != messageRequestTime;
         });
 
@@ -771,7 +788,7 @@ HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(
         if (m_pingHandler) {
             m_wakeEvent.wait(lock, pingWakePredicate);
         } else {
-            m_wakeEvent.wait_until(lock, m_timeOfLastActivity + m_configuration.inactivityTimeout, wakePredicate);
+            m_wakeEvent.waitUntil(lock, m_timeOfLastActivity + m_configuration.inactivityTimeout, wakePredicate);
         }
 
         if (m_state != whileState) {
@@ -791,7 +808,8 @@ HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(
                     m_messageConsumer,
                     m_attachmentManager,
                     m_metricRecorder,
-                    m_eventTracer);
+                    m_eventTracer,
+                    m_requestActivityPowerResource);
                 if (!handler) {
                     messageRequest->sendCompleted(MessageRequestObserverInterface::Status::INTERNAL_ERROR);
                 }
@@ -808,7 +826,7 @@ HTTP2Transport::State HTTP2Transport::sendMessagesAndPings(
 
                 auto authToken = m_authDelegate->getAuthToken();
                 if (!authToken.empty()) {
-                    m_pingHandler = PingHandler::create(shared_from_this(), authToken);
+                    m_pingHandler = PingHandler::create(shared_from_this(), authToken, m_requestActivityPowerResource);
                 } else {
                     ACSDK_ERROR(LX_P("failedToCreatePingHandler").d("reason", "invalidAuth"));
                 }
@@ -895,7 +913,7 @@ bool HTTP2Transport::setStateLocked(State newState, ConnectionStatusObserverInte
     }
 
     m_state = newState;
-    m_wakeEvent.notify_all();
+    m_wakeEvent.notifyAll();
 
     return true;
 }

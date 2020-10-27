@@ -12,7 +12,10 @@ target_include_directories(AVSGatewayManager PUBLIC
         "$<BUILD_INTERFACE:${RegistrationManager_SOURCE_DIR}/AVS/include>"
         "$<INSTALL_INTERFACE:include>")
 
-target_link_libraries(AVSGatewayManager AVSCommon RegistrationManager)
+target_link_libraries(AVSGatewayManager
+    acsdkPostConnectOperationProviderRegistrarInterfaces
+    AVSCommon
+    RegistrationManager)
 
 # install target
 asdk_install()

@@ -172,8 +172,10 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
     auto isLive = true;
     auto isMasterPlaylist = false;
     auto duration = INVALID_DURATION;
+    auto totalDuration = std::chrono::milliseconds::zero();
     auto encryptionInfo = EncryptionInfo();
     int mediaSequenceNumber = 1;
+    ssize_t indexToMapEntry = -1;
     ByteRange byteRange = std::make_tuple(0, 0);
     std::vector<std::string> variantURLs;
     std::vector<PlaylistEntry> entries;
@@ -209,6 +211,7 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
                 auto mediaInitInfo = parseHLSMapLine(line, playlistURL);
                 mediaInitInfo.encryptionInfo = encryptionInfo;
                 entries.push_back(mediaInitInfo);
+                indexToMapEntry = entries.size() - 1;
             }
             continue;
         }
@@ -228,6 +231,9 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
                 entryEncryptionInfo.initVector = to16ByteHexString(mediaSequenceNumber);
             }
             auto parseResult = PlaylistParseResult::STILL_ONGOING;
+            if (INVALID_DURATION != duration) {
+                totalDuration += duration;
+            }
             entries.push_back(PlaylistEntry(
                 absoluteURL, duration, parseResult, PlaylistEntry::Type::MEDIA_INFO, byteRange, entryEncryptionInfo));
             ++mediaSequenceNumber;
@@ -243,6 +249,9 @@ M3UContent parseM3UContent(const std::string& playlistURL, const std::string& co
     if (isMasterPlaylist) {
         return M3UContent(variantURLs);
     } else {
+        if (indexToMapEntry >= 0) {
+            entries[indexToMapEntry].encryptionInfo.totalDuration = totalDuration;
+        }
         return M3UContent(entries, isLive, playlistMediaSequence);
     }
 }

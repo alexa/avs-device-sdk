@@ -8,6 +8,9 @@ target_include_directories(acsdkDefaultSampleApplicationOptions PUBLIC
 target_link_libraries(acsdkDefaultSampleApplicationOptions
     acsdkCore
     acsdkManufactory
+    acsdkNullMetricRecorder
+    acsdkSampleApplicationInterfaces
+    acsdkSampleApplicationCBLAuthRequester
     acsdkShared
     CBLAuthDelegate)
 

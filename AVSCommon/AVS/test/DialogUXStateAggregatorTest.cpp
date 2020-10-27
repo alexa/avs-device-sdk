@@ -497,6 +497,38 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
     assertNoStateChange(m_testObserver);
 }
 
+/// Test that if receive() happens before RequestProcessingCompleted directive is handled, we exit THINKING mode.
+TEST_F(DialogUXAggregatorTest, test_receiveThenRPCTransitionsOutOfThinking) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    m_aggregator->receive("", "");
+    m_aggregator->receive("", "");
+
+    m_aggregator->onRequestProcessingStarted();
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
+    m_aggregator->onRequestProcessingCompleted();
+
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+}
+
+/// Test that if AIP experiences latency and sends a callback after RPS, we don't transition
+/// LISTENING->THINKING->LISTENING.
+TEST_F(DialogUXAggregatorTest, test_receiveAIPBusyAfterRPS) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    m_aggregator->onRequestProcessingStarted();
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    assertNoStateChange(m_testObserver);
+}
+
 }  // namespace test
 }  // namespace avsCommon
 }  // namespace alexaClientSDK

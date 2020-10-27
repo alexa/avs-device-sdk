@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_PLAYLISTPARSER_INCLUDE_PLAYLISTPARSER_CONTENTDECRYPTER_H_
 
 #include <atomic>
+#include <chrono>
 #include <memory>
 #include <string>
 #include <vector>
@@ -44,14 +45,12 @@ public:
     ContentDecrypter();
 
     /**
-     * Initializes media initialization section.
+     * Sets Media initialization section to mp4a from enca.
      *
      * @param mediaInitSection The Media initialization section.
-     * @param streamWriter The writer to write media init section.
+     * @param totalDuration Total duration of the content
      */
-    void writeMediaInitSection(
-        const ByteVector& mediaInitSection,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
+    void setMediaInitToDecryptedContent(const ByteVector& mediaInitSection, std::chrono::milliseconds totalDuration);
 
     /**
      * Decrypts contents and writes to stream.
@@ -120,7 +119,20 @@ private:
         const ByteVector& encryptedContent,
         const ByteVector& key,
         const ByteVector& iv,
-        ByteVector* decryptedContent);
+        const std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter>& streamWriter);
+
+    /**
+     * Writes result to stream.
+     *
+     * @param streamWriter The writer to write content.
+     * @param buffer Pointer to the buffer.
+     * @param size Size of the buffer in bytes.
+     * @return @c true if conversion is successful or @c false if failed.
+     */
+    bool writeToStream(
+        const std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter>& streamWriter,
+        const unsigned char* buffer,
+        size_t size);
 
     /**
      * Writes result to stream.
@@ -165,6 +177,12 @@ private:
 
     /// Media initialization section
     ByteVector m_mediaInitSection;
+
+    /// Flag for wav header
+    bool m_needWavHeader;
+
+    /// Total duration for content
+    std::chrono::milliseconds m_totalDuration;
 
     /// Flag to indicate if a shutdown is occurring.
     std::atomic<bool> m_shuttingDown;

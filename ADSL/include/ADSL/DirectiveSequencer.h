@@ -25,6 +25,7 @@
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
+#include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 
 #include "ADSL/DirectiveProcessor.h"
 #include "ADSL/DirectiveRouter.h"
@@ -112,7 +113,10 @@ private:
     std::deque<std::shared_ptr<avsCommon::avs::AVSDirective>> m_receivingQueue;
 
     /// Condition variable used to wake m_receivingLoop when waiting.
-    std::condition_variable m_wakeReceivingLoop;
+    avsCommon::utils::threading::ConditionVariableWrapper m_wakeReceivingLoop;
+
+    /// The @c PowerResource associated with this thread.
+    std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
 
     /// Thread to receive directives.
     std::thread m_receivingThread;

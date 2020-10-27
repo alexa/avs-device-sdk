@@ -12,8 +12,8 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-#ifndef ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_
-#define ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_
+#define ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_
 
 #include <memory>
 #include <string>
@@ -22,6 +22,7 @@
 #include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
@@ -48,6 +49,7 @@ class MRMCapabilityAgent
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public avsCommon::sdkInterfaces::UserInactivityMonitorObserverInterface
         , public avsCommon::sdkInterfaces::CallStateObserverInterface
+        , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface
         , public avsCommon::utils::RequiresShutdown
@@ -108,6 +110,12 @@ public:
     /// @name Overridden @c CallStateObserverInterface methods
     /// @{
     void onCallStateChange(avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) override;
+    /// @}
+
+    /// @name Overridden @c DialogUXStateChanged methods.
+    /// @{
+    void onDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) override;
     /// @}
 
     /// @name Overridden CapabilityConfigurationInterface methods.
@@ -185,6 +193,12 @@ private:
     void executeOnCallStateChange(const avsCommon::sdkInterfaces::CallStateObserverInterface::CallState state);
 
     /**
+     * This function handles when the DialogUXState has been changed.
+     */
+    void executeOnDialogUXStateChanged(
+        avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState);
+
+    /**
      * This function handles when a System.UserInactivityReport has been sent to
      * AVS.
      */
@@ -215,4 +229,4 @@ private:
 }  // namespace capabilityAgents
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKMULTIROOMMUSIC_INCLUDE_ACSDKMULTIROOMMUSIC_MRMCAPABILITYAGENT_H_

@@ -17,6 +17,7 @@
 
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Power/PowerMonitor.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <RegistrationManager/CustomerDataManager.h>
 
@@ -27,6 +28,7 @@ using namespace avsCommon::utils::logger;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("CertifiedSender");
@@ -63,7 +65,7 @@ void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::stri
     std::lock_guard<std::mutex> lock(m_requestMutex);
     m_sendMessageStatus = MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2;
     m_responseReceived = true;
-    m_requestCv.notify_all();
+    m_requestCv.notifyAll();
 }
 
 void CertifiedSender::CertifiedMessageRequest::sendCompleted(
@@ -72,11 +74,12 @@ void CertifiedSender::CertifiedMessageRequest::sendCompleted(
     if (!m_responseReceived) {
         m_sendMessageStatus = sendMessageStatus;
         m_responseReceived = true;
-        m_requestCv.notify_all();
+        m_requestCv.notifyAll();
     }
 }
 
 MessageRequestObserverInterface::Status CertifiedSender::CertifiedMessageRequest::waitForCompletion() {
+    ACSDK_DEBUG5(LX(__func__));
     std::unique_lock<std::mutex> lock(m_requestMutex);
     m_requestCv.wait(lock, [this]() { return m_isRequestShuttingDown || m_responseReceived; });
 
@@ -94,7 +97,7 @@ int CertifiedSender::CertifiedMessageRequest::getDbId() {
 void CertifiedSender::CertifiedMessageRequest::shutdown() {
     std::lock_guard<std::mutex> lock(m_requestMutex);
     m_isRequestShuttingDown = true;
-    m_requestCv.notify_all();
+    m_requestCv.notifyAll();
 }
 
 std::shared_ptr<CertifiedSender> CertifiedSender::create(
@@ -142,8 +145,8 @@ CertifiedSender::~CertifiedSender() {
     }
     lock.unlock();
 
-    m_workerThreadCV.notify_one();
-    m_backoffWaitCV.notify_one();
+    m_workerThreadCV.notifyOne();
+    m_backoffWaitCV.notifyOne();
 
     if (m_workerThread.joinable()) {
         m_workerThread.join();
@@ -167,6 +170,11 @@ bool CertifiedSender::init() {
         }
     }
 
+    m_powerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG);
+    if (m_powerResource) {
+        m_powerResource->acquire();
+    }
+
     m_workerThread = std::thread(&CertifiedSender::mainloop, this);
 
     return true;
@@ -179,15 +187,16 @@ bool CertifiedSender::init() {
  * @return Whether the status means the client should keep retrying.
  */
 inline bool shouldRetryTransmission(MessageRequestObserverInterface::Status status) {
+    ACSDK_DEBUG9(LX(__func__).d("status", status));
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
         case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
         case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
-        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
         case MessageRequestObserverInterface::Status::CANCELED:
         case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
         case MessageRequestObserverInterface::Status::BAD_REQUEST:
             return false;
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
         case MessageRequestObserverInterface::Status::THROTTLED:
         case MessageRequestObserverInterface::Status::PENDING:
         case MessageRequestObserverInterface::Status::NOT_CONNECTED:
@@ -204,19 +213,22 @@ inline bool shouldRetryTransmission(MessageRequestObserverInterface::Status stat
 
 void CertifiedSender::mainloop() {
     int failedSendRetryCount = 0;
+    PowerMonitor::getInstance()->assignThreadPowerResource(m_powerResource);
+
     while (true) {
         std::unique_lock<std::mutex> lock(m_mutex);
 
         m_currentMessage.reset();
 
         if ((!m_isConnected || m_messagesToSend.empty()) && !m_isShuttingDown) {
+            ACSDK_DEBUG9(LX(__func__).d("reason", "waitingForMessage"));
             m_workerThreadCV.wait(
                 lock, [this]() { return ((m_isConnected && !m_messagesToSend.empty()) || m_isShuttingDown); });
         }
 
         if (m_isShuttingDown) {
             ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  Exiting mainloop."));
-            return;
+            break;
         }
 
         m_currentMessage = m_messagesToSend.front();
@@ -229,6 +241,7 @@ void CertifiedSender::mainloop() {
         auto status = m_currentMessage->waitForCompletion();
 
         if (shouldRetryTransmission(status)) {
+            ACSDK_DEBUG9(LX(__func__).d("result", "retrying"));
             // If we couldn't send the message ok, let's push a fresh instance to the front of the deque.  This allows
             // ACL to continue interacting with the old instance (for example, if it is involved in a complex flow
             // of exception / onCompleted handling), and allows us to safely try sending the new instance.
@@ -248,13 +261,14 @@ void CertifiedSender::mainloop() {
             failedSendRetryCount++;
 
             lock.lock();
-            m_backoffWaitCV.wait_for(lock, timeout, [this]() { return m_isShuttingDown; });
+            m_backoffWaitCV.waitFor(lock, timeout, [this]() { return m_isShuttingDown; });
             if (m_isShuttingDown) {
                 ACSDK_DEBUG9(LX("CertifiedSender worker thread done.  Exiting mainloop."));
-                return;
+                break;
             }
             lock.unlock();
         } else {
+            ACSDK_DEBUG9(LX(__func__).d("result", "messageHandled"));
             /*
              * We should not retry to send the message (either because it was sent successfully or because trying again
              * is not expected to solve the issue)
@@ -271,15 +285,22 @@ void CertifiedSender::mainloop() {
             failedSendRetryCount = 0;
         }
     }
+
+    PowerMonitor::getInstance()->removeThreadPowerResource();
+    if (m_powerResource) {
+        m_powerResource->release();
+    }
 }
 
 void CertifiedSender::onConnectionStatusChanged(
     ConnectionStatusObserverInterface::Status status,
     ConnectionStatusObserverInterface::ChangedReason reason) {
+    ACSDK_DEBUG5(LX(__func__));
+
     std::unique_lock<std::mutex> lock(m_mutex);
     m_isConnected = (ConnectionStatusObserverInterface::Status::CONNECTED == status);
     lock.unlock();
-    m_workerThreadCV.notify_one();
+    m_workerThreadCV.notifyAll();
 }
 
 std::future<bool> CertifiedSender::sendJSONMessage(
@@ -290,6 +311,8 @@ std::future<bool> CertifiedSender::sendJSONMessage(
 }
 
 bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage, const std::string& uriPathExtension) {
+    ACSDK_DEBUG5(LX(__func__));
+
     std::unique_lock<std::mutex> lock(m_mutex);
 
     int queueSize = static_cast<int>(m_messagesToSend.size());
@@ -313,7 +336,7 @@ bool CertifiedSender::executeSendJSONMessage(std::string jsonMessage, const std:
 
     lock.unlock();
 
-    m_workerThreadCV.notify_one();
+    m_workerThreadCV.notifyOne();
 
     return true;
 }

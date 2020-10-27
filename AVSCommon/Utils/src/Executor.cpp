@@ -14,12 +14,16 @@
  */
 
 #include "AVSCommon/Utils/Memory/Memory.h"
+#include "AVSCommon/Utils/Power/PowerMonitor.h"
 #include "AVSCommon/Utils/Threading/Executor.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace threading {
+
+/// An id for identifying instances.
+static std::atomic<uint64_t> g_id{0};
 
 Executor::~Executor() {
     shutdown();
@@ -28,7 +32,9 @@ Executor::~Executor() {
 Executor::Executor(const std::chrono::milliseconds& delayExit) :
         m_threadRunning{false},
         m_timeout{delayExit},
-        m_shutdown{false} {
+        m_shutdown{false},
+        m_id{g_id++} {
+    m_powerResource = power::PowerMonitor::getInstance()->createLocalPowerResource("Executor:" + std::to_string(m_id));
 }
 
 void Executor::waitForSubmittedTasks() {
@@ -57,6 +63,7 @@ std::function<void()> Executor::pop() {
 
 bool Executor::hasNext() {
     std::unique_lock<std::mutex> lock{m_queueMutex};
+
     m_delayedCondition.wait_for(lock, m_timeout, [this] { return !m_queue.empty() || m_shutdown; });
     m_threadRunning = !m_queue.empty();
     return m_threadRunning;
@@ -67,6 +74,14 @@ bool Executor::runNext() {
     if (task) {
         task();
     }
+
+    if (m_powerResource) {
+        m_powerResource->release();
+    }
+
+    // It is acceptable that we enter LPM before
+    // the wait. TaskThread will still wait the intended m_timeout relative to the system
+    // not in LPM.
 
     return hasNext();
 }

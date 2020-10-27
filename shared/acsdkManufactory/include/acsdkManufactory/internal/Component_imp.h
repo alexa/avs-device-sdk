@@ -24,7 +24,8 @@ namespace acsdkManufactory {
 
 template <typename... Parameters>
 template <typename... ComponentAccumulatorParameters>
-Component<Parameters...>::Component(ComponentAccumulator<ComponentAccumulatorParameters...>&& componentAccumulator) :
+inline Component<Parameters...>::Component(
+    ComponentAccumulator<ComponentAccumulatorParameters...>&& componentAccumulator) :
         m_cookBook{componentAccumulator.getCookBook()} {
     using AccumulatorTypes = typename internal::GetImportsAndExports<ComponentAccumulatorParameters...>::type;
 
@@ -44,7 +45,7 @@ Component<Parameters...>::Component(ComponentAccumulator<ComponentAccumulatorPar
 }
 
 template <typename... Parameters>
-internal::CookBook Component<Parameters...>::getCookBook() const {
+inline internal::CookBook Component<Parameters...>::getCookBook() const {
     return m_cookBook;
 }
 

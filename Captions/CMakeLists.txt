@@ -3,5 +3,6 @@ project(Captions LANGUAGES CXX)
 
 include(../build/BuildDefaults.cmake)
 
+add_subdirectory("Component")
 add_subdirectory("Interface")
 add_subdirectory("Implementation")

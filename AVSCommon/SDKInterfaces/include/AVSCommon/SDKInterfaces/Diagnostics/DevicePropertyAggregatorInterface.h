@@ -22,12 +22,14 @@
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 #include <acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h>
 #include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/Optional.h>
+#include <Settings/DeviceSettingsManager.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -40,6 +42,7 @@ namespace diagnostics {
 class DevicePropertyAggregatorInterface
         : public acsdkAlertsInterfaces::AlertObserverInterface
         , public acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface
+        , public avsCommon::sdkInterfaces::AuthObserverInterface
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::ContextRequesterInterface
         , public acsdkNotificationsInterfaces::NotificationsObserverInterface
@@ -83,6 +86,18 @@ public:
     /// "false".
     static constexpr const char* AVS_ALERTS_MUTE = "AVSAlertsMute";
 
+    /// Property Key for Do not Disturb. The Property Value is a string representing if do not disturb is on. Ex:
+    /// "false".
+    static constexpr const char* DO_NOT_DISTURB = "DoNotDisturb";
+
+    /// Property Key for Locale. The Property Value is a string representing the locale of the device. Ex:
+    /// "[en-US]".
+    static constexpr const char* LOCALE = "Locale";
+
+    /// Property Key for Registration status. The Property Value is a string representing the registration status. Ex:
+    /// "true".
+    static constexpr const char* REGISTRATION_STATUS = "RegistrationStatus";
+
     /**
      * Gets the property for the given property key.
      *
@@ -106,6 +121,12 @@ public:
     virtual void setContextManager(
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) = 0;
 
+    /**
+     * Set the @c DeviceSettingsManager
+     *
+     * @param settingManager the @c DeviceSettingsManager
+     */
+    virtual void setDeviceSettingsManager(std::shared_ptr<settings::DeviceSettingsManager> settingManager) = 0;
     /**
      * @note This API should only be used to initialize the volume values. Subsequent updates to volume values should
      * come from the @c SpeakerManagerInterface.

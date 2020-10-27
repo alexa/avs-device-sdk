@@ -29,6 +29,20 @@ inline bool littleEndianMachine() {
     return words[0] == 1;
 }
 
+// Function used to swap endian of uint16_t
+inline uint16_t swapEndian(uint16_t input) {
+    return ((input & 0x00ff) << 8 | (input & 0xff00) >> 8);
+}
+
+// Function used to swap endian of uint32_t
+inline uint32_t swapEndian(uint32_t input) {
+    return (
+        (input & 0xff000000) >> 24 |  // move byte 3 to byte 0
+        (input & 0x0000ff00) << 8 |   // move byte 1 to byte 2
+        (input & 0x00ff0000) >> 8 |   // move byte 2 to byte 1
+        (input & 0x000000ff) << 24);  // byte 0 to byte 3
+}
+
 }  // namespace utils
 }  // namespace avsCommon
 }  // namespace alexaClientSDK

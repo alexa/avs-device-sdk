@@ -1,6 +1,5 @@
 if (BUILD_TESTING)
     add_library(SDKInterfacesTests
-            src/EqualizerStorageInterfaceTest.cpp
             src/StubMiscStorage.cpp
             )
 

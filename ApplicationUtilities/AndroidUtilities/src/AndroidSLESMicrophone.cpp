@@ -151,6 +151,9 @@ bool AndroidSLESMicrophone::startStreamingMicrophoneData() {
 bool AndroidSLESMicrophone::stopStreamingMicrophoneData() {
     ACSDK_INFO(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
+    if (!m_isStreaming) {
+        return true;
+    }
 
     if (m_recorderObject && m_recorderInterface) {
         auto result = (*m_recorderInterface)->SetRecordState(m_recorderInterface, SL_RECORDSTATE_STOPPED);

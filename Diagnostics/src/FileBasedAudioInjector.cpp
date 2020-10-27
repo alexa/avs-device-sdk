@@ -38,12 +38,14 @@ std::shared_ptr<applicationUtilities::resources::audio::MicrophoneInterface> Fil
     const std::shared_ptr<avsCommon::avs::AudioInputStream>& stream,
     const alexaClientSDK::avsCommon::utils::AudioFormat& compatibleAudioFormat) {
     ACSDK_DEBUG5(LX(__func__));
+    /// Cleanup reference to the old microphone. This can happen when SampleApp goes through a re-authorization / reset.
+    m_microphone.reset();
+
+    m_microphone = AudioInjectorMicrophone::create(stream, compatibleAudioFormat);
     if (!m_microphone) {
-        m_microphone = AudioInjectorMicrophone::create(stream, compatibleAudioFormat);
-        if (!m_microphone) {
-            ACSDK_CRITICAL(LX("Failed to create microphone"));
-        }
+        ACSDK_CRITICAL(LX("Failed to create microphone"));
     }
+
     return m_microphone;
 }
 

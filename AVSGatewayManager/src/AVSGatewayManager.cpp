@@ -45,6 +45,34 @@ static const std::string AVS_GATEWAY = "avsGateway";
 /// Default @c AVS gateway to connect to.
 static const std::string DEFAULT_AVS_GATEWAY = "https://alexa.na.gateway.devices.a2z.com";
 
+std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGatewayManager::
+    createAVSGatewayManagerInterface(
+        std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
+        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+        const std::shared_ptr<
+            acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
+            providerRegistrar) {
+    if (!configurationRoot) {
+        ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullConfigurationRoot"));
+        return nullptr;
+    }
+    if (!providerRegistrar) {
+        ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullProviderRegistrar"));
+        return nullptr;
+    }
+    auto gatewayManager = create(std::move(avsGatewayManagerStorage), customerDataManager, *configurationRoot);
+    if (!gatewayManager) {
+        ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "createFailed"));
+        return nullptr;
+    }
+    if (!providerRegistrar->registerProvider(gatewayManager)) {
+        ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "registerProviderFailed"));
+        return nullptr;
+    }
+    return gatewayManager;
+}
+
 std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
     std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,

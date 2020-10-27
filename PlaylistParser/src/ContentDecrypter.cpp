@@ -28,6 +28,7 @@ extern "C" {
 #endif  // ENABLE_SAMPLE_AES
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/WavUtils.h>
 
 #include "PlaylistParser/FFMpegInputBuffer.h"
 
@@ -91,7 +92,9 @@ using AVIOContextPtr = std::unique_ptr<AVIOContext, AVIOContextDeleter>;
 
 struct AVFormatContextDeleter {
     void operator()(AVFormatContext* ptr) {
-        avformat_free_context(ptr);
+        if (ptr) {
+            avformat_close_input(&ptr);
+        }
     }
 };
 using AVFormatContextPtr = std::unique_ptr<AVFormatContext, AVFormatContextDeleter>;
@@ -102,6 +105,20 @@ struct AVPacketDeleter {
     }
 };
 using AVPacketPtr = std::unique_ptr<AVPacket, AVPacketDeleter>;
+
+struct AVCodecContextDeleter {
+    void operator()(AVCodecContext* ptr) {
+        avcodec_free_context(&ptr);
+    }
+};
+using AVCodecContextPtr = std::unique_ptr<AVCodecContext, AVCodecContextDeleter>;
+
+struct AVFrameDeleter {
+    void operator()(AVFrame* ptr) {
+        av_frame_free(&ptr);
+    }
+};
+using AVFramePtr = std::unique_ptr<AVFrame, AVFrameDeleter>;
 
 /**
  * FFMpeg callback for refilling the buffer.
@@ -161,9 +178,26 @@ static int64_t avioSeek(void* opaque, int64_t offset, int whence) {
     }
     return input->getOffset();
 }
+
+/**
+ * Helper function to convert FFMpeg error codes to string.
+ *
+ * @param err Error code.
+ * @return String of error.
+ */
+std::string ffmpegErrToStr(int err) {
+    char errbuf[256];
+    if (av_strerror(err, errbuf, sizeof(errbuf)) == 0) {
+        return errbuf;
+    }
+    return strerror(AVUNERROR(err));
+}
 #endif  // ENABLE_SAMPLE_AES
 
-ContentDecrypter::ContentDecrypter() : RequiresShutdown{"ContentDecrypter"}, m_shuttingDown{false} {
+ContentDecrypter::ContentDecrypter() :
+        RequiresShutdown{"ContentDecrypter"},
+        m_needWavHeader{false},
+        m_shuttingDown{false} {
 #ifdef ENABLE_SAMPLE_AES
 // av_register_all is deprecated in FFMpeg 4.0.
 #if (LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(58, 9, 100))
@@ -172,7 +206,7 @@ ContentDecrypter::ContentDecrypter() : RequiresShutdown{"ContentDecrypter"}, m_s
 #endif  // ENABLE_SAMPLE_AES
 }
 
-void ContentDecrypter::writeMediaInitSection(const ByteVector& mis, std::shared_ptr<AttachmentWriter> streamWriter) {
+void ContentDecrypter::setMediaInitToDecryptedContent(const ByteVector& mis, std::chrono::milliseconds totalDuration) {
     auto size = mis.size();
     m_mediaInitSection = std::vector<unsigned char>(size);
     // Replace 'enca' with 'mp4a'. This is required to allow gstreamer to play the data.
@@ -187,7 +221,8 @@ void ContentDecrypter::writeMediaInitSection(const ByteVector& mis, std::shared_
             m_mediaInitSection[i] = mis[i];
         }
     }
-    writeToStream(m_mediaInitSection, streamWriter);
+    m_needWavHeader = true;
+    m_totalDuration = totalDuration;
 }
 
 bool ContentDecrypter::decryptAndWrite(
@@ -211,10 +246,12 @@ bool ContentDecrypter::decryptAndWrite(
             break;
         case EncryptionInfo::Method::SAMPLE_AES:
 #ifdef ENABLE_SAMPLE_AES
-            if (!decryptSampleAES(encryptedContent, key, ivByteArray, &decryptedContent)) {
+            if (!decryptSampleAES(encryptedContent, key, ivByteArray, streamWriter)) {
                 ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "sampleAESDecryptionFailed"));
                 return false;
             }
+            // Stream written to during decryptSampleAES
+            return true;
 #else
             ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "sampleAESDecryptionDisabled"));
             return false;
@@ -292,7 +329,14 @@ int ContentDecrypter::decryptAES(
         logFailure("EVPContextIsNULL");
         return 0;
     }
-
+    if (key.size() != static_cast<ByteVector::size_type>(EVP_CIPHER_key_length(EVP_aes_128_cbc()))) {
+        logFailure("InvalidKeyLength");
+        return 0;
+    }
+    if (iv.size() != static_cast<ByteVector::size_type>(EVP_CIPHER_iv_length(EVP_aes_128_cbc()))) {
+        logFailure("InvalidIVLength");
+        return 0;
+    }
     if (!EVP_DecryptInit_ex(ctx.get(), EVP_aes_128_cbc(), NULL, key.data(), iv.data())) {
         logFailure("UnableToInitializeDecryption");
         return 0;
@@ -330,6 +374,10 @@ ByteVector ContentDecrypter::prependMediaInitSection(const ByteVector& bytes) co
 
 static size_t findMDATLocation(const ByteVector& bytes) {
     auto size = bytes.size();
+    if (size < 4) {
+        ACSDK_ERROR(LX(__func__).m("Header is too small"));
+        return INVALID_MDAT_LOCATION;
+    }
     for (size_t i = 0; i <= (size - 4); i++) {
         if ('m' == bytes[i] && 'd' == bytes[i + 1] && 'a' == bytes[i + 2] && 't' == bytes[i + 3]) {
             ACSDK_DEBUG5(LX("sampleAESDecrypt").d("reason", "mdatLocated").d("position", i));
@@ -362,24 +410,17 @@ bool ContentDecrypter::decryptSampleAES(
     const ByteVector& encryptedContent,
     const ByteVector& key,
     const ByteVector& iv,
-    ByteVector* decryptedContent) {
-    if (!decryptedContent) {
-        ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "nullDecryptedContent"));
-        return 0;
+    const std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter>& streamWriter) {
+    if (encryptedContent.size() == 0) {
+        ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "encryptedContentIsEmpty"));
+        return false;
     }
 
-    auto inputSize = encryptedContent.size();
-    ByteVector output(inputSize);
-    int outputLength = 0;
+    // Output is larger than input due to being decoded
+    ByteVector output;
 
     // Locate 'mdat'. If mdat is located in the input then this is fragmented mp4
     int mdatLocation = findMDATLocation(encryptedContent);
-
-    // Copy data up to the end of 'mdat' into the output buffer
-    if (INVALID_MDAT_LOCATION != mdatLocation) {
-        memcpy(output.data(), encryptedContent.data(), mdatLocation + 4);
-        outputLength += mdatLocation + 4;
-    }
 
     // Tag on the media initialization section to the input.
     FFMpegInputBuffer input(prependMediaInitSection(encryptedContent));
@@ -397,6 +438,9 @@ bool ContentDecrypter::decryptSampleAES(
     auto averror = avformat_open_input(&rawFormatContext, NULL, NULL, NULL);
     if (averror != 0) {
         logAVError("decryptSampleAESFailed", "openInput", averror);
+        // Note that a user-supplied AVFormatContext will be freed on failure.
+        // Release the object to avoid double free.
+        formatContext.release();
         return false;
     }
 
@@ -405,6 +449,39 @@ bool ContentDecrypter::decryptSampleAES(
     int audioIndex = findAudioStreamIndex(formatContext.get());
     if (INVALID_STREAM_INDEX == audioIndex) {
         ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "audioStreamNotFound"));
+        return false;
+    }
+
+#if LIBAVCODEC_VERSION_MAJOR < 57
+    auto cid = formatContext->streams[audioIndex]->codec->codec_id;
+#else
+    // CodecContext is deprecated. Use CodecPar for ffmpeg > 3.1
+    auto cid = formatContext->streams[audioIndex]->codecpar->codec_id;
+#endif
+
+    // find decoder for the stream
+    AVCodec* dec = avcodec_find_decoder(cid);
+
+    // Allocate a codec context for the decoder
+    AVCodecContextPtr decCtx(avcodec_alloc_context3(dec));
+
+    int ret = 0;
+    ret = avcodec_parameters_to_context(decCtx.get(), formatContext->streams[audioIndex]->codecpar);
+    if (ret < 0) {
+        ACSDK_ERROR(LX("Error converting codec").d("error", ffmpegErrToStr(ret)));
+        return false;
+    }
+
+    ret = avcodec_open2(decCtx.get(), dec, NULL);
+    if (ret < 0) {
+        ACSDK_ERROR(LX("Error opening codec").d("error", ffmpegErrToStr(ret)));
+        return false;
+    }
+
+    // Allocate a frame for the decoded content
+    AVFramePtr decodedFrame(av_frame_alloc());
+    if (!decodedFrame) {
+        ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "Error allocating avFrame"));
         return false;
     }
 
@@ -417,12 +494,6 @@ bool ContentDecrypter::decryptSampleAES(
         uint8_t* audioFrame = packetPtr->data;
         uint8_t* pFrame = audioFrame;
 
-#if LIBAVCODEC_VERSION_MAJOR < 57
-        auto cid = formatContext->streams[audioIndex]->codec->codec_id;
-#else
-        // CodecContext is deprecated. Use CodecPar for ffmpeg > 3.1
-        auto cid = formatContext->streams[audioIndex]->codecpar->codec_id;
-#endif
         if (AV_CODEC_ID_AAC == cid) {
             // ADTS headers can contain CRC checks.
             // If the CRC check bit is 0, CRC exists.
@@ -457,13 +528,74 @@ bool ContentDecrypter::decryptSampleAES(
             memcpy(pFrame, decryptedBytes.data(), decryptSize);
         }
 
-        // write packet to output
-        memcpy(output.data() + outputLength, packetPtr->data, packetPtr->size);
-        outputLength += packetPtr->size;
-    }
-    output.resize(outputLength);
-    *decryptedContent = output;
+        // If mdatLocation is invalid, content is not fragmented mp4 and does not need to be decoded.
+        if (INVALID_MDAT_LOCATION == mdatLocation) {
+            if (!writeToStream(streamWriter, audioFrame, packetPtr->size)) {
+                ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "writeDecodedFrameToStreamFailed"));
+                return false;
+            }
+            continue;
+        }
 
+        // Send packet to be decoded
+        ret = avcodec_send_packet(decCtx.get(), packetPtr.get());
+        if (ret < 0) {
+            ACSDK_ERROR(LX("Error submitting packet to the decoder").d("error", ffmpegErrToStr(ret)));
+            return false;
+        }
+
+        // Receive all decodedFrames
+        while (avcodec_receive_frame(decCtx.get(), decodedFrame.get()) >= 0) {
+            ACSDK_DEBUG9(LX("DecodedFrameInfo")
+                             .d("totalFrame", decCtx->frame_number)
+                             .d("numChannel", decCtx->channels)
+                             .d("bitrate", decCtx->bit_rate)
+                             .d("bitperRawSample", decCtx->bits_per_raw_sample));
+
+            // Get WAVE Format
+            auto format = static_cast<AVSampleFormat>(decodedFrame->format);
+            bool isPCM = !(format == AV_SAMPLE_FMT_FLT || format == AV_SAMPLE_FMT_FLTP);
+
+            // Get Number of Bytes per sample
+            unsigned int bytesPerSample = av_get_bytes_per_sample(format);
+
+            // If first PlaylistEntry parsed, write wav header to stream.
+            if (m_needWavHeader) {
+                ACSDK_DEBUG9(LX("writeWavHeader")
+                                 .d("bytesPerSample", bytesPerSample)
+                                 .d("channels", decodedFrame->channels)
+                                 .d("sampleRate", decodedFrame->sample_rate)
+                                 .d("totalDuration", m_totalDuration.count())
+                                 .d("isPCM", isPCM));
+
+                auto header = avsCommon::utils::generateWavHeader(
+                    bytesPerSample, decodedFrame->channels, decodedFrame->sample_rate, m_totalDuration, isPCM);
+
+                if (!writeToStream(streamWriter, header.data(), header.size())) {
+                    ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "writeWavHeaderToStreamFailed"));
+                    return false;
+                }
+                m_needWavHeader = false;
+            }
+
+            // Write multichannel data into single buffer
+            ByteVector decodedBuffer;
+            decodedBuffer.reserve(decodedFrame->nb_samples * decodedFrame->channels * bytesPerSample);
+            for (int i = 0; i < decodedFrame->nb_samples; i++) {
+                for (int ch = 0; ch < decodedFrame->channels; ch++) {
+                    decodedBuffer.insert(
+                        decodedBuffer.end(),
+                        decodedFrame->data[ch] + bytesPerSample * i,
+                        decodedFrame->data[ch] + bytesPerSample * i + bytesPerSample);
+                }
+            }
+
+            if (!writeToStream(streamWriter, decodedBuffer.data(), decodedBuffer.size())) {
+                ACSDK_ERROR(LX("decryptSampleAESFailed").d("reason", "writeDecodedFrameToStreamFailed"));
+                return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -479,20 +611,27 @@ void ContentDecrypter::logAVError(const char* event, const char* reason, int ave
         ACSDK_ERROR(LX(event).d("reason", reason).d("averror", averror));
     }
 }
+
 #endif  // ENABLE_SAMPLE_AES
 
-bool ContentDecrypter::writeToStream(const ByteVector& content, std::shared_ptr<AttachmentWriter> streamWriter) {
+bool ContentDecrypter::writeToStream(
+    const std::shared_ptr<AttachmentWriter>& streamWriter,
+    const unsigned char* buffer,
+    size_t size) {
     if (!streamWriter) {
+        ACSDK_ERROR(LX("writeToStreamFailed").d("reason", "streamWriterIsNULL"));
+        return false;
+    }
+    if (!buffer) {
         ACSDK_ERROR(LX("writeToStreamFailed").d("reason", "streamWriterIsNULL"));
         return false;
     }
 
     size_t totalBytesWritten = 0;
-    auto contentSize = content.size();
     auto writeStatus = AttachmentWriter::WriteStatus::OK;
-    while (totalBytesWritten < contentSize && !m_shuttingDown) {
+    while (totalBytesWritten < size && !m_shuttingDown) {
         auto bytesWritten = streamWriter->write(
-            content.data() + totalBytesWritten, contentSize - totalBytesWritten, &writeStatus, WRITE_TO_STREAM_TIMEOUT);
+            buffer + totalBytesWritten, size - totalBytesWritten, &writeStatus, WRITE_TO_STREAM_TIMEOUT);
         totalBytesWritten += bytesWritten;
 
         switch (writeStatus) {
@@ -513,6 +652,15 @@ bool ContentDecrypter::writeToStream(const ByteVector& content, std::shared_ptr<
 
     ACSDK_DEBUG9(LX("writeToStreamSuccess"));
     return true;
+}
+
+bool ContentDecrypter::writeToStream(const ByteVector& content, std::shared_ptr<AttachmentWriter> streamWriter) {
+    if (!streamWriter) {
+        ACSDK_ERROR(LX("writeToStreamFailed").d("reason", "streamWriterIsNULL"));
+        return false;
+    }
+
+    return writeToStream(streamWriter, content.data(), content.size());
 }
 
 void ContentDecrypter::doShutdown() {

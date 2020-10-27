@@ -731,6 +731,11 @@ private:
     void markInvalid(const std::string& event, const std::string& reason, const std::string& type = "");
 
     /**
+     * Log each recipe and its dependencies.
+     */
+    void logDependencies() const;
+
+    /**
      * Invoke a factory function with its parameters supplied by an @c RuntimeManufactory.
      *
      * @tparam Type The type of interface to return.
@@ -756,25 +761,6 @@ private:
      */
     template <typename Type, typename FunctionType, typename... Dependencies>
     static Type innerInvokeWithDependencies(FunctionType function, Dependencies... dependencies);
-
-    /**
-     * Return true if all of the provided parameters a non-null.
-     *
-     * @tparam First The type of the first parameter
-     * @tparam Remainder The types of the rest of the parameters.
-     * @param first The first parameter.
-     * @param remainder The remaining parameters.
-     * @return Whether all of the provided parameters a true.
-     */
-    template <typename First, typename... Remainder>
-    static bool checkNonNull(const First& first, const Remainder&... remainder);
-
-    /**
-     * Terminal recursive template expansion (empty parameter list) of checkNonNull<First, ...Remainder>()
-     *
-     * @return Retuens true.
-     */
-    static bool checkNonNull();
 
     /**
      * Returns the Tag used by CookBook for logging.
