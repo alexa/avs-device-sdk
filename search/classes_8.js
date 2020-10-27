@@ -1,8 +1,10 @@
 var searchData=
 [
   ['import',['Import',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html',1,'alexaClientSDK::acsdkManufactory']]],
-  ['inmemoryequalizerconfiguration',['InMemoryEqualizerConfiguration',['../classalexa_client_s_d_k_1_1equalizer_1_1_in_memory_equalizer_configuration.html',1,'alexaClientSDK::equalizer']]],
-  ['inmemoryequalizerconfigurationtest',['InMemoryEqualizerConfigurationTest',['../classalexa_client_s_d_k_1_1equalizer_1_1test_1_1_in_memory_equalizer_configuration_test.html',1,'alexaClientSDK::equalizer::test']]],
+  ['initializationparameters',['InitializationParameters',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_initialization_parameters.html',1,'alexaClientSDK::avsCommon::avs::initialization']]],
+  ['initializationparametersbuilder',['InitializationParametersBuilder',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_initialization_parameters_builder.html',1,'alexaClientSDK::avsCommon::avs::initialization']]],
+  ['inmemoryequalizerconfiguration',['InMemoryEqualizerConfiguration',['../classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_in_memory_equalizer_configuration.html',1,'alexaClientSDK::acsdkEqualizer']]],
+  ['inmemoryequalizerconfigurationtest',['InMemoryEqualizerConfigurationTest',['../classalexa_client_s_d_k_1_1acsdk_equalizer_1_1test_1_1_in_memory_equalizer_configuration_test.html',1,'alexaClientSDK::acsdkEqualizer::test']]],
   ['inprocessattachment',['InProcessAttachment',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],
   ['inprocessattachmentreader',['InProcessAttachmentReader',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],
   ['inprocessattachmentwriter',['InProcessAttachmentWriter',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_writer.html',1,'alexaClientSDK::avsCommon::avs::attachment']]],

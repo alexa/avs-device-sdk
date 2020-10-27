@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -109,6 +109,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a017f9e856b6f2024f24e4721ccb29aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afef94342773f5201846a25e36bce8513"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#afef94342773f5201846a25e36bce8513">setMediaPlayers</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;mediaPlayers) override</td></tr>
 <tr class="separator:afef94342773f5201846a25e36bce8513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dd8edb94f4c89b9554f674cf0f5f43d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a9dd8edb94f4c89b9554f674cf0f5f43d">addMediaPlayer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;mediaPlayer) override</td></tr>
+<tr class="separator:a9dd8edb94f4c89b9554f674cf0f5f43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1a0a07d616b66cfa4f15665620cc8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a9f1a0a07d616b66cfa4f15665620cc8f">removeMediaPlayer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;mediaPlayer) override</td></tr>
+<tr class="separator:a9f1a0a07d616b66cfa4f15665620cc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24c223d40891f4bf501bea928b7fedf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a24c223d40891f4bf501bea928b7fedf7">isEnabled</a> () const override</td></tr>
+<tr class="separator:a24c223d40891f4bf501bea928b7fedf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">CaptionFrameParseListenerInterface methods</div></td></tr>
 <tr class="memitem:a10788e863852a1e7d54c3c583a2edaec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a10788e863852a1e7d54c3c583a2edaec">onParsed</a> (const <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_frame.html">CaptionFrame</a> &amp;captionFrame) override</td></tr>
 <tr class="separator:a10788e863852a1e7d54c3c583a2edaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +201,41 @@ Additional Inherited Members</h2></td></tr>
 <li>is designed to work with en-US. While other languages may work fine, the breaks between words may be off, or the line wraps may not be accurate. If improved locale support is required, then the line break logic in the <code><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a10788e863852a1e7d54c3c583a2edaec">CaptionManager::onParsed()</a></code> method should be modified to use a locale-safe method for determining the break points between words. One such method is supplied through ICU's BreakIterator: <a href="http://icu-project.org/apiref/icu4c/classicu_1_1BreakIterator.html">http://icu-project.org/apiref/icu4c/classicu_1_1BreakIterator.html</a> </li>
 </ul>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9dd8edb94f4c89b9554f674cf0f5f43d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dd8edb94f4c89b9554f674cf0f5f43d">&#9670;&nbsp;</a></span>addMediaPlayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::captions::CaptionManager::addMediaPlayer </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mediaPlayer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Adds a <code>MediaPlayerInterface</code> instance responsible for producing caption content. This media player will be appended to the list of active media players.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a></td><td>The media player which should be observed for media state changes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a625c5c24f0edfde390f6c7498eec0642">alexaClientSDK::captions::CaptionManagerInterface</a>.</p>
+
+</div>
+</div>
 <a id="a388dc7d4af040f7f8cd09de60b614594"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a388dc7d4af040f7f8cd09de60b614594">&#9670;&nbsp;</a></span>create()</h2>
 
@@ -270,6 +311,35 @@ Additional Inherited Members</h2></td></tr>
 </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a66df7916e28559f30233c2ff5a166293">alexaClientSDK::avsCommon::utils::RequiresShutdown</a>.</p>
+
+</div>
+</div>
+<a id="a24c223d40891f4bf501bea928b7fedf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c223d40891f4bf501bea928b7fedf7">&#9670;&nbsp;</a></span>isEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::captions::CaptionManager::isEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether captions are enabled. Capability Agents may skip unnecessary processing if captions are disabled.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether captions is enabled. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a50a50af680c57a48c2952f1bb51368b9">alexaClientSDK::captions::CaptionManagerInterface</a>.</p>
 
 </div>
 </div>
@@ -696,6 +766,41 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a9f1a0a07d616b66cfa4f15665620cc8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1a0a07d616b66cfa4f15665620cc8f">&#9670;&nbsp;</a></span>removeMediaPlayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::captions::CaptionManager::removeMediaPlayer </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mediaPlayer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Removes the <code>MediaPlayerInterface</code> instance from the list of media players responsible for producing caption content. The rest of the list remains unchanged.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a></td><td>The media player to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a33620c6a919d0bbc0ada23d03eb37f75">alexaClientSDK::captions::CaptionManagerInterface</a>.</p>
+
+</div>
+</div>
 <a id="a017f9e856b6f2024f24e4721ccb29aca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a017f9e856b6f2024f24e4721ccb29aca">&#9670;&nbsp;</a></span>setCaptionPresenter()</h2>
 
@@ -767,14 +872,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/Captions/Implementation/include/Captions/<a class="el" href="_caption_manager_8h_source.html">CaptionManager.h</a></li>
-<li>/workplace/avs-device-sdk/Captions/Implementation/src/<a class="el" href="_caption_manager_8cpp.html">CaptionManager.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/Captions/Implementation/include/Captions/<a class="el" href="_caption_manager_8h_source.html">CaptionManager.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/Captions/Implementation/src/<a class="el" href="_caption_manager_8cpp.html">CaptionManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

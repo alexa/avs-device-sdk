@@ -1,15 +1,15 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSetting.h" name="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSetting.h">
-<area shape="rect" id="node3" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="722,109,899,136"/>
-<area shape="rect" id="node10" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="542,281,773,307"/>
-<area shape="rect" id="node11" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="384,363,560,404"/>
-<area shape="rect" id="node20" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="899,184,1075,225"/>
-<area shape="rect" id="node31" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="59,281,243,307"/>
-<area shape="rect" id="node32" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="77,363,245,404"/>
-<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="253,452,429,493"/>
-<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="496,541,672,583"/>
-<area shape="rect" id="node22" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="899,273,1075,315"/>
-<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1242,363,1457,404"/>
-<area shape="rect" id="node28" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="880,452,1056,493"/>
-<area shape="rect" id="node29" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1025,363,1218,404"/>
-<area shape="rect" id="node30" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="751,541,927,583"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/test/Settings/MockSetting.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/test/Settings/MockSetting.h">
+<area shape="rect" id="node3" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="722,124,899,151"/>
+<area shape="rect" id="node10" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="542,295,773,322"/>
+<area shape="rect" id="node11" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="384,377,560,419"/>
+<area shape="rect" id="node20" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="899,199,1075,240"/>
+<area shape="rect" id="node31" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="59,295,243,322"/>
+<area shape="rect" id="node32" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="77,377,245,419"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="253,467,429,508"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="496,556,672,597"/>
+<area shape="rect" id="node22" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="899,288,1075,329"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1242,377,1457,419"/>
+<area shape="rect" id="node28" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="880,467,1056,508"/>
+<area shape="rect" id="node29" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1025,377,1218,419"/>
+<area shape="rect" id="node30" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="751,556,927,597"/>
 </map>

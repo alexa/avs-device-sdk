@@ -1,0 +1,30 @@
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h">
+<area shape="rect" id="node3" href="$_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="2704,153,2929,209"/>
+<area shape="rect" id="node5" href="$_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="2530,332,2725,373"/>
+<area shape="rect" id="node16" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="2855,421,3047,463"/>
+<area shape="rect" id="node49" href="$_pooled_application_media_interfaces_8h.html" title="PooledApplicationMediaInterfaces.h" alt="" coords="2701,257,2932,284"/>
+<area shape="rect" id="node6" href="$_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="2424,421,2593,463"/>
+<area shape="rect" id="node19" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="2217,511,2409,552"/>
+<area shape="rect" id="node21" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1131,421,1340,463"/>
+<area shape="rect" id="node48" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2579,511,2769,552"/>
+<area shape="rect" id="node7" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="2433,518,2555,545"/>
+<area shape="rect" id="node10" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="2444,600,2637,641"/>
+<area shape="rect" id="node14" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="2662,600,2827,641"/>
+<area shape="rect" id="node15" href="$_result_8h.html" title="Result.h" alt="" coords="2709,697,2780,723"/>
+<area shape="rect" id="node17" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="2793,511,3038,552"/>
+<area shape="rect" id="node25" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1133,511,1337,552"/>
+<area shape="rect" id="node28" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="887,518,1109,545"/>
+<area shape="rect" id="node29" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="693,607,889,634"/>
+<area shape="rect" id="node36" href="$_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="1361,511,1571,552"/>
+<area shape="rect" id="node38" href="$_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="369,511,579,552"/>
+<area shape="rect" id="node39" href="$_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="136,600,345,641"/>
+<area shape="rect" id="node40" href="$_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="1932,511,2141,552"/>
+<area shape="rect" id="node43" href="$_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="136,511,345,552"/>
+<area shape="rect" id="node44" href="$_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="603,511,812,552"/>
+<area shape="rect" id="node46" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="1696,518,1908,545"/>
+<area shape="rect" id="node27" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1149,600,1314,641"/>
+<area shape="rect" id="node30" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="703,689,879,731"/>
+<area shape="rect" id="node31" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2246,779,2422,820"/>
+<area shape="rect" id="node37" href="$_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="1339,600,1596,641"/>
+<area shape="rect" id="node42" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1933,600,2119,641"/>
+</map>

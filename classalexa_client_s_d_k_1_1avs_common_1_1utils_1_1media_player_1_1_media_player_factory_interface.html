@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,7 +79,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlay
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html" title="alexaClientSDK::mediaPlayer\l::PooledMediaPlayerFactory" alt="" coords="15,109,210,151"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProviderInterface" alt="" coords="268,5,485,61"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html" title="alexaClientSDK::mediaPlayer\l::PooledMediaPlayerFactory" alt="" coords="279,86,474,127"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProvider" alt="" coords="533,5,751,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -101,7 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3b5bac54489c26a8250943e11b227a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">MediaPlayerFactoryInterface</a></code> allows access to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> instances as needed (and if availible) This is a capability needed to support pre-buffering</p>
+<div class="textblock"><p>A <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">MediaPlayerFactoryInterface</a></code> allows access to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> instances as needed (and if available). This is a capability needed to support pre-buffering.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000034">Deprecated:</a></b></dt><dd>Use <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html">PooledMediaResourceProviderInterface</a> instead.</dd></dl>
 <p>Instances are not expected to be Thread-safe. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aaa6c0f24a195d1438ff8ea5b656dac66"></a>
@@ -156,7 +159,7 @@ Public Member Functions</h2></td></tr>
 <p>Acquire an instance of a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code>, if available.</p>
 <dl class="section return"><dt>Returns</dt><dd>an instance of of <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code>, or nullptr if none available. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#abd29106dc1004caee9b06b32e1133cbf">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider.html#a29aa035e6b315c82de85310eb38b4076">alexaClientSDK::avsCommon::utils::mediaPlayer::PooledMediaResourceProvider</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#abd29106dc1004caee9b06b32e1133cbf">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
 
 </div>
 </div>
@@ -218,7 +221,7 @@ Public Member Functions</h2></td></tr>
 <p>Get <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">Fingerprint</a></code> of <code>MediaPlayer</code>.</p>
 <dl class="section return"><dt>Returns</dt><dd><code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">Fingerprint</a></code> of <code>MediaPlayer</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a7790629d8853e2a956d1d7186332be55">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider.html#a7e797534986679b5b5ce0394cb805c1b">alexaClientSDK::avsCommon::utils::mediaPlayer::PooledMediaResourceProvider</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a7790629d8853e2a956d1d7186332be55">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
 
 </div>
 </div>
@@ -247,7 +250,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns true if a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> instance is available (i.e. if a call to <code>acquireMediaPlayer</code> would return a valid Player) The return value is valid until the next call to <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html#aa90b120de02ee921064e44bd1e304d16">acquireMediaPlayer()</a> or <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html#a69f3f342291e9dfa268cea3dee7a1e73">releaseMediaPlayer()</a></p>
 <dl class="section return"><dt>Returns</dt><dd>true if a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">MediaPlayerInterface</a></code> instance is available. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#afa747e479f621e08afb092d01ed9fd01">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider.html#ad62f1dc87518c1102d0db42d23c9db22">alexaClientSDK::avsCommon::utils::mediaPlayer::PooledMediaResourceProvider</a>, and <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#afa747e479f621e08afb092d01ed9fd01">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>.</p>
 
 </div>
 </div>
@@ -319,13 +322,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_factory_interface_8h_source.html">MediaPlayerFactoryInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_media_player_factory_interface_8h_source.html">MediaPlayerFactoryInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

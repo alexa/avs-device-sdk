@@ -1,21 +1,21 @@
-<map id="/workplace/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp" name="/workplace/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp">
-<area shape="rect" id="node4" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="724,735,900,776"/>
-<area shape="rect" id="node25" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="1798,109,1982,151"/>
-<area shape="rect" id="node27" href="$_kitt_ai_key_word_detector_8h.html" title="KittAi/KittAiKeyWordDetector.h" alt="" coords="1195,117,1400,143"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="969,824,1184,865"/>
-<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="704,913,880,955"/>
-<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="428,824,604,865"/>
-<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="700,824,893,865"/>
-<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1691,1003,1867,1044"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="56,913,232,955"/>
-<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="502,1003,678,1044"/>
-<area shape="rect" id="node31" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="408,288,630,315"/>
-<area shape="rect" id="node32" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1629,377,1828,419"/>
-<area shape="rect" id="node38" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="1774,281,1968,322"/>
-<area shape="rect" id="node40" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="1462,273,1677,329"/>
-<area shape="rect" id="node41" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="1026,199,1244,225"/>
-<area shape="rect" id="node42" href="$_snowboy_wrapper_8h.html" title="KittAi/SnowboyWrapper.h" alt="" coords="1486,199,1658,225"/>
-<area shape="rect" id="node33" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="1752,556,1918,597"/>
-<area shape="rect" id="node36" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1531,467,1696,508"/>
-<area shape="rect" id="node35" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1248,645,1424,687"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/KittAi/src/KittAiKeyWordDetector.cpp">
+<area shape="rect" id="node4" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="724,749,900,791"/>
+<area shape="rect" id="node25" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="1798,124,1982,165"/>
+<area shape="rect" id="node27" href="$_kitt_ai_key_word_detector_8h.html" title="KittAi/KittAiKeyWordDetector.h" alt="" coords="1195,131,1400,158"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="969,839,1184,880"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="704,928,880,969"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="428,839,604,880"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="700,839,893,880"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1691,1017,1867,1059"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="56,928,232,969"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="502,1017,678,1059"/>
+<area shape="rect" id="node31" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="408,303,630,329"/>
+<area shape="rect" id="node32" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1629,392,1828,433"/>
+<area shape="rect" id="node38" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="1774,295,1968,337"/>
+<area shape="rect" id="node40" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="1462,288,1677,344"/>
+<area shape="rect" id="node41" href="$_abstract_keyword_detector_8h.html" title="KWD/AbstractKeywordDetector.h" alt="" coords="1026,213,1244,240"/>
+<area shape="rect" id="node42" href="$_snowboy_wrapper_8h.html" title="KittAi/SnowboyWrapper.h" alt="" coords="1486,213,1658,240"/>
+<area shape="rect" id="node33" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="1752,571,1918,612"/>
+<area shape="rect" id="node36" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1531,481,1696,523"/>
+<area shape="rect" id="node35" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1248,660,1424,701"/>
 </map>

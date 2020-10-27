@@ -1,14 +1,10 @@
-<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="759,109,953,165"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="35,213,194,269"/>
-<area shape="rect" id="node12" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="1498,213,1657,269"/>
-<area shape="rect" id="node3" href="$_post_connect_sequencer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PostConnectSequencer.h" alt="" coords="219,213,453,269"/>
-<area shape="rect" id="node7" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="478,213,653,269"/>
-<area shape="rect" id="node8" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="677,213,835,269"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="860,213,1052,269"/>
-<area shape="rect" id="node11" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="1077,213,1275,269"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1299,213,1474,269"/>
-<area shape="rect" id="node4" href="$_post_connect_sequencer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSequencer.cpp" alt="" coords="5,317,195,373"/>
-<area shape="rect" id="node5" href="$_post_connect_sequencer_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSequencerFactory.cpp" alt="" coords="219,317,453,373"/>
-<area shape="rect" id="node6" href="$_post_connect_sequencer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/PostConnectSequencerTest.cpp" alt="" coords="477,317,691,373"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h">
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/HTTP2Transport.h" alt="" coords="940,139,1140,224"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2Transport.cpp" alt="" coords="5,272,264,343"/>
+<area shape="rect" id="node8" href="$_ping_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/PingHandler.cpp" alt="" coords="1863,272,2097,343"/>
+<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/DownchannelHandler.cpp" alt="" coords="289,272,575,343"/>
+<area shape="rect" id="node4" href="$_exchange_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/ExchangeHandler.cpp" alt="" coords="599,272,865,343"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2TransportFactory.cpp" alt="" coords="889,272,1191,343"/>
+<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/MessageRequestHandler.cpp" alt="" coords="1216,272,1525,343"/>
+<area shape="rect" id="node9" href="$_h_t_t_p2_transport_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/HTTP2TransportTest.cpp" alt="" coords="1550,272,1839,343"/>
 </map>

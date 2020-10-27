@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -100,6 +100,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab0872a90a53a69859befba2c98efcaf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a657138cd4d94b32225795e0b407c0286"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#a657138cd4d94b32225795e0b407c0286">getUrl</a> () const override</td></tr>
 <tr class="separator:a657138cd4d94b32225795e0b407c0286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a72954bc596b2cb2629671b86e5efda"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#a3a72954bc596b2cb2629671b86e5efda">getEffectiveUrl</a> () const override</td></tr>
+<tr class="separator:a3a72954bc596b2cb2629671b86e5efda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa619de0a800e158bdc3d8c33defa2f38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_1_1_header.html">HTTPContentFetcherInterface::Header</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#aa619de0a800e158bdc3d8c33defa2f38">getHeader</a> (std::atomic&lt; bool &gt; *shouldShutdown) override</td></tr>
 <tr class="separator:aa619de0a800e158bdc3d8c33defa2f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2249b8da6ded3d53fdd8f54544b80fe6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aba5364b9cdcabdc4dcab1d8a64370b86">HTTPContentFetcherInterface::State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#a2249b8da6ded3d53fdd8f54544b80fe6">getState</a> () override</td></tr>
@@ -242,6 +244,36 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a3a72954bc596b2cb2629671b86e5efda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a72954bc596b2cb2629671b86e5efda">&#9670;&nbsp;</a></span>getEffectiveUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::playlistParser::test::MockContentFetcher::getEffectiveUrl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets the effective URL associated with this content fetcher.</p>
+<dl class="section note"><dt>Note</dt><dd>This is useful in the case of redirects where the first URL used redirects to a different URL to fetch the content.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The content fetcher's effective URL. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#a7896e88e75a797468020a5588a8e9f40">alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface</a>.</p>
+
+</div>
+</div>
 <a id="aa619de0a800e158bdc3d8c33defa2f38"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa619de0a800e158bdc3d8c33defa2f38">&#9670;&nbsp;</a></span>getHeader()</h2>
 
@@ -365,13 +397,13 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/PlaylistParser/test/PlaylistParser/<a class="el" href="_mock_content_fetcher_8h_source.html">MockContentFetcher.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/PlaylistParser/test/PlaylistParser/<a class="el" href="_mock_content_fetcher_8h_source.html">MockContentFetcher.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

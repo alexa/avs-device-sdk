@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -92,8 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac847ec7ca0e190b1634d5273e716b7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add92f121bd66f4d8363fa0b26be6ec02"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_protocol_tracer_interface.html">ProtocolTracerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html#add92f121bd66f4d8363fa0b26be6ec02">getProtocolTracer</a> ()=0</td></tr>
 <tr class="separator:add92f121bd66f4d8363fa0b26be6ec02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af197e39c831e0daf8c883afae28ba381"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html#af197e39c831e0daf8c883afae28ba381">setDiagnosticDependencies</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a> &gt; sequencer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html">avs::attachment::AttachmentManagerInterface</a> &gt; attachmentManager)=0</td></tr>
-<tr class="separator:af197e39c831e0daf8c883afae28ba381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144cf6d1b243949f11f3e6fafa481f72"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html#a144cf6d1b243949f11f3e6fafa481f72">setDiagnosticDependencies</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a> &gt; sequencer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html">avs::attachment::AttachmentManagerInterface</a> &gt; attachmentManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">AVSConnectionManagerInterface</a> &gt; avsConnectionManager)=0</td></tr>
+<tr class="separator:a144cf6d1b243949f11f3e6fafa481f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3b2d8bc9a7cf36bc1d18651a665ef83"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_audio_injector_interface.html">AudioInjectorInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html#aa3b2d8bc9a7cf36bc1d18651a665ef83">getAudioInjector</a> ()=0</td></tr>
 <tr class="separator:aa3b2d8bc9a7cf36bc1d18651a665ef83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -215,8 +215,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af197e39c831e0daf8c883afae28ba381"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af197e39c831e0daf8c883afae28ba381">&#9670;&nbsp;</a></span>setDiagnosticDependencies()</h2>
+<a id="a144cf6d1b243949f11f3e6fafa481f72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a144cf6d1b243949f11f3e6fafa481f72">&#9670;&nbsp;</a></span>setDiagnosticDependencies()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +234,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html">avs::attachment::AttachmentManagerInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>attachmentManager</em>&#160;</td>
+          <td class="paramname"><em>attachmentManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html">AVSConnectionManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>avsConnectionManager</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -253,6 +259,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">sequencer</td><td>An instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a></code>. </td></tr>
     <tr><td class="paramname">attachmentManager</td><td>An instance of the <code>AttachmentManager</code>. </td></tr>
+    <tr><td class="paramname">avsConnectionManager</td><td>An instance of the <code>AVSConnectionManager</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -260,13 +267,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Diagnostics/<a class="el" href="_diagnostics_interface_8h_source.html">DiagnosticsInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Diagnostics/<a class="el" href="_diagnostics_interface_8h_source.html">DiagnosticsInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

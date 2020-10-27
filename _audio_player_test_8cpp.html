@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/test/AudioPlayerTest.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/test/AudioPlayerTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -95,6 +95,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_mock_playback_router_8h_source.html">AVSCommon/SDKInterfaces/MockPlaybackRouter.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_generator_8h_source.html">AVSCommon/Utils/JSON/JSONGenerator.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_pooled_media_resource_provider_8h_source.html">AVSCommon/Utils/MediaPlayer/PooledMediaResourceProvider.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_media_player_8h_source.html">AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_pooled_media_player_factory_8h_source.html">AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
@@ -104,45 +105,48 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AudioPlayerTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_audio_player_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp" id="_2workplace_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp">
-<area shape="rect" id="node11" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="116,213,320,255"/>
-<area shape="rect" id="node16" href="_mock_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MockChannelVolumeInterface.h" alt="" coords="2242,124,2454,165"/>
-<area shape="rect" id="node18" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="1593,124,1785,165"/>
-<area shape="rect" id="node20" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3247,124,3451,165"/>
-<area shape="rect" id="node22" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="2930,124,3171,165"/>
-<area shape="rect" id="node24" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2025,124,2217,165"/>
-<area shape="rect" id="node27" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2478,124,2670,165"/>
-<area shape="rect" id="node29" href="_mock_playback_router_8h.html" title="AVSCommon/SDKInterfaces\l/MockPlaybackRouter.h" alt="" coords="1809,124,2001,165"/>
-<area shape="rect" id="node31" href="_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="3526,124,3700,165"/>
-<area shape="rect" id="node35" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="3900,213,4073,255"/>
-<area shape="rect" id="node37" href="_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="831,124,1040,165"/>
-<area shape="rect" id="node45" href="_pooled_media_player_factory_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PooledMediaPlayerFactory.h" alt="" coords="1123,124,1332,165"/>
-<area shape="rect" id="node46" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="396,124,580,165"/>
-<area shape="rect" id="node48" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="4356,124,4536,165"/>
-<area shape="rect" id="node49" href="_mock_caption_manager_8h.html" title="MockCaptionManager.h" alt="" coords="2745,131,2905,158"/>
-<area shape="rect" id="node50" href="_audio_player_8h.html" title="acsdkAudioPlayer/AudioPlayer.h" alt="" coords="1356,131,1568,158"/>
-<area shape="rect" id="node14" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="353,392,558,433"/>
-<area shape="rect" id="node17" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="2241,213,2433,255"/>
-<area shape="rect" id="node19" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1676,392,1868,433"/>
-<area shape="rect" id="node21" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2654,392,2876,433"/>
-<area shape="rect" id="node23" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2862,213,3122,255"/>
-<area shape="rect" id="node25" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="2025,213,2217,255"/>
-<area shape="rect" id="node28" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2457,213,2649,255"/>
-<area shape="rect" id="node30" href="_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="1809,213,2001,255"/>
-<area shape="rect" id="node36" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3470,303,3646,344"/>
-<area shape="rect" id="node39" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1306,303,1515,344"/>
-<area shape="rect" id="node41" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="756,392,966,433"/>
-<area shape="rect" id="node42" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1166,213,1380,255"/>
-<area shape="rect" id="node43" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="953,213,1142,255"/>
-<area shape="rect" id="node44" href="_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="574,213,750,255"/>
-<area shape="rect" id="node40" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="1391,392,1600,433"/>
+<div class="center"><img src="_audio_player_test_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_audio_player_2acsdk_audio_player_2test_2_audio_player_test_8cpp">
+<area shape="rect" id="node11" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="878,317,1082,359"/>
+<area shape="rect" id="node16" href="_mock_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MockChannelVolumeInterface.h" alt="" coords="2802,139,3014,180"/>
+<area shape="rect" id="node18" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="1419,139,1611,180"/>
+<area shape="rect" id="node20" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="873,139,1077,180"/>
+<area shape="rect" id="node22" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="1153,139,1394,180"/>
+<area shape="rect" id="node24" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="1869,139,2061,180"/>
+<area shape="rect" id="node27" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2320,139,2512,180"/>
+<area shape="rect" id="node29" href="_mock_playback_router_8h.html" title="AVSCommon/SDKInterfaces\l/MockPlaybackRouter.h" alt="" coords="2536,139,2728,180"/>
+<area shape="rect" id="node31" href="_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="416,139,589,180"/>
+<area shape="rect" id="node35" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="96,228,269,269"/>
+<area shape="rect" id="node37" href="_pooled_media_resource_provider_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PooledMediaResourceProvider.h" alt="" coords="3300,228,3516,269"/>
+<area shape="rect" id="node42" href="_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="2086,139,2295,180"/>
+<area shape="rect" id="node46" href="_pooled_media_player_factory_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PooledMediaPlayerFactory.h" alt="" coords="2597,228,2806,269"/>
+<area shape="rect" id="node47" href="_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="3641,317,3825,359"/>
+<area shape="rect" id="node48" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="3325,139,3505,180"/>
+<area shape="rect" id="node49" href="_mock_caption_manager_8h.html" title="MockCaptionManager.h" alt="" coords="1635,146,1795,173"/>
+<area shape="rect" id="node50" href="_audio_player_8h.html" title="acsdkAudioPlayer/AudioPlayer.h" alt="" coords="3038,146,3250,173"/>
+<area shape="rect" id="node14" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1029,407,1235,448"/>
+<area shape="rect" id="node17" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="3027,407,3219,448"/>
+<area shape="rect" id="node19" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1540,407,1732,448"/>
+<area shape="rect" id="node21" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1157,317,1379,359"/>
+<area shape="rect" id="node23" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1150,228,1410,269"/>
+<area shape="rect" id="node25" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1673,228,1865,269"/>
+<area shape="rect" id="node28" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2329,228,2521,269"/>
+<area shape="rect" id="node30" href="_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="2831,228,3023,269"/>
+<area shape="rect" id="node36" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="49,407,225,448"/>
+<area shape="rect" id="node38" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="3294,407,3503,448"/>
+<area shape="rect" id="node39" href="_pooled_media_resource_provider_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PooledMediaResourceProviderInterface.h" alt="" coords="3249,317,3516,359"/>
+<area shape="rect" id="node40" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2373,317,2582,359"/>
+<area shape="rect" id="node41" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="1807,407,2017,448"/>
+<area shape="rect" id="node44" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1940,228,2153,269"/>
+<area shape="rect" id="node45" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2607,317,2796,359"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_test_audio_player_observer.html">alexaClientSDK::acsdkAudioPlayer::test::TestAudioPlayerObserver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_audio_player_observer.html">alexaClientSDK::acsdkAudioPlayer::test::MockAudioPlayerObserver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">alexaClientSDK::acsdkAudioPlayer::test::AudioPlayerTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,9 +173,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#aabe5e43adc73bfdff9f5fe6aab29e8d5">alexaClientSDK::acsdkAudioPlayer::test::MY_WAIT_TIMEOUT</a> (1000)</td></tr>
-<tr class="memdesc:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#aabe5e43adc73bfdff9f5fe6aab29e8d5">More...</a><br /></td></tr>
-<tr class="separator:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df0b5f43d3dc338089376f92bd95ad6"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a8df0b5f43d3dc338089376f92bd95ad6">alexaClientSDK::acsdkAudioPlayer::test::MY_WAIT_TIMEOUT</a> (1500)</td></tr>
+<tr class="memdesc:a8df0b5f43d3dc338089376f92bd95ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a8df0b5f43d3dc338089376f92bd95ad6">More...</a><br /></td></tr>
+<tr class="separator:a8df0b5f43d3dc338089376f92bd95ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5252771ed22ab652f669703cf14852c"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad5252771ed22ab652f669703cf14852c">alexaClientSDK::acsdkAudioPlayer::test::EVENT_PROCESS_DELAY</a> (20)</td></tr>
 <tr class="separator:ad5252771ed22ab652f669703cf14852c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4855602e27604e68ca5623edd3d30adf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4855602e27604e68ca5623edd3d30adf">alexaClientSDK::acsdkAudioPlayer::test::CHANNEL_NAME</a> (avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME)</td></tr>
@@ -237,6 +241,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a19668fcbd8c4dca8faa75aba8798123b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a19668fcbd8c4dca8faa75aba8798123b">alexaClientSDK::acsdkAudioPlayer::test::NAME_CLEAR_ALL</a> (&quot;CLEAR_ALL&quot;)</td></tr>
 <tr class="memdesc:a19668fcbd8c4dca8faa75aba8798123b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL clearBehavior.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a19668fcbd8c4dca8faa75aba8798123b">More...</a><br /></td></tr>
 <tr class="separator:a19668fcbd8c4dca8faa75aba8798123b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac836de639a141a7d21ef2ec2506fc6eb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac836de639a141a7d21ef2ec2506fc6eb">alexaClientSDK::acsdkAudioPlayer::test::NAME_CLEAR_ENQUEUED</a> (&quot;CLEAR_ENQUEUED&quot;)</td></tr>
+<tr class="memdesc:ac836de639a141a7d21ef2ec2506fc6eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ENQUEUED clearBehavior.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac836de639a141a7d21ef2ec2506fc6eb">More...</a><br /></td></tr>
+<tr class="separator:ac836de639a141a7d21ef2ec2506fc6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b2c7d98b336e5ce39eab2d289937b39"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b2c7d98b336e5ce39eab2d289937b39">alexaClientSDK::acsdkAudioPlayer::test::AUDIO_ITEM_ID_1</a> (&quot;testID1&quot;)</td></tr>
 <tr class="memdesc:a9b2c7d98b336e5ce39eab2d289937b39"><td class="mdescLeft">&#160;</td><td class="mdescRight">audioItemId for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b2c7d98b336e5ce39eab2d289937b39">More...</a><br /></td></tr>
 <tr class="separator:a9b2c7d98b336e5ce39eab2d289937b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,18 +269,24 @@ Functions</h2></td></tr>
 <tr class="separator:ad0afb44e391fd71a6d1cb47f3bb6a158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe1cbf1e0f060cbef5b3d484050a95ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#abe1cbf1e0f060cbef5b3d484050a95ca">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPlayingToStopped)</td></tr>
 <tr class="separator:abe1cbf1e0f060cbef5b3d484050a95ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53dcb4fe247baefbe40a6d8c4cccdabc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a53dcb4fe247baefbe40a6d8c4cccdabc">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPlayingToStoppedWithClear)</td></tr>
-<tr class="separator:a53dcb4fe247baefbe40a6d8c4cccdabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a249963e74a8f0655990a639bf81dd7e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a249963e74a8f0655990a639bf81dd7e6">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromStoppedToPlaying)</td></tr>
-<tr class="separator:a249963e74a8f0655990a639bf81dd7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53ebc3ec3d3b40bad8c473fc947e4a84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a53ebc3ec3d3b40bad8c473fc947e4a84">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromStoppedToResumePlaying)</td></tr>
-<tr class="separator:a53ebc3ec3d3b40bad8c473fc947e4a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2a18cbfaa411189bc33078571e43a9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac2a18cbfaa411189bc33078571e43a9a">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPlayingToStoppedToIdleWithClearAll)</td></tr>
+<tr class="separator:ac2a18cbfaa411189bc33078571e43a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bd1df358b0fa2857766f353dd6b31fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a6bd1df358b0fa2857766f353dd6b31fc">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_continuesPlayingWithClearEnqueued)</td></tr>
+<tr class="separator:a6bd1df358b0fa2857766f353dd6b31fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbce78a7c46edff694c90fe50a1a16c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#acbce78a7c46edff694c90fe50a1a16c6">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromIdleToPlayingAfterClearAll)</td></tr>
+<tr class="separator:acbce78a7c46edff694c90fe50a1a16c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4488b276dfca429163a852e5f4e8a675"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4488b276dfca429163a852e5f4e8a675">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromIdleToResumePlaying)</td></tr>
+<tr class="separator:a4488b276dfca429163a852e5f4e8a675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab36a9a90aa0289f0ad77e749bf0f6794"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab36a9a90aa0289f0ad77e749bf0f6794">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, testTransitionFromPlayingToPlayingNextEnqueuedTrack)</td></tr>
 <tr class="separator:ab36a9a90aa0289f0ad77e749bf0f6794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa68f89254a3abf488ae7ef34535dc9bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#aa68f89254a3abf488ae7ef34535dc9bb">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPlayingToPaused)</td></tr>
 <tr class="separator:aa68f89254a3abf488ae7ef34535dc9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a685ded42603b17d0f1227dae4610881f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a685ded42603b17d0f1227dae4610881f">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_localPause_withEnqueuedTracks_doesNotAutoProgress)</td></tr>
+<tr class="separator:a685ded42603b17d0f1227dae4610881f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9090bb05eb1167e0c61a9e894377b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae9090bb05eb1167e0c61a9e894377b59">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPausedToStopped)</td></tr>
 <tr class="separator:ae9090bb05eb1167e0c61a9e894377b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1170f88d4afb0d6721cc7853176e80b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1170f88d4afb0d6721cc7853176e80b6">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_transitionFromPausedToIdle)</td></tr>
+<tr class="separator:a1170f88d4afb0d6721cc7853176e80b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64d22dc87d3bd4cefd85a782e5b1c062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a64d22dc87d3bd4cefd85a782e5b1c062">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_resumeAfterPaused)</td></tr>
 <tr class="separator:a64d22dc87d3bd4cefd85a782e5b1c062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ef37a5a29fee965b5a5e29bfc381d1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a3ef37a5a29fee965b5a5e29bfc381d1b">alexaClientSDK::acsdkAudioPlayer::test::TEST_F</a> (AudioPlayerTest, test_callingProvideStateWhenIdle)</td></tr>
@@ -442,6 +455,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a1ac401e3e68c4c50be9aef3c2056d000"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1ac401e3e68c4c50be9aef3c2056d000">alexaClientSDK::acsdkAudioPlayer::test::CLEAR_ALL_PAYLOAD_TEST</a></td></tr>
 <tr class="memdesc:a1ac401e3e68c4c50be9aef3c2056d000"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL payload for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1ac401e3e68c4c50be9aef3c2056d000">More...</a><br /></td></tr>
 <tr class="separator:a1ac401e3e68c4c50be9aef3c2056d000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac393557749916d8c1061e656a2e386b2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac393557749916d8c1061e656a2e386b2">alexaClientSDK::acsdkAudioPlayer::test::CLEAR_ENQUEUED_PAYLOAD_TEST</a></td></tr>
+<tr class="memdesc:ac393557749916d8c1061e656a2e386b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ENQUEUED payload for testing.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac393557749916d8c1061e656a2e386b2">More...</a><br /></td></tr>
+<tr class="separator:ac393557749916d8c1061e656a2e386b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8424bc662f66044bca5a18a20c24eff"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae8424bc662f66044bca5a18a20c24eff">alexaClientSDK::acsdkAudioPlayer::test::TOKEN_KEY</a> = &quot;token&quot;</td></tr>
 <tr class="memdesc:ae8424bc662f66044bca5a18a20c24eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token JSON key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae8424bc662f66044bca5a18a20c24eff">More...</a><br /></td></tr>
 <tr class="separator:ae8424bc662f66044bca5a18a20c24eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -647,7 +663,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

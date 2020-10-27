@@ -1,8 +1,8 @@
 var searchData=
 [
   ['testeventcallback',['TestEventCallback',['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#aaac1109019885e14851a6d01e90cfb59',1,'alexaClientSDK::settings::test']]],
+  ['testnotifier',['TestNotifier',['../namespacealexa_client_s_d_k_1_1acsdk_notifier_1_1test.html#a2d8b0b5b8d5386a0652d544d8ed9c6eb',1,'alexaClientSDK::acsdkNotifier::test']]],
   ['timezonesetting',['TimeZoneSetting',['../namespacealexa_client_s_d_k_1_1settings.html#a86e137ac4b558d2e5b287e33031865f9',1,'alexaClientSDK::settings']]],
-  ['togglecontrollerattributes',['ToggleControllerAttributes',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller.html#adca4704633ce6a4219f89cdb0108c05d',1,'alexaClientSDK::avsCommon::sdkInterfaces::toggleController']]],
   ['togglestate',['ToggleState',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_interface.html#a77d71bf8056dc6525656f61ca6dcab60',1,'alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerInterface::ToggleState()'],['../classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1_toggle_controller_capability_agent.html#a20c23e7d138e263e25f6c0d1163c0718',1,'alexaClientSDK::capabilityAgents::toggleController::ToggleControllerCapabilityAgent::ToggleState()']]],
   ['token',['Token',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_multi_timer.html#a07b5af2a51e043952347e52646e09fd6',1,'alexaClientSDK::avsCommon::utils::timing::MultiTimer']]],
   ['truevalues',['TrueValues',['../structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_types_3_01_container_00_01_types_8_8_8_01_4.html#a078f72f7b70a887edbcbaf5ea4189068',1,'alexaClientSDK::acsdkManufactory::internal::ContainsTypes&lt; Container, Types... &gt;']]],

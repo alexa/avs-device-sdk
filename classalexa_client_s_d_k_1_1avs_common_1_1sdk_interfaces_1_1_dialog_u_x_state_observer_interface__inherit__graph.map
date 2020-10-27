@@ -3,9 +3,10 @@
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html" title="A test observer that mocks out the DialogUXStateObserverInterface#onDialogUXStateChanged() call..." alt="" coords="278,86,475,127"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html" title="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor" alt="" coords="268,151,485,193"/>
 <area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_test_dialog_u_x_state_observer.html" title="Class to monitor DialogUXStateAggregator for the THINKING state and automatically move it to IDLE..." alt="" coords="257,217,496,273"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="285,297,468,353"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime" alt="" coords="287,377,466,433"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html" title="alexaClientSDK::sampleApp\l::InteractionManager" alt="" coords="283,458,471,499"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="283,523,471,565"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="262,298,491,339"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="285,364,468,420"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime" alt="" coords="287,444,466,500"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html" title="alexaClientSDK::sampleApp\l::InteractionManager" alt="" coords="283,525,471,566"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="283,590,471,631"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="544,13,733,54"/>
 </map>

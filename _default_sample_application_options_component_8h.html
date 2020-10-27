@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/applications/acsdkDefaultSampleApplicationOptions/include/acsdkDefaultSampleApplicationOptions/DefaultSampleApplicationOptionsComponent.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/applications/acsdkDefaultSampleApplicationOptions/include/acsdkDefaultSampleApplicationOptions/DefaultSampleApplicationOptionsComponent.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,58 +67,70 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">DefaultSampleApplicationOptionsComponent.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_component_8h_source.html">acsdkManufactory/Component.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_u_i_manager_interface_8h_source.html">acsdkSampleApplicationInterfaces/UIManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_auth_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthDelegateInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_a_v_s_connection_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_exception_encountered_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_message_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/MessageSenderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_http_post_interface_8h_source.html">AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_c_b_l_auth_requester_interface_8h_source.html">CBLAuthDelegate/CBLAuthRequesterInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for DefaultSampleApplicationOptionsComponent.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_default_sample_application_options_component_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h" id="_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h">
-<area shape="rect" id="node2" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2976,146,3187,173"/>
-<area shape="rect" id="node26" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1677,317,1869,359"/>
-<area shape="rect" id="node29" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="29,228,232,269"/>
-<area shape="rect" id="node33" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="787,139,963,180"/>
-<area shape="rect" id="node45" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1794,139,1974,180"/>
-<area shape="rect" id="node50" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="431,139,675,180"/>
-<area shape="rect" id="node3" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2895,228,3070,269"/>
-<area shape="rect" id="node25" href="_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="3094,228,3269,269"/>
-<area shape="rect" id="node10" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2555,325,2757,351"/>
-<area shape="rect" id="node11" href="_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="3262,407,3437,448"/>
-<area shape="rect" id="node12" href="_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="3262,317,3437,359"/>
-<area shape="rect" id="node13" href="_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="2833,317,3007,359"/>
-<area shape="rect" id="node18" href="_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="3461,317,3635,359"/>
-<area shape="rect" id="node16" href="_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="3063,407,3238,448"/>
-<area shape="rect" id="node24" href="_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="3673,407,3847,448"/>
-<area shape="rect" id="node27" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1353,407,1545,448"/>
-<area shape="rect" id="node32" href="_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="105,325,231,351"/>
-<area shape="rect" id="node36" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="963,228,1178,269"/>
-<area shape="rect" id="node39" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="643,317,819,359"/>
-<area shape="rect" id="node40" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="392,317,568,359"/>
-<area shape="rect" id="node43" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="643,228,837,269"/>
-<area shape="rect" id="node44" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1407,228,1583,269"/>
-<area shape="rect" id="node42" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="392,407,568,448"/>
-<area shape="rect" id="node46" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1861,228,2041,269"/>
-<area shape="rect" id="node47" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="1473,317,1653,359"/>
-<area shape="rect" id="node48" href="_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="1945,317,2125,359"/>
-<area shape="rect" id="node49" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2149,325,2345,351"/>
+<div class="center"><img src="_default_sample_application_options_component_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8h">
+<area shape="rect" id="node2" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="3373,161,3584,187"/>
+<area shape="rect" id="node22" href="_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="862,153,1084,195"/>
+<area shape="rect" id="node23" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="373,332,565,373"/>
+<area shape="rect" id="node26" href="_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1210,153,1440,195"/>
+<area shape="rect" id="node30" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1937,243,2129,284"/>
+<area shape="rect" id="node34" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2607,153,2867,195"/>
+<area shape="rect" id="node36" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="146,332,349,373"/>
+<area shape="rect" id="node40" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1548,243,1724,284"/>
+<area shape="rect" id="node46" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2030,153,2210,195"/>
+<area shape="rect" id="node48" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="10,153,254,195"/>
+<area shape="rect" id="node49" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2431,243,2603,284"/>
+<area shape="rect" id="node3" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="3292,243,3467,284"/>
+<area shape="rect" id="node21" href="_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="3491,243,3666,284"/>
+<area shape="rect" id="node10" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2964,339,3166,366"/>
+<area shape="rect" id="node11" href="_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="3464,421,3639,463"/>
+<area shape="rect" id="node12" href="_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="3644,332,3819,373"/>
+<area shape="rect" id="node13" href="_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="3843,332,4018,373"/>
+<area shape="rect" id="node17" href="_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="3292,332,3467,373"/>
+<area shape="rect" id="node16" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3714,421,3890,463"/>
+<area shape="rect" id="node20" href="_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="3266,421,3440,463"/>
+<area shape="rect" id="node24" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="272,421,464,463"/>
+<area shape="rect" id="node27" href="_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="752,243,970,284"/>
+<area shape="rect" id="node28" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="792,332,1037,373"/>
+<area shape="rect" id="node29" href="_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1050,243,1245,284"/>
+<area shape="rect" id="node31" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1908,339,2158,366"/>
+<area shape="rect" id="node35" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2720,243,2943,284"/>
+<area shape="rect" id="node39" href="_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="43,429,170,455"/>
+<area shape="rect" id="node42" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1330,332,1544,373"/>
+<area shape="rect" id="node43" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1078,421,1254,463"/>
+<area shape="rect" id="node44" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1112,332,1306,373"/>
+<area shape="rect" id="node45" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2182,332,2358,373"/>
+<area shape="rect" id="node47" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="2154,243,2334,284"/>
+<area shape="rect" id="node50" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2434,332,2600,373"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_default_sample_application_options_component_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep" id="_2workplace_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep">
-<area shape="rect" id="node2" href="_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="5,139,319,209"/>
-<area shape="rect" id="node3" href="_sample_application_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication\lComponent.cpp" alt="" coords="343,146,595,202"/>
+<div class="center"><img src="_default_sample_application_options_component_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2applications_2acsdk_default_sample_application_options_2include_2acsdk_default_sample_application_options_2_default_sample_application_options_component_8hdep">
+<area shape="rect" id="node2" href="_default_sample_application_options_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/src/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="5,153,385,239"/>
+<area shape="rect" id="node3" href="_sample_application_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplicationComponent.cpp" alt="" coords="409,161,728,231"/>
 </map>
 </div>
 </div>
@@ -129,19 +141,24 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_default_sample_application_options"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_default_sample_application_options.html">alexaClientSDK::acsdkDefaultSampleApplicationOptions</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_sample_application"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html">alexaClientSDK::acsdkSampleApplication</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aa254b01dee44e00b7bf8a2ab29902442"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#aa254b01dee44e00b7bf8a2ab29902442">alexaClientSDK::acsdkSampleApplication::SampleApplicationOptionsComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt;, std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt;, std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt; &gt;, acsdkManufactory::Import&lt; std::unique_ptr&lt; avsCommon::utils::libcurlUtils::HttpPostInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; registrationManager::CustomerDataManager &gt; &gt;&gt;</td></tr>
+<tr class="separator:aa254b01dee44e00b7bf8a2ab29902442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5148356f45fac567ed082970aab64eb8"><td class="memItemLeft" align="right" valign="top">acsdkManufactory::Component&lt; acsdkManufactory::Import&lt; std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt; &gt;, acsdkManufactory::Import&lt; std::unique_ptr&lt; avsCommon::utils::libcurlUtils::HttpPostInterface &gt; &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt;, std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt;, std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_default_sample_application_options.html#a5148356f45fac567ed082970aab64eb8">alexaClientSDK::acsdkDefaultSampleApplicationOptions::getComponent</a> ()</td></tr>
-<tr class="separator:a5148356f45fac567ed082970aab64eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e6896fbc7826faeb56b72f25484887"><td class="memItemLeft" align="right" valign="top">SampleApplicationOptionsComponent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a87e6896fbc7826faeb56b72f25484887">alexaClientSDK::acsdkSampleApplication::getSampleApplicationOptionsComponent</a> (const std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt; &amp;authDelegate=nullptr, const std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &amp;metricRecorder=nullptr, const std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt; &amp;logger=nullptr)</td></tr>
+<tr class="separator:a87e6896fbc7826faeb56b72f25484887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

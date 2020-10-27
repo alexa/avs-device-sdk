@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,7 +99,7 @@ Collaboration diagram for alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory:
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af0fed4c61e8e15a52f0a695f2692ef59"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#af0fed4c61e8e15a52f0a695f2692ef59">~PooledMediaPlayerFactory</a> ()</td></tr>
 <tr class="separator:af0fed4c61e8e15a52f0a695f2692ef59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">MediaPlayerFactoryInterface methods.</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">PooledMediaResourceProviderInterface methods.</div></td></tr>
 <tr class="memitem:a7790629d8853e2a956d1d7186332be55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">avsCommon::utils::mediaPlayer::Fingerprint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a7790629d8853e2a956d1d7186332be55">getFingerprint</a> () override</td></tr>
 <tr class="separator:a7790629d8853e2a956d1d7186332be55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd29106dc1004caee9b06b32e1133cbf"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#abd29106dc1004caee9b06b32e1133cbf">acquireMediaPlayer</a> () override</td></tr>
@@ -129,8 +129,8 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aebea01318c263511e61efae48f4df47b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#aebea01318c263511e61efae48f4df47b">PooledMediaPlayerFactory</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;pool, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">avsCommon::utils::mediaPlayer::Fingerprint</a> &amp;fingerprint)</td></tr>
-<tr class="separator:aebea01318c263511e61efae48f4df47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03fd8bc2d9a80b5a9d19e2857c393a7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a03fd8bc2d9a80b5a9d19e2857c393a7e">PooledMediaPlayerFactory</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;mediaPlayerPool, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">avsCommon::utils::mediaPlayer::Fingerprint</a> &amp;fingerprint={})</td></tr>
+<tr class="separator:a03fd8bc2d9a80b5a9d19e2857c393a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29954a2393f1f6e8e77c62ac7c941c56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a29954a2393f1f6e8e77c62ac7c941c56">notifyObservers</a> ()</td></tr>
 <tr class="separator:a29954a2393f1f6e8e77c62ac7c941c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -143,7 +143,6 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:acfa68064770c2dd97197cf57bb65b673"><td class="mdescLeft">&#160;</td><td class="mdescRight">The collection of players in use.  <a href="#acfa68064770c2dd97197cf57bb65b673">More...</a><br /></td></tr>
 <tr class="separator:acfa68064770c2dd97197cf57bb65b673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00f2bb82305ad869de2ec9b2e3acc4cd"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_observer_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerFactoryObserverInterface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a00f2bb82305ad869de2ec9b2e3acc4cd">m_observers</a></td></tr>
-<tr class="memdesc:a00f2bb82305ad869de2ec9b2e3acc4cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory observers.  <a href="#a00f2bb82305ad869de2ec9b2e3acc4cd">More...</a><br /></td></tr>
 <tr class="separator:a00f2bb82305ad869de2ec9b2e3acc4cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc456d60c67e8c0e80268d8d866fd593"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">avsCommon::utils::mediaPlayer::Fingerprint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#acc456d60c67e8c0e80268d8d866fd593">m_fingerprint</a></td></tr>
 <tr class="memdesc:acc456d60c67e8c0e80268d8d866fd593"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_media_player.html">MediaPlayer</a> version information.  <a href="#acc456d60c67e8c0e80268d8d866fd593">More...</a><br /></td></tr>
@@ -177,8 +176,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aebea01318c263511e61efae48f4df47b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebea01318c263511e61efae48f4df47b">&#9670;&nbsp;</a></span>PooledMediaPlayerFactory()</h2>
+<a id="a03fd8bc2d9a80b5a9d19e2857c393a7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03fd8bc2d9a80b5a9d19e2857c393a7e">&#9670;&nbsp;</a></span>PooledMediaPlayerFactory()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,13 +189,13 @@ Protected Attributes</h2></td></tr>
           <td class="memname">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory::PooledMediaPlayerFactory </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>pool</em>, </td>
+          <td class="paramname"><em>mediaPlayerPool</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">avsCommon::utils::mediaPlayer::Fingerprint</a> &amp;&#160;</td>
-          <td class="paramname"><em>fingerprint</em>&#160;</td>
+          <td class="paramname"><em>fingerprint</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -210,10 +209,11 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor used to create a <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html">PooledMediaPlayerFactory</a> from a pre-created set of Players.</p>
+<p>Constructor used to create a <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html">PooledMediaPlayerFactory</a> from a pre-created set of players and their associated speakers, channel volumes, and equalizers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pool</td><td>pre-created collection of MediaPlayers. Ownership is not transferred. </td></tr>
+    <tr><td class="paramname">mediaPlayerPool</td><td>Pre-created collection of MediaPlayers. </td></tr>
+    <tr><td class="paramname">fingerprint</td><td>Optional fingerprint argument to send to AVS. </td></tr>
   </table>
   </dd>
 </dl>
@@ -309,7 +309,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html">PooledMediaPlayerFactory</a> from a pre-created set of Players.</p>
+<p>Create a <code><a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html">PooledMediaPlayerFactory</a></code> from a pre-created set of Players.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000036">Deprecated:</a></b></dt><dd>Use adaptMediaPlayerFactoryInterface. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pool</td><td>pre-created collection of MediaPlayers. Ownership is not transferred. </td></tr>
@@ -547,20 +548,19 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Factory observers. </p>
+<p>The collection of <code>ChannelVolumeInterfaces</code> associated with the media players managed by this factory.. Factory observers </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_pooled_media_player_factory_8h_source.html">PooledMediaPlayerFactory.h</a></li>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/src/MediaPlayer/<a class="el" href="_pooled_media_player_factory_8cpp.html">PooledMediaPlayerFactory.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/<a class="el" href="_pooled_media_player_factory_8h_source.html">PooledMediaPlayerFactory.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/src/MediaPlayer/<a class="el" href="_pooled_media_player_factory_8cpp.html">PooledMediaPlayerFactory.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,8 +79,13 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayAssi
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="312,5,485,47"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_assigner.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockAVSGatewayAssigner" alt="" coords="300,71,497,127"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="300,101,511,157"/>
+<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_assigner.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockAVSGatewayAssigner" alt="" coords="307,181,504,237"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html" title="alexaClientSDK::avsCommon\l::avs::AbstractAVSConnectionManager" alt="" coords="559,71,809,112"/>
+<area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_connection_manager.html" title="Mock class that implements AVSCOnnectionManagerInterface. " alt="" coords="585,137,783,193"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="896,5,1069,47"/>
+<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html" title="alexaClientSDK::capability\lAgents::system::test::MockConnection" alt="" coords="857,71,1108,112"/>
+<area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_connection.html" title="alexaClientSDK::certified\lSender::test::MockConnection" alt="" coords="883,136,1082,177"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -91,6 +96,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acbdb0fe881760d279b853dc29f235d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b27f0f95e14b85779697fa76145bf13"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html#a1b27f0f95e14b85779697fa76145bf13">setAVSGateway</a> (const std::string &amp;avsGateway)=0</td></tr>
 <tr class="separator:a1b27f0f95e14b85779697fa76145bf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077aac59a5864613c8acd836a1aaae1c"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html#a077aac59a5864613c8acd836a1aaae1c">getAVSGateway</a> () const =0</td></tr>
+<tr class="separator:a077aac59a5864613c8acd836a1aaae1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface for setting AVS gateway. </p>
@@ -123,6 +130,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a077aac59a5864613c8acd836a1aaae1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a077aac59a5864613c8acd836a1aaae1c">&#9670;&nbsp;</a></span>getAVSGateway()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayAssignerInterface::getAVSGateway </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets the current gateway URL for AVS connection.</p>
+<dl class="section return"><dt>Returns</dt><dd>The current gateway URL for AVS connection. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html#aa7988881cf6e138a14495d44a2e02685">alexaClientSDK::acl::AVSConnectionManager</a>.</p>
+
+</div>
+</div>
 <a id="a1b27f0f95e14b85779697fa76145bf13"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b27f0f95e14b85779697fa76145bf13">&#9670;&nbsp;</a></span>setAVSGateway()</h2>
 
@@ -159,13 +195,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_a_v_s_gateway_assigner_interface_8h_source.html">AVSGatewayAssignerInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_a_v_s_gateway_assigner_interface_8h_source.html">AVSGatewayAssignerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

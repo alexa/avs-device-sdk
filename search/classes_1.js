@@ -1,6 +1,7 @@
 var searchData=
 [
   ['basestreamsource',['BaseStreamSource',['../classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html',1,'alexaClientSDK::mediaPlayer']]],
+  ['baseuplcalculator',['BaseUplCalculator',['../classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_base_upl_calculator.html',1,'alexaClientSDK::metrics::implementations']]],
   ['basicdeviceconnectionrule',['BasicDeviceConnectionRule',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_basic_device_connection_rule.html',1,'alexaClientSDK::acsdkBluetooth']]],
   ['blockingpolicy',['BlockingPolicy',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_blocking_policy.html',1,'alexaClientSDK::avsCommon::avs']]],
   ['blockingpolicytest',['BlockingPolicyTest',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_blocking_policy_test.html',1,'alexaClientSDK::avsCommon::test']]],

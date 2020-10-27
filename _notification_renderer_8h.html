@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/NotificationRenderer.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/NotificationRenderer.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,13 +67,15 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">NotificationRenderer.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
+<code>#include &lt;<a class="el" href="_application_audio_pipeline_factory_interface_8h_source.html">acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h_source.html">AVSCommon/AVS/MixingBehavior.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_focus_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/FocusManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_media_player_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</code><br />
@@ -85,58 +87,65 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for NotificationRenderer.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_notification_renderer_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h">
-<area shape="rect" id="node4" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="5,399,243,426"/>
-<area shape="rect" id="node6" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="789,213,981,255"/>
-<area shape="rect" id="node14" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2301,213,2510,255"/>
-<area shape="rect" id="node34" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="1138,310,1350,337"/>
-<area shape="rect" id="node36" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1423,124,1636,165"/>
-<area shape="rect" id="node38" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1159,213,1348,255"/>
-<area shape="rect" id="node40" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3753,124,3948,165"/>
-<area shape="rect" id="node49" href="_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="539,303,746,344"/>
-<area shape="rect" id="node10" href="_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="837,399,1059,426"/>
-<area shape="rect" id="node11" href="_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="83,310,269,337"/>
-<area shape="rect" id="node13" href="_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="293,310,515,337"/>
-<area shape="rect" id="node12" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="267,399,482,426"/>
-<area shape="rect" id="node17" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1993,303,2197,344"/>
-<area shape="rect" id="node21" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="2357,310,2579,337"/>
-<area shape="rect" id="node22" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2889,310,3085,337"/>
-<area shape="rect" id="node24" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="1707,303,1917,344"/>
-<area shape="rect" id="node26" href="_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="3679,303,3889,344"/>
-<area shape="rect" id="node27" href="_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="3422,392,3631,433"/>
-<area shape="rect" id="node28" href="_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="3109,303,3318,344"/>
-<area shape="rect" id="node31" href="_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="3394,303,3603,344"/>
-<area shape="rect" id="node32" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="2603,303,2813,344"/>
-<area shape="rect" id="node20" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2117,392,2283,433"/>
-<area shape="rect" id="node23" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2888,392,3064,433"/>
-<area shape="rect" id="node25" href="_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="1659,392,1917,433"/>
-<area shape="rect" id="node30" href="_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="3211,392,3397,433"/>
-<area shape="rect" id="node37" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1639,213,1849,255"/>
-<area shape="rect" id="node45" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="4065,213,4260,255"/>
-<area shape="rect" id="node47" href="_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="4167,310,4265,337"/>
-<area shape="rect" id="node48" href="_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="4167,399,4281,426"/>
-<area shape="rect" id="node50" href="_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="507,392,701,433"/>
+<div class="center"><img src="_notification_renderer_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8h">
+<area shape="rect" id="node4" href="_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="1969,153,2194,209"/>
+<area shape="rect" id="node14" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1705,421,1914,463"/>
+<area shape="rect" id="node29" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="2154,518,2366,545"/>
+<area shape="rect" id="node31" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3841,511,4031,552"/>
+<area shape="rect" id="node34" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="3219,518,3456,545"/>
+<area shape="rect" id="node35" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3152,332,3344,373"/>
+<area shape="rect" id="node41" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2443,332,2656,373"/>
+<area shape="rect" id="node43" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4415,421,4609,463"/>
+<area shape="rect" id="node49" href="_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="3610,511,3817,552"/>
+<area shape="rect" id="node6" href="_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="1712,332,1907,373"/>
+<area shape="rect" id="node8" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="1011,421,1203,463"/>
+<area shape="rect" id="node33" href="_pooled_application_media_interfaces_8h.html" title="PooledApplicationMediaInterfaces.h" alt="" coords="1966,257,2197,284"/>
+<area shape="rect" id="node7" href="_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="1278,421,1447,463"/>
+<area shape="rect" id="node12" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="275,511,467,552"/>
+<area shape="rect" id="node10" href="_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="5,511,251,552"/>
+<area shape="rect" id="node18" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1357,511,1561,552"/>
+<area shape="rect" id="node21" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="591,518,814,545"/>
+<area shape="rect" id="node22" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1662,607,1858,634"/>
+<area shape="rect" id="node23" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="2390,511,2599,552"/>
+<area shape="rect" id="node24" href="_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="1687,511,1897,552"/>
+<area shape="rect" id="node25" href="_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="1047,600,1257,641"/>
+<area shape="rect" id="node26" href="_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="1921,511,2130,552"/>
+<area shape="rect" id="node27" href="_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="1071,511,1281,552"/>
+<area shape="rect" id="node28" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="838,511,1047,552"/>
+<area shape="rect" id="node20" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1371,600,1536,641"/>
+<area shape="rect" id="node37" href="_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="2727,429,2950,455"/>
+<area shape="rect" id="node38" href="_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="3270,429,3455,455"/>
+<area shape="rect" id="node40" href="_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="3023,429,3246,455"/>
+<area shape="rect" id="node39" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2979,518,3194,545"/>
+<area shape="rect" id="node42" href="_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="1471,421,1681,463"/>
+<area shape="rect" id="node47" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="4559,511,4753,552"/>
+<area shape="rect" id="node48" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="4106,511,4281,552"/>
+<area shape="rect" id="node50" href="_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="3616,600,3811,641"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_notification_renderer_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep">
-<area shape="rect" id="node2" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,124,456,195"/>
-<area shape="rect" id="node13" href="_notification_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notification\lRenderer.cpp" alt="" coords="480,124,707,195"/>
-<area shape="rect" id="node14" href="_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="731,124,962,195"/>
-<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,243,305,299"/>
-<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,347,451,403"/>
-<area shape="rect" id="node11" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,243,593,299"/>
-<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,451,221,507"/>
-<area shape="rect" id="node10" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,451,451,507"/>
-<area shape="rect" id="node6" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,555,221,611"/>
-<area shape="rect" id="node9" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,555,447,611"/>
-<area shape="rect" id="node7" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,659,212,700"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,659,569,700"/>
-<area shape="rect" id="node12" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,354,799,395"/>
+<div class="center"><img src="_notification_renderer_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notification_renderer_8hdep">
+<area shape="rect" id="node2" href="_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="524,161,763,246"/>
+<area shape="rect" id="node17" href="_notification_renderer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/src/Notification\lRenderer.cpp" alt="" coords="787,153,1014,253"/>
+<area shape="rect" id="node18" href="_notification_renderer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="1039,153,1269,253"/>
+<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="391,301,605,387"/>
+<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="539,435,748,520"/>
+<area shape="rect" id="node15" href="_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="681,301,891,387"/>
+<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="539,568,748,653"/>
+<area shape="rect" id="node14" href="_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="260,575,515,646"/>
+<area shape="rect" id="node6" href="_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="501,701,749,801"/>
+<area shape="rect" id="node10" href="_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="824,709,1033,794"/>
+<area shape="rect" id="node13" href="_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="226,716,477,787"/>
+<area shape="rect" id="node7" href="_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="557,849,805,935"/>
+<area shape="rect" id="node8" href="_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="5,849,260,935"/>
+<area shape="rect" id="node9" href="preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="285,849,533,935"/>
+<area shape="rect" id="node11" href="main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="829,857,1029,927"/>
+<area shape="rect" id="node12" href="_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1053,857,1305,927"/>
+<area shape="rect" id="node16" href="_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="1109,442,1357,513"/>
 </map>
 </div>
 </div>
@@ -154,12 +163,18 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_notifications"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html">alexaClientSDK::acsdkNotifications</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3ec5cb805e51515361e6daf55ead9e09"><td class="memItemLeft" align="right" valign="top">static const constexpr char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a3ec5cb805e51515361e6daf55ead9e09">alexaClientSDK::acsdkNotifications::NOTIFICATIONS_MEDIA_PLAYER_NAME</a> = &quot;NotificationsMediaPlayer&quot;</td></tr>
+<tr class="memdesc:a3ec5cb805e51515361e6daf55ead9e09"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify the notifications media player to render audio.  <a href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a3ec5cb805e51515361e6daf55ead9e09">More...</a><br /></td></tr>
+<tr class="separator:a3ec5cb805e51515361e6daf55ead9e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

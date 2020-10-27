@@ -1,18 +1,26 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h">
-<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="915,303,1146,344"/>
-<area shape="rect" id="node8" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="5,310,189,337"/>
-<area shape="rect" id="node10" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="1809,221,2023,247"/>
-<area shape="rect" id="node11" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="1542,213,1733,255"/>
-<area shape="rect" id="node13" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="668,213,831,255"/>
-<area shape="rect" id="node28" href="$_shared_a_v_s_setting_protocol_8h.html" title="Settings/SharedAVSSetting\lProtocol.h" alt="" coords="1054,124,1237,165"/>
-<area shape="rect" id="node31" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="2048,213,2253,255"/>
-<area shape="rect" id="node4" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="651,392,896,433"/>
-<area shape="rect" id="node6" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1493,556,1688,597"/>
-<area shape="rect" id="node16" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1221,303,1416,344"/>
-<area shape="rect" id="node27" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="213,303,381,344"/>
-<area shape="rect" id="node22" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1099,392,1293,433"/>
-<area shape="rect" id="node24" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1060,481,1159,508"/>
-<area shape="rect" id="node26" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1099,563,1213,590"/>
-<area shape="rect" id="node29" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="659,303,840,344"/>
-<area shape="rect" id="node30" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1918,310,2082,337"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h">
+<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="617,228,847,269"/>
+<area shape="rect" id="node21" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1797,325,1981,351"/>
+<area shape="rect" id="node22" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="2590,235,2805,262"/>
+<area shape="rect" id="node23" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="1379,228,1570,269"/>
+<area shape="rect" id="node25" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="2068,228,2231,269"/>
+<area shape="rect" id="node40" href="$_shared_a_v_s_setting_protocol_8h.html" title="Settings/SharedAVSSetting\lProtocol.h" alt="" coords="1593,139,1775,180"/>
+<area shape="rect" id="node43" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1023,228,1228,269"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="5,407,224,448"/>
+<area shape="rect" id="node6" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="679,407,924,448"/>
+<area shape="rect" id="node9" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="552,317,747,359"/>
+<area shape="rect" id="node10" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="336,317,528,359"/>
+<area shape="rect" id="node11" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="328,414,579,441"/>
+<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="806,496,1010,537"/>
+<area shape="rect" id="node20" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="123,496,365,537"/>
+<area shape="rect" id="node19" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="912,585,1077,627"/>
+<area shape="rect" id="node28" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2157,317,2352,359"/>
+<area shape="rect" id="node39" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="2013,496,2181,537"/>
+<area shape="rect" id="node32" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2724,407,2919,448"/>
+<area shape="rect" id="node37" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1705,407,1879,448"/>
+<area shape="rect" id="node34" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2840,503,2939,530"/>
+<area shape="rect" id="node36" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2891,593,3005,619"/>
+<area shape="rect" id="node38" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1707,496,1938,537"/>
+<area shape="rect" id="node41" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="1389,317,1571,359"/>
+<area shape="rect" id="node42" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1150,325,1314,351"/>
 </map>

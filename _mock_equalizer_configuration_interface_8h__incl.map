@@ -1,7 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/MockEqualizerConfigurationInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Audio/MockEqualizerConfigurationInterface.h">
-<area shape="rect" id="node4" href="$_equalizer_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerConfiguration\lInterface.h" alt="" coords="205,124,400,180"/>
-<area shape="rect" id="node6" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="372,303,537,344"/>
-<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="562,303,755,344"/>
-<area shape="rect" id="node12" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="247,228,369,255"/>
-<area shape="rect" id="node7" href="$_result_8h.html" title="Result.h" alt="" coords="419,392,490,419"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/test/include/acsdkEqualizerInterfaces/MockEqualizerConfigurationInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/test/include/acsdkEqualizerInterfaces/MockEqualizerConfigurationInterface.h">
+<area shape="rect" id="node4" href="$_equalizer_configuration_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerConfigurationInterface.h" alt="" coords="199,153,417,195"/>
+<area shape="rect" id="node6" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="375,317,540,359"/>
+<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="565,317,758,359"/>
+<area shape="rect" id="node12" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="249,243,372,269"/>
+<area shape="rect" id="node7" href="$_result_8h.html" title="Result.h" alt="" coords="422,407,493,433"/>
 </map>

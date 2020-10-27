@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -108,8 +108,8 @@ Collaboration diagram for alexaClientSDK::capabilitiesDelegate::CapabilitiesDele
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae2610420f8d8712cde1eedf9ed38987c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#ae2610420f8d8712cde1eedf9ed38987c">addDiscoveryEventSender</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html">DiscoveryEventSenderInterface</a> &gt; &amp;discoveryEventSender)</td></tr>
-<tr class="separator:ae2610420f8d8712cde1eedf9ed38987c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f78b8d8eba8c79fef1d76a7c858eeb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#a6f78b8d8eba8c79fef1d76a7c858eeb6">setDiscoveryEventSender</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html">DiscoveryEventSenderInterface</a> &gt; &amp;discoveryEventSender)</td></tr>
+<tr class="separator:a6f78b8d8eba8c79fef1d76a7c858eeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">CapabilitiesDelegateInterface method overrides.</div></td></tr>
 <tr class="memitem:a7d4222f258851d9fa1ee6423dc34d82b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#a7d4222f258851d9fa1ee6423dc34d82b">addOrUpdateEndpoint</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avsCommon::avs::AVSDiscoveryEndpointAttributes</a> &amp;endpointAttributes, const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt; &amp;capabilities) override</td></tr>
 <tr class="separator:a7d4222f258851d9fa1ee6423dc34d82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +162,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface</a></td></tr>
 <tr class="memitem:adec117d33ac22d7509b1e01232529782 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#adec117d33ac22d7509b1e01232529782">~ConnectionStatusObserverInterface</a> ()=default</td></tr>
 <tr class="separator:adec117d33ac22d7509b1e01232529782 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990338f0c9eeab3e32bfdf05034ed180 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a990338f0c9eeab3e32bfdf05034ed180">onConnectionStatusChanged</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">Status</a> status, const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface_1_1_engine_connection_status.html">EngineConnectionStatus</a> &gt; &amp;engineStatuses)</td></tr>
+<tr class="separator:a990338f0c9eeab3e32bfdf05034ed180 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html">alexaClientSDK::avsCommon::utils::RequiresShutdown</a></td></tr>
 <tr class="memitem:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#aae7174ed932ae1413460255238c4422b">RequiresShutdown</a> (const std::string &amp;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">name</a>)</td></tr>
 <tr class="separator:aae7174ed932ae1413460255238c4422b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,6 +190,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ad190d216d222f64733a75d5ef15f9c6d"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html">CapabilitiesDelegateInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#ad190d216d222f64733a75d5ef15f9c6d">createCapabilitiesDelegateInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; &amp;authDelegate, std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_capabilities_delegate_storage_interface.html">storage::CapabilitiesDelegateStorageInterface</a> &gt; storage, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; &amp;customerDataManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;providerRegistrar, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alexa_event_processed_notifier_interfaces.html#a1a4b11ea9831d0f01ea3f5a0e7d86df9">acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface</a> &gt; &amp;alexaEventProcessedNotifier)</td></tr>
+<tr class="separator:ad190d216d222f64733a75d5ef15f9c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a221ef2e65524befd9d131016714041d9"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html#a221ef2e65524befd9d131016714041d9">create</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; &amp;authDelegate, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_capabilities_delegate_storage_interface.html">storage::CapabilitiesDelegateStorageInterface</a> &gt; &amp;storage, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; &amp;customerDataManager)</td></tr>
 <tr class="separator:a221ef2e65524befd9d131016714041d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -260,25 +264,6 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html#a0f6ee5105a45f678ec365ad2253e1371">alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesDelegateInterface</a>.</p>
-
-</div>
-</div>
-<a id="ae2610420f8d8712cde1eedf9ed38987c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2610420f8d8712cde1eedf9ed38987c">&#9670;&nbsp;</a></span>addDiscoveryEventSender()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate::addDiscoveryEventSender </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html">DiscoveryEventSenderInterface</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>discoveryEventSender</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Adds the event sender used to send Discovery events. </p>
 
 </div>
 </div>
@@ -389,11 +374,85 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 </table>
 </div><div class="memdoc">
 <p>Create an <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000046">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">authDelegate</td><td>The auth delegate instance needed for <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>. </td></tr>
     <tr><td class="paramname">storage</td><td>The storage instance needed for <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>. </td></tr>
     <tr><td class="paramname">customerDataManager</td><td>Object that will track the CustomerDataHandler. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If successful, returns a new <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>, otherwise <code>nullptr</code>. </dd></dl>
+
+</div>
+</div>
+<a id="ad190d216d222f64733a75d5ef15f9c6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad190d216d222f64733a75d5ef15f9c6d">&#9670;&nbsp;</a></span>createCapabilitiesDelegateInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html">CapabilitiesDelegateInterface</a> &gt; alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate::createCapabilitiesDelegateInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html">avsCommon::sdkInterfaces::AuthDelegateInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>authDelegate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_capabilities_delegate_storage_interface.html">storage::CapabilitiesDelegateStorageInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>customerDataManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>providerRegistrar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alexa_event_processed_notifier_interfaces.html#a1a4b11ea9831d0f01ea3f5a0e7d86df9">acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>alexaEventProcessedNotifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create an instance of CapabilitiesDelegateInterface.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">authDelegate</td><td>The auth delegate instance needed for <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>. </td></tr>
+    <tr><td class="paramname">storage</td><td>The storage instance needed for <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html">CapabilitiesDelegate</a>. </td></tr>
+    <tr><td class="paramname">customerDataManager</td><td>Object that will track the CustomerDataHandler. </td></tr>
+    <tr><td class="paramname">providerRegistrar</td><td>Object with which to register the new instance as a post connect operation provider. </td></tr>
+    <tr><td class="paramname">shutdownNotifier</td><td>The object to register with to be notified when it is time to shut down. </td></tr>
+    <tr><td class="paramname">alexaEventProcessedNotifier</td><td>The object to register with to be notified of AlexaEventProcessed directives. </td></tr>
   </table>
   </dd>
 </dl>
@@ -770,6 +829,25 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 
 </div>
 </div>
+<a id="a6f78b8d8eba8c79fef1d76a7c858eeb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f78b8d8eba8c79fef1d76a7c858eeb6">&#9670;&nbsp;</a></span>setDiscoveryEventSender()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate::setDiscoveryEventSender </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html">DiscoveryEventSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>discoveryEventSender</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the event sender used to send Discovery events. </p>
+
+</div>
+</div>
 <a id="ab71c78246a97384a22ee09c39b81464f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab71c78246a97384a22ee09c39b81464f">&#9670;&nbsp;</a></span>setMessageSender()</h2>
 
@@ -806,14 +884,14 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/<a class="el" href="_capabilities_delegate_8h_source.html">CapabilitiesDelegate.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilitiesDelegate/src/<a class="el" href="_capabilities_delegate_8cpp.html">CapabilitiesDelegate.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/<a class="el" href="_capabilities_delegate_8h_source.html">CapabilitiesDelegate.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilitiesDelegate/src/<a class="el" href="_capabilities_delegate_8cpp.html">CapabilitiesDelegate.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

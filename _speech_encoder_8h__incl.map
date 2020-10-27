@@ -1,20 +1,22 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/SpeechEncoder.h" name="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/SpeechEncoder.h">
-<area shape="rect" id="node5" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1346,109,1545,151"/>
-<area shape="rect" id="node32" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="166,206,389,233"/>
-<area shape="rect" id="node33" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1872,288,2067,329"/>
-<area shape="rect" id="node41" href="$_encoder_context_8h.html" title="EncoderContext.h" alt="" coords="214,117,341,143"/>
-<area shape="rect" id="node6" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="837,288,1003,329"/>
-<area shape="rect" id="node30" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1516,199,1681,240"/>
-<area shape="rect" id="node9" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="989,377,1165,419"/>
-<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="989,467,1165,508"/>
-<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1042,556,1257,597"/>
-<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="781,645,957,687"/>
-<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="521,556,697,597"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="773,556,966,597"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="288,735,464,776"/>
-<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="531,645,707,687"/>
-<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="973,735,1149,776"/>
-<area shape="rect" id="node37" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2229,377,2424,419"/>
-<area shape="rect" id="node38" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2208,474,2307,501"/>
-<area shape="rect" id="node40" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2295,563,2409,590"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/SpeechEncoder.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SpeechEncoder/include/SpeechEncoder/SpeechEncoder.h">
+<area shape="rect" id="node5" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1377,139,1575,180"/>
+<area shape="rect" id="node32" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="263,235,486,262"/>
+<area shape="rect" id="node33" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2249,407,2444,448"/>
+<area shape="rect" id="node43" href="$_encoder_context_8h.html" title="EncoderContext.h" alt="" coords="311,146,438,173"/>
+<area shape="rect" id="node6" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="1153,317,1319,359"/>
+<area shape="rect" id="node30" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1479,228,1644,269"/>
+<area shape="rect" id="node9" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1241,407,1417,448"/>
+<area shape="rect" id="node11" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1187,496,1363,537"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="887,585,1102,627"/>
+<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1368,675,1544,716"/>
+<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="629,585,805,627"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1178,585,1371,627"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="256,585,432,627"/>
+<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="629,675,805,716"/>
+<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1027,764,1203,805"/>
+<area shape="rect" id="node37" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2545,496,2740,537"/>
+<area shape="rect" id="node41" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1879,496,2054,537"/>
+<area shape="rect" id="node38" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2793,593,2892,619"/>
+<area shape="rect" id="node40" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2743,682,2857,709"/>
+<area shape="rect" id="node42" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1802,585,2033,627"/>
 </map>

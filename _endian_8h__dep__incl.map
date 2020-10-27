@@ -1,4 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h">
-<area shape="rect" id="node2" href="$_playback_configuration_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/PlaybackConfiguration.cpp" alt="" coords="5,124,247,180"/>
-<area shape="rect" id="node3" href="$_opus_encoder_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/src/OpusEncoderContext.cpp" alt="" coords="271,124,515,180"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h">
+<area shape="rect" id="node2" href="$_wav_utils_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/WavUtils.cpp" alt="" coords="5,146,248,217"/>
+<area shape="rect" id="node3" href="$_endian_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/EndianTest.cpp" alt="" coords="272,146,531,217"/>
+<area shape="rect" id="node4" href="$_playback_configuration_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/src/PlaybackConfiguration.cpp" alt="" coords="555,139,807,224"/>
+<area shape="rect" id="node5" href="$_opus_encoder_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SpeechEncoder/OpusEncoderContext\l/src/OpusEncoderContext.cpp" alt="" coords="831,139,1078,224"/>
 </map>

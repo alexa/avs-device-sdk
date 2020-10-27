@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h">
-<area shape="rect" id="node6" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="401,124,653,165"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="677,124,897,165"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="445,213,664,255"/>
-<area shape="rect" id="node12" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="824,213,1003,255"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="497,303,676,344"/>
-<area shape="rect" id="node11" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="732,303,919,344"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h">
+<area shape="rect" id="node6" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="401,139,653,180"/>
+<area shape="rect" id="node13" href="$_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="677,139,897,180"/>
+<area shape="rect" id="node9" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="445,228,664,269"/>
+<area shape="rect" id="node12" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="824,228,1003,269"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="497,317,676,359"/>
+<area shape="rect" id="node11" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="732,317,919,359"/>
 </map>

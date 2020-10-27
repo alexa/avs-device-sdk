@@ -1,0 +1,16 @@
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/src/StaticExternalMediaPlayerAdapterHandler.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/src/StaticExternalMediaPlayerAdapterHandler.cpp">
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="627,265,803,306"/>
+<area shape="rect" id="node25" href="$_static_external_media_player_adapter_handler_8h.html" title="acsdkExternalMediaPlayer\l/StaticExternalMediaPlayerAdapter\lHandler.h" alt="" coords="1779,153,2005,209"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1138,369,1353,410"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="701,465,877,507"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="316,369,492,410"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="753,369,946,410"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="5,369,181,410"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="53,465,229,507"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="451,555,627,596"/>
+<area shape="rect" id="node27" href="$_external_media_adapter_handler_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lHandlerInterface.h" alt="" coords="1786,257,1998,313"/>
+<area shape="rect" id="node28" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1616,465,1805,507"/>
+<area shape="rect" id="node29" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="1503,361,1715,417"/>
+<area shape="rect" id="node31" href="$_external_media_player_common_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lCommon.h" alt="" coords="1790,361,1994,417"/>
+<area shape="rect" id="node30" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="1880,473,2115,499"/>
+</map>

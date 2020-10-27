@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -116,6 +117,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_timing_adapter_factory.html">TimingAdapterFactory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ae0a8c85001c1e48548629a523eee79ae"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#ae0a8c85001c1e48548629a523eee79ae">CaptionsComponent</a> = <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">CaptionManagerInterface</a> &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &gt;&gt;</td></tr>
+<tr class="separator:ae0a8c85001c1e48548629a523eee79ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a773094fa15abd23a640ea7b16b6eb0b1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#a773094fa15abd23a640ea7b16b6eb0b1">CaptionFormat</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#a773094fa15abd23a640ea7b16b6eb0b1aa1a10e841c3f544047518e14a531b5d1">CaptionFormat::WEBVTT</a>, 
@@ -125,6 +131,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ae3b2542705170374c8d36da18c8326cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#ae0a8c85001c1e48548629a523eee79ae">CaptionsComponent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#ae3b2542705170374c8d36da18c8326cb">getComponent</a> ()</td></tr>
+<tr class="separator:ae3b2542705170374c8d36da18c8326cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fcf3bc3106317e9351c7899a33145b7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#a7fcf3bc3106317e9351c7899a33145b7">TAG</a> (&quot;CaptionsComponent&quot;)</td></tr>
+<tr class="memdesc:a7fcf3bc3106317e9351c7899a33145b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a7fcf3bc3106317e9351c7899a33145b7">More...</a><br /></td></tr>
+<tr class="separator:a7fcf3bc3106317e9351c7899a33145b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e37d22b4b0d16f55131e48f3bdf5db"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">CaptionManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#a95e37d22b4b0d16f55131e48f3bdf5db">createCaptionManagerInterface</a> (const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier)</td></tr>
+<tr class="separator:a95e37d22b4b0d16f55131e48f3bdf5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a0c0616b6b36a30f7d71ae794c862d2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#a7a0c0616b6b36a30f7d71ae794c862d2">TAG</a> (&quot;LibwebvttParserAdapter&quot;)</td></tr>
 <tr class="memdesc:a7a0c0616b6b36a30f7d71ae794c862d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a7a0c0616b6b36a30f7d71ae794c862d2">More...</a><br /></td></tr>
 <tr class="separator:a7a0c0616b6b36a30f7d71ae794c862d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,6 +193,22 @@ Variables</h2></td></tr>
 <tr class="memdesc:a28d0554b08f58ab317834546bd291d0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of acceptable line wraps that can occur for a single <code><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_frame.html">CaptionFrame</a></code>.  <a href="#a28d0554b08f58ab317834546bd291d0b">More...</a><br /></td></tr>
 <tr class="separator:a28d0554b08f58ab317834546bd291d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ae0a8c85001c1e48548629a523eee79ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0a8c85001c1e48548629a523eee79ae">&#9670;&nbsp;</a></span>CaptionsComponent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#ae0a8c85001c1e48548629a523eee79ae">alexaClientSDK::captions::CaptionsComponent</a> = typedef <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">CaptionManagerInterface</a>&gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a>&gt; &gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Definition of a Manufactory component for Captions. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a773094fa15abd23a640ea7b16b6eb0b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a773094fa15abd23a640ea7b16b6eb0b1">&#9670;&nbsp;</a></span>CaptionFormat</h2>
@@ -286,6 +315,51 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a95e37d22b4b0d16f55131e48f3bdf5db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e37d22b4b0d16f55131e48f3bdf5db">&#9670;&nbsp;</a></span>createCaptionManagerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">CaptionManagerInterface</a>&gt; alexaClientSDK::captions::createCaptionManagerInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">ShutdownNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae3b2542705170374c8d36da18c8326cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3b2542705170374c8d36da18c8326cb">&#9670;&nbsp;</a></span>getComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1captions.html#ae0a8c85001c1e48548629a523eee79ae">CaptionsComponent</a> alexaClientSDK::captions::getComponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates an manufactory component that exports a shared pointer to an implementation of <code><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">CaptionManagerInterface</a></code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A component. </dd></dl>
 
 </div>
 </div>
@@ -570,7 +644,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a11988f50a77b81475e944743fe591f93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11988f50a77b81475e944743fe591f93">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a11988f50a77b81475e944743fe591f93">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -597,8 +671,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a7fcf3bc3106317e9351c7899a33145b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fcf3bc3106317e9351c7899a33145b7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::captions::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;CaptionsComponent&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="a7a0c0616b6b36a30f7d71ae794c862d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0c0616b6b36a30f7d71ae794c862d2">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a0c0616b6b36a30f7d71ae794c862d2">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -846,7 +948,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

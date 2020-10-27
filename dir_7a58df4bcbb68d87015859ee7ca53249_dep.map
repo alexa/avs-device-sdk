@@ -1,11 +1,11 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Endpoints/include" name="/workplace/avs&#45;device&#45;sdk/Endpoints/include">
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include">
 <area shape="rect" id="node2" href="dir_8059b77ea61b795319c9c4a7723ac991.html" title="Endpoints" alt="" coords="75,63,155,111"/>
 <area shape="rect" id="node3" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="5,159,127,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000339_000224.html" title="1" alt="" coords="90,139,98,153"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000431_000310.html" title="4" alt="" coords="90,139,98,153"/>
 <area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="15,255,117,303"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000339_000017.html" title="29" alt="" coords="113,241,127,256"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000224_000017.html" title="510" alt="" coords="55,228,76,243"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000017_000224.html" title="1" alt="" coords="63,218,71,233"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000431_000017.html" title="41" alt="" coords="113,241,127,256"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000310_000017.html" title="483" alt="" coords="55,228,76,243"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000017_000310.html" title="1" alt="" coords="63,218,71,233"/>
 <area shape="rect" id="clust2" href="dir_7a58df4bcbb68d87015859ee7ca53249.html" alt="" coords="65,52,262,121"/>
 <area shape="rect" id="clust1" href="dir_0a90cfc4c6fc93350190d2c91cca5e69.html" title="Endpoints" alt="" coords="54,16,273,132"/>
 </map>

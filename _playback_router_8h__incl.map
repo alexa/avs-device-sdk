@@ -1,7 +1,9 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h">
-<area shape="rect" id="node2" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="5,213,197,255"/>
-<area shape="rect" id="node5" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="279,124,471,165"/>
-<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="540,124,729,165"/>
-<area shape="rect" id="node3" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="66,303,313,329"/>
-<area shape="rect" id="node7" href="$_local_playback_handler_interface_8h.html" title="LocalPlaybackHandlerInterface.h" alt="" coords="222,221,437,247"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h">
+<area shape="rect" id="node2" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="114,139,337,180"/>
+<area shape="rect" id="node6" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="288,228,477,269"/>
+<area shape="rect" id="node10" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="501,228,693,269"/>
+<area shape="rect" id="node13" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="501,139,693,180"/>
+<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,228,163,269"/>
+<area shape="rect" id="node11" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="562,317,809,344"/>
+<area shape="rect" id="node14" href="$_local_playback_handler_interface_8h.html" title="LocalPlaybackHandlerInterface.h" alt="" coords="718,235,933,262"/>
 </map>

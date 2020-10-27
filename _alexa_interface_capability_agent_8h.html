@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/AlexaInterfaceCapabilityAgent.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/AlexaInterfaceCapabilityAgent.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -75,70 +75,86 @@ $(function() {
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alexa_event_processed_notifier_interface_8h_source.html">acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_annotated_8h_source.html">acsdkManufactory/Annotated.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_interface_message_sender_internal_interface_8h_source.html">Alexa/AlexaInterfaceMessageSenderInternalInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_agent_8h_source.html">AVSCommon/AVS/CapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_event_processed_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_builder_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_capabilities_registrar_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_identifier_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_default_endpoint_annotation_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_info_8h_source.html">AVSCommon/Utils/DeviceInfo.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_executor_8h_source.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlexaInterfaceCapabilityAgent.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alexa_interface_capability_agent_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h" id="_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h">
-<area shape="rect" id="node5" href="_alexa_interface_message_sender_internal_interface_8h.html" title="Alexa/AlexaInterfaceMessage\lSenderInternalInterface.h" alt="" coords="2014,131,2210,173"/>
-<area shape="rect" id="node23" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="728,131,923,173"/>
-<area shape="rect" id="node36" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="2173,325,2373,366"/>
-<area shape="rect" id="node43" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2339,421,2533,463"/>
-<area shape="rect" id="node44" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="2709,124,2917,180"/>
-<area shape="rect" id="node45" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="2308,235,2519,262"/>
-<area shape="rect" id="node46" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2857,689,3052,731"/>
-<area shape="rect" id="node6" href="_alexa_interface_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaInterfaceMessageSender\lInterface.h" alt="" coords="1945,317,2149,373"/>
-<area shape="rect" id="node7" href="_alexa_response_type_8h.html" title="AVSCommon/AVS/AlexaResponse\lType.h" alt="" coords="1488,421,1717,463"/>
-<area shape="rect" id="node10" href="_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="2097,421,2314,463"/>
-<area shape="rect" id="node12" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1962,518,2158,545"/>
-<area shape="rect" id="node13" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2205,600,2381,641"/>
-<area shape="rect" id="node15" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2205,689,2381,731"/>
-<area shape="rect" id="node18" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1865,779,2079,820"/>
-<area shape="rect" id="node21" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2104,779,2280,820"/>
-<area shape="rect" id="node25" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="889,325,1119,366"/>
-<area shape="rect" id="node27" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="453,421,713,463"/>
-<area shape="rect" id="node29" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1039,689,1231,731"/>
-<area shape="rect" id="node32" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="1640,228,1835,269"/>
-<area shape="rect" id="node37" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1052,228,1244,269"/>
-<area shape="rect" id="node38" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="320,511,512,552"/>
-<area shape="rect" id="node42" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="143,600,366,641"/>
-<area shape="rect" id="node26" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="1067,421,1261,463"/>
-<area shape="rect" id="node28" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="490,600,713,641"/>
-<area shape="rect" id="node30" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="779,786,994,813"/>
-<area shape="rect" id="node31" href="_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="1019,786,1256,813"/>
-<area shape="rect" id="node34" href="_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="1461,332,1683,359"/>
-<area shape="rect" id="node35" href="_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="1195,325,1387,366"/>
-<area shape="rect" id="node39" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="427,697,653,723"/>
-<area shape="rect" id="node41" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="787,600,1021,641"/>
-<area shape="rect" id="node50" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2557,779,2752,820"/>
+<div class="center"><img src="_alexa_interface_capability_agent_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8h">
+<area shape="rect" id="node5" href="_alexa_event_processed_notifier_interface_8h.html" title="acsdkAlexaEventProcessed\lNotifierInterfaces/AlexaEvent\lProcessedNotifierInterface.h" alt="" coords="1026,332,1219,388"/>
+<area shape="rect" id="node8" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="1285,436,1493,492"/>
+<area shape="rect" id="node10" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2365,146,2568,173"/>
+<area shape="rect" id="node11" href="_alexa_interface_message_sender_internal_interface_8h.html" title="Alexa/AlexaInterfaceMessage\lSenderInternalInterface.h" alt="" coords="2791,139,2987,180"/>
+<area shape="rect" id="node13" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2276,235,2471,277"/>
+<area shape="rect" id="node20" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="2165,443,2365,485"/>
+<area shape="rect" id="node24" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="4140,443,4335,485"/>
+<area shape="rect" id="node28" href="_endpoint_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointBuilderInterface.h" alt="" coords="4198,139,4439,180"/>
+<area shape="rect" id="node32" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="3643,228,3850,284"/>
+<area shape="rect" id="node41" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="4463,139,4718,180"/>
+<area shape="rect" id="node42" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1453,347,1664,373"/>
+<area shape="rect" id="node45" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="479,339,673,381"/>
+<area shape="rect" id="node6" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1053,443,1211,485"/>
+<area shape="rect" id="node12" href="_alexa_interface_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaInterfaceMessageSender\lInterface.h" alt="" coords="3078,332,3282,388"/>
+<area shape="rect" id="node16" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1910,443,2141,485"/>
+<area shape="rect" id="node17" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2743,339,3003,381"/>
+<area shape="rect" id="node18" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2005,339,2197,381"/>
+<area shape="rect" id="node19" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2221,339,2416,381"/>
+<area shape="rect" id="node21" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1688,339,1880,381"/>
+<area shape="rect" id="node22" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="3509,339,3701,381"/>
+<area shape="rect" id="node23" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2902,443,3125,485"/>
+<area shape="rect" id="node27" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="4801,540,4997,567"/>
+<area shape="rect" id="node29" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3877,339,4099,381"/>
+<area shape="rect" id="node30" href="_endpoint_capabilities_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lBuilderInterface.h" alt="" coords="3146,228,3353,284"/>
+<area shape="rect" id="node33" href="_endpoint_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="3975,235,4177,277"/>
+<area shape="rect" id="node34" href="_mode_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lAttributes.h" alt="" coords="4410,436,4617,492"/>
+<area shape="rect" id="node35" href="_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lInterface.h" alt="" coords="5329,228,5535,284"/>
+<area shape="rect" id="node36" href="_power_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerController/PowerController\lInterface.h" alt="" coords="5560,228,5776,284"/>
+<area shape="rect" id="node37" href="_range_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/RangeController/RangeController\lAttributes.h" alt="" coords="4303,228,4521,284"/>
+<area shape="rect" id="node38" href="_range_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RangeController/RangeController\lInterface.h" alt="" coords="4545,228,4764,284"/>
+<area shape="rect" id="node39" href="_toggle_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/ToggleController/ToggleController\lAttributes.h" alt="" coords="4789,228,5009,284"/>
+<area shape="rect" id="node40" href="_toggle_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ToggleController/ToggleController\lInterface.h" alt="" coords="5033,228,5253,284"/>
+<area shape="rect" id="node43" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1569,443,1783,485"/>
+<area shape="rect" id="node49" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="432,443,627,485"/>
+<area shape="rect" id="node50" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="854,443,1029,485"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_alexa_interface_capability_agent_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep" id="_2workplace_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep">
-<area shape="rect" id="node2" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,124,456,195"/>
-<area shape="rect" id="node13" href="_alexa_interface_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/src/AlexaInterfaceCapability\lAgent.cpp" alt="" coords="480,124,707,195"/>
-<area shape="rect" id="node14" href="_alexa_interface_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/test/AlexaInterfaceCapability\lAgentTest.cpp" alt="" coords="731,124,962,195"/>
-<area shape="rect" id="node15" href="_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lBuilder.cpp" alt="" coords="987,131,1173,187"/>
-<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,243,305,299"/>
-<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,347,451,403"/>
-<area shape="rect" id="node11" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,243,593,299"/>
-<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,451,221,507"/>
-<area shape="rect" id="node10" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,451,451,507"/>
-<area shape="rect" id="node6" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,555,221,611"/>
-<area shape="rect" id="node9" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,555,447,611"/>
-<area shape="rect" id="node7" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,659,212,700"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,659,569,700"/>
-<area shape="rect" id="node12" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,354,799,395"/>
+<div class="center"><img src="_alexa_interface_capability_agent_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_alexa_2include_2_alexa_2_alexa_interface_capability_agent_8hdep">
+<area shape="rect" id="node2" href="_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="524,139,763,224"/>
+<area shape="rect" id="node17" href="_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="787,139,1003,224"/>
+<area shape="rect" id="node18" href="_alexa_interface_capability_agent_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/Alexa/src\l/AlexaInterfaceCapabilityAgent.cpp" alt="" coords="1027,139,1254,224"/>
+<area shape="rect" id="node19" href="_alexa_interface_capability_agent_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/Alexa/test\l/AlexaInterfaceCapabilityAgentTest.cpp" alt="" coords="1278,139,1531,224"/>
+<area shape="rect" id="node20" href="_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="1555,146,1819,217"/>
+<area shape="rect" id="node21" href="_default_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/DefaultEndpointBuilder.cpp" alt="" coords="1844,146,2112,217"/>
+<area shape="rect" id="node22" href="_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/EndpointBuilder.cpp" alt="" coords="2137,146,2363,217"/>
+<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="391,272,605,357"/>
+<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="539,405,748,491"/>
+<area shape="rect" id="node15" href="_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="681,272,891,357"/>
+<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="539,539,748,624"/>
+<area shape="rect" id="node14" href="_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="260,546,515,617"/>
+<area shape="rect" id="node6" href="_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="501,672,749,772"/>
+<area shape="rect" id="node10" href="_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="824,679,1033,765"/>
+<area shape="rect" id="node13" href="_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="226,687,477,757"/>
+<area shape="rect" id="node7" href="_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="557,820,805,905"/>
+<area shape="rect" id="node8" href="_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="5,820,260,905"/>
+<area shape="rect" id="node9" href="preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="285,820,533,905"/>
+<area shape="rect" id="node11" href="main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="829,827,1029,898"/>
+<area shape="rect" id="node12" href="_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1053,827,1305,898"/>
+<area shape="rect" id="node16" href="_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="1109,413,1357,483"/>
 </map>
 </div>
 </div>
@@ -163,7 +179,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

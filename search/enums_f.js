@@ -3,6 +3,7 @@ var searchData=
   ['sampleappreturncode',['SampleAppReturnCode',['../namespacealexa_client_s_d_k_1_1sample_app.html#a091908d2e9931dcf16819bd967de7e70',1,'alexaClientSDK::sampleApp']]],
   ['sampleformat',['SampleFormat',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#a66a4a30a065b604abfdc9cfd0ba07e1d',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
   ['scanningtransitionstate',['ScanningTransitionState',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a8f726772dd1cb902d65167b44855d003',1,'alexaClientSDK::acsdkBluetooth::Bluetooth']]],
+  ['seekstatus',['SeekStatus',['../classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6',1,'alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface']]],
   ['setsettingresult',['SetSettingResult',['../_set_setting_result_8h.html#a15f12c618d4b135e4f8eb35afe8a2ac5',1,'SetSettingResult.h']]],
   ['setstateresult',['SetStateResult',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a10a3cb8dea046c68b6cd5b82c0bedbdb',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['settingnotifications',['SettingNotifications',['../namespacealexa_client_s_d_k_1_1settings.html#a65b348e86299aa3f3fcdf4a5f924e025',1,'alexaClientSDK::settings']]],
@@ -19,5 +20,5 @@ var searchData=
   ['stopreason',['StopReason',['../classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a318011e6df9725d152fdf4bde45d60e2',1,'alexaClientSDK::acsdkAlerts::Alert']]],
   ['streamformat',['StreamFormat',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a32e28372d55112aa4c7ff74cc8457465',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['streamingstate',['StreamingState',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#ae0ede412f4788fef00ad5354303a2727',1,'alexaClientSDK::acsdkBluetooth::Bluetooth']]],
-  ['supportedplaybackoperation',['SupportedPlaybackOperation',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html#add8b68bcbddf1c10e71d9bf8fa340a66',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer']]]
+  ['supportedplaybackoperation',['SupportedPlaybackOperation',['../namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a4998200940acd820cbc88895fb0a0f31',1,'alexaClientSDK::acsdkExternalMediaPlayerInterfaces']]]
 ];

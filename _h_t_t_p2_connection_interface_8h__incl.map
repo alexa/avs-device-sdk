@@ -1,13 +1,13 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h">
-<area shape="rect" id="node3" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="193,124,372,165"/>
-<area shape="rect" id="node8" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="895,213,1049,240"/>
-<area shape="rect" id="node19" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="396,124,575,165"/>
-<area shape="rect" id="node20" href="$_h_t_t_p2_connection_observer_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionObserverInterface.h" alt="" coords="649,124,898,165"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="371,213,587,240"/>
-<area shape="rect" id="node16" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="661,213,872,240"/>
-<area shape="rect" id="node13" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="257,288,436,329"/>
-<area shape="rect" id="node14" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="79,377,265,419"/>
-<area shape="rect" id="node15" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="289,377,468,419"/>
-<area shape="rect" id="node17" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="730,288,923,329"/>
-<area shape="rect" id="node18" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="947,288,1173,329"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h">
+<area shape="rect" id="node3" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="193,139,372,180"/>
+<area shape="rect" id="node8" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="895,228,1049,255"/>
+<area shape="rect" id="node19" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="396,139,575,180"/>
+<area shape="rect" id="node20" href="$_h_t_t_p2_connection_observer_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionObserverInterface.h" alt="" coords="649,139,898,180"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="371,228,587,255"/>
+<area shape="rect" id="node16" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="661,228,872,255"/>
+<area shape="rect" id="node13" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="257,303,436,344"/>
+<area shape="rect" id="node14" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="79,392,265,433"/>
+<area shape="rect" id="node15" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="289,392,468,433"/>
+<area shape="rect" id="node17" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="730,303,923,344"/>
+<area shape="rect" id="node18" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="947,303,1173,344"/>
 </map>

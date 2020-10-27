@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -117,6 +117,8 @@ Public Types</h2></td></tr>
 <tr class="memitem:a4dc706ff9be6b151c9fab1ae07b43ba2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a4dc706ff9be6b151c9fab1ae07b43ba2">ObserverInterface</a> = <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html">avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface</a></td></tr>
 <tr class="memdesc:a4dc706ff9be6b151c9fab1ae07b43ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to the <code>AudioInputProcessorObserverInterface</code> for brevity.  <a href="#a4dc706ff9be6b151c9fab1ae07b43ba2">More...</a><br /></td></tr>
 <tr class="separator:a4dc706ff9be6b151c9fab1ae07b43ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f17aa1010d5835428479cb8b988c165"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a9f17aa1010d5835428479cb8b988c165">ExpectSpeechTimeoutHandler</a> = <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_expect_speech_timeout_handler_interface.html">avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface</a></td></tr>
+<tr class="separator:a9f17aa1010d5835428479cb8b988c165"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a></td></tr>
 <tr class="memitem:a728a1ce41f6997d23f740e452dc5e066 inherit pub_types_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066">DialogUXState</a> { <br />
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html#a728a1ce41f6997d23f740e452dc5e066aa5daf7f2ebbba4975d61dab1c40188c7">DialogUXState::IDLE</a>, 
@@ -266,8 +268,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a901c19dfbd3eae328973e276137efb82"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a901c19dfbd3eae328973e276137efb82">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt; directiveSequencer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a> &gt; dialogUXStateAggregator, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a> &gt; userInactivityNotifier, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_system_sound_player_interface.html">avsCommon::sdkInterfaces::SystemSoundPlayerInterface</a> &gt; systemSoundPlayer, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt; &amp;assetsManager, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a820defae62eed403a8fbd8568ee0a315">settings::WakeWordConfirmationSetting</a> &gt; wakeWordConfirmation, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a271ebc0776135474c8f747c4d94e0238">settings::SpeechConfirmationSetting</a> &gt; speechConfirmation, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a12ad3f21f4fb0e9a0caf53ed772393f5">settings::WakeWordsSetting</a> &gt; wakeWordsSetting=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_speech_encoder.html">speechencoder::SpeechEncoder</a> &gt; speechEncoder=nullptr, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a> defaultAudioProvider=<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html#a8bb6d6ed0a65c27e2eabac7e869c698a">AudioProvider::null</a>(), std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt; powerResourceManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
-<tr class="separator:a901c19dfbd3eae328973e276137efb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69e449912c031a3ea238f1966d74cc6a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a69e449912c031a3ea238f1966d74cc6a">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt; directiveSequencer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html">avsCommon::avs::DialogUXStateAggregator</a> &gt; dialogUXStateAggregator, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a> &gt; userInactivityNotifier, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_system_sound_player_interface.html">avsCommon::sdkInterfaces::SystemSoundPlayerInterface</a> &gt; systemSoundPlayer, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt; &amp;assetsManager, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a820defae62eed403a8fbd8568ee0a315">settings::WakeWordConfirmationSetting</a> &gt; wakeWordConfirmation, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a271ebc0776135474c8f747c4d94e0238">settings::SpeechConfirmationSetting</a> &gt; speechConfirmation, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a12ad3f21f4fb0e9a0caf53ed772393f5">settings::WakeWordsSetting</a> &gt; wakeWordsSetting=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_speech_encoder.html">speechencoder::SpeechEncoder</a> &gt; speechEncoder=nullptr, <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">AudioProvider</a> defaultAudioProvider=<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html#a8bb6d6ed0a65c27e2eabac7e869c698a">AudioProvider::null</a>(), std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">avsCommon::sdkInterfaces::PowerResourceManagerInterface</a> &gt; powerResourceManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a9f17aa1010d5835428479cb8b988c165">ExpectSpeechTimeoutHandler</a> &gt; &amp;expectSpeechTimeoutHandler=nullptr)</td></tr>
+<tr class="separator:a69e449912c031a3ea238f1966d74cc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae175e2025056403694902812da16802c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structalexa_client_s_d_k_1_1settings_1_1_setting_event_metadata.html">settings::SettingEventMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ae175e2025056403694902812da16802c">getWakeWordsEventsMetadata</a> ()</td></tr>
 <tr class="separator:ae175e2025056403694902812da16802c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5efbc033101625c5879304a497b00dfb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structalexa_client_s_d_k_1_1settings_1_1_setting_event_metadata.html">settings::SettingEventMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a5efbc033101625c5879304a497b00dfb">getWakeWordConfirmationMetadata</a> ()</td></tr>
@@ -311,8 +313,36 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements a <code>SpeechRecognizer</code> capability agent.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer">https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/reference/speechrecognizer</a></dd></dl>
-<p><code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> is a top-level component which should be instantiated in application code, and connected up to other interfaces in the Alexa Client SDK. Interfaces which are used directly by the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a> are passed directly to its <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a901c19dfbd3eae328973e276137efb82">create()</a></code> function. To start sending an audio event, application code should call one of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ab7ba3bf12b57b9e5349d06599342fd3b">recognize()</a></code> functions. To stop sending audio, application code should call the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aa278c5def06b9461a9532b7b776ed3e4">stopCapture()</a></code> function. Application code can also register objects which implement the <code>ObserverInterface</code> to receive notifications when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> state changes. </p>
+<p><code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> is a top-level component which should be instantiated in application code, and connected up to other interfaces in the Alexa Client SDK. Interfaces which are used directly by the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a> are passed directly to its <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a69e449912c031a3ea238f1966d74cc6a">create()</a></code> function. To start sending an audio event, application code should call one of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ab7ba3bf12b57b9e5349d06599342fd3b">recognize()</a></code> functions. To stop sending audio, application code should call the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aa278c5def06b9461a9532b7b776ed3e4">stopCapture()</a></code> function. Application code can also register objects which implement the <code>ObserverInterface</code> to receive notifications when the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> state changes. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a9f17aa1010d5835428479cb8b988c165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f17aa1010d5835428479cb8b988c165">&#9670;&nbsp;</a></span>ExpectSpeechTimeoutHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a9f17aa1010d5835428479cb8b988c165">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor::ExpectSpeechTimeoutHandler</a> =  <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_expect_speech_timeout_handler_interface.html">avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function allows applications to tell the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> that the <code>ExpectSpeech</code> directive's timeout will be handled externally and stops the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code> from starting an internal timer to handle it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>The timeout of the <code>ExpectSpeech</code> directive. </td></tr>
+    <tr><td class="paramname">expectSpeechTimedOut</td><td>An <code>std::function</code> that applications may call if the timeout expires. This results in an <code>ExpectSpeechTimedOut</code> event being sent to AVS if no <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ab7ba3bf12b57b9e5349d06599342fd3b">recognize()</a></code> call is made prior to the timeout expiring. This function will return a future which is <code>true</code> if called in the correct state and an <code>ExpectSpeechTimeout</code> Event was sent successfully, or <code>false</code> otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code>ExpectSpeech</code> directive's timeout will be handled externally and should not be handled via an internal timer owned by the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function will be called after any calls to the <code>AudioInputProcessorObserverInterface's</code> onStateChanged() method to notify of a state change to <code>EXPECTING_SPEECH</code>. </dd>
+<dd>
+Implementations are not required to be thread-safe. </dd>
+<dd>
+If the  object that this call came from is destroyed, the <code>expectSpeechTimedOut</code> parameter is no longer valid. </dd></dl>
+
+</div>
+</div>
 <a id="a4dc706ff9be6b151c9fab1ae07b43ba2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4dc706ff9be6b151c9fab1ae07b43ba2">&#9670;&nbsp;</a></span>ObserverInterface</h2>
 
@@ -393,8 +423,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a901c19dfbd3eae328973e276137efb82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a901c19dfbd3eae328973e276137efb82">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a69e449912c031a3ea238f1966d74cc6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69e449912c031a3ea238f1966d74cc6a">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -496,7 +526,13 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a9f17aa1010d5835428479cb8b988c165">ExpectSpeechTimeoutHandler</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>expectSpeechTimeoutHandler</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -529,6 +565,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
     <tr><td class="paramname">defaultAudioProvider</td><td>A default <code>avsCommon::AudioProvider</code> to use for ExpectSpeech if the previous provider is not readable (<code>avsCommon::AudioProvider::alwaysReadable</code>). This parameter is optional and defaults to an invalid <code>avsCommon::AudioProvider</code>. </td></tr>
     <tr><td class="paramname">powerResourceManager</td><td>Power Resource Manager. </td></tr>
     <tr><td class="paramname">metricRecorder</td><td>The metric recorder. </td></tr>
+    <tr><td class="paramname">expectSpeechTimeoutHandler</td><td>An optional interface that applications may provide to specify external handling of the <code>ExpectSpeech</code> directive's timeout. If provided, this function must remain valid for the lifetime of the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -799,7 +836,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </table>
 </div><div class="memdoc">
 <p>This is called by the ContextManager once the context is ready and available.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000018">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -836,7 +873,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </table>
 </div><div class="memdoc">
 <p>The <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a> calls this if it is unable to process a <code>getContext</code> request successfully.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000008">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000019">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1256,14 +1293,14 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/AIP/include/AIP/<a class="el" href="_audio_input_processor_8h_source.html">AudioInputProcessor.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/AIP/src/<a class="el" href="_audio_input_processor_8cpp.html">AudioInputProcessor.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/AIP/include/AIP/<a class="el" href="_audio_input_processor_8h_source.html">AudioInputProcessor.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/AIP/src/<a class="el" href="_audio_input_processor_8cpp.html">AudioInputProcessor.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['favorites',['Favorites',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html#a76ef4764dfc52eba79cf6345853b77a6',1,'alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer']]],
+  ['favorites',['Favorites',['../namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a0f21963e3889fdd1dff94fd594b8a3e1',1,'alexaClientSDK::acsdkExternalMediaPlayerInterfaces']]],
   ['fetchoptions',['FetchOptions',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aa2dbdbb9bbf0442fff5b43d7baa40190',1,'alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface']]],
   ['focusstate',['FocusState',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275',1,'alexaClientSDK::avsCommon::avs']]],
   ['focustransitionstate',['FocusTransitionState',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a887cafc96c0233d9c8b68f0398d649ad',1,'alexaClientSDK::acsdkBluetooth::Bluetooth']]],

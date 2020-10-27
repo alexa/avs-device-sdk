@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -70,11 +70,17 @@ $(function() {
 <li>dataAvailableMutex
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a98464c0301545953f873a20fed3d0e9e">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout&lt; T &gt;::Header</a>
 </li>
+<li>dataId
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ad5cc232570e8cc8b3fb1307b4548aae4">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
 <li>dataRateInBitsPerSecond
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_attributes.html#a53fae5eca37039e4d91164037c0e6d8b">alexaClientSDK::avsCommon::utils::mediaPlayer::PlaybackAttributes</a>
 </li>
 <li>dataSigned
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#ac788a54cc931f134c876f6646609b96d">alexaClientSDK::avsCommon::utils::AudioFormat</a>
+</li>
+<li>dataSz
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a58fb707f5fe7509850e26048250a3b9f">alexaClientSDK::avsCommon::utils::WavHeader</a>
 </li>
 <li>dbId
 : <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_static_data.html#ad9f6e46c864c7b5f9165694c836138a0">alexaClientSDK::acsdkAlerts::Alert::StaticData</a>
@@ -87,6 +93,9 @@ $(function() {
 </li>
 <li>DEFAULT_TIMEOUT
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_wait_event.html#a79ea109d4ef3dd415f10f3508fdc1376">alexaClientSDK::mediaPlayer::android::test::WaitEvent</a>
+</li>
+<li>defaultSkillToken
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_authorized_player_info.html#a6e2a63a99235d8207bd16bf7303efdc3">alexaClientSDK::acsdkExternalMediaPlayer::AuthorizedPlayerInfo</a>
 </li>
 <li>delay
 : <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html#a424fb57e9288d7b0ac6174d2bb5047e9">alexaClientSDK::acsdkAudioPlayer::AudioItem::Stream::ProgressReport</a>
@@ -118,13 +127,17 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender_1_1_exception_params.html#a0d8e5d3e3c641f4efee96d1d0846ff9f">alexaClientSDK::integration::test::TestExceptionEncounteredSender::ExceptionParams</a>
 </li>
 <li>directiveHandler
-: <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html#a51dc96acf10706f3482cf8ecc6e0a509">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::Capability</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_01dee05b8c7853b027aac81ec15f7120.html#ac928b46419ae03de64f51a5bb88f6257">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesBuilderInterface::Capability</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html#a51dc96acf10706f3482cf8ecc6e0a509">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::Capability</a>
 </li>
 <li>displayCategories
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html#ac8175d46146d94dae87d0c30a2085d7a">alexaClientSDK::avsCommon::avs::AVSDiscoveryEndpointAttributes</a>
 </li>
+<li>DO_NOT_DISTURB
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html#ad8b859c73e52fd1a63dda26975bd28fa">alexaClientSDK::avsCommon::sdkInterfaces::diagnostics::DevicePropertyAggregatorInterface</a>
+</li>
 <li>duration
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#a9d054658c0c9aaaa796e57a0cbcff760">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_adapter_playback_state.html#a4faba5172eca5eee47e1ac27f567f186">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::AdapterPlaybackState</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html#a4115c02c402ed9088b2e6c9f99dffc72">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerState</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_fade_in_config.html#a0c5a5ccc6522851facecd1f29bae5bb8">alexaClientSDK::avsCommon::utils::mediaPlayer::SourceConfig::FadeInConfig</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html#a86951bfb09b9ab8e611ca40375435ae8">alexaClientSDK::avsCommon::utils::playlistParser::PlaylistEntry</a>
@@ -135,7 +148,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

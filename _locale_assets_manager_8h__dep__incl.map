@@ -1,5 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h">
-<area shape="rect" id="node2" href="$_locale_assets_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/LocaleAssets\lManager.cpp" alt="" coords="5,109,228,165"/>
-<area shape="rect" id="node3" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="253,117,530,158"/>
-<area shape="rect" id="node4" href="$_sample_application_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication\lComponent.cpp" alt="" coords="555,109,807,165"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h">
+<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,139,253,224"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="278,139,533,224"/>
+<area shape="rect" id="node4" href="$_locale_assets_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/LocaleAssetsManager.cpp" alt="" coords="557,146,830,217"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="854,146,1106,217"/>
+<area shape="rect" id="node6" href="$_sample_application_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplicationComponent.cpp" alt="" coords="1130,146,1449,217"/>
 </map>

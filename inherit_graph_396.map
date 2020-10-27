@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_reader.html" title="alexaClientSDK::sampleApp\l::ConsoleReader" alt="" coords="5,5,193,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_presenter_interface.html" title="alexaClientSDK::captions\l::CaptionPresenterInterface" alt="" coords="5,39,188,80"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_presenter.html" title="alexaClientSDK::captions\l::test::MockCaptionPresenter" alt="" coords="236,5,429,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_caption_presenter.html" title="alexaClientSDK::sampleApp\l::CaptionPresenter" alt="" coords="239,71,427,112"/>
 </map>

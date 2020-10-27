@@ -1,13 +1,13 @@
-<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/src" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/src">
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/src" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/src">
 <area shape="rect" id="node1" href="dir_f0ec0bc1067624a3e216a0b3de211133.html" title="src" alt="" coords="90,52,162,100"/>
 <area shape="rect" id="node2" href="dir_655fbec917b1f23289d3ed8ec9803bf1.html" title="PlaylistParser" alt="" coords="5,244,108,292"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000390_000401.html" title="2" alt="" coords="64,219,72,234"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000477_000492.html" title="2" alt="" coords="64,219,72,234"/>
 <area shape="rect" id="node3" href="dir_d1a5c25c65a86ab490915a47e76c835a.html" title="include" alt="" coords="90,148,162,196"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000390_000388.html" title="11" alt="" coords="127,122,142,137"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000477_000475.html" title="11" alt="" coords="127,122,142,137"/>
 <area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="95,340,197,388"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000390_000017.html" title="12" alt="" coords="162,318,177,332"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000401_000017.html" title="36" alt="" coords="110,313,124,328"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000388_000401.html" title="1" alt="" coords="88,226,96,241"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000388_000017.html" title="12" alt="" coords="143,314,157,328"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000477_000017.html" title="12" alt="" coords="162,318,177,332"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000492_000017.html" title="37" alt="" coords="110,313,124,328"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000475_000492.html" title="1" alt="" coords="88,226,96,241"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000475_000017.html" title="11" alt="" coords="143,314,157,328"/>
 <area shape="rect" id="clust1" href="dir_e1f7d5df1447213cfb529aad5fa2c859.html" title="GStreamerMediaPlayer" alt="" coords="47,16,205,111"/>
 </map>

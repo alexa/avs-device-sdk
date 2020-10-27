@@ -1,15 +1,19 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributes.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributes.h">
-<area shape="rect" id="node2" href="$_capability_resources_8h.html" title="AVSCommon/AVS/Capability\lResources.h" alt="" coords="227,124,421,165"/>
-<area shape="rect" id="node6" href="$_alexa_asset_id_8h.html" title="AVSCommon/AVS/AlexaAssetId.h" alt="" coords="336,295,563,322"/>
-<area shape="rect" id="node7" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="43,556,261,597"/>
-<area shape="rect" id="node10" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="387,213,583,240"/>
-<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="743,288,919,329"/>
-<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="743,377,919,419"/>
-<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="739,556,954,597"/>
-<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="437,556,613,597"/>
-<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1035,467,1211,508"/>
-<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="574,467,767,508"/>
-<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1576,467,1752,508"/>
-<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1072,556,1248,597"/>
-<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1072,645,1248,687"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributes.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/ToggleControllerAttributes.h">
+<area shape="rect" id="node2" href="$_capability_resources_8h.html" title="AVSCommon/AVS/Capability\lResources.h" alt="" coords="733,153,927,195"/>
+<area shape="rect" id="node10" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="963,243,1159,269"/>
+<area shape="rect" id="node32" href="$_capability_semantics_8h.html" title="AVSCommon/AVS/Capability\lSemantics/CapabilitySemantics.h" alt="" coords="239,496,458,537"/>
+<area shape="rect" id="node6" href="$_alexa_asset_id_8h.html" title="AVSCommon/AVS/AlexaAssetId.h" alt="" coords="485,325,711,351"/>
+<area shape="rect" id="node7" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="888,585,1105,627"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1385,317,1561,359"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1385,407,1561,448"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1877,585,2092,627"/>
+<area shape="rect" id="node22" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1130,585,1306,627"/>
+<area shape="rect" id="node23" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1447,496,1623,537"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="981,496,1175,537"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2269,496,2445,537"/>
+<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1677,585,1853,627"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1621,675,1797,716"/>
+<area shape="rect" id="node33" href="$_actions_to_directive_mapping_8h.html" title="ActionsToDirectiveMapping.h" alt="" coords="219,593,412,619"/>
+<area shape="rect" id="node34" href="$_states_to_range_mapping_8h.html" title="StatesToRangeMapping.h" alt="" coords="437,593,610,619"/>
+<area shape="rect" id="node35" href="$_states_to_value_mapping_8h.html" title="StatesToValueMapping.h" alt="" coords="26,593,194,619"/>
 </map>

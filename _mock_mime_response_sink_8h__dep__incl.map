@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h">
-<area shape="rect" id="node2" href="$_mock_mime_response_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockMimeResponseSink.cpp" alt="" coords="5,109,263,165"/>
-<area shape="rect" id="node3" href="$_mock_h_t_t_p2_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Request.h" alt="" coords="287,109,450,165"/>
-<area shape="rect" id="node4" href="$_mock_h_t_t_p2_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Request.cpp" alt="" coords="25,213,256,269"/>
-<area shape="rect" id="node5" href="$_mock_h_t_t_p2_connection_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Connection.h" alt="" coords="280,213,457,269"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="408,317,583,373"/>
-<area shape="rect" id="node6" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Connection.cpp" alt="" coords="135,317,383,373"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/test/Transport/MockMimeResponseSink.h">
+<area shape="rect" id="node2" href="$_mock_mime_response_sink_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/Common\l/MockMimeResponseSink.cpp" alt="" coords="15,124,215,209"/>
+<area shape="rect" id="node3" href="$_mock_h_t_t_p2_request_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/MockHTTP2Request.h" alt="" coords="239,131,513,202"/>
+<area shape="rect" id="node4" href="$_mock_h_t_t_p2_request_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/Common\l/MockHTTP2Request.cpp" alt="" coords="5,257,205,343"/>
+<area shape="rect" id="node5" href="$_mock_h_t_t_p2_connection_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/MockHTTP2Connection.h" alt="" coords="230,265,522,335"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_transport_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/HTTP2TransportTest.cpp" alt="" coords="415,398,705,469"/>
+<area shape="rect" id="node6" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/Common\l/MockHTTP2Connection.cpp" alt="" coords="191,391,391,476"/>
 </map>

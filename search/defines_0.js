@@ -21,6 +21,7 @@ var searchData=
   ['acsdk_5flog',['ACSDK_LOG',['../_logger_8h.html#aff9739000a127870cf563ba2991ec9d4',1,'Logger.h']]],
   ['acsdk_5flog_5fentry_5fbuffer_5fsmall_5fbuffer_5fsize',['ACSDK_LOG_ENTRY_BUFFER_SMALL_BUFFER_SIZE',['../_log_entry_buffer_8h.html#a6636fdb0fa88ea13bac64e585bc14a0f',1,'LogEntryBuffer.h']]],
   ['acsdk_5flog_5fsink',['ACSDK_LOG_SINK',['../_logger_8h.html#af30fcd5f90dfc0e248e249fe0998ce78',1,'Logger.h']]],
+  ['acsdk_5flog_5ftype_5findex',['ACSDK_LOG_TYPE_INDEX',['../_type_index_8h.html#a5e5168b56a5f532f321a765bd44cbf97',1,'TypeIndex.h']]],
   ['acsdk_5fmetric_5fids',['ACSDK_METRIC_IDS',['../_metrics_8h.html#a494cfc7a76f54c125d710e455d376faa',1,'Metrics.h']]],
   ['acsdk_5fmetric_5fmsg',['ACSDK_METRIC_MSG',['../_metrics_8h.html#afd20822dff70cc0a7186a38b32894968',1,'Metrics.h']]],
   ['acsdk_5fplayback_5fbutton_5fto_5fstring',['ACSDK_PLAYBACK_BUTTON_TO_STRING',['../_playback_buttons_8h.html#a2b73ea1f4517c10caca2c90137df759d',1,'PlaybackButtons.h']]],

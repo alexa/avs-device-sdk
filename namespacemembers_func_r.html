@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -64,8 +64,11 @@ $(function() {
 &#160;
 
 <h3><a id="index_r"></a>- r -</h3><ul>
+<li>RANGE_KEY()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics.html#aad4bde981fd2e458fb9089e6e2482fc2">alexaClientSDK::avsCommon::avs::capabilitySemantics</a>
+</li>
 <li>RatingToString()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html#ac0aa4845c4a9d491f16f686c6f2049d8">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#ae1f99a8dd9b9cd2b503ad287bd837c34">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>readAudioFromFile()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ade9cd8f50cc5d93f8084938976c8be71">alexaClientSDK::integration::test</a>
@@ -76,8 +79,20 @@ $(function() {
 <li>readCapabilities()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mrm.html#ac88d3d58d4be5ec084e671302e42ccda">alexaClientSDK::capabilityAgents::mrm</a>
 </li>
+<li>readFourCharFromHeader()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#ac0710f66c73c72e8f243699bd00a8eef">alexaClientSDK::avsCommon::utils</a>
+</li>
 <li>readFromContentFetcher()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#aa07d29678d73b9548429adc53213e99b">alexaClientSDK::playlistParser</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#aef473f34ccc74afa58303738508ab177">alexaClientSDK::playlistParser</a>
+</li>
+<li>readLongFromHeader()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#ab4319a73f02f90f6bc41d1fe50a74171">alexaClientSDK::avsCommon::utils</a>
+</li>
+<li>readShortFromHeader()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a3c24b11881bf805871fec832b03c8427">alexaClientSDK::avsCommon::utils</a>
+</li>
+<li>readWAVFile()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a07196670880902956ce0b3fa25d8035a">alexaClientSDK::avsCommon::utils</a>
 </li>
 <li>readWavFileToBuffer()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics_1_1utils.html#ab09e97a9f4cbb1380d5bc289162f84ba">alexaClientSDK::diagnostics::utils</a>
@@ -113,13 +128,13 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_1_1test.html#aa307e4a213a0adee2c462af7793d24f8">alexaClientSDK::acsdkNotifications::test</a>
 </li>
 <li>REPEAT_STATUS_STRING()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player.html#a674dafa95a7c30db1eb72b65c016140e">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#aa5da2b0a0302d506c5729c664728da40">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>replaceAllSubstring()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a79f5ea6950b7df3df0154def1c4a5673">alexaClientSDK::avsCommon::utils::string</a>
 </li>
 <li>REQUEST_TOKEN()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a29d726703b2a49e2038fe90247ecf5de">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a927014638bb70bb01338d2d162b4d9ff">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>requesterToString()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af11a37b2716aa64332e2a3bc6c79060b">alexaClientSDK::avsCommon::avs</a>
@@ -140,7 +155,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a4adb9a12ab9422136aca4717c029396c">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
 </li>
 <li>retrieveStringArray&lt; std::vector&lt; std::string &gt; &gt;()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a59dc72fcfaf8bad1bf77ed818c75791f">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a597416618073ec0d86017e75bee79034">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
 </li>
 <li>retrieveStringMap()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#aab77a936886a58a9059354656139b9d4">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
@@ -149,7 +164,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a7ff7fbc5739b73d50026208180411009">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
 </li>
 <li>retrieveValue()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#af8fee520868204e654e46ccc3887651d">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#ada99fd6893bc7cc654815944eade108c">alexaClientSDK::avsCommon::utils::json::jsonUtils</a>
 </li>
 <li>returnValueFromSetSettingResult()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1types.html#aee235d3a283d2a71c96e5965131758a1">alexaClientSDK::settings::types</a>
@@ -178,12 +193,15 @@ $(function() {
 <li>runCodecTest()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a62f586330521072e96cec543042f90e3">alexaClientSDK::avsCommon::test</a>
 </li>
+<li>runDecodingBoundariesTest()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a083d3d8adddbfe3114b1d2d4924c9958">alexaClientSDK::avsCommon::test</a>
+</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

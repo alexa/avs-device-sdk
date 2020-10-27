@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -71,17 +71,23 @@ $(function() {
 <li>readerEnableMutex
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a27abd67dbb60a2e42696abed67ad32e4">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout&lt; T &gt;::Header</a>
 </li>
+<li>reason
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface_1_1_engine_connection_status.html#a67621b46c1ac34faa49d975a2370b205">alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus</a>
+</li>
 <li>referenceCount
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout_1_1_header.html#a796981ae6cd114f2f3f44ec26fa1f459">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout&lt; T &gt;::Header</a>
 </li>
 <li>registration
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html#aea2e6c06a21c9efda65b2da39dd9c70f">alexaClientSDK::avsCommon::avs::AVSDiscoveryEndpointAttributes</a>
 </li>
+<li>REGISTRATION_STATUS
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html#a7b27c8548a45e6425f5c1db6b944c827">alexaClientSDK::avsCommon::sdkInterfaces::diagnostics::DevicePropertyAggregatorInterface</a>
+</li>
 <li>registrationKey
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes_1_1_registration.html#af3e2898f005ad0e7576ed2412bdad7df">alexaClientSDK::avsCommon::avs::AVSDiscoveryEndpointAttributes::Registration</a>
 </li>
 <li>repeatEnabled
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#a3c781cc40c16dad5ee7f6318f44f8376">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_adapter_playback_state.html#ae33114cc028e1b3f8d7b44592ea8304a">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::AdapterPlaybackState</a>
 </li>
 <li>request
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a1544f28df3dca5fc0d9d8a946e88e1a4">alexaClientSDK::integration::test::TestMessageSender::SendParams</a>
@@ -91,6 +97,9 @@ $(function() {
 </li>
 <li>requiresShutdown
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_application_media_interfaces.html#ac14b7658619e65b230f77c655164ba5f">alexaClientSDK::avsCommon::sdkInterfaces::ApplicationMediaInterfaces</a>
+</li>
+<li>requiresShutdowns
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1_pooled_application_media_interfaces.html#a1d1d451354357dc84b7b5ecfb84b87cf">alexaClientSDK::acsdkApplicationAudioPipelineFactoryInterfaces::PooledApplicationMediaInterfaces</a>
 </li>
 <li>responseCode
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_1_1_header.html#af271e97d1a7e70708e1c78ef58f2ab59">alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface::Header</a>
@@ -105,15 +114,21 @@ $(function() {
 <li>RETRY_TIMER
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a601fde894452853b71f066e9d350e1e7">alexaClientSDK::acl::TransportDefines</a>
 </li>
-<li>riffHeader
-: <a class="el" href="structalexa_client_s_d_k_1_1diagnostics_1_1utils_1_1_wav_file_header.html#a6fafd371752fe501d600c2cc0bcbe75e">alexaClientSDK::diagnostics::utils::WavFileHeader</a>
+<li>riffFmt
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a6ea9d22d004399a79200d254e75fca00">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>riffId
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a950557eba9326806552957ce6b87ecf2">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>riffSz
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ae186216e3f2805947d4b71d8ef85bae8">alexaClientSDK::avsCommon::utils::WavHeader</a>
 </li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

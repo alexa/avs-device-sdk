@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -129,6 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9534b190e6c4e0966c9f15dbaeddca11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a515d966a699b914147c84cbcb4f5cb50"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a515d966a699b914147c84cbcb4f5cb50">getHTTPResponseCode</a> ()</td></tr>
 <tr class="separator:a515d966a699b914147c84cbcb4f5cb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af80b7d255ca0b01460d274e4ed98ef39"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af80b7d255ca0b01460d274e4ed98ef39">getEffectiveUrl</a> ()</td></tr>
+<tr class="separator:af80b7d255ca0b01460d274e4ed98ef39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cf6f335a77e6f51e4e94353ba6005a0"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a0cf6f335a77e6f51e4e94353ba6005a0">perform</a> ()</td></tr>
 <tr class="separator:a0cf6f335a77e6f51e4e94353ba6005a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70d24d4c4d1a084168268b8e5b04a28e"><td class="memItemLeft" align="right" valign="top">CURLcode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a70d24d4c4d1a084168268b8e5b04a28e">pause</a> (int mask)</td></tr>
@@ -313,6 +315,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Used to get the underlying CURL easy handle. The handle returned may be a nullptr</p>
 <dl class="section return"><dt>Returns</dt><dd>The associated libcurl easy handle </dd></dl>
+
+</div>
+</div>
+<a id="af80b7d255ca0b01460d274e4ed98ef39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80b7d255ca0b01460d274e4ed98ef39">&#9670;&nbsp;</a></span>getEffectiveUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::getEffectiveUrl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the effective URL. </p><dl class="section note"><dt>Note</dt><dd>In cases where CURLOPT_FOLLOWLOCATION is used, CURL follows the url it receives in the location header of the response until it reaches a URL with no location header. This last used url is the effective URL.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The effective URL string. </dd></dl>
 
 </div>
 </div>
@@ -759,14 +780,14 @@ template&lt;typename ParamType &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">CurlEasyHandleWrapper.h</a></li>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/src/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8cpp.html">CurlEasyHandleWrapper.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8h_source.html">CurlEasyHandleWrapper.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/src/LibcurlUtils/<a class="el" href="_curl_easy_handle_wrapper_8cpp.html">CurlEasyHandleWrapper.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

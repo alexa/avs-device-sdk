@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/SampleApp/src/SampleApplicationComponent.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SampleApp/src/SampleApplicationComponent.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,55 +73,55 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_component_accumulator_8h_source.html">acsdkManufactory/ComponentAccumulator.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_core_component_8h_source.html">acsdkCore/CoreComponent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_shared_component_8h_source.html">acsdkShared/SharedComponent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_constructor_adapter_8h_source.html">acsdkManufactory/ConstructorAdapter.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_context_manager_8h_source.html">ContextManager/ContextManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_sample_application_c_b_l_auth_requester_8h_source.html">acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_default_sample_application_options_component_8h_source.html">acsdkDefaultSampleApplicationOptions/DefaultSampleApplicationOptionsComponent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_http_post_8h_source.html">AVSCommon/Utils/LibcurlUtils/HttpPost.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_locale_assets_manager_8h_source.html">SampleApp/LocaleAssetsManager.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_sample_application_component_8h_source.html">SampleApp/SampleApplicationComponent.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_u_i_manager_8h_source.html">SampleApp/UIManager.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SampleApplicationComponent.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_sample_application_component_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp" id="_2workplace_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp">
-<area shape="rect" id="node2" href="_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="400,109,600,151"/>
-<area shape="rect" id="node12" href="_core_component_8h.html" title="acsdkCore/CoreComponent.h" alt="" coords="2313,117,2508,143"/>
-<area shape="rect" id="node35" href="_shared_component_8h.html" title="acsdkShared/SharedComponent.h" alt="" coords="2448,213,2669,240"/>
-<area shape="rect" id="node37" href="_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="1579,117,1808,143"/>
-<area shape="rect" id="node38" href="_default_sample_application_options_component_8h.html" title="acsdkDefaultSampleApplication\lOptions/DefaultSampleApplication\lOptionsComponent.h" alt="" coords="3323,199,3544,255"/>
-<area shape="rect" id="node42" href="_locale_assets_manager_8h.html" title="SampleApp/LocaleAssetsManager.h" alt="" coords="5038,399,5271,426"/>
-<area shape="rect" id="node44" href="_sample_application_component_8h.html" title="SampleApp/SampleApplication\lComponent.h" alt="" coords="3667,109,3869,151"/>
-<area shape="rect" id="node48" href="_u_i_manager_8h.html" title="SampleApp/UIManager.h" alt="" coords="4343,310,4511,337"/>
-<area shape="rect" id="node4" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="1539,310,1749,337"/>
-<area shape="rect" id="node5" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1097,392,1271,433"/>
-<area shape="rect" id="node9" href="_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="5,213,187,240"/>
-<area shape="rect" id="node10" href="_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="211,206,386,247"/>
-<area shape="rect" id="node11" href="_component_accumulator__imp_8h.html" title="acsdkManufactory/internal\l/ComponentAccumulator_imp.h" alt="" coords="563,206,768,247"/>
-<area shape="rect" id="node13" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2749,481,2955,523"/>
-<area shape="rect" id="node15" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="3541,399,3752,426"/>
-<area shape="rect" id="node20" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3262,303,3442,344"/>
-<area shape="rect" id="node21" href="_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="2256,303,2432,344"/>
-<area shape="rect" id="node26" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2080,206,2272,247"/>
-<area shape="rect" id="node33" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1782,206,1954,247"/>
-<area shape="rect" id="node16" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3080,481,3280,523"/>
-<area shape="rect" id="node17" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3355,481,3570,523"/>
-<area shape="rect" id="node23" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1936,392,2131,433"/>
-<area shape="rect" id="node27" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="1667,392,1861,433"/>
-<area shape="rect" id="node29" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1249,303,1463,344"/>
-<area shape="rect" id="node30" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2659,303,2853,344"/>
-<area shape="rect" id="node32" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1773,303,1965,344"/>
-<area shape="rect" id="node28" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1222,489,1418,515"/>
-<area shape="rect" id="node31" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2760,392,2936,433"/>
-<area shape="rect" id="node36" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="3061,392,3264,433"/>
-<area shape="rect" id="node39" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="3853,303,4045,344"/>
-<area shape="rect" id="node41" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="4145,392,4389,433"/>
-<area shape="rect" id="node40" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="3877,392,4069,433"/>
-<area shape="rect" id="node43" href="_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="4899,481,5117,523"/>
-<area shape="rect" id="node46" href="_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="2878,303,3085,344"/>
-<area shape="rect" id="node47" href="_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="3975,206,4211,247"/>
-<area shape="rect" id="node49" href="_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="4411,481,4621,523"/>
-<area shape="rect" id="node50" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="4565,392,4811,433"/>
+<div class="center"><img src="_sample_application_component_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_sample_app_2src_2_sample_application_component_8cpp">
+<area shape="rect" id="node2" href="_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="464,124,664,165"/>
+<area shape="rect" id="node11" href="_constructor_adapter_8h.html" title="acsdkManufactory/Constructor\lAdapter.h" alt="" coords="1337,124,1538,165"/>
+<area shape="rect" id="node12" href="_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="3987,131,4216,158"/>
+<area shape="rect" id="node32" href="_sample_application_c_b_l_auth_requester_8h.html" title="acsdkSampleApplicationCBLAuth\lRequester/SampleApplicationCBLAuth\lRequester.h" alt="" coords="2145,213,2391,269"/>
+<area shape="rect" id="node35" href="_default_sample_application_options_component_8h.html" title="acsdkDefaultSampleApplication\lOptions/DefaultSampleApplication\lOptionsComponent.h" alt="" coords="2416,213,2637,269"/>
+<area shape="rect" id="node42" href="_http_post_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPost.h" alt="" coords="2040,317,2243,359"/>
+<area shape="rect" id="node46" href="_locale_assets_manager_8h.html" title="SampleApp/LocaleAssetsManager.h" alt="" coords="4527,228,4761,255"/>
+<area shape="rect" id="node49" href="_sample_application_component_8h.html" title="SampleApp/SampleApplication\lComponent.h" alt="" coords="2729,124,2930,165"/>
+<area shape="rect" id="node50" href="_u_i_manager_8h.html" title="SampleApp/UIManager.h" alt="" coords="2661,228,2829,255"/>
+<area shape="rect" id="node4" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="557,325,768,351"/>
+<area shape="rect" id="node5" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="643,407,818,448"/>
+<area shape="rect" id="node8" href="_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="5,228,187,255"/>
+<area shape="rect" id="node9" href="_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="211,221,386,262"/>
+<area shape="rect" id="node10" href="_component_accumulator__imp_8h.html" title="acsdkManufactory/internal\l/ComponentAccumulator_imp.h" alt="" coords="461,221,667,262"/>
+<area shape="rect" id="node17" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="4980,407,5175,448"/>
+<area shape="rect" id="node19" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="5121,496,5317,523"/>
+<area shape="rect" id="node20" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="3994,317,4209,359"/>
+<area shape="rect" id="node21" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3860,221,4052,262"/>
+<area shape="rect" id="node23" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3623,317,3817,359"/>
+<area shape="rect" id="node25" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3352,407,3552,448"/>
+<area shape="rect" id="node26" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="4980,317,5172,359"/>
+<area shape="rect" id="node27" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="3337,325,3548,351"/>
+<area shape="rect" id="node28" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3133,317,3313,359"/>
+<area shape="rect" id="node29" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4044,407,4239,448"/>
+<area shape="rect" id="node30" href="_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="4335,317,4511,359"/>
+<area shape="rect" id="node24" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3743,407,3919,448"/>
+<area shape="rect" id="node33" href="_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="2267,317,2490,359"/>
+<area shape="rect" id="node34" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="2565,317,2809,359"/>
+<area shape="rect" id="node36" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1672,407,1864,448"/>
+<area shape="rect" id="node37" href="_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1430,317,1661,359"/>
+<area shape="rect" id="node38" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1405,407,1597,448"/>
+<area shape="rect" id="node39" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1095,317,1355,359"/>
+<area shape="rect" id="node40" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="2717,407,2920,448"/>
+<area shape="rect" id="node41" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2885,317,3057,359"/>
+<area shape="rect" id="node45" href="_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="2288,407,2491,448"/>
+<area shape="rect" id="node48" href="_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="4535,317,4753,359"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -135,16 +135,16 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a56e61dbb0b70b55188165f40f5b25696"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a56e61dbb0b70b55188165f40f5b25696">alexaClientSDK::acsdkSampleApplication::createCBLAuthRequesterInterface</a> (const std::shared_ptr&lt; sampleApp::UIManager &gt; &amp;uiManager)</td></tr>
-<tr class="separator:a56e61dbb0b70b55188165f40f5b25696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af83f128fe5421e875bea7697b0632765"><td class="memItemLeft" align="right" valign="top">acsdkManufactory::Component&lt; std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt;, std::shared_ptr&lt; avsCommon::avs::initialization::AlexaClientSDKInit &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::LocaleAssetsManagerInterface &gt;, std::shared_ptr&lt; avsCommon::utils::configuration::ConfigurationNode &gt;, std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt;, std::shared_ptr&lt; registrationManager::CustomerDataManager &gt;, std::shared_ptr&lt; sampleApp::UIManager &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#af83f128fe5421e875bea7697b0632765">alexaClientSDK::acsdkSampleApplication::getComponent</a> (const std::vector&lt; std::shared_ptr&lt; std::istream &gt;&gt; &amp;jsonStreams)</td></tr>
-<tr class="separator:af83f128fe5421e875bea7697b0632765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafe78a5e12f57ef923ca8dd52977dba6"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; acsdkSampleApplicationInterfaces::UIManagerInterface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#aafe78a5e12f57ef923ca8dd52977dba6">alexaClientSDK::acsdkSampleApplication::createUIManagerInterface</a> (const std::shared_ptr&lt; sampleApp::UIManager &gt; &amp;uiManager)</td></tr>
+<tr class="separator:aafe78a5e12f57ef923ca8dd52977dba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe4a75efbc932c741fdb389d8be9757"><td class="memItemLeft" align="right" valign="top">SampleApplicationComponent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a4fe4a75efbc932c741fdb389d8be9757">alexaClientSDK::acsdkSampleApplication::getComponent</a> (std::unique_ptr&lt; avsCommon::avs::initialization::InitializationParameters &gt; initParams, const std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt; &amp;authDelegate=nullptr, const std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &amp;metricRecorder=nullptr, const std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt; &amp;logger=nullptr)</td></tr>
+<tr class="separator:a4fe4a75efbc932c741fdb389d8be9757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

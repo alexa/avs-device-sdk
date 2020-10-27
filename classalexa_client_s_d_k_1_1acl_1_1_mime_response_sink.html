@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -93,8 +93,8 @@ Collaboration diagram for alexaClientSDK::acl::MimeResponseSink:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a19e54ad19893359e0f426f55bf3382ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html#a19e54ad19893359e0f426f55bf3382ce">MimeResponseSink</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_status_handler_interface.html">MimeResponseStatusHandlerInterface</a> &gt; handler, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html">MessageConsumerInterface</a> &gt; messageConsumer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a> &gt; attachmentManager, std::string attachmentContextId)</td></tr>
-<tr class="separator:a19e54ad19893359e0f426f55bf3382ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ed21fee079f538efc8c10da61197090"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html#a8ed21fee079f538efc8c10da61197090">MimeResponseSink</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_status_handler_interface.html">MimeResponseStatusHandlerInterface</a> &gt; handler, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html">MessageConsumerInterface</a> &gt; messageConsumer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html">avsCommon::avs::attachment::AttachmentManagerInterface</a> &gt; attachmentManager, std::string attachmentContextId)</td></tr>
+<tr class="separator:a8ed21fee079f538efc8c10da61197090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aded74d94a4a9900e7fe0a68b09ef40a0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html#aded74d94a4a9900e7fe0a68b09ef40a0">~MimeResponseSink</a> ()=default</td></tr>
 <tr class="separator:aded74d94a4a9900e7fe0a68b09ef40a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">HTTP2MimeResponseSinkInterface methods</div></td></tr>
@@ -120,8 +120,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Handle Mime encoded responses from AVS.</p>
 <p>This includes forwarding json payloads to an <code>MessageConsumer</code>, attachments to attachment writers, and capturing exceptions for non 2xx results. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a19e54ad19893359e0f426f55bf3382ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19e54ad19893359e0f426f55bf3382ce">&#9670;&nbsp;</a></span>MimeResponseSink()</h2>
+<a id="a8ed21fee079f538efc8c10da61197090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ed21fee079f538efc8c10da61197090">&#9670;&nbsp;</a></span>MimeResponseSink()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +141,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html">avsCommon::avs::attachment::AttachmentManager</a> &gt;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html">avsCommon::avs::attachment::AttachmentManagerInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>attachmentManager</em>, </td>
         </tr>
         <tr>
@@ -474,14 +474,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_mime_response_sink_8h_source.html">MimeResponseSink.h</a></li>
-<li>/workplace/avs-device-sdk/ACL/src/Transport/<a class="el" href="_mime_response_sink_8cpp.html">MimeResponseSink.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_mime_response_sink_8h_source.html">MimeResponseSink.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/ACL/src/Transport/<a class="el" href="_mime_response_sink_8cpp.html">MimeResponseSink.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

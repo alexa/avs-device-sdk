@@ -5,6 +5,7 @@ var searchData=
   ['namespaceandnametest',['NamespaceAndNameTest',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_namespace_and_name_test.html',1,'alexaClientSDK::avsCommon::avs::test']]],
   ['networkinfo',['NetworkInfo',['../classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html',1,'alexaClientSDK::settings::types']]],
   ['networkintegrationtests',['NetworkIntegrationTests',['../classalexa_client_s_d_k_1_1integration_1_1test_1_1_network_integration_tests.html',1,'alexaClientSDK::integration::test']]],
+  ['nooppowerresourcemanager',['NoOpPowerResourceManager',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1_no_op_power_resource_manager.html',1,'alexaClientSDK::avsCommon::utils::power']]],
   ['normalizer',['Normalizer',['../classalexa_client_s_d_k_1_1media_player_1_1_normalizer.html',1,'alexaClientSDK::mediaPlayer']]],
   ['normalizertest',['NormalizerTest',['../classalexa_client_s_d_k_1_1media_player_1_1test_1_1_normalizer_test.html',1,'alexaClientSDK::mediaPlayer::test']]],
   ['notificationindicator',['NotificationIndicator',['../structalexa_client_s_d_k_1_1acsdk_notifications_1_1_notification_indicator.html',1,'alexaClientSDK::acsdkNotifications']]],
@@ -20,5 +21,8 @@ var searchData=
   ['notificationsobserverinterface',['NotificationsObserverInterface',['../classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_observer_interface.html',1,'alexaClientSDK::acsdkNotificationsInterfaces']]],
   ['notificationsstorageinterface',['NotificationsStorageInterface',['../classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html',1,'alexaClientSDK::acsdkNotificationsInterfaces']]],
   ['notificationsstoragetest',['NotificationsStorageTest',['../classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_notifications_storage_test.html',1,'alexaClientSDK::acsdkNotifications::test']]],
+  ['notifier',['Notifier',['../classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html',1,'alexaClientSDK::acsdkNotifier']]],
+  ['notifierinterface',['NotifierInterface',['../classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html',1,'alexaClientSDK::acsdkNotifierInterfaces']]],
+  ['notifiertest',['NotifierTest',['../classalexa_client_s_d_k_1_1acsdk_notifier_1_1test_1_1_notifier_test.html',1,'alexaClientSDK::acsdkNotifier::test']]],
   ['nullmetricrecorder',['NullMetricRecorder',['../classalexa_client_s_d_k_1_1acsdk_default_sample_application_options_1_1_null_metric_recorder.html',1,'alexaClientSDK::acsdkDefaultSampleApplicationOptions']]]
 ];

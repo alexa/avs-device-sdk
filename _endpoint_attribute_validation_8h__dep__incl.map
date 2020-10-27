@@ -1,6 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h" name="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h">
-<area shape="rect" id="node2" href="$_discovery_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/Utils/DiscoveryUtils.cpp" alt="" coords="5,109,196,165"/>
-<area shape="rect" id="node3" href="$_endpoint_attribute_validation_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lAttributeValidation.cpp" alt="" coords="221,109,407,165"/>
-<area shape="rect" id="node4" href="$_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lBuilder.cpp" alt="" coords="431,109,618,165"/>
-<area shape="rect" id="node5" href="$_endpoint_attribute_validation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lAttributeValidationTest.cpp" alt="" coords="643,109,833,165"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointAttributeValidation.h">
+<area shape="rect" id="node2" href="$_discovery_utils_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilitiesDelegate/src/Utils\l/DiscoveryUtils.cpp" alt="" coords="5,139,205,224"/>
+<area shape="rect" id="node3" href="$_default_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/DefaultEndpointBuilder.cpp" alt="" coords="230,146,498,217"/>
+<area shape="rect" id="node4" href="$_endpoint_attribute_validation_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/EndpointAttributeValidation.cpp" alt="" coords="522,146,814,217"/>
+<area shape="rect" id="node5" href="$_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/EndpointBuilder.cpp" alt="" coords="839,146,1065,217"/>
+<area shape="rect" id="node6" href="$_endpoint_attribute_validation_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/test/EndpointAttributeValidation\lTest.cpp" alt="" coords="1090,139,1361,224"/>
 </map>

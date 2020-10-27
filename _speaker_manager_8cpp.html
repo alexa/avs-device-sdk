@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/SpeakerManager/src/SpeakerManager.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/SpeakerManager/src/SpeakerManager.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -79,6 +80,8 @@ $(function() {
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_annotated_8h_source.html">acsdkManufactory/Annotated.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_shutdown_notifier_interface_8h_source.html">acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_constants_8h_source.html">AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
@@ -91,40 +94,41 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SpeakerManager.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_speaker_manager_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp">
-<area shape="rect" id="node7" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1586,288,1780,329"/>
-<area shape="rect" id="node14" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1019,556,1195,597"/>
-<area shape="rect" id="node25" href="_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="46,109,291,151"/>
-<area shape="rect" id="node27" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="651,288,824,329"/>
-<area shape="rect" id="node28" href="_metrics_8h.html" title="AVSCommon/Utils/Metrics.h" alt="" coords="1232,206,1422,233"/>
-<area shape="rect" id="node30" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="899,109,1080,151"/>
-<area shape="rect" id="node32" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="1028,199,1208,240"/>
-<area shape="rect" id="node34" href="_speaker_manager_constants_8h.html" title="SpeakerManager/SpeakerManager\lConstants.h" alt="" coords="3037,109,3260,151"/>
-<area shape="rect" id="node36" href="_speaker_manager_8h.html" title="SpeakerManager/SpeakerManager.h" alt="" coords="2316,117,2549,143"/>
-<area shape="rect" id="node12" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1460,385,1656,411"/>
-<area shape="rect" id="node13" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1019,467,1195,508"/>
-<area shape="rect" id="node18" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="929,645,1144,687"/>
-<area shape="rect" id="node21" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="752,735,928,776"/>
-<area shape="rect" id="node22" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="358,645,534,687"/>
-<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="609,645,802,687"/>
-<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2515,645,2691,687"/>
-<area shape="rect" id="node29" href="_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="1906,295,2134,322"/>
-<area shape="rect" id="node31" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="897,377,1077,419"/>
-<area shape="rect" id="node33" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1246,288,1426,329"/>
-<area shape="rect" id="node35" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="3612,377,3842,419"/>
-<area shape="rect" id="node39" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2520,206,2747,233"/>
-<area shape="rect" id="node40" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2990,288,3184,329"/>
-<area shape="rect" id="node41" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="2122,199,2345,240"/>
-<area shape="rect" id="node42" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2248,645,2440,687"/>
-<area shape="rect" id="node43" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1906,199,2098,240"/>
-<area shape="rect" id="node44" href="_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="3358,556,3550,597"/>
-<area shape="rect" id="node45" href="_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="3442,645,3681,687"/>
-<area shape="rect" id="node46" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1498,199,1678,240"/>
-<area shape="rect" id="node47" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2942,556,3131,597"/>
-<area shape="rect" id="node48" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2622,556,2816,597"/>
-<area shape="rect" id="node49" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1422,653,1635,679"/>
-<area shape="rect" id="node50" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="1964,653,2173,679"/>
+<div class="center"><img src="_speaker_manager_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speaker_manager_2src_2_speaker_manager_8cpp">
+<area shape="rect" id="node7" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1398,243,1601,269"/>
+<area shape="rect" id="node9" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="2891,600,3114,641"/>
+<area shape="rect" id="node15" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1102,421,1297,463"/>
+<area shape="rect" id="node21" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1170,689,1346,731"/>
+<area shape="rect" id="node28" href="_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="46,139,292,180"/>
+<area shape="rect" id="node30" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="310,421,484,463"/>
+<area shape="rect" id="node31" href="_metrics_8h.html" title="AVSCommon/Utils/Metrics.h" alt="" coords="1306,339,1496,366"/>
+<area shape="rect" id="node33" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="669,235,850,277"/>
+<area shape="rect" id="node35" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="720,332,900,373"/>
+<area shape="rect" id="node37" href="_speaker_manager_constants_8h.html" title="SpeakerManager/SpeakerManager\lConstants.h" alt="" coords="1102,139,1324,180"/>
+<area shape="rect" id="node39" href="_speaker_manager_8h.html" title="SpeakerManager/SpeakerManager.h" alt="" coords="2119,146,2352,173"/>
+<area shape="rect" id="node10" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="2942,689,3100,731"/>
+<area shape="rect" id="node11" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2040,689,2229,731"/>
+<area shape="rect" id="node19" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1100,518,1296,545"/>
+<area shape="rect" id="node20" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1041,600,1217,641"/>
+<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="871,779,1086,820"/>
+<area shape="rect" id="node24" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1305,868,1481,909"/>
+<area shape="rect" id="node25" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1481,779,1657,820"/>
+<area shape="rect" id="node26" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1162,779,1355,820"/>
+<area shape="rect" id="node27" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2286,779,2462,820"/>
+<area shape="rect" id="node32" href="_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="1868,429,2096,455"/>
+<area shape="rect" id="node34" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="486,511,666,552"/>
+<area shape="rect" id="node36" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="695,421,875,463"/>
+<area shape="rect" id="node38" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1527,511,1758,552"/>
+<area shape="rect" id="node42" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2324,339,2550,366"/>
+<area shape="rect" id="node43" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1649,421,1844,463"/>
+<area shape="rect" id="node44" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3070,332,3292,373"/>
+<area shape="rect" id="node45" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2070,779,2262,820"/>
+<area shape="rect" id="node46" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1625,235,1817,277"/>
+<area shape="rect" id="node47" href="_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="2621,235,2813,277"/>
+<area shape="rect" id="node48" href="_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="2575,332,2814,373"/>
+<area shape="rect" id="node49" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="1892,235,2147,277"/>
+<area shape="rect" id="node50" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="3002,228,3208,284"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -142,6 +146,11 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_speaker_manager_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:af8fb80e5986cd7ce1b98050175afce57"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#af8fb80e5986cd7ce1b98050175afce57">alexaClientSDK::capabilityAgents::speakerManager::DefaultEndpointAnnotation</a> = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</td></tr>
+<tr class="separator:af8fb80e5986cd7ce1b98050175afce57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -209,7 +218,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

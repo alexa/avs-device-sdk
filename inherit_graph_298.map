@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits2.html" title="alexaClientSDK::avsCommon\l::utils::sds::test::MinimalTraits2" alt="" coords="5,5,212,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html" title="alexaClientSDK::avsCommon\l::utils::metrics::MetricRecorder\lInterface" alt="" coords="5,85,208,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_default_sample_application_options_1_1_null_metric_recorder.html" title="alexaClientSDK::acsdkDefault\lSampleApplicationOptions\l::NullMetricRecorder" alt="" coords="267,5,467,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html" title="alexaClientSDK::avsCommon\l::utils::metrics::test\l::MockMetricRecorder" alt="" coords="269,85,466,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_metric_recorder.html" title="alexaClientSDK::metrics\l::implementations::MetricRecorder" alt="" coords="256,166,479,207"/>
 </map>

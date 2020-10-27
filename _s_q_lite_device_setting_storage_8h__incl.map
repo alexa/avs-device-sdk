@@ -1,7 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h">
-<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="357,124,571,165"/>
-<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="789,131,1008,158"/>
-<area shape="rect" id="node17" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1032,124,1237,165"/>
-<area shape="rect" id="node19" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1345,213,1509,240"/>
-<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="973,213,1195,240"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/Storage/SQLiteDeviceSettingStorage.h">
+<area shape="rect" id="node6" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="357,139,571,180"/>
+<area shape="rect" id="node13" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="789,146,1008,173"/>
+<area shape="rect" id="node17" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1032,139,1237,180"/>
+<area shape="rect" id="node19" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1345,228,1509,255"/>
+<area shape="rect" id="node15" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="973,228,1195,255"/>
 </map>

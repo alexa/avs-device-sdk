@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,33 +72,35 @@ $(function() {
 <div class="title">UUIDGeneration.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for UUIDGeneration.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_u_u_i_d_generation_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h">
+<div class="center"><img src="_u_u_i_d_generation_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8h">
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_u_u_i_d_generation_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep">
-<area shape="rect" id="node2" href="_a_v_s_message_header_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/AVSMessageHeader.cpp" alt="" coords="5,131,189,187"/>
-<area shape="rect" id="node3" href="_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/CapabilityAgent.cpp" alt="" coords="213,131,397,187"/>
-<area shape="rect" id="node4" href="_event_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="421,131,605,187"/>
-<area shape="rect" id="node5" href="_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="630,131,853,187"/>
-<area shape="rect" id="node6" href="_exception_encountered_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/ExceptionEncounteredSenderTest.cpp" alt="" coords="877,131,1126,187"/>
-<area shape="rect" id="node7" href="_u_u_i_d_generation_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/UUIDGeneration.cpp" alt="" coords="1151,131,1321,187"/>
-<area shape="rect" id="node8" href="_u_u_i_d_generation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/UUIDGenerationTest.cpp" alt="" coords="1345,131,1545,187"/>
-<area shape="rect" id="node9" href="_blue_z_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZDeviceManager.cpp" alt="" coords="1569,131,1805,187"/>
-<area shape="rect" id="node10" href="_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="1829,131,2051,187"/>
-<area shape="rect" id="node11" href="_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="2075,131,2295,187"/>
-<area shape="rect" id="node12" href="_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="2319,124,2518,195"/>
-<area shape="rect" id="node13" href="_alexa_interface_message_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/src/AlexaInterfaceMessage\lSender.cpp" alt="" coords="2542,124,2765,195"/>
-<area shape="rect" id="node14" href="_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="2789,124,2990,195"/>
-<area shape="rect" id="node15" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="3015,139,3292,180"/>
+<div class="center"><img src="_u_u_i_d_generation_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_u_u_i_d_generation_2_u_u_i_d_generation_8hdep">
+<area shape="rect" id="node2" href="_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,139,253,224"/>
+<area shape="rect" id="node3" href="_a_v_s_message_header_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/src/AVSMessageHeader.cpp" alt="" coords="277,146,587,217"/>
+<area shape="rect" id="node4" href="_capability_agent_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/src/CapabilityAgent.cpp" alt="" coords="612,146,892,217"/>
+<area shape="rect" id="node5" href="_event_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/src/EventBuilder.cpp" alt="" coords="917,146,1179,217"/>
+<area shape="rect" id="node6" href="_exception_encountered_sender_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/src/ExceptionEncountered\lSender.cpp" alt="" coords="1203,139,1498,224"/>
+<area shape="rect" id="node7" href="_exception_encountered_sender_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/test/ExceptionEncountered\lSenderTest.cpp" alt="" coords="1523,139,1821,224"/>
+<area shape="rect" id="node8" href="_u_u_i_d_generation_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/UUIDGeneration.cpp" alt="" coords="1845,146,2131,217"/>
+<area shape="rect" id="node9" href="_u_u_i_d_generation_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/UUIDGeneration\lTest.cpp" alt="" coords="2155,139,2419,224"/>
+<area shape="rect" id="node10" href="_blue_z_device_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZDeviceManager.cpp" alt="" coords="2443,139,2658,224"/>
+<area shape="rect" id="node11" href="_bluetooth_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/Bluetooth.cpp" alt="" coords="2682,139,2926,224"/>
+<area shape="rect" id="node12" href="_audio_input_processor_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/src/AudioInput\lProcessor.cpp" alt="" coords="2950,139,3189,224"/>
+<area shape="rect" id="node13" href="_audio_input_processor_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/test\l/AudioInputProcessorTest.cpp" alt="" coords="3213,139,3413,224"/>
+<area shape="rect" id="node14" href="_software_info_send_request_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/System/src\l/SoftwareInfoSendRequest.cpp" alt="" coords="3438,139,3642,224"/>
+<area shape="rect" id="node15" href="_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="3666,146,3918,217"/>
 </map>
 </div>
 </div>
@@ -118,16 +120,20 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ac1fa6a70a3b9f0bfd21cec9f9cea9c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#ac1fa6a70a3b9f0bfd21cec9f9cea9c71">alexaClientSDK::avsCommon::utils::uuidGeneration::setEntropyReader</a> (std::function&lt; double(void)&gt; func)</td></tr>
+<tr class="separator:ac1fa6a70a3b9f0bfd21cec9f9cea9c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af711859eff60cad465f1d0aa6909cbed"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#af711859eff60cad465f1d0aa6909cbed">alexaClientSDK::avsCommon::utils::uuidGeneration::generateUUID</a> ()</td></tr>
 <tr class="separator:af711859eff60cad465f1d0aa6909cbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5571ea7a6cb5327fbb320de339762d0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#a5571ea7a6cb5327fbb320de339762d0f">alexaClientSDK::avsCommon::utils::uuidGeneration::setSalt</a> (const std::string &amp;newSalt)</td></tr>
 <tr class="separator:a5571ea7a6cb5327fbb320de339762d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd19a36ac9ece0d269eb2a9b5cdc040"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1uuid_generation.html#abbd19a36ac9ece0d269eb2a9b5cdc040">alexaClientSDK::avsCommon::utils::uuidGeneration::addSeeds</a> (const std::vector&lt; uint32_t &gt; &amp;seeds)</td></tr>
+<tr class="separator:abbd19a36ac9ece0d269eb2a9b5cdc040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

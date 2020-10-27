@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/core/acsdkCore/include/acsdkCore/CoreComponent.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/core/acsdkCore/include/acsdkCore/CoreComponent.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,66 +67,90 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">CoreComponent.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alexa_event_processed_notifier_interface_8h_source.html">acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_component_8h_source.html">acsdkManufactory/Component.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_post_connect_operation_provider_registrar_interface_8h_source.html">acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_activity_tracker_interface_8h_source.html">AFML/ActivityTrackerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_manager_interface_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_info_8h_source.html">AVSCommon/Utils/DeviceInfo.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_configuration_node_8h_source.html">AVSCommon/Utils/Configuration/ConfigurationNode.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_multi_timer_8h_source.html">AVSCommon/Utils/Timing/MultiTimer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_focus_annotation_8h_source.html">AVSCommon/SDKInterfaces/AudioFocusAnnotation.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_auth_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthDelegateInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_a_v_s_connection_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_a_v_s_gateway_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_capabilities_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_context_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/ContextManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_exception_encountered_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_focus_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/FocusManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_message_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/MessageSenderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_misc_storage_interface_8h_source.html">AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_builder_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_capabilities_registrar_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_default_endpoint_annotation_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_alexa_interface_message_sender_8h_source.html">Alexa/AlexaInterfaceMessageSender.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_interrupt_model_8h_source.html">InterruptModel/InterruptModel.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CoreComponent.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_core_component_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h" id="_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h">
-<area shape="rect" id="node3" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="4397,117,4608,143"/>
-<area shape="rect" id="node21" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1833,109,2039,151"/>
-<area shape="rect" id="node34" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1295,206,1505,233"/>
-<area shape="rect" id="node37" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3559,109,3739,151"/>
-<area shape="rect" id="node39" href="_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="2871,199,3047,240"/>
-<area shape="rect" id="node42" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="664,109,856,151"/>
-<area shape="rect" id="node49" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="3369,199,3541,240"/>
-<area shape="rect" id="node4" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="4317,199,4491,240"/>
-<area shape="rect" id="node20" href="_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="4515,199,4690,240"/>
-<area shape="rect" id="node10" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="4027,295,4229,322"/>
-<area shape="rect" id="node11" href="_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="4903,377,5078,419"/>
-<area shape="rect" id="node12" href="_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="4907,288,5082,329"/>
-<area shape="rect" id="node13" href="_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="4254,288,4429,329"/>
-<area shape="rect" id="node15" href="_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="4555,288,4730,329"/>
-<area shape="rect" id="node19" href="_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="4699,377,4874,419"/>
-<area shape="rect" id="node23" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1834,199,2038,240"/>
-<area shape="rect" id="node26" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1414,288,1618,329"/>
-<area shape="rect" id="node30" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1694,288,1898,329"/>
-<area shape="rect" id="node29" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1321,377,1487,419"/>
-<area shape="rect" id="node31" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2264,288,2429,329"/>
-<area shape="rect" id="node33" href="_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="1973,288,2139,329"/>
-<area shape="rect" id="node35" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="901,288,1101,329"/>
-<area shape="rect" id="node36" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2454,288,2669,329"/>
-<area shape="rect" id="node38" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="3662,199,3842,240"/>
-<area shape="rect" id="node41" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2795,288,2989,329"/>
-<area shape="rect" id="node43" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="293,288,488,329"/>
-<area shape="rect" id="node44" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="222,199,437,240"/>
-<area shape="rect" id="node45" href="_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="563,288,776,329"/>
-<area shape="rect" id="node46" href="_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="563,199,800,240"/>
-<area shape="rect" id="node47" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="875,199,1069,240"/>
-<area shape="rect" id="node48" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="5,199,197,240"/>
-<area shape="rect" id="node50" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="3369,288,3535,329"/>
+<div class="center"><img src="_core_component_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8h">
+<area shape="rect" id="node3" href="_alexa_event_processed_notifier_interface_8h.html" title="acsdkAlexaEventProcessed\lNotifierInterfaces/AlexaEvent\lProcessedNotifierInterface.h" alt="" coords="2483,235,2676,291"/>
+<area shape="rect" id="node8" href="_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="210,250,421,277"/>
+<area shape="rect" id="node12" href="_post_connect_operation_provider_registrar_interface_8h.html" title="acsdkPostConnectOperation\lProviderRegistrarInterfaces\l/PostConnectOperationProviderRegistrar\lInterface.h" alt="" coords="991,228,1250,299"/>
+<area shape="rect" id="node15" href="_activity_tracker_interface_8h.html" title="AFML/ActivityTrackerInterface.h" alt="" coords="2598,146,2809,173"/>
+<area shape="rect" id="node18" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="2707,354,2899,395"/>
+<area shape="rect" id="node20" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="4377,139,4582,180"/>
+<area shape="rect" id="node25" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="3806,250,4017,277"/>
+<area shape="rect" id="node27" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3025,354,3240,395"/>
+<area shape="rect" id="node31" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="52,139,232,180"/>
+<area shape="rect" id="node33" href="_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="4377,354,4553,395"/>
+<area shape="rect" id="node36" href="_audio_focus_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/AudioFocusAnnotation.h" alt="" coords="4606,139,4798,180"/>
+<area shape="rect" id="node37" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1926,354,2118,395"/>
+<area shape="rect" id="node38" href="_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="2176,243,2407,284"/>
+<area shape="rect" id="node39" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3315,354,3507,395"/>
+<area shape="rect" id="node40" href="_a_v_s_gateway_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayManagerInterface.h" alt="" coords="1684,354,1901,395"/>
+<area shape="rect" id="node41" href="_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="1661,243,1869,284"/>
+<area shape="rect" id="node42" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3633,354,3825,395"/>
+<area shape="rect" id="node43" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="4823,139,5083,180"/>
+<area shape="rect" id="node44" href="_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="3206,139,3417,180"/>
+<area shape="rect" id="node45" href="_endpoint_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointBuilderInterface.h" alt="" coords="1395,243,1636,284"/>
+<area shape="rect" id="node46" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="1300,347,1507,403"/>
+<area shape="rect" id="node47" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="5107,139,5361,180"/>
+<area shape="rect" id="node48" href="_alexa_interface_message_sender_8h.html" title="Alexa/AlexaInterfaceMessage\lSender.h" alt="" coords="3496,243,3692,284"/>
+<area shape="rect" id="node49" href="_interrupt_model_8h.html" title="InterruptModel/Interrupt\lModel.h" alt="" coords="1893,243,2050,284"/>
+<area shape="rect" id="node50" href="_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="4059,139,4231,180"/>
+<area shape="rect" id="node4" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="2243,354,2401,395"/>
+<area shape="rect" id="node6" href="_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="2475,347,2683,403"/>
+<area shape="rect" id="node9" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="819,354,993,395"/>
+<area shape="rect" id="node11" href="_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="195,354,369,395"/>
+<area shape="rect" id="node13" href="_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="1017,347,1224,403"/>
+<area shape="rect" id="node14" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="547,361,743,388"/>
+<area shape="rect" id="node16" href="_channel_8h.html" title="AFML/Channel.h" alt="" coords="2883,250,3003,277"/>
+<area shape="rect" id="node21" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="4572,243,4776,284"/>
+<area shape="rect" id="node22" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="4628,354,4832,395"/>
+<area shape="rect" id="node24" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="4856,354,5060,395"/>
+<area shape="rect" id="node26" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3849,354,4049,395"/>
+<area shape="rect" id="node32" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="5,243,185,284"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_core_component_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep" id="_2workplace_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep">
-<area shape="rect" id="node2" href="_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="5,109,319,180"/>
-<area shape="rect" id="node3" href="_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="343,117,509,173"/>
-<area shape="rect" id="node4" href="_sample_application_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication\lComponent.cpp" alt="" coords="533,117,785,173"/>
+<div class="center"><img src="_core_component_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2core_2acsdk_core_2include_2acsdk_core_2_core_component_8hdep">
+<area shape="rect" id="node2" href="_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="5,139,308,224"/>
+<area shape="rect" id="node3" href="_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="332,139,587,224"/>
+<area shape="rect" id="node4" href="_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="611,146,875,217"/>
 </map>
 </div>
 </div>
@@ -140,16 +164,23 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_core"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_core.html">alexaClientSDK::acsdkCore</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a5d148f261c5e3b0600c0883e5573a5d0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_core.html#a5d148f261c5e3b0600c0883e5573a5d0">alexaClientSDK::acsdkCore::DefaultEndpointAnnotation</a> = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</td></tr>
+<tr class="separator:a5d148f261c5e3b0600c0883e5573a5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5376829880cf1496b1e899f43e3b61c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_core.html#ae5376829880cf1496b1e899f43e3b61c">alexaClientSDK::acsdkCore::CoreComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::avs::attachment::AttachmentManagerInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt;, std::shared_ptr&lt; registrationManager::CustomerDataManager &gt;, std::shared_ptr&lt; acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface &gt;, std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::storage::MiscStorageInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSGatewayManagerInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::CapabilitiesDelegateInterface &gt;, acsdkManufactory::Annotated&lt; DefaultEndpointAnnotation, avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface &gt;, acsdkManufactory::Annotated&lt; DefaultEndpointAnnotation, avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface &gt;, std::shared_ptr&lt; capabilityAgents::alexa::AlexaInterfaceMessageSender &gt;, std::shared_ptr&lt; afml::interruptModel::InterruptModel &gt;, acsdkManufactory::Annotated&lt; avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::timing::MultiTimer &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; acsdkShutdownManagerInterfaces::ShutdownNotifierInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSConnectionManagerInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::MessageSenderInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::configuration::ConfigurationNode &gt; &gt;&gt;</td></tr>
+<tr class="separator:ae5376829880cf1496b1e899f43e3b61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abcf6dffd723f080d01d2a79e9b26fbc8"><td class="memItemLeft" align="right" valign="top">acsdkManufactory::Component&lt; acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::timing::MultiTimer &gt; &gt;, std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt;, std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt;, std::shared_ptr&lt; registrationManager::CustomerDataManager &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_core.html#abcf6dffd723f080d01d2a79e9b26fbc8">alexaClientSDK::acsdkCore::getComponent</a> ()</td></tr>
-<tr class="separator:abcf6dffd723f080d01d2a79e9b26fbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f16854013eb65a3d19d9b0a9a18e3d5"><td class="memItemLeft" align="right" valign="top">CoreComponent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_core.html#a7f16854013eb65a3d19d9b0a9a18e3d5">alexaClientSDK::acsdkCore::getComponent</a> ()</td></tr>
+<tr class="separator:a7f16854013eb65a3d19d9b0a9a18e3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

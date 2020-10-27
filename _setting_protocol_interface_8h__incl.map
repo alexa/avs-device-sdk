@@ -1,8 +1,10 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h">
-<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="468,109,663,151"/>
-<area shape="rect" id="node18" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1072,117,1256,143"/>
-<area shape="rect" id="node20" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="880,109,1048,151"/>
-<area shape="rect" id="node13" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="333,199,528,240"/>
-<area shape="rect" id="node15" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="295,288,393,315"/>
-<area shape="rect" id="node17" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="344,363,459,389"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h">
+<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="747,139,942,180"/>
+<area shape="rect" id="node21" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1563,146,1747,173"/>
+<area shape="rect" id="node22" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1466,317,1634,359"/>
+<area shape="rect" id="node13" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="366,228,561,269"/>
+<area shape="rect" id="node18" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="908,228,1083,269"/>
+<area shape="rect" id="node15" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="269,325,367,351"/>
+<area shape="rect" id="node17" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="359,407,474,433"/>
+<area shape="rect" id="node19" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="880,317,1111,359"/>
 </map>

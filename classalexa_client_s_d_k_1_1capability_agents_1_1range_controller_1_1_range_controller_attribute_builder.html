@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -103,6 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae09a42a1fb1a29710d6594e1eb3418df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a009ce33cd63a6a836046bd098246cc6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html">RangeControllerAttributeBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html#a009ce33cd63a6a836046bd098246cc6b">addPreset</a> (const std::pair&lt; double, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller.html#a0a7fb9f08d8e784bdd430ad5e947f13b">avsCommon::sdkInterfaces::rangeController::PresetResources</a> &gt; &amp;preset) override</td></tr>
 <tr class="separator:a009ce33cd63a6a836046bd098246cc6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc5e84e91e9c1e7013de607297a6b412"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html">RangeControllerAttributeBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html#abc5e84e91e9c1e7013de607297a6b412">withSemantics</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_capability_semantics.html">avsCommon::avs::capabilitySemantics::CapabilitySemantics</a> &amp;semantics) override</td></tr>
+<tr class="separator:abc5e84e91e9c1e7013de607297a6b412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e5be41cf9ecfa3c77ac39ddfeda8f5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attributes.html">avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html#a1e5be41cf9ecfa3c77ac39ddfeda8f5e">build</a> () override</td></tr>
 <tr class="separator:a1e5be41cf9ecfa3c77ac39ddfeda8f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attribute_builder_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attribute_builder_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attribute_builder_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::rangeController::RangeControllerAttributeBuilderInterface</a></td></tr>
@@ -274,6 +276,42 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="abc5e84e91e9c1e7013de607297a6b412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc5e84e91e9c1e7013de607297a6b412">&#9670;&nbsp;</a></span>withSemantics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html">RangeControllerAttributeBuilder</a> &amp; alexaClientSDK::capabilityAgents::rangeController::RangeControllerAttributeBuilder::withSemantics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_capability_semantics.html">avsCommon::avs::capabilitySemantics::CapabilitySemantics</a> &amp;&#160;</td>
+          <td class="paramname"><em>semantics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configures the builder to use the specified semantics definition. </p><dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/alexa-rangecontroller.html">https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/alexa-rangecontroller.html</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">semantics</td><td>The <code>CapabilitySemantics</code> representing the semantics definition. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This builder, which can be used to nest configuration function calls. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attribute_builder_interface.html#a0321122b503d8a289e388766cbfe85f6">alexaClientSDK::avsCommon::sdkInterfaces::rangeController::RangeControllerAttributeBuilderInterface</a>.</p>
+
+</div>
+</div>
 <a id="ae09a42a1fb1a29710d6594e1eb3418df"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae09a42a1fb1a29710d6594e1eb3418df">&#9670;&nbsp;</a></span>withUnitOfMeasure()</h2>
 
@@ -312,14 +350,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/RangeController/include/RangeController/<a class="el" href="_range_controller_attribute_builder_8h_source.html">RangeControllerAttributeBuilder.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/RangeController/src/<a class="el" href="_range_controller_attribute_builder_8cpp.html">RangeControllerAttributeBuilder.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/RangeController/include/RangeController/<a class="el" href="_range_controller_attribute_builder_8h_source.html">RangeControllerAttributeBuilder.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/RangeController/src/<a class="el" href="_range_controller_attribute_builder_8cpp.html">RangeControllerAttributeBuilder.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

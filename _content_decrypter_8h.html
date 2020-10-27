@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/PlaylistParser/include/PlaylistParser/ContentDecrypter.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/PlaylistParser/include/PlaylistParser/ContentDecrypter.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,6 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -83,55 +84,57 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ContentDecrypter.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_content_decrypter_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h" id="_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h">
-<area shape="rect" id="node6" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1741,809,1945,851"/>
-<area shape="rect" id="node9" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="780,809,969,851"/>
-<area shape="rect" id="node11" href="_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="1645,109,1843,136"/>
-<area shape="rect" id="node14" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1969,809,2173,851"/>
-<area shape="rect" id="node17" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="3955,348,4157,404"/>
-<area shape="rect" id="node40" href="_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserInterface.h" alt="" coords="1570,184,1777,225"/>
-<area shape="rect" id="node44" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="780,541,975,583"/>
-<area shape="rect" id="node16" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2059,899,2224,940"/>
-<area shape="rect" id="node18" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="3037,452,3251,493"/>
-<area shape="rect" id="node19" href="_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="3213,541,3385,583"/>
-<area shape="rect" id="node30" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1303,549,1532,575"/>
-<area shape="rect" id="node39" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="2881,549,3101,575"/>
-<area shape="rect" id="node21" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2940,631,3116,672"/>
-<area shape="rect" id="node22" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2940,720,3116,761"/>
-<area shape="rect" id="node24" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2993,809,3207,851"/>
-<area shape="rect" id="node25" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3295,899,3471,940"/>
-<area shape="rect" id="node26" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2741,809,2917,851"/>
-<area shape="rect" id="node28" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3283,809,3477,851"/>
-<area shape="rect" id="node29" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="3552,809,3728,851"/>
-<area shape="rect" id="node32" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="2081,631,2285,672"/>
-<area shape="rect" id="node33" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1853,720,2057,761"/>
-<area shape="rect" id="node34" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2349,809,2515,851"/>
-<area shape="rect" id="node37" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="2309,720,2515,761"/>
-<area shape="rect" id="node38" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="2081,720,2285,761"/>
-<area shape="rect" id="node36" href="_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="1551,809,1716,851"/>
-<area shape="rect" id="node41" href="_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="1228,273,1447,300"/>
-<area shape="rect" id="node43" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="1239,363,1345,389"/>
-<area shape="rect" id="node46" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="263,631,457,672"/>
-<area shape="rect" id="node48" href="_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="193,727,292,754"/>
-<area shape="rect" id="node50" href="_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="185,817,300,843"/>
+<div class="center"><img src="_content_decrypter_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8h">
+<area shape="rect" id="node7" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="3565,839,3769,880"/>
+<area shape="rect" id="node9" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1285,839,1475,880"/>
+<area shape="rect" id="node11" href="_playlist_parser_8h.html" title="PlaylistParser/PlaylistParser.h" alt="" coords="1193,139,1391,165"/>
+<area shape="rect" id="node14" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="3793,839,3997,880"/>
+<area shape="rect" id="node17" href="_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="1140,377,1343,433"/>
+<area shape="rect" id="node38" href="_playlist_parser_interface_8h.html" title="AVSCommon/Utils/Playlist\lParser/PlaylistParserInterface.h" alt="" coords="1517,213,1723,255"/>
+<area shape="rect" id="node42" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="739,571,933,612"/>
+<area shape="rect" id="node16" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="3768,928,3933,969"/>
+<area shape="rect" id="node18" href="_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="1975,481,2188,523"/>
+<area shape="rect" id="node19" href="_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="2457,571,2629,612"/>
+<area shape="rect" id="node29" href="_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="2152,578,2381,605"/>
+<area shape="rect" id="node37" href="_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="1907,578,2127,605"/>
+<area shape="rect" id="node21" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3872,660,4048,701"/>
+<area shape="rect" id="node22" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2784,749,2960,791"/>
+<area shape="rect" id="node24" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2905,839,3119,880"/>
+<area shape="rect" id="node25" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3152,928,3328,969"/>
+<area shape="rect" id="node26" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2109,839,2285,880"/>
+<area shape="rect" id="node28" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3143,839,3337,880"/>
+<area shape="rect" id="node31" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="2985,660,3189,701"/>
+<area shape="rect" id="node32" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="2985,749,3189,791"/>
+<area shape="rect" id="node33" href="_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2664,839,2829,880"/>
+<area shape="rect" id="node35" href="_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="3441,749,3647,791"/>
+<area shape="rect" id="node36" href="_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="3213,749,3417,791"/>
+<area shape="rect" id="node39" href="_playlist_parser_observer_interface_8h.html" title="PlaylistParserObserverInterface.h" alt="" coords="4004,303,4223,329"/>
+<area shape="rect" id="node41" href="_playlist_entry_8h.html" title="PlaylistEntry.h" alt="" coords="4051,392,4157,419"/>
+<area shape="rect" id="node44" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="253,660,448,701"/>
+<area shape="rect" id="node49" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="854,749,1029,791"/>
+<area shape="rect" id="node46" href="_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="275,757,373,783"/>
+<area shape="rect" id="node48" href="_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="157,846,272,873"/>
+<area shape="rect" id="node50" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1651,839,1882,880"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_content_decrypter_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep" id="_2workplace_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep">
-<area shape="rect" id="node2" href="_url_content_to_attachment_converter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/include\l/PlaylistParser/UrlContentToAttachment\lConverter.h" alt="" coords="606,109,862,180"/>
-<area shape="rect" id="node10" href="_content_decrypter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/ContentDecrypter.cpp" alt="" coords="886,117,1041,173"/>
-<area shape="rect" id="node11" href="_content_decrypter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/test\l/ContentDecrypterTest.cpp" alt="" coords="1065,117,1245,173"/>
-<area shape="rect" id="node3" href="_android_s_l_e_s_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="306,228,565,299"/>
-<area shape="rect" id="node6" href="_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/MediaPlayer.h" alt="" coords="696,228,921,299"/>
-<area shape="rect" id="node7" href="_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/src/MediaPlayer.cpp" alt="" coords="605,347,831,403"/>
-<area shape="rect" id="node9" href="_url_content_to_attachment_converter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/UrlContentToAttachmentConverter.cpp" alt="" coords="946,235,1199,291"/>
-<area shape="rect" id="node4" href="_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="5,347,265,403"/>
-<area shape="rect" id="node5" href="_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="290,347,581,403"/>
-<area shape="rect" id="node8" href="_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="855,347,1080,403"/>
+<div class="center"><img src="_content_decrypter_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_playlist_parser_2include_2_playlist_parser_2_content_decrypter_8hdep">
+<area shape="rect" id="node2" href="_url_content_to_attachment_converter_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/include/PlaylistParser\l/UrlContentToAttachmentConverter.h" alt="" coords="1259,139,1497,224"/>
+<area shape="rect" id="node12" href="_content_decrypter_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/ContentDecrypter.cpp" alt="" coords="1522,146,1783,217"/>
+<area shape="rect" id="node13" href="_content_decrypter_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/test/ContentDecrypter\lTest.cpp" alt="" coords="1807,139,2047,224"/>
+<area shape="rect" id="node3" href="_android_s_l_e_s_media_player_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="447,272,699,372"/>
+<area shape="rect" id="node7" href="_media_player_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/include/MediaPlayer/MediaPlayer.h" alt="" coords="1182,279,1419,365"/>
+<area shape="rect" id="node9" href="_media_player_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="1443,427,1681,513"/>
+<area shape="rect" id="node11" href="_url_content_to_attachment_converter_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/UrlContentToAttachment\lConverter.cpp" alt="" coords="1495,279,1773,365"/>
+<area shape="rect" id="node4" href="_android_application_audio_pipeline_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkAndroidApplication\lAudioPipelineFactory/src/AndroidApplication\lAudioPipelineFactory.cpp" alt="" coords="5,420,284,520"/>
+<area shape="rect" id="node5" href="_android_s_l_e_s_media_player_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/src/AndroidSLESMediaPlayer.cpp" alt="" coords="308,427,560,513"/>
+<area shape="rect" id="node6" href="_android_s_l_e_s_media_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="585,427,838,513"/>
+<area shape="rect" id="node8" href="_gstreamer_application_audio_pipeline_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkGstreamerApplication\lAudioPipelineFactory/src/GstreamerApplication\lAudioPipelineFactory.cpp" alt="" coords="862,420,1158,520"/>
+<area shape="rect" id="node10" href="_media_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/test/MediaPlayerTest.cpp" alt="" coords="1182,427,1419,513"/>
 </map>
 </div>
 </div>
@@ -160,7 +163,7 @@ Typedefs</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/EqualizerImplementations/include/EqualizerImplementations/EqualizerController.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/EqualizerController.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_63c328d9f040c398ed3a99417a38689e.html">EqualizerImplementations</a></li><li class="navelem"><a class="el" href="dir_c3ab2912bcaa751858979eb56f868649.html">include</a></li><li class="navelem"><a class="el" href="dir_2b0702df2f3e533a62c24ce8fd2e9d93.html">EqualizerImplementations</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_93bd0102826ece8585dc4da73daf2d1d.html">Equalizer</a></li><li class="navelem"><a class="el" href="dir_2a36deac1a3e1a226a789cbfacbb8bfa.html">acsdkEqualizerImplementations</a></li><li class="navelem"><a class="el" href="dir_6828c0ed39d19f7e5a1dc746333688c5.html">include</a></li><li class="navelem"><a class="el" href="dir_2ec66f4d5098436590eeb93762d865bf.html">acsdkEqualizerImplementations</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,48 +76,53 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
-<code>#include &lt;<a class="el" href="_equalizer_configuration_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerConfigurationInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_equalizer_controller_listener_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerControllerListenerInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_equalizer_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_equalizer_mode_controller_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_equalizer_storage_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/EqualizerStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_equalizer_configuration_interface_8h_source.html">acsdkEqualizerInterfaces/EqualizerConfigurationInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_equalizer_controller_listener_interface_8h_source.html">acsdkEqualizerInterfaces/EqualizerControllerListenerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_equalizer_interface_8h_source.html">acsdkEqualizerInterfaces/EqualizerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_equalizer_mode_controller_interface_8h_source.html">acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_equalizer_storage_interface_8h_source.html">acsdkEqualizerInterfaces/EqualizerStorageInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_success_result_8h_source.html">AVSCommon/Utils/Error/SuccessResult.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for EqualizerController.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_equalizer_controller_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8h" id="_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8h">
-<area shape="rect" id="node6" href="_equalizer_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerConfiguration\lInterface.h" alt="" coords="1106,124,1301,180"/>
-<area shape="rect" id="node8" href="_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="334,303,499,344"/>
-<area shape="rect" id="node17" href="_equalizer_controller_listener_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerControllerListener\lInterface.h" alt="" coords="418,124,637,180"/>
-<area shape="rect" id="node18" href="_equalizer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerInterface.h" alt="" coords="661,131,853,173"/>
-<area shape="rect" id="node19" href="_equalizer_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerModeController\lInterface.h" alt="" coords="877,124,1082,180"/>
-<area shape="rect" id="node20" href="_equalizer_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h" alt="" coords="170,131,394,173"/>
-<area shape="rect" id="node10" href="hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="884,303,1077,344"/>
-<area shape="rect" id="node14" href="_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="706,228,829,255"/>
-<area shape="rect" id="node9" href="_result_8h.html" title="Result.h" alt="" coords="381,392,452,419"/>
+<div class="center"><img src="_equalizer_controller_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8h">
+<area shape="rect" id="node6" href="_equalizer_configuration_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerConfigurationInterface.h" alt="" coords="1098,153,1317,195"/>
+<area shape="rect" id="node8" href="_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="314,317,479,359"/>
+<area shape="rect" id="node17" href="_equalizer_controller_listener_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerControllerListenerInterface.h" alt="" coords="381,153,625,195"/>
+<area shape="rect" id="node18" href="_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="649,153,819,195"/>
+<area shape="rect" id="node19" href="_equalizer_mode_controller_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerModeControllerInterface.h" alt="" coords="843,153,1073,195"/>
+<area shape="rect" id="node20" href="_equalizer_storage_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerStorageInterface.h" alt="" coords="170,153,357,195"/>
+<area shape="rect" id="node10" href="hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="876,317,1069,359"/>
+<area shape="rect" id="node14" href="_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="683,243,806,269"/>
+<area shape="rect" id="node9" href="_result_8h.html" title="Result.h" alt="" coords="361,407,432,433"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_equalizer_controller_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8hdep" id="_2workplace_2avs-device-sdk_2_equalizer_implementations_2include_2_equalizer_implementations_2_equalizer_controller_8hdep">
-<area shape="rect" id="node2" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="229,243,456,313"/>
-<area shape="rect" id="node13" href="_equalizer_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Equalizer/include/Equalizer\l/EqualizerCapabilityAgent.h" alt="" coords="381,124,563,195"/>
-<area shape="rect" id="node15" href="_equalizer_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/EqualizerImplementations\l/src/EqualizerController.cpp" alt="" coords="587,131,789,187"/>
-<area shape="rect" id="node16" href="_equalizer_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/EqualizerImplementations\l/test/EqualizerControllerTest.cpp" alt="" coords="813,131,1027,187"/>
-<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="76,361,305,417"/>
-<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="232,465,451,521"/>
-<area shape="rect" id="node11" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="381,361,593,417"/>
-<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="6,569,221,625"/>
-<area shape="rect" id="node10" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="245,569,451,625"/>
-<area shape="rect" id="node6" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,673,221,729"/>
-<area shape="rect" id="node9" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="246,673,447,729"/>
-<area shape="rect" id="node7" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="15,777,212,819"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="292,777,569,819"/>
-<area shape="rect" id="node12" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="526,473,799,514"/>
-<area shape="rect" id="node14" href="_equalizer_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Equalizer/src/EqualizerCapability\lAgent.cpp" alt="" coords="480,243,699,313"/>
+<div class="center"><img src="_equalizer_controller_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_equalizer_2acsdk_equalizer_implementations_2include_2acsdk_equalizer_implementations_2_equalizer_controller_8hdep">
+<area shape="rect" id="node2" href="_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="479,294,717,379"/>
+<area shape="rect" id="node17" href="_equalizer_capability_agent_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\l/include/acsdkEqualizer/EqualizerCapabilityAgent.h" alt="" coords="685,153,1007,239"/>
+<area shape="rect" id="node19" href="_equalizer_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\lImplementations/include/acsdkEqualizerImplementations\l/EqualizerComponent.h" alt="" coords="1009,287,1361,387"/>
+<area shape="rect" id="node20" href="_equalizer_controller_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\lImplementations/src/EqualizerController.cpp" alt="" coords="1083,153,1361,239"/>
+<area shape="rect" id="node21" href="_equalizer_controller_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\lImplementations/test/EqualizerControllerTest.cpp" alt="" coords="1386,153,1695,239"/>
+<area shape="rect" id="node3" href="_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="637,435,852,520"/>
+<area shape="rect" id="node4" href="_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="496,568,705,653"/>
+<area shape="rect" id="node15" href="_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="352,435,561,520"/>
+<area shape="rect" id="node5" href="_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="496,701,705,787"/>
+<area shape="rect" id="node14" href="_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="729,709,984,779"/>
+<area shape="rect" id="node6" href="_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="773,835,1021,935"/>
+<area shape="rect" id="node10" href="_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="211,842,420,927"/>
+<area shape="rect" id="node13" href="_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="495,849,746,920"/>
+<area shape="rect" id="node7" href="_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="506,983,754,1068"/>
+<area shape="rect" id="node8" href="_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="1056,983,1311,1068"/>
+<area shape="rect" id="node9" href="preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="778,983,1026,1068"/>
+<area shape="rect" id="node11" href="main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="282,990,482,1061"/>
+<area shape="rect" id="node12" href="_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="5,990,257,1061"/>
+<area shape="rect" id="node16" href="_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="173,575,421,646"/>
+<area shape="rect" id="node18" href="_equalizer_capability_agent_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\l/src/EqualizerCapabilityAgent.cpp" alt="" coords="742,294,985,379"/>
 </map>
 </div>
 </div>
@@ -125,7 +130,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1equalizer_1_1_equalizer_controller.html">alexaClientSDK::equalizer::EqualizerController</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_equalizer_controller.html">alexaClientSDK::acsdkEqualizer::EqualizerController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -133,14 +138,14 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1equalizer"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1equalizer.html">alexaClientSDK::equalizer</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_equalizer"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_equalizer.html">alexaClientSDK::acsdkEqualizer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

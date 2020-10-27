@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -125,10 +125,20 @@ Functions</h2></td></tr>
 <tr class="separator:a28731f4050eb595f415a84c11258e6f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a321ae8562a2b4e8f746e19cdd0f28b48"><td class="memItemLeft" align="right" valign="top">static rapidjson::Value&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a321ae8562a2b4e8f746e19cdd0f28b48">buildAllAlertsContext</a> (const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_context_info.html">Alert::ContextInfo</a> &gt; &amp;alertsInfo, Document::AllocatorType &amp;allocator)</td></tr>
 <tr class="separator:a321ae8562a2b4e8f746e19cdd0f28b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad885ef8349d2fd855d4e4d6becd9f220"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ad885ef8349d2fd855d4e4d6becd9f220">currentISO8601TimeUTC</a> ()</td></tr>
+<tr class="separator:ad885ef8349d2fd855d4e4d6becd9f220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c62fdb732623dcae65233e8b3510de8"><td class="memItemLeft" align="right" valign="top">static rapidjson::Value&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a1c62fdb732623dcae65233e8b3510de8">buildActiveAlertsContext</a> (const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_context_info.html">Alert::ContextInfo</a> &gt; &amp;alertsInfo, Document::AllocatorType &amp;allocator)</td></tr>
 <tr class="separator:a1c62fdb732623dcae65233e8b3510de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31676ffdc60053e4fe87f08734cd0bfb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a31676ffdc60053e4fe87f08734cd0bfb">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, int count)</td></tr>
 <tr class="separator:a31676ffdc60053e4fe87f08734cd0bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903a668394c755493f2c27835d1c2269"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a903a668394c755493f2c27835d1c2269">addGenericMetadata</a> (std::unordered_map&lt; std::string, std::string &gt; &amp;metadata, const std::string &amp;alertToken, const std::string &amp;alertType, bool isConnected, long monotonicTime, const std::string &amp;scheduledTriggerTime, const std::string &amp;actualTriggerTime)</td></tr>
+<tr class="separator:a903a668394c755493f2c27835d1c2269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06d3e78a1d3011889e4d226bf527893"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#af06d3e78a1d3011889e4d226bf527893">addAlertStartedRingingMetadata</a> (std::unordered_map&lt; std::string, std::string &gt; &amp;metadata, const std::string &amp;ascending, int volume)</td></tr>
+<tr class="separator:af06d3e78a1d3011889e4d226bf527893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144d7369ec9b4822d0653d5182b06611"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a144d7369ec9b4822d0653d5182b06611">addAlertCanceledMetadata</a> (std::unordered_map&lt; std::string, std::string &gt; &amp;metadata)</td></tr>
+<tr class="separator:a144d7369ec9b4822d0653d5182b06611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3517de091472f10127eeb32c15d4886d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a3517de091472f10127eeb32c15d4886d">submitMetricWithMetadata</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, std::unordered_map&lt; std::string, std::string &gt; metadata)</td></tr>
+<tr class="separator:a3517de091472f10127eeb32c15d4886d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a34ddabfcc5f9a603336a9ea7ecab23e3">TAG</a> (&quot;AlertScheduler&quot;)</td></tr>
 <tr class="memdesc:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a34ddabfcc5f9a603336a9ea7ecab23e3">More...</a><br /></td></tr>
 <tr class="separator:a34ddabfcc5f9a603336a9ea7ecab23e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,7 +187,7 @@ Variables</h2></td></tr>
 <tr class="memitem:afacdaf017a7c078f118c011e165a6895"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#afacdaf017a7c078f118c011e165a6895">ALERTS_CAPABILITY_INTERFACE_NAME</a> = &quot;Alerts&quot;</td></tr>
 <tr class="memdesc:afacdaf017a7c078f118c011e165a6895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alerts interface name.  <a href="#afacdaf017a7c078f118c011e165a6895">More...</a><br /></td></tr>
 <tr class="separator:afacdaf017a7c078f118c011e165a6895"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44c7172f1c816350c3fc4e8513711008"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a44c7172f1c816350c3fc4e8513711008">ALERTS_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.4&quot;</td></tr>
+<tr class="memitem:a44c7172f1c816350c3fc4e8513711008"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a44c7172f1c816350c3fc4e8513711008">ALERTS_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.5&quot;</td></tr>
 <tr class="memdesc:a44c7172f1c816350c3fc4e8513711008"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alerts interface version.  <a href="#a44c7172f1c816350c3fc4e8513711008">More...</a><br /></td></tr>
 <tr class="separator:a44c7172f1c816350c3fc4e8513711008"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a409422854f05bac6ec61b16bfa1dabc1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a409422854f05bac6ec61b16bfa1dabc1">KEY_TYPE</a> = &quot;type&quot;</td></tr>
@@ -246,6 +256,12 @@ Variables</h2></td></tr>
 <tr class="memitem:adda910455d290114b15794830744398f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#adda910455d290114b15794830744398f">EVENT_PAYLOAD_TOKENS_KEY</a> = &quot;tokens&quot;</td></tr>
 <tr class="memdesc:adda910455d290114b15794830744398f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the event payload key for multiple tokens.  <a href="#adda910455d290114b15794830744398f">More...</a><br /></td></tr>
 <tr class="separator:adda910455d290114b15794830744398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43a5610561436624e0bbace230139bc5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a43a5610561436624e0bbace230139bc5">EVENT_PAYLOAD_SCHEDULED_TIME_KEY</a> = &quot;scheduledTime&quot;</td></tr>
+<tr class="memdesc:a43a5610561436624e0bbace230139bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the event payload key for scheduled time.  <a href="#a43a5610561436624e0bbace230139bc5">More...</a><br /></td></tr>
+<tr class="separator:a43a5610561436624e0bbace230139bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea20ab335a86327da0b59307abdd4ac3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aea20ab335a86327da0b59307abdd4ac3">EVENT_PAYLOAD_EVENT_TIME_KEY</a> = &quot;eventTime&quot;</td></tr>
+<tr class="memdesc:aea20ab335a86327da0b59307abdd4ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the event payload key for event time.  <a href="#aea20ab335a86327da0b59307abdd4ac3">More...</a><br /></td></tr>
+<tr class="separator:aea20ab335a86327da0b59307abdd4ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0bac6a7643fa4ae3c0c27bf785f61c2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aa0bac6a7643fa4ae3c0c27bf785f61c2">DIRECTIVE_PAYLOAD_TOKEN_KEY</a> = &quot;token&quot;</td></tr>
 <tr class="memdesc:aa0bac6a7643fa4ae3c0c27bf785f61c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of Token text in a Directive we may receive.  <a href="#aa0bac6a7643fa4ae3c0c27bf785f61c2">More...</a><br /></td></tr>
 <tr class="separator:aa0bac6a7643fa4ae3c0c27bf785f61c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,6 +309,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a7b55c916e88fe75a5939e0a5ce9ed8ea"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a7b55c916e88fe75a5939e0a5ce9ed8ea">AVS_PAYLOAD_ERROR_MESSAGE_KEY</a> = &quot;message&quot;</td></tr>
 <tr class="memdesc:a7b55c916e88fe75a5939e0a5ce9ed8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The JSON key for the error message in the payload of error events.  <a href="#a7b55c916e88fe75a5939e0a5ce9ed8ea">More...</a><br /></td></tr>
 <tr class="separator:a7b55c916e88fe75a5939e0a5ce9ed8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5beea1488cee99a61de43599d4295290"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a5beea1488cee99a61de43599d4295290">OFFLINE_STOPPED_ALERT_TOKEN_KEY</a> = &quot;token&quot;</td></tr>
+<tr class="memdesc:a5beea1488cee99a61de43599d4295290"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the offline stopped alert token key.  <a href="#a5beea1488cee99a61de43599d4295290">More...</a><br /></td></tr>
+<tr class="separator:a5beea1488cee99a61de43599d4295290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e162b2e19d5a3e75a0150a6ead92142"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a0e162b2e19d5a3e75a0150a6ead92142">OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY</a> = &quot;scheduledTime&quot;</td></tr>
+<tr class="memdesc:a0e162b2e19d5a3e75a0150a6ead92142"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the offline stopped alert scheduledTime key.  <a href="#a0e162b2e19d5a3e75a0150a6ead92142">More...</a><br /></td></tr>
+<tr class="separator:a0e162b2e19d5a3e75a0150a6ead92142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85378ce0defd05e02d38018b0d001bc6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a85378ce0defd05e02d38018b0d001bc6">OFFLINE_STOPPED_ALERT_ID_KEY</a> = &quot;id&quot;</td></tr>
+<tr class="memdesc:a85378ce0defd05e02d38018b0d001bc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the offline stopped alert id key.  <a href="#a85378ce0defd05e02d38018b0d001bc6">More...</a><br /></td></tr>
+<tr class="separator:a85378ce0defd05e02d38018b0d001bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d62d2d551c12bb18d7bea464df55b8a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a7d62d2d551c12bb18d7bea464df55b8a">EMPTY_DIALOG_REQUEST_ID</a> = &quot;&quot;</td></tr>
 <tr class="memdesc:a7d62d2d551c12bb18d7bea464df55b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">An empty dialogRequestId.  <a href="#a7d62d2d551c12bb18d7bea464df55b8a">More...</a><br /></td></tr>
 <tr class="separator:a7d62d2d551c12bb18d7bea464df55b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -320,6 +345,47 @@ Variables</h2></td></tr>
 <tr class="memitem:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a62bdfcfa644713a86f4e181ad03c7e00">ALERT_METRIC_SOURCE_PREFIX</a> = &quot;ALERT-&quot;</td></tr>
 <tr class="memdesc:a62bdfcfa644713a86f4e181ad03c7e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for ALERT metric source.  <a href="#a62bdfcfa644713a86f4e181ad03c7e00">More...</a><br /></td></tr>
 <tr class="separator:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88621446116caf5493771f2071bcafdc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a88621446116caf5493771f2071bcafdc">ALERT_STARTED_METRIC_NAME</a> = &quot;NotificationStartedRinging&quot;</td></tr>
+<tr class="memdesc:a88621446116caf5493771f2071bcafdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric names.  <a href="#a88621446116caf5493771f2071bcafdc">More...</a><br /></td></tr>
+<tr class="separator:a88621446116caf5493771f2071bcafdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac60bde964216c67ef5d667c5940894e6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ac60bde964216c67ef5d667c5940894e6">ALERT_CANCELED_METRIC_NAME</a> = &quot;NotificationCanceled&quot;</td></tr>
+<tr class="separator:ac60bde964216c67ef5d667c5940894e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068ce123e53a1810df3d21dff3b714c8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a068ce123e53a1810df3d21dff3b714c8">METRIC_METADATA_TYPE_KEY</a> = &quot;NotificationType&quot;</td></tr>
+<tr class="memdesc:a068ce123e53a1810df3d21dff3b714c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric metadata keys.  <a href="#a068ce123e53a1810df3d21dff3b714c8">More...</a><br /></td></tr>
+<tr class="separator:a068ce123e53a1810df3d21dff3b714c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ddf8bea62a48cc9fb9e4d1af9e394eb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a5ddf8bea62a48cc9fb9e4d1af9e394eb">METRIC_METADATA_TOKEN_KEY</a> = &quot;NotificationId&quot;</td></tr>
+<tr class="separator:a5ddf8bea62a48cc9fb9e4d1af9e394eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f4a2462364432a2b866c90ae2c1204"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ae4f4a2462364432a2b866c90ae2c1204">METRIC_METADATA_VERSION_KEY</a> = &quot;NotificationMetadataVersion&quot;</td></tr>
+<tr class="separator:ae4f4a2462364432a2b866c90ae2c1204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a446e358f41dbd18cf6e241b852de999f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a446e358f41dbd18cf6e241b852de999f">METRIC_METADATA_DEVICE_STATE_KEY</a> = &quot;DeviceState&quot;</td></tr>
+<tr class="separator:a446e358f41dbd18cf6e241b852de999f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bbe2e33fda7da86e3c9f7af043fc9ee"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a0bbe2e33fda7da86e3c9f7af043fc9ee">METRIC_METADATA_ACTUAL_TRIGGER_TIME_KEY</a> = &quot;ActualTriggerTime&quot;</td></tr>
+<tr class="separator:a0bbe2e33fda7da86e3c9f7af043fc9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4936b309eaea580bdd177acbead887ab"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a4936b309eaea580bdd177acbead887ab">METRIC_METADATA_SCHEDULED_TRIGGER_TIME_KEY</a> = &quot;ScheduledTriggerTime&quot;</td></tr>
+<tr class="separator:a4936b309eaea580bdd177acbead887ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19ebdcbd01bc57663f78c4912ebedbd6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a19ebdcbd01bc57663f78c4912ebedbd6">METRIC_METADATA_MONOTONIC_TIME_KEY</a> = &quot;MonotonicTime&quot;</td></tr>
+<tr class="separator:a19ebdcbd01bc57663f78c4912ebedbd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1523bd98fd6a0e78df973ff3f28aa66f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a1523bd98fd6a0e78df973ff3f28aa66f">METRIC_METADATA_IS_ASCENDING_KEY</a> = &quot;IsAscending&quot;</td></tr>
+<tr class="separator:a1523bd98fd6a0e78df973ff3f28aa66f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212562deaae50dea54d8d126779d0c09"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a212562deaae50dea54d8d126779d0c09">METRIC_METADATA_ALERT_VOLUME_KEY</a> = &quot;NotificationVolume&quot;</td></tr>
+<tr class="separator:a212562deaae50dea54d8d126779d0c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a0c2d367d86a67b19acb1a2356cb56"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#af2a0c2d367d86a67b19acb1a2356cb56">METRIC_METADATA_IS_QUEUED_KEY</a> = &quot;IsNotificationQueued&quot;</td></tr>
+<tr class="separator:af2a0c2d367d86a67b19acb1a2356cb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee632cfdaacec3c19075fd8d76566e9f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aee632cfdaacec3c19075fd8d76566e9f">METRIC_METADATA_CANCELED_REASON_KEY</a> = &quot;CanceledReason&quot;</td></tr>
+<tr class="separator:aee632cfdaacec3c19075fd8d76566e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc15a6d889043909c114feba3627de8c"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#abc15a6d889043909c114feba3627de8c">METRIC_METADATA_VERSION_VALUE</a> = 2</td></tr>
+<tr class="memdesc:abc15a6d889043909c114feba3627de8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric metadata values.  <a href="#abc15a6d889043909c114feba3627de8c">More...</a><br /></td></tr>
+<tr class="separator:abc15a6d889043909c114feba3627de8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa82a84a120ddf54a274b21e31f7a809f"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aa82a84a120ddf54a274b21e31f7a809f">MILLISECONDS_IN_A_SECOND</a> = 1000</td></tr>
+<tr class="separator:aa82a84a120ddf54a274b21e31f7a809f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a388747a9c74fb5c1daacb8de17fc727b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a388747a9c74fb5c1daacb8de17fc727b">METRIC_METADATA_IS_QUEUED_VALUE</a> = &quot;false&quot;</td></tr>
+<tr class="separator:a388747a9c74fb5c1daacb8de17fc727b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ffd11ab3713c4e92771d307b7bf59a7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a5ffd11ab3713c4e92771d307b7bf59a7">METRIC_METADATA_DEVICE_STATE_ONLINE</a> = &quot;ONLINE&quot;</td></tr>
+<tr class="separator:a5ffd11ab3713c4e92771d307b7bf59a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ea8cdc30d1ba1218e4f3706e0b2cbc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ac7ea8cdc30d1ba1218e4f3706e0b2cbc">METRIC_METADATA_DEVICE_STATE_OFFLINE</a> = &quot;OFFLINE&quot;</td></tr>
+<tr class="separator:ac7ea8cdc30d1ba1218e4f3706e0b2cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d9877e4328af0e2e76c3799923eed07"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a3d9877e4328af0e2e76c3799923eed07">METRIC_METADATA_CANCELED_REASON_VALUE</a> = &quot;TriggerTimeInThePast&quot;</td></tr>
+<tr class="separator:a3d9877e4328af0e2e76c3799923eed07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64ad2f2201fc6348daf2de9ae3ae0675"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a64ad2f2201fc6348daf2de9ae3ae0675">FAILED_SNOOZE_ALERT</a> = &quot;failedToSnoozeAlert&quot;</td></tr>
 <tr class="memdesc:a64ad2f2201fc6348daf2de9ae3ae0675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric constants related to Alerts.  <a href="#a64ad2f2201fc6348daf2de9ae3ae0675">More...</a><br /></td></tr>
 <tr class="separator:a64ad2f2201fc6348daf2de9ae3ae0675"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -329,6 +395,12 @@ Variables</h2></td></tr>
 <tr class="separator:a143230b07480038d1a5d837e91dba4e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725a1acf098c71f519ca02b1f3c89fc7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a725a1acf098c71f519ca02b1f3c89fc7">INVALID_PAYLOAD_FOR_CHANGE_ALARM_VOLUME</a> = &quot;invalidPayloadToChangeAlarmVolume&quot;</td></tr>
 <tr class="separator:a725a1acf098c71f519ca02b1f3c89fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac035bc8f561efb784496e93d68231e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a7ac035bc8f561efb784496e93d68231e">ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME</a></td></tr>
+<tr class="separator:a7ac035bc8f561efb784496e93d68231e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db101f2359e13ae5944aa115159e021"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a6db101f2359e13ae5944aa115159e021">ALERT_RINGING_ZERO_VOLUME</a> = &quot;alertTriggeredAtZeroAlertVolume&quot;</td></tr>
+<tr class="separator:a6db101f2359e13ae5944aa115159e021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac66231249928c7e519d54269a657aa72"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ac66231249928c7e519d54269a657aa72">ALERT_VOLUME_METRIC_LIMIT</a> = 30</td></tr>
+<tr class="separator:ac66231249928c7e519d54269a657aa72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a62bdfcfa644713a86f4e181ad03c7e00">ALERT_METRIC_SOURCE_PREFIX</a> = &quot;ALERT-&quot;</td></tr>
 <tr class="memdesc:a62bdfcfa644713a86f4e181ad03c7e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric Activity Name Prefix for ALERT metric source.  <a href="#a62bdfcfa644713a86f4e181ad03c7e00">More...</a><br /></td></tr>
 <tr class="separator:a62bdfcfa644713a86f4e181ad03c7e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -341,6 +413,140 @@ Variables</h2></td></tr>
 <tr class="separator:a5fdd6a33388b2fe5c714cecaa94812c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a144d7369ec9b4822d0653d5182b06611"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a144d7369ec9b4822d0653d5182b06611">&#9670;&nbsp;</a></span>addAlertCanceledMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acsdkAlerts::addAlertCanceledMetadata </td>
+          <td>(</td>
+          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af06d3e78a1d3011889e4d226bf527893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af06d3e78a1d3011889e4d226bf527893">&#9670;&nbsp;</a></span>addAlertStartedRingingMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acsdkAlerts::addAlertStartedRingingMetadata </td>
+          <td>(</td>
+          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>ascending</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a903a668394c755493f2c27835d1c2269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a903a668394c755493f2c27835d1c2269">&#9670;&nbsp;</a></span>addGenericMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acsdkAlerts::addGenericMetadata </td>
+          <td>(</td>
+          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>alertToken</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>alertType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isConnected</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>monotonicTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scheduledTriggerTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>actualTriggerTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1c62fdb732623dcae65233e8b3510de8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c62fdb732623dcae65233e8b3510de8">&#9670;&nbsp;</a></span>buildActiveAlertsContext()</h2>
 
@@ -428,6 +634,32 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rapidjson::Value representing the array. </dd></dl>
+
+</div>
+</div>
+<a id="ad885ef8349d2fd855d4e4d6becd9f220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad885ef8349d2fd855d4e4d6becd9f220">&#9670;&nbsp;</a></span>currentISO8601TimeUTC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::acsdkAlerts::currentISO8601TimeUTC </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Generate a UTC ISO8601-formatted timestamp </p><dl class="section return"><dt>Returns</dt><dd>UTC ISO8601-formatted timestamp as std::string </dd></dl>
 
 </div>
 </div>
@@ -789,6 +1021,48 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a3517de091472f10127eeb32c15d4886d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3517de091472f10127eeb32c15d4886d">&#9670;&nbsp;</a></span>submitMetricWithMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acsdkAlerts::submitMetricWithMetadata </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt;&#160;</td>
+          <td class="paramname"><em>metadata</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a34ddabfcc5f9a603336a9ea7ecab23e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a34ddabfcc5f9a603336a9ea7ecab23e3">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/3]</span></h2>
 
@@ -975,6 +1249,28 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The value of the AlarmVolumeRampChanged Event name. </p>
+
+</div>
+</div>
+<a id="ac60bde964216c67ef5d667c5940894e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac60bde964216c67ef5d667c5940894e6">&#9670;&nbsp;</a></span>ALERT_CANCELED_METRIC_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERT_CANCELED_METRIC_NAME = &quot;NotificationCanceled&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1190,6 +1486,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a7ac035bc8f561efb784496e93d68231e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ac035bc8f561efb784496e93d68231e">&#9670;&nbsp;</a></span>ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;alertTriggeredAtLessThan30PercentMaxAlertVolume&quot;</span></div></div><!-- fragment -->
+</div>
+</div>
+<a id="a6db101f2359e13ae5944aa115159e021"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6db101f2359e13ae5944aa115159e021">&#9670;&nbsp;</a></span>ALERT_RINGING_ZERO_VOLUME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERT_RINGING_ZERO_VOLUME = &quot;alertTriggeredAtZeroAlertVolume&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3c6dd9e6698bf264e5cd50877dcb21cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c6dd9e6698bf264e5cd50877dcb21cd">&#9670;&nbsp;</a></span>ALERT_SCHEDULING_FAILED</h2>
 
@@ -1238,6 +1578,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a88621446116caf5493771f2071bcafdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88621446116caf5493771f2071bcafdc">&#9670;&nbsp;</a></span>ALERT_STARTED_METRIC_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERT_STARTED_METRIC_NAME = &quot;NotificationStartedRinging&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Metric names. </p>
+
+</div>
+</div>
 <a id="a2fb671f02e2669500bee0b0bc87757d3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2fb671f02e2669500bee0b0bc87757d3">&#9670;&nbsp;</a></span>ALERT_STOPPED_EVENT_NAME</h2>
 
@@ -1283,6 +1647,28 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The value of the VolumeChanged Event name. </p>
+
+</div>
+</div>
+<a id="ac66231249928c7e519d54269a657aa72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac66231249928c7e519d54269a657aa72">&#9670;&nbsp;</a></span>ALERT_VOLUME_METRIC_LIMIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlerts::ALERT_VOLUME_METRIC_LIMIT = 30</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1343,7 +1729,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERTS_CAPABILITY_INTERFACE_VERSION = &quot;1.4&quot;</td>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::ALERTS_CAPABILITY_INTERFACE_VERSION = &quot;1.5&quot;</td>
         </tr>
       </table>
   </td>
@@ -2019,6 +2405,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aea20ab335a86327da0b59307abdd4ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea20ab335a86327da0b59307abdd4ac3">&#9670;&nbsp;</a></span>EVENT_PAYLOAD_EVENT_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::EVENT_PAYLOAD_EVENT_TIME_KEY = &quot;eventTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The value of the event payload key for event time. </p>
+
+</div>
+</div>
+<a id="a43a5610561436624e0bbace230139bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43a5610561436624e0bbace230139bc5">&#9670;&nbsp;</a></span>EVENT_PAYLOAD_SCHEDULED_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::EVENT_PAYLOAD_SCHEDULED_TIME_KEY = &quot;scheduledTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The value of the event payload key for scheduled time. </p>
+
+</div>
+</div>
 <a id="a0d5c8f915aa1b6c4039bdf39ecbb8140"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0d5c8f915aa1b6c4039bdf39ecbb8140">&#9670;&nbsp;</a></span>EVENT_PAYLOAD_TOKEN_KEY</h2>
 
@@ -2413,6 +2847,384 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a0bbe2e33fda7da86e3c9f7af043fc9ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bbe2e33fda7da86e3c9f7af043fc9ee">&#9670;&nbsp;</a></span>METRIC_METADATA_ACTUAL_TRIGGER_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_ACTUAL_TRIGGER_TIME_KEY = &quot;ActualTriggerTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a212562deaae50dea54d8d126779d0c09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a212562deaae50dea54d8d126779d0c09">&#9670;&nbsp;</a></span>METRIC_METADATA_ALERT_VOLUME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_ALERT_VOLUME_KEY = &quot;NotificationVolume&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aee632cfdaacec3c19075fd8d76566e9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee632cfdaacec3c19075fd8d76566e9f">&#9670;&nbsp;</a></span>METRIC_METADATA_CANCELED_REASON_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_CANCELED_REASON_KEY = &quot;CanceledReason&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3d9877e4328af0e2e76c3799923eed07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d9877e4328af0e2e76c3799923eed07">&#9670;&nbsp;</a></span>METRIC_METADATA_CANCELED_REASON_VALUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_CANCELED_REASON_VALUE = &quot;TriggerTimeInThePast&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a446e358f41dbd18cf6e241b852de999f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446e358f41dbd18cf6e241b852de999f">&#9670;&nbsp;</a></span>METRIC_METADATA_DEVICE_STATE_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_DEVICE_STATE_KEY = &quot;DeviceState&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac7ea8cdc30d1ba1218e4f3706e0b2cbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7ea8cdc30d1ba1218e4f3706e0b2cbc">&#9670;&nbsp;</a></span>METRIC_METADATA_DEVICE_STATE_OFFLINE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_DEVICE_STATE_OFFLINE = &quot;OFFLINE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5ffd11ab3713c4e92771d307b7bf59a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ffd11ab3713c4e92771d307b7bf59a7">&#9670;&nbsp;</a></span>METRIC_METADATA_DEVICE_STATE_ONLINE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_DEVICE_STATE_ONLINE = &quot;ONLINE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1523bd98fd6a0e78df973ff3f28aa66f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1523bd98fd6a0e78df973ff3f28aa66f">&#9670;&nbsp;</a></span>METRIC_METADATA_IS_ASCENDING_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_IS_ASCENDING_KEY = &quot;IsAscending&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af2a0c2d367d86a67b19acb1a2356cb56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2a0c2d367d86a67b19acb1a2356cb56">&#9670;&nbsp;</a></span>METRIC_METADATA_IS_QUEUED_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_IS_QUEUED_KEY = &quot;IsNotificationQueued&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a388747a9c74fb5c1daacb8de17fc727b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a388747a9c74fb5c1daacb8de17fc727b">&#9670;&nbsp;</a></span>METRIC_METADATA_IS_QUEUED_VALUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_IS_QUEUED_VALUE = &quot;false&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a19ebdcbd01bc57663f78c4912ebedbd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19ebdcbd01bc57663f78c4912ebedbd6">&#9670;&nbsp;</a></span>METRIC_METADATA_MONOTONIC_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_MONOTONIC_TIME_KEY = &quot;MonotonicTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4936b309eaea580bdd177acbead887ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4936b309eaea580bdd177acbead887ab">&#9670;&nbsp;</a></span>METRIC_METADATA_SCHEDULED_TRIGGER_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_SCHEDULED_TRIGGER_TIME_KEY = &quot;ScheduledTriggerTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5ddf8bea62a48cc9fb9e4d1af9e394eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ddf8bea62a48cc9fb9e4d1af9e394eb">&#9670;&nbsp;</a></span>METRIC_METADATA_TOKEN_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_TOKEN_KEY = &quot;NotificationId&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a068ce123e53a1810df3d21dff3b714c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a068ce123e53a1810df3d21dff3b714c8">&#9670;&nbsp;</a></span>METRIC_METADATA_TYPE_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_TYPE_KEY = &quot;NotificationType&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Metric metadata keys. </p>
+
+</div>
+</div>
+<a id="ae4f4a2462364432a2b866c90ae2c1204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4f4a2462364432a2b866c90ae2c1204">&#9670;&nbsp;</a></span>METRIC_METADATA_VERSION_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::METRIC_METADATA_VERSION_KEY = &quot;NotificationMetadataVersion&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc15a6d889043909c114feba3627de8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc15a6d889043909c114feba3627de8c">&#9670;&nbsp;</a></span>METRIC_METADATA_VERSION_VALUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlerts::METRIC_METADATA_VERSION_VALUE = 2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Metric metadata values. </p>
+
+</div>
+</div>
+<a id="aa82a84a120ddf54a274b21e31f7a809f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa82a84a120ddf54a274b21e31f7a809f">&#9670;&nbsp;</a></span>MILLISECONDS_IN_A_SECOND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlerts::MILLISECONDS_IN_A_SECOND = 1000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad37a0fb4f11d422e38fdc64817cdd73a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad37a0fb4f11d422e38fdc64817cdd73a">&#9670;&nbsp;</a></span>NAMESPACE</h2>
 
@@ -2434,6 +3246,78 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The namespace for this capability agent. </p>
+
+</div>
+</div>
+<a id="a85378ce0defd05e02d38018b0d001bc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85378ce0defd05e02d38018b0d001bc6">&#9670;&nbsp;</a></span>OFFLINE_STOPPED_ALERT_ID_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::OFFLINE_STOPPED_ALERT_ID_KEY = &quot;id&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The value of the offline stopped alert id key. </p>
+
+</div>
+</div>
+<a id="a0e162b2e19d5a3e75a0150a6ead92142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e162b2e19d5a3e75a0150a6ead92142">&#9670;&nbsp;</a></span>OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY = &quot;scheduledTime&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The value of the offline stopped alert scheduledTime key. </p>
+
+</div>
+</div>
+<a id="a5beea1488cee99a61de43599d4295290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5beea1488cee99a61de43599d4295290">&#9670;&nbsp;</a></span>OFFLINE_STOPPED_ALERT_TOKEN_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::OFFLINE_STOPPED_ALERT_TOKEN_KEY = &quot;token&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The value of the offline stopped alert token key. </p>
 
 </div>
 </div>
@@ -2561,7 +3445,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

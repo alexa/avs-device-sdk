@@ -1,18 +1,25 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h" name="/workplace/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h">
-<area shape="rect" id="node7" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="42,295,265,322"/>
-<area shape="rect" id="node8" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="406,385,621,411"/>
-<area shape="rect" id="node10" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="339,288,531,329"/>
-<area shape="rect" id="node12" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="768,199,960,240"/>
-<area shape="rect" id="node17" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="1175,109,1351,151"/>
-<area shape="rect" id="node11" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="93,385,331,411"/>
-<area shape="rect" id="node16" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="605,295,827,322"/>
-<area shape="rect" id="node21" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1381,199,1557,240"/>
-<area shape="rect" id="node22" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1381,288,1557,329"/>
-<area shape="rect" id="node24" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1418,377,1633,419"/>
-<area shape="rect" id="node29" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="951,467,1127,508"/>
-<area shape="rect" id="node30" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="848,377,1024,419"/>
-<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1201,377,1394,419"/>
-<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1929,556,2105,597"/>
-<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1303,467,1479,508"/>
-<area shape="rect" id="node33" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1256,556,1432,597"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AFML/include/AFML/Channel.h">
+<area shape="rect" id="node7" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="343,317,566,344"/>
+<area shape="rect" id="node8" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1045,414,1259,441"/>
+<area shape="rect" id="node10" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="937,310,1129,351"/>
+<area shape="rect" id="node12" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="705,213,897,255"/>
+<area shape="rect" id="node17" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2351,124,2527,165"/>
+<area shape="rect" id="node42" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="145,310,319,351"/>
+<area shape="rect" id="node11" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="783,414,1020,441"/>
+<area shape="rect" id="node16" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="690,317,913,344"/>
+<area shape="rect" id="node21" href="$_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="3105,213,3271,255"/>
+<area shape="rect" id="node22" href="$_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="2014,213,2221,255"/>
+<area shape="rect" id="node25" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1759,213,1935,255"/>
+<area shape="rect" id="node41" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="2671,213,2847,255"/>
+<area shape="rect" id="node23" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="2497,303,2695,359"/>
+<area shape="rect" id="node24" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="2737,407,2953,448"/>
+<area shape="rect" id="node26" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1759,310,1935,351"/>
+<area shape="rect" id="node28" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2010,407,2225,448"/>
+<area shape="rect" id="node33" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1476,496,1652,537"/>
+<area shape="rect" id="node34" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2351,407,2527,448"/>
+<area shape="rect" id="node39" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1690,407,1883,448"/>
+<area shape="rect" id="node40" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1337,585,1513,627"/>
+<area shape="rect" id="node35" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2497,496,2673,537"/>
+<area shape="rect" id="node37" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2497,585,2673,627"/>
+<area shape="rect" id="node44" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="477,407,707,448"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -163,6 +163,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:af439c6110fc744f4220225673586b386"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#af439c6110fc744f4220225673586b386">createAlexaInterfaceMessageSender</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;contextManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;messageSender, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier)</td></tr>
+<tr class="separator:af439c6110fc744f4220225673586b386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34396ced926d1b0f466431cde645e0d4"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#a34396ced926d1b0f466431cde645e0d4">createAlexaInterfaceMessageSenderInternalInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a> &gt; &amp;messageSender)</td></tr>
+<tr class="separator:a34396ced926d1b0f466431cde645e0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6c58321b7b92c66344bda701cc6e6dd"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#aa6c58321b7b92c66344bda701cc6e6dd">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender)</td></tr>
 <tr class="separator:aa6c58321b7b92c66344bda701cc6e6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::AlexaInterfaceMessageSenderInterface</a></td></tr>
@@ -284,6 +288,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Factory method to create a <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000049">Deprecated:</a></b></dt><dd>Use createAlexaInterfaceMessageSender. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>Interface to access AVS state. </td></tr>
@@ -291,7 +296,93 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A new instance of <code>ReportStateCapabilityAgent</code> on success, <code>nullptr</code> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A new instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> on success, <code>nullptr</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="af439c6110fc744f4220225673586b386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af439c6110fc744f4220225673586b386">&#9670;&nbsp;</a></span>createAlexaInterfaceMessageSender()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a> &gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender::createAlexaInterfaceMessageSender </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>contextManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>messageSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method to create a <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>Interface to access AVS state. </td></tr>
+    <tr><td class="paramname">connectionManager</td><td>Interface to send events to AVS. </td></tr>
+    <tr><td class="paramname">shutdownNotifier</td><td>Interface to notify of shutdown. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> on success, <code>nullptr</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a34396ced926d1b0f466431cde645e0d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34396ced926d1b0f466431cde645e0d4">&#9670;&nbsp;</a></span>createAlexaInterfaceMessageSenderInternalInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender::createAlexaInterfaceMessageSenderInternalInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>messageSender</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method to forward an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> to <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">messageSender</td><td>The instance to forward. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A forwarded instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -747,14 +838,14 @@ In future versions, this method will be made pure virtual.</dd></dl>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/<a class="el" href="_alexa_interface_message_sender_8h_source.html">AlexaInterfaceMessageSender.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/Alexa/src/<a class="el" href="_alexa_interface_message_sender_8cpp.html">AlexaInterfaceMessageSender.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/<a class="el" href="_alexa_interface_message_sender_8h_source.html">AlexaInterfaceMessageSender.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/Alexa/src/<a class="el" href="_alexa_interface_message_sender_8cpp.html">AlexaInterfaceMessageSender.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

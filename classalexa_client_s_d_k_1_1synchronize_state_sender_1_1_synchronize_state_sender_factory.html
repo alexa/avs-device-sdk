@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -102,6 +102,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:affcda470e71eb13b8865b5ab712d18f0"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html">avsCommon::sdkInterfaces::PostConnectOperationProviderInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html#affcda470e71eb13b8865b5ab712d18f0">createPostConnectOperationProviderInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;providerRegistrar, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;contextManager)</td></tr>
+<tr class="separator:affcda470e71eb13b8865b5ab712d18f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acae5a9403a3b7985901371dfad599d7a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html">SynchronizeStateSenderFactory</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html#acae5a9403a3b7985901371dfad599d7a">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager)</td></tr>
 <tr class="separator:acae5a9403a3b7985901371dfad599d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -132,6 +134,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Creates a new instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html">SynchronizeStateSenderFactory</a></code>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000063">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The <code>ContextManager</code> used to construct the synchronize state sender. </td></tr>
@@ -170,15 +173,59 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="affcda470e71eb13b8865b5ab712d18f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affcda470e71eb13b8865b5ab712d18f0">&#9670;&nbsp;</a></span>createPostConnectOperationProviderInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html">avsCommon::sdkInterfaces::PostConnectOperationProviderInterface</a> &gt; alexaClientSDK::synchronizeStateSender::SynchronizeStateSenderFactory::createPostConnectOperationProviderInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>providerRegistrar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>contextManager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates a new instance of the <code>PostConnectOperationProviderInterface</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The <code>ContextManager</code> used to construct the synchronize state sender. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a new instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html">SynchronizeStateSenderFactory</a></code>. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/SynchronizeStateSender/include/SynchronizeStateSender/<a class="el" href="_synchronize_state_sender_factory_8h_source.html">SynchronizeStateSenderFactory.h</a></li>
-<li>/workplace/avs-device-sdk/SynchronizeStateSender/src/<a class="el" href="_synchronize_state_sender_factory_8cpp.html">SynchronizeStateSenderFactory.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SynchronizeStateSender/include/SynchronizeStateSender/<a class="el" href="_synchronize_state_sender_factory_8h_source.html">SynchronizeStateSenderFactory.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SynchronizeStateSender/src/<a class="el" href="_synchronize_state_sender_factory_8cpp.html">SynchronizeStateSenderFactory.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

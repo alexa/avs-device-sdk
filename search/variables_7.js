@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['handle_5fplay_5fcommand_5fto_5fplaying',['HANDLE_PLAY_COMMAND_TO_PLAYING',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a4427ac35c7189b893733e8a33d7e86f2',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['handler',['handler',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_handler_and_policy.html#ace595c65bbdb895e35c29f58f622279d',1,'alexaClientSDK::avsCommon::avs::HandlerAndPolicy']]],
   ['has_5fmore_5fkey',['HAS_MORE_KEY',['../namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#aa37e06f0ec4eb13c52ea722b830e92fb',1,'alexaClientSDK::acsdkBluetooth']]],
   ['hasrenderingfailed',['hasRenderingFailed',['../structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_dynamic_data.html#a57fc6d38a0cb7bc1f112dd0f304dc13c',1,'alexaClientSDK::acsdkAlerts::Alert::DynamicData']]],
@@ -9,7 +10,7 @@ var searchData=
   ['header3',['header3',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_m_i_m_e_parser_test.html#aaebc34bea87a9681d0afdec9290bd7a0',1,'alexaClientSDK::avsCommon::test::MIMEParserTest']]],
   ['header4',['header4',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_m_i_m_e_parser_test.html#aaf1e576be07d323e13bcc577d8ea66eb',1,'alexaClientSDK::avsCommon::test::MIMEParserTest']]],
   ['header5',['header5',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_m_i_m_e_parser_test.html#a70c2806e95e34f959a1696c89130e653',1,'alexaClientSDK::avsCommon::test::MIMEParserTest']]],
-  ['header_5fkey',['HEADER_KEY',['../namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019',1,'alexaClientSDK::capabilitiesDelegate::test::HEADER_KEY()'],['../namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019',1,'alexaClientSDK::capabilitiesDelegate::test::HEADER_KEY()'],['../namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a7c6d9a91b93eefbb46ffa6c60c152a42',1,'alexaClientSDK::capabilityAgents::externalMediaPlayer::HEADER_KEY()']]],
+  ['header_5fkey',['HEADER_KEY',['../namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a032e97ce0326bd273ba7061d35dc704f',1,'alexaClientSDK::acsdkExternalMediaPlayer::HEADER_KEY()'],['../namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019',1,'alexaClientSDK::capabilitiesDelegate::test::HEADER_KEY()'],['../namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a63b09e077ff1b762ab844fa667a45019',1,'alexaClientSDK::capabilitiesDelegate::test::HEADER_KEY()']]],
   ['header_5fkey_5fstring',['HEADER_KEY_STRING',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1constants.html#a7a09cc0d9eaab0f0c9f844caab7aa9aa',1,'alexaClientSDK::avsCommon::avs::constants']]],
   ['header_5fline',['HEADER_LINE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#af8824c98ed568984260d583329db95f6',1,'alexaClientSDK::avsCommon::test']]],
   ['header_5fline_5flanguage_5fprefix',['HEADER_LINE_LANGUAGE_PREFIX',['../namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#aff275a2e9d6c32b7979c771514e9c10e',1,'alexaClientSDK::authorization::cblAuthDelegate']]],

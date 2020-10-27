@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -76,6 +76,7 @@ $(function() {
 <li>capabilityResources
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_attributes.html#ae30578c62714dfaa75e94bd8a391386d">alexaClientSDK::avsCommon::sdkInterfaces::modeController::ModeControllerAttributes</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attributes.html#ac5b608a922575e89be989aa046a1dff5">alexaClientSDK::avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html#a896c1a20e3e5a91bc38b04f373188735">alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes</a>
 </li>
 <li>caption_manager
 : <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_caption_manager_test.html#a0a9d1651779cd7797a00da77e6ec97c6">alexaClientSDK::captions::test::CaptionManagerTest</a>
@@ -83,17 +84,26 @@ $(function() {
 <li>captionData
 : <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item.html#af207720a65419811fcba28a14bed443d">alexaClientSDK::acsdkAudioPlayer::AudioItem</a>
 </li>
+<li>cbSz
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a2fad5d8373aa016e102db868cc0f495a">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>channelVolume
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_application_media_interfaces.html#af0b722bf9c8688490484606d815da61f">alexaClientSDK::avsCommon::sdkInterfaces::ApplicationMediaInterfaces</a>
+</li>
+<li>channelVolumes
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1_pooled_application_media_interfaces.html#aecbdec393dd20f955487614747661199">alexaClientSDK::acsdkApplicationAudioPipelineFactoryInterfaces::PooledApplicationMediaInterfaces</a>
+</li>
 <li>charIndex
 : <a class="el" href="structalexa_client_s_d_k_1_1captions_1_1_text_style.html#a0850a3d24bd82b36b123f02a42b2f477">alexaClientSDK::captions::TextStyle</a>
-</li>
-<li>chunkSize
-: <a class="el" href="structalexa_client_s_d_k_1_1diagnostics_1_1utils_1_1_wav_file_header.html#a76b6571064b08928bf8994124e68f07f">alexaClientSDK::diagnostics::utils::WavFileHeader</a>
 </li>
 <li>classOfDevice
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface_1_1_meta_data.html#a73a1188d52b53724c1d9fad7f688e202">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface::MetaData</a>
 </li>
 <li>cleanedUp
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_slow_destructor.html#a07979eee77ed35a781f070d60ded077f">alexaClientSDK::avsCommon::utils::threading::test::SlowDestructor</a>
+</li>
+<li>clearLead
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state_1_1_media_player_protection.html#a57194dbbb010e56d596aebba584542d3">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerState::MediaPlayerProtection</a>
 </li>
 <li>clientA
 : <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_channel_test.html#a5754aba8d73c2511fec1f53efb407d1e">alexaClientSDK::afml::test::ChannelTest</a>
@@ -128,7 +138,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_kitt_ai_key_word_test.html#a2e0e779bfdd77591036f8bd420b693ce">alexaClientSDK::kwd::test::KittAiKeyWordTest</a>
 </li>
 <li>configuration
-: <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html#ab6ab52e137d0695c66a5eb9882c40bb2">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::Capability</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_01dee05b8c7853b027aac81ec15f7120.html#a6f73f3022d042940edd58ca1aaea2574">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesBuilderInterface::Capability</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface_1_1_capability.html#ab6ab52e137d0695c66a5eb9882c40bb2">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface::Capability</a>
 </li>
 <li>configurationJsonDuckingNotSupported
 : <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1interrupt_model_1_1_interrupt_model_configuration.html#a18b289395f3f6c55d1ee67de950fc601">alexaClientSDK::afml::interruptModel::InterruptModelConfiguration</a>
@@ -180,7 +191,7 @@ $(function() {
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html#a9db2704b13dc277b133e92f0c0154182">alexaClientSDK::avsCommon::avs::AVSMessageEndpoint</a>
 </li>
 <li>coverId
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#a165f566d85dca5a5d417c2c89a288299">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_adapter_playback_state.html#a1710e268688b66c7550eeea00a69c315">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::AdapterPlaybackState</a>
 </li>
 <li>customIdentifier
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes_1_1_additional_attributes.html#a30253343fbae15c7d29a799a0a828300">alexaClientSDK::avsCommon::avs::AVSDiscoveryEndpointAttributes::AdditionalAttributes</a>
@@ -190,7 +201,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

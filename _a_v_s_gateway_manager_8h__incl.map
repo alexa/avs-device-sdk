@@ -1,16 +1,26 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h">
-<area shape="rect" id="node6" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="97,407,315,448"/>
-<area shape="rect" id="node7" href="$_a_v_s_gateway_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayManagerInterface.h" alt="" coords="392,317,609,359"/>
-<area shape="rect" id="node9" href="$_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="839,124,1045,180"/>
-<area shape="rect" id="node22" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1431,407,1645,448"/>
-<area shape="rect" id="node25" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorageInterface.h" alt="" coords="49,131,312,173"/>
-<area shape="rect" id="node27" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="737,228,904,269"/>
-<area shape="rect" id="node8" href="$_a_v_s_gateway_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayObserverInterface.h" alt="" coords="391,407,611,448"/>
-<area shape="rect" id="node10" href="$_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="980,228,1200,269"/>
-<area shape="rect" id="node11" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1013,317,1205,359"/>
-<area shape="rect" id="node12" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="998,414,1249,441"/>
-<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="813,496,1017,537"/>
-<area shape="rect" id="node20" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1126,496,1369,537"/>
-<area shape="rect" id="node19" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="699,585,865,627"/>
-<area shape="rect" id="node26" href="$_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="61,228,268,269"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h">
+<area shape="rect" id="node6" href="$_post_connect_operation_provider_registrar_interface_8h.html" title="acsdkPostConnectOperation\lProviderRegistrarInterfaces\l/PostConnectOperationProviderRegistrar\lInterface.h" alt="" coords="1803,139,2061,209"/>
+<area shape="rect" id="node8" href="$_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="2006,257,2213,313"/>
+<area shape="rect" id="node25" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="894,629,1109,671"/>
+<area shape="rect" id="node37" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="2904,629,3123,671"/>
+<area shape="rect" id="node38" href="$_a_v_s_gateway_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayManagerInterface.h" alt="" coords="2741,540,2958,581"/>
+<area shape="rect" id="node40" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorageInterface.h" alt="" coords="2498,265,2761,306"/>
+<area shape="rect" id="node42" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2326,153,2493,195"/>
+<area shape="rect" id="node20" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="901,272,1097,299"/>
+<area shape="rect" id="node9" href="$_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="2035,361,2255,403"/>
+<area shape="rect" id="node10" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2049,451,2241,492"/>
+<area shape="rect" id="node11" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2020,547,2271,574"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1133,629,1337,671"/>
+<area shape="rect" id="node18" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1612,629,1855,671"/>
+<area shape="rect" id="node17" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1285,719,1451,760"/>
+<area shape="rect" id="node21" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="377,361,553,403"/>
+<area shape="rect" id="node22" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="377,451,553,492"/>
+<area shape="rect" id="node28" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1412,629,1588,671"/>
+<area shape="rect" id="node29" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="440,540,616,581"/>
+<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1374,540,1567,581"/>
+<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="951,540,1127,581"/>
+<area shape="rect" id="node32" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="693,629,869,671"/>
+<area shape="rect" id="node33" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="616,719,792,760"/>
+<area shape="rect" id="node39" href="$_a_v_s_gateway_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayObserverInterface.h" alt="" coords="2659,629,2879,671"/>
+<area shape="rect" id="node41" href="$_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="2511,361,2718,403"/>
 </map>

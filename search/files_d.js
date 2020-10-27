@@ -7,6 +7,7 @@ var searchData=
   ['networkinfo_2eh',['NetworkInfo.h',['../_network_info_8h.html',1,'']]],
   ['networkinfotest_2ecpp',['NetworkInfoTest.cpp',['../_network_info_test_8cpp.html',1,'']]],
   ['networkintegrationtests_2ecpp',['NetworkIntegrationTests.cpp',['../_network_integration_tests_8cpp.html',1,'']]],
+  ['nooppowerresourcemanager_2eh',['NoOpPowerResourceManager.h',['../_no_op_power_resource_manager_8h.html',1,'']]],
   ['normalizer_2ecpp',['Normalizer.cpp',['../_normalizer_8cpp.html',1,'']]],
   ['normalizer_2eh',['Normalizer.h',['../_normalizer_8h.html',1,'']]],
   ['normalizertest_2ecpp',['NormalizerTest.cpp',['../_normalizer_test_8cpp.html',1,'']]],
@@ -27,5 +28,8 @@ var searchData=
   ['notificationsobserverinterface_2eh',['NotificationsObserverInterface.h',['../_notifications_observer_interface_8h.html',1,'']]],
   ['notificationsstorageinterface_2eh',['NotificationsStorageInterface.h',['../_notifications_storage_interface_8h.html',1,'']]],
   ['notificationsstoragetest_2ecpp',['NotificationsStorageTest.cpp',['../_notifications_storage_test_8cpp.html',1,'']]],
+  ['notifier_2eh',['Notifier.h',['../_notifier_8h.html',1,'']]],
+  ['notifierinterface_2eh',['NotifierInterface.h',['../_notifier_interface_8h.html',1,'']]],
+  ['notifiertest_2ecpp',['NotifierTest.cpp',['../_notifier_test_8cpp.html',1,'']]],
   ['nullmetricrecorder_2eh',['NullMetricRecorder.h',['../_null_metric_recorder_8h.html',1,'']]]
 ];

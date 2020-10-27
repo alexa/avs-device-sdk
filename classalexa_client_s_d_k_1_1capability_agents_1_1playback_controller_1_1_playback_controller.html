@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -145,6 +145,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:addea8b8401069b82a22164b27069b545"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">PlaybackHandlerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html#addea8b8401069b82a22164b27069b545">createPlaybackHandlerInterface</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; shutdownNotifier, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; defaultEndpointCapabilitiesRegistrar)</td></tr>
+<tr class="separator:addea8b8401069b82a22164b27069b545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa070edfd0e5ca81b0482338b8047a80a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html">PlaybackController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html#aa070edfd0e5ca81b0482338b8047a80a">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender)</td></tr>
 <tr class="separator:aa070edfd0e5ca81b0482338b8047a80a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -213,6 +215,63 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Create an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html">PlaybackController</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The <code>ContextManagerInterface</code> used to generate system context for events. </td></tr>
+    <tr><td class="paramname">messageSender</td><td>The <code>MessageSenderInterface</code> that sends events to AVS. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>nullptr</code> if the inputs are not defined, else a new instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_controller.html">PlaybackController</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="addea8b8401069b82a22164b27069b545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addea8b8401069b82a22164b27069b545">&#9670;&nbsp;</a></span>createPlaybackHandlerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">PlaybackHandlerInterface</a> &gt; alexaClientSDK::capabilityAgents::playbackController::PlaybackController::createPlaybackHandlerInterface </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contextManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>messageSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>defaultEndpointCapabilitiesRegistrar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method to create an instance of <code>PlaybackHandlerInterface</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The <code>ContextManagerInterface</code> used to generate system context for events. </td></tr>
@@ -348,7 +407,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>This is called by the ContextManager once the context is ready and available.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000018">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -385,7 +444,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>The <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a> calls this if it is unable to process a <code>getContext</code> request successfully.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000008">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000019">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -445,14 +504,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/PlaybackController/include/PlaybackController/<a class="el" href="_playback_controller_8h_source.html">PlaybackController.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/PlaybackController/src/<a class="el" href="_playback_controller_8cpp.html">PlaybackController.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/PlaybackController/include/PlaybackController/<a class="el" href="_playback_controller_8h_source.html">PlaybackController.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/PlaybackController/src/<a class="el" href="_playback_controller_8cpp.html">PlaybackController.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

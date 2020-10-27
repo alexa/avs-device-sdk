@@ -1,6 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Audio/EqualizerModeControllerInterface.h">
-<area shape="rect" id="node2" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="153,124,276,151"/>
-<area shape="rect" id="node6" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="294,199,487,240"/>
-<area shape="rect" id="node10" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="512,199,677,240"/>
-<area shape="rect" id="node11" href="$_result_8h.html" title="Result.h" alt="" coords="559,288,630,315"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/include/acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/include/acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h">
+<area shape="rect" id="node2" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="153,153,276,180"/>
+<area shape="rect" id="node6" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="294,228,487,269"/>
+<area shape="rect" id="node10" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="512,228,677,269"/>
+<area shape="rect" id="node11" href="$_result_8h.html" title="Result.h" alt="" coords="559,317,630,344"/>
 </map>

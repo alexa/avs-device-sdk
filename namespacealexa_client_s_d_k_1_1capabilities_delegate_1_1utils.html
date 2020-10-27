@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -106,6 +106,15 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:abec93ce64149eb1d4dd71252472baf90"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#abec93ce64149eb1d4dd71252472baf90">MAX_DISCOVERY_PAYLOAD_SIZE</a> = 256 * 1024</td></tr>
+<tr class="memdesc:abec93ce64149eb1d4dd71252472baf90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of the Discovery event (256 KB)  <a href="#abec93ce64149eb1d4dd71252472baf90">More...</a><br /></td></tr>
+<tr class="separator:abec93ce64149eb1d4dd71252472baf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04ac23ea876b794d8a7c457bbe2340a1"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a04ac23ea876b794d8a7c457bbe2340a1">MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE</a> = 10 * 1024</td></tr>
+<tr class="memdesc:a04ac23ea876b794d8a7c457bbe2340a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of header and scope fields in the Discovery event (Choosing a sufficiently large size of 10KB).  <a href="#a04ac23ea876b794d8a7c457bbe2340a1">More...</a><br /></td></tr>
+<tr class="separator:a04ac23ea876b794d8a7c457bbe2340a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a887eeaeae2520d8006c32c045f537a6c"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a887eeaeae2520d8006c32c045f537a6c">MAX_ENDPOINTS_SIZE_IN_PAYLOAD</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#abec93ce64149eb1d4dd71252472baf90">MAX_DISCOVERY_PAYLOAD_SIZE</a> - <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a04ac23ea876b794d8a7c457bbe2340a1">MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE</a></td></tr>
+<tr class="memdesc:a887eeaeae2520d8006c32c045f537a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of endpoint configurations in Event payload.  <a href="#a887eeaeae2520d8006c32c045f537a6c">More...</a><br /></td></tr>
+<tr class="separator:a887eeaeae2520d8006c32c045f537a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ecb2e43280a8140abee4613d20fa898"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a2ecb2e43280a8140abee4613d20fa898">CAPABILITY_INTERFACE_INSTANCE_NAME_KEY</a> = &quot;instance&quot;</td></tr>
 <tr class="separator:a2ecb2e43280a8140abee4613d20fa898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab24b5290e49c3e8e1e9734c8f0cc8505"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#ab24b5290e49c3e8e1e9734c8f0cc8505">CAPABILITY_INTERFACE_PROPERTIES_KEY</a> = &quot;properties&quot;</td></tr>
@@ -1114,6 +1123,78 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a04ac23ea876b794d8a7c457bbe2340a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04ac23ea876b794d8a7c457bbe2340a1">&#9670;&nbsp;</a></span>MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int alexaClientSDK::capabilitiesDelegate::utils::MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE = 10 * 1024</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum size of header and scope fields in the Discovery event (Choosing a sufficiently large size of 10KB). </p>
+
+</div>
+</div>
+<a id="abec93ce64149eb1d4dd71252472baf90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec93ce64149eb1d4dd71252472baf90">&#9670;&nbsp;</a></span>MAX_DISCOVERY_PAYLOAD_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int alexaClientSDK::capabilitiesDelegate::utils::MAX_DISCOVERY_PAYLOAD_SIZE = 256 * 1024</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum size of the Discovery event (256 KB) </p>
+
+</div>
+</div>
+<a id="a887eeaeae2520d8006c32c045f537a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a887eeaeae2520d8006c32c045f537a6c">&#9670;&nbsp;</a></span>MAX_ENDPOINTS_SIZE_IN_PAYLOAD</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int alexaClientSDK::capabilitiesDelegate::utils::MAX_ENDPOINTS_SIZE_IN_PAYLOAD = <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#abec93ce64149eb1d4dd71252472baf90">MAX_DISCOVERY_PAYLOAD_SIZE</a> - <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a04ac23ea876b794d8a7c457bbe2340a1">MAX_DISCOVERY_HEADER_AND_SCOPE_SIZE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum size of endpoint configurations in Event payload. </p>
+
+</div>
+</div>
 <a id="a1cb7c90b9b661aa60a0ba02bc5cbf519"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1cb7c90b9b661aa60a0ba02bc5cbf519">&#9670;&nbsp;</a></span>PAYLOAD_VERSION</h2>
 
@@ -1238,7 +1319,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

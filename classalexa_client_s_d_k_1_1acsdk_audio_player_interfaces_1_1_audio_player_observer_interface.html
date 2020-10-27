@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -80,9 +81,10 @@ Inheritance diagram for alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerO
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_inherit__map" id="alexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_test_audio_player_observer.html" title="alexaClientSDK::acsdkAudio\lPlayer::test::TestAudioPlayerObserver" alt="" coords="301,5,548,47"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="307,71,542,127"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="596,79,785,120"/>
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_audio_player_observer.html" title="alexaClientSDK::acsdkAudio\lPlayer::test::MockAudioPlayerObserver" alt="" coords="301,5,553,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_test_audio_player_observer.html" title="alexaClientSDK::acsdkAudio\lPlayer::test::TestAudioPlayerObserver" alt="" coords="304,71,551,112"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="310,137,545,193"/>
+<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="601,144,791,185"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -92,16 +94,57 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context of the AudioPlayer when the observer is notified of the <code>PlayerActivity</code> state change.  <a href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a8c231eba491d935e024ac9ec29ada8b6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6">SeekStatus</a> { <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6a0062bc1c40bb7a13bce3f3489ba73a2e">SeekStatus::SEEK_START</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6a9ce60dcb99a513824d62182bb17fef9f">SeekStatus::SEEK_COMPLETE</a>
+ }<tr class="memdesc:a8c231eba491d935e024ac9ec29ada8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing Seek activities.  <a href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:a8c231eba491d935e024ac9ec29ada8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acd31b18546fe802112562001117cb9d6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#acd31b18546fe802112562001117cb9d6">~AudioPlayerObserverInterface</a> ()=default</td></tr>
 <tr class="separator:acd31b18546fe802112562001117cb9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3960f276eb6df62ef7e0a4400886c401"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a3960f276eb6df62ef7e0a4400886c401">onPlayerActivityChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af150b2d10515e0e7347e09a69986a47b">avsCommon::avs::PlayerActivity</a> state, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html">Context</a> &amp;context)=0</td></tr>
 <tr class="separator:a3960f276eb6df62ef7e0a4400886c401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7554fcfe01259107d736b2ff3a4c054c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a7554fcfe01259107d736b2ff3a4c054c">onSeekActivity</a> (const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6">SeekStatus</a> seekStatus, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html">Context</a> &amp;context)</td></tr>
+<tr class="separator:a7554fcfe01259107d736b2ff3a4c054c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class allows any observers of the <code>AudioPlayer</code> to be notified of changes in the <code>AudioPlayer</code> audio state. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a8c231eba491d935e024ac9ec29ada8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c231eba491d935e024ac9ec29ada8b6">&#9670;&nbsp;</a></span>SeekStatus</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6">alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::SeekStatus</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enum representing Seek activities. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8c231eba491d935e024ac9ec29ada8b6a0062bc1c40bb7a13bce3f3489ba73a2e"></a>SEEK_START&#160;</td><td class="fielddoc"><p>Initiating a seek to another play position within the current track. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8c231eba491d935e024ac9ec29ada8b6a9ce60dcb99a513824d62182bb17fef9f"></a>SEEK_COMPLETE&#160;</td><td class="fielddoc"><p>Finished seeking within the current track. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acd31b18546fe802112562001117cb9d6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acd31b18546fe802112562001117cb9d6">&#9670;&nbsp;</a></span>~AudioPlayerObserverInterface()</h2>
 
@@ -175,14 +218,60 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7554fcfe01259107d736b2ff3a4c054c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7554fcfe01259107d736b2ff3a4c054c">&#9670;&nbsp;</a></span>onSeekActivity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::onSeekActivity </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html#a8c231eba491d935e024ac9ec29ada8b6">SeekStatus</a>&#160;</td>
+          <td class="paramname"><em>seekStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used to notify the observer when the <code>AudioPlayer</code> is seeking within the current track.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seekStatus</td><td>Type of activity being performed, represented by <code>SeekStatus</code> </td></tr>
+    <tr><td class="paramname">context</td><td>The <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html" title="The context of the AudioPlayer when the observer is notified of the PlayerActivity state change...">Context</a></code> of the <code>AudioPlayer</code> at the time of the seek activity. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_test_audio_player_observer.html#a981efa1cd96d8976054101604f338dec">alexaClientSDK::acsdkAudioPlayer::test::TestAudioPlayerObserver</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/<a class="el" href="_audio_player_observer_interface_8h_source.html">AudioPlayerObserverInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/<a class="el" href="_audio_player_observer_interface_8h_source.html">AudioPlayerObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,8 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_audio_player_observer.html">MockAudioPlayerObserver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_context.html">MockContext</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_progress_timer_test.html">ProgressTimerTest</a></td></tr>
@@ -93,9 +95,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#aabe5e43adc73bfdff9f5fe6aab29e8d5">MY_WAIT_TIMEOUT</a> (1000)</td></tr>
-<tr class="memdesc:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="#aabe5e43adc73bfdff9f5fe6aab29e8d5">More...</a><br /></td></tr>
-<tr class="separator:aabe5e43adc73bfdff9f5fe6aab29e8d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df0b5f43d3dc338089376f92bd95ad6"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a8df0b5f43d3dc338089376f92bd95ad6">MY_WAIT_TIMEOUT</a> (1500)</td></tr>
+<tr class="memdesc:a8df0b5f43d3dc338089376f92bd95ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plenty of time for a test to complete.  <a href="#a8df0b5f43d3dc338089376f92bd95ad6">More...</a><br /></td></tr>
+<tr class="separator:a8df0b5f43d3dc338089376f92bd95ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5252771ed22ab652f669703cf14852c"><td class="memItemLeft" align="right" valign="top">static std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad5252771ed22ab652f669703cf14852c">EVENT_PROCESS_DELAY</a> (20)</td></tr>
 <tr class="separator:ad5252771ed22ab652f669703cf14852c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4855602e27604e68ca5623edd3d30adf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4855602e27604e68ca5623edd3d30adf">CHANNEL_NAME</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html#a665ff812ec1ce4cdc68ae409673ad0be">avsCommon::sdkInterfaces::FocusManagerInterface::CONTENT_CHANNEL_NAME</a>)</td></tr>
@@ -161,6 +163,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a19668fcbd8c4dca8faa75aba8798123b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a19668fcbd8c4dca8faa75aba8798123b">NAME_CLEAR_ALL</a> (&quot;CLEAR_ALL&quot;)</td></tr>
 <tr class="memdesc:a19668fcbd8c4dca8faa75aba8798123b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL clearBehavior.  <a href="#a19668fcbd8c4dca8faa75aba8798123b">More...</a><br /></td></tr>
 <tr class="separator:a19668fcbd8c4dca8faa75aba8798123b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac836de639a141a7d21ef2ec2506fc6eb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac836de639a141a7d21ef2ec2506fc6eb">NAME_CLEAR_ENQUEUED</a> (&quot;CLEAR_ENQUEUED&quot;)</td></tr>
+<tr class="memdesc:ac836de639a141a7d21ef2ec2506fc6eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ENQUEUED clearBehavior.  <a href="#ac836de639a141a7d21ef2ec2506fc6eb">More...</a><br /></td></tr>
+<tr class="separator:ac836de639a141a7d21ef2ec2506fc6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b2c7d98b336e5ce39eab2d289937b39"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b2c7d98b336e5ce39eab2d289937b39">AUDIO_ITEM_ID_1</a> (&quot;testID1&quot;)</td></tr>
 <tr class="memdesc:a9b2c7d98b336e5ce39eab2d289937b39"><td class="mdescLeft">&#160;</td><td class="mdescRight">audioItemId for testing.  <a href="#a9b2c7d98b336e5ce39eab2d289937b39">More...</a><br /></td></tr>
 <tr class="separator:a9b2c7d98b336e5ce39eab2d289937b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,18 +191,24 @@ Functions</h2></td></tr>
 <tr class="separator:ad0afb44e391fd71a6d1cb47f3bb6a158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe1cbf1e0f060cbef5b3d484050a95ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#abe1cbf1e0f060cbef5b3d484050a95ca">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPlayingToStopped)</td></tr>
 <tr class="separator:abe1cbf1e0f060cbef5b3d484050a95ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53dcb4fe247baefbe40a6d8c4cccdabc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a53dcb4fe247baefbe40a6d8c4cccdabc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPlayingToStoppedWithClear)</td></tr>
-<tr class="separator:a53dcb4fe247baefbe40a6d8c4cccdabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a249963e74a8f0655990a639bf81dd7e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a249963e74a8f0655990a639bf81dd7e6">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromStoppedToPlaying)</td></tr>
-<tr class="separator:a249963e74a8f0655990a639bf81dd7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53ebc3ec3d3b40bad8c473fc947e4a84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a53ebc3ec3d3b40bad8c473fc947e4a84">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, testTransitionFromStoppedToResumePlaying)</td></tr>
-<tr class="separator:a53ebc3ec3d3b40bad8c473fc947e4a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2a18cbfaa411189bc33078571e43a9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac2a18cbfaa411189bc33078571e43a9a">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPlayingToStoppedToIdleWithClearAll)</td></tr>
+<tr class="separator:ac2a18cbfaa411189bc33078571e43a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bd1df358b0fa2857766f353dd6b31fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a6bd1df358b0fa2857766f353dd6b31fc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_continuesPlayingWithClearEnqueued)</td></tr>
+<tr class="separator:a6bd1df358b0fa2857766f353dd6b31fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbce78a7c46edff694c90fe50a1a16c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#acbce78a7c46edff694c90fe50a1a16c6">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromIdleToPlayingAfterClearAll)</td></tr>
+<tr class="separator:acbce78a7c46edff694c90fe50a1a16c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4488b276dfca429163a852e5f4e8a675"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4488b276dfca429163a852e5f4e8a675">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, testTransitionFromIdleToResumePlaying)</td></tr>
+<tr class="separator:a4488b276dfca429163a852e5f4e8a675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab36a9a90aa0289f0ad77e749bf0f6794"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab36a9a90aa0289f0ad77e749bf0f6794">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, testTransitionFromPlayingToPlayingNextEnqueuedTrack)</td></tr>
 <tr class="separator:ab36a9a90aa0289f0ad77e749bf0f6794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa68f89254a3abf488ae7ef34535dc9bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#aa68f89254a3abf488ae7ef34535dc9bb">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPlayingToPaused)</td></tr>
 <tr class="separator:aa68f89254a3abf488ae7ef34535dc9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a685ded42603b17d0f1227dae4610881f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a685ded42603b17d0f1227dae4610881f">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_localPause_withEnqueuedTracks_doesNotAutoProgress)</td></tr>
+<tr class="separator:a685ded42603b17d0f1227dae4610881f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9090bb05eb1167e0c61a9e894377b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae9090bb05eb1167e0c61a9e894377b59">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPausedToStopped)</td></tr>
 <tr class="separator:ae9090bb05eb1167e0c61a9e894377b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1170f88d4afb0d6721cc7853176e80b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1170f88d4afb0d6721cc7853176e80b6">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_transitionFromPausedToIdle)</td></tr>
+<tr class="separator:a1170f88d4afb0d6721cc7853176e80b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64d22dc87d3bd4cefd85a782e5b1c062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a64d22dc87d3bd4cefd85a782e5b1c062">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_resumeAfterPaused)</td></tr>
 <tr class="separator:a64d22dc87d3bd4cefd85a782e5b1c062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ef37a5a29fee965b5a5e29bfc381d1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a3ef37a5a29fee965b5a5e29bfc381d1b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>, test_callingProvideStateWhenIdle)</td></tr>
@@ -390,6 +401,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a1ac401e3e68c4c50be9aef3c2056d000"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1ac401e3e68c4c50be9aef3c2056d000">CLEAR_ALL_PAYLOAD_TEST</a></td></tr>
 <tr class="memdesc:a1ac401e3e68c4c50be9aef3c2056d000"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ALL payload for testing.  <a href="#a1ac401e3e68c4c50be9aef3c2056d000">More...</a><br /></td></tr>
 <tr class="separator:a1ac401e3e68c4c50be9aef3c2056d000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac393557749916d8c1061e656a2e386b2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac393557749916d8c1061e656a2e386b2">CLEAR_ENQUEUED_PAYLOAD_TEST</a></td></tr>
+<tr class="memdesc:ac393557749916d8c1061e656a2e386b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLEAR_ENQUEUED payload for testing.  <a href="#ac393557749916d8c1061e656a2e386b2">More...</a><br /></td></tr>
+<tr class="separator:ac393557749916d8c1061e656a2e386b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8424bc662f66044bca5a18a20c24eff"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae8424bc662f66044bca5a18a20c24eff">TOKEN_KEY</a> = &quot;token&quot;</td></tr>
 <tr class="memdesc:ae8424bc662f66044bca5a18a20c24eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Token JSON key.  <a href="#ae8424bc662f66044bca5a18a20c24eff">More...</a><br /></td></tr>
 <tr class="separator:ae8424bc662f66044bca5a18a20c24eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1045,8 +1059,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aabe5e43adc73bfdff9f5fe6aab29e8d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabe5e43adc73bfdff9f5fe6aab29e8d5">&#9670;&nbsp;</a></span>MY_WAIT_TIMEOUT()</h2>
+<a id="a8df0b5f43d3dc338089376f92bd95ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df0b5f43d3dc338089376f92bd95ad6">&#9670;&nbsp;</a></span>MY_WAIT_TIMEOUT()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1057,7 +1071,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static std::chrono::milliseconds alexaClientSDK::acsdkAudioPlayer::test::MY_WAIT_TIMEOUT </td>
           <td>(</td>
-          <td class="paramtype">1000&#160;</td>
+          <td class="paramtype">1500&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1098,6 +1112,34 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>CLEAR_ALL clearBehavior. </p>
+
+</div>
+</div>
+<a id="ac836de639a141a7d21ef2ec2506fc6eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac836de639a141a7d21ef2ec2506fc6eb">&#9670;&nbsp;</a></span>NAME_CLEAR_ENQUEUED()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acsdkAudioPlayer::test::NAME_CLEAR_ENQUEUED </td>
+          <td>(</td>
+          <td class="paramtype">&quot;CLEAR_ENQUEUED&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CLEAR_ENQUEUED clearBehavior. </p>
 
 </div>
 </div>
@@ -1410,7 +1452,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a22ff7cb8cff01339ced987a53ec8f8a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22ff7cb8cff01339ced987a53ec8f8a1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a22ff7cb8cff01339ced987a53ec8f8a1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1438,7 +1480,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aff8b46991eaa8a1e2457e4cc2dc5f2da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff8b46991eaa8a1e2457e4cc2dc5f2da">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aff8b46991eaa8a1e2457e4cc2dc5f2da">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1466,7 +1508,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0aaf6d1b1144a73badbe26ed573abfd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0aaf6d1b1144a73badbe26ed573abfd0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0aaf6d1b1144a73badbe26ed573abfd0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1494,7 +1536,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a81d5010ac9e3bac818643e09284e4fea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81d5010ac9e3bac818643e09284e4fea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a81d5010ac9e3bac818643e09284e4fea">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1522,7 +1564,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a87b189d6417ff3edb6e86255ffe0b117"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87b189d6417ff3edb6e86255ffe0b117">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a87b189d6417ff3edb6e86255ffe0b117">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1550,7 +1592,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a67f3b3bd3ca0c3c062c057726906a6d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67f3b3bd3ca0c3c062c057726906a6d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a67f3b3bd3ca0c3c062c057726906a6d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1578,7 +1620,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1aaae9d9fb99495b8446570dd9f70ea6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aaae9d9fb99495b8446570dd9f70ea6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aaae9d9fb99495b8446570dd9f70ea6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1606,7 +1648,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac3d2c1274a050f7509f886fc1e589e2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3d2c1274a050f7509f886fc1e589e2a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3d2c1274a050f7509f886fc1e589e2a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1634,7 +1676,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aad73a1aac077cd024512cd1985123c67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad73a1aac077cd024512cd1985123c67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad73a1aac077cd024512cd1985123c67">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1662,7 +1704,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa6f4b6010ea9ac3de82dc2a6e3aa73a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6f4b6010ea9ac3de82dc2a6e3aa73a1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f4b6010ea9ac3de82dc2a6e3aa73a1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1690,7 +1732,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abc180fe050b64620e22d11870e9a9558"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc180fe050b64620e22d11870e9a9558">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abc180fe050b64620e22d11870e9a9558">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1718,7 +1760,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7f148e65f63f8909c4569f9667dd269b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f148e65f63f8909c4569f9667dd269b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f148e65f63f8909c4569f9667dd269b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1747,7 +1789,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad0afb44e391fd71a6d1cb47f3bb6a158"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0afb44e391fd71a6d1cb47f3bb6a158">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0afb44e391fd71a6d1cb47f3bb6a158">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1776,7 +1818,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abe1cbf1e0f060cbef5b3d484050a95ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe1cbf1e0f060cbef5b3d484050a95ca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abe1cbf1e0f060cbef5b3d484050a95ca">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1804,8 +1846,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a53dcb4fe247baefbe40a6d8c4cccdabc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53dcb4fe247baefbe40a6d8c4cccdabc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/75]</span></h2>
+<a id="ac2a18cbfaa411189bc33078571e43a9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2a18cbfaa411189bc33078571e43a9a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1819,7 +1861,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_transitionFromPlayingToStoppedWithClear&#160;</td>
+          <td class="paramtype">test_transitionFromPlayingToStoppedToIdleWithClearAll&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1829,12 +1871,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test transition from Playing to Stopped with <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027a9fdb8ce15fc1cb22714d1321f343f9ad" title="Clears the entire playback queue and stops the currently playing stream (if applicable). ">ClearQueue.CLEAR_ALL</a> Directive </p>
+<p>Test transition from Playing to Stopped, then IDLE with <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027a9fdb8ce15fc1cb22714d1321f343f9ad" title="Clears the entire playback queue and stops the currently playing stream (if applicable). ">ClearQueue.CLEAR_ALL</a> Directive </p>
 
 </div>
 </div>
-<a id="a249963e74a8f0655990a639bf81dd7e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a249963e74a8f0655990a639bf81dd7e6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/75]</span></h2>
+<a id="a6bd1df358b0fa2857766f353dd6b31fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bd1df358b0fa2857766f353dd6b31fc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1848,7 +1890,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_transitionFromStoppedToPlaying&#160;</td>
+          <td class="paramtype">test_continuesPlayingWithClearEnqueued&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1858,12 +1900,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test transition from Stopped to Playing after issuing second Play directive </p>
+<p>Test transition from Playing to Stopped with <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027aa07b81b1682c17f3ff20fe26d9bd51b2" title="Clears the queue and continues to play the currently playing stream. ">ClearQueue.CLEAR_ENQUEUED</a> Directive Note - should not transition to idle </p>
 
 </div>
 </div>
-<a id="a53ebc3ec3d3b40bad8c473fc947e4a84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53ebc3ec3d3b40bad8c473fc947e4a84">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/75]</span></h2>
+<a id="acbce78a7c46edff694c90fe50a1a16c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbce78a7c46edff694c90fe50a1a16c6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1877,7 +1919,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">testTransitionFromStoppedToResumePlaying&#160;</td>
+          <td class="paramtype">test_transitionFromIdleToPlayingAfterClearAll&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1887,12 +1929,41 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test transition from Stopped to Playing after issuing second Play directive, resuming </p>
+<p>Test transition from Idle to Playing after issuing second Play directive </p>
+
+</div>
+</div>
+<a id="a4488b276dfca429163a852e5f4e8a675"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4488b276dfca429163a852e5f4e8a675">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/78]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAudioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testTransitionFromIdleToResumePlaying&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test transition from Idle to Playing after issuing second Play directive, resuming </p>
 
 </div>
 </div>
 <a id="ab36a9a90aa0289f0ad77e749bf0f6794"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab36a9a90aa0289f0ad77e749bf0f6794">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab36a9a90aa0289f0ad77e749bf0f6794">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1921,7 +1992,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa68f89254a3abf488ae7ef34535dc9bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa68f89254a3abf488ae7ef34535dc9bb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa68f89254a3abf488ae7ef34535dc9bb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1949,8 +2020,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a685ded42603b17d0f1227dae4610881f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a685ded42603b17d0f1227dae4610881f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/78]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAudioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_localPause_withEnqueuedTracks_doesNotAutoProgress&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test that <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> stays stopped and does not progress after a local stop </p>
+
+</div>
+</div>
 <a id="ae9090bb05eb1167e0c61a9e894377b59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9090bb05eb1167e0c61a9e894377b59">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9090bb05eb1167e0c61a9e894377b59">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1974,12 +2074,41 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test transition from Paused to Stopped on <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027a9fdb8ce15fc1cb22714d1321f343f9ad" title="Clears the entire playback queue and stops the currently playing stream (if applicable). ">ClearQueue.CLEAR_ALL</a> directive </p>
+<p>Test transition from Paused to Stopped on Stop directive </p>
+
+</div>
+</div>
+<a id="a1170f88d4afb0d6721cc7853176e80b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1170f88d4afb0d6721cc7853176e80b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/78]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAudioPlayer::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html">AudioPlayerTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_transitionFromPausedToIdle&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test transition from Paused to Idle on <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027a9fdb8ce15fc1cb22714d1321f343f9ad" title="Clears the entire playback queue and stops the currently playing stream (if applicable). ">ClearQueue.CLEAR_ALL</a> directive </p>
 
 </div>
 </div>
 <a id="a64d22dc87d3bd4cefd85a782e5b1c062"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64d22dc87d3bd4cefd85a782e5b1c062">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a64d22dc87d3bd4cefd85a782e5b1c062">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2008,7 +2137,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3ef37a5a29fee965b5a5e29bfc381d1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ef37a5a29fee965b5a5e29bfc381d1b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef37a5a29fee965b5a5e29bfc381d1b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2037,7 +2166,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4869e33f586f558924fdbe96500a8c3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4869e33f586f558924fdbe96500a8c3b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4869e33f586f558924fdbe96500a8c3b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2066,7 +2195,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3230c154460214f55fb525cfa60ccc1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3230c154460214f55fb525cfa60ccc1c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3230c154460214f55fb525cfa60ccc1c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2095,7 +2224,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a694883fb5a77f533613bc8c498437d60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a694883fb5a77f533613bc8c498437d60">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a694883fb5a77f533613bc8c498437d60">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2124,7 +2253,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac89fea512f8b5e2a222fca527b5d9921"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac89fea512f8b5e2a222fca527b5d9921">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac89fea512f8b5e2a222fca527b5d9921">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2153,7 +2282,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aad9bb0698846e7a994039b342af2c160"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad9bb0698846e7a994039b342af2c160">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad9bb0698846e7a994039b342af2c160">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2182,7 +2311,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6ab5e11461390f3c3eb394b7a80210c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ab5e11461390f3c3eb394b7a80210c8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ab5e11461390f3c3eb394b7a80210c8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2211,7 +2340,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3800e043d9d0c7d4cb617cf276f91b53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3800e043d9d0c7d4cb617cf276f91b53">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3800e043d9d0c7d4cb617cf276f91b53">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2240,7 +2369,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a37d71911d8c07143b85626ff1d5c0b6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37d71911d8c07143b85626ff1d5c0b6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a37d71911d8c07143b85626ff1d5c0b6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2269,7 +2398,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4be8bba2f5a6af1ad4d840723bbaecae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4be8bba2f5a6af1ad4d840723bbaecae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4be8bba2f5a6af1ad4d840723bbaecae">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2298,7 +2427,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aebb25442af37430e1f456183a94db999"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebb25442af37430e1f456183a94db999">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb25442af37430e1f456183a94db999">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2327,7 +2456,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2178503763c270c42a116dc6889938e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2178503763c270c42a116dc6889938e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2178503763c270c42a116dc6889938e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2356,7 +2485,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad592afd55f84ee6566f1d2a7e66e46c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad592afd55f84ee6566f1d2a7e66e46c5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad592afd55f84ee6566f1d2a7e66e46c5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2385,7 +2514,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac6885cac422fa5132e07382db0125349"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6885cac422fa5132e07382db0125349">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6885cac422fa5132e07382db0125349">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2414,7 +2543,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a162a35158652b122d748572807fab935"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a162a35158652b122d748572807fab935">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a162a35158652b122d748572807fab935">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2443,7 +2572,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a893af0256fdb693552a7d375e9577cdd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a893af0256fdb693552a7d375e9577cdd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a893af0256fdb693552a7d375e9577cdd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2472,7 +2601,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5f129a9915fe13ed6697079b30c46f27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f129a9915fe13ed6697079b30c46f27">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f129a9915fe13ed6697079b30c46f27">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2501,7 +2630,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8663ad3b4250d25f823e30798ab09c25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8663ad3b4250d25f823e30798ab09c25">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8663ad3b4250d25f823e30798ab09c25">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2530,7 +2659,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad2a50645d4cff966e990b8772c8be75b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2a50645d4cff966e990b8772c8be75b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2a50645d4cff966e990b8772c8be75b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2559,7 +2688,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae737cb485a94d7d6def882f5572ebdc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae737cb485a94d7d6def882f5572ebdc0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae737cb485a94d7d6def882f5572ebdc0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2588,7 +2717,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac725dc7c472f7df8b44b906115fafb01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac725dc7c472f7df8b44b906115fafb01">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac725dc7c472f7df8b44b906115fafb01">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2617,7 +2746,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab98cf2eb15e102d6d9d7b0878571c532"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab98cf2eb15e102d6d9d7b0878571c532">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab98cf2eb15e102d6d9d7b0878571c532">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2646,7 +2775,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3f6b0b979fb9799aeff44824acf8cf05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f6b0b979fb9799aeff44824acf8cf05">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f6b0b979fb9799aeff44824acf8cf05">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2675,7 +2804,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0f6aa780ffd6ee01bbfe329b7280415a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f6aa780ffd6ee01bbfe329b7280415a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f6aa780ffd6ee01bbfe329b7280415a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2704,7 +2833,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac8bf58211bd5e69e3ec54b85c34c269c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8bf58211bd5e69e3ec54b85c34c269c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8bf58211bd5e69e3ec54b85c34c269c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2733,7 +2862,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="acf86ef03310cda3e0b3189e6af0ccaa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf86ef03310cda3e0b3189e6af0ccaa5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acf86ef03310cda3e0b3189e6af0ccaa5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2762,7 +2891,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae14da468d7df815d9e662fab531587ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae14da468d7df815d9e662fab531587ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14da468d7df815d9e662fab531587ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2791,7 +2920,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1334008585df9cd6d939fa5d55eecd59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1334008585df9cd6d939fa5d55eecd59">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1334008585df9cd6d939fa5d55eecd59">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2820,7 +2949,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8aea90fbf3d4d3d2016c4bd248c38b35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aea90fbf3d4d3d2016c4bd248c38b35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8aea90fbf3d4d3d2016c4bd248c38b35">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2849,7 +2978,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a23ccc076778002e11ba1fa3d8a248f0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23ccc076778002e11ba1fa3d8a248f0f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ccc076778002e11ba1fa3d8a248f0f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2878,7 +3007,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a44e814b5d3e8a8bcd28290766e23a8ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44e814b5d3e8a8bcd28290766e23a8ec">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a44e814b5d3e8a8bcd28290766e23a8ec">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2907,7 +3036,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4b7e6d55f648796e92b323645a3919d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b7e6d55f648796e92b323645a3919d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b7e6d55f648796e92b323645a3919d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2936,7 +3065,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af7c632cca84a64b03953ef9a544bbffc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7c632cca84a64b03953ef9a544bbffc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af7c632cca84a64b03953ef9a544bbffc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2965,7 +3094,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aff92d398fe041f3153454b44cb162bad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff92d398fe041f3153454b44cb162bad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aff92d398fe041f3153454b44cb162bad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2994,7 +3123,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3203337ababa6e84c06e897490844c91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3203337ababa6e84c06e897490844c91">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3203337ababa6e84c06e897490844c91">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3023,7 +3152,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aba087e530514414be94b89a6447c0b73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba087e530514414be94b89a6447c0b73">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aba087e530514414be94b89a6447c0b73">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3052,7 +3181,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af771bc9ed5dc375471498a95d8466f88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af771bc9ed5dc375471498a95d8466f88">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af771bc9ed5dc375471498a95d8466f88">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3080,7 +3209,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0aafdb996e450d01b35bbbc38204e235"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0aafdb996e450d01b35bbbc38204e235">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0aafdb996e450d01b35bbbc38204e235">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3108,7 +3237,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab35a437cb5ba7dc1269bcbffa5a327de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab35a437cb5ba7dc1269bcbffa5a327de">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab35a437cb5ba7dc1269bcbffa5a327de">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3136,7 +3265,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="afcbd2aad8369d6d0e0e540de938f5250"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcbd2aad8369d6d0e0e540de938f5250">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afcbd2aad8369d6d0e0e540de938f5250">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3165,7 +3294,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aeb88b06fecb23b8fdc00e1dccf8092fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb88b06fecb23b8fdc00e1dccf8092fe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb88b06fecb23b8fdc00e1dccf8092fe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3194,7 +3323,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adde244728f1964ea4a50764ab3a4ee86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adde244728f1964ea4a50764ab3a4ee86">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adde244728f1964ea4a50764ab3a4ee86">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3222,7 +3351,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5bd4dfd7a237f3ed2e7cc2c5f4d690f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bd4dfd7a237f3ed2e7cc2c5f4d690f9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bd4dfd7a237f3ed2e7cc2c5f4d690f9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3250,7 +3379,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a784b9e422544d376ab48af209eb5b3e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a784b9e422544d376ab48af209eb5b3e4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a784b9e422544d376ab48af209eb5b3e4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3278,7 +3407,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad194b6f1155c874b5805d0e04ef40d33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad194b6f1155c874b5805d0e04ef40d33">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad194b6f1155c874b5805d0e04ef40d33">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3306,7 +3435,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adef8762f4f96257c2d06537d314e59e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adef8762f4f96257c2d06537d314e59e2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adef8762f4f96257c2d06537d314e59e2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[70/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3334,7 +3463,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9f2c55edaa8033fe15db802331f8f4ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f2c55edaa8033fe15db802331f8f4ad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f2c55edaa8033fe15db802331f8f4ad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[71/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3362,7 +3491,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6d3f4dbfbeba152dc268584db9815878"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d3f4dbfbeba152dc268584db9815878">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d3f4dbfbeba152dc268584db9815878">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[72/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3390,7 +3519,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa5dc0e317e39607cc34d628251608852"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5dc0e317e39607cc34d628251608852">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[70/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5dc0e317e39607cc34d628251608852">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[73/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3418,7 +3547,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a986377a491d13c6234d49d0ca93db1ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a986377a491d13c6234d49d0ca93db1ff">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[71/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a986377a491d13c6234d49d0ca93db1ff">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[74/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3446,7 +3575,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac1935ee1ef741e2dccd8e7e15cdfcfb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1935ee1ef741e2dccd8e7e15cdfcfb4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[72/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1935ee1ef741e2dccd8e7e15cdfcfb4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[75/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3474,7 +3603,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9eb6d8fe7bf7d0005180fe74c936d01d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9eb6d8fe7bf7d0005180fe74c936d01d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[73/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eb6d8fe7bf7d0005180fe74c936d01d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[76/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3502,7 +3631,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6baca3ae4f2b614cd7e55cf8810a2d77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6baca3ae4f2b614cd7e55cf8810a2d77">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[74/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6baca3ae4f2b614cd7e55cf8810a2d77">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[77/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3530,7 +3659,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abba185920cad29865edb06b86e19a028"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abba185920cad29865edb06b86e19a028">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[75/75]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abba185920cad29865edb06b86e19a028">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[78/78]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3726,6 +3855,31 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;clearBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a19668fcbd8c4dca8faa75aba8798123b">NAME_CLEAR_ALL</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a19668fcbd8c4dca8faa75aba8798123b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a19668fcbd8c4dca8faa75aba8798123b">alexaClientSDK::acsdkAudioPlayer::test::NAME_CLEAR_ALL</a></div><div class="ttdeci">static const std::string NAME_CLEAR_ALL(&quot;CLEAR_ALL&quot;)</div><div class="ttdoc">CLEAR_ALL clearBehavior. </div></div>
 </div><!-- fragment -->
 <p>CLEAR_ALL payload for testing. </p>
+
+</div>
+</div>
+<a id="ac393557749916d8c1061e656a2e386b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac393557749916d8c1061e656a2e386b2">&#9670;&nbsp;</a></span>CLEAR_ENQUEUED_PAYLOAD_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAudioPlayer::test::CLEAR_ENQUEUED_PAYLOAD_TEST</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;clearBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac836de639a141a7d21ef2ec2506fc6eb">NAME_CLEAR_ENQUEUED</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ac836de639a141a7d21ef2ec2506fc6eb"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac836de639a141a7d21ef2ec2506fc6eb">alexaClientSDK::acsdkAudioPlayer::test::NAME_CLEAR_ENQUEUED</a></div><div class="ttdeci">static const std::string NAME_CLEAR_ENQUEUED(&quot;CLEAR_ENQUEUED&quot;)</div><div class="ttdoc">CLEAR_ENQUEUED clearBehavior. </div></div>
+</div><!-- fragment -->
+<p>CLEAR_ENQUEUED payload for testing. </p>
 
 </div>
 </div>
@@ -3964,7 +4118,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab8b813a19f0082b40b8e9d025a9fa502">IDLE_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ab8b813a19f0082b40b8e9d025a9fa502"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab8b813a19f0082b40b8e9d025a9fa502">alexaClientSDK::acsdkAudioPlayer::test::IDLE_STATE</a></div><div class="ttdeci">static const std::string IDLE_STATE</div><div class="ttdoc">The IDLE state of the AudioPlayer. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:154</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;{&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(0) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;playerActivity\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab8b813a19f0082b40b8e9d025a9fa502">IDLE_STATE</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ab8b813a19f0082b40b8e9d025a9fa502"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ab8b813a19f0082b40b8e9d025a9fa502">alexaClientSDK::acsdkAudioPlayer::test::IDLE_STATE</a></div><div class="ttdeci">static const std::string IDLE_STATE</div><div class="ttdoc">The IDLE state of the AudioPlayer. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:158</div></div>
 </div><!-- fragment -->
 <p>The expected state when the <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> is not handling any directive. </p>
 
@@ -5116,13 +5270,13 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line"><span class="stringliteral">&quot;{&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;playBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a82cb367bcf7fc4f0401645a96a594cc9">NAME_REPLACE_ALL</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;playRequestor\&quot;: {&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;type\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad8042086dceee018e5cf573a9c6db7d9">PLAY_REQUESTOR_TYPE_ALERT</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;id\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b54079a6ccbc7e858d821fac326e1de">PLAY_REQUESTOR_ID</a> + <span class="stringliteral">&quot;\&quot;&quot;</span></div><div class="line">    <span class="stringliteral">&quot;},&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;audioItem\&quot;: {&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;audioItemId\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4abe6f89574c94ea3200dd2671652cbc">AUDIO_ITEM_ID_2</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;stream\&quot;: {&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;url\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a63d5323512a63488398f755fd50a2a0a">URL_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;streamFormat\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4c7eaec276cc4081ee0393a0396945ca">FORMAT_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">OFFSET_IN_MILLISECONDS_TEST</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;expiryTime\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad268db5e8a25b02fbb19db4005805073">EXPIRY_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;progressReport\&quot;: {&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;progressReportDelayInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">PROGRESS_REPORT_DELAY</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;progressReportIntervalInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a>) +</div><div class="line">            <span class="stringliteral">&quot;},&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a789afea7e7970bd9a00ca90a3f445aac">TOKEN_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;expectedPreviousToken\&quot;:\&quot;\&quot;&quot;</span></div><div class="line">        <span class="stringliteral">&quot;}&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="line"><span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a82cb367bcf7fc4f0401645a96a594cc9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a82cb367bcf7fc4f0401645a96a594cc9">alexaClientSDK::acsdkAudioPlayer::test::NAME_REPLACE_ALL</a></div><div class="ttdeci">static const std::string NAME_REPLACE_ALL(&quot;REPLACE_ALL&quot;)</div><div class="ttdoc">REPLACE_ALL playBehavior. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_adc7625da1aae6b77671d0bc579debb09"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">alexaClientSDK::acsdkAudioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:157</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ad8042086dceee018e5cf573a9c6db7d9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad8042086dceee018e5cf573a9c6db7d9">alexaClientSDK::acsdkAudioPlayer::test::PLAY_REQUESTOR_TYPE_ALERT</a></div><div class="ttdeci">static const std::string PLAY_REQUESTOR_TYPE_ALERT</div><div class="ttdoc">A playRequestor object with type &quot;ALERT&quot;. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:197</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_adc7625da1aae6b77671d0bc579debb09"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">alexaClientSDK::acsdkAudioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:161</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ad8042086dceee018e5cf573a9c6db7d9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad8042086dceee018e5cf573a9c6db7d9">alexaClientSDK::acsdkAudioPlayer::test::PLAY_REQUESTOR_TYPE_ALERT</a></div><div class="ttdeci">static const std::string PLAY_REQUESTOR_TYPE_ALERT</div><div class="ttdoc">A playRequestor object with type &quot;ALERT&quot;. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:201</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ad268db5e8a25b02fbb19db4005805073"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad268db5e8a25b02fbb19db4005805073">alexaClientSDK::acsdkAudioPlayer::test::EXPIRY_TEST</a></div><div class="ttdeci">static const std::string EXPIRY_TEST(&quot;481516234248151623421088&quot;)</div><div class="ttdoc">ExpiryTime for testing. Needs to be in ISO 8601 format. </div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4c7eaec276cc4081ee0393a0396945ca"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4c7eaec276cc4081ee0393a0396945ca">alexaClientSDK::acsdkAudioPlayer::test::FORMAT_TEST</a></div><div class="ttdeci">static const std::string FORMAT_TEST(&quot;AUDIO_MPEG&quot;)</div><div class="ttdoc">Format of the audio. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4cdb6de355b8def7ad9be2b972c8080e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_DELAY</a></div><div class="ttdeci">static const long PROGRESS_REPORT_DELAY</div><div class="ttdoc">progressReportDelayInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:163</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a9b54079a6ccbc7e858d821fac326e1de"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b54079a6ccbc7e858d821fac326e1de">alexaClientSDK::acsdkAudioPlayer::test::PLAY_REQUESTOR_ID</a></div><div class="ttdeci">static const std::string PLAY_REQUESTOR_ID</div><div class="ttdoc">A playRequestor object id. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:200</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:166</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4cdb6de355b8def7ad9be2b972c8080e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_DELAY</a></div><div class="ttdeci">static const long PROGRESS_REPORT_DELAY</div><div class="ttdoc">progressReportDelayInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:167</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a9b54079a6ccbc7e858d821fac326e1de"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b54079a6ccbc7e858d821fac326e1de">alexaClientSDK::acsdkAudioPlayer::test::PLAY_REQUESTOR_ID</a></div><div class="ttdeci">static const std::string PLAY_REQUESTOR_ID</div><div class="ttdoc">A playRequestor object id. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:204</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:170</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4abe6f89574c94ea3200dd2671652cbc"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4abe6f89574c94ea3200dd2671652cbc">alexaClientSDK::acsdkAudioPlayer::test::AUDIO_ITEM_ID_2</a></div><div class="ttdeci">static const std::string AUDIO_ITEM_ID_2(&quot;testID2&quot;)</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a789afea7e7970bd9a00ca90a3f445aac"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a789afea7e7970bd9a00ca90a3f445aac">alexaClientSDK::acsdkAudioPlayer::test::TOKEN_TEST</a></div><div class="ttdeci">static const std::string TOKEN_TEST(&quot;Token_Test&quot;)</div><div class="ttdoc">Token for testing. </div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a63d5323512a63488398f755fd50a2a0a"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a63d5323512a63488398f755fd50a2a0a">alexaClientSDK::acsdkAudioPlayer::test::URL_TEST</a></div><div class="ttdeci">static const std::string URL_TEST(&quot;cid:Test&quot;)</div><div class="ttdoc">URL for testing. </div></div>
@@ -5557,14 +5711,14 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line"><span class="stringliteral">&quot;{&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;playBehavior\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a82cb367bcf7fc4f0401645a96a594cc9">NAME_REPLACE_ALL</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">    <span class="stringliteral">&quot;\&quot;audioItem\&quot;: {&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;audioItemId\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4abe6f89574c94ea3200dd2671652cbc">AUDIO_ITEM_ID_2</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">        <span class="stringliteral">&quot;\&quot;stream\&quot;: {&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;url\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a63d5323512a63488398f755fd50a2a0a">URL_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;streamFormat\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4c7eaec276cc4081ee0393a0396945ca">FORMAT_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;offsetInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">OFFSET_IN_MILLISECONDS_TEST</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;expiryTime\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad268db5e8a25b02fbb19db4005805073">EXPIRY_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;progressReport\&quot;: {&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;progressReportDelayInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">PROGRESS_REPORT_DELAY</a>) + <span class="stringliteral">&quot;,&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;progressReportIntervalInMilliseconds\&quot;:&quot;</span> + std::to_string(<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a>) +</div><div class="line">            <span class="stringliteral">&quot;},&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;caption\&quot;: {&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;content\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac5303652c6e222670b23ee8256bbd347">CAPTION_CONTENT_SAMPLE</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">                <span class="stringliteral">&quot;\&quot;type\&quot;:\&quot;WEBVTT\&quot;&quot;</span></div><div class="line">            <span class="stringliteral">&quot;},&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;token\&quot;:\&quot;&quot;</span> + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a789afea7e7970bd9a00ca90a3f445aac">TOKEN_TEST</a> + <span class="stringliteral">&quot;\&quot;,&quot;</span></div><div class="line">            <span class="stringliteral">&quot;\&quot;expectedPreviousToken\&quot;:\&quot;\&quot;&quot;</span></div><div class="line">        <span class="stringliteral">&quot;}&quot;</span></div><div class="line">    <span class="stringliteral">&quot;}&quot;</span></div><div class="line"><span class="stringliteral">&quot;}&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a82cb367bcf7fc4f0401645a96a594cc9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a82cb367bcf7fc4f0401645a96a594cc9">alexaClientSDK::acsdkAudioPlayer::test::NAME_REPLACE_ALL</a></div><div class="ttdeci">static const std::string NAME_REPLACE_ALL(&quot;REPLACE_ALL&quot;)</div><div class="ttdoc">REPLACE_ALL playBehavior. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_adc7625da1aae6b77671d0bc579debb09"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">alexaClientSDK::acsdkAudioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:157</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_adc7625da1aae6b77671d0bc579debb09"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#adc7625da1aae6b77671d0bc579debb09">alexaClientSDK::acsdkAudioPlayer::test::OFFSET_IN_MILLISECONDS_TEST</a></div><div class="ttdeci">static const long OFFSET_IN_MILLISECONDS_TEST</div><div class="ttdoc">The offset in milliseconds returned by the mock media player. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:161</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ad268db5e8a25b02fbb19db4005805073"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ad268db5e8a25b02fbb19db4005805073">alexaClientSDK::acsdkAudioPlayer::test::EXPIRY_TEST</a></div><div class="ttdeci">static const std::string EXPIRY_TEST(&quot;481516234248151623421088&quot;)</div><div class="ttdoc">ExpiryTime for testing. Needs to be in ISO 8601 format. </div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4c7eaec276cc4081ee0393a0396945ca"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4c7eaec276cc4081ee0393a0396945ca">alexaClientSDK::acsdkAudioPlayer::test::FORMAT_TEST</a></div><div class="ttdeci">static const std::string FORMAT_TEST(&quot;AUDIO_MPEG&quot;)</div><div class="ttdoc">Format of the audio. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4cdb6de355b8def7ad9be2b972c8080e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_DELAY</a></div><div class="ttdeci">static const long PROGRESS_REPORT_DELAY</div><div class="ttdoc">progressReportDelayInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:163</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:166</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4cdb6de355b8def7ad9be2b972c8080e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4cdb6de355b8def7ad9be2b972c8080e">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_DELAY</a></div><div class="ttdeci">static const long PROGRESS_REPORT_DELAY</div><div class="ttdoc">progressReportDelayInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:167</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:170</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a4abe6f89574c94ea3200dd2671652cbc"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a4abe6f89574c94ea3200dd2671652cbc">alexaClientSDK::acsdkAudioPlayer::test::AUDIO_ITEM_ID_2</a></div><div class="ttdeci">static const std::string AUDIO_ITEM_ID_2(&quot;testID2&quot;)</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a789afea7e7970bd9a00ca90a3f445aac"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a789afea7e7970bd9a00ca90a3f445aac">alexaClientSDK::acsdkAudioPlayer::test::TOKEN_TEST</a></div><div class="ttdeci">static const std::string TOKEN_TEST(&quot;Token_Test&quot;)</div><div class="ttdoc">Token for testing. </div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ac5303652c6e222670b23ee8256bbd347"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac5303652c6e222670b23ee8256bbd347">alexaClientSDK::acsdkAudioPlayer::test::CAPTION_CONTENT_SAMPLE</a></div><div class="ttdeci">static const std::string CAPTION_CONTENT_SAMPLE</div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:189</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_ac5303652c6e222670b23ee8256bbd347"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ac5303652c6e222670b23ee8256bbd347">alexaClientSDK::acsdkAudioPlayer::test::CAPTION_CONTENT_SAMPLE</a></div><div class="ttdeci">static const std::string CAPTION_CONTENT_SAMPLE</div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:193</div></div>
 <div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a63d5323512a63488398f755fd50a2a0a"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a63d5323512a63488398f755fd50a2a0a">alexaClientSDK::acsdkAudioPlayer::test::URL_TEST</a></div><div class="ttdeci">static const std::string URL_TEST(&quot;cid:Test&quot;)</div><div class="ttdoc">URL for testing. </div></div>
 </div><!-- fragment -->
 </div>
@@ -5660,7 +5814,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div><div class="line">    std::chrono::milliseconds((2 * <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a>) + (<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a> / 2))}</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:166</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">{</div><div class="line">    std::chrono::milliseconds((2 * <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a>) + (<a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">PROGRESS_REPORT_INTERVAL</a> / 2))}</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test_html_a40d48b7fe2949a779e9738d220769721"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a40d48b7fe2949a779e9738d220769721">alexaClientSDK::acsdkAudioPlayer::test::PROGRESS_REPORT_INTERVAL</a></div><div class="ttdeci">static const long PROGRESS_REPORT_INTERVAL</div><div class="ttdoc">progressReportIntervalInMilliseconds for testing. </div><div class="ttdef"><b>Definition:</b> AudioPlayerTest.cpp:170</div></div>
 </div><!-- fragment -->
 <p>The time that must elapse in order to get 2.5 interval periods. </p>
 
@@ -5742,7 +5896,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

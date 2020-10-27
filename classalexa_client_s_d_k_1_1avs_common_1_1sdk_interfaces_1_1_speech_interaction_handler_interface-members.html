@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,7 @@ $(function() {
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a5978f4e60c04d7190a57f70690392ee0">notifyOfHoldToTalkEnd</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a6357701015ad779f3bf476692653147f">notifyOfHoldToTalkStart</a>(capabilityAgents::aip::AudioProvider holdToTalkAudioProvider, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now())=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#af774ca697e9493c20c17a58756c71cce">notifyOfHoldToTalkStart</a>(capabilityAgents::aip::AudioProvider holdToTalkAudioProvider, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now(), avsCommon::avs::AudioInputStream::Index beginIndex=capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a042deea9f6f255a45361784c10ced894">notifyOfTapToTalk</a>(capabilityAgents::aip::AudioProvider tapToTalkAudioProvider, avsCommon::avs::AudioInputStream::Index beginIndex, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now())=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a559bea910ab07ee77a6f9844e4056b23">notifyOfTapToTalkEnd</a>()=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a8d9ca244397498be6839feac0972b5e7">notifyOfWakeWord</a>(capabilityAgents::aip::AudioProvider wakeWordAudioProvider, avsCommon::avs::AudioInputStream::Index beginIndex, avsCommon::avs::AudioInputStream::Index endIndex, std::string keyword, std::chrono::steady_clock::time_point startOfSpeechTimestamp, std::shared_ptr&lt; const std::vector&lt; char &gt;&gt; KWDMetadata=nullptr)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
@@ -82,7 +82,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

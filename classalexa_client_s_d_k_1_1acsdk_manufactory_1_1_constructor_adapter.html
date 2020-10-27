@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: alexaClientSDK::acsdkManufactory::ConstructorAdapter&lt; Type, Dependencies &gt; Class Template Reference</title>
+<title>AlexaClientSDK: alexaClientSDK::acsdkManufactory::ConstructorAdapter&lt;... &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,109 +65,20 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_constructor_adapter-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">alexaClientSDK::acsdkManufactory::ConstructorAdapter&lt; Type, Dependencies &gt; Class Template Reference</div>  </div>
+<div class="title">alexaClientSDK::acsdkManufactory::ConstructorAdapter&lt;... &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="_constructor_adapter_8h_source.html">ConstructorAdapter.h</a>&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7815fa258faef1f64fa0fd654b789ff3"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_constructor_adapter.html#a7815fa258faef1f64fa0fd654b789ff3">get</a> () -&gt; std::shared_ptr&lt; Type &gt;(*)(Dependencies...)</td></tr>
-<tr class="separator:a7815fa258faef1f64fa0fd654b789ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a37a4e75e9feebe8576840636a542c4"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; Type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_constructor_adapter.html#a1a37a4e75e9feebe8576840636a542c4">createInstance</a> (Dependencies... dependencies)</td></tr>
-<tr class="separator:a1a37a4e75e9feebe8576840636a542c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Type, typename... Dependencies&gt;<br />
-class alexaClientSDK::acsdkManufactory::ConstructorAdapter&lt; Type, Dependencies &gt;</h3>
-
-<p>Template to provide a factory function to invoke a constructor.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Type</td><td>The type being constructed. </td></tr>
-    <tr><td class="paramname">Dependencies</td><td>The parameters types of the constructor and the resulting factory function. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1a37a4e75e9feebe8576840636a542c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a37a4e75e9feebe8576840636a542c4">&#9670;&nbsp;</a></span>createInstance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Type , typename... Dependencies&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; Type &gt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_constructor_adapter.html">alexaClientSDK::acsdkManufactory::ConstructorAdapter</a>&lt; Type, Dependencies &gt;::createInstance </td>
-          <td>(</td>
-          <td class="paramtype">Dependencies...&#160;</td>
-          <td class="paramname"><em>dependencies</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The factory function wrapping the constructor.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dependencies</td><td>The parameters of the factory function and constructor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A new instance of <code>Type</code>. </dd></dl>
-
-</div>
-</div>
-<a id="a7815fa258faef1f64fa0fd654b789ff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7815fa258faef1f64fa0fd654b789ff3">&#9670;&nbsp;</a></span>get()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Type , typename... Dependencies&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_constructor_adapter.html">alexaClientSDK::acsdkManufactory::ConstructorAdapter</a>&lt; Type, Dependencies &gt;::get </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> -&gt; std::shared_ptr&lt;Type&gt; (*)(Dependencies...)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get the factory function wrapping the constructor.</p>
-<dl class="section return"><dt>Returns</dt><dd>The factory function wrapping the constructor. </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufactory/<a class="el" href="_constructor_adapter_8h_source.html">ConstructorAdapter.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufactory/<a class="el" href="_constructor_adapter_8h_source.html">ConstructorAdapter.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

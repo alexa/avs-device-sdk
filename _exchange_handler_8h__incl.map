@@ -1,17 +1,17 @@
-<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandler.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandler.h">
-<area shape="rect" id="node3" href="$_exchange_handler_context_interface_8h.html" title="ACL/Transport/ExchangeHandler\lContextInterface.h" alt="" coords="991,109,1205,151"/>
-<area shape="rect" id="node5" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="599,206,850,233"/>
-<area shape="rect" id="node17" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="1026,199,1205,240"/>
-<area shape="rect" id="node28" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="1314,199,1493,240"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="5,288,209,329"/>
-<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="445,288,687,329"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="145,377,310,419"/>
-<area shape="rect" id="node20" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="919,385,1072,411"/>
-<area shape="rect" id="node21" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="1330,295,1546,322"/>
-<area shape="rect" id="node25" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="1621,295,1831,322"/>
-<area shape="rect" id="node22" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="1259,377,1438,419"/>
-<area shape="rect" id="node23" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1255,467,1442,508"/>
-<area shape="rect" id="node24" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="1053,467,1231,508"/>
-<area shape="rect" id="node26" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="1897,377,2091,419"/>
-<area shape="rect" id="node27" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="1597,377,1823,419"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandler.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandler.h">
+<area shape="rect" id="node3" href="$_exchange_handler_context_interface_8h.html" title="ACL/Transport/ExchangeHandler\lContextInterface.h" alt="" coords="991,139,1205,180"/>
+<area shape="rect" id="node5" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="599,235,850,262"/>
+<area shape="rect" id="node17" href="$_h_t_t_p2_request_config_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestConfig.h" alt="" coords="1026,228,1205,269"/>
+<area shape="rect" id="node28" href="$_h_t_t_p2_request_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestInterface.h" alt="" coords="1314,228,1493,269"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="5,317,209,359"/>
+<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="445,317,687,359"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="145,407,310,448"/>
+<area shape="rect" id="node20" href="$_h_t_t_p2_request_type_8h.html" title="HTTP2RequestType.h" alt="" coords="919,414,1072,441"/>
+<area shape="rect" id="node21" href="$_h_t_t_p2_request_source_interface_8h.html" title="HTTP2RequestSourceInterface.h" alt="" coords="1330,325,1546,351"/>
+<area shape="rect" id="node25" href="$_h_t_t_p2_response_sink_interface_8h.html" title="HTTP2ResponseSinkInterface.h" alt="" coords="1621,325,1831,351"/>
+<area shape="rect" id="node22" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="1259,407,1438,448"/>
+<area shape="rect" id="node23" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1255,496,1442,537"/>
+<area shape="rect" id="node24" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="1053,496,1231,537"/>
+<area shape="rect" id="node26" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="1897,407,2091,448"/>
+<area shape="rect" id="node27" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="1597,407,1823,448"/>
 </map>

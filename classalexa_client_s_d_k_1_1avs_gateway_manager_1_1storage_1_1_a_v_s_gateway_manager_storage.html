@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -108,6 +108,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a48fc329c6321357fa76822c3a298337c"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">AVSGatewayManagerStorageInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage.html#a48fc329c6321357fa76822c3a298337c">createAVSGatewayManagerStorageInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; &amp;miscStorage)</td></tr>
+<tr class="separator:a48fc329c6321357fa76822c3a298337c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cdb9aa35dffba6b7d0c489a7d42ddc6"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage.html">AVSGatewayManagerStorage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage.html#a3cdb9aa35dffba6b7d0c489a7d42ddc6">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; miscStorage)</td></tr>
 <tr class="separator:a3cdb9aa35dffba6b7d0c489a7d42ddc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -166,6 +168,40 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage.html">AVSGatewayManagerStorage</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">miscStorage</td><td>The underlying miscellaneous storage to store gateway verification data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A unique pointer to the instance of the newly created <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage.html">AVSGatewayManagerStorage</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a48fc329c6321357fa76822c3a298337c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48fc329c6321357fa76822c3a298337c">&#9670;&nbsp;</a></span>createAVSGatewayManagerStorageInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">AVSGatewayManagerStorageInterface</a> &gt; alexaClientSDK::avsGatewayManager::storage::AVSGatewayManagerStorage::createAVSGatewayManagerStorageInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>miscStorage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates an instance of @ <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">AVSGatewayManagerStorageInterface</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">miscStorage</td><td>The underlying miscellaneous storage to store gateway verification data. </td></tr>
@@ -278,14 +314,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/<a class="el" href="_a_v_s_gateway_manager_storage_8h_source.html">AVSGatewayManagerStorage.h</a></li>
-<li>/workplace/avs-device-sdk/AVSGatewayManager/src/Storage/<a class="el" href="_a_v_s_gateway_manager_storage_8cpp.html">AVSGatewayManagerStorage.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/<a class="el" href="_a_v_s_gateway_manager_storage_8h_source.html">AVSGatewayManagerStorage.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSGatewayManager/src/Storage/<a class="el" href="_a_v_s_gateway_manager_storage_8cpp.html">AVSGatewayManagerStorage.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -104,6 +104,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_system_sound_audio_factory.html#a0a554ec0d8b6f2109837b492a8b92aa3">alexaClientSDK::applicationUtilities::resources::audio::SystemSoundAudioFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_system_sound_audio_factory_interface.html#a121c4869f11dbb4d3b45a06d75e55a01">alexaClientSDK::avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface</a>
 </li>
+<li>EngineConnectionStatus()
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface_1_1_engine_connection_status.html#a1dd83d9129d5e5e37b5fbc7794c82fbd">alexaClientSDK::avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus</a>
+</li>
 <li>enqueue()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html#ac71b70e7fd87afcf2e2ff8d07e0bf2fd">alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_storage.html#a20f67ff2e2e01c844aae7e1c5905572c">alexaClientSDK::acsdkNotifications::test::TestNotificationsStorage</a>
@@ -123,7 +126,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html#a7d3df86551e1acb3a44cb0ebaef13bca">alexaClientSDK::bluetoothImplementations::blueZ::BlueZHostController</a>
 </li>
 <li>EqualizerRuntimeSetup()
-: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html#a4e9ed4278681f5919242eb1db5aa57ce">alexaClientSDK::defaultClient::EqualizerRuntimeSetup</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html#a7e3bbbbb0229183d09817da00ee73f48">alexaClientSDK::defaultClient::EqualizerRuntimeSetup</a>
 </li>
 <li>erase()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#ad0db107ab67571d7f7be46fce4f6805e">alexaClientSDK::acsdkAlerts::storage::AlertStorageInterface</a>
@@ -135,6 +138,12 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_s_q_lite_capabilities_delegate_storage.html#aca4b32eccb91237ac394cfc3054f0b1f">alexaClientSDK::capabilitiesDelegate::storage::SQLiteCapabilitiesDelegateStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html#a68bd3e2439c47ee2dc6079b74113aaf6">alexaClientSDK::certifiedSender::MessageStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html#a215ff84f6c26f2a3593dc2635c6313e8">alexaClientSDK::certifiedSender::SQLiteMessageStorage</a>
+</li>
+<li>eraseOffline()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a48a60702aa3ffac414a6fb165ddfc717">alexaClientSDK::acsdkAlerts::storage::AlertStorageInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a7e53b861c80cbf5da42ee964b67bad62">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a4ecea2334f77ad8b9f0710e91fb085f9">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a63231d9621bce9a956c105728ad1348b">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>
 </li>
 <li>errorToString()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a07a4a0bd75c8464b0ed6e00437011b6d">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Reader&lt; T &gt;</a>
@@ -188,11 +197,17 @@ $(function() {
 <li>ExternalCapabilitiesBuilder()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_external_capabilities_builder.html#a17845645579b86d90240521caacef8d5">alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder</a>
 </li>
+<li>ExternalMediaAdapterHandler()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_adapter_handler.html#a78f55a3f1bfa91ae01e2870b914a5e98">alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaAdapterHandler</a>
+</li>
+<li>ExternalMediaAdapterHandlerInterface()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface.html#a38a09b99c7757570795abe4e37776475">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterHandlerInterface</a>
+</li>
 <li>ExternalMediaAdapterInterface()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_external_media_adapter_interface.html#ac6c902cd581aca571d629936eb4e61c0">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::ExternalMediaAdapterInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#ab80e7c97cea899451bc70f0867acd5f4">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface</a>
 </li>
 <li>ExternalMediaPlayerTest()
-: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test_1_1_external_media_player_test.html#a0d9af21c8817098abef023d55078bf69">alexaClientSDK::capabilityAgents::externalMediaPlayer::test::ExternalMediaPlayerTest</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_external_media_player_test.html#a3aa19c2ac7db132785964eafbbef3d9b">alexaClientSDK::acsdkExternalMediaPlayer::test::ExternalMediaPlayerTest</a>
 </li>
 <li>extractMediaPlayerState()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_audio_player_test.html#a0636d4eef59a55e1214ca4d5e9280a87">alexaClientSDK::acsdkAudioPlayer::test::AudioPlayerTest</a>
@@ -208,7 +223,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

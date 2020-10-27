@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,15 +72,18 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a>, including all inherited members.</p>
 <table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a625c5c24f0edfde390f6c7498eec0642">addMediaPlayer</a>(const std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt; &amp;mediaPlayer)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a50a50af680c57a48c2952f1bb51368b9">isEnabled</a>() const =0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#aa40cd443564965d6930067040843ef72">onCaption</a>(CaptionFrame::MediaPlayerSourceId sourceId, const CaptionData &amp;captionData)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#aee6e586e6b125a626366f24084fb440d">setCaptionPresenter</a>(const std::shared_ptr&lt; CaptionPresenterInterface &gt; &amp;presenter)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a72cdd16d884e2923211a0c70bd53ac7a">setMediaPlayers</a>(const std::vector&lt; std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt;&gt; &amp;mediaPlayers)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a297cb00c1a2897827490014023d21f8b">~CaptionManagerInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a33620c6a919d0bbc0ada23d03eb37f75">removeMediaPlayer</a>(const std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt; &amp;mediaPlayer)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#aee6e586e6b125a626366f24084fb440d">setCaptionPresenter</a>(const std::shared_ptr&lt; CaptionPresenterInterface &gt; &amp;presenter)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a72cdd16d884e2923211a0c70bd53ac7a">setMediaPlayers</a>(const std::vector&lt; std::shared_ptr&lt; avsCommon::utils::mediaPlayer::MediaPlayerInterface &gt;&gt; &amp;mediaPlayers)=0</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a297cb00c1a2897827490014023d21f8b">~CaptionManagerInterface</a>()=default</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">alexaClientSDK::captions::CaptionManagerInterface</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

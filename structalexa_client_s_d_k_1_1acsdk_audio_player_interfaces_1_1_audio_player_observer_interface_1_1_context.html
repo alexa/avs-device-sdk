@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,6 +97,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a06183bc76fa75ab8bf83be7de0d04a2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">avsCommon::avs::PlayRequestor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html#a06183bc76fa75ab8bf83be7de0d04a2d">playRequestor</a></td></tr>
 <tr class="memdesc:a06183bc76fa75ab8bf83be7de0d04a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>PlayRequestor</code> object in <code>Play</code> directive.  <a href="#a06183bc76fa75ab8bf83be7de0d04a2d">More...</a><br /></td></tr>
 <tr class="separator:a06183bc76fa75ab8bf83be7de0d04a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f646951d71e05b18c70d7ac0b582f8e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html#a5f646951d71e05b18c70d7ac0b582f8e">trackProtectionName</a></td></tr>
+<tr class="memdesc:a5f646951d71e05b18c70d7ac0b582f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track protection name of the <code>AudioItem</code>.  <a href="#a5f646951d71e05b18c70d7ac0b582f8e">More...</a><br /></td></tr>
+<tr class="separator:a5f646951d71e05b18c70d7ac0b582f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5dc2d7a59401bff43c51d80d58c8fe"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html#a6c5dc2d7a59401bff43c51d80d58c8fe">startOffset</a></td></tr>
+<tr class="memdesc:a6c5dc2d7a59401bff43c51d80d58c8fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The start offset in millisecond for the <code>AudioItem</code> in <code>Play</code> directive.  <a href="#a6c5dc2d7a59401bff43c51d80d58c8fe">More...</a><br /></td></tr>
+<tr class="separator:a6c5dc2d7a59401bff43c51d80d58c8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4ef35ccc2c9f892df8b093581dcac2"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface_1_1_context.html#a6d4ef35ccc2c9f892df8b093581dcac2">endOffset</a></td></tr>
+<tr class="memdesc:a6d4ef35ccc2c9f892df8b093581dcac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The end offset in millisecond for the <code>AudioItem</code> in <code>Play</code> directive.  <a href="#a6d4ef35ccc2c9f892df8b093581dcac2">More...</a><br /></td></tr>
+<tr class="separator:a6d4ef35ccc2c9f892df8b093581dcac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The context of the AudioPlayer when the observer is notified of the <code>PlayerActivity</code> state change. </p>
@@ -114,6 +123,22 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The ID of the <code>AudioItem</code> that the @ AudioPlayer is handling. </p>
+
+</div>
+</div>
+<a id="a6d4ef35ccc2c9f892df8b093581dcac2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d4ef35ccc2c9f892df8b093581dcac2">&#9670;&nbsp;</a></span>endOffset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::Context::endOffset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The end offset in millisecond for the <code>AudioItem</code> in <code>Play</code> directive. </p>
 
 </div>
 </div>
@@ -149,14 +174,46 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a6c5dc2d7a59401bff43c51d80d58c8fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c5dc2d7a59401bff43c51d80d58c8fe">&#9670;&nbsp;</a></span>startOffset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::Context::startOffset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The start offset in millisecond for the <code>AudioItem</code> in <code>Play</code> directive. </p>
+
+</div>
+</div>
+<a id="a5f646951d71e05b18c70d7ac0b582f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f646951d71e05b18c70d7ac0b582f8e">&#9670;&nbsp;</a></span>trackProtectionName</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerObserverInterface::Context::trackProtectionName</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Track protection name of the <code>AudioItem</code>. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/<a class="el" href="_audio_player_observer_interface_8h_source.html">AudioPlayerObserverInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/<a class="el" href="_audio_player_observer_interface_8h_source.html">AudioPlayerObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

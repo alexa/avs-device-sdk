@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -64,8 +64,20 @@ $(function() {
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_f"></a>- f -</h3><ul>
+<li>factId
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ae2dabe9f98c695a5a0b217c92d99bdaa">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>factSampleLen
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ac6a119435fdcae8ea500b0c2636db184">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>factSz
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a77b6a81aa0e1ee7d99a14d1ac0b6c6ed">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
 <li>fadeInConfig
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config.html#a825de06917237d624088301d7ad82687">alexaClientSDK::avsCommon::utils::mediaPlayer::SourceConfig</a>
+</li>
+<li>failLocalChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_setting_stub.html#ac0b4f4049464bc764ced41724791272f">alexaClientSDK::diagnostics::test::SettingStub&lt; ValueT &gt;</a>
 </li>
 <li>failure()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1error_1_1_success_result.html#a15898c8b2f40c6cc8eaac5520c01f245">alexaClientSDK::avsCommon::utils::error::SuccessResult&lt; TValue &gt;</a>
@@ -75,7 +87,7 @@ $(function() {
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_import.html#add1baf767afd49c1b23ec02802328063">alexaClientSDK::acsdkManufactory::internal::HasImport&lt; Types &gt;</a>
 </li>
 <li>favorites
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1external_media_player_1_1_adapter_playback_state.html#a898048874403036a02dd50daea447723">alexaClientSDK::avsCommon::sdkInterfaces::externalMediaPlayer::AdapterPlaybackState</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_adapter_playback_state.html#a5f4d9560e0b765b3ec6bca51e1fa2e20">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::AdapterPlaybackState</a>
 </li>
 <li>FetchOptions
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aa2dbdbb9bbf0442fff5b43d7baa40190">alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface</a>
@@ -86,6 +98,9 @@ $(function() {
 <li>finalize()
 : <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html#a0378880d1fca22e9f26ad5d51253ae79">alexaClientSDK::storage::sqliteStorage::SQLiteStatement</a>
 </li>
+<li>finalizeAttributes()
+: <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a908e3b39f68aef955a4a83961735ad44">alexaClientSDK::endpoints::EndpointBuilder</a>
+</li>
 <li>FinallyGuard()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1error_1_1_finally_guard.html#a27f632ca997bc419af53ab4311c3b4ec">alexaClientSDK::avsCommon::utils::error::FinallyGuard</a>
 </li>
@@ -94,9 +109,6 @@ $(function() {
 </li>
 <li>finishArrayElement()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#af7328c67efebb9d1d0a60e0ccfef1b12">alexaClientSDK::avsCommon::utils::json::JsonGenerator</a>
-</li>
-<li>finishDefaultEndpointConfiguration()
-: <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a514e303df7d4ee63077591e424c70ca7">alexaClientSDK::endpoints::EndpointBuilder</a>
 </li>
 <li>finishObject()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#a02476879a230ddb4d73177214d02becc">alexaClientSDK::avsCommon::utils::json::JsonGenerator</a>
@@ -107,8 +119,11 @@ $(function() {
 <li>firmwareVersionControl()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a2fcc535eaac40f4545c619f674a2b1e1">alexaClientSDK::sampleApp::InteractionManager</a>
 </li>
-<li>fmtHeader
-: <a class="el" href="structalexa_client_s_d_k_1_1diagnostics_1_1utils_1_1_wav_file_header.html#a1c952b45588b28ca3f00f3087d474624">alexaClientSDK::diagnostics::utils::WavFileHeader</a>
+<li>fmtId
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#a32273a89936b03b769abdcf59cd19156">alexaClientSDK::avsCommon::utils::WavHeader</a>
+</li>
+<li>fmtSz
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ac82f2cf1ea7afb12a71cfb779d6e30e9">alexaClientSDK::avsCommon::utils::WavHeader</a>
 </li>
 <li>focusChanged
 : <a class="el" href="structalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client_1_1test_client_info.html#a4ae550484f508418ac8f8f8770cc52ae">alexaClientSDK::afml::test::TestClient::testClientInfo</a>
@@ -129,7 +144,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_g_variant_tuple_reader.html#a0cce103df6693b6565dd581f34e5ef75">alexaClientSDK::bluetoothImplementations::blueZ::GVariantTupleReader</a>
 </li>
 <li>FOREVER
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#a27da967585be612e5eed10afa81eb20b">alexaClientSDK::avsCommon::utils::timing::Timer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#aaf2865d27ceb9acee219ac3b0ce77259">alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#a27da967585be612e5eed10afa81eb20b">alexaClientSDK::avsCommon::utils::timing::Timer</a>
 </li>
 <li>format
 : <a class="el" href="structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream.html#a9a11741b82927aaee457e0facfa04255">alexaClientSDK::acsdkAudioPlayer::AudioItem::Stream</a>
@@ -139,6 +155,9 @@ $(function() {
 </li>
 <li>FormattedAudioStreamAdapter()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_formatted_audio_stream_adapter.html#a515432281205d87328409b394525d87e">alexaClientSDK::avsCommon::utils::bluetooth::FormattedAudioStreamAdapter</a>
+</li>
+<li>freeze()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1_power_resource.html#a7845e68887b22e52aa5337d81c5afb9b">alexaClientSDK::avsCommon::utils::power::PowerResource</a>
 </li>
 <li>friendlyName
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html#aac16bfb46af98b520e52d275fa4595ca">alexaClientSDK::avsCommon::avs::AVSDiscoveryEndpointAttributes</a>
@@ -161,7 +180,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

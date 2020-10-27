@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_type_3_01std_1_1tuple_3_04f930d33359a7e30a2331090bfdf498e.html" title="alexaClientSDK::acsdkManufactory\l::internal::ContainsType\&lt; std\l::tuple\&lt; ContainedTypes... \&gt;,\l Type \&gt;::IsFalse\&lt; InType \&gt;" alt="" coords="5,5,236,76"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1_equalizer_storage_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::EqualizerStorageInterface" alt="" coords="5,43,244,84"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_misc_d_b_equalizer_storage.html" title="alexaClientSDK::acsdkEqualizer\l::MiscDBEqualizerStorage" alt="" coords="311,5,523,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_storage_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::test::MockEqualizerStorage\lInterface" alt="" coords="292,71,541,127"/>
 </map>

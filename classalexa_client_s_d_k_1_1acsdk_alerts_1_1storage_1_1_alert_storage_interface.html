@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,12 +97,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a06bed9973f7140130fd49fca1501279e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a186e728311035efd943db0ac88e29ea0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a186e728311035efd943db0ac88e29ea0">store</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alert)=0</td></tr>
 <tr class="separator:a186e728311035efd943db0ac88e29ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62408ae961f3454952c7784ddbf729c9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a62408ae961f3454952c7784ddbf729c9">storeOfflineAlert</a> (const std::string &amp;token, const std::string &amp;scheduledTime)=0</td></tr>
+<tr class="separator:a62408ae961f3454952c7784ddbf729c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77745f417e3e5c1089dde4ad8cc8f0e6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a77745f417e3e5c1089dde4ad8cc8f0e6">load</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt;&gt; *alertContainer, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt; settingsManager)=0</td></tr>
 <tr class="separator:a77745f417e3e5c1089dde4ad8cc8f0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9277354e289f230f6e27265117798b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#adc9277354e289f230f6e27265117798b">loadOfflineAlerts</a> (rapidjson::Value *alertContainer, rapidjson::Document::AllocatorType &amp;allocator)=0</td></tr>
+<tr class="separator:adc9277354e289f230f6e27265117798b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31cd043b6e9115c3ca147d46f14df7da"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a31cd043b6e9115c3ca147d46f14df7da">modify</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alert)=0</td></tr>
 <tr class="separator:a31cd043b6e9115c3ca147d46f14df7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0db107ab67571d7f7be46fce4f6805e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#ad0db107ab67571d7f7be46fce4f6805e">erase</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alert)=0</td></tr>
 <tr class="separator:ad0db107ab67571d7f7be46fce4f6805e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a60702aa3ffac414a6fb165ddfc717"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a48a60702aa3ffac414a6fb165ddfc717">eraseOffline</a> (const std::string &amp;token, int id)=0</td></tr>
+<tr class="separator:a48a60702aa3ffac414a6fb165ddfc717"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06a61aa2c31d1db3327c3c68a7f6e899"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a06a61aa2c31d1db3327c3c68a7f6e899">bulkErase</a> (const std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt;&gt; &amp;alertList)=0</td></tr>
 <tr class="separator:a06a61aa2c31d1db3327c3c68a7f6e899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7659af83b3a87ae31e4b6e2735496725"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_alert_storage_interface.html#a7659af83b3a87ae31e4b6e2735496725">clearDatabase</a> ()=0</td></tr>
@@ -227,7 +233,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Close the currently open database, if one is open. </p>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#ab6ca56ca1ef39c77f3326cf7d093f505">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#af5a5871cdb8c481e1ac93c263455cecb">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#abfee2cc1c36dd6349f2cd17f72fa12d3">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#af5a5871cdb8c481e1ac93c263455cecb">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#ab6ca56ca1ef39c77f3326cf7d093f505">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#abfee2cc1c36dd6349f2cd17f72fa12d3">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -256,7 +262,7 @@ Public Member Functions</h2></td></tr>
 <p>Creates a new database. If a database is already being handled by this object or there is another internal error, then this function returns false.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is a problem creating the database. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a601904ea3a0ac9792ecc441c58c51427">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a04b7d2794f0df5d2bb0701d06773d7ed">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#af142564ac2dfb4d0e0aff1472e669ba0">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a04b7d2794f0df5d2bb0701d06773d7ed">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a601904ea3a0ac9792ecc441c58c51427">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#af142564ac2dfb4d0e0aff1472e669ba0">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -293,6 +299,53 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Whether the <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a></code> was successfully erased. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#ae34a742e3c57f44ba71fc2f2abaf6c21">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#aec64312d26af4e9c9fdb2cc74f4f5dca">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+
+</div>
+</div>
+<a id="a48a60702aa3ffac414a6fb165ddfc717"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a60702aa3ffac414a6fb165ddfc717">&#9670;&nbsp;</a></span>eraseOffline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::acsdkAlerts::storage::AlertStorageInterface::eraseOffline </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Erases a single alert from the offline database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The alertToken of the alert to be erased. </td></tr>
+    <tr><td class="paramname">id</td><td>The id of the alert to be erased </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the alert was successfully erased. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a4ecea2334f77ad8b9f0710e91fb085f9">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a63231d9621bce9a956c105728ad1348b">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a7e53b861c80cbf5da42ee964b67bad62">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -340,6 +393,52 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Whether the <code>Alerts</code> were successfully loaded. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#aa577876c343ae2020a006fb1309aefa2">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a4e6b25ac8fded65300e6c2c9b46a796d">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a85da8c59d02fa2f3836f64cb9b4ab248">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+
+</div>
+</div>
+<a id="adc9277354e289f230f6e27265117798b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc9277354e289f230f6e27265117798b">&#9670;&nbsp;</a></span>loadOfflineAlerts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::acsdkAlerts::storage::AlertStorageInterface::loadOfflineAlerts </td>
+          <td>(</td>
+          <td class="paramtype">rapidjson::Value *&#160;</td>
+          <td class="paramname"><em>alertContainer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">rapidjson::Document::AllocatorType &amp;&#160;</td>
+          <td class="paramname"><em>allocator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Loads all alerts in the offline database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">alertContainer</td><td>The container where alerts should be stored. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">allocator</td><td>The rapidjson allocator, required for the results of this function to be mergable with other rapidjson::Value objects. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#acc31db78f5f2d3bfc12b6a5ea9a90945">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a1ed29757ba86b51ae7f4e6ae20e658e8">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a9f92e64d9a041d2a5849e4af8187e2d7">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -404,7 +503,7 @@ Public Member Functions</h2></td></tr>
 <p>Open an existing database. If this object is already managing an open database, or there is a problem opening the database, this function returns false.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is opened ok, <code>false</code> if this object is already managing an open database, or if there is another internal reason the database could not be opened. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a7ae7dcfc39d1de809c52259c5b49354d">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a94c97e3e48eba2acc89ccc5bd5e153df">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a697186725dbb34c4fe01da2dec3ef4a5">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a94c97e3e48eba2acc89ccc5bd5e153df">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a7ae7dcfc39d1de809c52259c5b49354d">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#a697186725dbb34c4fe01da2dec3ef4a5">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
 
 </div>
 </div>
@@ -444,14 +543,61 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a62408ae961f3454952c7784ddbf729c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62408ae961f3454952c7784ddbf729c9">&#9670;&nbsp;</a></span>storeOfflineAlert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::acsdkAlerts::storage::AlertStorageInterface::storeOfflineAlert </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scheduledTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Stores a single <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a></code> in the offline alerts database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The alertToken of the alert to be erased. </td></tr>
+    <tr><td class="paramname">scheduledTime</td><td>The scheduled time of the alert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a></code> was successfully stored. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a32b78f0eec1fbb47d556bedba608f41c">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#aec35e53e2f1b34580817201ef1bce697">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_s_q_lite_alert_storage.html#affd1c4e78fde668ac2f0695d178fe585">alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/Storage/<a class="el" href="_alert_storage_interface_8h_source.html">AlertStorageInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/Storage/<a class="el" href="_alert_storage_interface_8h_source.html">AlertStorageInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

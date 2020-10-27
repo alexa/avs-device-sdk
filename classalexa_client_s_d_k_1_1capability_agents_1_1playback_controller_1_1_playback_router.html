@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a33981d8388bfebda25e88a4a9afe2338"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">PlaybackRouterInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html#a33981d8388bfebda25e88a4a9afe2338">createPlaybackRouterInterface</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">avsCommon::sdkInterfaces::PlaybackHandlerInterface</a> &gt; defaultHandler, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; shutdownNotifier)</td></tr>
+<tr class="separator:a33981d8388bfebda25e88a4a9afe2338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac45de0dd1c710a88bdb2ced4c1fe9fec"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html">PlaybackRouter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html#ac45de0dd1c710a88bdb2ced4c1fe9fec">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">avsCommon::sdkInterfaces::PlaybackHandlerInterface</a> &gt; defaultHandler)</td></tr>
 <tr class="separator:ac45de0dd1c710a88bdb2ced4c1fe9fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -234,7 +236,53 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000050">Deprecated:</a></b></dt><dd>Use createPlaybackRouterInterface. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the new @ <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_router.html">PlaybackRouter</a> instance. </dd></dl>
+
+</div>
+</div>
+<a id="a33981d8388bfebda25e88a4a9afe2338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33981d8388bfebda25e88a4a9afe2338">&#9670;&nbsp;</a></span>createPlaybackRouterInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">PlaybackRouterInterface</a> &gt; alexaClientSDK::capabilityAgents::playbackController::PlaybackRouter::createPlaybackRouterInterface </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_handler_interface.html">avsCommon::sdkInterfaces::PlaybackHandlerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>defaultHandler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create an instance of @ PlaybackRouterInterface.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">defaultHandler</td><td>The default playback handler. </td></tr>
+    <tr><td class="paramname">shutdownNotifier</td><td>The <code>ShutdownNotifierInterface</code> to notify this instance when to shut down. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the new @ PlaybackRouterInterface instance. </dd></dl>
 
 </div>
 </div>
@@ -458,14 +506,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/PlaybackController/include/PlaybackController/<a class="el" href="_playback_router_8h_source.html">PlaybackRouter.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/PlaybackController/src/<a class="el" href="_playback_router_8cpp.html">PlaybackRouter.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/PlaybackController/include/PlaybackController/<a class="el" href="_playback_router_8h_source.html">PlaybackRouter.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/PlaybackController/src/<a class="el" href="_playback_router_8cpp.html">PlaybackRouter.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes" name="alexaClientSDK::avsCommon::sdkInterfaces::rangeController::RangeControllerAttributes">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_resources.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityResources" alt="" coords="35,5,233,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; avsCommon\l::avs::resources::AlexaUnitOfMeasure \&gt;" alt="" coords="5,71,263,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::avsCommon::avs::capabilitySemantics\l::CapabilitySemantics \&gt;" alt="" coords="5,5,292,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_resources.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityResources" alt="" coords="50,100,247,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; avsCommon\l::avs::resources::AlexaUnitOfMeasure \&gt;" alt="" coords="20,166,277,222"/>
 </map>

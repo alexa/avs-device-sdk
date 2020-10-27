@@ -1,6 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/MultiTimer.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/MultiTimer.h">
-<area shape="rect" id="node8" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="531,124,725,165"/>
-<area shape="rect" id="node14" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="464,213,659,255"/>
-<area shape="rect" id="node17" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="277,303,376,329"/>
-<area shape="rect" id="node19" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="395,377,509,404"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/MultiTimer.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/MultiTimer.h">
+<area shape="rect" id="node8" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="504,139,699,180"/>
+<area shape="rect" id="node14" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="904,228,1099,269"/>
+<area shape="rect" id="node20" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="335,228,510,269"/>
+<area shape="rect" id="node17" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1123,325,1221,351"/>
+<area shape="rect" id="node19" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1115,407,1229,433"/>
+<area shape="rect" id="node21" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="294,317,525,359"/>
 </map>

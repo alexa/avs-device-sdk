@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,12 +89,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad2d87fc88676a563e9a40d17e6cc0c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9716d836e3ad9babb1d720ff806a5686"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html">ToggleControllerAttributeBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html#a9716d836e3ad9babb1d720ff806a5686">withCapabilityResources</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_resources.html">avsCommon::avs::CapabilityResources</a> &amp;capabilityResources)=0</td></tr>
 <tr class="separator:a9716d836e3ad9babb1d720ff806a5686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38f69daa6a4d7e0a320197c8fed36bbf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller.html#adca4704633ce6a4219f89cdb0108c05d">ToggleControllerAttributes</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html#a38f69daa6a4d7e0a320197c8fed36bbf">build</a> ()=0</td></tr>
+<tr class="memitem:ac9014f6615f1d326a764847f06255b77"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html">ToggleControllerAttributeBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html#ac9014f6615f1d326a764847f06255b77">withSemantics</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_capability_semantics.html">avsCommon::avs::capabilitySemantics::CapabilitySemantics</a> &amp;semantics)=0</td></tr>
+<tr class="separator:ac9014f6615f1d326a764847f06255b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38f69daa6a4d7e0a320197c8fed36bbf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html#a38f69daa6a4d7e0a320197c8fed36bbf">build</a> ()=0</td></tr>
 <tr class="separator:a38f69daa6a4d7e0a320197c8fed36bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for a toggle controller attribute builder.</p>
-<p>The builder is responsible for building a <code>ToggleControllerAttributes</code> object.</p>
+<p>The builder is responsible for building a <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a></code> object.</p>
 <dl class="section note"><dt>Note</dt><dd>The following attributes are mandatory and the build will fail if they are missing:<ul>
 <li>At least one capability friendly name </li>
 </ul>
@@ -137,7 +139,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller.html#adca4704633ce6a4219f89cdb0108c05d">ToggleControllerAttributes</a>&gt; alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributeBuilderInterface::build </td>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">utils::Optional</a>&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a>&gt; alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributeBuilderInterface::build </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -149,8 +151,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Builds a <code>ToggleControllerAttributes</code> with the configured properties.</p>
-<dl class="section return"><dt>Returns</dt><dd>A non optional <code>ToggleControllerAttributes</code> if the build succeeds; otherwise, an empty <code>ToggleControllerAttributes</code> object. </dd></dl>
+<p>Builds a <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a></code> with the configured properties.</p>
+<dl class="section return"><dt>Returns</dt><dd>A non optional <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a></code> if the build succeeds; otherwise, an empty <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html">ToggleControllerAttributes</a></code> object. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1_toggle_controller_attribute_builder.html#a2fc9c4ef2835237929fed15d301e77ae">alexaClientSDK::capabilityAgents::toggleController::ToggleControllerAttributeBuilder</a>.</p>
 
@@ -193,14 +195,50 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac9014f6615f1d326a764847f06255b77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9014f6615f1d326a764847f06255b77">&#9670;&nbsp;</a></span>withSemantics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attribute_builder_interface.html">ToggleControllerAttributeBuilderInterface</a>&amp; alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributeBuilderInterface::withSemantics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_capability_semantics.html">avsCommon::avs::capabilitySemantics::CapabilitySemantics</a> &amp;&#160;</td>
+          <td class="paramname"><em>semantics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configures the builder to use the specified semantics definition. </p><dl class="section see"><dt>See also</dt><dd><a href="https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/alexa-togglecontroller.html">https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/alexa-togglecontroller.html</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">semantics</td><td>The <code>CapabilitySemantics</code> representing the semantics definition. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This builder, which can be used to nest configuration function calls. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1_toggle_controller_attribute_builder.html#a36bde381fe278b036ab1e238b3a3abbe">alexaClientSDK::capabilityAgents::toggleController::ToggleControllerAttributeBuilder</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/<a class="el" href="_toggle_controller_attribute_builder_interface_8h_source.html">ToggleControllerAttributeBuilderInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ToggleController/<a class="el" href="_toggle_controller_attribute_builder_interface_8h_source.html">ToggleControllerAttributeBuilderInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

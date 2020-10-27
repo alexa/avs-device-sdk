@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -280,8 +280,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a339249f5dd5ebc38557947269813b697"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a339249f5dd5ebc38557947269813b697">create</a> (std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface</a> &gt; mediaPlayerFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; playbackRouter, std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&gt; audioChannelVolumeInterfaces, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">captions::CaptionManagerInterface</a> &gt; captionManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
-<tr class="separator:a339249f5dd5ebc38557947269813b697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb7deecb9a8ace5173c51d58b5cdd11"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html">acsdkAudioPlayerInterfaces::AudioPlayerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a5eb7deecb9a8ace5173c51d58b5cdd11">createAudioPlayerInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html">avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface</a> &gt; &amp;mediaResourceProvider, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;messageSender, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_focus_annotation.html">avsCommon::sdkInterfaces::AudioFocusAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; &amp;annotatedFocusManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;contextManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;exceptionSender, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; &amp;playbackRouter, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">captions::CaptionManagerInterface</a> &gt; &amp;captionManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;endpointCapabilitiesRegistrar, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_registrar_interface.html">avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface</a> &gt; &amp;renderPlayerInfoCardsProviderRegistrar)</td></tr>
+<tr class="separator:a5eb7deecb9a8ace5173c51d58b5cdd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f8840c065cd7dc305ce0b0740f13315"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a3f8840c065cd7dc305ce0b0740f13315">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html">avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface</a> &gt; mediaResourceProvider, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; playbackRouter, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">captions::CaptionManagerInterface</a> &gt; captionManager=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
+<tr class="separator:a3f8840c065cd7dc305ce0b0740f13315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -433,8 +435,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 
 </div>
 </div>
-<a id="a339249f5dd5ebc38557947269813b697"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a339249f5dd5ebc38557947269813b697">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a3f8840c065cd7dc305ce0b0740f13315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f8840c065cd7dc305ce0b0740f13315">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -445,8 +447,8 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
         <tr>
           <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> &gt; alexaClientSDK::acsdkAudioPlayer::AudioPlayer::create </td>
           <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerFactoryInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>mediaPlayerFactory</em>, </td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html">avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>mediaResourceProvider</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -481,12 +483,6 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>audioChannelVolumeInterfaces</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">captions::CaptionManagerInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>captionManager</em> = <code>nullptr</code>, </td>
         </tr>
@@ -511,20 +507,126 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <p>Creates a new <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mediaPlayerFactory</td><td>The instance of the <code>MediaPlayerFactoryInterface</code> used to manage players for playing audio. </td></tr>
+    <tr><td class="paramname">mediaResourceProvider</td><td>The instance of the <code>PooledMediaResourceProviderInterface</code> used to manage players for playing audio. </td></tr>
     <tr><td class="paramname">messageSender</td><td>The object to use for sending events. </td></tr>
     <tr><td class="paramname">focusManager</td><td>The channel focus manager used to manage usage of the dialog channel. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The AVS Context manager used to generate system context for events. </td></tr>
     <tr><td class="paramname">exceptionSender</td><td>The object to use for sending AVS Exception messages. </td></tr>
     <tr><td class="paramname">playbackRouter</td><td>The <code>PlaybackRouterInterface</code> instance to use when <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> becomes active. </td></tr>
-    <tr><td class="paramname">audioChannelVolumeInterfaces</td><td>A list of <code>ChannelVolumeInterface</code> instances to use to control/attenuate channel volume. These instances are required for controlling volume for the <code>MediaPlayerInterface</code> instances created by </td></tr>
-    <tr><td class="paramname">mediaPlayerFactory.</td><td></td></tr>
     <tr><td class="paramname">captionManager</td><td>The optional <code>CaptionManagerInterface</code> instance to use for handling captions. </td></tr>
     <tr><td class="paramname">metricRecorder</td><td>The metric recorder. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the new <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> instance. </dd></dl>
+
+</div>
+</div>
+<a id="a5eb7deecb9a8ace5173c51d58b5cdd11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5eb7deecb9a8ace5173c51d58b5cdd11">&#9670;&nbsp;</a></span>createAudioPlayerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html">acsdkAudioPlayerInterfaces::AudioPlayerInterface</a> &gt; alexaClientSDK::acsdkAudioPlayer::AudioPlayer::createAudioPlayerInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html">avsCommon::utils::mediaPlayer::PooledMediaResourceProviderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mediaResourceProvider</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>messageSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_focus_annotation.html">avsCommon::sdkInterfaces::AudioFocusAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>annotatedFocusManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>contextManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>exceptionSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_playback_router_interface.html">avsCommon::sdkInterfaces::PlaybackRouterInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>playbackRouter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html">captions::CaptionManagerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>captionManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>endpointCapabilitiesRegistrar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_registrar_interface.html">avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>renderPlayerInfoCardsProviderRegistrar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method to create a new <code>AudioPlayerInterface</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mediaResourceProvider</td><td>The instance of the <code>PooledMediaResourceProviderInterface</code> used to manage players for playing audio. </td></tr>
+    <tr><td class="paramname">messageSender</td><td>The object to use for sending events. </td></tr>
+    <tr><td class="paramname">annotatedFocusManager</td><td>The annotated audio focus manager used to manage usage of the dialog channel. </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The AVS Context manager used to generate system context for events. </td></tr>
+    <tr><td class="paramname">exceptionSender</td><td>The object to use for sending AVS Exception messages. </td></tr>
+    <tr><td class="paramname">playbackRouter</td><td>The <code>PlaybackRouterInterface</code> instance to use when <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> becomes active. </td></tr>
+    <tr><td class="paramname">captionManager</td><td>The <code>CaptionManagerInterface</code> instance to use for handling captions. </td></tr>
+    <tr><td class="paramname">metricRecorder</td><td>The metric recorder. </td></tr>
+    <tr><td class="paramname">shutdownNotifier</td><td>The object to notify this <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> when to shut down. </td></tr>
+    <tr><td class="paramname">endpointCapabilitiesRegistrar</td><td>The object with which to register this <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a>'s capabilities for the default endpoint. </td></tr>
+    <tr><td class="paramname">renderPlayerInfoCardsProviderRegistrar</td><td>The object with which to register this <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a> as a <code>RenderPlayerInfoCardsProviderInterface</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared_ptr to a new <code>AudioPlayerInterface</code>. </dd></dl>
 
 </div>
 </div>
@@ -1650,7 +1752,7 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000029">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#ad7e749a95830d3bf65d44e873402f1b0">alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface</a>.</p>
 
@@ -1776,21 +1878,21 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function stops playback of the current song. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000017">Deprecated:</a></b></dt><dd>Use <code>LocalPlayerControlInterface.playbackStop</code> instead </dd></dl>
+<p>This function stops playback of the current song. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000040">Deprecated:</a></b></dt><dd>Use <code>LocalPlayerControlInterface.playbackStop</code> instead </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html#a6d2f1c007114f9aa87d4d5a410518e2b">alexaClientSDK::acsdkAudioPlayerInterfaces::AudioPlayerInterface</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/include/acsdkAudioPlayer/<a class="el" href="_audio_player_8h_source.html">AudioPlayer.h</a></li>
-<li>/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/src/<a class="el" href="_audio_player_8cpp.html">AudioPlayer.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/include/acsdkAudioPlayer/<a class="el" href="_audio_player_8h_source.html">AudioPlayer.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/src/<a class="el" href="_audio_player_8cpp.html">AudioPlayer.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

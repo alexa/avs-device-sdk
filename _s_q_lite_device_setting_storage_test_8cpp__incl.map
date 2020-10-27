@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingStorageTest.cpp">
-<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="466,199,681,240"/>
-<area shape="rect" id="node18" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="1065,109,1269,151"/>
-<area shape="rect" id="node20" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="932,206,1151,233"/>
-<area shape="rect" id="node23" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1395,199,1600,240"/>
-<area shape="rect" id="node25" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1310,288,1474,315"/>
-<area shape="rect" id="node22" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="930,288,1153,315"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingStorageTest.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Settings/test/SQLiteDeviceSettingStorageTest.cpp">
+<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="466,228,681,269"/>
+<area shape="rect" id="node18" href="$_s_q_lite_device_setting_storage_8h.html" title="Settings/Storage/SQLiteDevice\lSettingStorage.h" alt="" coords="1065,139,1269,180"/>
+<area shape="rect" id="node20" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="932,235,1151,262"/>
+<area shape="rect" id="node23" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="1395,228,1600,269"/>
+<area shape="rect" id="node25" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="1310,317,1474,344"/>
+<area shape="rect" id="node22" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="930,317,1153,344"/>
 </map>

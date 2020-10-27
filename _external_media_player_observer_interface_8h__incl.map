@@ -1,5 +1,5 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ExternalMediaPlayerObserverInterface.h">
-<area shape="rect" id="node2" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="5,221,240,247"/>
-<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExternalMediaAdapterInterface.h" alt="" coords="203,124,419,165"/>
-<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="464,213,653,255"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h">
+<area shape="rect" id="node2" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="5,279,240,306"/>
+<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="205,168,417,224"/>
+<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="464,272,653,313"/>
 </map>

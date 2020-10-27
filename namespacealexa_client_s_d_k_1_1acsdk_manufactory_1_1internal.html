@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,8 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::acsdkManufactory::internal Namespace Reference</div>  </div>
 </div><!--header-->
@@ -135,13 +134,14 @@ Functions</h2></td></tr>
 <tr class="memitem:af9ea9d25c156459d54e3695aaaa9dfdd"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af9ea9d25c156459d54e3695aaaa9dfdd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_type_index.html">TypeIndex</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#af9ea9d25c156459d54e3695aaaa9dfdd">getTypeIndex</a> ()</td></tr>
 <tr class="separator:af9ea9d25c156459d54e3695aaaa9dfdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6da5f9102cee260748a755b4dd891ad4"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a6da5f9102cee260748a755b4dd891ad4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a6da5f9102cee260748a755b4dd891ad4">logTypeIndex</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a6da5f9102cee260748a755b4dd891ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549910db01c1e37810d210d169ff9e56"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a549910db01c1e37810d210d169ff9e56">TAG</a> (&quot;Cookbook&quot;)</td></tr>
+<tr class="memdesc:a549910db01c1e37810d210d169ff9e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a549910db01c1e37810d210d169ff9e56">More...</a><br /></td></tr>
+<tr class="separator:a549910db01c1e37810d210d169ff9e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac81e33c8c0839694f195a08cbf2ea458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#ac81e33c8c0839694f195a08cbf2ea458">manufactoryUtilsTest</a> ()</td></tr>
 <tr class="separator:ac81e33c8c0839694f195a08cbf2ea458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a39c9e5078ffcb1b5405c0c60e09cd4c7"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a39c9e5078ffcb1b5405c0c60e09cd4c7">TAG</a> = &quot;CookBook&quot;</td></tr>
-<tr class="separator:a39c9e5078ffcb1b5405c0c60e09cd4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a8101cb2bb18dff9f0b1d341885d040df"></a>
@@ -196,6 +196,47 @@ template&lt;typename Type &gt; </div>
 
 </div>
 </div>
+<a id="a6da5f9102cee260748a755b4dd891ad4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6da5f9102cee260748a755b4dd891ad4">&#9670;&nbsp;</a></span>logTypeIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkManufactory::internal::logTypeIndex </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to log a name for a given type. This can be useful when <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_type_index.html#a9ae2fa8afeebb571e532ed6353b92a29">TypeIndex&lt;Type&gt;::getName()</a> does not return a string that is easy to correlate with C++ type names.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>The type to log </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name ot log for the type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac81e33c8c0839694f195a08cbf2ea458"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac81e33c8c0839694f195a08cbf2ea458">&#9670;&nbsp;</a></span>manufactoryUtilsTest()</h2>
 
@@ -214,18 +255,31 @@ template&lt;typename Type &gt; </div>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a39c9e5078ffcb1b5405c0c60e09cd4c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39c9e5078ffcb1b5405c0c60e09cd4c7">&#9670;&nbsp;</a></span>TAG</h2>
+<a id="a549910db01c1e37810d210d169ff9e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549910db01c1e37810d210d169ff9e56">&#9670;&nbsp;</a></span>TAG()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string alexaClientSDK::acsdkManufactory::internal::TAG = &quot;CookBook&quot;</td>
+          <td class="memname">static const std::string alexaClientSDK::acsdkManufactory::internal::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;Cookbook&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
 
 </div>
 </div>
@@ -233,7 +287,7 @@ template&lt;typename Type &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,0 +1,33 @@
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkLibcurlAlexaCommunications/include/acsdkAlexaCommunications/AlexaCommunicationsComponent.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkLibcurlAlexaCommunications/include/acsdkAlexaCommunications/AlexaCommunicationsComponent.h">
+<area shape="rect" id="node3" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="1054,161,1265,187"/>
+<area shape="rect" id="node29" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="2364,243,2587,284"/>
+<area shape="rect" id="node34" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1358,332,1550,373"/>
+<area shape="rect" id="node37" href="$_event_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/EventTracerInterface.h" alt="" coords="3574,153,3766,195"/>
+<area shape="rect" id="node38" href="$_internet_connection_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionMonitorInterface.h" alt="" coords="2093,153,2335,195"/>
+<area shape="rect" id="node40" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="3073,153,3304,195"/>
+<area shape="rect" id="node46" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2561,153,2741,195"/>
+<area shape="rect" id="node4" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1171,243,1345,284"/>
+<area shape="rect" id="node28" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="972,243,1147,284"/>
+<area shape="rect" id="node10" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1625,339,1827,366"/>
+<area shape="rect" id="node11" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="503,421,677,463"/>
+<area shape="rect" id="node12" href="$_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="635,332,809,373"/>
+<area shape="rect" id="node13" href="$_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="1108,332,1283,373"/>
+<area shape="rect" id="node20" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="364,332,539,373"/>
+<area shape="rect" id="node17" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1402,421,1578,463"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="901,421,1077,463"/>
+<area shape="rect" id="node19" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="701,421,876,463"/>
+<area shape="rect" id="node27" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="27,421,201,463"/>
+<area shape="rect" id="node30" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="2139,332,2297,373"/>
+<area shape="rect" id="node31" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2371,332,2561,373"/>
+<area shape="rect" id="node35" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1754,421,1946,463"/>
+<area shape="rect" id="node39" href="$_internet_connection_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionObserverInterface.h" alt="" coords="2089,243,2339,284"/>
+<area shape="rect" id="node41" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="3594,243,3813,284"/>
+<area shape="rect" id="node42" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="3045,332,3290,373"/>
+<area shape="rect" id="node43" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="3375,243,3570,284"/>
+<area shape="rect" id="node44" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3159,243,3351,284"/>
+<area shape="rect" id="node45" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="3314,339,3565,366"/>
+<area shape="rect" id="node47" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="2661,243,2841,284"/>
+<area shape="rect" id="node48" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="2636,332,2816,373"/>
+<area shape="rect" id="node49" href="$_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="2840,332,3020,373"/>
+<area shape="rect" id="node50" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="888,339,1084,366"/>
+</map>

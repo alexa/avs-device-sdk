@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp">
-<area shape="rect" id="node4" href="$_s_q_lite_message_storage_8h.html" title="CertifiedSender/SQLiteMessage\lStorage.h" alt="" coords="713,109,922,151"/>
-<area shape="rect" id="node21" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="56,199,214,240"/>
-<area shape="rect" id="node5" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="953,199,1168,240"/>
-<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="338,199,553,240"/>
-<area shape="rect" id="node17" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="710,206,928,233"/>
-<area shape="rect" id="node19" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="942,288,1165,315"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CertifiedSender/test/MessageStorageTest.cpp">
+<area shape="rect" id="node4" href="$_s_q_lite_message_storage_8h.html" title="CertifiedSender/SQLiteMessage\lStorage.h" alt="" coords="713,139,922,180"/>
+<area shape="rect" id="node21" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="56,228,214,269"/>
+<area shape="rect" id="node5" href="$_message_storage_interface_8h.html" title="CertifiedSender/MessageStorage\lInterface.h" alt="" coords="953,228,1168,269"/>
+<area shape="rect" id="node9" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="338,228,553,269"/>
+<area shape="rect" id="node17" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="710,235,928,262"/>
+<area shape="rect" id="node19" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="942,317,1165,344"/>
 </map>

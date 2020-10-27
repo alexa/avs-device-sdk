@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,8 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e6402ffd9b13290423ced4ddd3b2120"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#a7e6402ffd9b13290423ced4ddd3b2120">~SampleApplication</a> ()</td></tr>
 <tr class="memdesc:a7e6402ffd9b13290423ced4ddd3b2120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor which manages the <code><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html" title="Class to manage the top-level components of the AVS Client Application. ">SampleApplication</a></code> shutdown sequence.  <a href="#a7e6402ffd9b13290423ced4ddd3b2120">More...</a><br /></td></tr>
 <tr class="separator:a7e6402ffd9b13290423ced4ddd3b2120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af513c38c4370d63d5ce2bca1ee2fd78c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#af513c38c4370d63d5ce2bca1ee2fd78c">createMediaPlayersForAdapters</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html">avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory</a> &gt; httpContentFetcherFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html">defaultClient::EqualizerRuntimeSetup</a> &gt; equalizerRuntimeSetup)</td></tr>
-<tr class="separator:af513c38c4370d63d5ce2bca1ee2fd78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfd81b8a169b962982b551fe672d9cd4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#abfd81b8a169b962982b551fe672d9cd4">createMediaPlayersForAdapters</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt; &amp;httpContentFetcherFactory, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html">defaultClient::EqualizerRuntimeSetup</a> &gt; equalizerRuntimeSetup)</td></tr>
+<tr class="separator:abfd81b8a169b962982b551fe672d9cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -191,8 +191,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af513c38c4370d63d5ce2bca1ee2fd78c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af513c38c4370d63d5ce2bca1ee2fd78c">&#9670;&nbsp;</a></span>createMediaPlayersForAdapters()</h2>
+<a id="abfd81b8a169b962982b551fe672d9cd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfd81b8a169b962982b551fe672d9cd4">&#9670;&nbsp;</a></span>createMediaPlayersForAdapters()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -200,7 +200,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool alexaClientSDK::sampleApp::SampleApplication::createMediaPlayersForAdapters </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html">avsCommon::utils::libcurlUtils::HTTPContentFetcherFactory</a> &gt;&#160;</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_factory_interface.html">avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>httpContentFetcherFactory</em>, </td>
         </tr>
         <tr>
@@ -248,14 +248,14 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/SampleApp/include/SampleApp/<a class="el" href="_sample_application_8h_source.html">SampleApplication.h</a></li>
-<li>/workplace/avs-device-sdk/SampleApp/src/<a class="el" href="_sample_application_8cpp.html">SampleApplication.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SampleApp/include/SampleApp/<a class="el" href="_sample_application_8h_source.html">SampleApplication.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SampleApp/src/<a class="el" href="_sample_application_8cpp.html">SampleApplication.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

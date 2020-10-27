@@ -2,6 +2,8 @@ var searchData=
 [
   ['basestreamsource_2ecpp',['BaseStreamSource.cpp',['../_base_stream_source_8cpp.html',1,'']]],
   ['basestreamsource_2eh',['BaseStreamSource.h',['../_base_stream_source_8h.html',1,'']]],
+  ['baseuplcalculator_2ecpp',['BaseUplCalculator.cpp',['../_base_upl_calculator_8cpp.html',1,'']]],
+  ['baseuplcalculator_2eh',['BaseUplCalculator.h',['../_base_upl_calculator_8h.html',1,'']]],
   ['basicdeviceconnectionrule_2ecpp',['BasicDeviceConnectionRule.cpp',['../_basic_device_connection_rule_8cpp.html',1,'']]],
   ['basicdeviceconnectionrule_2eh',['BasicDeviceConnectionRule.h',['../_basic_device_connection_rule_8h.html',1,'']]],
   ['blockingpolicy_2ecpp',['BlockingPolicy.cpp',['../_blocking_policy_8cpp.html',1,'']]],

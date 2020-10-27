@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -90,8 +90,8 @@ $(function() {
 </li>
 <li>parseDirectivePayload()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a3e1be85771c075c93f9814db935c0408">alexaClientSDK::acsdkBluetooth</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_equalizer.html#a3bd21e149bfe1feb1990ee246f164403">alexaClientSDK::acsdkEqualizer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a9bd2df54b5fa192d585e5e2801a45fcd">alexaClientSDK::capabilityAgents::doNotDisturb</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1equalizer.html#a9c0182958894b46d57a6188128ca191b">alexaClientSDK::capabilityAgents::equalizer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mode_controller.html#a72a1acbd51b5e66a374eb50da55092f4">alexaClientSDK::capabilityAgents::modeController</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1range_controller.html#a26c862f6a93a11a7c8cd6282b2ddf625">alexaClientSDK::capabilityAgents::rangeController</a>
 </li>
@@ -152,6 +152,9 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a4419f503e86a68eac4adb0726c44f820">alexaClientSDK::avsCommon::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test.html#a122eec9020b1f4b1c71fbe1711d88f22">alexaClientSDK::capabilityAgents::alexa::test</a>
 </li>
+<li>PAYLOAD_KEY()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics.html#aeac4d1217576ef88be3f0e2bfbb571ae">alexaClientSDK::avsCommon::avs::capabilitySemantics</a>
+</li>
 <li>PAYLOAD_TEST()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ab35d2c88c5064f71ccd6d7f0936de7cf">alexaClientSDK::adsl::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a1f2421e7408d84208ebe69c02ac998a7">alexaClientSDK::avsCommon::test</a>
@@ -185,10 +188,10 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a5ba9f26759979944f7a9dfc5278f16a3">alexaClientSDK::avsCommon::avs</a>
 </li>
 <li>PLAYER_ERROR_EVENT()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a292afcd1f4732ea4264b830f2c6f9cbc">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a731cfa918ab3f68b7b89e4217660e2e9">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_EVENT()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a288e6cd3325c3d7f85bc865d2488ad6d">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#aee4ab2cd03ea6156e97d861e4dec6018">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_FINISHED_TIMEOUT()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#aaca6ce0c73e6f9356cbd8716dd9bc6df">alexaClientSDK::capabilityAgents::templateRuntime::test</a>
@@ -214,6 +217,9 @@ $(function() {
 <li>POWER_STATE_ON()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test.html#a83347c48df5ef46e10f003d18d0a460a">alexaClientSDK::capabilityAgents::alexa::test</a>
 </li>
+<li>powerResourceLevelToString()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a283fcc0d0a61c72b74e404f177e86fbd">alexaClientSDK::avsCommon::sdkInterfaces</a>
+</li>
 <li>prefetchStatusCallback()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#ad27e1ddfcd46aac94756c6bd15ee91cf">alexaClientSDK::mediaPlayer::android</a>
 </li>
@@ -237,7 +243,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,8 +88,8 @@ Inheritance diagram for alexaClientSDK::acl::MessageRouterObserverInterface:</di
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c2f49a0eed39a512a38b69df9984c10"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#a2c2f49a0eed39a512a38b69df9984c10">~MessageRouterObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a2c2f49a0eed39a512a38b69df9984c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdc957e542bf8a0d3150768c79af6e91"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#afdc957e542bf8a0d3150768c79af6e91">onConnectionStatusChanged</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status</a> status, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11e">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason</a> reason)=0</td></tr>
-<tr class="separator:afdc957e542bf8a0d3150768c79af6e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e853af167c35e628c8358268d39a48a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#a0e853af167c35e628c8358268d39a48a">onConnectionStatusChanged</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status</a> status, const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface_1_1_engine_connection_status.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus</a> &gt; &amp;engineStatuses)=0</td></tr>
+<tr class="separator:a0e853af167c35e628c8358268d39a48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfa767278dbe7c2c350d92db9679f5c3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html#adfa767278dbe7c2c350d92db9679f5c3">receive</a> (const std::string &amp;contextId, const std::string &amp;message)=0</td></tr>
 <tr class="separator:adfa767278dbe7c2c350d92db9679f5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -123,8 +123,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afdc957e542bf8a0d3150768c79af6e91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdc957e542bf8a0d3150768c79af6e91">&#9670;&nbsp;</a></span>onConnectionStatusChanged()</h2>
+<a id="a0e853af167c35e628c8358268d39a48a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e853af167c35e628c8358268d39a48a">&#9670;&nbsp;</a></span>onConnectionStatusChanged()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,8 +141,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#aec54cdb601e5f93a516400d99663d11e">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason</a>&#160;</td>
-          <td class="paramname"><em>reason</em>&#160;</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface_1_1_engine_connection_status.html">avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>engineStatuses</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -160,7 +160,7 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">status</td><td>The current status of the connection. </td></tr>
-    <tr><td class="paramname">reason</td><td>The reason the connection status changed. </td></tr>
+    <tr><td class="paramname">engineStatuses</td><td>status of observed engine(s) </td></tr>
   </table>
   </dd>
 </dl>
@@ -212,13 +212,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_router_observer_interface_8h_source.html">MessageRouterObserverInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/ACL/include/ACL/Transport/<a class="el" href="_message_router_observer_interface_8h_source.html">MessageRouterObserverInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

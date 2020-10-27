@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/ExternalMediaPlayer/src/AuthorizedSender.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/src/AuthorizedSender.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_a76b392fe5ef3dcdb4d5296d7cae461e.html">ExternalMediaPlayer</a></li><li class="navelem"><a class="el" href="dir_905cdd7d6deecb22a97b9baafb626602.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_55f1e16e469d547c636a522dac21b8a1.html">capabilities</a></li><li class="navelem"><a class="el" href="dir_729c1b4d96f1a026ff97d948c472c484.html">ExternalMediaPlayer</a></li><li class="navelem"><a class="el" href="dir_a328dbaf52b46f56ba81d00ea3e009a8.html">acsdkExternalMediaPlayer</a></li><li class="navelem"><a class="el" href="dir_72877713421ce2354c033bfc14917011.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -80,32 +80,34 @@ $(function() {
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="_authorized_sender_8h_source.html">ExternalMediaPlayer/AuthorizedSender.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_authorized_sender_8h_source.html">acsdkExternalMediaPlayer/AuthorizedSender.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AuthorizedSender.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_authorized_sender_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_external_media_player_2src_2_authorized_sender_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_external_media_player_2src_2_authorized_sender_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_external_media_player_2src_2_authorized_sender_8cpp">
-<area shape="rect" id="node2" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1212,124,1385,165"/>
-<area shape="rect" id="node10" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="672,303,848,344"/>
-<area shape="rect" id="node32" href="_authorized_sender_8h.html" title="ExternalMediaPlayer\l/AuthorizedSender.h" alt="" coords="1890,124,2033,165"/>
-<area shape="rect" id="node8" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1085,213,1261,255"/>
-<area shape="rect" id="node14" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1246,392,1461,433"/>
-<area shape="rect" id="node19" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="712,481,888,523"/>
-<area shape="rect" id="node20" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="357,392,533,433"/>
-<area shape="rect" id="node27" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="659,392,853,433"/>
-<area shape="rect" id="node28" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="43,392,219,433"/>
-<area shape="rect" id="node23" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="411,481,587,523"/>
-<area shape="rect" id="node25" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="411,571,587,612"/>
-<area shape="rect" id="node34" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1932,213,2124,255"/>
-<area shape="rect" id="node40" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2497,213,2692,255"/>
-<area shape="rect" id="node35" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1917,310,2168,337"/>
-<area shape="rect" id="node37" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1638,392,1842,433"/>
-<area shape="rect" id="node39" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="979,392,1221,433"/>
-<area shape="rect" id="node38" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1728,481,1893,523"/>
-<area shape="rect" id="node45" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2775,303,2969,344"/>
-<area shape="rect" id="node47" href="_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2985,399,3084,426"/>
-<area shape="rect" id="node49" href="_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2935,489,3049,515"/>
+<div class="center"><img src="_authorized_sender_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_external_media_player_2acsdk_external_media_player_2src_2_authorized_sender_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_external_media_player_2acsdk_external_media_player_2src_2_authorized_sender_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2capabilities_2_external_media_player_2acsdk_external_media_player_2src_2_authorized_sender_8cpp">
+<area shape="rect" id="node2" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="251,153,424,195"/>
+<area shape="rect" id="node10" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="749,332,925,373"/>
+<area shape="rect" id="node32" href="_authorized_sender_8h.html" title="acsdkExternalMediaPlayer\l/AuthorizedSender.h" alt="" coords="2326,153,2503,195"/>
+<area shape="rect" id="node8" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="432,243,608,284"/>
+<area shape="rect" id="node14" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="267,421,482,463"/>
+<area shape="rect" id="node19" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="683,511,859,552"/>
+<area shape="rect" id="node20" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1393,421,1569,463"/>
+<area shape="rect" id="node27" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="809,421,1002,463"/>
+<area shape="rect" id="node28" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="557,421,733,463"/>
+<area shape="rect" id="node23" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1344,511,1520,552"/>
+<area shape="rect" id="node25" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="461,600,637,641"/>
+<area shape="rect" id="node34" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2069,332,2261,373"/>
+<area shape="rect" id="node40" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2949,243,3144,284"/>
+<area shape="rect" id="node35" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2025,429,2276,455"/>
+<area shape="rect" id="node37" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1745,511,1949,552"/>
+<area shape="rect" id="node39" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1027,511,1269,552"/>
+<area shape="rect" id="node38" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1820,600,1985,641"/>
+<area shape="rect" id="node45" href="_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="3143,332,3337,373"/>
+<area shape="rect" id="node49" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2809,421,2983,463"/>
+<area shape="rect" id="node47" href="_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="3328,429,3427,455"/>
+<area shape="rect" id="node48" href="_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="3363,518,3477,545"/>
+<area shape="rect" id="node50" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2473,511,2703,552"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -114,9 +116,7 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html">alexaClientSDK::capabilityAgents::externalMediaPlayer</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_external_media_player"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html">alexaClientSDK::acsdkExternalMediaPlayer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -126,24 +126,24 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a669e00226ae0704245aaa9635f55a5d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a669e00226ae0704245aaa9635f55a5d6">alexaClientSDK::capabilityAgents::externalMediaPlayer::TAG</a> (&quot;AuthorizedSender&quot;)</td></tr>
-<tr class="memdesc:a669e00226ae0704245aaa9635f55a5d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a669e00226ae0704245aaa9635f55a5d6">More...</a><br /></td></tr>
-<tr class="separator:a669e00226ae0704245aaa9635f55a5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56d622b558a4279ffbb8ce841eb8172"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#af56d622b558a4279ffbb8ce841eb8172">alexaClientSDK::acsdkExternalMediaPlayer::TAG</a> (&quot;AuthorizedSender&quot;)</td></tr>
+<tr class="memdesc:af56d622b558a4279ffbb8ce841eb8172"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#af56d622b558a4279ffbb8ce841eb8172">More...</a><br /></td></tr>
+<tr class="separator:af56d622b558a4279ffbb8ce841eb8172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:acdbb71cc7de6f0f59bf80c8e530fbd7b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#acdbb71cc7de6f0f59bf80c8e530fbd7b">alexaClientSDK::capabilityAgents::externalMediaPlayer::EVENT_KEY</a> = &quot;event&quot;</td></tr>
-<tr class="memdesc:acdbb71cc7de6f0f59bf80c8e530fbd7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#acdbb71cc7de6f0f59bf80c8e530fbd7b">More...</a><br /></td></tr>
-<tr class="separator:acdbb71cc7de6f0f59bf80c8e530fbd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c6d9a91b93eefbb46ffa6c60c152a42"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a7c6d9a91b93eefbb46ffa6c60c152a42">alexaClientSDK::capabilityAgents::externalMediaPlayer::HEADER_KEY</a> = &quot;header&quot;</td></tr>
-<tr class="memdesc:a7c6d9a91b93eefbb46ffa6c60c152a42"><td class="mdescLeft">&#160;</td><td class="mdescRight">The header key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a7c6d9a91b93eefbb46ffa6c60c152a42">More...</a><br /></td></tr>
-<tr class="separator:a7c6d9a91b93eefbb46ffa6c60c152a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77a12b3a76319db16467d89dbf0c7a7a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a77a12b3a76319db16467d89dbf0c7a7a">alexaClientSDK::capabilityAgents::externalMediaPlayer::PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
-<tr class="memdesc:a77a12b3a76319db16467d89dbf0c7a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The payload key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a77a12b3a76319db16467d89dbf0c7a7a">More...</a><br /></td></tr>
-<tr class="separator:a77a12b3a76319db16467d89dbf0c7a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60a2956799de9ec5bac365996fa15535"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a60a2956799de9ec5bac365996fa15535">alexaClientSDK::capabilityAgents::externalMediaPlayer::PLAYER_ID_KEY</a> = &quot;playerId&quot;</td></tr>
-<tr class="memdesc:a60a2956799de9ec5bac365996fa15535"><td class="mdescLeft">&#160;</td><td class="mdescRight">The playerId key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a60a2956799de9ec5bac365996fa15535">More...</a><br /></td></tr>
-<tr class="separator:a60a2956799de9ec5bac365996fa15535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a810c95078c73e9ba0ddb499be006b255"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a810c95078c73e9ba0ddb499be006b255">alexaClientSDK::acsdkExternalMediaPlayer::EVENT_KEY</a> = &quot;event&quot;</td></tr>
+<tr class="memdesc:a810c95078c73e9ba0ddb499be006b255"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a810c95078c73e9ba0ddb499be006b255">More...</a><br /></td></tr>
+<tr class="separator:a810c95078c73e9ba0ddb499be006b255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a032e97ce0326bd273ba7061d35dc704f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a032e97ce0326bd273ba7061d35dc704f">alexaClientSDK::acsdkExternalMediaPlayer::HEADER_KEY</a> = &quot;header&quot;</td></tr>
+<tr class="memdesc:a032e97ce0326bd273ba7061d35dc704f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The header key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a032e97ce0326bd273ba7061d35dc704f">More...</a><br /></td></tr>
+<tr class="separator:a032e97ce0326bd273ba7061d35dc704f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac60b300bb542c4625467d62db1e4046"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aac60b300bb542c4625467d62db1e4046">alexaClientSDK::acsdkExternalMediaPlayer::PAYLOAD_KEY</a> = &quot;payload&quot;</td></tr>
+<tr class="memdesc:aac60b300bb542c4625467d62db1e4046"><td class="mdescLeft">&#160;</td><td class="mdescRight">The payload key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aac60b300bb542c4625467d62db1e4046">More...</a><br /></td></tr>
+<tr class="separator:aac60b300bb542c4625467d62db1e4046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94379d5be9ec9dcd855bf717f4ae3b04"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a94379d5be9ec9dcd855bf717f4ae3b04">alexaClientSDK::acsdkExternalMediaPlayer::PLAYER_ID_KEY</a> = &quot;playerId&quot;</td></tr>
+<tr class="memdesc:a94379d5be9ec9dcd855bf717f4ae3b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">The playerId key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a94379d5be9ec9dcd855bf717f4ae3b04">More...</a><br /></td></tr>
+<tr class="separator:a94379d5be9ec9dcd855bf717f4ae3b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -175,7 +175,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

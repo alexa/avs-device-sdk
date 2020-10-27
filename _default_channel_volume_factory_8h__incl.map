@@ -1,7 +1,7 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h">
-<area shape="rect" id="node2" href="$_channel_volume_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeFactoryInterface.h" alt="" coords="5,139,229,180"/>
-<area shape="rect" id="node10" href="$_channel_volume_manager_8h.html" title="SpeakerManager/ChannelVolume\lManager.h" alt="" coords="253,139,469,180"/>
-<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="147,228,339,269"/>
-<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="120,317,365,359"/>
-<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="389,317,581,359"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h">
+<area shape="rect" id="node2" href="$_channel_volume_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeFactoryInterface.h" alt="" coords="5,153,229,195"/>
+<area shape="rect" id="node10" href="$_channel_volume_manager_8h.html" title="SpeakerManager/ChannelVolume\lManager.h" alt="" coords="253,153,469,195"/>
+<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="147,243,339,284"/>
+<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="120,332,365,373"/>
+<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="389,332,581,373"/>
 </map>

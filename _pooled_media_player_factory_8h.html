@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,52 +74,56 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &lt;<a class="el" href="_media_player_factory_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_pooled_media_resource_provider_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_media_player_interface_8h_source.html">AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PooledMediaPlayerFactory.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_pooled_media_player_factory_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h">
-<area shape="rect" id="node4" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="2767,213,2976,255"/>
-<area shape="rect" id="node8" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="944,124,1153,165"/>
-<area shape="rect" id="node44" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2451,481,2641,523"/>
-<area shape="rect" id="node7" href="_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="2817,303,3075,344"/>
-<area shape="rect" id="node12" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="544,481,748,523"/>
-<area shape="rect" id="node16" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="917,399,1140,426"/>
-<area shape="rect" id="node17" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="815,221,1011,247"/>
-<area shape="rect" id="node36" href="_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="384,392,593,433"/>
-<area shape="rect" id="node37" href="_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="5,303,215,344"/>
-<area shape="rect" id="node38" href="_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="1240,213,1449,255"/>
-<area shape="rect" id="node41" href="_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="131,213,340,255"/>
-<area shape="rect" id="node42" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="772,481,981,523"/>
-<area shape="rect" id="node43" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="2207,578,2419,605"/>
-<area shape="rect" id="node15" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="458,571,623,612"/>
-<area shape="rect" id="node18" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="825,303,1001,344"/>
-<area shape="rect" id="node19" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1521,392,1697,433"/>
-<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1501,481,1716,523"/>
-<area shape="rect" id="node27" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1925,571,2101,612"/>
-<area shape="rect" id="node28" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1242,481,1418,523"/>
-<area shape="rect" id="node34" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1885,481,2079,523"/>
-<area shape="rect" id="node35" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2637,660,2813,701"/>
-<area shape="rect" id="node31" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="989,571,1165,612"/>
-<area shape="rect" id="node32" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="989,660,1165,701"/>
-<area shape="rect" id="node40" href="_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1351,303,1538,344"/>
+<div class="center"><img src="_pooled_media_player_factory_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8h">
+<area shape="rect" id="node4" href="_pooled_media_resource_provider_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PooledMediaResourceProviderInterface.h" alt="" coords="2797,496,3064,537"/>
+<area shape="rect" id="node15" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1915,139,2125,180"/>
+<area shape="rect" id="node48" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="365,585,555,627"/>
+<area shape="rect" id="node7" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="2835,585,3027,627"/>
+<area shape="rect" id="node13" href="_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="2427,585,2637,627"/>
+<area shape="rect" id="node9" href="_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="3051,675,3296,716"/>
+<area shape="rect" id="node11" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="2835,675,3027,716"/>
+<area shape="rect" id="node14" href="_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="2502,675,2759,716"/>
+<area shape="rect" id="node18" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2089,585,2293,627"/>
+<area shape="rect" id="node21" href="_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="2273,414,2495,441"/>
+<area shape="rect" id="node22" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1715,325,1911,351"/>
+<area shape="rect" id="node40" href="_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="1573,228,1782,269"/>
+<area shape="rect" id="node41" href="_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="2038,317,2247,359"/>
+<area shape="rect" id="node42" href="_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="1305,228,1514,269"/>
+<area shape="rect" id="node45" href="_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="1987,228,2197,269"/>
+<area shape="rect" id="node46" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="1299,585,1509,627"/>
+<area shape="rect" id="node47" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="143,682,355,709"/>
+<area shape="rect" id="node20" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2005,675,2171,716"/>
+<area shape="rect" id="node23" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1725,407,1901,448"/>
+<area shape="rect" id="node24" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="972,496,1148,537"/>
+<area shape="rect" id="node28" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="739,585,954,627"/>
+<area shape="rect" id="node32" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1176,675,1352,716"/>
+<area shape="rect" id="node33" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1533,585,1709,627"/>
+<area shape="rect" id="node38" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1030,585,1223,627"/>
+<area shape="rect" id="node39" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1832,764,2008,805"/>
+<area shape="rect" id="node35" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1669,675,1845,716"/>
+<area shape="rect" id="node36" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1632,764,1808,805"/>
+<area shape="rect" id="node44" href="_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1439,317,1625,359"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_pooled_media_player_factory_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep">
-<area shape="rect" id="node2" href="_pooled_media_player_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lPlayerFactory.cpp" alt="" coords="5,124,204,195"/>
-<area shape="rect" id="node3" href="_pooled_media_player_factory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/PooledMediaPlayerFactory\lTest.cpp" alt="" coords="229,124,437,195"/>
-<area shape="rect" id="node4" href="_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="461,124,692,195"/>
-<area shape="rect" id="node5" href="_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="717,131,925,187"/>
-<area shape="rect" id="node6" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="949,131,1165,187"/>
-<area shape="rect" id="node7" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="827,243,1025,284"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1049,243,1326,284"/>
+<div class="center"><img src="_pooled_media_player_factory_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_media_player_2_pooled_media_player_factory_8hdep">
+<area shape="rect" id="node2" href="_pooled_media_player_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/MediaPlayer\l/PooledMediaPlayerFactory.cpp" alt="" coords="5,139,240,224"/>
+<area shape="rect" id="node3" href="_pooled_media_resource_provider_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/MediaPlayer\l/PooledMediaResourceProvider.cpp" alt="" coords="264,139,499,224"/>
+<area shape="rect" id="node4" href="_pooled_media_player_factory_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/PooledMediaPlayer\lFactoryTest.cpp" alt="" coords="523,139,802,224"/>
+<area shape="rect" id="node5" href="_audio_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/AudioPlayer/acsdkAudio\lPlayer/test/AudioPlayerTest.cpp" alt="" coords="827,139,1064,224"/>
+<area shape="rect" id="node6" href="_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="1089,139,1298,224"/>
+<area shape="rect" id="node7" href="main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="968,272,1168,343"/>
+<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1193,272,1445,343"/>
 </map>
 </div>
 </div>
@@ -142,7 +146,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

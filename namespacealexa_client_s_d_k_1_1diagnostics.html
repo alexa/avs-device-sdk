@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -101,6 +101,8 @@ Functions</h2></td></tr>
 <tr class="separator:ac66a5ba05d9b29f8d26f1bdc6e47a8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32e49425910ff986a33f617bdcbd7705"><td class="memItemLeft" align="right" valign="top">static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#a32e49425910ff986a33f617bdcbd7705">calculateMaxSampleCountPerTimeout</a> (unsigned int sampleRateHz)</td></tr>
 <tr class="separator:a32e49425910ff986a33f617bdcbd7705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca95963df1b0c3be46aeba406520f483"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#aca95963df1b0c3be46aeba406520f483">toString</a> (bool value)</td></tr>
+<tr class="separator:aca95963df1b0c3be46aeba406520f483"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2f0bc405e269dfec25a79140f65a866"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#ad2f0bc405e269dfec25a79140f65a866">TAG</a> (&quot;DeviceProtocolTracer&quot;)</td></tr>
 <tr class="memdesc:ad2f0bc405e269dfec25a79140f65a866"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ad2f0bc405e269dfec25a79140f65a866">More...</a><br /></td></tr>
 <tr class="separator:ad2f0bc405e269dfec25a79140f65a866"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +133,9 @@ Variables</h2></td></tr>
 <tr class="memitem:addbdfc23f061f16d1a3c2ca78c37bd06"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#addbdfc23f061f16d1a3c2ca78c37bd06">TIMEOUT</a> {2}</td></tr>
 <tr class="memdesc:addbdfc23f061f16d1a3c2ca78c37bd06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value to wait for asynchronous operations.  <a href="#addbdfc23f061f16d1a3c2ca78c37bd06">More...</a><br /></td></tr>
 <tr class="separator:addbdfc23f061f16d1a3c2ca78c37bd06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13acac1cbf7d1bf32d45ee906a6eb333"><td class="memItemLeft" align="right" valign="top">static const std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#a13acac1cbf7d1bf32d45ee906a6eb333">listOfSynchronousProperties</a></td></tr>
+<tr class="memdesc:a13acac1cbf7d1bf32d45ee906a6eb333"><td class="mdescLeft">&#160;</td><td class="mdescRight">The list of Synchronous Properties that need to be retrieved before returning all device properties.  <a href="#a13acac1cbf7d1bf32d45ee906a6eb333">More...</a><br /></td></tr>
+<tr class="separator:a13acac1cbf7d1bf32d45ee906a6eb333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab51333537647307261d1facaf29bbc0c"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#ab51333537647307261d1facaf29bbc0c">DEFAULT_MAX_MESSAGES</a> = 1</td></tr>
 <tr class="memdesc:ab51333537647307261d1facaf29bbc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of trace messages stored in the device protocol tracer.  <a href="#ab51333537647307261d1facaf29bbc0c">More...</a><br /></td></tr>
 <tr class="separator:ab51333537647307261d1facaf29bbc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,6 +251,40 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aca95963df1b0c3be46aeba406520f483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca95963df1b0c3be46aeba406520f483">&#9670;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::diagnostics::toString </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Standard method to convert bool to string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The boolean value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string representation. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="ab51333537647307261d1facaf29bbc0c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab51333537647307261d1facaf29bbc0c">&#9670;&nbsp;</a></span>DEFAULT_MAX_MESSAGES</h2>
@@ -316,6 +355,32 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String to identify invalid property value. </p>
+
+</div>
+</div>
+<a id="a13acac1cbf7d1bf32d45ee906a6eb333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13acac1cbf7d1bf32d45ee906a6eb333">&#9670;&nbsp;</a></span>listOfSynchronousProperties</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::set&lt;std::string&gt; alexaClientSDK::diagnostics::listOfSynchronousProperties</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1settings.html#ad72ea573723458f883abb3398e423188aff6cacf77c164c047c1dc124e25814fe">DevicePropertyAggregator::DevicePropertyAggregatorInterface::DO_NOT_DISTURB</a>,</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1settings.html#ad72ea573723458f883abb3398e423188ab8639e43b605dcfb1b2414fde7f0bc73">DevicePropertyAggregator::DevicePropertyAggregatorInterface::LOCALE</a>}</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1settings_html_ad72ea573723458f883abb3398e423188aff6cacf77c164c047c1dc124e25814fe"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1settings.html#ad72ea573723458f883abb3398e423188aff6cacf77c164c047c1dc124e25814fe">alexaClientSDK::settings::DO_NOT_DISTURB</a></div><div class="ttdef"><b>Definition:</b> DeviceSettingsManager.h:75</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1settings_html_ad72ea573723458f883abb3398e423188ab8639e43b605dcfb1b2414fde7f0bc73"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1settings.html#ad72ea573723458f883abb3398e423188ab8639e43b605dcfb1b2414fde7f0bc73">alexaClientSDK::settings::LOCALE</a></div><div class="ttdef"><b>Definition:</b> DeviceSettingsManager.h:81</div></div>
+</div><!-- fragment -->
+<p>The list of Synchronous Properties that need to be retrieved before returning all device properties. </p>
 
 </div>
 </div>
@@ -443,7 +508,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

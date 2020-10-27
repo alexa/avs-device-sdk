@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -104,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad33b53c1d5c409da7cc09eae1e937a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a303700f305bc5954f05ec8bc4c9412d7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_lib_curl_http_content_fetcher.html#a303700f305bc5954f05ec8bc4c9412d7">getUrl</a> () const override</td></tr>
 <tr class="separator:a303700f305bc5954f05ec8bc4c9412d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b661e66a0aa90da1896fdca8e1b48a3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_lib_curl_http_content_fetcher.html#a5b661e66a0aa90da1896fdca8e1b48a3">getEffectiveUrl</a> () const override</td></tr>
+<tr class="separator:a5b661e66a0aa90da1896fdca8e1b48a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1924f13910f8f8bb896c55b4a3efb3de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface_1_1_header.html">Header</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_lib_curl_http_content_fetcher.html#a1924f13910f8f8bb896c55b4a3efb3de">getHeader</a> (std::atomic&lt; bool &gt; *shouldShutdown) override</td></tr>
 <tr class="separator:a1924f13910f8f8bb896c55b4a3efb3de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a722322d9809e56d17cde6cd1c011b37e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_lib_curl_http_content_fetcher.html#a722322d9809e56d17cde6cd1c011b37e">getBody</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt; writer) override</td></tr>
@@ -260,6 +262,36 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a5b661e66a0aa90da1896fdca8e1b48a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b661e66a0aa90da1896fdca8e1b48a3">&#9670;&nbsp;</a></span>getEffectiveUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::libcurlUtils::LibCurlHttpContentFetcher::getEffectiveUrl </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets the effective URL associated with this content fetcher.</p>
+<dl class="section note"><dt>Note</dt><dd>This is useful in the case of redirects where the first URL used redirects to a different URL to fetch the content.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The content fetcher's effective URL. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#a7896e88e75a797468020a5588a8e9f40">alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface</a>.</p>
+
+</div>
+</div>
 <a id="a1924f13910f8f8bb896c55b4a3efb3de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1924f13910f8f8bb896c55b4a3efb3de">&#9670;&nbsp;</a></span>getHeader()</h2>
 
@@ -383,14 +415,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_lib_curl_http_content_fetcher_8h_source.html">LibCurlHttpContentFetcher.h</a></li>
-<li>/workplace/avs-device-sdk/AVSCommon/Utils/src/LibcurlUtils/<a class="el" href="_lib_curl_http_content_fetcher_8cpp.html">LibCurlHttpContentFetcher.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/<a class="el" href="_lib_curl_http_content_fetcher_8h_source.html">LibCurlHttpContentFetcher.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/Utils/src/LibcurlUtils/<a class="el" href="_lib_curl_http_content_fetcher_8cpp.html">LibCurlHttpContentFetcher.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

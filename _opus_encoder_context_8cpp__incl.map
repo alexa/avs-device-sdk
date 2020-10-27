@@ -1,14 +1,14 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/src/OpusEncoderContext.cpp" name="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/src/OpusEncoderContext.cpp">
-<area shape="rect" id="node5" href="$_endian_8h.html" title="AVSCommon/Utils/Endian.h" alt="" coords="5,117,193,143"/>
-<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="963,109,1139,151"/>
-<area shape="rect" id="node29" href="$_opus_encoder_context_8h.html" title="SpeechEncoder/OpusEncoder\lContext.h" alt="" coords="1769,109,1966,151"/>
-<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="721,288,936,329"/>
-<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="470,288,646,329"/>
-<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="963,199,1139,240"/>
-<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="659,199,852,240"/>
-<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1555,199,1731,240"/>
-<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1214,288,1390,329"/>
-<area shape="rect" id="node25" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1214,377,1390,419"/>
-<area shape="rect" id="node30" href="$_encoder_context_8h.html" title="SpeechEncoder/EncoderContext.h" alt="" coords="1756,206,1979,233"/>
-<area shape="rect" id="node31" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1557,295,1780,322"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/src/OpusEncoderContext.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/src/OpusEncoderContext.cpp">
+<area shape="rect" id="node5" href="$_endian_8h.html" title="AVSCommon/Utils/Endian.h" alt="" coords="5,146,193,173"/>
+<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="963,139,1139,180"/>
+<area shape="rect" id="node29" href="$_opus_encoder_context_8h.html" title="SpeechEncoder/OpusEncoder\lContext.h" alt="" coords="1769,139,1966,180"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="721,317,936,359"/>
+<area shape="rect" id="node19" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="470,317,646,359"/>
+<area shape="rect" id="node20" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="963,228,1139,269"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="659,228,852,269"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1555,228,1731,269"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1214,317,1390,359"/>
+<area shape="rect" id="node25" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1214,407,1390,448"/>
+<area shape="rect" id="node30" href="$_encoder_context_8h.html" title="SpeechEncoder/EncoderContext.h" alt="" coords="1756,235,1979,262"/>
+<area shape="rect" id="node31" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1557,325,1780,351"/>
 </map>

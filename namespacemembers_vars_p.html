@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,6 +98,12 @@ $(function() {
 <li>PAIRED_DEVICES_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#ad58a4d98937f9a148f08da59f0761c22">alexaClientSDK::acsdkBluetooth</a>
 </li>
+<li>PARSE_COMPLETE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1metrics_1_1implementations.html#a4cfb38a24e88e4e8475a476a51b7cd25">alexaClientSDK::metrics::implementations</a>
+</li>
+<li>PARSE_COMPLETE_TO_DISPATCH
+: <a class="el" href="namespacealexa_client_s_d_k_1_1metrics_1_1implementations.html#a694586832a2e02d5d686efde956e0ae7">alexaClientSDK::metrics::implementations</a>
+</li>
 <li>PAST_INSTANT
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae1dee7777600f017ad9af60c7b2c11b5">alexaClientSDK::acsdkAlerts::test</a>
 </li>
@@ -115,14 +121,14 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#a81153ca948bbdc393f9cb61dc1344ff4">alexaClientSDK::bluetoothImplementations::blueZ</a>
 </li>
 <li>PAUSE_DIRECTIVE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ac50bff15e8655fb5a43eeca780697781">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a60bc4e397d9d4d0a5d08f4ab0ea69610">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#acc1356148eab94317353e8b49381eee3">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ab9993bc57fb7bb24d34488e389fe02e1">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PAYLOAD_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a75fd82192065979445031e90e3d5e0dc">alexaClientSDK::acsdkBluetooth::test</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aac60b300bb542c4625467d62db1e4046">alexaClientSDK::acsdkExternalMediaPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a2651411811fd35ad815561adaa7f358f">alexaClientSDK::capabilitiesDelegate::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#abbf5dcfa5810b05aab72efc1a0005e3f">alexaClientSDK::capabilityAgents::aip</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a77a12b3a76319db16467d89dbf0c7a7a">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
 </li>
 <li>PAYLOAD_KEY_DIALOG_REQUEST_ID
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#afbec9dea6271153e8ec32072a9ac0e38">alexaClientSDK::capabilityAgents::interactionModel</a>
@@ -156,8 +162,14 @@ $(function() {
 <li>PAYLOAD_VERSION_KEY_STRING
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a143fc6ccd71846cfc7ef9edc75908c44">alexaClientSDK::avsCommon::avs</a>
 </li>
+<li>PCM_HEADER_SIZE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a2bf9d753419345d0d1c3b96e0ab715f5">alexaClientSDK::avsCommon::utils</a>
+</li>
 <li>PCM_SIGNED_SILENCE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#aa99af321a65f6a84bd6c6ffabea6a39e">alexaClientSDK::mediaPlayer::android</a>
+</li>
+<li>PCM_SUBCHUNK_SZ
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a9a8b275fd3f1b9daf64d575fa19d7487">alexaClientSDK::avsCommon::utils</a>
 </li>
 <li>PCM_UNSIGNED_SILENCE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#a7a64af1954bc71b4f527429a2550c52e">alexaClientSDK::mediaPlayer::android</a>
@@ -185,19 +197,32 @@ $(function() {
 <li>PLAY_AUDIO_INDICATOR_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a727e904978295001c83943e68fb91f90">alexaClientSDK::acsdkNotifications</a>
 </li>
+<li>PLAY_BITS_PER_SAMPLE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#aa14f0b5e8e3fe2588131b3d2130c3480">alexaClientSDK::avsCommon::utils</a>
+</li>
 <li>PLAY_CMD
 : <a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#abdb508ba1a0c2ca6c3316bb0ebf1b997">alexaClientSDK::bluetoothImplementations::blueZ</a>
 </li>
+<li>PLAY_CONTEXT_TOKEN
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a88aebc6cadc429e69542d05715332fd4">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
+</li>
 <li>PLAY_DIRECTIVE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a9abffa1b4596c4b27b20cff968e12fc7">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a6dc4efc911116ba495f7ab36a7c70cbd">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a816bf371b1c9b3bb60aa3ad290f8c286">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a42a5c70c14413f0c2fc65cec7db90dd9">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAY_DIRECTIVE_RECEIVED
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a9ad68201a1944c9986ab9fc551faa057">alexaClientSDK::acsdkAudioPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ae7ab16287e840c3c3c6c382f3eb30ede">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a9ab251a345fd1208bfaa902ef710b017">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1metrics_1_1implementations.html#a809d02ae762db3e33f40218b351b417a">alexaClientSDK::metrics::implementations</a>
+</li>
+<li>PLAY_OFFSET
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a455ddb31a077c434b1d01f7be5f699d6">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAY_PAIR
 : <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#ac380b01c5184ccd9a9126682233fa618">alexaClientSDK::integration::test</a>
+</li>
+<li>PLAY_REQUESTOR
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a538b3ee8dd545aa54ab3b2da8d9200a1">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAY_REQUESTOR_ID
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9b54079a6ccbc7e858d821fac326e1de">alexaClientSDK::acsdkAudioPlayer::test</a>
@@ -270,7 +295,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1test.html#aab4693b426bd615101e583973d610be0">alexaClientSDK::capabilityAgents::playbackController::test</a>
 </li>
 <li>PLAYBACK_SESSION_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a8200f314e03c8e4c502d8df584c5e2dd">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#ab94fb245673d60cd00d4ed3e66b31997">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYBACK_SHUFFLE_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1test.html#aa589936e8882da834bbc97fc96e55b59">alexaClientSDK::capabilityAgents::playbackController::test</a>
@@ -282,23 +307,25 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1test.html#a39d81fec531212e38546570e9f1c9937">alexaClientSDK::capabilityAgents::playbackController::test</a>
 </li>
 <li>PLAYBACK_SOURCE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#afd91c6dcb89c3846ebf352ec49024a02">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#ac163b03a92eeb7a9d67178c401abc009">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYBACK_SOURCE_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#af2866d43824f5ea48e663d104e119eb9">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a01f254396492e1343eefcc5860742ca7">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYBACK_STARTED
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5ad5e8d054783aa8e1ae5e9512529bae">alexaClientSDK::acsdkAudioPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1metrics_1_1implementations.html#aa699c43b578207317e3534d41c6bdc13">alexaClientSDK::metrics::implementations</a>
 </li>
 <li>PLAYBACK_STARTED_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a1cad533a0d990d671fdba13e0efd3213">alexaClientSDK::acsdkAudioPlayer::test</a>
 </li>
 <li>PLAYBACK_STATE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#aa63edec82f2a3bf6517eb3628e40857e">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#ae22544ac26d74776f4f826f72c2f9ff3">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a90c0d9fce33c5e8208d13b92be238b9f">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ad36666a27259db2ecce94c6f90fda71f">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYBACK_STOPPED
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a682a01d708c440fc44a1bbf26bca72bb">alexaClientSDK::acsdkAudioPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1metrics_1_1implementations.html#a74d16c5d724bc502c89dbd6af447cfdc">alexaClientSDK::metrics::implementations</a>
 </li>
 <li>PLAYBACK_STOPPED_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#abd1dcbd8994695e3f22c83a943423da4">alexaClientSDK::acsdkAudioPlayer::test</a>
@@ -340,59 +367,59 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a96812448a60541e1fd18fa089226b1fc">alexaClientSDK::capabilityAgents::playbackController</a>
 </li>
 <li>PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a911e9e9703dbde8be6c75dca5802927d">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a4a5236d23c2e091fe0465cca6ab2a3ef">alexaClientSDK::acsdkExternalMediaPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a8f492fc8af918318703db4fa52100a6d">alexaClientSDK::capabilityAgents::playbackController</a>
 </li>
 <li>PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_TYPE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a4334f7368b31499f9c030360b4197cf0">alexaClientSDK::capabilityAgents::playbackController</a>
 </li>
 <li>PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a6ae956b7d0b369e8e2ed86dcd7881f9b">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a9025d1a2832a7f5629d16e160fe4831d">alexaClientSDK::acsdkExternalMediaPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a2b22f9be20b7504ea43c61991c73e0d4">alexaClientSDK::capabilityAgents::playbackController</a>
 </li>
 <li>PLAYBACKCONTROLLER_NAMESPACE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#af4dbd0581900872445d5017caf31382c">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a7f6477272576e82fce358c72d6ea8d00">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#ab88de3371bde33e05cbc564bdf264fad">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a8bf93f7bf513285d3b63865dd9dbf4de">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ab678aadb1d85b1bf3b603e454c060865">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a203081b583628429de557b24310eb9e7">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#aac6c5ce42ea7bb731928f7dc64119f72">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aa09c8d6ae36920c75de0e8775c7af2d1">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYBACKSTATEREPORTER_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a409f1aadff05daeaaa7f204e704f51ca">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#ae8444354c7fc93cabc3593ecf3d272ef">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#af0e53f1cee827aed84ac795ce9294aac">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#af93d397fb1b0b0f14120f67b1f2e25ef">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYBACKSTATEREPORTER_STATE_NAMESPACE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ab0601172912cdfd2ab5382ec95375141">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a51beb378ce0e1cf284ef09644c11a1aa">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#abc8bfa6babb084920c27d6b3c01bf206">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a9b018c0dd24bba58ff048f5a3d9af190">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYER_COOKIE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a2167a2fd0cf40201f34ef4f3e360cdb9">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a95983df593ca31d466d8407853cb38ee">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_ERROR_EVENT
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#aa0c1e9f420f4748b7c2765911b1e93d7">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#ab2d285ed711fdc48755cead9f8a932cc">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_EVENT
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a9ebaffc4686512d00dbf80d36c8ff2b7">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a295ade1a6bebcf10779fea28c6856857">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a15c3bcf0eb43cd82f17b84ebaad64b5c">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a72a651df602daef03d5f8ec7efc40207">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a4a5980ee2199e751df3e88d6f75b4c4b">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a2af6f87232a6187aee9b8787e983457e">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>PLAYER_ID_KEY
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a60a2956799de9ec5bac365996fa15535">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a94379d5be9ec9dcd855bf717f4ae3b04">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYER_IN_FOCUS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ab55f448113e6255f898a74119822122e">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a4ffa0fc28fcf7e066beea347a8e3207c">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYER_INFO
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime.html#af7922fecbfb5835a76c7ffea82993611">alexaClientSDK::capabilityAgents::templateRuntime</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a2b4e52af89673ffbb29bf382f501eb7d">alexaClientSDK::capabilityAgents::templateRuntime::test</a>
 </li>
 <li>PLAYER_STATE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#ab0909a8f88f2d3a5657a497f3c9397cd">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#af7bee20060cceac38826cefe25a27f0c">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYER_STATE_FINISHED
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a4c1180f7efee369a1ca24d8e215a9767">alexaClientSDK::capabilityAgents::speechSynthesizer</a>
@@ -404,16 +431,16 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer.html#a23f214dfda5bf8b19a5ede9f1b8e123c">alexaClientSDK::capabilityAgents::speechSynthesizer</a>
 </li>
 <li>PLAYER_TRACK
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a8db4a1c6955dd0260d5e5a1ddaf37fad">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a1c6a1325bad9d83d236e8b01e30ba118">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYER_USER_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#a3d584f99b41426fcbd8fd649a51c2e07">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ae71b76569b698443db5971f5186e5c81">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLAYERINFO_PAYLOAD
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test.html#a0e81320394b0008aa4817b1b35cafa53">alexaClientSDK::capabilityAgents::templateRuntime::test</a>
 </li>
 <li>PLAYERS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a405ceda984bb55fa454a858b0fde2f79">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aaf64bfa6219f67f9b1d3165f8810d9e5">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYING_STATE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a5a3f0bc758b5e4ba40bd66f12e31d8b4">alexaClientSDK::acsdkAudioPlayer::test</a>
@@ -430,14 +457,14 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a89ca6eca34c998e1f11d2779448a603d">alexaClientSDK::playlistParser::test</a>
 </li>
 <li>PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_NAME
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#aed80484613958fb67442d8d076ab940d">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#aedf1c68324ec91fd9961cf74de82d48f">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYLISTCONTROLLER_CAPABILITY_INTERFACE_VERSION
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#a8af4d2b48ea2abe0d4c81315b982e319">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a219dcdc81a7668c40ed05d5dc6305ebb">alexaClientSDK::acsdkExternalMediaPlayer</a>
 </li>
 <li>PLAYLISTCONTROLLER_NAMESPACE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#adbea1de2cec32c3df89dc7ad10416ea1">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#ade1a551f323e282318fc8dbb80023cce">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a7fc247fb7363f69ee7589ad87989d2e5">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a9c97315584438ca8b7c5e31350c633ff">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PLS_CONTENT_TYPE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#ae2d8a300fc90d8a970d8fc786089e718">alexaClientSDK::playlistParser</a>
@@ -446,7 +473,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#ae4ea523dee7ebdc160762ddcd7ff59c8">alexaClientSDK::playlistParser</a>
 </li>
 <li>POSITIONINMS
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1external_media_player.html#a7e3a6250c2ec2cd73782fa0553fc35fc">alexaClientSDK::avsCommon::avs::externalMediaPlayer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#adec3a551d8205aadd6a5226b6ab9cae0">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>POST_KEY_CLIENT_ID
 : <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#adc5fce43ae5f24577ad616e46d19f086">alexaClientSDK::authorization::cblAuthDelegate</a>
@@ -500,6 +527,12 @@ $(function() {
 <li>PREFERRED_SAMPLES_PER_CALLBACK
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a5f634e1b21b2f54f1f4b783f1ae802ab">alexaClientSDK::sampleApp</a>
 </li>
+<li>PREFIX
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power.html#a3711d306ba2e6e39335b475756c59dd3">alexaClientSDK::avsCommon::utils::power</a>
+</li>
+<li>PREFIXED_TEST_ID
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1test.html#ab73738015cdc2d4a498e0cf79368ce29">alexaClientSDK::avsCommon::utils::power::test</a>
+</li>
 <li>PREPARE_PLAY_DIRECTIVE_RECEIVED
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac1c1e638d5e59ab2cb184da61befaebc">alexaClientSDK::acsdkAudioPlayer</a>
 </li>
@@ -520,8 +553,8 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#af432fb4d8dcf53138650e306e1cf426f">alexaClientSDK::bluetoothImplementations::blueZ</a>
 </li>
 <li>PREVIOUS_DIRECTIVE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player.html#ac92f0d2874029bf2efbd5a52af4d2a1d">alexaClientSDK::capabilityAgents::externalMediaPlayer</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#ac28d9bf573eca5c16d0a5f0bec511931">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a7677f3120e2e36aa44f99f078a67cbfc">alexaClientSDK::acsdkExternalMediaPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ae617a04f5fa997d45b80689c0f0c7b6e">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>PRIMARY_LOCALE_INDEX
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1types.html#aca569e91c5a7b9ee9e5f76f5f4863fbd">alexaClientSDK::settings::types</a>
@@ -569,8 +602,8 @@ $(function() {
 </li>
 <li>PROVIDE_STATE_TOKEN_TEST
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a454da2cf0f7526743443b4c6874fbabd">alexaClientSDK::acsdkAudioPlayer::test</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ab7db851a93c0db186d20c1e473c937ed">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae9800e932c8997b89809bdac7dc6dc22">alexaClientSDK::afml::test</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1test.html#aac82e40ad91d1bb49c35e89c2624c2f5">alexaClientSDK::capabilityAgents::externalMediaPlayer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aa7bbfb67f8af8b90bf83dfde87ae2743">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
 </li>
 <li>PROXY_DEFAULT_TIMEOUT
@@ -581,7 +614,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

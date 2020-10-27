@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/ACL/src/Transport/PostConnectSequencer.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/ACL/src/Transport/PostConnectSequencer.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,44 +73,40 @@ $(function() {
 <div class="title">PostConnectSequencer.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_post_connect_sequencer_8h_source.html">ACL/Transport/PostConnectSequencer.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="_finally_guard_8h_source.html">AVSCommon/Utils/Error/FinallyGuard.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_power_monitor_8h_source.html">AVSCommon/Utils/Power/PowerMonitor.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_post_connect_sequencer_8h_source.html">ACL/Transport/PostConnectSequencer.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PostConnectSequencer.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_sequencer_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp" id="_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp">
-<area shape="rect" id="node2" href="_post_connect_sequencer_8h.html" title="ACL/Transport/PostConnect\lSequencer.h" alt="" coords="2387,109,2573,151"/>
-<area shape="rect" id="node39" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3281,363,3457,404"/>
-<area shape="rect" id="node8" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="195,363,415,404"/>
-<area shape="rect" id="node14" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="679,631,921,672"/>
-<area shape="rect" id="node16" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2313,541,2503,583"/>
-<area shape="rect" id="node18" href="_post_connect_interface_8h.html" title="ACL/Transport/PostConnect\lInterface.h" alt="" coords="541,363,728,404"/>
-<area shape="rect" id="node20" href="_transport_observer_interface_8h.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="1649,363,1868,404"/>
-<area shape="rect" id="node23" href="_h_t_t_p2_transport_8h.html" title="ACL/Transport/HTTP2Transport.h" alt="" coords="1452,199,1671,225"/>
-<area shape="rect" id="node9" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="955,452,1147,493"/>
-<area shape="rect" id="node10" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1400,549,1651,575"/>
-<area shape="rect" id="node19" href="_post_connect_observer_interface_8h.html" title="ACL/Transport/PostConnect\lObserverInterface.h" alt="" coords="491,452,677,493"/>
-<area shape="rect" id="node21" href="_transport_interface_8h.html" title="ACL/Transport/TransportInterface.h" alt="" coords="1489,459,1717,486"/>
-<area shape="rect" id="node22" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1741,452,1987,493"/>
-<area shape="rect" id="node26" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="2113,452,2317,493"/>
-<area shape="rect" id="node29" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="173,541,365,583"/>
-<area shape="rect" id="node31" href="_event_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/EventTracerInterface.h" alt="" coords="1961,363,2153,404"/>
-<area shape="rect" id="node32" href="_h_t_t_p2_connection_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionInterface.h" alt="" coords="1226,273,1422,315"/>
-<area shape="rect" id="node33" href="_h_t_t_p2_connection_observer_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionObserverInterface.h" alt="" coords="1213,363,1462,404"/>
-<area shape="rect" id="node34" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="753,273,933,315"/>
-<area shape="rect" id="node35" href="_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="803,363,1027,404"/>
-<area shape="rect" id="node36" href="_ping_handler_8h.html" title="ACL/Transport/PingHandler.h" alt="" coords="1009,281,1202,307"/>
-<area shape="rect" id="node37" href="_post_connect_factory_interface_8h.html" title="ACL/Transport/PostConnect\lFactoryInterface.h" alt="" coords="541,273,728,315"/>
-<area shape="rect" id="node38" href="_synchronized_message_request_queue_8h.html" title="ACL/Transport/Synchronized\lMessageRequestQueue.h" alt="" coords="1222,452,1413,493"/>
-<area shape="rect" id="node28" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2084,541,2289,583"/>
-<area shape="rect" id="node30" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="173,631,365,672"/>
-<area shape="rect" id="node41" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3679,541,3894,583"/>
-<area shape="rect" id="node44" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2729,541,2905,583"/>
-<area shape="rect" id="node45" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3281,452,3457,493"/>
-<area shape="rect" id="node49" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2745,452,2938,493"/>
-<area shape="rect" id="node50" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2443,452,2619,493"/>
-<area shape="rect" id="node48" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="3132,541,3308,583"/>
+<div class="center"><img src="_post_connect_sequencer_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_a_c_l_2src_2_transport_2_post_connect_sequencer_8cpp">
+<area shape="rect" id="node2" href="_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="287,124,452,165"/>
+<area shape="rect" id="node4" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="619,124,795,165"/>
+<area shape="rect" id="node26" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="1331,213,1506,255"/>
+<area shape="rect" id="node32" href="_post_connect_sequencer_8h.html" title="ACL/Transport/PostConnect\lSequencer.h" alt="" coords="1835,124,2021,165"/>
+<area shape="rect" id="node10" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="70,392,285,433"/>
+<area shape="rect" id="node17" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="661,392,837,433"/>
+<area shape="rect" id="node18" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="443,213,619,255"/>
+<area shape="rect" id="node24" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="745,213,938,255"/>
+<area shape="rect" id="node25" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1064,213,1240,255"/>
+<area shape="rect" id="node20" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="368,303,544,344"/>
+<area shape="rect" id="node22" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="360,392,536,433"/>
+<area shape="rect" id="node29" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1115,392,1346,433"/>
+<area shape="rect" id="node30" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1523,303,1698,344"/>
+<area shape="rect" id="node33" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="2634,213,2854,255"/>
+<area shape="rect" id="node40" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="2639,481,2881,523"/>
+<area shape="rect" id="node41" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1651,392,1840,433"/>
+<area shape="rect" id="node42" href="_post_connect_interface_8h.html" title="ACL/Transport/PostConnect\lInterface.h" alt="" coords="2405,213,2592,255"/>
+<area shape="rect" id="node44" href="_transport_observer_interface_8h.html" title="ACL/Transport/TransportObserver\lInterface.h" alt="" coords="2001,213,2220,255"/>
+<area shape="rect" id="node34" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2648,303,2840,344"/>
+<area shape="rect" id="node35" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2437,399,2688,426"/>
+<area shape="rect" id="node38" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1805,481,2009,523"/>
+<area shape="rect" id="node39" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1824,571,1989,612"/>
+<area shape="rect" id="node43" href="_post_connect_observer_interface_8h.html" title="ACL/Transport/PostConnect\lObserverInterface.h" alt="" coords="2437,303,2624,344"/>
+<area shape="rect" id="node45" href="_transport_interface_8h.html" title="ACL/Transport/TransportInterface.h" alt="" coords="2033,310,2261,337"/>
+<area shape="rect" id="node46" href="_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="1965,392,2211,433"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -163,7 +159,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

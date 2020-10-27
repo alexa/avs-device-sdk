@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -171,8 +171,14 @@ $(function() {
 <li>NotificationsStorageTest()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_notifications_storage_test.html#a8e7c2bebdf36d03fd674412929fe348d">alexaClientSDK::acsdkNotifications::test::NotificationsStorageTest</a>
 </li>
+<li>Notifier()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adefc61940989da0fb758d68d108584b3">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>
+</li>
 <li>notify_all()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html#afe1f6496f9e9069395109f15c6f4a942">alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits::ConditionVariable</a>
+</li>
+<li>notifyAll()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_condition_variable_wrapper.html#ae0604a45e12ba1b22fe70093f9adf31e">alexaClientSDK::avsCommon::utils::threading::ConditionVariableWrapper</a>
 </li>
 <li>notifyAVS
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface_1_1_notification_properties.html#aa1ee6e455bcd60dc70a8172484d2051b">alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties</a>
@@ -187,10 +193,16 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface_1_1_activity.html#af298cc8bfbc191f945ac54e203536899">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::Activity</a>
 </li>
 <li>notifyObservers()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html#aa06a78116bbc10591100ee3326ca0c1c">alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#a68875775a1c33e720a3f5df573103dc2">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html#aede41cec641671b86f16946764854c94">alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface_1_1_notification_properties.html#ab7e06a4456e953cdb4c4a92598daf1f4">alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html#a29954a2393f1f6e8e77c62ac7c941c56">alexaClientSDK::mediaPlayer::PooledMediaPlayerFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html#a1b7a51d0c65e32725b45e959086ad73a">alexaClientSDK::settings::SettingInterface&lt; ValueT &gt;</a>
+</li>
+<li>notifyObserversInReverse()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#ae7a3f83373bdffebb201f9822fc7412a">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>
 </li>
 <li>notifyObserversOnReadData()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html#a5ce56135809e8ec00b804ef043fa2d34">alexaClientSDK::mediaPlayer::BaseStreamSource</a>
@@ -206,8 +218,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ab256bfb678b373bdb79d93f83d9af4eb">alexaClientSDK::defaultClient::DefaultClient</a>
 </li>
 <li>notifyOfHoldToTalkStart()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a6357701015ad779f3bf476692653147f">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a1df8cb33863effab42303f9d6f94eba9">alexaClientSDK::defaultClient::DefaultClient</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#af774ca697e9493c20c17a58756c71cce">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ab5c3f6b4e2ac260e6db9331a63d0a7c4">alexaClientSDK::defaultClient::DefaultClient</a>
 </li>
 <li>notifyOfTapToTalk()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a042deea9f6f255a45361784c10ced894">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a>
@@ -220,6 +232,9 @@ $(function() {
 <li>notifyOfWakeWord()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a8d9ca244397498be6839feac0972b5e7">alexaClientSDK::avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#af65819d0d2d60d1ca259f0fe5b443506">alexaClientSDK::defaultClient::DefaultClient</a>
+</li>
+<li>notifyOne()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_condition_variable_wrapper.html#ae1fd82306954b0c366fac0c2160967c2">alexaClientSDK::avsCommon::utils::threading::ConditionVariableWrapper</a>
 </li>
 <li>notifySystemClockSynchronized()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_system_clock_monitor.html#a7606d648320cc9777cde419c0f0ddff9">alexaClientSDK::avsCommon::utils::timing::SystemClockMonitor</a>
@@ -241,11 +256,9 @@ $(function() {
 <li>numberChannels()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#a637503ca05db6b73861d4554f1d74096">alexaClientSDK::mediaPlayer::android::PlaybackConfiguration</a>
 </li>
-<li>numberOfChannels
-: <a class="el" href="structalexa_client_s_d_k_1_1diagnostics_1_1utils_1_1_wav_file_header.html#abff1cdd0420935efe81c6ee3ab4aaca1">alexaClientSDK::diagnostics::utils::WavFileHeader</a>
-</li>
 <li>numChannels
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#a3c98d77a4f5f2723b4a2c4045d3dd181">alexaClientSDK::avsCommon::utils::AudioFormat</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wav_header.html#ac7a2ef566f4571f740ccb2c03f83b82d">alexaClientSDK::avsCommon::utils::WavHeader</a>
 </li>
 <li>NumChannels()
 : <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_snowboy_wrapper.html#a0af48fef7a71dc3a08051a4ba9451b9a">alexaClientSDK::kwd::SnowboyWrapper</a>
@@ -255,7 +268,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

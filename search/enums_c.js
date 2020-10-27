@@ -2,7 +2,7 @@ var searchData=
 [
   ['parsefromjsonstatus',['ParseFromJsonStatus',['../classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#acd39ae856222a1bf50ec4829b1381437',1,'alexaClientSDK::acsdkAlerts::Alert']]],
   ['parsestatus',['ParseStatus',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html#aec5d27fc4922b753ff8952280d54000a',1,'alexaClientSDK::avsCommon::avs::AVSDirective']]],
-  ['periodtype',['PeriodType',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#a3abfcab70fb00bbe0fb6137c8e15b77b',1,'alexaClientSDK::avsCommon::utils::timing::Timer']]],
+  ['periodtype',['PeriodType',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#ae809e50475e84c933dac71cc2be4517c',1,'alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface::PeriodType()'],['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html#a3abfcab70fb00bbe0fb6137c8e15b77b',1,'alexaClientSDK::avsCommon::utils::timing::Timer::PeriodType()']]],
   ['playbackbutton',['PlaybackButton',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a61e425aaa1522eafa6647f6b11cb9556',1,'alexaClientSDK::avsCommon::avs']]],
   ['playbackoperation',['PlaybackOperation',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6',1,'alexaClientSDK::avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface']]],
   ['playbacktoggle',['PlaybackToggle',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ad9f7d4000e3b111db271f73d9e34604b',1,'alexaClientSDK::avsCommon::avs']]],

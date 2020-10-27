@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html" title="LogEntry is used to compile the log entry text to log via Logger. " alt="" coords="5,5,203,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_factory_interface.html" title="A factory for creating TimerDelegateInterface. " alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate_factory.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate\lFactory" alt="" coords="264,5,461,61"/>
 </map>

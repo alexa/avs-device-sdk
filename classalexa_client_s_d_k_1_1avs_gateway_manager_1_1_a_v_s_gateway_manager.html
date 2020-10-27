@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -133,6 +133,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a23de92cd50b4241a2ef54f2e9a32d9f6"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#a23de92cd50b4241a2ef54f2e9a32d9f6">createAVSGatewayManagerInterface</a> (std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">storage::AVSGatewayManagerStorageInterface</a> &gt; avsGatewayManagerStorage, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; &amp;customerDataManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;configurationRoot, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;providerRegistrar)</td></tr>
+<tr class="separator:a23de92cd50b4241a2ef54f2e9a32d9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa488c71d0355bb08c4be2a7351435dd"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html#aaa488c71d0355bb08c4be2a7351435dd">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">storage::AVSGatewayManagerStorageInterface</a> &gt; avsGatewayManagerStorage, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; customerDataManager, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</td></tr>
 <tr class="separator:aaa488c71d0355bb08c4be2a7351435dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -266,6 +268,7 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 </table>
 </div><div class="memdoc">
 <p>Creates an instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000038">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">avsGatewayManagerStorage</td><td>The <code>AVSGatewayManagerInterface</code> to store avs gateway information. </td></tr>
@@ -276,6 +279,65 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code>. </dd></dl>
 <p>Retrieve AVS Gateway from config file if available else set Default value. </p>
+
+</div>
+</div>
+<a id="a23de92cd50b4241a2ef54f2e9a32d9f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23de92cd50b4241a2ef54f2e9a32d9f6">&#9670;&nbsp;</a></span>createAVSGatewayManagerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_manager_interface.html">avsCommon::sdkInterfaces::AVSGatewayManagerInterface</a> &gt; alexaClientSDK::avsGatewayManager::AVSGatewayManager::createAVSGatewayManagerInterface </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1_a_v_s_gateway_manager_storage_interface.html">storage::AVSGatewayManagerStorageInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>avsGatewayManagerStorage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>customerDataManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>configurationRoot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html">acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>providerRegistrar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates an instance of the <code>AVSGatewayManagerInterface</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">avsGatewayManagerStorage</td><td>The <code>AVSGatewayManagerInterface</code> to store avs gateway information. </td></tr>
+    <tr><td class="paramname">customerDataManager</td><td>The <code>CustomerDataManager</code> object that will track the CustomerDataHandler. </td></tr>
+    <tr><td class="paramname">configurationRoot</td><td>The <code>ConfigurationNode</code> to get AVS gateway information from the config file. </td></tr>
+    <tr><td class="paramname">providerRegistrar</td><td>Object with which to register the new instance as a post connect operation provider. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new instance of the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html">AVSGatewayManager</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -471,14 +533,14 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/<a class="el" href="_a_v_s_gateway_manager_8h_source.html">AVSGatewayManager.h</a></li>
-<li>/workplace/avs-device-sdk/AVSGatewayManager/src/<a class="el" href="_a_v_s_gateway_manager_8cpp.html">AVSGatewayManager.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/<a class="el" href="_a_v_s_gateway_manager_8h_source.html">AVSGatewayManager.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSGatewayManager/src/<a class="el" href="_a_v_s_gateway_manager_8cpp.html">AVSGatewayManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

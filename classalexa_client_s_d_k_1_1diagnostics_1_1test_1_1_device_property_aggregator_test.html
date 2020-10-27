@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -118,6 +118,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a4b6bf9fc4eee8f654070b06e6a19f2a8"><td class="memItemLeft" align="right" valign="top">std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_device_property_aggregator_test.html#a4b6bf9fc4eee8f654070b06e6a19f2a8">m_mockContextMangerThread</a></td></tr>
 <tr class="memdesc:a4b6bf9fc4eee8f654070b06e6a19f2a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread to process the <code>ContextManager</code> requests on.  <a href="#a4b6bf9fc4eee8f654070b06e6a19f2a8">More...</a><br /></td></tr>
 <tr class="separator:a4b6bf9fc4eee8f654070b06e6a19f2a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543a5f6bd482f0317edf9bc1a54ee7ae"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_device_property_aggregator_test.html#a543a5f6bd482f0317edf9bc1a54ee7ae">m_deviceSettingsManager</a></td></tr>
+<tr class="memdesc:a543a5f6bd482f0317edf9bc1a54ee7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>SettingsManager</code>.  <a href="#a543a5f6bd482f0317edf9bc1a54ee7ae">More...</a><br /></td></tr>
+<tr class="separator:a543a5f6bd482f0317edf9bc1a54ee7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86e475e1f8c3b9b2a153e5884622584"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_setting_stub.html">SettingStub</a>&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a1073c3f0b19a328bdac6aeec5317efbf">settings::DoNotDisturbSetting</a> ::ValueType &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_device_property_aggregator_test.html#aa86e475e1f8c3b9b2a153e5884622584">m_DNDSetting</a></td></tr>
+<tr class="memdesc:aa86e475e1f8c3b9b2a153e5884622584"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_setting_stub.html" title="Settings stub that just set the value immediately. ">SettingStub</a></code> for the DoNotDisturb setting.  <a href="#aa86e475e1f8c3b9b2a153e5884622584">More...</a><br /></td></tr>
+<tr class="separator:aa86e475e1f8c3b9b2a153e5884622584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0f519bcea771fc7d1867d0acb0d88a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_device_property_aggregator_test.html#ad0f519bcea771fc7d1867d0acb0d88a1">m_propertyMapSizeBeforeDeviceSetting</a></td></tr>
+<tr class="memdesc:ad0f519bcea771fc7d1867d0acb0d88a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The nummber of values in the propertyMap before adding device settings.  <a href="#ad0f519bcea771fc7d1867d0acb0d88a1">More...</a><br /></td></tr>
+<tr class="separator:ad0f519bcea771fc7d1867d0acb0d88a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6a10587490bce19e942c104018d386b2"></a>
@@ -256,6 +265,38 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a543a5f6bd482f0317edf9bc1a54ee7ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543a5f6bd482f0317edf9bc1a54ee7ae">&#9670;&nbsp;</a></span>m_deviceSettingsManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a>&gt; alexaClientSDK::diagnostics::test::DevicePropertyAggregatorTest::m_deviceSettingsManager</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <code>SettingsManager</code>. </p>
+
+</div>
+</div>
+<a id="aa86e475e1f8c3b9b2a153e5884622584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa86e475e1f8c3b9b2a153e5884622584">&#9670;&nbsp;</a></span>m_DNDSetting</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_setting_stub.html">SettingStub</a>&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a1073c3f0b19a328bdac6aeec5317efbf">settings::DoNotDisturbSetting</a> ::ValueType&gt; &gt; alexaClientSDK::diagnostics::test::DevicePropertyAggregatorTest::m_DNDSetting</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The <code><a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1test_1_1_setting_stub.html" title="Settings stub that just set the value immediately. ">SettingStub</a></code> for the DoNotDisturb setting. </p>
+
+</div>
+</div>
 <a id="a42775ed35e8b08976894e1680dc212f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a42775ed35e8b08976894e1680dc212f1">&#9670;&nbsp;</a></span>m_mockContextManager</h2>
 
@@ -304,14 +345,30 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad0f519bcea771fc7d1867d0acb0d88a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0f519bcea771fc7d1867d0acb0d88a1">&#9670;&nbsp;</a></span>m_propertyMapSizeBeforeDeviceSetting</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int alexaClientSDK::diagnostics::test::DevicePropertyAggregatorTest::m_propertyMapSizeBeforeDeviceSetting</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The nummber of values in the propertyMap before adding device settings. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/Diagnostics/test/<a class="el" href="_device_property_aggregator_test_8cpp.html">DevicePropertyAggregatorTest.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/Diagnostics/test/<a class="el" href="_device_property_aggregator_test_8cpp.html">DevicePropertyAggregatorTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

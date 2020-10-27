@@ -1,6 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
-<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="49,124,259,165"/>
-<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="459,124,673,165"/>
-<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="878,131,1097,158"/>
-<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1057,213,1280,240"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
+<area shape="rect" id="node2" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="49,139,259,180"/>
+<area shape="rect" id="node5" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="459,139,673,180"/>
+<area shape="rect" id="node14" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="878,146,1097,173"/>
+<area shape="rect" id="node16" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1057,228,1280,255"/>
 </map>

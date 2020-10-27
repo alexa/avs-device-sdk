@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,6 +96,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport_factory.html">HTTP2TransportFactory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_legacy_provider_registrar.html">LegacyProviderRegistrar</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html">MessageConsumerInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_message_request_handler.html">MessageRequestHandler</a></td></tr>
@@ -159,6 +161,9 @@ Functions</h2></td></tr>
 <tr class="separator:a3af97973c2d1e0bcc9a0f89aeea1e29e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fa363fbf0864cee86273f59ecc4ea8e"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a2fa363fbf0864cee86273f59ecc4ea8e">operator&lt;&lt;</a> (std::ostream &amp;stream, HTTP2Transport::State state)</td></tr>
 <tr class="separator:a2fa363fbf0864cee86273f59ecc4ea8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a673cf5fcd209c06d9d1d56ea6c821dc5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a673cf5fcd209c06d9d1d56ea6c821dc5">TAG</a> (&quot;HTTP2TransportFactory&quot;)</td></tr>
+<tr class="memdesc:a673cf5fcd209c06d9d1d56ea6c821dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a673cf5fcd209c06d9d1d56ea6c821dc5">More...</a><br /></td></tr>
+<tr class="separator:a673cf5fcd209c06d9d1d56ea6c821dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65638c1fb9761b937511729e01aa5260"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a65638c1fb9761b937511729e01aa5260">TAG</a> (&quot;MessageRequestHandler&quot;)</td></tr>
 <tr class="memdesc:a65638c1fb9761b937511729e01aa5260"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a65638c1fb9761b937511729e01aa5260">More...</a><br /></td></tr>
 <tr class="separator:a65638c1fb9761b937511729e01aa5260"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,64 +450,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a6bd700f75ca78470bdf146ac35f68923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bd700f75ca78470bdf146ac35f68923">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/12]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
-          <td>(</td>
-          <td class="paramtype">&quot;PostConnectSequencer&quot;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating form this file. </p>
-
-</div>
-</div>
-<a id="a47be99f9700b6c1fea52328ce4e1c39a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47be99f9700b6c1fea52328ce4e1c39a">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/12]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
-          <td>(</td>
-          <td class="paramtype">&quot;SynchronizedMessageRequestQueue&quot;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
 <a id="adc56b59e347ef3c49f02ae4fba40c613"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc56b59e347ef3c49f02ae4fba40c613">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adc56b59e347ef3c49f02ae4fba40c613">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -529,8 +478,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0c2f7f8067d245ae745364d0a973a3c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c2f7f8067d245ae745364d0a973a3c1">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/12]</span></h2>
+<a id="a47be99f9700b6c1fea52328ce4e1c39a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47be99f9700b6c1fea52328ce4e1c39a">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -541,7 +490,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
           <td>(</td>
-          <td class="paramtype">&quot;PostConnectSequencerFactory&quot;&#160;</td>
+          <td class="paramtype">&quot;SynchronizedMessageRequestQueue&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -558,7 +507,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a85d1de5e3765c5897f6e2a3742845222"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85d1de5e3765c5897f6e2a3742845222">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d1de5e3765c5897f6e2a3742845222">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -585,8 +534,64 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a0c2f7f8067d245ae745364d0a973a3c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c2f7f8067d245ae745364d0a973a3c1">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;PostConnectSequencerFactory&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="a673cf5fcd209c06d9d1d56ea6c821dc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a673cf5fcd209c06d9d1d56ea6c821dc5">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;HTTP2TransportFactory&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="a01400ba9ddf0fda7d49c091b10f37cf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01400ba9ddf0fda7d49c091b10f37cf9">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a01400ba9ddf0fda7d49c091b10f37cf9">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -613,8 +618,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a6bd700f75ca78470bdf146ac35f68923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bd700f75ca78470bdf146ac35f68923">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;PostConnectSequencer&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating form this file. </p>
+
+</div>
+</div>
 <a id="a99fdf0bd9d52d4f3587cccb99a98969f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99fdf0bd9d52d4f3587cccb99a98969f">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a99fdf0bd9d52d4f3587cccb99a98969f">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -642,7 +675,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="afccc8a1e23dde7851b9f1b375ded13c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afccc8a1e23dde7851b9f1b375ded13c8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afccc8a1e23dde7851b9f1b375ded13c8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[9/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -669,36 +702,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a53850046260ea9cc5aa5dbd3cdde0bf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53850046260ea9cc5aa5dbd3cdde0bf7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[9/12]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
-          <td>(</td>
-          <td class="paramtype">&quot;PingHandler&quot;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
 <a id="a3af97973c2d1e0bcc9a0f89aeea1e29e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3af97973c2d1e0bcc9a0f89aeea1e29e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[10/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3af97973c2d1e0bcc9a0f89aeea1e29e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[10/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -725,8 +730,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a53850046260ea9cc5aa5dbd3cdde0bf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53850046260ea9cc5aa5dbd3cdde0bf7">&#9670;&nbsp;</a></span>TAG() <span class="overload">[11/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acl::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;PingHandler&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="ae52a94f9546731ec3fd127b1f7f0ce7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae52a94f9546731ec3fd127b1f7f0ce7e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[11/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae52a94f9546731ec3fd127b1f7f0ce7e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[12/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -754,7 +787,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a65638c1fb9761b937511729e01aa5260"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65638c1fb9761b937511729e01aa5260">&#9670;&nbsp;</a></span>TAG() <span class="overload">[12/12]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a65638c1fb9761b937511729e01aa5260">&#9670;&nbsp;</a></span>TAG() <span class="overload">[13/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1597,7 +1630,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

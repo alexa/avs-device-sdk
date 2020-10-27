@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/SynchronizeStateSender/include/SynchronizeStateSender/PostConnectSynchronizeStateSender.h File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/SynchronizeStateSender/include/SynchronizeStateSender/PostConnectSynchronizeStateSender.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,59 +72,60 @@ $(function() {
 <div class="title">PostConnectSynchronizeStateSender.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;condition_variable&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;<a class="el" href="_waitable_message_request_8h_source.html">AVSCommon/AVS/WaitableMessageRequest.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_context_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/ContextManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_context_requester_interface_8h_source.html">AVSCommon/SDKInterfaces/ContextRequesterInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_post_connect_operation_interface_8h_source.html">AVSCommon/SDKInterfaces/PostConnectOperationInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_condition_variable_wrapper_8h_source.html">AVSCommon/Utils/Threading/ConditionVariableWrapper.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for PostConnectSynchronizeStateSender.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_synchronize_state_sender_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h" id="_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h">
-<area shape="rect" id="node6" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="43,660,285,701"/>
-<area shape="rect" id="node18" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1631,124,1823,165"/>
-<area shape="rect" id="node42" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2643,213,2837,255"/>
-<area shape="rect" id="node49" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="361,571,581,612"/>
-<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="473,757,724,783"/>
-<area shape="rect" id="node16" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1588,839,1831,880"/>
-<area shape="rect" id="node11" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1018,839,1222,880"/>
-<area shape="rect" id="node15" href="_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1037,928,1203,969"/>
-<area shape="rect" id="node19" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="2155,392,2349,433"/>
-<area shape="rect" id="node36" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1693,213,1907,255"/>
-<area shape="rect" id="node37" href="_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="1683,392,1896,433"/>
-<area shape="rect" id="node38" href="_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="1671,303,1908,344"/>
-<area shape="rect" id="node47" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2079,213,2271,255"/>
-<area shape="rect" id="node20" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1983,489,2179,515"/>
-<area shape="rect" id="node21" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1632,571,1808,612"/>
-<area shape="rect" id="node22" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1603,660,1779,701"/>
-<area shape="rect" id="node25" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1298,839,1513,880"/>
-<area shape="rect" id="node28" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1855,839,2031,880"/>
-<area shape="rect" id="node29" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2705,749,2881,791"/>
-<area shape="rect" id="node34" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1701,749,1894,791"/>
-<area shape="rect" id="node35" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="865,749,1041,791"/>
-<area shape="rect" id="node32" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2959,839,3135,880"/>
-<area shape="rect" id="node33" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2211,928,2387,969"/>
-<area shape="rect" id="node39" href="_capability_state_8h.html" title="AVSCommon/AVS/Capability\lState.h" alt="" coords="2424,392,2619,433"/>
-<area shape="rect" id="node41" href="_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="2305,571,2481,612"/>
-<area shape="rect" id="node43" href="_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="2556,310,2777,337"/>
-<area shape="rect" id="node45" href="_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="2289,303,2481,344"/>
-<area shape="rect" id="node46" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="2736,481,2936,523"/>
-<area shape="rect" id="node48" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1983,303,2214,344"/>
-<area shape="rect" id="node50" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="492,660,684,701"/>
+<div class="center"><img src="_post_connect_synchronize_state_sender_8h__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8h">
+<area shape="rect" id="node5" href="_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="205,511,446,552"/>
+<area shape="rect" id="node16" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2736,153,2928,195"/>
+<area shape="rect" id="node36" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3552,243,3747,284"/>
+<area shape="rect" id="node43" href="_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="2213,511,2433,552"/>
+<area shape="rect" id="node45" href="_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="1155,421,1350,463"/>
+<area shape="rect" id="node7" href="_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="651,697,902,723"/>
+<area shape="rect" id="node14" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="46,779,288,820"/>
+<area shape="rect" id="node11" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="780,779,984,820"/>
+<area shape="rect" id="node17" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="2748,421,2943,463"/>
+<area shape="rect" id="node31" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="2610,243,2825,284"/>
+<area shape="rect" id="node32" href="_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="3119,421,3332,463"/>
+<area shape="rect" id="node33" href="_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="2916,332,3154,373"/>
+<area shape="rect" id="node41" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2850,243,3042,284"/>
+<area shape="rect" id="node18" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3018,518,3214,545"/>
+<area shape="rect" id="node19" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1427,600,1603,641"/>
+<area shape="rect" id="node20" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2095,689,2271,731"/>
+<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2005,779,2220,820"/>
+<area shape="rect" id="node24" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1796,868,1972,909"/>
+<area shape="rect" id="node25" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3290,779,3466,820"/>
+<area shape="rect" id="node29" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1788,779,1981,820"/>
+<area shape="rect" id="node30" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2498,779,2674,820"/>
+<area shape="rect" id="node28" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="3140,868,3316,909"/>
+<area shape="rect" id="node34" href="_capability_state_8h.html" title="AVSCommon/AVS/Capability\lState.h" alt="" coords="3610,421,3804,463"/>
+<area shape="rect" id="node37" href="_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="3596,339,3818,366"/>
+<area shape="rect" id="node39" href="_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="3178,332,3370,373"/>
+<area shape="rect" id="node40" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="4016,600,4216,641"/>
+<area shape="rect" id="node42" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2661,332,2892,373"/>
+<area shape="rect" id="node44" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1211,600,1403,641"/>
+<area shape="rect" id="node47" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="1509,689,1684,731"/>
+<area shape="rect" id="node50" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="1039,511,1215,552"/>
+<area shape="rect" id="node49" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1481,779,1712,820"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_post_connect_synchronize_state_sender_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep" id="_2workplace_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep">
-<area shape="rect" id="node2" href="_post_connect_synchronize_state_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SynchronizeStateSender\l/src/PostConnectSynchronizeState\lSender.cpp" alt="" coords="5,124,232,195"/>
-<area shape="rect" id="node3" href="_synchronize_state_sender_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SynchronizeStateSender\l/src/SynchronizeStateSenderFactory.cpp" alt="" coords="256,131,517,187"/>
-<area shape="rect" id="node4" href="_post_connect_synchronize_state_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SynchronizeStateSender\l/test/PostConnectSynchronizeState\lSenderTest.cpp" alt="" coords="542,124,773,195"/>
+<div class="center"><img src="_post_connect_synchronize_state_sender_8h__dep__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_synchronize_state_sender_2include_2_synchronize_state_sender_2_post_connect_synchronize_state_sender_8hdep">
+<area shape="rect" id="node2" href="_post_connect_synchronize_state_sender_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SynchronizeStateSender/src\l/PostConnectSynchronizeStateSender.cpp" alt="" coords="5,153,276,239"/>
+<area shape="rect" id="node3" href="_synchronize_state_sender_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SynchronizeStateSender/src\l/SynchronizeStateSenderFactory.cpp" alt="" coords="300,153,539,239"/>
+<area shape="rect" id="node4" href="_post_connect_synchronize_state_sender_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SynchronizeStateSender/test\l/PostConnectSynchronizeStateSenderTest.cpp" alt="" coords="563,153,860,239"/>
 </map>
 </div>
 </div>
@@ -147,7 +148,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

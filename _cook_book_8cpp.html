@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/shared/acsdkManufactory/src/CookBook.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/shared/acsdkManufactory/src/CookBook.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,37 +67,39 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">CookBook.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_cook_book_8h_source.html">acsdkManufactory/internal/CookBook.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_cook_book_8h_source.html">acsdkManufactory/internal/CookBook.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CookBook.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_cook_book_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp" id="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp">
-<area shape="rect" id="node2" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="522,109,697,151"/>
-<area shape="rect" id="node9" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="93,385,296,411"/>
-<area shape="rect" id="node10" href="_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="143,556,318,597"/>
-<area shape="rect" id="node11" href="_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="143,467,318,508"/>
-<area shape="rect" id="node12" href="_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="793,467,967,508"/>
-<area shape="rect" id="node17" href="_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="1109,199,1283,240"/>
-<area shape="rect" id="node15" href="_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="771,556,946,597"/>
-<area shape="rect" id="node24" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1644,288,1820,329"/>
-<area shape="rect" id="node41" href="_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="657,288,831,329"/>
-<area shape="rect" id="node43" href="_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="1285,288,1459,329"/>
-<area shape="rect" id="node26" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1780,377,1956,419"/>
-<area shape="rect" id="node29" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2011,467,2226,508"/>
-<area shape="rect" id="node32" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2516,556,2692,597"/>
-<area shape="rect" id="node33" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1485,467,1661,508"/>
-<area shape="rect" id="node39" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2479,467,2673,508"/>
-<area shape="rect" id="node40" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1119,645,1295,687"/>
-<area shape="rect" id="node35" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1369,556,1545,597"/>
-<area shape="rect" id="node37" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1369,645,1545,687"/>
-<area shape="rect" id="node42" href="_runtime_manufactory__imp_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory_imp.h" alt="" coords="507,377,693,419"/>
-<area shape="rect" id="node44" href="_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="1267,385,1448,411"/>
+<div class="center"><img src="_cook_book_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2shared_2acsdk_manufactory_2src_2_cook_book_8cpp">
+<area shape="rect" id="node2" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="635,675,811,716"/>
+<area shape="rect" id="node25" href="_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1353,139,1527,180"/>
+<area shape="rect" id="node8" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="615,764,830,805"/>
+<area shape="rect" id="node15" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="259,853,435,895"/>
+<area shape="rect" id="node16" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1244,764,1420,805"/>
+<area shape="rect" id="node23" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="346,764,539,805"/>
+<area shape="rect" id="node24" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="103,943,279,984"/>
+<area shape="rect" id="node19" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1485,853,1661,895"/>
+<area shape="rect" id="node21" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1485,943,1661,984"/>
+<area shape="rect" id="node29" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="363,414,565,441"/>
+<area shape="rect" id="node30" href="_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="1686,585,1861,627"/>
+<area shape="rect" id="node31" href="_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="1686,496,1861,537"/>
+<area shape="rect" id="node32" href="_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="1161,496,1335,537"/>
+<area shape="rect" id="node36" href="_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="857,228,1031,269"/>
+<area shape="rect" id="node34" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="909,585,1085,627"/>
+<area shape="rect" id="node35" href="_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="710,585,885,627"/>
+<area shape="rect" id="node41" href="_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1155,317,1330,359"/>
+<area shape="rect" id="node43" href="_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="641,317,815,359"/>
+<area shape="rect" id="node42" href="_runtime_manufactory__imp_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory_imp.h" alt="" coords="1312,407,1499,448"/>
+<area shape="rect" id="node44" href="_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="691,414,872,441"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -111,16 +113,48 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html">alexaClientSDK::acsdkManufactory::internal</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a39c9e5078ffcb1b5405c0c60e09cd4c7"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a39c9e5078ffcb1b5405c0c60e09cd4c7">alexaClientSDK::acsdkManufactory::internal::TAG</a> = &quot;CookBook&quot;</td></tr>
-<tr class="separator:a39c9e5078ffcb1b5405c0c60e09cd4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_cook_book_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
+<tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a549910db01c1e37810d210d169ff9e56"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a549910db01c1e37810d210d169ff9e56">alexaClientSDK::acsdkManufactory::internal::TAG</a> (&quot;Cookbook&quot;)</td></tr>
+<tr class="memdesc:a549910db01c1e37810d210d169ff9e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html#a549910db01c1e37810d210d169ff9e56">More...</a><br /></td></tr>
+<tr class="separator:a549910db01c1e37810d210d169ff9e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8bc9ca8e55a0ebf538e46e28bf26262">&#9670;&nbsp;</a></span>LX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">event</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a LogEntry using this file's TAG and the specified event string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

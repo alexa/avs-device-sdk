@@ -1,6 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h">
-<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="218,124,469,151"/>
-<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="785,199,1027,240"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="556,199,760,240"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="717,288,882,329"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDMessageRequest.h">
+<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="218,153,469,180"/>
+<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="785,228,1027,269"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="556,228,760,269"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="717,317,882,359"/>
 </map>

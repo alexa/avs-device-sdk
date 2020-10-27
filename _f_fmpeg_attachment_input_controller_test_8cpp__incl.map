@@ -1,8 +1,8 @@
-<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp">
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="789,213,993,255"/>
-<area shape="rect" id="node15" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1355,221,1578,247"/>
-<area shape="rect" id="node16" href="$med__alerts__notification__01_8mp3_8h.html" title="Audio/Data/med_alerts\l_notification_01.mp3.h" alt="" coords="1405,124,1560,165"/>
-<area shape="rect" id="node17" href="$_f_fmpeg_attachment_input_controller_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegAttachmentInputController.h" alt="" coords="1093,124,1331,165"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="809,303,975,344"/>
-<area shape="rect" id="node19" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1017,213,1239,255"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/test/FFmpegAttachmentInputControllerTest.cpp">
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="789,228,993,269"/>
+<area shape="rect" id="node15" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1355,235,1578,262"/>
+<area shape="rect" id="node16" href="$med__alerts__notification__01_8mp3_8h.html" title="Audio/Data/med_alerts\l_notification_01.mp3.h" alt="" coords="1405,139,1560,180"/>
+<area shape="rect" id="node17" href="$_f_fmpeg_attachment_input_controller_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegAttachmentInputController.h" alt="" coords="1093,139,1331,180"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="809,317,975,359"/>
+<area shape="rect" id="node19" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="1017,228,1239,269"/>
 </map>

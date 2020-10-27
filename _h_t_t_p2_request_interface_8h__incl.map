@@ -1,9 +1,9 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h">
-<area shape="rect" id="node3" href="$_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="306,124,526,165"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="550,124,765,165"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="212,213,391,255"/>
-<area shape="rect" id="node8" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="208,303,395,344"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="5,303,184,344"/>
-<area shape="rect" id="node11" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="933,213,1126,255"/>
-<area shape="rect" id="node12" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="683,213,909,255"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h">
+<area shape="rect" id="node3" href="$_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="306,139,526,180"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="550,139,765,180"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="212,228,391,269"/>
+<area shape="rect" id="node8" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="208,317,395,359"/>
+<area shape="rect" id="node9" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="5,317,184,359"/>
+<area shape="rect" id="node11" href="$_h_t_t_p2_receive_data_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ReceiveDataStatus.h" alt="" coords="933,228,1126,269"/>
+<area shape="rect" id="node12" href="$_h_t_t_p2_response_finished_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseFinishedStatus.h" alt="" coords="683,228,909,269"/>
 </map>

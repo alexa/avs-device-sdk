@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,8 +97,8 @@ Collaboration diagram for alexaClientSDK::playlistParser::ContentDecrypter:</div
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a353cf8c4b80fe7733e1ff990411a27b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_content_decrypter.html#a353cf8c4b80fe7733e1ff990411a27b0">ContentDecrypter</a> ()</td></tr>
 <tr class="separator:a353cf8c4b80fe7733e1ff990411a27b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16124727d77e0a6029da3652908b5db5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_content_decrypter.html#a16124727d77e0a6029da3652908b5db5">writeMediaInitSection</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#abb353a54a9bac083933edf0b95d28cbd">ByteVector</a> &amp;mediaInitSection, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt; streamWriter)</td></tr>
-<tr class="separator:a16124727d77e0a6029da3652908b5db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e04e883fb8b46fff354f52397cb3475"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_content_decrypter.html#a4e04e883fb8b46fff354f52397cb3475">setMediaInitToDecryptedContent</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#abb353a54a9bac083933edf0b95d28cbd">ByteVector</a> &amp;mediaInitSection, std::chrono::milliseconds totalDuration)</td></tr>
+<tr class="separator:a4e04e883fb8b46fff354f52397cb3475"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1199ec3898a419ef1623927296bba91"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1_content_decrypter.html#ab1199ec3898a419ef1623927296bba91">decryptAndWrite</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#abb353a54a9bac083933edf0b95d28cbd">ByteVector</a> &amp;encryptedContent, const <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#abb353a54a9bac083933edf0b95d28cbd">ByteVector</a> &amp;key, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html">avsCommon::utils::playlistParser::EncryptionInfo</a> &amp;encryptionInfo, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt; streamWriter)</td></tr>
 <tr class="separator:ab1199ec3898a419ef1623927296bba91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">RequiresShutdown methods.</div></td></tr>
@@ -276,14 +276,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a16124727d77e0a6029da3652908b5db5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16124727d77e0a6029da3652908b5db5">&#9670;&nbsp;</a></span>writeMediaInitSection()</h2>
+<a id="a4e04e883fb8b46fff354f52397cb3475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e04e883fb8b46fff354f52397cb3475">&#9670;&nbsp;</a></span>setMediaInitToDecryptedContent()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void alexaClientSDK::playlistParser::ContentDecrypter::writeMediaInitSection </td>
+          <td class="memname">void alexaClientSDK::playlistParser::ContentDecrypter::setMediaInitToDecryptedContent </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#abb353a54a9bac083933edf0b95d28cbd">ByteVector</a> &amp;&#160;</td>
           <td class="paramname"><em>mediaInitSection</em>, </td>
@@ -291,8 +291,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html">avsCommon::avs::attachment::AttachmentWriter</a> &gt;&#160;</td>
-          <td class="paramname"><em>streamWriter</em>&#160;</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>totalDuration</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -301,11 +301,11 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes media initialization section.</p>
+<p>Sets Media initialization section to mp4a from enca.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mediaInitSection</td><td>The Media initialization section. </td></tr>
-    <tr><td class="paramname">streamWriter</td><td>The writer to write media init section. </td></tr>
+    <tr><td class="paramname">totalDuration</td><td>Total duration of the content </td></tr>
   </table>
   </dd>
 </dl>
@@ -313,14 +313,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_content_decrypter_8h_source.html">ContentDecrypter.h</a></li>
-<li>/workplace/avs-device-sdk/PlaylistParser/src/<a class="el" href="_content_decrypter_8cpp.html">ContentDecrypter.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/PlaylistParser/include/PlaylistParser/<a class="el" href="_content_decrypter_8h_source.html">ContentDecrypter.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/PlaylistParser/src/<a class="el" href="_content_decrypter_8cpp.html">ContentDecrypter.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

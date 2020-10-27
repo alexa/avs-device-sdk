@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -121,8 +121,6 @@ Functions</h2></td></tr>
 <tr class="separator:ac550d37a039396ea80d55c715a0d42b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab84d41ab291cc3b990f13e3ddfe2709f"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#ab84d41ab291cc3b990f13e3ddfe2709f">truncateWithDefault</a> (const std::string &amp;mac, const std::string &amp;defaultString=&quot;XX:XX:XX:XX:XX:XX&quot;)</td></tr>
 <tr class="separator:ab84d41ab291cc3b990f13e3ddfe2709f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6606af68e454e317df75585e5c4e74eb"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a6606af68e454e317df75585e5c4e74eb">truncateFriendlyName</a> (const std::string &amp;friendlyName)</td></tr>
-<tr class="separator:a6606af68e454e317df75585e5c4e74eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87dbc3eca9768efcbbb9caba1389be65"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a87dbc3eca9768efcbbb9caba1389be65">supportsAvsProfile</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html">BluetoothDeviceInterface</a> &gt; device, const std::string &amp;avsProfileName)</td></tr>
 <tr class="separator:a87dbc3eca9768efcbbb9caba1389be65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf68166f4017db526a3d0dc7743053c9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#abf68166f4017db526a3d0dc7743053c9">waitOnFuture</a> (std::future&lt; bool &gt; future, std::string description=&quot;&quot;, std::chrono::milliseconds timeout=<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a9e9adf411e8bc927c11320bba597435a">DEFAULT_FUTURE_TIMEOUT</a>)</td></tr>
@@ -845,40 +843,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A bool indicating success. </dd></dl>
-
-</div>
-</div>
-<a id="a6606af68e454e317df75585e5c4e74eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6606af68e454e317df75585e5c4e74eb">&#9670;&nbsp;</a></span>truncateFriendlyName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::string alexaClientSDK::acsdkBluetooth::truncateFriendlyName </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>friendlyName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Utility function to truncate a <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html">Bluetooth</a> device friendly name.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">friendlyName</td><td>The <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html">Bluetooth</a> device friendly name. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The truncated friendly name. </dd></dl>
 
 </div>
 </div>
@@ -3300,7 +3264,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

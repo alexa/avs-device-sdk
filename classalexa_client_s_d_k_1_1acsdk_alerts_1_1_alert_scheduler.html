@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -107,6 +107,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2d9def15cb440b39ff34f95be0a5b421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61659e90b173ec0f729ff7d73bfc117a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a61659e90b173ec0f729ff7d73bfc117a">scheduleAlert</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alert)</td></tr>
 <tr class="separator:a61659e90b173ec0f729ff7d73bfc117a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceafdb07e9865ff96382778cbafeed21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#aceafdb07e9865ff96382778cbafeed21">saveOfflineStoppedAlert</a> (const std::string &amp;alertToken, const std::string &amp;scheduledTime)</td></tr>
+<tr class="separator:aceafdb07e9865ff96382778cbafeed21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6dbe6d45582f88a605b538c45650f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a5f6dbe6d45582f88a605b538c45650f2">getOfflineStoppedAlerts</a> (rapidjson::Value *alertContainer, rapidjson::Document::AllocatorType &amp;allocator)</td></tr>
+<tr class="separator:a5f6dbe6d45582f88a605b538c45650f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dd82f981ede1836dc4b291f3011674d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a5dd82f981ede1836dc4b291f3011674d">reloadAlertsFromDatabase</a> (std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt; settingsManager, bool shouldScheduleAlerts)</td></tr>
 <tr class="separator:a5dd82f981ede1836dc4b291f3011674d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a5f6a5ffa38b9a0788d4d55561eff9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a67a5f6a5ffa38b9a0788d4d55561eff9">snoozeAlert</a> (const std::string &amp;alertToken, const std::string &amp;updatedTime_ISO_8601)</td></tr>
@@ -115,10 +119,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad2bbe8b02bf89c6061831e5f4d6b3559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94a0ffd61a7c67b8ef78adae315f8910"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a94a0ffd61a7c67b8ef78adae315f8910">deleteAlerts</a> (const std::list&lt; std::string &gt; &amp;tokenList)</td></tr>
 <tr class="separator:a94a0ffd61a7c67b8ef78adae315f8910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a043e2db364dcaf75c4d7c270feabe24a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a043e2db364dcaf75c4d7c270feabe24a">deleteOfflineStoppedAlert</a> (const std::string &amp;token, int id)</td></tr>
+<tr class="separator:a043e2db364dcaf75c4d7c270feabe24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f069e5ab4ef65080a6e7910c75fa12f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a3f069e5ab4ef65080a6e7910c75fa12f">isAlertActive</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alert)</td></tr>
 <tr class="separator:a3f069e5ab4ef65080a6e7910c75fa12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac340e5577b37cf8ae161782c39558ba2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#ac340e5577b37cf8ae161782c39558ba2">updateFocus</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState)</td></tr>
-<tr class="separator:ac340e5577b37cf8ae161782c39558ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fda767b41d776d68ee4a948d760e6d3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a4fda767b41d776d68ee4a948d760e6d3">getActiveAlert</a> ()</td></tr>
+<tr class="separator:a4fda767b41d776d68ee4a948d760e6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae358b96e888c8afa65c793e72ab39632"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#ae358b96e888c8afa65c793e72ab39632">updateFocus</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> focusState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a> behavior)</td></tr>
+<tr class="separator:ae358b96e888c8afa65c793e72ab39632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d84037e1758dc1c691944edf2297ca2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a7d84037e1758dc1c691944edf2297ca2">getFocusState</a> ()</td></tr>
 <tr class="separator:a7d84037e1758dc1c691944edf2297ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5afc5ea86fa2f57b58bd678c794c6c64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler_1_1_alerts_context_info.html">AlertScheduler::AlertsContextInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a5afc5ea86fa2f57b58bd678c794c6c64">getContextInfo</a> ()</td></tr>
@@ -290,6 +298,61 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a043e2db364dcaf75c4d7c270feabe24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a043e2db364dcaf75c4d7c270feabe24a">&#9670;&nbsp;</a></span>deleteOfflineStoppedAlert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkAlerts::AlertScheduler::deleteOfflineStoppedAlert </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Delete an offline stopped alert from list of offline stopped alerts</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The alertToken of the alert to be deleted </td></tr>
+    <tr><td class="paramname">id</td><td>The alert Id of the alert to be deleted </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4fda767b41d776d68ee4a948d760e6d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fda767b41d776d68ee4a948d760e6d3">&#9670;&nbsp;</a></span>getActiveAlert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> &gt; alexaClientSDK::acsdkAlerts::AlertScheduler::getActiveAlert </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the current active alert.</p>
+<dl class="section return"><dt>Returns</dt><dd>the current active alert, else nullptr. </dd></dl>
+
+</div>
+</div>
 <a id="a2136016a697bb5b2e0b89d86202c1a2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2136016a697bb5b2e0b89d86202c1a2d">&#9670;&nbsp;</a></span>getAllAlerts()</h2>
 
@@ -344,6 +407,42 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Provide our current channel focus state.</p>
 <dl class="section return"><dt>Returns</dt><dd>Our current channel focus state. </dd></dl>
+
+</div>
+</div>
+<a id="a5f6dbe6d45582f88a605b538c45650f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f6dbe6d45582f88a605b538c45650f2">&#9670;&nbsp;</a></span>getOfflineStoppedAlerts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::acsdkAlerts::AlertScheduler::getOfflineStoppedAlerts </td>
+          <td>(</td>
+          <td class="paramtype">rapidjson::Value *&#160;</td>
+          <td class="paramname"><em>alertContainer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">rapidjson::Document::AllocatorType &amp;&#160;</td>
+          <td class="paramname"><em>allocator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get list of offline stopped alerts</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">alertContainer</td><td>rapidJson array to load alerts into </td></tr>
+    <tr><td class="paramname">allocator</td><td>The rapidjson allocator, required for the results of this function to be mergable with other rapidjson::Value objects. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -533,6 +632,42 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="aceafdb07e9865ff96382778cbafeed21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceafdb07e9865ff96382778cbafeed21">&#9670;&nbsp;</a></span>saveOfflineStoppedAlert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::acsdkAlerts::AlertScheduler::saveOfflineStoppedAlert </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>alertToken</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scheduledTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save the currently active alert as an offline stopped alert </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">alertToken</td><td>the alert token of the offline stopped alert </td></tr>
+    <tr><td class="paramname">scheduledTime</td><td>the scheduled time of the offline stopepd alert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the offline alert was successfully saved. </dd></dl>
+
+</div>
+</div>
 <a id="a61659e90b173ec0f729ff7d73bfc117a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61659e90b173ec0f729ff7d73bfc117a">&#9670;&nbsp;</a></span>scheduleAlert()</h2>
 
@@ -614,8 +749,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ac340e5577b37cf8ae161782c39558ba2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac340e5577b37cf8ae161782c39558ba2">&#9670;&nbsp;</a></span>updateFocus()</h2>
+<a id="ae358b96e888c8afa65c793e72ab39632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae358b96e888c8afa65c793e72ab39632">&#9670;&nbsp;</a></span>updateFocus()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -624,8 +759,18 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void alexaClientSDK::acsdkAlerts::AlertScheduler::updateFocus </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a>&#160;</td>
-          <td class="paramname"><em>focusState</em></td><td>)</td>
+          <td class="paramname"><em>focusState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a>&#160;</td>
+          <td class="paramname"><em>behavior</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -633,6 +778,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">focusState</td><td>The state we now have. </td></tr>
+    <tr><td class="paramname">behavior</td><td>The mixing behavior. </td></tr>
   </table>
   </dd>
 </dl>
@@ -640,14 +786,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/<a class="el" href="_alert_scheduler_8h_source.html">AlertScheduler.h</a></li>
-<li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/src/<a class="el" href="_alert_scheduler_8cpp.html">AlertScheduler.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/<a class="el" href="_alert_scheduler_8h_source.html">AlertScheduler.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/capabilities/Alerts/acsdkAlerts/src/<a class="el" href="_alert_scheduler_8cpp.html">AlertScheduler.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

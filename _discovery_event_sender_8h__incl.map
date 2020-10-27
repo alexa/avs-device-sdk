@@ -1,14 +1,31 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/DiscoveryEventSender.h" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/DiscoveryEventSender.h">
-<area shape="rect" id="node7" href="$_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="347,228,588,269"/>
-<area shape="rect" id="node19" href="$_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="1434,124,1642,180"/>
-<area shape="rect" id="node20" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1031,317,1223,359"/>
-<area shape="rect" id="node21" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1141,407,1333,448"/>
-<area shape="rect" id="node22" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="663,228,855,269"/>
-<area shape="rect" id="node23" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="5,235,215,262"/>
-<area shape="rect" id="node24" href="$_discovery_event_sender_interface_8h.html" title="DiscoveryEventSenderInterface.h" alt="" coords="714,139,933,165"/>
-<area shape="rect" id="node25" href="$_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="930,235,1165,262"/>
-<area shape="rect" id="node8" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="397,325,647,351"/>
-<area shape="rect" id="node17" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="701,407,943,448"/>
-<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="472,407,676,448"/>
-<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="421,496,586,537"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/DiscoveryEventSender.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/DiscoveryEventSender.h">
+<area shape="rect" id="node6" href="$_waitable_message_request_8h.html" title="AVSCommon/AVS/WaitableMessage\lRequest.h" alt="" coords="1115,407,1357,448"/>
+<area shape="rect" id="node19" href="$_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="4067,213,4275,269"/>
+<area shape="rect" id="node20" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="216,503,408,545"/>
+<area shape="rect" id="node21" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="144,600,336,641"/>
+<area shape="rect" id="node22" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="848,407,1040,448"/>
+<area shape="rect" id="node23" href="$_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="1944,221,2139,262"/>
+<area shape="rect" id="node48" href="$_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="2319,139,2529,165"/>
+<area shape="rect" id="node49" href="$_discovery_event_sender_interface_8h.html" title="DiscoveryEventSenderInterface.h" alt="" coords="555,325,773,351"/>
+<area shape="rect" id="node50" href="$_discovery_status_observer_interface_8h.html" title="DiscoveryStatusObserverInterface.h" alt="" coords="400,414,635,441"/>
+<area shape="rect" id="node8" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="951,511,1201,537"/>
+<area shape="rect" id="node17" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="360,600,603,641"/>
+<area shape="rect" id="node12" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="627,600,831,641"/>
+<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="717,689,883,731"/>
+<area shape="rect" id="node26" href="$_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="1682,407,1857,448"/>
+<area shape="rect" id="node30" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2385,317,2561,359"/>
+<area shape="rect" id="node37" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3805,407,3981,448"/>
+<area shape="rect" id="node27" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1755,600,1986,641"/>
+<area shape="rect" id="node28" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1637,503,1811,545"/>
+<area shape="rect" id="node33" href="$_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="2965,503,3131,545"/>
+<area shape="rect" id="node34" href="$_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="2511,407,2718,448"/>
+<area shape="rect" id="node47" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="2180,407,2356,448"/>
+<area shape="rect" id="node35" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="2470,496,2669,552"/>
+<area shape="rect" id="node36" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="2600,600,2816,641"/>
+<area shape="rect" id="node38" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3288,503,3464,545"/>
+<area shape="rect" id="node40" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3414,600,3629,641"/>
+<area shape="rect" id="node43" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3103,689,3279,731"/>
+<area shape="rect" id="node44" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3653,600,3829,641"/>
+<area shape="rect" id="node45" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3094,600,3287,641"/>
+<area shape="rect" id="node46" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2299,600,2475,641"/>
 </map>

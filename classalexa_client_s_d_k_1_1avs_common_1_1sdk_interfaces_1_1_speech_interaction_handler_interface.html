@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -91,8 +91,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8d9ca244397498be6839feac0972b5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a042deea9f6f255a45361784c10ced894"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a042deea9f6f255a45361784c10ced894">notifyOfTapToTalk</a> (<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">capabilityAgents::aip::AudioProvider</a> tapToTalkAudioProvider, avsCommon::avs::AudioInputStream::Index beginIndex, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now())=0</td></tr>
 <tr class="separator:a042deea9f6f255a45361784c10ced894"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6357701015ad779f3bf476692653147f"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a6357701015ad779f3bf476692653147f">notifyOfHoldToTalkStart</a> (<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">capabilityAgents::aip::AudioProvider</a> holdToTalkAudioProvider, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now())=0</td></tr>
-<tr class="separator:a6357701015ad779f3bf476692653147f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af774ca697e9493c20c17a58756c71cce"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#af774ca697e9493c20c17a58756c71cce">notifyOfHoldToTalkStart</a> (<a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html">capabilityAgents::aip::AudioProvider</a> holdToTalkAudioProvider, std::chrono::steady_clock::time_point startOfSpeechTimestamp=std::chrono::steady_clock::now(), avsCommon::avs::AudioInputStream::Index beginIndex=<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aa30f5984272de44f8f64b65ad2b1d455">capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX</a>)=0</td></tr>
+<tr class="separator:af774ca697e9493c20c17a58756c71cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5978f4e60c04d7190a57f70690392ee0"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a5978f4e60c04d7190a57f70690392ee0">notifyOfHoldToTalkEnd</a> ()=0</td></tr>
 <tr class="separator:a5978f4e60c04d7190a57f70690392ee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a559bea910ab07ee77a6f9844e4056b23"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speech_interaction_handler_interface.html#a559bea910ab07ee77a6f9844e4056b23">notifyOfTapToTalkEnd</a> ()=0</td></tr>
@@ -156,8 +156,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6357701015ad779f3bf476692653147f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6357701015ad779f3bf476692653147f">&#9670;&nbsp;</a></span>notifyOfHoldToTalkStart()</h2>
+<a id="af774ca697e9493c20c17a58756c71cce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af774ca697e9493c20c17a58756c71cce">&#9670;&nbsp;</a></span>notifyOfHoldToTalkStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -175,7 +175,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::chrono::steady_clock::time_point&#160;</td>
-          <td class="paramname"><em>startOfSpeechTimestamp</em> = <code>std::chrono::steady_clock::now()</code>&#160;</td>
+          <td class="paramname"><em>startOfSpeechTimestamp</em> = <code>std::chrono::steady_clock::now()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">avsCommon::avs::AudioInputStream::Index&#160;</td>
+          <td class="paramname"><em>beginIndex</em> = <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#aa30f5984272de44f8f64b65ad2b1d455">capabilityAgents::aip::AudioInputProcessor::INVALID_INDEX</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -194,12 +200,13 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">holdToTalkAudioProvider</td><td>The audio provider containing the audio data stream along with its metadata. </td></tr>
     <tr><td class="paramname">startOfSpeechTimestamp</td><td>Moment in time when user started talking to Alexa. This parameter is optional and it is used to measure user perceived latency. </td></tr>
+    <tr><td class="paramname">beginIndex</td><td>An optional parameter indicating where in the stream to start reading from. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future indicating whether the interaction was successfully started. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#a1df8cb33863effab42303f9d6f94eba9">alexaClientSDK::defaultClient::DefaultClient</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ab5c3f6b4e2ac260e6db9331a63d0a7c4">alexaClientSDK::defaultClient::DefaultClient</a>.</p>
 
 </div>
 </div>
@@ -362,13 +369,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_speech_interaction_handler_interface_8h_source.html">SpeechInteractionHandlerInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_speech_interaction_handler_interface_8h_source.html">SpeechInteractionHandlerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

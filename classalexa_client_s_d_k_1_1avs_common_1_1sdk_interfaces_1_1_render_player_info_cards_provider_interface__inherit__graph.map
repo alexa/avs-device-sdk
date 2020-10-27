@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title="alexaClientSDK::acsdkAudio\lPlayer::AudioPlayer" alt="" coords="291,5,482,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1external_media_player_1_1_external_media_player.html" title="alexaClientSDK::capability\lAgents::externalMediaPlayer\l::ExternalMediaPlayer" alt="" coords="292,71,481,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="272,152,501,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockRenderInfoCardsPlayer" alt="" coords="273,218,501,274"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::ExternalMediaPlayer" alt="" coords="275,71,498,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="272,136,501,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockRenderInfoCardsPlayer" alt="" coords="273,202,501,258"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_player_info_card_provider.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::test::MockRenderPlayerInfoCard\lProvider" alt="" coords="276,283,497,353"/>
 </map>

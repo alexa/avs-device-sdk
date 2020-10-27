@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html" title="alexaClientSDK::settings\l::storage::DeviceSettingStorage\lInterface" alt="" coords="5,45,213,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html" title="alexaClientSDK::settings\l::storage::SQLiteDeviceSetting\lStorage" alt="" coords="273,5,475,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1test_1_1_mock_device_setting_storage.html" title="alexaClientSDK::settings\l::storage::test::MockDeviceSetting\lStorage" alt="" coords="261,85,487,141"/>
+</map>

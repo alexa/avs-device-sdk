@@ -1,18 +1,23 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer">
-<area shape="rect" id="node2" href="dir_6e2730d153b793e6456d6b6cc64aaf73.html" title="include" alt="" coords="85,159,157,207"/>
-<area shape="rect" id="node5" href="dir_de0e77330fd0ab33359e90b501923c8e.html" title="Captions" alt="" coords="16,255,91,303"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000285_000305.html" title="2" alt="" coords="84,237,92,252"/>
-<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="113,351,215,399"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000285_000017.html" title="21" alt="" coords="156,324,170,338"/>
-<area shape="rect" id="node3" href="dir_4d08ef978c1a216cc332b97de961dd1c.html" title="src" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000287_000285.html" title="1" alt="" coords="105,131,113,145"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000287_000305.html" title="2" alt="" coords="36,227,44,242"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000287_000017.html" title="6" alt="" coords="180,328,188,342"/>
-<area shape="rect" id="node4" href="dir_5283f0cd10c6619452adf56ede5e1143.html" title="test" alt="" coords="133,63,205,111"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000288_000285.html" title="1" alt="" coords="145,138,153,153"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000288_000305.html" title="1" alt="" coords="57,229,65,244"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000288_000017.html" title="12" alt="" coords="196,334,211,349"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000305_000017.html" title="24" alt="" coords="121,325,135,340"/>
-<area shape="rect" id="clust2" href="dir_097c79eef3239c0772ccd3b4f7a59e99.html" alt="" coords="27,52,376,217"/>
-<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="16,16,387,228"/>
+<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeechSynthesizer">
+<area shape="rect" id="node2" href="dir_6e2730d153b793e6456d6b6cc64aaf73.html" title="include" alt="" coords="186,159,258,207"/>
+<area shape="rect" id="node5" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html" title="applications" alt="" coords="97,255,187,303"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000362_000028.html" title="1" alt="" coords="177,238,185,253"/>
+<area shape="rect" id="node6" href="dir_de0e77330fd0ab33359e90b501923c8e.html" title="Captions" alt="" coords="262,351,337,399"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000362_000382.html" title="2" alt="" coords="287,323,295,338"/>
+<area shape="rect" id="node7" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="91,447,193,495"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000362_000017.html" title="21" alt="" coords="158,425,173,440"/>
+<area shape="rect" id="node3" href="dir_4d08ef978c1a216cc332b97de961dd1c.html" title="src" alt="" coords="90,63,162,111"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000364_000362.html" title="1" alt="" coords="187,132,195,147"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000364_000382.html" title="2" alt="" coords="309,326,317,341"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000364_000017.html" title="6" alt="" coords="76,423,84,437"/>
+<area shape="rect" id="node4" href="dir_5283f0cd10c6619452adf56ede5e1143.html" title="test" alt="" coords="186,63,258,111"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000365_000362.html" title="1" alt="" coords="226,133,234,147"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000365_000028.html" title="1" alt="" coords="154,231,162,246"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000365_000382.html" title="1" alt="" coords="333,333,341,348"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000365_000017.html" title="12" alt="" coords="118,419,133,434"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000028_000382.html" title="4" alt="" coords="247,328,255,342"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000028_000017.html" title="86" alt="" coords="143,421,158,436"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000382_000017.html" title="24" alt="" coords="194,437,209,452"/>
+<area shape="rect" id="clust2" href="dir_097c79eef3239c0772ccd3b4f7a59e99.html" alt="" coords="79,52,429,217"/>
+<area shape="rect" id="clust1" href="dir_7cf910bd1d7603f12ef47ff650cec893.html" title="CapabilityAgents" alt="" coords="69,16,439,228"/>
 </map>

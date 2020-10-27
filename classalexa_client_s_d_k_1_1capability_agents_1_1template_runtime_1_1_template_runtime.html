@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -211,6 +211,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a1bd261c6d568393bd8c1bdf47b748aa3"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#a1bd261c6d568393bd8c1bdf47b748aa3">createTemplateRuntime</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_registrar_interface.html">avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface</a> &gt; &amp;renderPlayerInfoCardsInterfaces, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender)</td></tr>
+<tr class="separator:a1bd261c6d568393bd8c1bdf47b748aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38fec302e5fd79fb203fd772c998a2e0"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#a38fec302e5fd79fb203fd772c998a2e0">create</a> (const std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_interface.html">avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderInterface</a> &gt;&gt; &amp;renderPlayerInfoCardsInterfaces, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt; focusManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionSender)</td></tr>
 <tr class="separator:a38fec302e5fd79fb203fd772c998a2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface</a></td></tr>
@@ -414,6 +416,57 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">renderPlayerInfoCardsInterfaces</td><td>A set of objects to use for subscribing <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a></code> as an observer of changes for RenderPlayerInfoCards. </td></tr>
+    <tr><td class="paramname">exceptionSender</td><td>The object to use for sending AVS Exception messages. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>nullptr</code> if the inputs are not defined, else a new instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="a1bd261c6d568393bd8c1bdf47b748aa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bd261c6d568393bd8c1bdf47b748aa3">&#9670;&nbsp;</a></span>createTemplateRuntime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a> &gt; alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime::createTemplateRuntime </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_registrar_interface.html">avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>renderPlayerInfoCardsInterfaces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface.html">avsCommon::sdkInterfaces::FocusManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>focusManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>exceptionSender</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html">TemplateRuntime</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">renderPlayerInfoCardsProviderRegistrar</td><td>The registrar containing the set of <code>RenderPlayerInfoCardsProviders</code>. </td></tr>
     <tr><td class="paramname">exceptionSender</td><td>The object to use for sending AVS Exception messages. </td></tr>
   </table>
   </dd>
@@ -755,14 +808,14 @@ The implementation of this method MUST return quickly. Failure to do so blocks t
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/<a class="el" href="_template_runtime_8h_source.html">TemplateRuntime.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/TemplateRuntime/src/<a class="el" href="_template_runtime_8cpp.html">TemplateRuntime.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/<a class="el" href="_template_runtime_8h_source.html">TemplateRuntime.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/TemplateRuntime/src/<a class="el" href="_template_runtime_8cpp.html">TemplateRuntime.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp File Reference</title>
+<title>AlexaClientSDK: /home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/SpeechSynthesizer/test/SpeechSynthesizerTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,7 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_application_audio_pipeline_factory_8h_source.html">acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_manager_interface_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_context_manager_8h_source.html">AVSCommon/SDKInterfaces/MockContextManager.h</a>&gt;</code><br />
@@ -97,42 +98,43 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SpeechSynthesizerTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_speech_synthesizer_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp">
-<area shape="rect" id="node7" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="2506,124,2747,165"/>
-<area shape="rect" id="node9" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="55,392,260,433"/>
-<area shape="rect" id="node15" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="3275,124,3467,165"/>
-<area shape="rect" id="node17" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2085,124,2277,165"/>
-<area shape="rect" id="node20" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="2772,124,2964,165"/>
-<area shape="rect" id="node22" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="1869,124,2061,165"/>
-<area shape="rect" id="node26" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3491,124,3695,165"/>
-<area shape="rect" id="node28" href="_mock_power_resource_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockPowerResourceManager.h" alt="" coords="2989,124,3201,165"/>
-<area shape="rect" id="node30" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="106,213,310,255"/>
-<area shape="rect" id="node32" href="_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="811,124,1021,165"/>
-<area shape="rect" id="node39" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="2302,124,2482,165"/>
-<area shape="rect" id="node41" href="_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="3688,303,3861,344"/>
-<area shape="rect" id="node45" href="_mock_caption_manager_8h.html" title="MockCaptionManager.h" alt="" coords="1064,131,1224,158"/>
-<area shape="rect" id="node48" href="_speech_synthesizer_8h.html" title="SpeechSynthesizer/Speech\lSynthesizer.h" alt="" coords="1662,124,1845,165"/>
-<area shape="rect" id="node8" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2495,213,2755,255"/>
-<area shape="rect" id="node11" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="246,481,450,523"/>
-<area shape="rect" id="node13" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="322,571,526,612"/>
-<area shape="rect" id="node14" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="94,571,298,612"/>
-<area shape="rect" id="node16" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2473,392,2665,433"/>
-<area shape="rect" id="node18" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1923,213,2115,255"/>
-<area shape="rect" id="node21" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2780,213,2972,255"/>
-<area shape="rect" id="node23" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1696,213,1899,255"/>
-<area shape="rect" id="node24" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1716,310,1943,337"/>
-<area shape="rect" id="node25" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1268,303,1457,344"/>
-<area shape="rect" id="node27" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3391,213,3614,255"/>
-<area shape="rect" id="node29" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2997,213,3227,255"/>
-<area shape="rect" id="node34" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="725,303,934,344"/>
-<area shape="rect" id="node36" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="491,392,701,433"/>
-<area shape="rect" id="node37" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="792,213,1005,255"/>
-<area shape="rect" id="node38" href="_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="475,481,651,523"/>
-<area shape="rect" id="node40" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2291,213,2471,255"/>
-<area shape="rect" id="node46" href="_caption_manager_8h.html" title="Captions/CaptionManager.h" alt="" coords="584,221,768,247"/>
-<area shape="rect" id="node47" href="_caption_manager_interface_8h.html" title="Captions/CaptionManagerInterface.h" alt="" coords="1009,310,1244,337"/>
-<area shape="rect" id="node50" href="_play_behavior_8h.html" title="AVSCommon/AVS/PlayBehavior.h" alt="" coords="2270,489,2495,515"/>
+<div class="center"><img src="_speech_synthesizer_test_8cpp__incl.png" border="0" usemap="#_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp" alt=""/></div>
+<map name="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp" id="_2home_2_a_n_t_8_a_m_a_z_o_n_8_c_o_m_2womw_2workspace_2alexa_client_s_d_k_2release_2avs-device-sdk_2_capability_agents_2_speech_synthesizer_2test_2_speech_synthesizer_test_8cpp">
+<area shape="rect" id="node7" href="_mock_application_audio_pipeline_factory_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/MockApplication\lAudioPipelineFactory.h" alt="" coords="875,139,1099,195"/>
+<area shape="rect" id="node18" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="2769,146,3010,187"/>
+<area shape="rect" id="node20" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="195,347,400,388"/>
+<area shape="rect" id="node23" href="_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="3485,250,3677,291"/>
+<area shape="rect" id="node25" href="_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="2685,250,2877,291"/>
+<area shape="rect" id="node28" href="_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="3168,146,3360,187"/>
+<area shape="rect" id="node30" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="2952,250,3144,291"/>
+<area shape="rect" id="node32" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="3938,250,4142,291"/>
+<area shape="rect" id="node34" href="_mock_power_resource_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockPowerResourceManager.h" alt="" coords="3702,250,3914,291"/>
+<area shape="rect" id="node36" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="335,250,539,291"/>
+<area shape="rect" id="node38" href="_mock_media_player_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MockMediaPlayer.h" alt="" coords="1455,250,1665,291"/>
+<area shape="rect" id="node42" href="_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="2355,146,2535,187"/>
+<area shape="rect" id="node44" href="_j_s_o_n_generator_8h.html" title="AVSCommon/Utils/JSON\l/JSONGenerator.h" alt="" coords="4219,436,4392,477"/>
+<area shape="rect" id="node48" href="_mock_caption_manager_8h.html" title="MockCaptionManager.h" alt="" coords="1271,257,1431,284"/>
+<area shape="rect" id="node50" href="_speech_synthesizer_8h.html" title="SpeechSynthesizer/Speech\lSynthesizer.h" alt="" coords="1890,146,2073,187"/>
+<area shape="rect" id="node8" href="_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="725,243,950,299"/>
+<area shape="rect" id="node10" href="_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="816,347,1011,388"/>
+<area shape="rect" id="node11" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="627,436,819,477"/>
+<area shape="rect" id="node12" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1382,436,1591,477"/>
+<area shape="rect" id="node16" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1616,436,1805,477"/>
+<area shape="rect" id="node14" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="605,525,809,567"/>
+<area shape="rect" id="node15" href="_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="1215,525,1425,567"/>
+<area shape="rect" id="node19" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2401,250,2661,291"/>
+<area shape="rect" id="node21" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="195,436,399,477"/>
+<area shape="rect" id="node22" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="195,525,399,567"/>
+<area shape="rect" id="node24" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2675,436,2867,477"/>
+<area shape="rect" id="node26" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="2064,347,2256,388"/>
+<area shape="rect" id="node29" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3168,250,3360,291"/>
+<area shape="rect" id="node31" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="2331,347,2533,388"/>
+<area shape="rect" id="node33" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="3685,347,3907,388"/>
+<area shape="rect" id="node35" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2318,436,2549,477"/>
+<area shape="rect" id="node40" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1776,347,1989,388"/>
+<area shape="rect" id="node41" href="_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="1080,436,1256,477"/>
+<area shape="rect" id="node43" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2197,250,2377,291"/>
+<area shape="rect" id="node49" href="_caption_manager_8h.html" title="Captions/CaptionManager.h" alt="" coords="1085,354,1269,381"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -229,6 +231,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa69477606388bb49cebd6afe68fa8f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb61809dc9c789b0191e45bee1e59465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aeb61809dc9c789b0191e45bee1e59465">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MATCHER</a> (IsInterruptedEvent, &quot;&quot;)</td></tr>
 <tr class="separator:aeb61809dc9c789b0191e45bee1e59465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee33f58d799287ea381bacd8a457008e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aee33f58d799287ea381bacd8a457008e">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F</a> (SpeechSynthesizerTest, test_createWithNullAudioPipelineFactoryFails)</td></tr>
+<tr class="separator:aee33f58d799287ea381bacd8a457008e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c4aa7f6f05d10948623ffe6b32a529d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a0c4aa7f6f05d10948623ffe6b32a529d">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F</a> (SpeechSynthesizerTest, test_callingHandleImmediately)</td></tr>
 <tr class="separator:a0c4aa7f6f05d10948623ffe6b32a529d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae635c458bfb2ee68440ad72e87d0e34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aae635c458bfb2ee68440ad72e87d0e34">alexaClientSDK::capabilityAgents::speechSynthesizer::test::TEST_F</a> (SpeechSynthesizerTest, test_callingHandle)</td></tr>
@@ -334,7 +338,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

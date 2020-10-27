@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,6 +98,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_sink_interface.html">MetricSinkInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_upl_calculator_interface.html">UplCalculatorInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_upl_data.html">UplData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -131,6 +135,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a1010b01f4d36404f9ed7ba9cb0e1bcf8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics.html#a1010b01f4d36404f9ed7ba9cb0e1bcf8">TAG</a> (&quot;MetricEventBuilder&quot;)</td></tr>
 <tr class="memdesc:a1010b01f4d36404f9ed7ba9cb0e1bcf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a1010b01f4d36404f9ed7ba9cb0e1bcf8">More...</a><br /></td></tr>
 <tr class="separator:a1010b01f4d36404f9ed7ba9cb0e1bcf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc0c678cb8cc570eb72451f7403eb7e5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics.html#abc0c678cb8cc570eb72451f7403eb7e5">TAG</a> (&quot;UplData&quot;)</td></tr>
+<tr class="memdesc:abc0c678cb8cc570eb72451f7403eb7e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#abc0c678cb8cc570eb72451f7403eb7e5">More...</a><br /></td></tr>
+<tr class="separator:abc0c678cb8cc570eb72451f7403eb7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="aceb1a026324943d1c99e32ce11a6670a"></a>
@@ -311,7 +318,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a1010b01f4d36404f9ed7ba9cb0e1bcf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1010b01f4d36404f9ed7ba9cb0e1bcf8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1010b01f4d36404f9ed7ba9cb0e1bcf8">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,7 +346,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="afd42133659d2c2bbc5b507ae5dd86402"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd42133659d2c2bbc5b507ae5dd86402">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afd42133659d2c2bbc5b507ae5dd86402">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,8 +373,36 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="abc0c678cb8cc570eb72451f7403eb7e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc0c678cb8cc570eb72451f7403eb7e5">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::avsCommon::utils::metrics::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;UplData&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="a1d1fb128173a1775ab865e347c935294"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d1fb128173a1775ab865e347c935294">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d1fb128173a1775ab865e347c935294">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,7 +430,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a8af3aa78a04251d9363a44f0dfcea679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8af3aa78a04251d9363a44f0dfcea679">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8af3aa78a04251d9363a44f0dfcea679">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,7 +461,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

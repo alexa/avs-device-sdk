@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aee6e586e6b125a626366f24084fb440d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72cdd16d884e2923211a0c70bd53ac7a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a72cdd16d884e2923211a0c70bd53ac7a">setMediaPlayers</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt;&gt; &amp;mediaPlayers)=0</td></tr>
 <tr class="separator:a72cdd16d884e2923211a0c70bd53ac7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a625c5c24f0edfde390f6c7498eec0642"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a625c5c24f0edfde390f6c7498eec0642">addMediaPlayer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;mediaPlayer)=0</td></tr>
+<tr class="separator:a625c5c24f0edfde390f6c7498eec0642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33620c6a919d0bbc0ada23d03eb37f75"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a33620c6a919d0bbc0ada23d03eb37f75">removeMediaPlayer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;mediaPlayer)=0</td></tr>
+<tr class="separator:a33620c6a919d0bbc0ada23d03eb37f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a50af680c57a48c2952f1bb51368b9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager_interface.html#a50a50af680c57a48c2952f1bb51368b9">isEnabled</a> () const =0</td></tr>
+<tr class="separator:a50a50af680c57a48c2952f1bb51368b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface to allow handling of <code><a class="el" href="structalexa_client_s_d_k_1_1captions_1_1_caption_data.html">CaptionData</a></code> objects and route them to a <code><a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_presenter_interface.html">CaptionPresenterInterface</a></code> instance. Implementations of this interface must be capable of receiving captions from multiple media sources in parallel. </p>
@@ -125,6 +131,70 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a625c5c24f0edfde390f6c7498eec0642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a625c5c24f0edfde390f6c7498eec0642">&#9670;&nbsp;</a></span>addMediaPlayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::captions::CaptionManagerInterface::addMediaPlayer </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mediaPlayer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Adds a <code>MediaPlayerInterface</code> instance responsible for producing caption content. This media player will be appended to the list of active media players.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a></td><td>The media player which should be observed for media state changes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a9dd8edb94f4c89b9554f674cf0f5f43d">alexaClientSDK::captions::CaptionManager</a>.</p>
+
+</div>
+</div>
+<a id="a50a50af680c57a48c2952f1bb51368b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50a50af680c57a48c2952f1bb51368b9">&#9670;&nbsp;</a></span>isEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::captions::CaptionManagerInterface::isEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether captions are enabled. Capability Agents may skip unnecessary processing if captions are disabled.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether captions is enabled. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a24c223d40891f4bf501bea928b7fedf7">alexaClientSDK::captions::CaptionManager</a>.</p>
+
+</div>
+</div>
 <a id="aa40cd443564965d6930067040843ef72"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa40cd443564965d6930067040843ef72">&#9670;&nbsp;</a></span>onCaption()</h2>
 
@@ -168,6 +238,41 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#ae348c3b7d1a9aa8686e1f15c7198da06">alexaClientSDK::captions::CaptionManager</a>.</p>
+
+</div>
+</div>
+<a id="a33620c6a919d0bbc0ada23d03eb37f75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33620c6a919d0bbc0ada23d03eb37f75">&#9670;&nbsp;</a></span>removeMediaPlayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::captions::CaptionManagerInterface::removeMediaPlayer </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mediaPlayer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Removes the <code>MediaPlayerInterface</code> instance from the list of media players responsible for producing caption content. The rest of the list remains unchanged.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a></td><td>The media player to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html#a9f1a0a07d616b66cfa4f15665620cc8f">alexaClientSDK::captions::CaptionManager</a>.</p>
 
 </div>
 </div>
@@ -242,13 +347,13 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/Captions/Interface/include/Captions/<a class="el" href="_caption_manager_interface_8h_source.html">CaptionManagerInterface.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/Captions/Interface/include/Captions/<a class="el" href="_caption_manager_interface_8h_source.html">CaptionManagerInterface.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -104,10 +104,6 @@ Collaboration diagram for alexaClientSDK::capabilityAgents::alexa::AlexaInterfac
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a01a1c6e9e5dca887caa17177b0a68a44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#a01a1c6e9e5dca887caa17177b0a68a44">getCapabilityConfiguration</a> ()</td></tr>
 <tr class="separator:a01a1c6e9e5dca887caa17177b0a68a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae309ab6b787ab335c043550b9746014e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#ae309ab6b787ab335c043550b9746014e">addEventProcessedObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html">avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface</a> &gt; &amp;observer)</td></tr>
-<tr class="separator:ae309ab6b787ab335c043550b9746014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ecb42113f97b251e93414d682be2f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#ab2ecb42113f97b251e93414d682be2f0">removeEventProcessedObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html">avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface</a> &gt; &amp;observer)</td></tr>
-<tr class="separator:ab2ecb42113f97b251e93414d682be2f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">DirectiveHandlerInterface and CapabilityAgent Functions</div></td></tr>
 <tr class="memitem:a204e4761b5febab0f1aecd3204d99a74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#af58d993140a71e224a968ddc9f4d485c">avsCommon::avs::DirectiveHandlerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#a204e4761b5febab0f1aecd3204d99a74">getConfiguration</a> () const override</td></tr>
 <tr class="separator:a204e4761b5febab0f1aecd3204d99a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,8 +163,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0de260edc66de057ee7e3186eb61d599"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#a0de260edc66de057ee7e3186eb61d599">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &amp;deviceInfo, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &amp;endpointId, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; alexaMessageSender)</td></tr>
-<tr class="separator:a0de260edc66de057ee7e3186eb61d599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c385ae08bec954c5bb95d24a1e6afb5"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#a2c385ae08bec954c5bb95d24a1e6afb5">createDefaultAlexaInterfaceCapabilityAgent</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;deviceInfo, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;exceptionEncounteredSender, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; &amp;alexaMessageSender, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alexa_event_processed_notifier_interfaces.html#a1a4b11ea9831d0f01ea3f5a0e7d86df9">acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface</a> &gt; &amp;alexaEventProcessedNotifier, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;endpointCapabilitiesRegistrar)</td></tr>
+<tr class="separator:a2c385ae08bec954c5bb95d24a1e6afb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5b6fa029a0aa7b065de22e529ad55b6"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#ae5b6fa029a0aa7b065de22e529ad55b6">create</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;deviceInfo, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &amp;endpointId, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;exceptionEncounteredSender, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; &amp;alexaMessageSender)</td></tr>
+<tr class="separator:ae5b6fa029a0aa7b065de22e529ad55b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4241de02a2591038738ec0736de869"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html#a4f4241de02a2591038738ec0736de869">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &amp;deviceInfo, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &amp;endpointId, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; alexaMessageSender)</td></tr>
+<tr class="separator:a4f4241de02a2591038738ec0736de869"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -200,31 +200,6 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Capability Agent to handle directives under the Alexa Namespace. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae309ab6b787ab335c043550b9746014e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae309ab6b787ab335c043550b9746014e">&#9670;&nbsp;</a></span>addEventProcessedObserver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::addEventProcessedObserver </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html">avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>observer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Adds an observer which implements <code>AlexaEventProcessedObserverInterface</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">observer</td><td>The <code>AlexaEventProcessedObserverInterface</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aab420b8c3194f74d6eb0b16179dbbac9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab420b8c3194f74d6eb0b16179dbbac9">&#9670;&nbsp;</a></span>cancelDirective()</h2>
 
@@ -251,8 +226,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a0de260edc66de057ee7e3186eb61d599"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0de260edc66de057ee7e3186eb61d599">&#9670;&nbsp;</a></span>create()</h2>
+<a id="ae5b6fa029a0aa7b065de22e529ad55b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5b6fa029a0aa7b065de22e529ad55b6">&#9670;&nbsp;</a></span>create() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -261,7 +236,66 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::create </td>
+          <td class="memname">static std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a>&gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deviceInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">avsCommon::sdkInterfaces::endpoints::EndpointIdentifier</a> &amp;&#160;</td>
+          <td class="paramname"><em>endpointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>exceptionEncounteredSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>alexaMessageSender</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a></code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deviceInfo</td><td>Structure with information about the Alexa client device. </td></tr>
+    <tr><td class="paramname">endpointId</td><td>The <code>EndpointIdentifier</code> for the endpoint that will own this capability. </td></tr>
+    <tr><td class="paramname">exceptionEncounteredSender</td><td>The <code>ExceptionEncounteredSender</code> to send exceptions. </td></tr>
+    <tr><td class="paramname">alexaMessageSender</td><td>The <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> to send AlexaInterface events. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a></code> on success, <code>nullptr</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a4f4241de02a2591038738ec0736de869"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f4241de02a2591038738ec0736de869">&#9670;&nbsp;</a></span>create() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a>&gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::create </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &amp;&#160;</td>
           <td class="paramname"><em>deviceInfo</em>, </td>
@@ -297,12 +331,79 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Creates an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a></code>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000048">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceInfo</td><td>Structure with information about the Alexa client device. </td></tr>
     <tr><td class="paramname">endpointId</td><td>The endpoint to which this capability is associated. </td></tr>
     <tr><td class="paramname">exceptionEncounteredSender</td><td>The <code>ExceptionEncounteredSender</code> to send exceptions. </td></tr>
     <tr><td class="paramname">alexaMessageSender</td><td>The <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> to send AlexaInterface events. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a></code> on success, <code>nullptr</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a2c385ae08bec954c5bb95d24a1e6afb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c385ae08bec954c5bb95d24a1e6afb5">&#9670;&nbsp;</a></span>createDefaultAlexaInterfaceCapabilityAgent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a> &gt; alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::createDefaultAlexaInterfaceCapabilityAgent </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html">avsCommon::utils::DeviceInfo</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deviceInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>exceptionEncounteredSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html">AlexaInterfaceMessageSenderInternalInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>alexaMessageSender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alexa_event_processed_notifier_interfaces.html#a1a4b11ea9831d0f01ea3f5a0e7d86df9">acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>alexaEventProcessedNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>endpointCapabilitiesRegistrar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_capability_agent.html">AlexaInterfaceCapabilityAgent</a></code> for the default endpoint.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deviceInfo</td><td>Structure with information about the Alexa client device. </td></tr>
+    <tr><td class="paramname">exceptionEncounteredSender</td><td>The <code>ExceptionEncounteredSender</code> to send exceptions. </td></tr>
+    <tr><td class="paramname">alexaMessageSender</td><td>The <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html">AlexaInterfaceMessageSender</a></code> to send AlexaInterface events. </td></tr>
+    <tr><td class="paramname">alexaEventProcessedNotifier</td><td>The <code>AlexaEventProcessedNotifierInterface</code> to notify observers of AlexaEventProcessed events. </td></tr>
+    <tr><td class="paramname">endpointCapabilitiesRegistrar</td><td>The <code>EndpointCapabilitiesRegistrarInterface</code> for the default endpoint (annotated with DefaultEndpointAnnotation), so that the SpeakerManager can register itself as a capability with the default endpoint. </td></tr>
   </table>
   </dd>
 </dl>
@@ -438,40 +539,15 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ab2ecb42113f97b251e93414d682be2f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2ecb42113f97b251e93414d682be2f0">&#9670;&nbsp;</a></span>removeEventProcessedObserver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceCapabilityAgent::removeEventProcessedObserver </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html">avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>observer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Removes the observer which implements the <code>AlexaEventProcessedObserverInterface</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">observer</td><td>The <code>AlexaEventProcessedObserverInterface</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/workplace/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/<a class="el" href="_alexa_interface_capability_agent_8h_source.html">AlexaInterfaceCapabilityAgent.h</a></li>
-<li>/workplace/avs-device-sdk/CapabilityAgents/Alexa/src/<a class="el" href="_alexa_interface_capability_agent_8cpp.html">AlexaInterfaceCapabilityAgent.cpp</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/Alexa/include/Alexa/<a class="el" href="_alexa_interface_capability_agent_8h_source.html">AlexaInterfaceCapabilityAgent.h</a></li>
+<li>/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs-device-sdk/CapabilityAgents/Alexa/src/<a class="el" href="_alexa_interface_capability_agent_8cpp.html">AlexaInterfaceCapabilityAgent.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.20.1 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.21.0 - Copyright 2016-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
