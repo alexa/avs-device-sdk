@@ -89,6 +89,7 @@ UrlContentToAttachmentConverter::UrlContentToAttachmentConverter(
     m_stream = std::make_shared<InProcessAttachment>(url, nullptr, numOfReaders);
     m_streamWriter = m_stream->createWriter(avsCommon::utils::sds::WriterPolicy::BLOCKING);
     m_contentDecrypter = std::make_shared<ContentDecrypter>();
+    m_id3TagsRemover = std::make_shared<Id3TagsRemover>();
 }
 
 std::chrono::milliseconds UrlContentToAttachmentConverter::getStartStreamingPoint() {
@@ -240,15 +241,35 @@ bool UrlContentToAttachmentConverter::writeDecryptedUrlContentIntoStream(
             return false;
         }
 
-        if (!m_shuttingDown && !m_contentDecrypter->decryptAndWrite(content, key, encryptionInfo, m_streamWriter)) {
+        if (!m_shuttingDown &&
+            !m_contentDecrypter->decryptAndWrite(content, key, encryptionInfo, m_streamWriter, m_id3TagsRemover)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "decryptAndWriteFailed"));
             return false;
         }
     } else {
-        if (!download(url, headers, m_streamWriter, contentFetcher)) {
+        bool returnValue = true;
+        auto attachment = std::make_shared<InProcessAttachment>("download:" + url);
+
+        // start separate thread to download content to the new attachment
+        std::thread writerThread([this, url, headers, attachment, contentFetcher, &returnValue]() {
+            std::shared_ptr<AttachmentWriter> streamWriter = attachment->createWriter(WriterPolicy::BLOCKING);
+            if (!download(url, headers, streamWriter, contentFetcher)) {
+                ACSDK_ERROR(LX("downloadFailed").d("reason", "downloadToStreamFailed"));
+                returnValue = false;
+            }
+            streamWriter->close();
+        });
+
+        // remove ID3 tags from new attachment and write to  m_streamWriter
+        if (!m_id3TagsRemover->removeTagsAndWrite(attachment, m_streamWriter)) {
             ACSDK_ERROR(LX("writeDecryptedUrlContentIntoStreamFailed").d("reason", "downloadFailed"));
-            return false;
+            returnValue = false;
         }
+
+        if (writerThread.joinable()) {
+            writerThread.join();
+        }
+        return returnValue;
     }
 
     ACSDK_DEBUG9(LX("writeDecryptedUrlContentIntoStreamSuccess"));
@@ -378,8 +399,10 @@ void UrlContentToAttachmentConverter::doShutdown() {
     }
     m_shuttingDown = true;
     m_contentDecrypter->shutdown();
+    m_id3TagsRemover->shutdown();
     m_executor.shutdown();
     m_contentDecrypter.reset();
+    m_id3TagsRemover.reset();
     m_playlistParser->shutdown();
     m_playlistParser.reset();
     m_streamWriter->close();

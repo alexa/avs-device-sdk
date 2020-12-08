@@ -45,6 +45,7 @@ const char FAVORITE[] = "favorite";
 const char PLAYBACK_SOURCE[] = "playbackSource";
 const char TYPE[] = "type";
 const char PLAYBACK_SOURCE_ID[] = "playbackSourceId";
+const char PLAYBACK_ID[] = "playbackId";
 const char TRACKNAME[] = "trackName";
 const char TRACK_ID[] = "trackId";
 const char TRACK_NUMBER[] = "trackNumber";

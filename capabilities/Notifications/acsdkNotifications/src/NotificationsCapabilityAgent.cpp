@@ -196,9 +196,6 @@ std::shared_ptr<CapabilityConfiguration> getNotificationsCapabilityConfiguration
 bool NotificationsCapabilityAgent::init() {
     ACSDK_DEBUG5(LX(__func__));
 
-    m_renderer->addObserver(shared_from_this());
-    m_contextManager->setStateProvider(INDICATOR_STATE_CONTEXT_KEY, shared_from_this());
-
     if (!m_notificationsStorage->open()) {
         ACSDK_INFO(LX(__func__).m("database file does not exist.  Creating."));
         if (!m_notificationsStorage->createDatabase()) {
@@ -216,6 +213,9 @@ void NotificationsCapabilityAgent::executeInit() {
     ACSDK_DEBUG5(LX(__func__));
 
     IndicatorState currentIndicatorState = IndicatorState::OFF;
+
+    m_renderer->addObserver(shared_from_this());
+    m_contextManager->setStateProvider(INDICATOR_STATE_CONTEXT_KEY, shared_from_this());
 
     if (!m_notificationsStorage->getIndicatorState(&currentIndicatorState)) {
         ACSDK_ERROR(LX("executeInitFailed").d("reason", "getIndicatorStateFailed"));

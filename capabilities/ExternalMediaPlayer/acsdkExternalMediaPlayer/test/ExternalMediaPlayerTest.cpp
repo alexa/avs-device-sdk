@@ -163,6 +163,7 @@ static const std::string IDLE_PLAYBACK_STATE =
                 "value":{
                     "playbackSource":"",
                     "playbackSourceId":"",
+                    "playbackId":"",
                     "trackName":"",
                     "trackId":"",
                     "trackNumber":"",

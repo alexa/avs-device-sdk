@@ -52,6 +52,7 @@ add_library(AVSCommon SHARED
     Utils/src/HTTP2/HTTP2MimeRequestEncoder.cpp
     Utils/src/HTTP2/HTTP2MimeResponseDecoder.cpp
     Utils/src/HTTP2/HTTP2SendDataResult.cpp
+    Utils/src/ID3Tags/ID3v2Tags.cpp
     Utils/src/LibcurlUtils/CallbackData.cpp
     Utils/src/LibcurlUtils/CurlEasyHandleWrapper.cpp
     Utils/src/LibcurlUtils/CurlMultiHandleWrapper.cpp
@@ -64,6 +65,7 @@ add_library(AVSCommon SHARED
     Utils/src/LibcurlUtils/LibcurlHTTP2ConnectionFactory.cpp
     Utils/src/LibcurlUtils/LibcurlHTTP2Request.cpp
     Utils/src/LibcurlUtils/LibcurlUtils.cpp
+    Utils/src/LibcurlUtils/DefaultSetCurlOptionsCallbackFactory.cpp
     Utils/src/Logger/ConsoleLogger.cpp
     Utils/src/Logger/Level.cpp
     Utils/src/Logger/LogEntry.cpp

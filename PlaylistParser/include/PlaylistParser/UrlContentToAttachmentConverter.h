@@ -29,6 +29,7 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "PlaylistParser/ContentDecrypter.h"
+#include "PlaylistParser/Id3TagsRemover.h"
 #include "PlaylistParser/PlaylistParser.h"
 
 namespace alexaClientSDK {
@@ -259,6 +260,9 @@ private:
 
     /// Helper to decrypt encrypted content.
     std::shared_ptr<ContentDecrypter> m_contentDecrypter;
+
+    /// Helper to remove ID3 tags from content.
+    std::shared_ptr<Id3TagsRemover> m_id3TagsRemover;
 
     /**
      * @name @c onPlaylistEntryParsed Callback Variables

@@ -48,7 +48,7 @@ public:
      *
      * @param postConnectOperationProviders The providers to (pre) register.
      */
-    LegacyProviderRegistrar(
+    explicit LegacyProviderRegistrar(
         const std::vector<std::shared_ptr<PostConnectOperationProviderInterface>>& postConnectOperationProviders);
 
     /// @name PostConnectOperationProviderRegistrarInterface methods.

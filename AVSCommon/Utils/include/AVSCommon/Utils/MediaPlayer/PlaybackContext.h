@@ -73,9 +73,9 @@ bool validateIfNotMalicious(const std::string& header);
  * Validate the headers. Delete the invalid entries
  *
  * @param[out] playbackContext to be validated and the invalid entries will be deleted.
- * @return @c true if validation had no errrors, else @c false.
+ * @return  <true, true> if valid and not malicious.
  */
-bool validatePlaybackContextHeaders(PlaybackContext* playbackContext);
+std::pair<bool, bool> validatePlaybackContextHeaders(PlaybackContext* playbackContext);
 
 }  // namespace mediaPlayer
 }  // namespace utils

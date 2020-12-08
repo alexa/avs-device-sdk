@@ -105,11 +105,11 @@ ShutdownMonitor::~ShutdownMonitor() {
     for (auto object : m_objects) {
         if (!object->isShutdown()) {
             m_destructorLogger.logAtExit(
-                alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+                alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL,
                 LX("ShutdownMonitor").d("reason", "no shutdown() call").d("name: ", object->name()));
         }
         m_destructorLogger.logAtExit(
-            alexaClientSDK::avsCommon::utils::logger::Level::WARN,
+            alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL,
             LX("ShutdownMonitor").d("reason", "never deleted").d("name", object->name()));
     }
 }
@@ -123,7 +123,7 @@ RequiresShutdown::RequiresShutdown(const std::string& name) : m_name{name}, m_is
 
 RequiresShutdown::~RequiresShutdown() {
     if (!m_isShutdown) {
-        ACSDK_ERROR(LX("~RequiresShutdownFailed").d("reason", "notShutdown").d("name", name()));
+        ACSDK_CRITICAL(LX("~RequiresShutdownFailed").d("reason", "notShutdown").d("name", name()));
     }
     g_shutdownMonitor.remove(this);
 }

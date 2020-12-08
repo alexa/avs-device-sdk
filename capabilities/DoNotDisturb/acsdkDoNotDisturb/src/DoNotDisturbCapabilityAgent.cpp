@@ -71,6 +71,42 @@ static const std::string DND_JSON_INTERFACE_VERSION = "1.0";
 /// Name for "enabled" JSON branch.
 static constexpr char JSON_KEY_ENABLED[] = "enabled";
 
+std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::createDoNotDisturbCapabilityAgent(
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+    const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& settingsStorage,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (!exceptionSender || !messageSender || !settingsStorage || !shutdownNotifier || !endpointCapabilitiesRegistrar ||
+        !connectionManager) {
+        ACSDK_ERROR(LX("createDoNotDisturbCapabilityAgentFailed")
+                        .d("isExceptionSenderNull", !exceptionSender)
+                        .d("isMessageSenderNull", !messageSender)
+                        .d("isSettingsStorageNull", !settingsStorage)
+                        .d("isShutdownNotifierNull", !shutdownNotifier)
+                        .d("isEndpointCapabilitiesRegistrarNull", !endpointCapabilitiesRegistrar)
+                        .d("isConnectionManagerNull", !connectionManager));
+        return nullptr;
+    }
+
+    auto dndCA = create(messageSender, settingsStorage, exceptionSender, connectionManager);
+    if (!dndCA) {
+        ACSDK_ERROR(LX("createDoNotDisturbCapabilityAgentFailed").m("null DoNotDisturb CapabilityAgent"));
+        return nullptr;
+    }
+
+    shutdownNotifier->addObserver(dndCA);
+    endpointCapabilitiesRegistrar->withCapability(dndCA, dndCA);
+    connectionManager->addConnectionStatusObserver(dndCA);
+
+    return dndCA;
+}
+
 std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create(
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<MessageSenderInterface> messageSender,
@@ -90,11 +126,26 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
         return nullptr;
     }
 
+    auto dndCA = create(messageSender, settingsStorage, exceptionEncounteredSender);
+
+    if (!dndCA) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "null DoNotDisturb CapabilityAgent"));
+        return nullptr;
+    }
+
+    return dndCA;
+}
+
+std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create(
+    const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+    const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& settingsStorage,
+    const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager) {
     auto dndCA = std::shared_ptr<DoNotDisturbCapabilityAgent>(
-        new DoNotDisturbCapabilityAgent(exceptionEncounteredSender, messageSender));
+        new DoNotDisturbCapabilityAgent(exceptionSender, messageSender, connectionManager));
 
     if (!dndCA->initialize(settingsStorage)) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "Initialization failed."));
+        ACSDK_ERROR(LX("createFailed").d("reason", "Initialization failed"));
         return nullptr;
     }
 
@@ -103,10 +154,12 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
 
 DoNotDisturbCapabilityAgent::DoNotDisturbCapabilityAgent(
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    std::shared_ptr<MessageSenderInterface> messageSender) :
+    std::shared_ptr<MessageSenderInterface> messageSender,
+    std::shared_ptr<AVSConnectionManagerInterface> connectionManager) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"acsdkDoNotDisturb"},
         m_messageSender{messageSender},
+        m_connectionManager{connectionManager},
         m_isConnected{false},
         m_hasOfflineChanges{false} {
     generateCapabilityConfiguration();
@@ -232,6 +285,10 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> DoN
 }
 
 void DoNotDisturbCapabilityAgent::doShutdown() {
+    if (m_connectionManager) {
+        m_connectionManager->removeConnectionStatusObserver(shared_from_this());
+    }
+
     m_executor.shutdown();
     m_dndModeSetting.reset();
 }

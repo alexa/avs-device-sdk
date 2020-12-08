@@ -29,10 +29,18 @@ namespace resources {
 namespace audio {
 
 /**
- * A class that constructs an object to create unique streams to the audio data for the Alerts.
+ * A class that constructs an object to create unique streams to the audio data for alerts and other audio types.
+ *
  */
 class AudioFactory : public avsCommon::sdkInterfaces::audio::AudioFactoryInterface {
 public:
+    /**
+     * Factory method that creates a new @c AudioFactoryInterface.
+     *
+     * @return A shared_ptr to a new @c AudioFactoryInterface.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> createAudioFactoryInterface();
+
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alerts() const override;
     std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notifications() const override;
     std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> communications()

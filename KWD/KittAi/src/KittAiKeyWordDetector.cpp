@@ -195,10 +195,9 @@ bool KittAiKeyWordDetector::isAudioFormatCompatibleWithKittAi(avsCommon::utils::
 void KittAiKeyWordDetector::detectionLoop() {
     notifyKeyWordDetectorStateObservers(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
     int16_t audioDataToPush[m_maxSamplesPerPush];
-    ssize_t wordsRead;
     while (!m_isShuttingDown) {
         bool didErrorOccur;
-        wordsRead = readFromStream(
+        auto wordsRead = readFromStream(
             m_streamReader, m_stream, audioDataToPush, m_maxSamplesPerPush, TIMEOUT_FOR_READ_CALLS, &didErrorOccur);
         if (didErrorOccur) {
             break;

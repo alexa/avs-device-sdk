@@ -23,6 +23,7 @@
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterface.h>
 #include <AVSCommon/Utils/LibcurlUtils/CurlEasyHandleWrapper.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlSetCurlOptionsCallbackInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -35,7 +36,16 @@ namespace libcurlUtils {
  */
 class LibCurlHttpContentFetcher : public avsCommon::sdkInterfaces::HTTPContentFetcherInterface {
 public:
-    LibCurlHttpContentFetcher(const std::string& url);
+    /**
+     * Constructor.
+     *
+     * @param url The url to fetch the content from.
+     * @param setCurlOptionsCallback The optional @c LibcurlSetCurlOptionsCallbackInterface allows setting user
+     * defined curl options.
+     */
+    explicit LibCurlHttpContentFetcher(
+        const std::string& url,
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback = nullptr);
 
     /// @name HTTPContentFetcherInterface methods
     /// @{
@@ -79,7 +89,7 @@ private:
      * @param customHeaders Custom HTTP headers to add.
      * @return @c curl_slist of custom headers if customHeaders are not empty, otherwise NULL.
      */
-    curl_slist* getCustomHeaderList(std::vector<std::string> customHeaders);
+    curl_slist* getCustomHeaderList(const std::vector<std::string>& customHeaders);
 
     /// The URL to fetch from.
     const std::string m_url;
@@ -126,7 +136,7 @@ private:
     std::thread m_thread;
 
     /// Flag to indicate that a call to @c getContent() has been made. Subsequent calls will not be accepted.
-    std::atomic_flag m_hasObjectBeenUsed;
+    std::atomic<bool> m_hasObjectBeenUsed;
 
     /// A mutex to ensure that all state transitions on the m_state variable are thead-safe.
     std::mutex m_stateMutex;

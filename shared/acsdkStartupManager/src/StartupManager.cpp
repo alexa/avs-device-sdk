@@ -32,6 +32,33 @@ static const std::string TAG("StartupManager");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+/**
+ * Helper function for notifying observers of startup.
+ *
+ * @note This was introduced to prevent cppcheck from complaining that @c result was
+ * always true.
+ *
+ * @param result Accumulated result of startup notifications.  If false, skip calling
+ * observer->startup().  If observer->startup() returns false, set result to false.
+ * @param observer The observer to notify of startup.
+ */
+static void notifyObserverOfStartup(bool* result, std::shared_ptr<RequiresStartupInterface> observer) {
+    if (!result) {
+        ACSDK_ERROR(LX("notifyObserverFailed").d("reason", "nullResult"));
+        return;
+    }
+
+    if (!*result) {
+        ACSDK_ERROR(LX("skippingCallToStartup").d("reason", "startupAborted"));
+        return;
+    }
+
+    if (!observer->startup()) {
+        ACSDK_ERROR(LX("startupAborted").d("reason", "doStartupFailed"));
+        *result = false;
+    }
+}
+
 std::shared_ptr<StartupManagerInterface> StartupManager::createStartupManagerInterface(
     const std::shared_ptr<StartupNotifierInterface>& notifier) {
     if (!notifier) {
@@ -48,16 +75,8 @@ bool StartupManager::startup() {
         return false;
     }
     bool result = true;
-    m_notifier->notifyObservers([&result](std::shared_ptr<RequiresStartupInterface> observer) {
-        if (!result) {
-            ACSDK_ERROR(LX("skippingCallToStartup").d("reason", "startupAborted"));
-            return;
-        }
-        if (!observer->startup()) {
-            ACSDK_ERROR(LX("startupAborted").d("reason", "doStartupFailed"));
-            result = false;
-        }
-    });
+    m_notifier->notifyObservers(
+        [&result](std::shared_ptr<RequiresStartupInterface> observer) { notifyObserverOfStartup(&result, observer); });
     m_notifier.reset();
     return result;
 }

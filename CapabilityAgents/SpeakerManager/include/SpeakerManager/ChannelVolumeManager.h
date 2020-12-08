@@ -46,6 +46,7 @@ public:
     /// ChannelVolumeInterface Functions.
     /// @{
     avsCommon::sdkInterfaces::ChannelVolumeInterface::Type getSpeakerType() const override;
+    size_t getId() const override;
     bool startDucking() override;
     bool stopDucking() override;
     bool setUnduckedVolume(int8_t volume) override;

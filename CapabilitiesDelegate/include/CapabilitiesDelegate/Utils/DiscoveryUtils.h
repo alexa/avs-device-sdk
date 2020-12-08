@@ -54,6 +54,19 @@ bool validateCapabilityConfiguration(const avsCommon::avs::CapabilityConfigurati
 bool validateEndpointAttributes(const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes);
 
 /**
+ * Compares given endpoint configuration JSONs and returns true if they are equal, else false.
+ * @Note: RapidJSON's equal to operator compares elements of arrays in order. To overcome this, we always sort
+ * array entries before creating JSON strings.
+ *
+ * @param firstEndpointConfigJson The first endpoint config json string.
+ * @param secondEndpointConfigJson The second endpoint config json string.
+ * @return True if the json strings are same, else false.
+ */
+bool compareEndpointConfigurations(
+    const std::string& firstEndpointConfigJson,
+    const std::string& secondEndpointConfigJson);
+
+/**
  * Formats the given @c EndpointAttributes and @c CapabilityConfigurations into a JSON required to send in the
  * @c Discovery.AddOrUpdateReport event.
  *

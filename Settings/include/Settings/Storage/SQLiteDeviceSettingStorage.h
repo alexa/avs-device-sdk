@@ -43,6 +43,17 @@ public:
      * @param configurationRoot The global config object where the location of the misc database can be found.
      * @return Pointer to the SQLiteDeviceSettingStorage object, nullptr if there's an error creating it.
      */
+    static std::shared_ptr<DeviceSettingStorageInterface> createDeviceSettingStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Factory method for creating a storage object for settings based on an SQLite database.
+     * Settings will be stored in the misc database.
+     *
+     * @deprecated Use createDeviceSettingStorageInterface
+     * @param configurationRoot The global config object where the location of the misc database can be found.
+     * @return Pointer to the SQLiteDeviceSettingStorage object, nullptr if there's an error creating it.
+     */
     static std::unique_ptr<SQLiteDeviceSettingStorage> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 

@@ -72,6 +72,8 @@ static const std::string ALERT_EVENT_TYPE_REMINDER_STRING = "REMINDER";
 static const std::string OFFLINE_STOPPED_ALERT_TOKEN_KEY = "token";
 /// The value of the offline stopped alert scheduledTime key.
 static const std::string OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY = "scheduledTime";
+/// The value of the offline stopped alert eventTime key.
+static const std::string OFFLINE_STOPPED_ALERT_EVENT_TIME_KEY = "eventTime";
 /// The value of the offline stopped alert id key.
 static const std::string OFFLINE_STOPPED_ALERT_ID_KEY = "id";
 
@@ -141,7 +143,7 @@ static const std::string OFFLINE_ALERTS_TABLE_NAME = "offlineAlerts";
 
 static const std::string CREATE_OFFLINE_ALERTS_TABLE_SQL_STRING =
     std::string("CREATE TABLE ") + OFFLINE_ALERTS_TABLE_NAME + " (" + "id INT PRIMARY KEY NOT NULL," +
-    "token TEXT NOT NULL," + "scheduled_time_iso_8601 TEXT NOT NULL);";
+    "token TEXT NOT NULL," + "scheduled_time_iso_8601 TEXT NOT NULL," + "event_time_iso_8601 TEXT NOT NULL);";
 
 /// The name of the alertAssetPlayOrderItems table.
 static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME = "alertAssetPlayOrderItems";
@@ -279,6 +281,22 @@ static bool dbFieldToAlertState(int dbState, Alert::State* state) {
 
     ACSDK_ERROR(LX("dbFieldToAlertStateFailed").m("Could not convert db value.").d("db value", dbState));
     return false;
+}
+
+std::shared_ptr<AlertStorageInterface> SQLiteAlertStorage::createAlertStorageInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory) {
+    if (!configurationRoot || !audioFactory) {
+        ACSDK_ERROR(LX("createAlertStorageInterfaceFailed")
+                        .d("isConfigurationRootNull", !configurationRoot)
+                        .d("isAudioFactoryNull", !audioFactory));
+        return nullptr;
+    }
+
+    auto alertsAudioFactory = audioFactory->alerts();
+
+    auto storage = create(*configurationRoot, alertsAudioFactory);
+    return std::move(storage);
 }
 
 std::unique_ptr<SQLiteAlertStorage> SQLiteAlertStorage::create(
@@ -720,7 +738,10 @@ bool SQLiteAlertStorage::store(std::shared_ptr<Alert> alert) {
     return true;
 }
 
-bool SQLiteAlertStorage::storeOfflineAlert(const std::string& token, const std::string& scheduledTime) {
+bool SQLiteAlertStorage::storeOfflineAlert(
+    const std::string& token,
+    const std::string& scheduledTime,
+    const std::string& eventTime) {
     std::string tableName;
     std::string sqlString;
 
@@ -733,10 +754,10 @@ bool SQLiteAlertStorage::storeOfflineAlert(const std::string& token, const std::
     tableName = OFFLINE_ALERTS_TABLE_NAME;
     sqlString = "INSERT INTO " + OFFLINE_ALERTS_TABLE_NAME + " (" +
                         "id,token,"
-                        "scheduled_time_iso_8601"
+                        "scheduled_time_iso_8601,event_time_iso_8601"
                         ") VALUES (" +
                         "?,?," +
-                        "?" +
+                        "?,?" +
                         ");";
     // clang-format on
 
@@ -756,11 +777,13 @@ bool SQLiteAlertStorage::storeOfflineAlert(const std::string& token, const std::
 
     int boundParam = 1;
     auto alertToken = token;
-    auto iso8601 = scheduledTime;
+    auto scheduledTime_ISO = scheduledTime;
+    auto eventTime_ISO = eventTime;
 
     /// If we are offine then we only want to bind a few parameters
     if (!statement->bindIntParameter(boundParam++, id) || !statement->bindStringParameter(boundParam++, alertToken) ||
-        !statement->bindStringParameter(boundParam++, iso8601)) {
+        !statement->bindStringParameter(boundParam++, scheduledTime_ISO) ||
+        !statement->bindStringParameter(boundParam++, eventTime_ISO)) {
         ACSDK_ERROR(LX("storeFailed").m("Could not bind parameter."));
         return false;
     }
@@ -1040,6 +1063,7 @@ bool SQLiteAlertStorage::loadOfflineAlerts(
     int id = 0;
     std::string token;
     std::string scheduledTime_ISO_8601;
+    std::string eventTime_ISO_8601;
 
     if (!statement->step()) {
         ACSDK_ERROR(LX("loadOfflineAlertsFailed").m("Could not perform step."));
@@ -1058,6 +1082,8 @@ bool SQLiteAlertStorage::loadOfflineAlerts(
                 token = statement->getColumnText(i);
             } else if ("scheduled_time_iso_8601" == columnName) {
                 scheduledTime_ISO_8601 = statement->getColumnText(i);
+            } else if ("event_time_iso_8601" == columnName) {
+                eventTime_ISO_8601 = statement->getColumnText(i);
             }
         }
 
@@ -1065,6 +1091,7 @@ bool SQLiteAlertStorage::loadOfflineAlerts(
         alertJson.SetObject();
         alertJson.AddMember(StringRef(OFFLINE_STOPPED_ALERT_TOKEN_KEY), token, allocator);
         alertJson.AddMember(StringRef(OFFLINE_STOPPED_ALERT_SCHEDULED_TIME_KEY), scheduledTime_ISO_8601, allocator);
+        alertJson.AddMember(StringRef(OFFLINE_STOPPED_ALERT_EVENT_TIME_KEY), eventTime_ISO_8601, allocator);
         alertJson.AddMember(StringRef(OFFLINE_STOPPED_ALERT_ID_KEY), id, allocator);
 
         alertContainer->PushBack(alertJson, allocator);

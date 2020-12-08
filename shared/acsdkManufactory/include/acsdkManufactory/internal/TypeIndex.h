@@ -24,6 +24,7 @@
 
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
+#include <AVSCommon/Utils/PlatformDefinitions.h>
 
 #include "acsdkManufactory/internal/TypeTraitsHelper.h"
 

@@ -14,6 +14,7 @@
  */
 
 #include <acsdkCore/CoreComponent.h>
+#include <acsdkManufactory/Annotated.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
 #include <acsdkShared/SharedComponent.h>
 
@@ -31,7 +32,25 @@ namespace acsdkAlexaCommunications {
 using namespace acl;
 using namespace acsdkManufactory;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::libcurlUtils;
+
+/**
+ * This function adapts an Annotated<AVSConnectionManagerInterface, LibcurlSetCurlOptionsCallbackFactoryInterface>
+ * to a shared_ptr<AVSConnectionManagerInterface> and creates a HTTP2ConnectionFactory.
+ *
+ * TODO: ACSDK-4957
+ * @note This is only necessary because LibcurlHTTP2ConnectionFactory is in AVSCommon and is prohibited
+ * from using acsdkManufactory::Annotated<> because acsdkManufactory depends upon AVSCommon.  This will
+ * be fixed when acsdkManufactory's depenency upon AVSCommon is removed.
+ *
+ * @param callbackFactory The Annotated curl options callback factory
+ * @return A HTTP2ConnectionFactoryInterface.
+ */
+static std::shared_ptr<HTTP2ConnectionFactoryInterface> createHTTP2ConnectionFactory(
+    const Annotated<AVSConnectionManagerInterface, LibcurlSetCurlOptionsCallbackFactoryInterface>& callbackFactory) {
+    return LibcurlHTTP2ConnectionFactory::createHTTP2ConnectionFactoryInterface(callbackFactory);
+}
 
 AlexaCommunicationsComponent getComponent() {
     return ComponentAccumulator<>()
@@ -40,7 +59,7 @@ AlexaCommunicationsComponent getComponent() {
         .addRetainedFactory(AVSConnectionManager::createAVSConnectionManagerInterface)
         .addRetainedFactory(AVSConnectionManager::createMessageSenderInterface)
         .addRetainedFactory(HTTP2TransportFactory::createTransportFactoryInterface)
-        .addRetainedFactory(LibcurlHTTP2ConnectionFactory::createHTTP2ConnectionFactoryInterface)
+        .addRetainedFactory(createHTTP2ConnectionFactory)
         .addRetainedFactory(MessageRouter::createMessageRouterInterface)
         .addRetainedFactory(PostConnectSequencerFactory::createPostConnectFactoryInterface);
 }

@@ -26,6 +26,7 @@
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/Timing/Timer.h>
 
 #include "ACL/Transport/MessageConsumerInterface.h"
 #include "ACL/Transport/MessageRouterInterface.h"
@@ -49,6 +50,9 @@ class MessageRouter
         , public MessageConsumerInterface
         , public std::enable_shared_from_this<MessageRouter> {
 public:
+    /// Amount of time to allow for an automatic reconnect before notifying of a server side disconnect.
+    static const std::chrono::milliseconds DEFAULT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD;
+
     /**
      * Factory function for creating an instance of MessageRouterInterface.
      *
@@ -77,13 +81,16 @@ public:
      * is used.
      * @param engineType optional parameter of engine type associated with this MessageRouter. Default to be
      * ENGINE_TYPE_ALEXA_VOICE_SERVICES.
+     * @param serverSideDisconnectGracePeriod How long to allow for an automatic reconnection before reporting
+     * a server side disconnect to our observer.
      */
     MessageRouter(
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> transportFactory,
         const std::string& avsGateway = "",
-        int engineType = avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES);
+        int engineType = avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+        std::chrono::milliseconds serverSideDisconnectGracePeriod = DEFAULT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD);
 
     /// @name MessageRouterInterface methods.
     /// @{
@@ -133,6 +140,16 @@ private:
      * @param reason The reason the connection status changed.
      */
     void notifyObserverOnConnectionStatusChanged(
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
+
+    /**
+     * Without any further queueing to the executor, notify the connection observer that the status has changed.
+     *
+     * @param status The current status of the connection.
+     * @param reason The reason the connection status changed.
+     */
+    void handleNotifyObserverOnConnectionStatusChanged(
         const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
         const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason);
 
@@ -227,6 +244,18 @@ private:
 
     /// The synchonized queue of messages to send that is shared between transports.
     std::shared_ptr<SynchronizedMessageRequestQueue> m_requestQueue;
+
+    /// Timer used to smooth over server side disconnects.
+    avsCommon::utils::timing::Timer m_serverSideDisconnectTimer;
+
+    /// True if notification of a server side disconnect should be delivered when the timer triggers.
+    bool m_serverSideDisconnectNotificationPending;
+
+    /// The last connection status reported to our observer.
+    avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_lastReportedConnectionStatus;
+
+    /// Amount of time to allow for an automatic reconnect before notifying of a server side disconnect.
+    const std::chrono::milliseconds m_serverSideReconnectGracePeriod;
 
 protected:
     /**

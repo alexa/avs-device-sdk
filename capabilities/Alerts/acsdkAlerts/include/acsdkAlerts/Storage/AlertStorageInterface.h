@@ -77,9 +77,13 @@ public:
      *
      * @param token The alertToken of the alert to be erased.
      * @param scheduledTime The scheduled time of the alert
+     * @param eventTime the time the alert stopped
      * @return Whether the @c Alert was successfully stored.
      */
-    virtual bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime) = 0;
+    virtual bool storeOfflineAlert(
+        const std::string& token,
+        const std::string& scheduledTime,
+        const std::string& eventTime) = 0;
 
     /**
      * Loads all alerts in the database.

@@ -39,7 +39,7 @@ namespace test {
  */
 class MockHTTP2Request : public HTTP2RequestInterface {
 public:
-    MockHTTP2Request(const alexaClientSDK::avsCommon::utils::http2::HTTP2RequestConfig& config);
+    explicit MockHTTP2Request(const alexaClientSDK::avsCommon::utils::http2::HTTP2RequestConfig& config);
     MOCK_METHOD0(cancel, bool());
     MOCK_CONST_METHOD0(getId, std::string());
 

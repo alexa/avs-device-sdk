@@ -26,19 +26,6 @@ namespace alexaClientSDK {
 namespace settings {
 
 /**
- * Structure to save a specific setting and its configuration.
- *
- * @tparam SettingsT The type of the setting.
- */
-template <typename SettingsT>
-struct SettingConfiguration {
-    /// The setting configured.
-    std::shared_ptr<SettingsT> setting;
-    /// The setting metadata.
-    avsCommon::utils::Optional<settings::SettingEventMetadata> metadata;
-};
-
-/**
  * Base template for settings manager builders.
  *
  * This definition is only needed to allow us to extract the parameter pack of a specific @c SettingsManager type.

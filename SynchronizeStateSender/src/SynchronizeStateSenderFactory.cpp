@@ -38,7 +38,9 @@ std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
             providerRegistrar,
-        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager) {
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
+    ACSDK_DEBUG5(LX(__func__));
     if (!providerRegistrar) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullProviderRegistrar"));
         return nullptr;
@@ -47,7 +49,8 @@ std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>
         ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
         return nullptr;
     }
-    std::shared_ptr<SynchronizeStateSenderFactory> provider(new SynchronizeStateSenderFactory(contextManager));
+    std::shared_ptr<SynchronizeStateSenderFactory> provider(
+        new SynchronizeStateSenderFactory(contextManager, metricRecorder));
     if (!providerRegistrar->registerProvider(provider)) {
         return nullptr;
     }
@@ -55,24 +58,28 @@ std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>
 }
 
 std::shared_ptr<SynchronizeStateSenderFactory> SynchronizeStateSenderFactory::create(
-    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
     ACSDK_DEBUG5(LX(__func__));
     if (!contextManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
     } else {
-        return std::shared_ptr<SynchronizeStateSenderFactory>(new SynchronizeStateSenderFactory(contextManager));
+        return std::shared_ptr<SynchronizeStateSenderFactory>(
+            new SynchronizeStateSenderFactory(contextManager, metricRecorder));
     }
     return nullptr;
 }
 
 SynchronizeStateSenderFactory::SynchronizeStateSenderFactory(
-    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager) :
-        m_contextManager{contextManager} {
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
+        m_contextManager{contextManager},
+        m_metricRecorder{metricRecorder} {
 }
 
 std::shared_ptr<PostConnectOperationInterface> SynchronizeStateSenderFactory::createPostConnectOperation() {
     ACSDK_DEBUG5(LX(__func__));
-    return PostConnectSynchronizeStateSender::create(m_contextManager);
+    return PostConnectSynchronizeStateSender::create(m_contextManager, m_metricRecorder);
 }
 
 }  // namespace synchronizeStateSender

@@ -86,7 +86,9 @@ bool operator!=(const ComponentConfiguration& lhs, const ComponentConfiguration&
     return !(lhs == rhs);
 }
 
-bool operator==(const std::shared_ptr<ComponentConfiguration> lhs, const std::shared_ptr<ComponentConfiguration> rhs) {
+bool operator==(
+    const std::shared_ptr<ComponentConfiguration>& lhs,
+    const std::shared_ptr<ComponentConfiguration>& rhs) {
     if (!lhs && !rhs) {
         return true;
     }
@@ -97,7 +99,9 @@ bool operator==(const std::shared_ptr<ComponentConfiguration> lhs, const std::sh
     return *lhs == *rhs;
 }
 
-bool operator!=(const std::shared_ptr<ComponentConfiguration> lhs, const std::shared_ptr<ComponentConfiguration> rhs) {
+bool operator!=(
+    const std::shared_ptr<ComponentConfiguration>& lhs,
+    const std::shared_ptr<ComponentConfiguration>& rhs) {
     return !(lhs == rhs);
 }
 

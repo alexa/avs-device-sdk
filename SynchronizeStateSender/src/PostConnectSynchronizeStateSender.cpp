@@ -19,11 +19,18 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 
+#include <AVSCommon/Utils/Metrics.h>
+#include <AVSCommon/Utils/Metrics/DataPointDurationBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
+
 namespace alexaClientSDK {
 namespace synchronizeStateSender {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::metrics;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PostConnectSynchronizeStateSender");
@@ -41,15 +48,48 @@ static const std::string SYNCHRONIZE_STATE_NAMESPACE = "System";
 /// The name of the SynchronizeState event.
 static const std::string SYNCHRONIZE_STATE_NAME = "SynchronizeState";
 
+/// Metric Activity Name Prefix for PostConnectSynchronizeStateSender metric source
+static const std::string METRIC_ACTIVITY_NAME_PREFIX = "POSTCONNECT_SYNCHRONIZE_STATE_SENDER-";
+
 /// Table with the retry times on subsequent retries.
 static const std::vector<int> RETRY_TABLE = {
-    250,    // Retry 1:  0.25s
-    1000,   // Retry 2:  1.00s
-    3000,   // Retry 3:  3.00s
-    5000,   // Retry 4:  5.00s
-    10000,  // Retry 5: 10.00s
-    20000,  // Retry 6: 20.00s
+    250,     // Retry 1:  0.25s
+    1000,    // Retry 1: 1s
+    2000,    // Retry 2: 2s
+    4000,    // Retry 3  4s
+    8000,    // Retry 4: 8s
+    16000,   // Retry 5: 16s
+    32000,   // Retry 6: 32s
+    64000,   // Retry 7: 64s
+    128000,  // Retry 8: 128s
+    256000   // Retry 9: 256s
 };
+
+/**
+ * Handles a Metric event by creating and recording it. Failure to create or record the event results
+ * in an early return.
+ *
+ * @param metricRecorder The @c MetricRecorderInterface which records Metric events.
+ * @param eventName The activity name of the Metric event.
+ * @param reason Additional information on cause of Metric event.
+ */
+static void submitMetric(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    const std::string& eventName,
+    const std::string& reason) {
+    auto metricEventBuilder = MetricEventBuilder{}
+                                  .setActivityName(METRIC_ACTIVITY_NAME_PREFIX + eventName)
+                                  .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(1).build())
+                                  .addDataPoint(DataPointStringBuilder{}.setName("REASON").setValue(reason).build());
+
+    auto metricEvent = metricEventBuilder.build();
+
+    if (metricEvent == nullptr) {
+        ACSDK_ERROR(LX("Error creating metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metricEvent);
+}
 
 /// The instance of the @c RetryTimer used to calculate retry backoff times.
 static avsCommon::utils::RetryTimer RETRY_TIMER{RETRY_TABLE};
@@ -58,19 +98,24 @@ static avsCommon::utils::RetryTimer RETRY_TIMER{RETRY_TABLE};
 std::chrono::milliseconds CONTEXT_FETCH_TIMEOUT = std::chrono::milliseconds(2000);
 
 std::shared_ptr<PostConnectSynchronizeStateSender> PostConnectSynchronizeStateSender::create(
-    std::shared_ptr<ContextManagerInterface> contextManager) {
+    std::shared_ptr<ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
+    ACSDK_DEBUG5(LX(__func__));
+
     if (!contextManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullContextManager"));
     } else {
         return std::shared_ptr<PostConnectSynchronizeStateSender>(
-            new PostConnectSynchronizeStateSender(contextManager));
+            new PostConnectSynchronizeStateSender(contextManager, metricRecorder));
     }
     return nullptr;
 }
 
 PostConnectSynchronizeStateSender::PostConnectSynchronizeStateSender(
-    std::shared_ptr<ContextManagerInterface> contextManager) :
+    std::shared_ptr<ContextManagerInterface> contextManager,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
         m_contextManager{contextManager},
+        m_metricRecorder{metricRecorder},
         m_isStopping{false} {
 }
 
@@ -150,6 +195,10 @@ bool PostConnectSynchronizeStateSender::performOperation(const std::shared_ptr<M
             } else if (status == MessageRequestObserverInterface::Status::CANCELED) {
                 return false;
             }
+
+            submitMetric(m_metricRecorder, "retrySynchronizeStateEvent", "NON_SUCCESS_RESPONSE");
+        } else {
+            submitMetric(m_metricRecorder, "retrySynchronizeStateEvent", "CONTEXT_FETCH_TIMEDOUT");
         }
 
         /// Retry with backoff.

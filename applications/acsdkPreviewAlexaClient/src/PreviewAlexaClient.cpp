@@ -25,7 +25,6 @@
 #include <acsdkNotifications/SQLiteNotificationsStorage.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
 #include <Audio/AudioFactory.h>
-#include <Audio/MicrophoneInterface.h>
 #include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/Initialization/InitializationParametersBuilder.h>
@@ -183,6 +182,7 @@ using ApplicationMediaInterfaces = alexaClientSDK::avsCommon::sdkInterfaces::App
  * manufactory integration is finished.
  */
 using PreviewAlexaClientManufactory = Manufactory<
+    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
@@ -211,6 +211,8 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
@@ -218,11 +220,15 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
+    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
+    std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
     std::shared_ptr<certifiedSender::CertifiedSender>,
     std::shared_ptr<registrationManager::CustomerDataManager>,
-    std::shared_ptr<sampleApp::UIManager>>;
+    std::shared_ptr<sampleApp::UIManager>,
+    std::shared_ptr<settings::DeviceSettingsManager>,
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PreviewAlexaClient");
@@ -385,6 +391,7 @@ struct CapabilityResources {
     std::vector<FriendlyName> friendlyNames;
 };
 
+#ifdef RANGE_CONTROLLER
 /// This struct represents the Range Controller preset and its friendly names.
 struct RangeControllerPresetResources {
     /// The value of a preset.
@@ -393,7 +400,9 @@ struct RangeControllerPresetResources {
     /// The friendly names of the presets.
     std::vector<FriendlyName> friendlyNames;
 };
+#endif
 
+#ifdef MODE_CONTROLLER
 /// This struct represents the Mode Controller modes and its friendly names.
 struct ModeControllerModeResources {
     /// The mode in the Mode Controller.
@@ -402,7 +411,7 @@ struct ModeControllerModeResources {
     /// The friendly names of the @c mode.
     std::vector<FriendlyName> friendlyNames;
 };
-
+#endif
 #endif
 
 /**
@@ -766,10 +775,10 @@ bool PreviewAlexaClient::initialize(
     platformSpecificValues->openSlEngine = m_openSlEngine;
 #endif
 
-    bool enableDucking = true;
-
 #ifdef DISABLE_DUCKING
-    enableDucking = false;
+    bool enableDucking = false;
+#else
+    bool enableDucking = true;
 #endif
 
     // Add the InterruptModel Configuration.
@@ -872,13 +881,6 @@ bool PreviewAlexaClient::initialize(
     auto commsSpeaker = commsMediaInterfaces->speaker;
 #endif
 
-    auto alertsMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "AlertsMediaPlayer");
-    if (!alertsMediaInterfaces) {
-        ACSDK_CRITICAL(LX("Failed to create application media interfaces for alerts!"));
-        return false;
-    }
-    m_alertsMediaPlayer = alertsMediaInterfaces->mediaPlayer;
-
     auto systemSoundMediaInterfaces =
         createApplicationMediaPlayer(httpContentFetcherFactory, false, "SystemSoundMediaPlayer");
     if (!systemSoundMediaInterfaces) {
@@ -905,12 +907,6 @@ bool PreviewAlexaClient::initialize(
     auto meetingSpeaker = meetingMediaInterfaces->speaker;
 #endif
 
-    auto audioFactory = std::make_shared<alexaClientSDK::applicationUtilities::resources::audio::AudioFactory>();
-
-    // Creating the alert storage object to be used for rendering and storing alerts.
-    auto alertStorage =
-        alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage::create(config, audioFactory->alerts());
-
     // Creating the message storage object to be used for storing message to be sent later.
     auto messageStorage = alexaClientSDK::certifiedSender::SQLiteMessageStorage::create(config);
 
@@ -918,11 +914,6 @@ bool PreviewAlexaClient::initialize(
      * Creating notifications storage object to be used for storing notification indicators.
      */
     auto notificationsStorage = alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage::create(config);
-
-    /*
-     * Creating new device settings storage object to be used for storing AVS Settings.
-     */
-    auto deviceSettingsStorage = alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage::create(config);
 
     /*
      * Creating bluetooth storage object to be used for storing uuid to mac mappings for devices.
@@ -1118,6 +1109,7 @@ bool PreviewAlexaClient::initialize(
      */
     std::shared_ptr<defaultClient::DefaultClient::DefaultClientManufactory> subsetManufactory =
         manufactory->createSubsetManufactory<
+            std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
             std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
             std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
             std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
@@ -1146,6 +1138,8 @@ bool PreviewAlexaClient::initialize(
             std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
             std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+            std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+            std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
             acsdkManufactory::Annotated<
                 avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
                 avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
@@ -1153,10 +1147,14 @@ bool PreviewAlexaClient::initialize(
             std::shared_ptr<avsCommon::utils::DeviceInfo>,
             std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
             std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
+            std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
             std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
+            std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
             std::shared_ptr<captions::CaptionManagerInterface>,
             std::shared_ptr<certifiedSender::CertifiedSender>,
-            std::shared_ptr<registrationManager::CustomerDataManager>>();
+            std::shared_ptr<registrationManager::CustomerDataManager>,
+            std::shared_ptr<settings::DeviceSettingsManager>,
+            std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>();
 
     alexaClientSDK::avsCommon::utils::AudioFormat compatibleAudioFormat;
     compatibleAudioFormat.sampleRateHz = SAMPLE_RATE_HZ;
@@ -1203,11 +1201,9 @@ bool PreviewAlexaClient::initialize(
      */
     std::shared_ptr<defaultClient::DefaultClient> client = alexaClientSDK::defaultClient::DefaultClient::create(
         subsetManufactory,
-        m_alertsMediaPlayer,
         m_bluetoothMediaPlayer,
         m_ringtoneMediaPlayer,
         m_systemSoundMediaPlayer,
-        alertsMediaInterfaces->speaker,
         bluetoothMediaInterfaces->speaker,
         ringtoneMediaInterfaces->speaker,
         systemSoundMediaInterfaces->speaker,
@@ -1226,23 +1222,18 @@ bool PreviewAlexaClient::initialize(
         commsSpeaker,
         sharedDataStream,
 #endif
-        audioFactory,
-        std::move(alertStorage),
         std::move(notificationsStorage),
-        std::move(deviceSettingsStorage),
         std::move(bluetoothStorage),
         {userInterfaceManager},
         {userInterfaceManager},
         displayCardsSupported,
         enabledConnectionRules,
-        /* systemTimezone*/ nullptr,
         firmwareVersion,
         true,
         nullptr,
         std::move(bluetoothDeviceManager),
         diagnostics,
         std::make_shared<alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder>(deviceInfo),
-        true,
         tapToTalkAudioProvider);
     if (!client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));

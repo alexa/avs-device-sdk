@@ -22,15 +22,30 @@
 #include <type_traits>
 #include <utility>
 
+#include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 
+#include "Settings/SettingEventMetadata.h"
 #include "Settings/SettingInterface.h"
 #include "Settings/SettingStringConversion.h"
 
 namespace alexaClientSDK {
 namespace settings {
+
+/**
+ * Structure to save a specific setting and its configuration.
+ *
+ * @tparam SettingsT The type of the setting.
+ */
+template <typename SettingsT>
+struct SettingConfiguration {
+    /// The setting configured.
+    std::shared_ptr<SettingsT> setting;
+    /// The setting metadata.
+    avsCommon::utils::Optional<settings::SettingEventMetadata> metadata;
+};
 
 /**
  * The @c SettingsManager is responsible for managing settings.
@@ -54,12 +69,26 @@ public:
     template <typename SettingT>
     using SettingPointerType = std::shared_ptr<SettingT>;
 
+    /// The tuple holding the settings configuration.
+    using SettingConfigurations = std::tuple<SettingConfiguration<SettingsT>...>;
+
     /// The number of settings supported by this manager.
     static constexpr size_t NUMBER_OF_SETTINGS{sizeof...(SettingsT)};
 
     /**
      * Settings manager constructor.
      *
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param settingConfigurations The tuple holding the settings configuration.
+     */
+    SettingsManager(
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        SettingConfigurations settingConfigurations);
+
+    /**
+     * Settings manager constructor.
+     *
+     * @deprecated
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
      */
     SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
@@ -147,6 +176,23 @@ public:
     template <size_t index>
     bool hasSetting();
 
+    /**
+     * Gets the settings configuration.
+     *
+     * @return the settings configuration.
+     */
+    SettingConfigurations getConfigurations() const;
+
+    /**
+     * Gets the setting for the given @c index.
+     *
+     * @tparam index The setting index.
+     * @return A pointer for the setting kept in @c index if the setting has been built; @c nullptr otherwise.
+     * @note This function should be used after @c build() has been called.
+     */
+    template <size_t index>
+    std::shared_ptr<SettingType<index>> getSetting() const;
+
     /// @name CustomerDataHandler Functions
     /// @{
     void clearData() override;
@@ -204,7 +250,18 @@ private:
 
     // A tuple with all the settings supported by this manager.
     std::tuple<SettingPointerType<SettingsT>...> m_settings;
+
+    /// A tuple with all setting configurations.
+    SettingConfigurations m_settingConfigs;
 };
+
+template <typename... SettingsT>
+SettingsManager<SettingsT...>::SettingsManager(
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    SettingConfigurations settingConfiguration) :
+        CustomerDataHandler{dataManager},
+        m_settingConfigs{settingConfiguration} {
+}
 
 template <typename... SettingsT>
 SettingsManager<SettingsT...>::SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
@@ -328,6 +385,18 @@ template <typename... SettingsT>
 void SettingsManager<SettingsT...>::clearData() {
     std::lock_guard<std::mutex> lock{m_mutex};
     doClearData<0>();
+}
+
+template <typename... SettingsT>
+std::tuple<SettingConfiguration<SettingsT>...> SettingsManager<SettingsT...>::getConfigurations() const {
+    return m_settingConfigs;
+}
+
+template <typename... SettingsT>
+template <size_t index>
+std::shared_ptr<typename SettingsManager<SettingsT...>::template SettingType<index>> SettingsManager<
+    SettingsT...>::getSetting() const {
+    return std::get<index>(m_settingConfigs).setting;
 }
 
 }  // namespace settings

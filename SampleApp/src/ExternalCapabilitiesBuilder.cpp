@@ -234,7 +234,7 @@ ExternalCapabilitiesBuilder::buildCapabilities(
 
     Capability mrmCapability;
     auto mrmConfigurations = mrmCapabilityAgent->getCapabilityConfigurations();
-    mrmCapability.directiveHandler = std::move(mrmCapabilityAgent);
+    mrmCapability.directiveHandler = mrmCapabilityAgent;
     for (auto& configurationPtr : mrmConfigurations) {
         mrmCapability.configuration = *configurationPtr;
         capabilities.push_back(mrmCapability);

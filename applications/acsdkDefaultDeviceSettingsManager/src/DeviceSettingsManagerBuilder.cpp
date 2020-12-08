@@ -23,10 +23,10 @@
 #include <System/TimeZoneHandler.h>
 #include <System/LocaleHandler.h>
 
-#include "DefaultClient/DeviceSettingsManagerBuilder.h"
+#include "acsdkDeviceSettingsManager/DeviceSettingsManagerBuilder.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SettingsManagerBuilder");
+static const std::string TAG("DeviceSettingsManagerBuilder");
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -36,7 +36,7 @@ static const std::string TAG("SettingsManagerBuilder");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
-namespace defaultClient {
+namespace acsdkDeviceSettingsManager {
 
 using namespace settings;
 
@@ -62,6 +62,45 @@ static inline bool checkPointer(const std::shared_ptr<PointerT>& pointer, const 
         return false;
     }
     return true;
+}
+
+std::shared_ptr<settings::DeviceSettingsManager> DeviceSettingsManagerBuilder::createDeviceSettingsManager(
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+    std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent> doNotDisturbCapabilityAgent,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone) {
+    if (!settingStorage || !messageSender || !connectionManager || !dataManager || !localeAssetsManager ||
+        !doNotDisturbCapabilityAgent) {
+        ACSDK_ERROR(LX("createDeviceSettingsManagerBuilderFailed")
+                        .d("isSettingStorageNull", !settingStorage)
+                        .d("isMessageSenderNull", !messageSender)
+                        .d("isConnectionManagerNull", !connectionManager)
+                        .d("isDataManagerNull", !dataManager)
+                        .d("isLocaleAssetsManagerNull", !localeAssetsManager)
+                        .d("isDoNotDisturbCapabilityAgentNull", !doNotDisturbCapabilityAgent));
+        return nullptr;
+    }
+
+    DeviceSettingsManagerBuilder settingsManagerBuilder{settingStorage, messageSender, connectionManager, dataManager};
+    settingsManagerBuilder.withDoNotDisturbSetting(doNotDisturbCapabilityAgent)
+        .withAlarmVolumeRampSetting()
+        .withWakeWordConfirmationSetting()
+        .withSpeechConfirmationSetting()
+        .withTimeZoneSetting(systemTimezone)
+        .withNetworkInfoSetting();
+
+    if (localeAssetsManager->getDefaultSupportedWakeWords().empty()) {
+        settingsManagerBuilder.withLocaleSetting(localeAssetsManager);
+    } else {
+        settingsManagerBuilder.withLocaleAndWakeWordsSettings(localeAssetsManager);
+    }
+
+    auto deviceSettingsManager = settingsManagerBuilder.build();
+
+    return std::move(deviceSettingsManager);
 }
 
 DeviceSettingsManagerBuilder::DeviceSettingsManagerBuilder(
@@ -97,7 +136,7 @@ std::unique_ptr<DeviceSettingsManager> DeviceSettingsManagerBuilder::build() {
         return nullptr;
     }
 
-    std::unique_ptr<DeviceSettingsManager> manager{new DeviceSettingsManager(m_dataManager)};
+    std::unique_ptr<DeviceSettingsManager> manager{new DeviceSettingsManager(m_dataManager, m_settingConfigs)};
     if (!addSetting<NUMBER_OF_SETTINGS - 1>(*this, *manager)) {
         ACSDK_ERROR(LX("buildFailed").d("reason", "addSettingFailed"));
         return nullptr;
@@ -222,5 +261,5 @@ DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withSynchronizedSett
     return *this;
 }
 
-}  // namespace defaultClient
+}  // namespace acsdkDeviceSettingsManager
 }  // namespace alexaClientSDK

@@ -21,6 +21,7 @@
 #include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 namespace alexaClientSDK {
 namespace synchronizeStateSender {
@@ -34,6 +35,7 @@ public:
      * Creates a new instance of the @c PostConnectOperationProviderInterface.
      *
      * @param contextManager The @c ContextManager used to construct the synchronize state sender.
+     * @param metricRecorder The object used for metric recording.
      * @return a new instance of the @c SynchronizeStateSenderFactory.
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationProviderInterface>
@@ -41,7 +43,8 @@ public:
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
             providerRegistrar,
-        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager);
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr);
 
     /**
      * Creates a new instance of the @c SynchronizeStateSenderFactory.
@@ -51,7 +54,8 @@ public:
      * @return a new instance of the @c SynchronizeStateSenderFactory.
      */
     static std::shared_ptr<SynchronizeStateSenderFactory> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// ContextRequesterInterface Methods.
     /// @{
@@ -63,11 +67,17 @@ private:
      * Constructor.
      *
      * @param contextManager The @c ContextManager used to construct the synchronize state sender.
+     * @param metricRecorder The object used for metric recording.
      */
-    SynchronizeStateSenderFactory(std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager);
+    SynchronizeStateSenderFactory(
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /// The @c ContextManager used in the construction of the @c PostConnectSynchronizeStateSender.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// @param metricRecorder The object used for metric recording.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 };
 
 }  // namespace synchronizeStateSender

@@ -34,14 +34,26 @@ static const std::string TAG("LibcurlHTTP2ConnectionFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface> LibcurlHTTP2ConnectionFactory::
-    createHTTP2ConnectionFactoryInterface() {
-    return std::make_shared<LibcurlHTTP2ConnectionFactory>();
+    createHTTP2ConnectionFactoryInterface(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& curlSetOptionsCallbackFactory) {
+    return std::make_shared<LibcurlHTTP2ConnectionFactory>(curlSetOptionsCallbackFactory);
+}
+
+LibcurlHTTP2ConnectionFactory::LibcurlHTTP2ConnectionFactory(
+    const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& curlSetOptionsCallbackFactory) :
+        m_setCurlOptionsCallbackFactory{curlSetOptionsCallbackFactory} {
 }
 
 std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> LibcurlHTTP2ConnectionFactory::
     createHTTP2Connection() {
     ACSDK_DEBUG5(LX(__func__));
-    auto result = LibcurlHTTP2Connection::create();
+
+    std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface> setCurlOptionsCallback;
+    if (m_setCurlOptionsCallbackFactory) {
+        setCurlOptionsCallback = m_setCurlOptionsCallbackFactory->createSetCurlOptionsCallback();
+    }
+
+    auto result = LibcurlHTTP2Connection::create(setCurlOptionsCallback);
     return result;
 }
 

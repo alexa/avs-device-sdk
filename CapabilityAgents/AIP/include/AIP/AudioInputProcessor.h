@@ -779,6 +779,11 @@ private:
      * passed to the directive sequencer.
      */
     std::string m_preCachedDialogRequestId;
+
+    /**
+     * Value that will contain the time since last wake from suspend when AIP acquires the wakelock.
+     */
+    std::chrono::milliseconds m_timeSinceLastResumeMS;
 };
 
 }  // namespace aip

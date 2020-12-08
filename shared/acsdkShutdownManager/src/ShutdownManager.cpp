@@ -36,7 +36,7 @@ static const std::string TAG("ShutdownManager");
 std::shared_ptr<ShutdownManagerInterface> ShutdownManager::createShutdownManagerInterface(
     const std::shared_ptr<ShutdownNotifierInterface>& notifier) {
     if (!notifier) {
-        ACSDK_ERROR(LX("createShutdownManagerFailed").d("reaso", "nullNotifier"));
+        ACSDK_ERROR(LX("createShutdownManagerFailed").d("reason", "nullNotifier"));
         return nullptr;
     }
 

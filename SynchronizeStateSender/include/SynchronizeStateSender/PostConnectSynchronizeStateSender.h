@@ -24,6 +24,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextRequesterInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 
 namespace alexaClientSDK {
@@ -41,10 +42,12 @@ public:
      * Creates a new instance of the @c PostConnectSynchronizeStateSender.
      *
      * @param contextManager The @c ContextManager to request the context from.
+     * @param metricRecorder The object used for metric recording.
      * @return a new instance of the @c PostConnectSynchronizeStateSender.
      */
     static std::shared_ptr<PostConnectSynchronizeStateSender> create(
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// ContextRequesterInterface Methods.
     /// @{
@@ -63,9 +66,11 @@ private:
     /**
      * Constructor.
      * @param contextManager
+     * @param metricRecorder
      */
     PostConnectSynchronizeStateSender(
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * A method to fetch the context and store it in @c m_contextString.
@@ -82,6 +87,9 @@ private:
 
     /// The @c ContextManagerInterface to request the context from.
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> m_contextManager;
+
+    /// The @c MetricRecorderInterface to record metrics with.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Flag to indicate the PostConnectOperation is stopping.
     bool m_isStopping;

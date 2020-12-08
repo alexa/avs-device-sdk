@@ -22,6 +22,7 @@
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <CapabilitiesDelegate/Storage/SQLiteCapabilitiesDelegateStorage.h>
+#include <SQLiteStorage/SQLiteDatabase.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
@@ -30,6 +31,7 @@ namespace test {
 
 using namespace avsCommon::utils::configuration;
 using namespace ::testing;
+using namespace alexaClientSDK::storage::sqliteStorage;
 
 /// Test database file name.
 static const std::string TEST_DATABASE_FILE_NAME = "SQLiteCapabilitiesDelegateStorageTest.db";
@@ -43,6 +45,9 @@ static const std::string CAPABILITIES_DELEGATE_JSON = R"(
 }
 )";
 // clang-format on
+
+/// The name of the capabilitiesDelegate table.
+static const std::string ENDPOINT_CONFIG_TABLE_NAME = "endpointConfigTable";
 
 /// Test endpoint ID.
 static const std::string TEST_ENDPOINT_ID_1 = "EndpointID1";
@@ -79,6 +84,9 @@ public:
     void TearDown() override;
 
 protected:
+    /// Utility method to create and validate a fresh database.
+    void setupDatabase();
+
     /// Cleanup function to close.
     void closeAndDeleteDB();
 
@@ -96,6 +104,13 @@ void SQLiteCapabilitiesDelegateStorageTest::closeAndDeleteDB() {
     }
 }
 
+void SQLiteCapabilitiesDelegateStorageTest::setupDatabase() {
+    m_db = SQLiteCapabilitiesDelegateStorage::create(ConfigurationNode::getRoot());
+
+    ASSERT_THAT(m_db, NotNull());
+    ASSERT_TRUE(m_db->createDatabase());
+}
+
 void SQLiteCapabilitiesDelegateStorageTest::SetUp() {
     /// Initialize Global ConfigurationNode with valid value.
     auto json = std::shared_ptr<std::stringstream>(new std::stringstream());
@@ -103,11 +118,6 @@ void SQLiteCapabilitiesDelegateStorageTest::SetUp() {
     std::vector<std::shared_ptr<std::istream>> jsonStream;
     jsonStream.push_back(json);
     ASSERT_TRUE(ConfigurationNode::initialize(jsonStream));
-
-    m_db = SQLiteCapabilitiesDelegateStorage::create(ConfigurationNode::getRoot());
-
-    ASSERT_THAT(m_db, NotNull());
-    ASSERT_TRUE(m_db->createDatabase());
 }
 
 void SQLiteCapabilitiesDelegateStorageTest::TearDown() {
@@ -137,6 +147,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_createValidConfigurationRoot)
  * Tests if create existing database fails.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_createExistingDatabaseFails) {
+    setupDatabase();
     ASSERT_FALSE(m_db->createDatabase());
 }
 
@@ -144,14 +155,37 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_createExistingDatabaseFails) 
  * Tests if the open existing database succeeds.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_openExistingDatabaseSucceeds) {
+    setupDatabase();
     m_db->close();
     ASSERT_TRUE(m_db->open());
+}
+
+/**
+ * Tests if open succeeds when there is an empty database with no Endpoint Config Table.
+ */
+TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_databaseWithNoEndpointConfigTable) {
+    /// Create empty database with no tables.
+    auto sqliteDB = std::unique_ptr<alexaClientSDK::storage::sqliteStorage::SQLiteDatabase>(
+        new alexaClientSDK::storage::sqliteStorage::SQLiteDatabase(TEST_DATABASE_FILE_NAME));
+    ASSERT_THAT(sqliteDB, NotNull());
+    ASSERT_TRUE(sqliteDB->initialize());
+
+    /// Open the same database as the SQLiteCapabilitiesDelegateStorage
+    m_db = SQLiteCapabilitiesDelegateStorage::create(ConfigurationNode::getRoot());
+
+    ASSERT_FALSE(sqliteDB->tableExists(ENDPOINT_CONFIG_TABLE_NAME));
+    ASSERT_THAT(m_db, NotNull());
+    ASSERT_TRUE(m_db->open());
+    ASSERT_TRUE(sqliteDB->tableExists(ENDPOINT_CONFIG_TABLE_NAME));
+
+    sqliteDB->close();
 }
 
 /**
  * Tests if the store method works with a single endpoint.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForEndpointWorks) {
+    setupDatabase();
     ASSERT_TRUE(m_db->store(TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1));
     std::string testString;
     ASSERT_TRUE(m_db->load(TEST_ENDPOINT_ID_1, &testString));
@@ -163,6 +197,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForEndpointWorks) {
  * Tests if the store method works with an endpoint map.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForEndpointMapWorks) {
+    setupDatabase();
     std::unordered_map<std::string, std::string> storeMap;
     storeMap.insert({TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1});
     storeMap.insert({TEST_ENDPOINT_ID_2, TEST_ENDPOINT_CONFIG_2});
@@ -186,6 +221,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForEndpointMapWorks) {
  * Test if storing an existing entry in to the database replaces the previous value.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForExistingEntry) {
+    setupDatabase();
     std::string storedValue;
     std::unordered_map<std::string, std::string> storeMap;
     storeMap.insert({TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1});
@@ -204,6 +240,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_storeForExistingEntry) {
  * Test if the load method with endpointId input works.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_loadForEndpointWorks) {
+    setupDatabase();
     std::unordered_map<std::string, std::string> storeMap;
     storeMap.insert({TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1});
     storeMap.insert({TEST_ENDPOINT_ID_2, TEST_ENDPOINT_CONFIG_2});
@@ -221,6 +258,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_loadForEndpointWorks) {
  * Test if the load method with endpointId input works.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_loadForNonExistingEndpoint) {
+    setupDatabase();
     std::unordered_map<std::string, std::string> storeMap;
     storeMap.insert({TEST_ENDPOINT_ID_2, TEST_ENDPOINT_CONFIG_2});
     ASSERT_TRUE(m_db->store(storeMap));
@@ -233,6 +271,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_loadForNonExistingEndpoint) {
  * Test if the erase method works for a given endpointId.
  */
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_eraseWorks) {
+    setupDatabase();
     std::unordered_map<std::string, std::string> storeMap;
     storeMap.insert({TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1});
     storeMap.insert({TEST_ENDPOINT_ID_2, TEST_ENDPOINT_CONFIG_2});
@@ -253,6 +292,7 @@ TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_eraseWorks) {
 }
 
 TEST_F(SQLiteCapabilitiesDelegateStorageTest, test_clearDatabaseWorks) {
+    setupDatabase();
     /// Store one item in the database.
     std::unordered_map<std::string, std::string> testMap;
     ASSERT_TRUE(m_db->store(TEST_ENDPOINT_ID_1, TEST_ENDPOINT_CONFIG_1));

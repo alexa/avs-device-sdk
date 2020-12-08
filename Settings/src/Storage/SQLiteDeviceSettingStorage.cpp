@@ -70,6 +70,22 @@ static const int STATUS_INDEX = 2;
          DEVICE_SETTINGS_STATUS_COLUMN_NAME + " TEXT NOT NULL);";
 // clang-format on
 
+std::shared_ptr<DeviceSettingStorageInterface> SQLiteDeviceSettingStorage::createDeviceSettingStorageInterface(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    auto storage = create((*configurationRoot));
+    if (!storage) {
+        ACSDK_ERROR(LX("createDeviceSettingStorageInterfaceFailed").d("reason", "null storage"));
+        return nullptr;
+    }
+
+    if (!storage->open()) {
+        ACSDK_ERROR(LX("createDeviceSettingStorageInterfaceFailed").d("reason", "deviceSettingStorageOpenFailed"));
+        return nullptr;
+    }
+
+    return std::move(storage);
+}
+
 std::unique_ptr<SQLiteDeviceSettingStorage> SQLiteDeviceSettingStorage::create(
     const ConfigurationNode& configurationRoot) {
     ACSDK_DEBUG5(LX(__func__));

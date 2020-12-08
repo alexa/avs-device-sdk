@@ -136,6 +136,17 @@ public:
     bool getInt(const std::string& key, int* out = nullptr, int defaultValue = 0) const;
 
     /**
+     * Get @c uint32_t value for @c key from this @c ConfigurationNode.
+     *
+     * @param key The key of the @c uint32_t value to get.
+     * @param[out] out Pointer to receive the returned value.
+     * @param defaultValue Default value to use if this @c ConfigurationNode does not have an @c uint32_t value for @c
+     * key. Zero if not specified.
+     * @return Whether this @c ConfigurationNode has an @c uint32_t value for @c key.
+     */
+    bool getUint32(const std::string& key, uint32_t* out = nullptr, uint32_t defaultValue = 0) const;
+
+    /**
      * Get the @c string value for @c key from this @c ConfigurationNode.
      *
      * @param key The key of the @c string value to get.

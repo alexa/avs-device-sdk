@@ -18,6 +18,7 @@
 
 #include <chrono>
 #include <cstddef>
+#include <ostream>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -76,6 +77,37 @@ public:
      */
     virtual void close() = 0;
 };
+
+/**
+ * Write an @c Attachment::WriteStatus value to the given stream.
+ *
+ * @param stream The stream to write the value to.
+ * @param status The value to write to the stream as a string.
+ * @return The stream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AttachmentWriter::WriteStatus& status) {
+    switch (status) {
+        case AttachmentWriter::WriteStatus::OK:
+            stream << "OK";
+            break;
+        case AttachmentWriter::WriteStatus::CLOSED:
+            stream << "CLOSED";
+            break;
+        case AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
+            stream << "OK_BUFFER_FULL";
+            break;
+        case AttachmentWriter::WriteStatus::ERROR_BYTES_LESS_THAN_WORD_SIZE:
+            stream << "ERROR_BYTES_LESS_THAN_WORD_SIZE";
+            break;
+        case AttachmentWriter::WriteStatus::ERROR_INTERNAL:
+            stream << "ERROR_INTERNAL";
+            break;
+        case AttachmentWriter::WriteStatus::TIMEDOUT:
+            stream << "TIMEDOUT";
+            break;
+    }
+    return stream;
+}
 
 }  // namespace attachment
 }  // namespace avs

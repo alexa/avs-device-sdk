@@ -31,6 +31,10 @@ namespace avsCommon {
 namespace utils {
 namespace timing {
 
+std::shared_ptr<SystemClockMonitor> SystemClockMonitor::createSystemClockMonitor() {
+    return std::make_shared<avsCommon::utils::timing::SystemClockMonitor>();
+}
+
 void SystemClockMonitor::notifySystemClockSynchronized() {
     notifyObservers();
 }

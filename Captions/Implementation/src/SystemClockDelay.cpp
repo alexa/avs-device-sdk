@@ -22,8 +22,8 @@ namespace alexaClientSDK {
 namespace captions {
 
 void SystemClockDelay::delay(std::chrono::milliseconds milliseconds) {
-    auto duration =
-        std::chrono::milliseconds(std::max(std::chrono::milliseconds::zero().count(), milliseconds.count()));
+    auto duration = std::chrono::milliseconds(std::max(
+        static_cast<int64_t>(std::chrono::milliseconds::zero().count()), static_cast<int64_t>(milliseconds.count())));
     std::this_thread::sleep_for(duration);
 }
 

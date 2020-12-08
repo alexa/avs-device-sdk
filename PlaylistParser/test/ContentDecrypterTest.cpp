@@ -73,6 +73,9 @@ protected:
 
     /// Instance of the @c IterativePlaylistParser.
     std::shared_ptr<ContentDecrypter> m_decrypter;
+
+    /// Instance of the @c ID3TagsRemover.
+    std::shared_ptr<Id3TagsRemover> m_id3TagsRemover;
 };
 
 void ContentDecrypterTest::SetUp() {
@@ -81,6 +84,7 @@ void ContentDecrypterTest::SetUp() {
     m_reader = m_attachment->createReader(ReaderPolicy::NONBLOCKING);
 
     m_decrypter = std::make_shared<ContentDecrypter>();
+    m_id3TagsRemover = std::make_shared<Id3TagsRemover>();
 }
 
 void ContentDecrypterTest::TearDown() {
@@ -88,7 +92,11 @@ void ContentDecrypterTest::TearDown() {
     m_writer.reset();
     m_reader.reset();
 
+    m_decrypter->shutdown();
     m_decrypter.reset();
+
+    m_id3TagsRemover->shutdown();
+    m_id3TagsRemover.reset();
 }
 
 std::string ContentDecrypterTest::readDecryptedContent(size_t readSize) {
@@ -103,7 +111,7 @@ std::string ContentDecrypterTest::readDecryptedContent(size_t readSize) {
 TEST_F(ContentDecrypterTest, test_unsupportedEncryption) {
     auto noEncryption = EncryptionInfo();
 
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, noEncryption, m_writer);
+    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, noEncryption, m_writer, m_id3TagsRemover);
 
     EXPECT_FALSE(result);
 }
@@ -112,7 +120,8 @@ TEST_F(ContentDecrypterTest, test_invalidKeyEncryption) {
     /// Test key: aaaaaaaaaaaaaaa. Length is invalid.
     static const ByteVector INVALID_KEY(15, 0x61);
 
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, INVALID_KEY, AES_ENCRYPTION_INFO, m_writer);
+    auto result = m_decrypter->decryptAndWrite(
+        AES_ENCRYPTED_CONTENT, INVALID_KEY, AES_ENCRYPTION_INFO, m_writer, m_id3TagsRemover);
 
     EXPECT_FALSE(result);
 }
@@ -125,13 +134,15 @@ TEST_F(ContentDecrypterTest, test_invalidIVEncryption) {
     static const auto INVALID_AES_ENCRYPTION_INFO =
         EncryptionInfo(EncryptionInfo::Method::AES_128, "https://wwww.amazon.com/key.txt", INVALID_HEX_IV);
 
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, INVALID_AES_ENCRYPTION_INFO, m_writer);
+    auto result = m_decrypter->decryptAndWrite(
+        AES_ENCRYPTED_CONTENT, KEY, INVALID_AES_ENCRYPTION_INFO, m_writer, m_id3TagsRemover);
 
     EXPECT_FALSE(result);
 }
 
 TEST_F(ContentDecrypterTest, test_aESDecryption) {
-    auto result = m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO, m_writer);
+    auto result =
+        m_decrypter->decryptAndWrite(AES_ENCRYPTED_CONTENT, KEY, AES_ENCRYPTION_INFO, m_writer, m_id3TagsRemover);
 
     auto decryptedString = readDecryptedContent(DECRYPTED_STRING.size());
     EXPECT_TRUE(result);

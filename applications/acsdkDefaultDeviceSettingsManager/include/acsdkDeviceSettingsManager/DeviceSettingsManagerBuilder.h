@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEVICESETTINGSMANAGERBUILDER_H_
-#define ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEVICESETTINGSMANAGERBUILDER_H_
+#ifndef ACSDKDEVICESETTINGSMANAGER_DEVICESETTINGSMANAGERBUILDER_H_
+#define ACSDKDEVICESETTINGSMANAGER_DEVICESETTINGSMANAGERBUILDER_H_
 
 #include <cstdint>
 #include <functional>
@@ -38,13 +38,36 @@
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 
 namespace alexaClientSDK {
-namespace defaultClient {
+namespace acsdkDeviceSettingsManager {
 
 /**
  * The builder for @c DeviceSettingsManager.
  */
 class DeviceSettingsManagerBuilder : public settings::SettingsManagerBuilderBase<settings::DeviceSettingsManager> {
 public:
+    /**
+     * Factory method that creates a DeviceSettingsManager.
+     *
+     * @param settingStorage The storage used for settings.
+     * @param messageSender Sender used to send events related to this setting changes.
+     * @param connectionManager The ACL connection manager.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param localeAssetsManager The object that manages locale assets.
+     * @param doNotDisturbCapabilityAgent The DoNotDisturb CA. This parameter is needed because currently the
+     * DoNotDisturbSetting is managed differently than other settings in the SDK (ACSDK-2279). This is a legacy
+     * anti-pattern, and other CAs should be injected with the DeviceSettingsManager (as opposed to the
+     * DeviceSettingsManager being injected with the DND CA, as seen here).
+     * @param systemTimezone Optional parameter responsible for validating / applying timezone changes system wide.
+     */
+    static std::shared_ptr<settings::DeviceSettingsManager> createDeviceSettingsManager(
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
+        std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
+        std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent> doNotDisturbCapabilityAgent,
+        std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone = nullptr);
+
     /**
      * Constructor.
      *
@@ -197,7 +220,7 @@ std::shared_ptr<DeviceSettingsManagerBuilder::SettingType<index>> DeviceSettings
     return std::get<index>(m_settingConfigs).setting;
 }
 
-}  // namespace defaultClient
+}  // namespace acsdkDeviceSettingsManager
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_APPLICATIONUTILITIES_DEFAULTCLIENT_INCLUDE_DEFAULTCLIENT_DEVICESETTINGSMANAGERBUILDER_H_
+#endif  // ACSDKDEVICESETTINGSMANAGER_DEVICESETTINGSMANAGERBUILDER_H_

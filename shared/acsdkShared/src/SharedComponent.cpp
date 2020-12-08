@@ -46,7 +46,8 @@ SharedComponent getComponent() {
         .addRetainedFactory(ShutdownManager::createShutdownManagerInterface)
         .addRetainedFactory(ConstructorAdapter<ShutdownNotifierInterface, ShutdownNotifier>::get())
         .addRetainedFactory(StartupManager::createStartupManagerInterface)
-        .addRetainedFactory(ConstructorAdapter<StartupNotifierInterface, StartupNotifier>::get());
+        .addRetainedFactory(ConstructorAdapter<StartupNotifierInterface, StartupNotifier>::get())
+        .addRetainedFactory(SystemClockMonitor::createSystemClockMonitor);
 }
 
 }  // namespace acsdkShared

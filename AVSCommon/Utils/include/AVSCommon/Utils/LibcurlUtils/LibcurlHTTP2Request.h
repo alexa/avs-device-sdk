@@ -24,6 +24,7 @@
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestInterface.h>
 
 #include "CurlEasyHandleWrapper.h"
+#include "LibcurlSetCurlOptionsCallbackInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -34,10 +35,16 @@ class LibcurlHTTP2Request : public alexaClientSDK::avsCommon::utils::http2::HTTP
 public:
     /**
      * Constructor.
-     * @param config
+     *
+     * @param config The @c HTTP2RequestConfig used for this request.
+     * @param setCurlOptionsCallback The @c LibcurlSetCurlOptionsCallbackInterface to set curl options when creating
+     * http2 conenction.
      * @param id Name used to identify this request.
      */
-    LibcurlHTTP2Request(const alexaClientSDK::avsCommon::utils::http2::HTTP2RequestConfig& config, std::string id = "");
+    LibcurlHTTP2Request(
+        const alexaClientSDK::avsCommon::utils::http2::HTTP2RequestConfig& config,
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback,
+        std::string id = "");
 
     /// @name HTTP2RequestInterface methods.
     /// @{

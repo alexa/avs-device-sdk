@@ -68,6 +68,11 @@ private:
     SQLiteBluetoothStorage(const std::string& filepath);
 
     /**
+     * Closes the SQLiteDatabase instance. This must be called with @c m_mutex obtained.
+     */
+    void closeLocked();
+
+    /**
      * Utility that extracts a row from the database using a given statement. The lock must be obtained
      * before calling this function to ensure a consistent result. A step will be executed on the passed
      * in statement, so this function is not idempotent.

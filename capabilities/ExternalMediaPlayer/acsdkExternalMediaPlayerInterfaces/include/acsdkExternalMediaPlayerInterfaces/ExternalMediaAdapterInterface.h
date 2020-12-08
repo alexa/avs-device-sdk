@@ -351,6 +351,13 @@ struct AdapterPlaybackState {
     /// Service Provider services for additional info.
     std::string playbackSourceId;
 
+    /// An unique identifiier for the current playback of the track.
+    /// If same track exists twice in a context, each instance will have a unique playbackId. It is
+    /// valid for only one playback of a track and once the track is played or skipped-over, the
+    /// playback-id is no longer valid. e.g if you skip a track and then come back to it using
+    /// skip-prev, the playback-id changes. It is for debugging purposes and it is optional.
+    std::string playbackId;
+
     /// The display name for the currently playing trackname of the track.
     std::string trackName;
 

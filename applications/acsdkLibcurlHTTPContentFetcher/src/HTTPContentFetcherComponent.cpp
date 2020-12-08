@@ -23,11 +23,30 @@ namespace alexaClientSDK {
 namespace acsdkHTTPContentFetcher {
 
 using namespace acsdkManufactory;
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::libcurlUtils;
 
+/**
+ * This function adapts an Annotated<HTTPContentFetcherInterfaceFactoryInterface,
+ * LibcurlSetCurlOptionsCallbackFactoryInterface> to a shared_ptr<AVSConnectionManagerInterface>
+ * and returns a HTTPContentFetcherInterfaceFactoryInterface.
+ *
+ * TODO: ACSDK-4957
+ * @note This is only necessary because HTTPContentFetcherFactory is in AVSCommon and is prohibited
+ * from using acsdkManufactory::Annotated<> because acsdkManufactory depends upon AVSCommon.  This will
+ * be fixed when acsdkManufactory's depenency upon AVSCommon is removed.
+ *
+ * @param callbackFactory The Annotated<> curl options callback factory.
+ * @return A HTTPContentFetcherInterfaceFactoryInterface.
+ */
+static std::shared_ptr<HTTPContentFetcherInterfaceFactoryInterface> createHTTPContentFetcherFactory(
+    const Annotated<HTTPContentFetcherInterfaceFactoryInterface, LibcurlSetCurlOptionsCallbackFactoryInterface>&
+        callbackFactory) {
+    return HTTPContentFetcherFactory::createHTTPContentFetcherInterfaceFactoryInterface(callbackFactory);
+}
+
 HTTPContentFetcherComponent getComponent() {
-    return ComponentAccumulator<>().addRetainedFactory(
-        HTTPContentFetcherFactory::createHTTPContentFetcherInterfaceFactoryInterface);
+    return ComponentAccumulator<>().addRetainedFactory(createHTTPContentFetcherFactory);
 }
 
 }  // namespace acsdkHTTPContentFetcher

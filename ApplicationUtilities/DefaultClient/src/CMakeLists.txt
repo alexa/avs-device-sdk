@@ -5,10 +5,10 @@ add_library(DefaultClient SHARED
     ConnectionRetryTrigger.cpp
     DefaultClient.cpp
     DefaultClientComponent.cpp
-    DeviceSettingsManagerBuilder.cpp
     EqualizerRuntimeSetup.cpp
     StubApplicationAudioPipelineFactory.cpp
     )
+
 target_include_directories(DefaultClient PUBLIC
     "${DefaultClient_SOURCE_DIR}/include"
     "${DeviceSettings_SOURCE_DIR}/include"
@@ -20,6 +20,7 @@ if(BLUETOOTH_BLUEZ)
 endif()
 
 target_link_libraries(DefaultClient
+    ${ACSDKDEVICESETTINGSMANAGER_LIB}
     ACL
     acsdkApplicationAudioPipelineFactoryInterfaces
     acsdkCore
@@ -51,6 +52,7 @@ target_link_libraries(DefaultClient
     SystemSoundPlayer
     TemplateRuntime
     acsdkAlerts
+    acsdkAlertsInterfaces
     acsdkAudioPlayer
     acsdkBluetooth
     acsdkEqualizer

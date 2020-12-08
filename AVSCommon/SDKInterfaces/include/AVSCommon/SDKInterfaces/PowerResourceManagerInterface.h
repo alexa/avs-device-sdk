@@ -92,6 +92,12 @@ public:
     virtual bool isPowerResourceAcquired(const std::string& component) = 0;
 
     /**
+     * Acquires the time since latest system resume.
+     * @return time since last system resume, if implemented by power manager, zero otherwise.
+     */
+    virtual std::chrono::milliseconds getTimeSinceLastResumeMS();
+
+    /**
      * New APIs to support refcount and acquire with timeout.
      * Use the below new APIs - create(), acquire(), release() and close()
      * if you need refcounting or autorelease timeout support for your component.
@@ -154,6 +160,15 @@ public:
      */
     virtual bool close(const std::shared_ptr<PowerResourceId>& id) = 0;
 };
+
+/**
+ * Provides the default @c PowerResourceManagerInterface time since last resume in MS.
+ *
+ * @return Return default value of 0 milliseconds in the form of std::chrono::milliseconds.
+ */
+inline std::chrono::milliseconds PowerResourceManagerInterface::getTimeSinceLastResumeMS() {
+    return std::chrono::milliseconds(0);
+}
 
 /**
  * Converts the @c PowerResourceLevel enum to a string.

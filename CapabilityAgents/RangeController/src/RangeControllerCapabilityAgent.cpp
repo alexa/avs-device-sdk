@@ -296,7 +296,6 @@ void RangeControllerCapabilityAgent::handleDirective(std::shared_ptr<DirectiveIn
             return;
         }
 
-        std::pair<AlexaResponseType, std::string> result;
         if (directiveName == NAME_SETRANGEVALUE) {
             executeSetRangeValueDirective(info, payload);
         } else if (directiveName == NAME_ADJUSTRANGEVALUE) {

@@ -590,6 +590,24 @@ TEST_F(SpeakerManagerTest, test_getConfiguration) {
 }
 
 /**
+ * Test that adding duplicated ChannelVolumeInterface instances in the SpeakerManager works correctly.
+ */
+TEST_F(SpeakerManagerTest, test_addDuplicatedChannelVolumeInterfaces) {
+    auto channelVolumeInterface = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
+    channelVolumeInterface->DelegateToReal();
+    std::vector<std::shared_ptr<ChannelVolumeInterface>> channelVolumeInterfaceVec = {channelVolumeInterface,
+                                                                                      channelVolumeInterface};
+    m_speakerManager = SpeakerManager::create(
+        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
+    EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).Times(Exactly(1));
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
+    SpeakerManagerInterface::NotificationProperties properties;
+    std::future<bool> future = m_speakerManager->adjustVolume(
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, AVS_ADJUST_VOLUME_MAX, properties);
+    ASSERT_TRUE(future.get());
+}
+
+/**
  * Test that adding a null observer does not cause any errors in the SpeakerManager.
  */
 TEST_F(SpeakerManagerTest, test_addNullObserver) {

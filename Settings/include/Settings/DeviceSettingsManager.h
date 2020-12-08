@@ -23,9 +23,9 @@
 #include "Settings/SettingInterface.h"
 #include "Settings/SettingsManager.h"
 #include "Settings/SpeechConfirmationSettingType.h"
+#include "Settings/WakeWordConfirmationSettingType.h"
 #include "Settings/Types/AlarmVolumeRampTypes.h"
 #include "Settings/Types/NetworkInfo.h"
-#include "Settings/WakeWordConfirmationSettingType.h"
 
 namespace alexaClientSDK {
 namespace settings {
@@ -92,6 +92,17 @@ using DeviceSettingsManager = SettingsManager<
     WakeWordsSetting,
     LocalesSetting,
     NetworkInfoSetting>;
+
+/// An alias to shorten the name.
+using DeviceSettingManagerSettingConfigurations = std::tuple<
+    SettingConfiguration<DoNotDisturbSetting>,
+    SettingConfiguration<AlarmVolumeRampSetting>,
+    SettingConfiguration<WakeWordConfirmationSetting>,
+    SettingConfiguration<SpeechConfirmationSetting>,
+    SettingConfiguration<TimeZoneSetting>,
+    SettingConfiguration<WakeWordsSetting>,
+    SettingConfiguration<LocalesSetting>,
+    SettingConfiguration<NetworkInfoSetting>>;
 
 }  // namespace settings
 }  // namespace alexaClientSDK

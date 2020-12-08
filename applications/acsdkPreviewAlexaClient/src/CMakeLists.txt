@@ -11,11 +11,15 @@ target_include_directories(LibPreviewAlexaClient PUBLIC
 target_link_libraries(LibPreviewAlexaClient
         ${ACSDKALEXACOMMUNICATIONS_LIB}
         ${ACSDKAUTHORIZATIONDELEGATE_LIB}
+        ${ACSDKDEVICESETTINGSMANAGER_LIB}
         ${ACSDKHTTPCONTENTFETCHER_LIB}
         ${ACSDKINTERNETCONNECTIONMONITOR_LIB}
         ${ACSDKMETRICRECORDER_LIB}
+        ${ACSDKSYSTEMTIMEZONE_LIB}
+        acsdkAlerts
         acsdkApplicationAudioPipelineFactoryInterfaces
         acsdkCore
+        acsdkLibcurlHTTPContentFetcher
         acsdkManufactory
         acsdkSampleApplicationInterfaces
         LibSampleApp)

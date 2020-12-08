@@ -64,6 +64,7 @@ namespace acsdkPreviewAlexaClient {
  * remain stable.
  */
 using PreviewAlexaClientComponent = acsdkManufactory::Component<
+    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
@@ -92,6 +93,8 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
@@ -99,11 +102,15 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
+    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
+    std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
     std::shared_ptr<certifiedSender::CertifiedSender>,
     std::shared_ptr<registrationManager::CustomerDataManager>,
-    std::shared_ptr<sampleApp::UIManager>>;
+    std::shared_ptr<sampleApp::UIManager>,
+    std::shared_ptr<settings::DeviceSettingsManager>,
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
 
 /**
  * Get the manufactory @c Component for PreviewAlexaClient.

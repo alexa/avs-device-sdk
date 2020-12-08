@@ -97,8 +97,9 @@ std::pair<AlexaResponseType, std::string> DefaultEndpointRangeControllerHandler:
     }
 
     if (m_currentRangeValue != value) {
+        auto valueStr = std::to_string(value);
         ConsolePrinter::prettyPrint(
-            {"ENDPOINT: Default Endpoint", "INSTANCE: " + m_instance, "RANGE SET TO: " + std::to_string(value)});
+            {"ENDPOINT: Default Endpoint", "INSTANCE: " + m_instance, "RANGE SET TO: " + valueStr});
         m_currentRangeValue = value;
         copyOfObservers = m_observers;
         notifyObserver = true;
@@ -121,7 +122,6 @@ std::pair<AlexaResponseType, std::string> DefaultEndpointRangeControllerHandler:
     double deltaValue,
     AlexaStateChangeCauseType cause) {
     std::list<std::shared_ptr<RangeControllerObserverInterface>> copyOfObservers;
-    bool notifyObserver = false;
 
     std::unique_lock<std::mutex> lock(m_mutex);
     auto newvalue = m_currentRangeValue + deltaValue;
@@ -131,21 +131,18 @@ std::pair<AlexaResponseType, std::string> DefaultEndpointRangeControllerHandler:
     }
 
     m_currentRangeValue += deltaValue;
-    ConsolePrinter::prettyPrint({"ENDPOINT: Default Endpoint",
-                                 "INSTANCE: " + m_instance,
-                                 "ADJUSTED RANGE TO : " + std::to_string(m_currentRangeValue)});
+    auto rangeValueStr = std::to_string(m_currentRangeValue);
+    ConsolePrinter::prettyPrint(
+        {"ENDPOINT: Default Endpoint", "INSTANCE: " + m_instance, "ADJUSTED RANGE TO : " + rangeValueStr});
     copyOfObservers = m_observers;
-    notifyObserver = true;
 
     lock.unlock();
 
-    if (notifyObserver) {
-        notifyObservers(
-            RangeControllerInterface::RangeState{
-                m_currentRangeValue, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
-            cause,
-            copyOfObservers);
-    }
+    notifyObservers(
+        RangeControllerInterface::RangeState{
+            m_currentRangeValue, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
+        cause,
+        copyOfObservers);
 
     return std::make_pair(AlexaResponseType::SUCCESS, "");
 }

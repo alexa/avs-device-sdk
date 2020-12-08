@@ -19,7 +19,9 @@
 #include <memory>
 
 #include <ACL/Transport/MessageRouterFactoryInterface.h>
+#include <acsdkAlerts/Storage/AlertStorageInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
@@ -39,6 +41,7 @@
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderRegistrarInterface.h>
+#include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
@@ -48,6 +51,7 @@
 #include <CertifiedSender/MessageStorageInterface.h>
 #include <InterruptModel/InterruptModel.h>
 #include <RegistrationManager/CustomerDataManager.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 
 #include "DefaultClient/EqualizerRuntimeSetup.h"
 #include "DefaultClient/StubApplicationAudioPipelineFactory.h"
@@ -62,6 +66,7 @@ namespace defaultClient {
  * non-manufactory method of initialization.
  */
 using DefaultClientComponent = acsdkManufactory::Component<
+    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
@@ -88,6 +93,8 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
@@ -95,10 +102,14 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
+    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
+    std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
     std::shared_ptr<certifiedSender::CertifiedSender>,
-    std::shared_ptr<registrationManager::CustomerDataManager>>;
+    std::shared_ptr<registrationManager::CustomerDataManager>,
+    std::shared_ptr<settings::DeviceSettingsManager>,
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
 
 /**
  * Get the manufactory @c Component for (legacy) @c DefaultClient initialization.
@@ -127,7 +138,12 @@ DefaultClientComponent getComponent(
         audioMediaResourceProvider,
     const std::shared_ptr<certifiedSender::MessageStorageInterface>& messageStorage,
     const std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>& powerResourceManager,
-    const acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap);
+    const acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
+    const std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>& systemTimeZone,
+    const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& deviceSettingStorage,
+    bool startAlertSchedulingOnInitialization,
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
+    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage);
 
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

@@ -360,7 +360,9 @@ protected:
 
         m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
 
-        m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(m_customerDataManager);
+        DeviceSettingManagerSettingConfigurations configurations;
+        m_deviceSettingsManager =
+            std::make_shared<settings::DeviceSettingsManager>(m_customerDataManager, configurations);
 
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,

@@ -128,7 +128,8 @@ CurlEasyHandleWrapper::CurlEasyHandleWrapper(std::string id) :
         m_requestHeaders{nullptr},
         m_postHeaders{nullptr},
         m_post{nullptr},
-        m_lastPost{nullptr} {
+        m_lastPost{nullptr},
+        m_curlOptionsSettingAdapter{this} {
     if (m_handle == nullptr) {
         ACSDK_ERROR(LX("CurlEasyHandleWrapperFailed").d("reason", "curl_easy_init failed"));
     } else {
@@ -392,6 +393,10 @@ CURLcode CurlEasyHandleWrapper::pause(int mask) {
 
     ACSDK_ERROR(LX("pauseFailed").d("reason", "notValid"));
     return CURLcode::CURLE_FAILED_INIT;
+}
+
+CurlEasyHandleWrapperOptionsSettingAdapter& CurlEasyHandleWrapper::curlOptionsSetter() {
+    return m_curlOptionsSettingAdapter;
 }
 
 #ifdef ACSDK_EMIT_CURL_LOGS

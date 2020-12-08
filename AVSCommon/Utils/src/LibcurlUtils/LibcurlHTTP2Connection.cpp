@@ -115,7 +115,10 @@ static bool performCurlChecks() {
     return true;
 }
 
-LibcurlHTTP2Connection::LibcurlHTTP2Connection() : m_isStopping{false} {
+LibcurlHTTP2Connection::LibcurlHTTP2Connection(
+    const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback) :
+        m_isStopping{false},
+        m_setCurlOptionsCallback{setCurlOptionsCallback} {
     m_networkThread = std::thread(&LibcurlHTTP2Connection::networkLoop, this);
 }
 
@@ -134,11 +137,12 @@ bool LibcurlHTTP2Connection::createMultiHandle() {
     return true;
 }
 
-std::shared_ptr<LibcurlHTTP2Connection> LibcurlHTTP2Connection::create() {
+std::shared_ptr<LibcurlHTTP2Connection> LibcurlHTTP2Connection::create(
+    const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback) {
     if (!performCurlChecks()) {
         return nullptr;
     }
-    return std::shared_ptr<LibcurlHTTP2Connection>(new LibcurlHTTP2Connection());
+    return std::shared_ptr<LibcurlHTTP2Connection>(new LibcurlHTTP2Connection(setCurlOptionsCallback));
 }
 
 LibcurlHTTP2Connection::~LibcurlHTTP2Connection() {
@@ -265,7 +269,7 @@ void LibcurlHTTP2Connection::networkLoop() {
 }
 
 std::shared_ptr<HTTP2RequestInterface> LibcurlHTTP2Connection::createAndSendRequest(const HTTP2RequestConfig& config) {
-    auto req = std::make_shared<LibcurlHTTP2Request>(config, config.getId());
+    auto req = std::make_shared<LibcurlHTTP2Request>(config, m_setCurlOptionsCallback, config.getId());
     addStream(req);
     return req;
 }

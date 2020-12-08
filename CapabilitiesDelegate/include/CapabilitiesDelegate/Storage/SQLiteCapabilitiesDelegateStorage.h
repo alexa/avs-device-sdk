@@ -97,6 +97,20 @@ private:
      */
     bool eraseLocked(const std::string& endpointId);
 
+    /**
+     * Utility method to create a endpoint config table.
+     * @Note: This method is not thread safe.
+     *
+     * @return True if create table is successful, else false.
+     */
+    bool createEndpointConfigTableLocked();
+
+    /**
+     * Utility method to close the underlying database.
+     * @Note: This method is not thread safe.
+     */
+    void closeLocked();
+
     /// Mutex to synchronize access to database.
     std::mutex m_mutex;
 

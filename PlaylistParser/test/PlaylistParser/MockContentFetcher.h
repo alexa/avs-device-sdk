@@ -223,7 +223,9 @@ static std::unordered_map<std::string, std::string> urlsToContent{
 /// A mock content fetcher
 class MockContentFetcher : public HTTPContentFetcherInterface {
 public:
-    MockContentFetcher(const std::string& url) : m_url{url}, m_state{HTTPContentFetcherInterface::State::INITIALIZED} {
+    explicit MockContentFetcher(const std::string& url) :
+            m_url{url},
+            m_state{HTTPContentFetcherInterface::State::INITIALIZED} {
     }
 
     std::string getUrl() const override {

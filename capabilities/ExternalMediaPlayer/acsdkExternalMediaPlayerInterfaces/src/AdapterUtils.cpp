@@ -86,6 +86,7 @@ rapidjson::Value buildPlaybackState(
     rapidjson::Document value(rapidjson::kObjectType);
     value.AddMember(PLAYBACK_SOURCE, playbackState.playbackSource, allocator);
     value.AddMember(PLAYBACK_SOURCE_ID, playbackState.playbackSourceId, allocator);
+    value.AddMember(PLAYBACK_ID, playbackState.playbackId, allocator);
     value.AddMember(TRACKNAME, playbackState.trackName, allocator);
     value.AddMember(TRACK_ID, playbackState.trackId, allocator);
     value.AddMember(TRACK_NUMBER, playbackState.trackNumber, allocator);

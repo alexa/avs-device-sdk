@@ -151,6 +151,10 @@ bool ConfigurationNode::getInt(const std::string& key, int* out, int defaultValu
     return getValue(key, out, defaultValue, &Value::IsInt, &Value::GetInt);
 }
 
+bool ConfigurationNode::getUint32(const std::string& key, uint32_t* out, uint32_t defaultValue) const {
+    return getValue(key, out, defaultValue, &Value::IsUint, &Value::GetUint);
+}
+
 bool ConfigurationNode::getString(const std::string& key, std::string* out, std::string defaultValue) const {
     const char* temp;
     auto result = getString(key, &temp, defaultValue.c_str());

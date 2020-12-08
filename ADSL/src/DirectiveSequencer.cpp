@@ -170,7 +170,7 @@ void DirectiveSequencer::receiveDirectiveLocked(std::unique_lock<std::mutex>& lo
         ACSDK_METRIC_MSG(TAG, directive, Metrics::Location::ADSL_DEQUEUE);
     }
 
-    bool handled = false;
+    bool handled;
 
 /**
  * Previously it was expected that all directives resulting from a Recognize event

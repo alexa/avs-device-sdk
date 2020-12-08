@@ -112,7 +112,7 @@ if(BUILD_TESTING)
 
     if(NETWORK_INTEGRATION_TESTS AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
         set(networkTestSourceFile
-            "${CMAKE_CURRENT_SOURCE_DIR}/NetworkIntegrationTests.cpp")
+            "${CMAKE_CURRENT_SOURCE_DIR}/NetworkIntegrationTest.cpp")
         get_filename_component(networkTestName ${networkTestSourceFile} NAME_WE)
         add_executable(${networkTestName} ${networkTestSourceFile})
         target_include_directories(${networkTestName} PUBLIC "${INCLUDE_PATH}")

@@ -21,6 +21,7 @@
 
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <SynchronizeStateSender/PostConnectSynchronizeStateSender.h>
 
@@ -151,6 +152,17 @@ void PostConnectSynchronizeStateSenderTest::TearDown() {
 TEST_F(PostConnectSynchronizeStateSenderTest, test_createWithNullContextManager) {
     auto instance = PostConnectSynchronizeStateSender::create(nullptr);
     ASSERT_EQ(instance, nullptr);
+}
+
+/**
+ * Test create with @c MetricRecorder.
+ */
+TEST_F(PostConnectSynchronizeStateSenderTest, test_createWithMetricRecorder) {
+    ASSERT_THAT(PostConnectSynchronizeStateSender::create(m_mockContextManager, nullptr), NotNull());
+    ASSERT_THAT(
+        PostConnectSynchronizeStateSender::create(
+            m_mockContextManager, std::make_shared<avsCommon::utils::metrics::test::MockMetricRecorder>()),
+        NotNull());
 }
 
 /**

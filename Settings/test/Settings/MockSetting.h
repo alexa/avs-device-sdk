@@ -41,7 +41,7 @@ public:
      *
      * @param value Initial value of this setting.
      */
-    MockSetting(const ValueT& value);
+    explicit MockSetting(const ValueT& value);
 };
 
 template <typename ValueT>

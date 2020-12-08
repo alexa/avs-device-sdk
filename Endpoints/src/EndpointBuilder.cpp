@@ -559,10 +559,6 @@ std::unique_ptr<EndpointInterface> EndpointBuilder::buildImplementation() {
     for (auto& capabilityBuilder : m_capabilitiesBuilders) {
         auto capability = capabilityBuilder();
         if (!capability.second) {
-            if (!m_isDefaultEndpoint) {
-                ACSDK_ERROR(LX("buildImplementationFailed").d("reason", "buildCapabilityFailed"));
-                return nullptr;
-            }
             endpoint->addCapabilityConfiguration(capability.first);
         } else {
             endpoint->addCapability(capability.first, capability.second);

@@ -3218,12 +3218,11 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
 
                             auto it = m_connectedDevices.find(category);
 
-                            if (it == m_connectedDevices.end() ||
-                                (it != m_connectedDevices.end() && it->second.find(device) == it->second.end())) {
+                            if (it == m_connectedDevices.end() || it->second.find(device) == it->second.end()) {
                                 executeOnDeviceConnect(device, true);
                                 /*
-                                 * Default to sending a ConnectByDeviceIds event since this wasn't a result of a profile
-                                 * specific connection.
+                                 * Default to sending a ConnectByDeviceIds event since this wasn't a result of a
+                                 * profile specific connection.
                                  */
                                 std::unordered_set<
                                     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>

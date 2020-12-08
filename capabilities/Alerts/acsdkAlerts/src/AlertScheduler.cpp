@@ -176,10 +176,13 @@ bool AlertScheduler::scheduleAlert(std::shared_ptr<Alert> alert) {
     return true;
 }
 
-bool AlertScheduler::saveOfflineStoppedAlert(const std::string& alertToken, const std::string& scheduledTime) {
-    ACSDK_DEBUG1(LX(__func__).d("token", alertToken).d("scheduledTime", scheduledTime));
+bool AlertScheduler::saveOfflineStoppedAlert(
+    const std::string& alertToken,
+    const std::string& scheduledTime,
+    const std::string& eventTime) {
+    ACSDK_DEBUG1(LX(__func__).d("token", alertToken).d("scheduledTime", scheduledTime).d("eventTime", eventTime));
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (!m_alertStorage->storeOfflineAlert(alertToken, scheduledTime)) {
+    if (!m_alertStorage->storeOfflineAlert(alertToken, scheduledTime, eventTime)) {
         ACSDK_ERROR(LX("saveOfflineStoppedAlertFailed").d("reason", "could not store alert in database."));
         return false;
     }
@@ -519,6 +522,9 @@ void AlertScheduler::shutdown() {
     m_alertStorage.reset();
     m_alertRenderer.reset();
     m_activeAlert.reset();
+    for (auto& alert : m_scheduledAlerts) {
+        alert->setRenderer(nullptr);
+    }
     m_scheduledAlerts.clear();
 }
 

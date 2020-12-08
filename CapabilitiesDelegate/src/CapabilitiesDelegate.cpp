@@ -159,9 +159,6 @@ void CapabilitiesDelegate::clearData() {
 }
 
 bool CapabilitiesDelegate::init() {
-    const std::string errorEvent = "initFailed";
-    std::string infoEvent = "CapabilitiesDelegateInit";
-
     if (!m_capabilitiesDelegateStorage->open()) {
         ACSDK_INFO(LX(__func__).m("Couldn't open database. Creating."));
         if (!m_capabilitiesDelegateStorage->createDatabase()) {
@@ -787,7 +784,7 @@ void CapabilitiesDelegate::filterUnchangedPendingAddOrUpdateEndpointsLocked(
     for (auto& endpointIdToConfigPair : addOrUpdateEndpointIdToConfigPairs) {
         auto storedEndpointConfigId = storedEndpointConfig->find(endpointIdToConfigPair.first);
         if (storedEndpointConfig->end() != storedEndpointConfigId) {
-            if (endpointIdToConfigPair.second == storedEndpointConfigId->second) {
+            if (compareEndpointConfigurations(endpointIdToConfigPair.second, storedEndpointConfigId->second)) {
                 ACSDK_DEBUG9(LX(__func__)
                                  .d("step", "endpoint not be included in addOrUpdateReport")
                                  .sensitive("endpointId", endpointIdToConfigPair.first));

@@ -309,11 +309,10 @@ void SensoryKeywordDetector::detectionLoop() {
     m_beginIndexOfStreamReader = m_streamReader->tell();
     notifyKeyWordDetectorStateObservers(KeyWordDetectorStateObserverInterface::KeyWordDetectorState::ACTIVE);
     std::vector<int16_t> audioDataToPush(m_maxSamplesPerPush);
-    ssize_t wordsRead;
     SnsrRC result;
     while (!m_isShuttingDown) {
         bool didErrorOccur = false;
-        wordsRead = readFromStream(
+        auto wordsRead = readFromStream(
             m_streamReader,
             m_stream,
             audioDataToPush.data(),

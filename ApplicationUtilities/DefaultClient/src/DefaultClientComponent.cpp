@@ -14,18 +14,21 @@
  */
 
 #include <ACL/AVSConnectionManager.h>
-#include <acsdkManufactory/ComponentAccumulator.h>
-#include <acsdkShared/SharedComponent.h>
-#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
-
+#include <acsdkAlerts/AlertsComponent.h>
 #include <acsdkAudioPlayer/AudioPlayerComponent.h>
+#include <acsdkDeviceSettingsManager/DeviceSettingsManagerComponent.h>
+#include <acsdkDoNotDisturb/DoNotDisturbComponent.h>
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayerComponent.h>
+#include <acsdkManufactory/ComponentAccumulator.h>
 #include <acsdkManufactory/ConstructorAdapter.h>
+#include <acsdkShared/SharedComponent.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AFML/FocusManagementComponent.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
+#include <AVSCommon/Utils/LibcurlUtils/DefaultSetCurlOptionsCallbackFactory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSGatewayManager/AVSGatewayManager.h>
 #include <AVSGatewayManager/Storage/AVSGatewayManagerStorage.h>
@@ -57,7 +60,6 @@ using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::libcurlUtils;
-using namespace avsGatewayManager;
 using namespace avsGatewayManager::storage;
 using namespace capabilityAgents::alexa;
 
@@ -147,6 +149,28 @@ getCreateApplicationAudioPipelineFactory(
     };
 }
 
+/**
+ * Returns an std::function that finishes configuring the @c DeviceSettingStorageInterface.
+ * @param DeviceSettingStorageInterface The storage interface to finish configuring.
+ * @return A shared pointer to an @c DeviceSettingStorageInterface.
+ */
+static std::function<std::shared_ptr<settings::storage::DeviceSettingStorageInterface>()>
+getCreateDeviceSettingStorageInterface(std::shared_ptr<settings::storage::DeviceSettingStorageInterface> storage) {
+    return [storage]() -> std::shared_ptr<settings::storage::DeviceSettingStorageInterface> {
+        if (!storage) {
+            ACSDK_ERROR(LX("getCreateDeviceSettingStorageInterfaceFailed").d("isStorageNull", !storage));
+            return nullptr;
+        }
+
+        if (!storage->open()) {
+            ACSDK_ERROR(LX("getCreateDeviceSettingStorageInterfaceFailed").d("reason", "failed to open"));
+            return nullptr;
+        }
+
+        return storage;
+    };
+}
+
 DefaultClientComponent getComponent(
     const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
@@ -169,7 +193,12 @@ DefaultClientComponent getComponent(
         audioMediaResourceProvider,
     const std::shared_ptr<certifiedSender::MessageStorageInterface>& messageStorage,
     const std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>& powerResourceManager,
-    const acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap) {
+    const acsdkExternalMediaPlayer::ExternalMediaPlayer::AdapterCreationMap& adapterCreationMap,
+    const std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>& systemTimeZone,
+    const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& deviceSettingStorage,
+    bool startAlertSchedulingOnInitialization,
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
+    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage) {
     return ComponentAccumulator<>()
         /// Instead of using factory methods to instantiate these interfaces, DefaultClientComponent accepts pre-made
         /// implementations and adds them to the manufactory.
@@ -191,9 +220,14 @@ DefaultClientComponent getComponent(
         .addInstance(audioMediaResourceProvider)
         .addInstance(messageStorage)
         .addInstance(powerResourceManager)
+        .addInstance(systemTimeZone)
+        .addInstance(audioFactory)
+        .addInstance(alertStorage)
         .addRetainedFactory(getCreateApplicationAudioPipelineFactory(stubAudioPipelineFactory))
+        .addRetainedFactory(getCreateDeviceSettingStorageInterface(deviceSettingStorage))
 
         /// Baseline SDK components. Applications are not expected to modify these.
+        .addComponent(acsdkDeviceSettingsManager::getComponent())
         .addComponent(acsdkShared::getComponent())
         .addRetainedFactory(afml::interruptModel::InterruptModel::createInterruptModel)
         .addComponent(afml::getComponent())
@@ -209,6 +243,7 @@ DefaultClientComponent getComponent(
         .addRetainedFactory(AttachmentManager::createInProcessAttachmentManagerInterface)
         .addRetainedFactory(certifiedSender::CertifiedSender::create)
         .addRetainedFactory(createAlexaEventProcessedNotifierInterface)
+        .addRetainedFactory(DefaultSetCurlOptionsCallbackFactory::createSetCurlOptionsCallbackFactoryInterface)
         .addRetainedFactory(HTTPContentFetcherFactory::createHTTPContentFetcherInterfaceFactoryInterface)
         .addRetainedFactory(getCreateMessageRouter(messageRouterFactory))
         .addUniqueFactory(capabilitiesDelegate::storage::SQLiteCapabilitiesDelegateStorage::
@@ -218,7 +253,9 @@ DefaultClientComponent getComponent(
         .addComponent(captions::getComponent())
 
         /// Capability Agents. Most CAs are still instantiated in DefaultClient.cpp.
+        .addComponent(acsdkAlerts::getComponent(startAlertSchedulingOnInitialization))
         .addComponent(acsdkAudioPlayer::getBackwardsCompatibleComponent())
+        .addComponent(acsdkDoNotDisturb::getComponent())
         .addComponent(acsdkExternalMediaPlayer::getBackwardsCompatibleComponent(adapterCreationMap))
         .addComponent(capabilityAgents::playbackController::getComponent())
         .addComponent(capabilityAgents::speakerManager::getComponent())

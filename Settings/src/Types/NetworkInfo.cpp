@@ -305,6 +305,18 @@ static bool validIpV4(const std::string& input) {
 }
 
 /**
+ * Checks whether the modified hextet and colon position make a valid IPV6
+ * @param hextets amount of hextets given
+ * @param doubleColonPos position of the double colon
+ * @return
+ */
+static bool verifyHextetsIPv6(const size_t hextets, const size_t doubleColonPos) {
+    return (
+        (hextets == IP_V6_NUMBER_OF_HEXTETS) ||
+        ((doubleColonPos != std::string::npos) && (hextets < IP_V6_NUMBER_OF_HEXTETS)));
+}
+
+/**
  * Checks whether the input is a valid IPv6 format.
  *
  * @param input The target string that may represent an IPv6 address.
@@ -329,8 +341,7 @@ static bool validIpV6(const std::string& input) {
     };
 
     if (expectedFormat(no2ColonsInput, valueChecker, IP_V6_DELIMITER, true)) {
-        return (hextets == IP_V6_NUMBER_OF_HEXTETS) ||
-               ((doubleColonPos != std::string::npos) && (hextets < IP_V6_NUMBER_OF_HEXTETS));
+        return verifyHextetsIPv6(hextets, doubleColonPos);
     }
     return false;
 }

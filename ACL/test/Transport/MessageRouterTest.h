@@ -50,7 +50,13 @@ public:
         std::shared_ptr<AttachmentManagerInterface> attachmentManager,
         std::shared_ptr<TransportFactoryInterface> factory,
         const std::string& avsGateway) :
-            MessageRouter(authDelegate, attachmentManager, factory, avsGateway) {
+            MessageRouter(
+                authDelegate,
+                attachmentManager,
+                factory,
+                avsGateway,
+                avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+                SHORT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD) {
     }
 
     /**
@@ -64,11 +70,14 @@ public:
         auto status = future.wait_for(millisecondsToWait);
         return status == std::future_status::ready;
     }
+
+    /// Short amount of time to allow for an automatic reconnect before notifying of a server side disconnect.
+    static const std::chrono::milliseconds SHORT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD;
 };
 
 class MockTransportFactory : public TransportFactoryInterface {
 public:
-    MockTransportFactory(std::shared_ptr<MockTransport> transport) : m_mockTransport{transport} {
+    explicit MockTransportFactory(std::shared_ptr<MockTransport> transport) : m_mockTransport{transport} {
     }
 
     void setMockTransport(std::shared_ptr<MockTransport> transport) {
@@ -146,6 +155,7 @@ public:
     // TestableMessageRouter m_router;
 };
 
+const std::chrono::milliseconds TestableMessageRouter::SHORT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD(2000);
 const std::string MessageRouterTest::MESSAGE = "123456789";
 const int MessageRouterTest::MESSAGE_LENGTH = 10;
 const std::chrono::milliseconds MessageRouterTest::SHORT_TIMEOUT_MS = std::chrono::milliseconds(1000);

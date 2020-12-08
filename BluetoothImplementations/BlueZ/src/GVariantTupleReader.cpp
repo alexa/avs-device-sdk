@@ -136,8 +136,7 @@ ManagedGVariant GVariantTupleReader::getVariant(gsize index) const {
         ACSDK_ERROR(LX("getVariantFailed").d("reason", "index out of range"));
         return ManagedGVariant();
     }
-    GVariant* value = nullptr;
-    value = g_variant_get_child_value(m_tuple, index);
+    GVariant* value = g_variant_get_child_value(m_tuple, index);
     return ManagedGVariant(value);
 }
 

@@ -95,10 +95,14 @@ public:
     /**
      * Save the currently active alert as an offline stopped alert
      * @param alertToken the alert token of the offline stopped alert
-     * @param scheduledTime the scheduled time of the offline stopepd alert
+     * @param scheduledTime the scheduled time of the offline stopped alert
+     * @param eventTime the time the alert stopped
      * @return Whether the offline alert was successfully saved.
      */
-    bool saveOfflineStoppedAlert(const std::string& alertToken, const std::string& scheduledTime);
+    bool saveOfflineStoppedAlert(
+        const std::string& alertToken,
+        const std::string& scheduledTime,
+        const std::string& eventTime);
 
     /**
      * Get list of offline stopped alerts

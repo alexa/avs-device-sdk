@@ -78,7 +78,7 @@ bool operator!=(const ComponentConfiguration& lhs, const ComponentConfiguration&
  * @param rhs The right hand side of the == operation.
  * @return Whether or not this instance and @c rhs are equivalent.
  */
-bool operator==(const std::shared_ptr<ComponentConfiguration> lhs, const std::shared_ptr<ComponentConfiguration> rhs);
+bool operator==(const std::shared_ptr<ComponentConfiguration>& lhs, const std::shared_ptr<ComponentConfiguration>& rhs);
 
 /**
  * Operator != for shared_ptr of @c ComponentConfiguration
@@ -87,7 +87,7 @@ bool operator==(const std::shared_ptr<ComponentConfiguration> lhs, const std::sh
  * @param rhs The right hand side of the != operation.
  * @return Whether or not this instance and @c rhs are not equivalent.
  */
-bool operator!=(const std::shared_ptr<ComponentConfiguration> lhs, const std::shared_ptr<ComponentConfiguration> rhs);
+bool operator!=(const std::shared_ptr<ComponentConfiguration>& lhs, const std::shared_ptr<ComponentConfiguration>& rhs);
 
 }  // namespace avs
 }  // namespace avsCommon

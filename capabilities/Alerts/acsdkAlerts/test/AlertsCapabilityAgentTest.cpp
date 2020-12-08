@@ -148,7 +148,7 @@ public:
         return true;
     }
 
-    bool storeOfflineAlert(const std::string&, const std::string&) override {
+    bool storeOfflineAlert(const std::string&, const std::string&, const std::string&) override {
         return true;
     }
 
@@ -190,7 +190,7 @@ public:
     MOCK_METHOD0(open, bool());
     MOCK_METHOD0(close, void());
     MOCK_METHOD1(store, bool(std::shared_ptr<Alert>));
-    MOCK_METHOD2(storeOfflineAlert, bool(const std::string&, const std::string&));
+    MOCK_METHOD3(storeOfflineAlert, bool(const std::string&, const std::string&, const std::string&));
     MOCK_METHOD2(load, bool(std::vector<std::shared_ptr<Alert>>*, std::shared_ptr<settings::DeviceSettingsManager>));
     MOCK_METHOD2(loadOfflineAlerts, bool(rapidjson::Value*, rapidjson::Document::AllocatorType&));
     MOCK_METHOD1(modify, bool(std::shared_ptr<Alert>));
@@ -350,8 +350,9 @@ void AlertsCapabilityAgentTest::SetUp() {
     m_customerDataManager = std::make_shared<CustomerDataManager>();
     m_messageStorage = std::make_shared<StubMessageStorage>();
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
-    m_settingsManager =
-        std::make_shared<settings::DeviceSettingsManager>(std::make_shared<registrationManager::CustomerDataManager>());
+    settings::DeviceSettingManagerSettingConfigurations configurations;
+    m_settingsManager = std::make_shared<settings::DeviceSettingsManager>(
+        std::make_shared<registrationManager::CustomerDataManager>(), configurations);
     m_mockAlarmVolumeRampSetting =
         std::make_shared<MockSetting<AlarmVolumeRampSetting::ValueType>>(settings::types::getAlarmVolumeRampDefault());
     ASSERT_TRUE(m_settingsManager->addSetting<DeviceSettingsIndex::ALARM_VOLUME_RAMP>(m_mockAlarmVolumeRampSetting));
@@ -374,7 +375,7 @@ void AlertsCapabilityAgentTest::SetUp() {
     ON_CALL(*(m_alertStorage), createDatabase()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), open()).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), store(_)).WillByDefault(Return(true));
-    ON_CALL(*(m_alertStorage), storeOfflineAlert(_, _)).WillByDefault(Return(true));
+    ON_CALL(*(m_alertStorage), storeOfflineAlert(_, _, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), load(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), loadOfflineAlerts(_, _)).WillByDefault(Return(true));
     ON_CALL(*(m_alertStorage), modify(_)).WillByDefault(Return(true));

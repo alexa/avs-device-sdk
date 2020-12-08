@@ -36,6 +36,8 @@ static const std::string TAG("MessageRouter");
 /// String for logging purpose as the key for the size of m_transports.
 static constexpr const char* KEY_SIZEOF_TRANSPORTS = "sizeOf m_transports";
 
+const std::chrono::milliseconds MessageRouter::DEFAULT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD(15000);
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -74,7 +76,8 @@ MessageRouter::MessageRouter(
     std::shared_ptr<AttachmentManagerInterface> attachmentManager,
     std::shared_ptr<TransportFactoryInterface> transportFactory,
     const std::string& avsGateway,
-    int engineType) :
+    int engineType,
+    std::chrono::milliseconds serverSideDisconnectGracePeriod) :
         MessageRouterInterface{"MessageRouter"},
         m_avsGateway{avsGateway},
         m_authDelegate{authDelegate},
@@ -84,7 +87,10 @@ MessageRouter::MessageRouter(
         m_isEnabled{false},
         m_attachmentManager{attachmentManager},
         m_transportFactory{transportFactory},
-        m_requestQueue{std::make_shared<SynchronizedMessageRequestQueue>()} {
+        m_requestQueue{std::make_shared<SynchronizedMessageRequestQueue>()},
+        m_serverSideDisconnectNotificationPending{false},
+        m_lastReportedConnectionStatus{ConnectionStatusObserverInterface::Status::DISCONNECTED},
+        m_serverSideReconnectGracePeriod{serverSideDisconnectGracePeriod} {
 }
 
 MessageRouterInterface::ConnectionStatus MessageRouter::getConnectionStatus() {
@@ -258,10 +264,8 @@ void MessageRouter::onDisconnected(
 
 void MessageRouter::onServerSideDisconnect(std::shared_ptr<TransportInterface> transport) {
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    ACSDK_INFO(LX("server-side disconnect received")
-                   .d("Message router is enabled", m_isEnabled)
-                   .p("transport", transport)
-                   .p("m_activeTransport", m_activeTransport));
+    ACSDK_INFO(
+        LX(__func__).d("m_isEnabled", m_isEnabled).p("transport", transport).p("m_activeTransport", m_activeTransport));
     if (m_isEnabled && transport == m_activeTransport) {
         setConnectionStatusLocked(
             ConnectionStatusObserverInterface::Status::PENDING,
@@ -299,14 +303,47 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
     const ConnectionStatusObserverInterface::Status status,
     const ConnectionStatusObserverInterface::ChangedReason reason) {
     auto task = [this, status, reason]() {
+        if (m_serverSideReconnectGracePeriod != std::chrono::milliseconds(0) &&
+            ConnectionStatusObserverInterface::Status::PENDING == status &&
+            ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT == reason) {
+            m_serverSideDisconnectNotificationPending = true;
+            m_serverSideDisconnectTimer.start(m_serverSideReconnectGracePeriod, [this]() {
+                ACSDK_DEBUG0(LX("serverSideDisconectTimerPredicate"));
+                m_executor.submit([this]() {
+                    ACSDK_DEBUG0(
+                        LX("serverSideDisconectTimerHandler")
+                            .d("m_serverSideDisconnectNotificationPending", m_serverSideDisconnectNotificationPending));
+                    if (m_serverSideDisconnectNotificationPending) {
+                        handleNotifyObserverOnConnectionStatusChanged(
+                            ConnectionStatusObserverInterface::Status::PENDING,
+                            ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+                    }
+                });
+            });
+        } else {
+            if (m_serverSideDisconnectNotificationPending) {
+                ACSDK_DEBUG0(LX("NotificationOfServerSideDisconnectSuppressed"));
+            }
+            m_serverSideDisconnectTimer.stop();
+            handleNotifyObserverOnConnectionStatusChanged(status, reason);
+        }
+    };
+    m_executor.submit(task);
+}
+
+void MessageRouter::handleNotifyObserverOnConnectionStatusChanged(
+    const ConnectionStatusObserverInterface::Status status,
+    const ConnectionStatusObserverInterface::ChangedReason reason) {
+    m_serverSideDisconnectNotificationPending = false;
+    if (status != m_lastReportedConnectionStatus) {
+        m_lastReportedConnectionStatus = status;
         auto observer = getObserver();
         if (observer) {
             std::vector<ConnectionStatusObserverInterface::EngineConnectionStatus> statuses;
             statuses.emplace_back(m_engineType, reason, status);
             observer->onConnectionStatusChanged(status, statuses);
         }
-    };
-    m_executor.submit(task);
+    }
 }
 
 void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const std::string& message) {

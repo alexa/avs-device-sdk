@@ -101,7 +101,7 @@ bool SQLiteNotificationsStorage::createDatabase() {
     }
 
     // Create NotificationIndicator table
-    if (!m_database.performQuery(CREATE_NOTIFICATION_INDICATOR_TABLE_SQL_STRING)) {
+    if (!createNotificationIndicatorsTable()) {
         ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to create notification indicator table"));
         close();
         return false;
@@ -111,15 +111,8 @@ bool SQLiteNotificationsStorage::createDatabase() {
     // the database will be in an inconsistent state and will require deletion or another call to createDatabase().
 
     // Create IndicatorState table
-    if (!m_database.performQuery(CREATE_INDICATOR_STATE_TABLE_SQL_STRING)) {
+    if (!createIndicatorStateTable()) {
         ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to create indicator state table"));
-        close();
-        return false;
-    }
-
-    // The default IndicatorState should be OFF.
-    if (!setIndicatorState(IndicatorState::OFF)) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to set default indicator state"));
         close();
         return false;
     }
@@ -134,14 +127,19 @@ bool SQLiteNotificationsStorage::open() {
     }
 
     if (!m_database.tableExists(NOTIFICATION_INDICATOR_TABLE_NAME)) {
-        ACSDK_ERROR(
-            LX("openFailed").d("reason", "table doesn't exist").d("TableName", NOTIFICATION_INDICATOR_TABLE_NAME));
-        return false;
+        ACSDK_ERROR(LX("Table: " + NOTIFICATION_INDICATOR_TABLE_NAME + " not found!"));
+        if (!createNotificationIndicatorsTable()) {
+            close();
+            return false;
+        }
     }
 
     if (!m_database.tableExists(INDICATOR_STATE_NAME)) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "table doesn't exist").d("TableName", INDICATOR_STATE_NAME));
-        return false;
+        ACSDK_ERROR(LX("Table: " + INDICATOR_STATE_NAME + " not found!"));
+        if (!createIndicatorStateTable()) {
+            close();
+            return false;
+        }
     }
 
     return true;
@@ -468,6 +466,29 @@ bool SQLiteNotificationsStorage::getQueueSize(int* size) {
         ACSDK_ERROR(LX("getQueueSizeFailed").m("Failed to count rows in table"));
         return false;
     }
+    return true;
+}
+
+bool SQLiteNotificationsStorage::createNotificationIndicatorsTable() {
+    if (!m_database.performQuery(CREATE_NOTIFICATION_INDICATOR_TABLE_SQL_STRING)) {
+        ACSDK_ERROR(LX("createNotificationIndicatorsTableFailed"));
+        return false;
+    }
+    return true;
+}
+
+bool SQLiteNotificationsStorage::createIndicatorStateTable() {
+    if (!m_database.performQuery(CREATE_INDICATOR_STATE_TABLE_SQL_STRING)) {
+        ACSDK_ERROR(LX("createIndicatorStateTableFailed").d("reason", "tableCreationFailed"));
+        return false;
+    }
+
+    // The default IndicatorState should be OFF.
+    if (!setIndicatorState(IndicatorState::OFF)) {
+        ACSDK_ERROR(LX("createIndicatorStateTableFailed").d("reason", "set(Default)IndicatorStateFailed"));
+        return false;
+    }
+
     return true;
 }
 

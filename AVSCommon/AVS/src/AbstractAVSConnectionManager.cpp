@@ -69,7 +69,6 @@ void AbstractAVSConnectionManager::addConnectionStatusObserver(
         // call old onConnectionStatusChanged API on AVS connection
         for (const auto& status : localEngineConnectionStatuses) {
             if (status.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
-                ACSDK_DEBUG9(LX(__func__).d("status", status.status).d("reason", status.reason));
                 observer->onConnectionStatusChanged(status.status, status.reason);
                 break;
             }
@@ -130,7 +129,6 @@ void AbstractAVSConnectionManager::notifyObservers(bool avsConnectionStatusChang
         if (avsConnectionStatusChanged) {
             for (const auto& status : localEngineConnectionStatuses) {
                 if (status.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
-                    ACSDK_DEBUG9(LX(__func__).d("status", status.status).d("reason", status.reason));
                     observer->onConnectionStatusChanged(status.status, status.reason);
                     break;
                 }

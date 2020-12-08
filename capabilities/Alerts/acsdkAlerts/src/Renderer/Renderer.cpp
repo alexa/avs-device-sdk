@@ -85,6 +85,33 @@ static void submitMetric(
     recordMetric(metricRecorder, metricEvent);
 }
 
+std::shared_ptr<Renderer> Renderer::createAlertRenderer(
+    const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
+        audioPipelineFactory,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
+    if (!audioPipelineFactory) {
+        ACSDK_ERROR(LX("createFailed").m("audioPipelineFactory parameter was nullptr."));
+        return nullptr;
+    }
+
+    auto applicationMediaInterfaces = audioPipelineFactory->createApplicationMediaInterfaces(
+        ALERTS_MEDIA_PLAYER_NAME,
+        false,
+        false,
+        false,
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME);
+
+    if (!applicationMediaInterfaces) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "failed to create media player or related interfaces"));
+        return nullptr;
+    }
+    auto mediaPlayer = applicationMediaInterfaces->mediaPlayer;
+
+    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder});
+    mediaPlayer->addObserver(renderer);
+    return renderer;
+}
+
 std::shared_ptr<Renderer> Renderer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<MetricRecorderInterface> metricRecorder) {
@@ -96,6 +123,15 @@ std::shared_ptr<Renderer> Renderer::create(
     auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder});
     mediaPlayer->addObserver(renderer);
     return renderer;
+}
+
+void Renderer::doShutdown() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    if (m_mediaPlayer) {
+        m_mediaPlayer->removeObserver(shared_from_this());
+    }
+    m_executor.shutdown();
 }
 
 void Renderer::start(
@@ -165,6 +201,7 @@ void Renderer::onPlaybackError(
 Renderer::Renderer(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+        RequiresShutdown{"Renderer"},
         m_mediaPlayer{mediaPlayer},
         m_metricRecorder{metricRecorder},
         m_observer{nullptr},

@@ -37,6 +37,9 @@ public:
 
     /**
      * Produces an @c HTTPContentFetcherInterface object or @c nullptr on failure.
+     *
+     * @param url The url to fetch the content from.
+     * @return A new instance of @c HTTPContentFetcherInterface.
      */
     virtual std::unique_ptr<HTTPContentFetcherInterface> create(const std::string& url) = 0;
 };

@@ -172,9 +172,6 @@ private:
     /// The vector of components requiring shutdown
     std::vector<std::shared_ptr<avsCommon::utils::RequiresShutdown>> m_shutdownRequiredList;
 
-    /// The @c MediaPlayer used by @c Alerts.
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_alertsMediaPlayer;
-
     /// The @c MediaPlayer used by @c Bluetooth.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_bluetoothMediaPlayer;
 

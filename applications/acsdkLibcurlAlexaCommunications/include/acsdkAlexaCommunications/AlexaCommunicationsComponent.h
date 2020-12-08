@@ -18,12 +18,14 @@
 
 #include <memory>
 
+#include <acsdkManufactory/Annotated.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlSetCurlOptionsCallbackFactoryInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 namespace alexaClientSDK {
@@ -38,6 +40,9 @@ using AlexaCommunicationsComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>>,
+    acsdkManufactory::Import<acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::AVSConnectionManagerInterface,
+        avsCommon::utils::libcurlUtils::LibcurlSetCurlOptionsCallbackFactoryInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>>;
 

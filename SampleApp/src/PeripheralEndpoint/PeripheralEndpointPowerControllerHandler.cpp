@@ -71,7 +71,6 @@ std::pair<AlexaResponseType, std::string> PeripheralEndpointPowerControllerHandl
     bool state,
     AlexaStateChangeCauseType cause) {
     std::list<std::shared_ptr<PowerControllerObserverInterface>> copyOfObservers;
-    bool notifyObserver = false;
 
     std::unique_lock<std::mutex> lock(m_mutex);
     if (m_currentPowerState != state) {
@@ -80,22 +79,18 @@ std::pair<AlexaResponseType, std::string> PeripheralEndpointPowerControllerHandl
 
         m_currentPowerState = state;
         copyOfObservers = m_observers;
-        notifyObserver = true;
     }
 
     m_currentPowerState = state;
     copyOfObservers = m_observers;
-    notifyObserver = true;
 
     lock.unlock();
 
-    if (notifyObserver) {
-        notifyObservers(
-            PowerControllerInterface::PowerState{
-                m_currentPowerState, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
-            cause,
-            copyOfObservers);
-    }
+    notifyObservers(
+        PowerControllerInterface::PowerState{
+            m_currentPowerState, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
+        cause,
+        copyOfObservers);
 
     return std::make_pair(AlexaResponseType::SUCCESS, "");
 }

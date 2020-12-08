@@ -159,8 +159,7 @@ bool AggregatedPowerResourceManager::acquire(
 
     // Do not dedupe  acquire calls if refcount enabled. Let the application PowerResourceManagerInterface
     // handle that if desired.
-    if (callerPowerResourceInfo.isRefCounted ||
-        (!callerPowerResourceInfo.isRefCounted && callerPowerResourceInfo.refCount == 0)) {
+    if (callerPowerResourceInfo.isRefCounted || callerPowerResourceInfo.refCount == 0) {
         callerPowerResourceInfo.refCount++;
         m_appPowerResourceManager->acquire(aggregatedPowerResourceId);
     }

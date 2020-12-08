@@ -71,7 +71,10 @@ static const bool CHECK_TABLE_NOT_EXISTS = false;
  * @param tableName The table name to check.
  * @return an error message if the checks fail, else a blank string
  */
-static std::string basicDBChecks(SQLiteDatabase& db, const std::string& componentName, const std::string& tableName);
+static std::string basicDBChecksLocked(
+    SQLiteDatabase& db,
+    const std::string& componentName,
+    const std::string& tableName);
 
 /**
  * Helper method that will check basic things about the DB.
@@ -82,7 +85,7 @@ static std::string basicDBChecks(SQLiteDatabase& db, const std::string& componen
  * @param tableShouldExist If true, checks if the table should exist. If false, it checks the opposite.
  * @return an error message if the checks fail, else a blank string
  */
-static std::string basicDBChecks(
+static std::string basicDBChecksLocked(
     SQLiteDatabase& db,
     const std::string& componentName,
     const std::string& tableName,
@@ -158,24 +161,37 @@ SQLiteMiscStorage::~SQLiteMiscStorage() {
 }
 
 bool SQLiteMiscStorage::open() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return openLocked();
+}
+
+bool SQLiteMiscStorage::openLocked() {
     if (!m_db.open()) {
         ACSDK_DEBUG0(LX("openDatabaseFailed"));
         return false;
     }
-
     return true;
 }
 
 void SQLiteMiscStorage::close() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return closeLocked();
+}
+
+void SQLiteMiscStorage::closeLocked() {
     m_db.close();
 }
 
 bool SQLiteMiscStorage::createDatabase() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return createDatabaseLocked();
+}
+
+bool SQLiteMiscStorage::createDatabaseLocked() {
     if (!m_db.initialize()) {
         ACSDK_ERROR(LX("createDatabaseFailed"));
         return false;
     }
-
     return true;
 }
 
@@ -198,7 +214,7 @@ std::string getDBTableName(const std::string& componentName, const std::string& 
     return (componentName + MISC_DATABASE_DB_COMPONENT_TABLE_NAMES_SEPARATOR + tableName);
 }
 
-std::string basicDBChecks(SQLiteDatabase& db, const std::string& componentName, const std::string& tableName) {
+std::string basicDBChecksLocked(SQLiteDatabase& db, const std::string& componentName, const std::string& tableName) {
     if (!db.isDatabaseReady()) {
         return "Database is not ready";
     }
@@ -214,12 +230,12 @@ std::string basicDBChecks(SQLiteDatabase& db, const std::string& componentName, 
     return "";
 }
 
-std::string basicDBChecks(
+std::string basicDBChecksLocked(
     SQLiteDatabase& db,
     const std::string& componentName,
     const std::string& tableName,
     bool tableShouldExist) {
-    const std::string errorReason = basicDBChecks(db, componentName, tableName);
+    const std::string errorReason = basicDBChecksLocked(db, componentName, tableName);
     if (!errorReason.empty()) {
         return errorReason;
     }
@@ -266,13 +282,13 @@ std::string getDBDataType(const std::string& keyValueType) {
     return "";
 }
 
-bool SQLiteMiscStorage::getKeyValueTypes(
+bool SQLiteMiscStorage::getKeyValueTypesLocked(
     const std::string& componentName,
     const std::string& tableName,
     KeyType* keyType,
     ValueType* valueType) {
     const std::string errorEvent = "getKeyValueTypesFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -341,7 +357,7 @@ bool SQLiteMiscStorage::getKeyValueTypes(
     return true;
 }
 
-std::string SQLiteMiscStorage::checkKeyType(
+std::string SQLiteMiscStorage::checkKeyTypeLocked(
     const std::string& componentName,
     const std::string& tableName,
     KeyType keyType) {
@@ -349,7 +365,7 @@ std::string SQLiteMiscStorage::checkKeyType(
         return "Cannot check for unknown key column type";
     }
 
-    const std::string basicDBChecksError = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string basicDBChecksError = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
     if (!basicDBChecksError.empty()) {
         return basicDBChecksError;
     }
@@ -357,7 +373,7 @@ std::string SQLiteMiscStorage::checkKeyType(
     KeyType keyColumnType;
     ValueType valueColumnType;
 
-    if (!getKeyValueTypes(componentName, tableName, &keyColumnType, &valueColumnType)) {
+    if (!getKeyValueTypesLocked(componentName, tableName, &keyColumnType, &valueColumnType)) {
         return "Unable to get key column type";
     }
 
@@ -372,7 +388,7 @@ std::string SQLiteMiscStorage::checkKeyType(
     return "";
 }
 
-std::string SQLiteMiscStorage::checkValueType(
+std::string SQLiteMiscStorage::checkValueTypeLocked(
     const std::string& componentName,
     const std::string& tableName,
     ValueType valueType) {
@@ -380,7 +396,7 @@ std::string SQLiteMiscStorage::checkValueType(
         return "Cannot check for unknown value column type";
     }
 
-    const std::string basicDBChecksError = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string basicDBChecksError = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
     if (!basicDBChecksError.empty()) {
         return basicDBChecksError;
     }
@@ -388,7 +404,7 @@ std::string SQLiteMiscStorage::checkValueType(
     KeyType keyColumnType;
     ValueType valueColumnType;
 
-    if (!getKeyValueTypes(componentName, tableName, &keyColumnType, &valueColumnType)) {
+    if (!getKeyValueTypesLocked(componentName, tableName, &keyColumnType, &valueColumnType)) {
         return "Unable to get value column type";
     }
 
@@ -403,7 +419,7 @@ std::string SQLiteMiscStorage::checkValueType(
     return "";
 }
 
-std::string SQLiteMiscStorage::checkKeyValueType(
+std::string SQLiteMiscStorage::checkKeyValueTypeLocked(
     const std::string& componentName,
     const std::string& tableName,
     KeyType keyType,
@@ -415,7 +431,7 @@ std::string SQLiteMiscStorage::checkKeyValueType(
         return "Cannot check for unknown value column type";
     }
 
-    const std::string basicDBChecksError = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string basicDBChecksError = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
     if (!basicDBChecksError.empty()) {
         return basicDBChecksError;
     }
@@ -423,7 +439,7 @@ std::string SQLiteMiscStorage::checkKeyValueType(
     KeyType keyColumnType;
     ValueType valueColumnType;
 
-    if (!getKeyValueTypes(componentName, tableName, &keyColumnType, &valueColumnType)) {
+    if (!getKeyValueTypesLocked(componentName, tableName, &keyColumnType, &valueColumnType)) {
         return "Unable to get key/value column types";
     }
 
@@ -449,8 +465,17 @@ bool SQLiteMiscStorage::createTable(
     const std::string& tableName,
     KeyType keyType,
     ValueType valueType) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return createTableLocked(componentName, tableName, keyType, valueType);
+}
+
+bool SQLiteMiscStorage::createTableLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    KeyType keyType,
+    ValueType valueType) {
     const std::string errorEvent = "createTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_NOT_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_NOT_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -483,8 +508,13 @@ bool SQLiteMiscStorage::createTable(
 }
 
 bool SQLiteMiscStorage::clearTable(const std::string& componentName, const std::string& tableName) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return clearTableLocked(componentName, tableName);
+}
+
+bool SQLiteMiscStorage::clearTableLocked(const std::string& componentName, const std::string& tableName) {
     const std::string errorEvent = "clearTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -502,8 +532,13 @@ bool SQLiteMiscStorage::clearTable(const std::string& componentName, const std::
 }
 
 bool SQLiteMiscStorage::deleteTable(const std::string& componentName, const std::string& tableName) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return deleteTableLocked(componentName, tableName);
+}
+
+bool SQLiteMiscStorage::deleteTableLocked(const std::string& componentName, const std::string& tableName) {
     const std::string errorEvent = "deleteTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -537,6 +572,15 @@ bool SQLiteMiscStorage::get(
     const std::string& tableName,
     const std::string& key,
     std::string* value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return getLocked(componentName, tableName, key, value);
+}
+
+bool SQLiteMiscStorage::getLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key,
+    std::string* value) {
     const std::string errorEvent = "getFromTableFailed";
 
     if (!value) {
@@ -544,7 +588,7 @@ bool SQLiteMiscStorage::get(
         return false;
     }
 
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
         return false;
@@ -552,7 +596,7 @@ bool SQLiteMiscStorage::get(
 
     std::string dbTableName = getDBTableName(componentName, tableName);
 
-    const std::string keyTypeError = checkKeyType(componentName, tableName, KeyType::STRING_KEY);
+    const std::string keyTypeError = checkKeyTypeLocked(componentName, tableName, KeyType::STRING_KEY);
     if (!keyTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyTypeError));
         return false;
@@ -590,6 +634,15 @@ bool SQLiteMiscStorage::tableEntryExists(
     const std::string& tableName,
     const std::string& key,
     bool* tableEntryExistsValue) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return tableEntryExistsLocked(componentName, tableName, key, tableEntryExistsValue);
+}
+
+bool SQLiteMiscStorage::tableEntryExistsLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key,
+    bool* tableEntryExistsValue) {
     const std::string errorEvent = "tableEntryExistsFailed";
 
     if (!tableEntryExistsValue) {
@@ -597,7 +650,7 @@ bool SQLiteMiscStorage::tableEntryExists(
         return false;
     }
 
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
         return false;
@@ -605,7 +658,7 @@ bool SQLiteMiscStorage::tableEntryExists(
 
     KeyType keyColumnType;
     ValueType valueColumnType;
-    if (!getKeyValueTypes(componentName, tableName, &keyColumnType, &valueColumnType)) {
+    if (!getKeyValueTypesLocked(componentName, tableName, &keyColumnType, &valueColumnType)) {
         ACSDK_ERROR(LX(errorEvent).m("Unable to get key/value column types"));
         return false;
     }
@@ -616,7 +669,7 @@ bool SQLiteMiscStorage::tableEntryExists(
 
     if (valueColumnType == ValueType::STRING_VALUE) {
         std::string tableEntry;
-        if (!get(componentName, tableName, key, &tableEntry)) {
+        if (!getLocked(componentName, tableName, key, &tableEntry)) {
             ACSDK_ERROR(LX(errorEvent).m("Unable to get table entry"));
             return false;
         }
@@ -631,14 +684,21 @@ bool SQLiteMiscStorage::tableExists(
     const std::string& componentName,
     const std::string& tableName,
     bool* tableExistsValue) {
-    const std::string errorEvent = "tableExistsFailed";
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return tableExistsLocked(componentName, tableName, tableExistsValue);
+}
 
+bool SQLiteMiscStorage::tableExistsLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    bool* tableExistsValue) {
+    const std::string errorEvent = "tableExistsFailed";
     if (!tableExistsValue) {
         ACSDK_ERROR(LX(errorEvent).m("tableExistsValue is nullptr."));
         return false;
     }
 
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName);
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
         return false;
@@ -654,8 +714,17 @@ bool SQLiteMiscStorage::add(
     const std::string& tableName,
     const std::string& key,
     const std::string& value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return addLocked(componentName, tableName, key, value);
+}
+
+bool SQLiteMiscStorage::addLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key,
+    const std::string& value) {
     const std::string errorEvent = "addToTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -663,14 +732,14 @@ bool SQLiteMiscStorage::add(
     }
 
     const std::string keyValueTypeError =
-        checkKeyValueType(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
+        checkKeyValueTypeLocked(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
     if (!keyValueTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyValueTypeError));
         return false;
     }
 
     bool tableEntryExistsValue;
-    if (!tableEntryExists(componentName, tableName, key, &tableEntryExistsValue)) {
+    if (!tableEntryExistsLocked(componentName, tableName, key, &tableEntryExistsValue)) {
         ACSDK_ERROR(LX(errorEvent).d("Unable to get table entry information for " + key + " in table", tableName));
         return false;
     }
@@ -711,8 +780,17 @@ bool SQLiteMiscStorage::update(
     const std::string& tableName,
     const std::string& key,
     const std::string& value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return updateLocked(componentName, tableName, key, value);
+}
+
+bool SQLiteMiscStorage::updateLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key,
+    const std::string& value) {
     const std::string errorEvent = "updateTableEntryFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -720,14 +798,14 @@ bool SQLiteMiscStorage::update(
     }
 
     const std::string keyValueTypeError =
-        checkKeyValueType(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
+        checkKeyValueTypeLocked(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
     if (!keyValueTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyValueTypeError));
         return false;
     }
 
     bool tableEntryExistsValue;
-    if (!tableEntryExists(componentName, tableName, key, &tableEntryExistsValue)) {
+    if (!tableEntryExistsLocked(componentName, tableName, key, &tableEntryExistsValue)) {
         ACSDK_ERROR(LX(errorEvent).d("Unable to get table entry information for " + key + " in table", tableName));
         return false;
     }
@@ -768,8 +846,17 @@ bool SQLiteMiscStorage::put(
     const std::string& tableName,
     const std::string& key,
     const std::string& value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return putLocked(componentName, tableName, key, value);
+}
+
+bool SQLiteMiscStorage::putLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key,
+    const std::string& value) {
     const std::string errorEvent = "putToTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -777,14 +864,14 @@ bool SQLiteMiscStorage::put(
     }
 
     const std::string keyValueTypeError =
-        checkKeyValueType(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
+        checkKeyValueTypeLocked(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
     if (!keyValueTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyValueTypeError));
         return false;
     }
 
     bool tableEntryExistsValue;
-    if (!tableEntryExists(componentName, tableName, key, &tableEntryExistsValue)) {
+    if (!tableEntryExistsLocked(componentName, tableName, key, &tableEntryExistsValue)) {
         ACSDK_ERROR(LX(errorEvent).d("Unable to get table entry information for " + key + " in table", tableName));
         return false;
     }
@@ -826,22 +913,30 @@ bool SQLiteMiscStorage::put(
 }
 
 bool SQLiteMiscStorage::remove(const std::string& componentName, const std::string& tableName, const std::string& key) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return removeLocked(componentName, tableName, key);
+}
+
+bool SQLiteMiscStorage::removeLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    const std::string& key) {
     const std::string errorEvent = "removeTableEntryFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
         return false;
     }
 
-    const std::string keyTypeError = checkKeyType(componentName, tableName, KeyType::STRING_KEY);
+    const std::string keyTypeError = checkKeyTypeLocked(componentName, tableName, KeyType::STRING_KEY);
     if (!keyTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyTypeError));
         return false;
     }
 
     bool tableEntryExistsValue;
-    if (!tableEntryExists(componentName, tableName, key, &tableEntryExistsValue)) {
+    if (!tableEntryExistsLocked(componentName, tableName, key, &tableEntryExistsValue)) {
         ACSDK_ERROR(LX(errorEvent).d("Unable to get table entry information for " + key + " in table", tableName));
         return false;
     }
@@ -879,8 +974,16 @@ bool SQLiteMiscStorage::load(
     const std::string& componentName,
     const std::string& tableName,
     std::unordered_map<std::string, std::string>* valueContainer) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return loadLocked(componentName, tableName, valueContainer);
+}
+
+bool SQLiteMiscStorage::loadLocked(
+    const std::string& componentName,
+    const std::string& tableName,
+    std::unordered_map<std::string, std::string>* valueContainer) {
     const std::string errorEvent = "loadFromTableFailed";
-    const std::string errorReason = basicDBChecks(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
+    const std::string errorReason = basicDBChecksLocked(m_db, componentName, tableName, CHECK_TABLE_EXISTS);
 
     if (!errorReason.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(errorReason));
@@ -893,7 +996,7 @@ bool SQLiteMiscStorage::load(
     }
 
     const std::string keyValueTypeError =
-        checkKeyValueType(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
+        checkKeyValueTypeLocked(componentName, tableName, KeyType::STRING_KEY, ValueType::STRING_VALUE);
     if (!keyValueTypeError.empty()) {
         ACSDK_ERROR(LX(errorEvent).m(keyValueTypeError));
         return false;
@@ -940,6 +1043,11 @@ bool SQLiteMiscStorage::load(
 }
 
 bool SQLiteMiscStorage::isOpened() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return isOpenedLocked();
+}
+
+bool SQLiteMiscStorage::isOpenedLocked() {
     return m_db.isDatabaseReady();
 }
 

@@ -185,7 +185,7 @@ void SpeechEncoder::encodeLoop(AudioInputStream::Index begin, AudioInputStream::
 
                         // There's still something to send
 
-                    } else if (writeResult <= 0) {
+                    } else {
                         switch (writeResult) {
                             case AudioInputStream::Writer::Error::WOULDBLOCK:
                                 // Should never happen.

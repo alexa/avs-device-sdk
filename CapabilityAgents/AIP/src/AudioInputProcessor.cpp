@@ -220,35 +220,6 @@ static const int MILLISECONDS_PER_SECOND = 1000;
  * in an early return.
  *
  * @param metricRecorder The @c MetricRecorderInterface which records Metric events.
- * @param activityName The activityName of the Metric event.
- * @param dataPoint The @c DataPoint of this Metric event (e.g. duration).
- * @param dialogRequestId The dialogRequestId associated with this Metric event; default is empty string.
- */
-static void submitMetric(
-    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
-    const std::string& activityName,
-    const DataPoint& dataPoint,
-    const std::string& dialogRequestId = "") {
-    auto metricEventBuilder =
-        MetricEventBuilder{}
-            .setActivityName(activityName)
-            .addDataPoint(dataPoint)
-            .addDataPoint(DataPointStringBuilder{}.setName("DIALOG_REQUEST_ID").setValue(dialogRequestId).build());
-
-    auto metricEvent = metricEventBuilder.build();
-
-    if (metricEvent == nullptr) {
-        ACSDK_ERROR(LX("Error creating metric with explicit dialogRequestId"));
-        return;
-    }
-    recordMetric(metricRecorder, metricEvent);
-}
-
-/**
- * Handles a Metric event by creating and recording it. Failure to create or record the event results
- * in an early return.
- *
- * @param metricRecorder The @c MetricRecorderInterface which records Metric events.
  * @param metricEventBuilder The @c MetricEventBuilder.
  * @param dialogRequestId The dialogRequestId associated with this Metric event; default is empty string.
  */
@@ -602,7 +573,8 @@ AudioInputProcessor::AudioInputProcessor(
         m_speechConfirmation{speechConfirmation},
         m_wakeWordsSetting{wakeWordsSetting},
         m_powerResourceManager{powerResourceManager},
-        m_expectSpeechTimeoutHandler{expectSpeechTimeoutHandler} {
+        m_expectSpeechTimeoutHandler{expectSpeechTimeoutHandler},
+        m_timeSinceLastResumeMS{std::chrono::milliseconds(0)} {
     m_capabilityConfigurations.insert(capabilitiesConfiguration);
 }
 
@@ -717,13 +689,14 @@ void AudioInputProcessor::handleSetEndOfSpeechOffsetDirective(std::shared_ptr<Di
 
     auto payload = info->directive->getPayload();
     int64_t endOfSpeechOffset = 0;
-    int64_t startOfSpeechTimestamp = 0;
+
     std::string startOfSpeechTimeStampInString;
     bool foundEnd = json::jsonUtils::retrieveValue(payload, END_OF_SPEECH_OFFSET_FIELD_NAME, &endOfSpeechOffset);
     bool foundStart =
         json::jsonUtils::retrieveValue(payload, START_OF_SPEECH_TIMESTAMP_FIELD_NAME, &startOfSpeechTimeStampInString);
 
     if (foundEnd && foundStart) {
+        int64_t startOfSpeechTimestamp = 0;
         auto offset = milliseconds(endOfSpeechOffset);
         submitMetric(
             m_metricRecorder,
@@ -1002,8 +975,13 @@ bool AudioInputProcessor::executeRecognize(
     // Handle metrics for this event.
     submitMetric(
         m_metricRecorder,
-        START_OF_UTTERANCE_ACTIVITY_NAME,
-        DataPointCounterBuilder{}.setName(START_OF_UTTERANCE).increment(1).build(),
+        MetricEventBuilder{}
+            .setActivityName(START_OF_UTTERANCE_ACTIVITY_NAME)
+            .addDataPoint(DataPointStringBuilder{}
+                              .setName("TIME_SINCE_RESUME_ID")
+                              .setValue(std::to_string(m_timeSinceLastResumeMS.count()))
+                              .build())
+            .addDataPoint(DataPointCounterBuilder{}.setName(START_OF_UTTERANCE).increment(1).build()),
         m_preCachedDialogRequestId);
 
     if (initiatedByWakeword) {
@@ -1123,7 +1101,6 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
         return true;
     }
     if (m_state != ObserverInterface::State::RECOGNIZING) {
-        static const char* errorMessage = "StopCapture only allowed in RECOGNIZING state.";
         auto returnValue = false;
         if (info) {
             if (info->result) {
@@ -1136,6 +1113,7 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
                                    .m("StopCapture directive ignored because local StopCapture was performed."));
 
                 } else {
+                    static const char* errorMessage = "StopCapture only allowed in RECOGNIZING state.";
                     info->result->setFailed(errorMessage);
                     ACSDK_ERROR(LX("executeStopCaptureFailed")
                                     .d("reason", "invalidState")
@@ -1228,8 +1206,8 @@ bool AudioInputProcessor::executeExpectSpeech(milliseconds timeout, std::shared_
         return true;
     }
     if (m_state != ObserverInterface::State::IDLE && m_state != ObserverInterface::State::BUSY) {
-        static const char* errorMessage = "ExpectSpeech only allowed in IDLE or BUSY state.";
         if (info->result) {
+            static const char* errorMessage = "ExpectSpeech only allowed in IDLE or BUSY state.";
             info->result->setFailed(errorMessage);
         }
         removeDirective(info);
@@ -1531,6 +1509,7 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
         case ObserverInterface::State::EXPECTING_SPEECH:
             m_powerResourceManager->acquirePowerResource(
                 POWER_RESOURCE_COMPONENT_NAME, PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH);
+            m_timeSinceLastResumeMS = m_powerResourceManager->getTimeSinceLastResumeMS();
             break;
         case ObserverInterface::State::BUSY:
         case ObserverInterface::State::IDLE:

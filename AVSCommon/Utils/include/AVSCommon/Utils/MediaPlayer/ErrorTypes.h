@@ -76,8 +76,9 @@ enum class ErrorType {
     /// Invalid command
     MEDIA_ERROR_INVALID_COMMAND,
     /// Playlist error occurred
-    MEDIA_ERROR_PLAYLIST_ERROR
-
+    MEDIA_ERROR_PLAYLIST_ERROR,
+    /// Decryption Flow failure
+    MEDIA_ERROR_DECRYPTION_FLOW
 };
 
 /**
@@ -140,6 +141,8 @@ inline std::string errorTypeToString(ErrorType errorType) {
             return "MEDIA_ERROR_INVALID_COMMAND";
         case ErrorType::MEDIA_ERROR_PLAYLIST_ERROR:
             return "MEDIA_ERROR_PLAYLIST_ERROR";
+        case ErrorType::MEDIA_ERROR_DECRYPTION_FLOW:
+            return "MEDIA_ERROR_DECRYPTION_FLOW";
     }
     return "unknown ErrorType";
 }

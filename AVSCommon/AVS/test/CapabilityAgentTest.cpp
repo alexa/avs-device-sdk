@@ -244,8 +244,8 @@ public:
      * @return A shared pointer to an instance of the @c MockCapabilityAgent.
      */
     static std::shared_ptr<MockCapabilityAgent> create(
-        const std::string nameSpace,
-        const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender);
+        const std::string& nameSpace,
+        const std::shared_ptr<MockExceptionEncounteredSender>& m_exceptionSender);
 
     /**
      * MockCapabilityAgent Constructor.
@@ -255,7 +255,7 @@ public:
      */
     MockCapabilityAgent(
         const std::string& nameSpace,
-        const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender);
+        const std::shared_ptr<MockExceptionEncounteredSender>& m_exceptionSender);
 
     ~MockCapabilityAgent() override;
 
@@ -311,14 +311,14 @@ private:
 };
 
 std::shared_ptr<MockCapabilityAgent> MockCapabilityAgent::create(
-    const std::string nameSpace,
-    const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender) {
+    const std::string& nameSpace,
+    const std::shared_ptr<MockExceptionEncounteredSender>& m_exceptionSender) {
     return std::make_shared<MockCapabilityAgent>(nameSpace, m_exceptionSender);
 }
 
 MockCapabilityAgent::MockCapabilityAgent(
     const std::string& nameSpace,
-    const std::shared_ptr<MockExceptionEncounteredSender> m_exceptionSender) :
+    const std::shared_ptr<MockExceptionEncounteredSender>& m_exceptionSender) :
         CapabilityAgent(nameSpace, m_exceptionSender),
         m_functionCalled{FunctionCalled::NONE} {
 }

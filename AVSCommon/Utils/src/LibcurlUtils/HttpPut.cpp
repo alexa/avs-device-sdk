@@ -79,7 +79,7 @@ HTTPResponse HttpPut::doPut(const std::string& url, const std::vector<std::strin
         return httpResponse;
     }
 
-    if (!m_curl.setopt(CURLOPT_INFILESIZE_LARGE, static_cast<curl_off_t>(data.length()))) {
+    if (!m_curl.curlOptionsSetter().setopt(CURLOPT_INFILESIZE_LARGE, static_cast<curl_off_t>(data.length()))) {
         ACSDK_ERROR(LX(errorEvent).d(errorReasonKey, "unableToSetDataLength"));
         return httpResponse;
     }

@@ -13,29 +13,34 @@
  * permissions and limitations under the License.
  */
 
-#include <ACL/AVSConnectionManager.h>
+#include <acsdkAlerts/AlertsComponent.h>
+#include <acsdkAlerts/Storage/SQLiteAlertStorage.h>
 #include <acsdkAlexaCommunications/AlexaCommunicationsComponent.h>
 #include <acsdkAudioPlayer/AudioPlayerComponent.h>
 #include <acsdkAuthorizationDelegate/AuthorizationDelegateComponent.h>
 #include <acsdkCore/CoreComponent.h>
+#include <acsdkDeviceSettingsManager/DeviceSettingsManagerComponent.h>
+#include <acsdkDoNotDisturb/DoNotDisturbComponent.h>
 #include <acsdkEqualizerImplementations/EqualizerComponent.h>
 #include <acsdkInternetConnectionMonitor/InternetConnectionMonitorComponent.h>
+#include <acsdkHTTPContentFetcher/HTTPContentFetcherComponent.h>
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayerComponent.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
 #include <acsdkMetricRecorder/MetricRecorderComponent.h>
+#include <acsdkSystemTimeZone/SystemTimeZoneComponent.h>
 #include <acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h>
 #include <acsdkShared/SharedComponent.h>
-#include <DefaultClient/StubApplicationAudioPipelineFactory.h>
+#include <Audio/AudioFactory.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
-#include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
+#include <AVSCommon/Utils/LibcurlUtils/DefaultSetCurlOptionsCallbackFactory.h>
 #include <Captions/CaptionsComponent.h>
-#include <ContextManager/ContextManager.h>
 #include <DefaultClient/EqualizerRuntimeSetup.h>
 #include <PlaybackController/PlaybackControllerComponent.h>
 #include <SampleApp/CaptionPresenter.h>
 #include <SampleApp/LocaleAssetsManager.h>
 #include <SampleApp/SampleEqualizerModeController.h>
 #include <SampleApp/UIManager.h>
+#include <Settings/Storage/SQLiteDeviceSettingStorage.h>
 #include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <SpeakerManager/SpeakerManagerComponent.h>
 #include <TemplateRuntime/RenderPlayerInfoCardsProviderRegistrar.h>
@@ -54,10 +59,6 @@
 
 #include "acsdkPreviewAlexaClient/PreviewAlexaClient.h"
 #include "acsdkPreviewAlexaClient/PreviewAlexaClientComponent.h"
-#include "SampleApp/CaptionPresenter.h"
-#include "SampleApp/LocaleAssetsManager.h"
-#include "SampleApp/SampleEqualizerModeController.h"
-#include "SampleApp/UIManager.h"
 
 namespace alexaClientSDK {
 namespace acsdkPreviewAlexaClient {
@@ -104,6 +105,30 @@ static std::function<std::shared_ptr<EventTracerInterface>()> getCreateEventTrac
     };
 }
 
+/**
+ * Function to create a LibcurlSetCurlOptionsCallbackFactoryInterface that is Annotated<> to target the
+ * instance for consumption by AVSConnectionManager.
+ *
+ * @return Pointer to LibcurlSetCurlOptionsCallbackFactoryInterface Annotated<> for consumption by
+ * AVSCnnectonManager.
+ */
+static Annotated<AVSConnectionManagerInterface, LibcurlSetCurlOptionsCallbackFactoryInterface>
+createSetCurlOptionsCallbackForAVSConnectionManager() {
+    return DefaultSetCurlOptionsCallbackFactory::createSetCurlOptionsCallbackFactoryInterface();
+}
+
+/**
+ * Function to create a LibcurlSetCurlOptionsCallbackFactoryInterface that is Annotated<> to target the
+ * instance for consumption by HTTPContentFetcherInterfaceFactory.
+ *
+ * @return Pointer to LibcurlSetCurlOptionsCallbackFactoryInterface Annotated<> for consumption by
+ * HTTPContentFetcherInterfaceFactory.
+ */
+static Annotated<HTTPContentFetcherInterfaceFactoryInterface, LibcurlSetCurlOptionsCallbackFactoryInterface>
+createSetCurlOptionsCallbackForHTTPContentFetcherInterfaceFactory() {
+    return DefaultSetCurlOptionsCallbackFactory::createSetCurlOptionsCallbackFactoryInterface();
+}
+
 PreviewAlexaClientComponent getComponent(
     std::unique_ptr<avsCommon::avs::initialization::InitializationParameters> initParams,
     const std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface>& diagnostics,
@@ -128,11 +153,13 @@ PreviewAlexaClientComponent getComponent(
 
         /// Baseline SDK components. Applications are not expected to modify these.
         .addComponent(acsdkCore::getComponent())
+        .addComponent(acsdkDeviceSettingsManager::getComponent())
         .addComponent(acsdkInternetConnectionMonitor::getComponent())
+        .addComponent(acsdkHTTPContentFetcher::getComponent())
         .addComponent(acsdkShared::getComponent())
-        .addRetainedFactory(certifiedSender::SQLiteMessageStorage::createMessageStorageInterface)
         .addRetainedFactory(certifiedSender::CertifiedSender::create)
-        .addRetainedFactory(HTTPContentFetcherFactory::createHTTPContentFetcherInterfaceFactoryInterface)
+        .addRetainedFactory(createSetCurlOptionsCallbackForAVSConnectionManager)
+        .addRetainedFactory(createSetCurlOptionsCallbackForHTTPContentFetcherInterfaceFactory)
 
         /**
          * Although these are the default options for PreviewAlexaClient, applications commonly modify or replace
@@ -145,6 +172,7 @@ PreviewAlexaClientComponent getComponent(
         .addComponent(acsdkAlexaCommunications::getComponent())
         .addComponent(acsdkAuthorizationDelegate::getComponent())
         .addComponent(acsdkMetricRecorder::getComponent())
+        .addComponent(acsdkSystemTimeZone::getComponent())
 #ifdef ANDROID_LOGGER
         .addPrimaryFactory(applicationUtilities::androidUtilities::AndroidLogger::getAndroidLogger)
 #else
@@ -163,6 +191,7 @@ PreviewAlexaClientComponent getComponent(
          *
          *     .addRequiredFactory(myCustomApp::CustomCaptionPresenter::createCaptionPresenterInterface)
          */
+        .addRetainedFactory(applicationUtilities::resources::audio::AudioFactory::createAudioFactoryInterface)
         .addRetainedFactory(
             capabilityAgents::speakerManager::DefaultChannelVolumeFactory::createChannelVolumeFactoryInterface)
         .addRetainedFactory(createApplicationAudioPipelineFactoryInterface)
@@ -174,6 +203,12 @@ PreviewAlexaClientComponent getComponent(
         .addRetainedFactory(sampleApp::UIManager::create)
         .addUnloadableFactory(SampleApplicationCBLAuthRequester::createCBLAuthRequesterInterface)
 
+        /// SQLite implementations of databases used by Capability Agents and other components.
+        /// Applications may choose to replace these with their own database implementations.
+        .addRetainedFactory(acsdkAlerts::storage::SQLiteAlertStorage::createAlertStorageInterface)
+        .addRetainedFactory(certifiedSender::SQLiteMessageStorage::createMessageStorageInterface)
+        .addRetainedFactory(settings::storage::SQLiteDeviceSettingStorage::createDeviceSettingStorageInterface)
+
         /// Optional, horizontal components. These may be enabled via cmake or AlexaClientSDKConfig.json.
         /// Applications are not expected to modify these.
         .addComponent(captions::getComponent())
@@ -183,7 +218,9 @@ PreviewAlexaClientComponent getComponent(
 #endif
 
         /// Capability Agents. Many CAs are still created in Default Client.
+        .addComponent(acsdkAlerts::getComponent())
         .addComponent(acsdkAudioPlayer::getComponent())
+        .addComponent(acsdkDoNotDisturb::getComponent())
         .addComponent(acsdkEqualizer::getComponent())
         .addComponent(acsdkExternalMediaPlayer::getComponent())
         .addComponent(capabilityAgents::playbackController::getComponent())

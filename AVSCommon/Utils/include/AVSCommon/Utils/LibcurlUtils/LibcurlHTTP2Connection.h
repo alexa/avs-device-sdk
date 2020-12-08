@@ -24,6 +24,7 @@
 
 #include "AVSCommon/Utils/HTTP2/HTTP2ConnectionInterface.h"
 #include "CurlMultiHandleWrapper.h"
+#include "LibcurlSetCurlOptionsCallbackInterface.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -37,9 +38,12 @@ public:
     /**
      * Create an @c LibcurlHTTP2Connection.
      *
+     * @param setCurlOptionsCallback The optional @c LibcurlSetCurlOptionsCallbackInterface to set curl
+     * options when a new http2 connection is being created.
      * @return The new @c LibcurlHTTP2Connection or nullptr if the operation fails.
      */
-    static std::shared_ptr<LibcurlHTTP2Connection> create();
+    static std::shared_ptr<LibcurlHTTP2Connection> create(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback = nullptr);
 
     /**
      * Destructor.
@@ -57,9 +61,13 @@ public:
 
 protected:
     /**
-     * Constructor
+     * Constructor.
+     *
+     * @param setCurlOptionsCallback The optional @c LibcurlSetCurlOptionsCallbackInterface to set curl
+     * options when a new http2 connection is being created.
      */
-    LibcurlHTTP2Connection();
+    LibcurlHTTP2Connection(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback = nullptr);
 
 private:
     /**
@@ -191,6 +199,9 @@ private:
 
     /// Set to true when we want to exit the network loop.
     bool m_isStopping;
+
+    /// The @c LibcurlSetCurlOptionsCallbackInterface used for this connection.
+    std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface> m_setCurlOptionsCallback;
 };
 
 }  // namespace libcurlUtils

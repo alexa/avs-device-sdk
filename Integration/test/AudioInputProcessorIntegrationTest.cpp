@@ -246,9 +246,9 @@ public:
 #if defined(KWD_KITTAI) || defined(KWD_SENSORY)
 class wakeWordTrigger : public KeyWordObserverInterface {
 public:
-    wakeWordTrigger(AudioFormat compatibleAudioFormat, std::shared_ptr<AudioInputProcessor> aip) {
-        m_compatibleAudioFormat = compatibleAudioFormat;
-        m_aip = aip;
+    wakeWordTrigger(AudioFormat compatibleAudioFormat, std::shared_ptr<AudioInputProcessor> aip) :
+            m_compatibleAudioFormat(compatibleAudioFormat),
+            m_aip(aip) {
     }
     void onKeyWordDetected(
         std::shared_ptr<AudioInputStream> stream,

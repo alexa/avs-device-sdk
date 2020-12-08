@@ -21,6 +21,7 @@
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlSetCurlOptionsCallbackFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -35,22 +36,31 @@ public:
     /**
      * Factory for creating instances of avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface
      *
+     * @param setCurlOptionsCallbackFactory The @c LibcurlSetCurlOptionsCallbackFactoryInterface to set user defined
+     * curl options.
      * @return A new instance of avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface.
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>
-    createHTTPContentFetcherInterfaceFactoryInterface();
+    createHTTPContentFetcherInterfaceFactoryInterface(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& setCurlOptionsCallbackFactory = nullptr);
 
     /**
      * Constructor.
      *
-     * @deprecated
+     * @param setCurlOptionsCallbackFactory The optional @c LibcurlSetCurlOptionsCallbackFactoryInterface to set user
+     * defined curl options
      */
-    HTTPContentFetcherFactory() = default;
+    HTTPContentFetcherFactory(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& setCurlOptionsCallbackFactory = nullptr);
 
     /// @name HTTPContentFetcherInterfaceFactoryInterface methods
     /// @{
     std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) override;
     /// @}
+
+private:
+    /// The optional @c LibcurlSetCurlOptionsCallbackFactoryInterface to set user defined curl options.
+    std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface> m_setCurlOptionsCallbackFactory;
 };
 
 }  // namespace libcurlUtils

@@ -408,6 +408,24 @@ TEST_F(SQLiteBluetoothStorageTest, retrieveCategoryforKnownMultipleUUID) {
     ASSERT_THAT(category, Eq(TEST_OTHER));
 }
 
+/// Test when a database is empty.
+TEST_F(SQLiteBluetoothStorageTest, testEmptyDatabase) {
+    m_sqLiteDb = std::unique_ptr<alexaClientSDK::storage::sqliteStorage::SQLiteDatabase>(
+        new alexaClientSDK::storage::sqliteStorage::SQLiteDatabase(TEST_DATABASE));
+
+    // Setup raw database.
+    ASSERT_THAT(m_sqLiteDb, NotNull());
+    ASSERT_TRUE(m_sqLiteDb->initialize());
+
+    m_db = SQLiteBluetoothStorage::create(ConfigurationNode::getRoot());
+
+    ASSERT_FALSE(m_sqLiteDb->tableExists(UUID_TABLE_NAME));
+    ASSERT_THAT(m_db, NotNull());
+    ASSERT_TRUE(m_db->open());
+
+    ASSERT_TRUE(m_sqLiteDb->tableExists(UUID_TABLE_NAME));
+}
+
 /// Parameterized tests to test both migrated and newly created databases.
 class SQLiteBluetoothStorageParameterizedTests
         : public SQLiteBluetoothStorageTest

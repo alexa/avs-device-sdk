@@ -36,4 +36,8 @@ typedef SSIZE_T ssize_t;
 #define avscommon_EXPORT
 #endif
 
+#if defined(_MSC_VER)
+#define ACSDK_USE_RTTI ON
+#endif
+
 #endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_PLATFORMDEFINITIONS_H_

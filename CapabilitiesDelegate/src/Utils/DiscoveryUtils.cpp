@@ -19,6 +19,7 @@
 #include <AVSCommon/AVS/AVSMessageHeader.h>
 #include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <Endpoints/EndpointAttributeValidation.h>
@@ -143,6 +144,38 @@ static std::string getScopeJson(const std::string& authToken) {
 }
 
 /**
+ * Adds the given string array as a sorted members array with the given key to the @c JsonGenerator.
+ *
+ * @param generator The @c JsonGenerator used to generate the JSON.
+ * @param key The key to use for the members array entry.
+ * @param memberArray The string array where each entry represents a member.
+ */
+static void addSortedMembersArray(
+    JsonGenerator& generator,
+    const std::string& key,
+    const std::vector<std::string>& memberArray) {
+    auto copy = memberArray;
+    std::sort(copy.begin(), copy.end());
+    generator.addMembersArray(key, copy);
+}
+
+/**
+ * Adds the given string array as a sorted string array with the given key to the @c JsonGenerator.
+ *
+ * @param generator The @c JsonGenerator used to generate the JSON.
+ * @param key The key to use for the string array entry.
+ * @param stringArray The string array to be added.
+ */
+static void addSortedStringArray(
+    JsonGenerator& generator,
+    const std::string& key,
+    const std::vector<std::string>& stringArray) {
+    auto copy = stringArray;
+    std::sort(copy.begin(), copy.end());
+    generator.addStringArray(key, copy);
+}
+
+/**
  * Formats the given @c CapabilityConfiguration into a JSON required to send in @c Discovery.AddOrUpdateReport event.
  * Note: The caller should validate the CapabilityConfiguration before calling this method.
  *
@@ -166,7 +199,7 @@ static std::string getCapabilityConfigJson(const CapabilityConfiguration& capabi
             generator2.addMember(CAPABILITY_INTERFACE_PROPERTIES_NAME_KEY, supported);
             supportedJson.push_back(generator2.toString());
         }
-        generator.addMembersArray(CAPABILITY_INTERFACE_PROPERTIES_SUPPORTED_KEY, supportedJson);
+        addSortedMembersArray(generator, CAPABILITY_INTERFACE_PROPERTIES_SUPPORTED_KEY, supportedJson);
         generator.addMember(
             CAPABILITY_INTERFACE_PROPERTIES_PROACTIVELY_REPORTED_KEY,
             capabilityConfig.properties.value().isProactivelyReported);
@@ -244,6 +277,22 @@ bool validateEndpointAttributes(const AVSDiscoveryEndpointAttributes& endpointAt
     return true;
 }
 
+bool compareEndpointConfigurations(const std::string& firstEndpointJson, const std::string& secondEndpointJson) {
+    rapidjson::Document firstEndpointDocument;
+    if (!jsonUtils::parseJSON(firstEndpointJson, &firstEndpointDocument)) {
+        ACSDK_ERROR(LX("compareEndpointConfigurationsFailed").d("reason", "invalid first endpoint json"));
+        return false;
+    }
+
+    rapidjson::Document secondEndpointDocument;
+    if (!jsonUtils::parseJSON(secondEndpointJson, &secondEndpointDocument)) {
+        ACSDK_ERROR(LX("compareEndpointConfigurationsFailed").d("reason", "invalid second endpoint json"));
+        return false;
+    }
+
+    return (firstEndpointDocument == secondEndpointDocument);
+}
+
 std::string getEndpointConfigJson(
     const AVSDiscoveryEndpointAttributes& endpointAttributes,
     const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) {
@@ -253,8 +302,7 @@ std::string getEndpointConfigJson(
     generator.addMember(FRIENDLY_NAME_KEY, endpointAttributes.friendlyName);
     generator.addMember(DESCRIPTION_KEY, endpointAttributes.description);
     generator.addMember(MANUFACTURER_NAME_KEY, endpointAttributes.manufacturerName);
-
-    generator.addStringArray(DISPLAY_CATEGORIES_KEY, endpointAttributes.displayCategories);
+    addSortedStringArray(generator, DISPLAY_CATEGORIES_KEY, endpointAttributes.displayCategories);
 
     /// Additional Attributes Object.
     if (endpointAttributes.additionalAttributes.hasValue()) {
@@ -301,7 +349,7 @@ std::string getEndpointConfigJson(
             }
             connectionsJsons.push_back(connectionJsonGenerator.toString());
         }
-        generator.addMembersArray(CONNECTIONS_KEY, connectionsJsons);
+        addSortedMembersArray(generator, CONNECTIONS_KEY, connectionsJsons);
     }
 
     /// Cookie Object.
@@ -320,7 +368,7 @@ std::string getEndpointConfigJson(
             capabilityConfigJsons.push_back(capabilityConfigJson);
         }
     }
-    generator.addMembersArray(CAPABILITIES_KEY, capabilityConfigJsons);
+    addSortedMembersArray(generator, CAPABILITIES_KEY, capabilityConfigJsons);
 
     return generator.toString();
 }

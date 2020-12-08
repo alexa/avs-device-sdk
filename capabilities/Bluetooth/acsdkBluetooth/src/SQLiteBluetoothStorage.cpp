@@ -52,6 +52,14 @@ static const std::string COLUMN_MAC = "mac";
 /// The Category column.
 static const std::string COLUMN_CATEGORY = "category";
 
+/// The SQL string to create a table.
+// clang-format off
+const std::string SQL_CREATE_UUID_TABLE_QUERY = "CREATE TABLE " + UUID_TABLE_NAME + "(" +
+    COLUMN_UUID + " text not null unique, " +
+    COLUMN_MAC + " text not null unique, " +
+    COLUMN_CATEGORY + " text not null default "+ deviceCategoryToString(DeviceCategory::UNKNOWN) +");";
+// clang-format on
+
 std::unique_ptr<SQLiteBluetoothStorage> SQLiteBluetoothStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     ACSDK_DEBUG5(LX(__func__));
@@ -73,24 +81,15 @@ std::unique_ptr<SQLiteBluetoothStorage> SQLiteBluetoothStorage::create(
 bool SQLiteBluetoothStorage::createDatabase() {
     ACSDK_DEBUG5(LX(__func__));
 
-    std::string defaultCategory = deviceCategoryToString(DeviceCategory::UNKNOWN);
-
-    // clang-format off
-    const std::string sqlString = "CREATE TABLE " + UUID_TABLE_NAME + "(" +
-        COLUMN_UUID + " text not null unique, " +
-        COLUMN_MAC + " text not null unique, " +
-        COLUMN_CATEGORY + " text not null default "+ defaultCategory +");";
-    // clang-format on
-
     std::lock_guard<std::mutex> lock(m_databaseMutex);
     if (!m_db.initialize()) {
         ACSDK_ERROR(LX(__func__).d("reason", "initializeDBFailed"));
         return false;
     }
 
-    if (!m_db.performQuery(sqlString)) {
+    if (!m_db.performQuery(SQL_CREATE_UUID_TABLE_QUERY)) {
         ACSDK_ERROR(LX(__func__).d("reason", "createTableFailed"));
-        close();
+        closeLocked();
         return false;
     }
 
@@ -101,21 +100,37 @@ bool SQLiteBluetoothStorage::open() {
     ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock(m_databaseMutex);
 
-    bool ret = m_db.open();
-    if (ret && !isDatabaseMigratedLocked()) {
-        // Database exists & database is not migrated yet
-        ACSDK_INFO(LX(__func__).d("reason", "Legacy Database, migrating database"));
-        migrateDatabaseLocked();
+    if (!m_db.open()) {
+        ACSDK_ERROR(LX("openFailed").d("reason", "openDBFailed"));
+        return false;
     }
 
-    return ret;
+    if (!m_db.tableExists(UUID_TABLE_NAME)) {
+        if (!m_db.performQuery(SQL_CREATE_UUID_TABLE_QUERY)) {
+            ACSDK_ERROR(LX("openFailed").d("sqlStatement", SQL_CREATE_UUID_TABLE_QUERY));
+            closeLocked();
+
+            return false;
+        }
+    } else if (!isDatabaseMigratedLocked()) {
+        // Database exists & database is not migrated yet
+        ACSDK_INFO(LX(__func__).d("reason", "Legacy Database, migrating database"));
+        if (!migrateDatabaseLocked()) {
+            ACSDK_ERROR(LX("openFailed").d("reason", "failedtoMigrateDatabase"));
+            closeLocked();
+
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void SQLiteBluetoothStorage::close() {
     ACSDK_DEBUG5(LX(__func__));
-    std::lock_guard<std::mutex> lock(m_databaseMutex);
 
-    return m_db.close();
+    std::lock_guard<std::mutex> lock(m_databaseMutex);
+    closeLocked();
 }
 
 bool SQLiteBluetoothStorage::clear() {
@@ -536,6 +551,12 @@ bool SQLiteBluetoothStorage::remove(const std::string& mac) {
     }
 
     return true;
+}
+
+void SQLiteBluetoothStorage::closeLocked() {
+    ACSDK_DEBUG5(LX(__func__));
+
+    m_db.close();
 }
 
 SQLiteBluetoothStorage::SQLiteBluetoothStorage(const std::string& filePath) : m_db{filePath} {

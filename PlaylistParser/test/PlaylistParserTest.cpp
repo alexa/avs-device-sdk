@@ -39,7 +39,7 @@ using namespace avsCommon::avs;
 
 /// A mock factory that creates mock content fetchers
 class MockContentFetcherFactory : public avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface {
-    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) {
+    std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> create(const std::string& url) override {
         return avsCommon::utils::memory::make_unique<MockContentFetcher>(url);
     }
 };
@@ -92,13 +92,13 @@ private:
 
 class PlaylistParserTest : public ::testing::Test {
 protected:
-    void SetUp() {
+    void SetUp() override {
         mockFactory = std::make_shared<MockContentFetcherFactory>();
         playlistParser = PlaylistParser::create(mockFactory);
         testObserver = std::make_shared<TestParserObserver>();
     }
 
-    void TearDown() {
+    void TearDown() override {
         playlistParser->shutdown();
     }
 

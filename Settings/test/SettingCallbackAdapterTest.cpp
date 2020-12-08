@@ -52,7 +52,7 @@ public:
     bool clearData(const std::string& value) override;
 
     /// Build setting object.
-    TimezoneSettingStub(const std::string& value);
+    explicit TimezoneSettingStub(const std::string& value);
 };
 
 SetSettingResult TimezoneSettingStub::setLocalChange(const std::string& value) {
@@ -95,7 +95,9 @@ protected:
 
 void SettingCallbackAdapterTest::SetUp() {
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    m_manager = std::make_shared<DeviceSettingsManager>(customerDataManager);
+    DeviceSettingManagerSettingConfigurations settingConfigs;
+
+    m_manager = std::make_shared<DeviceSettingsManager>(customerDataManager, settingConfigs);
     m_timezone = std::make_shared<TimezoneSettingStub>(INIT_TIMEZONE);
     ASSERT_TRUE(m_manager->addSetting<DeviceSettingsIndex::TIMEZONE>(m_timezone));
 }
@@ -124,7 +126,7 @@ public:
      *
      * @param manager The device manager used to register the callbacks.
      */
-    ObserverClass(std::shared_ptr<DeviceSettingsManager>& manager);
+    explicit ObserverClass(std::shared_ptr<DeviceSettingsManager>& manager);
 
     /**
      * Destructor.

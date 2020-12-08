@@ -32,6 +32,12 @@ namespace timing {
 class SystemClockMonitor {
 public:
     /**
+     * Factory method that creates a new @c SystemClockMonitor.
+     * @return A shared_ptr to a @c SystemClockMonitor.
+     */
+    static std::shared_ptr<SystemClockMonitor> createSystemClockMonitor();
+
+    /**
      * Should be called when the device clock has synchronized (ex. ntp time sync)
      */
     void notifySystemClockSynchronized();

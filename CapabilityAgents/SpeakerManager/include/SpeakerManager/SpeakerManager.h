@@ -34,6 +34,7 @@
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
+#include <AVSCommon/Utils/functional/hash.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -47,9 +48,10 @@ namespace speakerManager {
 /**
  * This class implements a @c CapabilityAgent that handles the AVS @c Speaker API.
  *
- * The @c SpeakerManager can handle multiple @c ChannelVolumeInterface objects. @c ChannelVolumeInterface
- * are grouped by their respective @c ChannelVolumeInterface::Type, and the volume and mute state will be consistent
- * across each type. For example, to change the volume of all @c ChannelVolumeInterface objects of a specific type:
+ * The @c SpeakerManager can handle multiple @c ChannelVolumeInterface objects and dedupe them with
+ * the same getId() value. The @c ChannelVolumeInterface are grouped by their respective
+ * @c ChannelVolumeInterface::Type, and the volume and mute state will be consistent across each type.
+ * For example, to change the volume of all @c ChannelVolumeInterface objects of a specific type:
  *
  * @code{.cpp}
  *     // Use local setVolume API.
@@ -196,6 +198,50 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         const int minUnmuteVolume,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+
+    /// Hash functor to use identifier of @c ChannelVolumeInterface as the key in SpeakerSet.
+    struct ChannelVolumeInterfaceHash {
+    public:
+        size_t operator()(const std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>& key) const {
+            if (nullptr == key) {
+                /// This should never happen because the only way to add a ChannelVolumeInterface into the SpeakerSet
+                /// has a guard of nullptr.
+                return 0;
+            }
+            return key->getId();
+        }
+    };
+
+    /// Comparator to compare two shared_ptrs of @c ChannelVolumeInterface objects in SpeakerSet.
+    struct ChannelVolumeInterfaceEqualTo {
+    public:
+        bool operator()(
+            const std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface1,
+            std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface2) const {
+            if (!channelVolumeInterface1 || !channelVolumeInterface2) {
+                /// This should never happen because the only way to add a ChannelVolumeInterface into the SpeakerSet
+                /// has a guard of nullptr.
+                return true;
+            }
+            return channelVolumeInterface1->getId() == channelVolumeInterface2->getId();
+        }
+    };
+
+    /// Alias for a set of @c ChannelVolumeInterface keyed by the id.
+    using SpeakerSet = std::unordered_set<
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>,
+        ChannelVolumeInterfaceHash,
+        ChannelVolumeInterfaceEqualTo>;
+
+    /**
+     * Internal function to add @c ChannelVolumeInterface object into SpeakerMap.
+     * Invalid element(nullptr or ChannelVolumeInterface with the same getId() value) is not allowed to be added into
+     * the map.
+     *
+     * @param channelVolumeInterface The @c ChannelVolumeInterface object.
+     */
+    void addChannelVolumeInterfaceIntoSpeakerMap(
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface);
 
     /**
      * Parses the payload from a string into a rapidjson document.
@@ -397,10 +443,13 @@ private:
     /// the @c volume to restore to when unmuting at 0 volume
     const int m_minUnmuteVolume;
 
-    /// A multimap contain ChannelVolumeInterfaces keyed by @c Type.
-    std::multimap<
+    /// An unordered_map contains ChannelVolumeInterfaces keyed by @c Type. Only internal function
+    /// addChannelVolumeInterfaceIntoSpeakerMap can insert an element into this map to ensure that no invalid element
+    /// is added. The @c ChannelVolumeInterface in the map is deduped by the getId() value.
+    std::unordered_map<
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
-        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>
+        SpeakerSet,
+        avsCommon::utils::functional::EnumClassHash>
         m_speakerMap;
 
     /// The observers to be notified whenever any of the @c SpeakerSetting changing APIs are called.

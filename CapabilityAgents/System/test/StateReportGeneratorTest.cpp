@@ -87,7 +87,13 @@ void StateReportGeneratorTest::SetUp() {
     m_mockIntSetting = std::make_shared<MockSetting<int>>(INT_SETTING_VALUE);
     m_mockStringSetting = std::make_shared<MockSetting<std::string>>(STRING_SETTING_VALUE);
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    m_mockSettingManager = std::make_shared<MockSettingManager>(customerDataManager);
+    std::tuple<
+        SettingConfiguration<SettingInterface<bool>>,
+        SettingConfiguration<SettingInterface<int>>,
+        SettingConfiguration<SettingInterface<std::string>>>
+        settingConfigs;
+
+    m_mockSettingManager = std::make_shared<MockSettingManager>(customerDataManager, settingConfigs);
 
     SettingEventMetadata boolSettingMetadata{"test", "", "BoolSettingReport", "boolSetting"};
     SettingEventMetadata intSettingMetadata{"test", "", "IntSettingReport", "intSetting"};

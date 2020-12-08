@@ -34,14 +34,25 @@ static const std::string TAG("HTTPContentFetcherFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface> HTTPContentFetcherFactory::
-    createHTTPContentFetcherInterfaceFactoryInterface() {
-    return std::make_shared<HTTPContentFetcherFactory>();
+    createHTTPContentFetcherInterfaceFactoryInterface(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& setCurlOptionsCallbackFactory) {
+    return std::make_shared<HTTPContentFetcherFactory>(setCurlOptionsCallbackFactory);
+}
+
+HTTPContentFetcherFactory::HTTPContentFetcherFactory(
+    const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& setCurlOptionsCallbackFactory) :
+        m_setCurlOptionsCallbackFactory{setCurlOptionsCallbackFactory} {
 }
 
 std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> HTTPContentFetcherFactory::create(
     const std::string& url) {
+    std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface> setCurlOptionsCallback;
+    if (m_setCurlOptionsCallbackFactory) {
+        setCurlOptionsCallback = m_setCurlOptionsCallbackFactory->createSetCurlOptionsCallback();
+    }
+
     ACSDK_DEBUG9(LX(__func__).sensitive("URL", url).m("Creating a new http content fetcher"));
-    return avsCommon::utils::memory::make_unique<LibCurlHttpContentFetcher>(url);
+    return avsCommon::utils::memory::make_unique<LibCurlHttpContentFetcher>(url, setCurlOptionsCallback);
 }
 
 }  // namespace libcurlUtils

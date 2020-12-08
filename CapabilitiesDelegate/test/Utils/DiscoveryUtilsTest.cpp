@@ -41,25 +41,35 @@ using namespace rapidjson;
 using Properties = CapabilityConfiguration::Properties;
 
 /// A Test CapabilityConfiguration type.
-static const std::string TEST_TYPE = "TEST_TYPE";
+static const std::string TEST_TYPE_1 = "TEST_TYPE_1";
 
 /// A Test CapabilityConfiguration interface name.
-static const std::string TEST_INTERFACE_NAME = "TEST_INTERFACE_NAME";
+static const std::string TEST_INTERFACE_NAME_1 = "TEST_INTERFACE_NAME_1";
 
 /// A Test CapabilityConfiguration version.
-static const std::string TEST_VERSION = "TEST_VERSION";
+static const std::string TEST_VERSION_1 = "TEST_VERSION_1";
+
+/// A Test CapabilityConfiguration type.
+static const std::string TEST_TYPE_2 = "TEST_TYPE_2";
+
+/// A Test CapabilityConfiguration interface name.
+static const std::string TEST_INTERFACE_NAME_2 = "TEST_INTERFACE_NAME_2";
+
+/// A Test CapabilityConfiguration version.
+static const std::string TEST_VERSION_2 = "TEST_VERSION_2";
 
 /// A Test CapabilityConfiguration instance name.
 static const Optional<std::string> TEST_INSTANCE_NAME("TEST_INSTANCE_NAME");
 
 /// A Test CapabilityConfiguration properties supportedList.
-static const std::vector<std::string> TEST_SUPPORTED_LIST{"TEST_PROPERTY"};
+static const std::vector<std::string> TEST_SUPPORTED_LIST{"TEST_PROPERTY_1", "TEST_PROPERTY_2"};
 
 /// A Test CapabilityConfiguration Optional properties.
 static const Optional<Properties> TEST_PROPERTIES = Properties(false, false, TEST_SUPPORTED_LIST);
 
+/// A Test CapabilityConfiguration supported properties string.
 static const std::string EXPECTED_TEST_PROPERTIES_STRING =
-    R"({"supported":[{"name":"TEST_PROPERTY"}],"proactivelyReported":false,"retrievable":false})";
+    R"({"supported":[{"name":"TEST_PROPERTY_1"},{"name":"TEST_PROPERTY_2"}],"proactivelyReported":false,"retrievable":false})";
 
 /// A Test valid JSON value.
 static const std::string TEST_VALID_CONFIG_JSON = R"({"key":{"key1":"value1"}})";
@@ -81,7 +91,7 @@ static const std::string TEST_DESCRIPTION = "TEST_DESCRIPTION";
 static const std::string TEST_MANUFACTURER_NAME = "TEST_MANUFACTURER_NAME";
 
 /// A Test display category list.
-static const std::vector<std::string> TEST_DISPLAY_CATEGORIES = {"TEST_DISPLAY_CATEGORY"};
+static const std::vector<std::string> TEST_DISPLAY_CATEGORIES = {"TEST_DISPLAY_CATEGORY_1", "TEST_DISPLAY_CATEGORY_2"};
 
 /// A Test customer identifier.
 static const std::string TEST_CUSTOMER_IDENTIFIER = "TEST_CUSTOMER_IDENTIFIER";
@@ -163,34 +173,15 @@ AVSDiscoveryEndpointAttributes getTestEndpointAttributes() {
     endpointAttributes.cookies = cookie;
 
     CapabilityConfiguration capability(
-        TEST_TYPE,
-        TEST_INTERFACE_NAME,
-        TEST_VERSION,
+        TEST_TYPE_1,
+        TEST_INTERFACE_NAME_1,
+        TEST_VERSION_1,
         TEST_INSTANCE_NAME,
         TEST_PROPERTIES,
         TEST_ADDITIONAL_CONFIGURATIONS);
     capabilities.push_back(capability);
 
     return endpointAttributes;
-}
-
-/**
- * Returns an array of @c CapabilityConfigurations to be used in unit tests.
- *
- * @return an array of @c CapabilityConfigurations.
- */
-std::vector<CapabilityConfiguration> getTestCapabilities() {
-    std::vector<CapabilityConfiguration> capabilities;
-    CapabilityConfiguration capability(
-        TEST_TYPE,
-        TEST_INTERFACE_NAME,
-        TEST_VERSION,
-        TEST_INSTANCE_NAME,
-        TEST_PROPERTIES,
-        TEST_ADDITIONAL_CONFIGURATIONS);
-    capabilities.push_back(capability);
-
-    return capabilities;
 }
 
 /**
@@ -330,14 +321,18 @@ void validateEndpointConfigJson(const std::string& endpointConfigJson) {
         capabilitiesMaps.push_back(capabilitiesMap);
     }
 
-    ASSERT_EQ(capabilitiesMaps.size(), 1U);
+    ASSERT_EQ(capabilitiesMaps.size(), 2U);
 
-    ASSERT_EQ(capabilitiesMaps[0]["interface"], TEST_INTERFACE_NAME);
-    ASSERT_EQ(capabilitiesMaps[0]["version"], TEST_VERSION);
-    ASSERT_EQ(capabilitiesMaps[0]["type"], TEST_TYPE);
+    ASSERT_EQ(capabilitiesMaps[0]["interface"], TEST_INTERFACE_NAME_1);
+    ASSERT_EQ(capabilitiesMaps[0]["version"], TEST_VERSION_1);
+    ASSERT_EQ(capabilitiesMaps[0]["type"], TEST_TYPE_1);
     ASSERT_EQ(capabilitiesMaps[0]["instance"], TEST_INSTANCE_NAME.value());
     ASSERT_EQ(capabilitiesMaps[0]["properties"], EXPECTED_TEST_PROPERTIES_STRING);
     ASSERT_EQ(capabilitiesMaps[0]["configuration"], TEST_VALID_CONFIG_JSON);
+
+    ASSERT_EQ(capabilitiesMaps[1]["interface"], TEST_INTERFACE_NAME_2);
+    ASSERT_EQ(capabilitiesMaps[1]["version"], TEST_VERSION_2);
+    ASSERT_EQ(capabilitiesMaps[1]["type"], TEST_TYPE_2);
 }
 
 /**
@@ -422,26 +417,26 @@ class DiscoveryUtilsTest : public Test {};
  */
 TEST_F(DiscoveryUtilsTest, test_validateCapabilityConfiguration) {
     /// Invalid Type
-    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration("", TEST_INTERFACE_NAME, TEST_VERSION)));
+    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration("", TEST_INTERFACE_NAME_1, TEST_VERSION_1)));
 
     /// Invalid Interface Name
-    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(TEST_TYPE, "", TEST_VERSION)));
+    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(TEST_TYPE_1, "", TEST_VERSION_1)));
 
     /// Invalid Version
-    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(TEST_TYPE, TEST_INTERFACE_NAME, "")));
+    ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(TEST_TYPE_1, TEST_INTERFACE_NAME_1, "")));
 
     /// Invalid instance name
     Optional<std::string> invalidInstanceName("");
     ASSERT_FALSE(validateCapabilityConfiguration(
-        CapabilityConfiguration(TEST_TYPE, TEST_INTERFACE_NAME, TEST_VERSION, invalidInstanceName)));
+        CapabilityConfiguration(TEST_TYPE_1, TEST_INTERFACE_NAME_1, TEST_VERSION_1, invalidInstanceName)));
 
     /// Invalid supported list
     std::vector<std::string> supportedList;
     Properties invalidSupportedListProperties(false, false, supportedList);
     ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(
-        TEST_TYPE,
-        TEST_INTERFACE_NAME,
-        TEST_VERSION,
+        TEST_TYPE_1,
+        TEST_INTERFACE_NAME_1,
+        TEST_VERSION_1,
         TEST_INSTANCE_NAME,
         Optional<Properties>(invalidSupportedListProperties))));
 
@@ -449,13 +444,18 @@ TEST_F(DiscoveryUtilsTest, test_validateCapabilityConfiguration) {
     CapabilityConfiguration::AdditionalConfigurations additionalConfigurations;
     additionalConfigurations.insert({"TEST", "abc:"});
     ASSERT_FALSE(validateCapabilityConfiguration(CapabilityConfiguration(
-        TEST_TYPE, TEST_INTERFACE_NAME, TEST_VERSION, TEST_INSTANCE_NAME, TEST_PROPERTIES, additionalConfigurations)));
+        TEST_TYPE_1,
+        TEST_INTERFACE_NAME_1,
+        TEST_VERSION_1,
+        TEST_INSTANCE_NAME,
+        TEST_PROPERTIES,
+        additionalConfigurations)));
 
     /// Valid case with fully loaded @c CapabilityConfiguration.
     ASSERT_TRUE(validateCapabilityConfiguration(CapabilityConfiguration(
-        TEST_TYPE,
-        TEST_INTERFACE_NAME,
-        TEST_VERSION,
+        TEST_TYPE_1,
+        TEST_INTERFACE_NAME_1,
+        TEST_VERSION_1,
         TEST_INSTANCE_NAME,
         TEST_PROPERTIES,
         TEST_ADDITIONAL_CONFIGURATIONS)));
@@ -490,7 +490,29 @@ TEST_F(DiscoveryUtilsTest, test_validateAVSDiscoveryEndpointAttributes) {
  * Test if the getEndpointConfigJson method works as expected.
  */
 TEST_F(DiscoveryUtilsTest, test_formatEndpointConfigJson) {
-    validateEndpointConfigJson(getEndpointConfigJson(getTestEndpointAttributes(), getTestCapabilities()));
+    std::vector<CapabilityConfiguration> capabilities;
+
+    CapabilityConfiguration capability1(
+        TEST_TYPE_1,
+        TEST_INTERFACE_NAME_1,
+        TEST_VERSION_1,
+        TEST_INSTANCE_NAME,
+        TEST_PROPERTIES,
+        TEST_ADDITIONAL_CONFIGURATIONS);
+
+    CapabilityConfiguration capability2(TEST_TYPE_2, TEST_INTERFACE_NAME_2, TEST_VERSION_2);
+
+    capabilities.push_back(capability1);
+    capabilities.push_back(capability2);
+
+    validateEndpointConfigJson(getEndpointConfigJson(getTestEndpointAttributes(), capabilities));
+
+    /// Check if endpoint configuration is valid even after flipping the contents of the capabilities array.
+    capabilities.clear();
+    capabilities.push_back(capability2);
+    capabilities.push_back(capability1);
+
+    validateEndpointConfigJson(getEndpointConfigJson(getTestEndpointAttributes(), capabilities));
 }
 
 /**
@@ -516,6 +538,31 @@ TEST_F(DiscoveryUtilsTest, test_deleteReportEvent) {
     std::vector<std::string> testEndpointConfigs = {TEST_ENDPOINT_CONFIG};
     auto event = getDeleteReportEventJson(testEndpointConfigs, TEST_AUTH_TOKEN);
     validateDiscoveryEvent(event, DELETE_REPORT_EVENT_NAME, TEST_AUTH_TOKEN, {TEST_ENDPOINT_ID});
+}
+
+TEST_F(DiscoveryUtilsTest, test_compareEndpointConfigJsons) {
+    std::string endpointConfig1, endpointConfig2;
+
+    /// Contents of the JSON are same.
+    endpointConfig1 =
+        R"({"endpointId":"a", "friendlyName":"c", "capabilities":[{"interfaceName":"abc", "version":"123"}, {"interfaceName":"xyz", "version":"456"}]})";
+    endpointConfig2 =
+        R"({"endpointId":"a", "friendlyName":"c", "capabilities":[{"interfaceName":"abc", "version":"123"}, {"interfaceName":"xyz", "version":"456"}]})";
+    ASSERT_TRUE(compareEndpointConfigurations(endpointConfig1, endpointConfig2));
+
+    /// Elements out of order
+    endpointConfig1 =
+        R"({"endpointId":"a", "friendlyName":"c", "capabilities":[{"interfaceName":"abc", "version":"123"}, {"interfaceName":"xyz", "version":"456"}]})";
+    endpointConfig2 =
+        R"({"capabilities":[{"interfaceName":"abc", "version":"123"}, {"interfaceName":"xyz", "version":"456"}], "friendlyName":"c", "endpointId":"a"})";
+    ASSERT_TRUE(compareEndpointConfigurations(endpointConfig1, endpointConfig2));
+
+    /// Order of arrays doesn't match
+    endpointConfig1 =
+        R"({"endpointId":"a", "friendlyName":"c", "capabilities":[{"interfaceName":"abc", "version":"123"}, {"interfaceName":"xyz", "version":"456"}]})";
+    endpointConfig2 =
+        R"({"endpointId":"a", "friendlyName":"c", "capabilities":[{"interfaceName":"xyz", "version":"456"}, {"interfaceName":"abc", "version":"123"}]})";
+    ASSERT_FALSE(compareEndpointConfigurations(endpointConfig1, endpointConfig2));
 }
 
 }  // namespace test

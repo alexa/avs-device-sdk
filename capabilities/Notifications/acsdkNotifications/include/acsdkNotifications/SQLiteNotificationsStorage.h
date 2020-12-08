@@ -85,6 +85,20 @@ private:
      */
     bool getNextNotificationIndicatorLocked(NotificationIndicator* notificationIndicator);
 
+    /**
+     * Create the notificationIndicators table.
+     *
+     * @return Whether or not the operation was successful.
+     */
+    bool createNotificationIndicatorsTable();
+
+    /**
+     * Create the indicatorState table.
+     *
+     * @return Whether or not the operation was successful.
+     */
+    bool createIndicatorStateTable();
+
     /// A mutex to protect database access.
     std::mutex m_databaseMutex;
 

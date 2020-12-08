@@ -25,6 +25,10 @@ namespace applicationUtilities {
 namespace resources {
 namespace audio {
 
+std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> AudioFactory::createAudioFactoryInterface() {
+    return std::make_shared<alexaClientSDK::applicationUtilities::resources::audio::AudioFactory>();
+}
+
 std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> AudioFactory::alerts() const {
     return std::make_shared<AlertsAudioFactory>();
 }

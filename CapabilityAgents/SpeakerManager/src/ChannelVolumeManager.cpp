@@ -89,6 +89,10 @@ ChannelVolumeInterface::Type ChannelVolumeManager::getSpeakerType() const {
     return m_type;
 }
 
+size_t ChannelVolumeManager::getId() const {
+    return (size_t)m_speaker.get();
+}
+
 bool ChannelVolumeManager::startDucking() {
     std::lock_guard<std::mutex> locker{m_mutex};
     ACSDK_DEBUG5(LX(__func__));

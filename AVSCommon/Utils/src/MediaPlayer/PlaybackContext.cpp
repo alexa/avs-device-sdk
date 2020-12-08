@@ -54,17 +54,24 @@ bool validateIfNotMalicious(const std::string& header) {
  * Helper function to validate the headers.
  *
  * @param[out] headerConfig to be validated and the invalid entries will be deleted.
- * @return @c true if validation had no errrors, else @c false.
+ * @return <true, true> if valid and not malicious.
  */
-static bool validatePlaybackContextHeadersInternal(HeaderConfig* headerConfig) {
+static std::pair<bool, bool> validatePlaybackContextHeadersInternal(HeaderConfig* headerConfig) {
     bool foundInvalidHeaders = false;
+    bool foundMaliciousHeaders = false;
     for (auto entry = headerConfig->begin(); entry != headerConfig->end();) {
-        if (((entry->first.find(ALLOWED_PREFIX) == 0 && entry->first.length() >= MIN_KEY_LENGTH &&
-              entry->first.length() <= MAX_KEY_LENGTH && entry->second.length() <= MAX_VALUE_LENGTH) ||
-             (entry->first.compare(AUTHORIZATION) == 0 && entry->second.length() <= MAX_VALUE_LENGTH) ||
-             (entry->first.compare(COOKIE) == 0 && entry->second.length() <= MAX_VALUE_LENGTH)) &&
-            (validateIfNotMalicious(entry->first) && validateIfNotMalicious(entry->second))) {
-            entry++;
+        if (!validateIfNotMalicious(entry->first) || !validateIfNotMalicious(entry->second)) {
+            foundMaliciousHeaders = true;
+        }
+        if ((entry->first.find(ALLOWED_PREFIX) == 0 && entry->first.length() >= MIN_KEY_LENGTH &&
+             entry->first.length() <= MAX_KEY_LENGTH && entry->second.length() <= MAX_VALUE_LENGTH) ||
+            (entry->first.compare(AUTHORIZATION) == 0 && entry->second.length() <= MAX_VALUE_LENGTH) ||
+            (entry->first.compare(COOKIE) == 0 && entry->second.length() <= MAX_VALUE_LENGTH)) {
+            if (!foundMaliciousHeaders) {
+                entry++;
+            } else {
+                entry = headerConfig->erase(entry);
+            }
         } else {
             entry = headerConfig->erase(entry);
             foundInvalidHeaders = true;
@@ -76,27 +83,35 @@ static bool validatePlaybackContextHeadersInternal(HeaderConfig* headerConfig) {
                        .d("found invalid headers:", foundInvalidHeaders)
                        .d("HeadersSize:", headerConfig->size()));
     }
+
+    if (foundMaliciousHeaders) {
+        ACSDK_WARN(LX("validateHeadersInternal").d("found malicious headers:", foundMaliciousHeaders));
+    }
+
     // Erase extra headers.
     for (auto entry = headerConfig->begin(); headerConfig->size() > MAX_ENTRIES_PER_CONFIG;) {
         entry = headerConfig->erase(entry);
         foundInvalidHeaders = true;
     }
 
-    return !foundInvalidHeaders;
+    return std::make_pair(!foundInvalidHeaders, !foundMaliciousHeaders);
 }
 
-bool validatePlaybackContextHeaders(PlaybackContext* playbackContext) {
+std::pair<bool, bool> validatePlaybackContextHeaders(PlaybackContext* playbackContext) {
     std::vector<HeaderConfig*> configs = {&(playbackContext->keyConfig),
                                           &(playbackContext->manifestConfig),
                                           &(playbackContext->audioSegmentConfig),
                                           &(playbackContext->allConfig)};
-    std::vector<bool> isHeaderValid(configs.size(), false);
+    std::vector<std::pair<bool, bool>> isHeaderValid(configs.size(), std::make_pair(false, false));
 
     std::transform(configs.begin(), configs.end(), isHeaderValid.begin(), [](HeaderConfig* config) {
         return validatePlaybackContextHeadersInternal(config);
     });
-
-    return std::all_of(isHeaderValid.begin(), isHeaderValid.end(), [](bool isValid) { return isValid; });
+    return std::make_pair(
+        std::all_of(
+            isHeaderValid.begin(), isHeaderValid.end(), [](std::pair<bool, bool> isValid) { return isValid.first; }),
+        std::all_of(
+            isHeaderValid.begin(), isHeaderValid.end(), [](std::pair<bool, bool> isValid) { return isValid.second; }));
 }
 
 }  // namespace mediaPlayer

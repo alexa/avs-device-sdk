@@ -61,6 +61,56 @@
 namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
 
+/// Splitting AudioPlayer internal state from the external facing PlayerActivity
+/// the change here is trivial, but the sematics of BUFFERING vs BUFFER_UNDERRUN are slightly different
+/// so, this was a recommended path from the sdk team
+enum class AudioPlayerState {
+    /// Initial state, prior to acting on the first @c Play directive, or after the current queue is finished
+    IDLE,
+    /// Indicates that an audio stream is pre-buffering, but is not ready to play.
+    BUFFERING,
+    /// Indicates that an audio stream under-run has interrupted playback
+    /// The difference between BUFFERING and BUFFER_UNDERRUN only affects a couple of behaviors
+    BUFFER_UNDERRUN,
+    /// Indicates that audio is currently playing.
+    PLAYING,
+    /**
+     * Indicates that audio playback was stopped due to an error or a directive which stops or replaces the current
+     * stream.
+     */
+    STOPPED,
+    /// Indicates that the audio stream has been paused.
+    PAUSED,
+    /// Indicates that playback has finished.
+    FINISHED
+};
+
+/*
+ * Convert a @c AudioPlayerState to @c std::string.
+ *
+ * @param state The @c AudioPlayerState to convert.
+ * @return The string representation of @c AudioPlayerState.
+ */
+inline std::string playerStateToString(AudioPlayerState state) {
+    switch (state) {
+        case AudioPlayerState::IDLE:
+            return "IDLE";
+        case AudioPlayerState::PLAYING:
+            return "PLAYING";
+        case AudioPlayerState::STOPPED:
+            return "STOPPED";
+        case AudioPlayerState::PAUSED:
+            return "PAUSED";
+        case AudioPlayerState::BUFFERING:
+            return "BUFFERING";
+        case AudioPlayerState::BUFFER_UNDERRUN:
+            return "BUFFER_UNDERRUN";
+        case AudioPlayerState::FINISHED:
+            return "FINISHED";
+    }
+    return "unknown AudioPlayerState";
+}
+
 /**
  * This class implements the @c AudioPlayer capability agent.
  *
@@ -240,6 +290,33 @@ public:
 
 private:
     /**
+     * A utility class to manage interaction with the MessageSender.
+     */
+    class MessageRequestObserver : public avsCommon::avs::MessageRequest {
+    public:
+        /**
+         * Constructor.
+         *
+         * @param metricRecorder The metric recorder.
+         * @param jsonContent The JSON text to be sent to AVS.
+         * @param uriPathExtension An optional URI path extension of the message to be appended to the base url of the
+         * AVS endpoint. If not specified, the default AVS path extension will be used.
+         */
+        MessageRequestObserver(
+            std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+            const std::string& jsonContent,
+            const std::string& uriPathExtension = "");
+
+        /// @name MessageRequest functions.
+        /// @{
+        void sendCompleted(
+            avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status sendMessageStatus) override;
+        /// @}
+    private:
+        /// The metric recorder.
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> mMetricRecorder;
+    };
+    /**
      * This structure contain the necessary objects from the @c PLAY directive that are used for playing the audio.
      */
     struct PlayDirectiveInfo {
@@ -397,7 +474,7 @@ private:
 
     /**
      * This function provides updated context information for @c AudioPlayer to @c ContextManager.  This function is
-     * called when @c ContextManager calls @c provideState(), and is also called internally by @c changeActivity().
+     * called when @c ContextManager calls @c provideState(), and is also called internally by @c changeState().
      *
      * @param sendToken flag indicating whether @c stateRequestToken contains a valid token which should be passed
      *     along to @c ContextManager.  This flag defaults to @c false.
@@ -608,9 +685,9 @@ private:
     /**
      * This function changes the @c AudioPlayer state.  All state changes are made by calling this function.
      *
-     * @param activity The state to change to.
+     * @param state The state to change to.
      */
-    void changeActivity(avsCommon::avs::PlayerActivity activity);
+    void changeState(AudioPlayerState state);
 
     /**
      * Most of the @c AudioPlayer events use the same payload, and only vary in their event name.  This utility
@@ -868,6 +945,14 @@ private:
      */
     std::string getTrackProtectionName(const avsCommon::utils::mediaPlayer::MediaPlayerState& mediaPlayerState) const;
 
+    /**
+     * Convert from internal state to external activity
+     *
+     * @param state Internal state value
+     * @returns External Activity equivelent
+     */
+    avsCommon::avs::PlayerActivity activityFromState(AudioPlayerState state) const;
+
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
 
@@ -904,16 +989,16 @@ private:
      * Focus change notifications are required to block until the focus change completes, so @c onFocusChanged() blocks
      * waiting for a state change.  This is a read-only operation from outside the executor thread, so it doesn't break
      * thread-safety for reads inside the executor, but it does require that these reads from outside the executor lock
-     * @c m_currentActivityMutex, and that writes from inside the executor lock @c m_currentActivityMutex and notify
-     * @c m_currentActivityConditionVariable..
+     * @c m_currentStateMutex, and that writes from inside the executor lock @c m_currentStateutex and notify
+     * @c m_currentStateConditionVariable..
      */
-    avsCommon::avs::PlayerActivity m_currentActivity;
+    AudioPlayerState m_currentState;
 
-    /// Protects writes to @c m_currentActivity and waiting on @c m_currentActivityConditionVariable.
-    std::mutex m_currentActivityMutex;
+    /// Protects writes to @c m_currentState and waiting on @c m_currentStateConditionVariable.
+    std::mutex m_currentStateMutex;
 
-    /// Provides notifications of changes to @c m_currentActivity.
-    std::condition_variable m_currentActivityConditionVariable;
+    /// Provides notifications of changes to @c m_currentState.
+    std::condition_variable m_currentStateConditionVariable;
 
     /**
      * @name Executor Thread Variables

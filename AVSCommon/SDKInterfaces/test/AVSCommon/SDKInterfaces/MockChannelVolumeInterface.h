@@ -18,6 +18,7 @@
 
 #include <gmock/gmock.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
+#include <AVSCommon/SDKInterfaces/MockSpeakerInterface.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -29,6 +30,9 @@ class MockChannelVolumeManager : public avsCommon::sdkInterfaces::ChannelVolumeI
 public:
     avsCommon::sdkInterfaces::ChannelVolumeInterface::Type getSpeakerType() const {
         return m_type;
+    }
+    size_t getId() const {
+        return (size_t)m_speaker.get();
     }
     bool startDucking() {
         return true;
@@ -52,20 +56,25 @@ public:
         settings->mute = m_settings.mute;
         return true;
     }
-    MockChannelVolumeManager(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type) :
+    MockChannelVolumeManager(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker) :
             ChannelVolumeInterface(),
             m_settings{avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN, false},
-            m_type{type} {
+            m_type{type},
+            m_speaker{speaker} {
     }
 
 private:
     avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings m_settings;
     const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type m_type;
+    const std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> m_speaker;
 };
 
 class MockChannelVolumeInterface : public avsCommon::sdkInterfaces::ChannelVolumeInterface {
 public:
     MOCK_CONST_METHOD0(getSpeakerType, avsCommon::sdkInterfaces::ChannelVolumeInterface::Type());
+    MOCK_CONST_METHOD0(getId, size_t());
     MOCK_METHOD0(startDucking, bool());
     MOCK_METHOD0(stopDucking, bool());
     MOCK_METHOD1(setUnduckedVolume, bool(int8_t));
@@ -74,9 +83,11 @@ public:
     void DelegateToReal();
     MockChannelVolumeInterface(
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type =
-            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME) :
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
+        std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> speaker =
+            std::make_shared<NiceMock<MockSpeakerInterface>>()) :
             ChannelVolumeInterface(),
-            m_manager{type} {
+            m_manager{type, speaker} {
     }
 
 private:
@@ -85,6 +96,7 @@ private:
 
 inline void MockChannelVolumeInterface::DelegateToReal() {
     ON_CALL(*this, getSpeakerType()).WillByDefault(Invoke(&m_manager, &ChannelVolumeInterface::getSpeakerType));
+    ON_CALL(*this, getId()).WillByDefault(Invoke(&m_manager, &ChannelVolumeInterface::getId));
     ON_CALL(*this, startDucking()).WillByDefault(Invoke(&m_manager, &ChannelVolumeInterface::startDucking));
     ON_CALL(*this, stopDucking()).WillByDefault(Invoke(&m_manager, &ChannelVolumeInterface::stopDucking));
     ON_CALL(*this, setUnduckedVolume(_)).WillByDefault(Invoke(&m_manager, &ChannelVolumeInterface::setUnduckedVolume));

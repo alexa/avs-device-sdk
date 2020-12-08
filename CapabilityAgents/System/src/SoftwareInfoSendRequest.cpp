@@ -101,6 +101,11 @@ void SoftwareInfoSendRequest::onSendCompleted(MessageRequestObserverInterface::S
             m_observer.reset();
         }
     } else {
+        if (!m_messageSender) {
+            ACSDK_ERROR(LX("failedToRetry").d("reason", "alreadyShutdown"));
+            return;
+        }
+
         // At each retry, switch the Timer used to specify the time of the next retry.
         auto& timer = m_retryTimers[m_retryCounter % (sizeof(m_retryTimers) / sizeof(m_retryTimers[0]))];
         auto delay = RETRY_TIMER.calculateTimeToRetry(m_retryCounter++);
@@ -121,14 +126,16 @@ void SoftwareInfoSendRequest::onExceptionReceived(const std::string& message) {
 void SoftwareInfoSendRequest::doShutdown() {
     ACSDK_DEBUG5(LX("doShutdown"));
 
-    std::lock_guard<std::mutex> lock(m_mutex);
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
 
+        m_messageSender.reset();
+        m_observer.reset();
+    }
+    // Stop timers without locking m_mutex to prevent deadlock
     for (auto& timer : m_retryTimers) {
         timer.stop();
     }
-
-    m_messageSender.reset();
-    m_observer.reset();
 }
 
 SoftwareInfoSendRequest::SoftwareInfoSendRequest(
@@ -145,6 +152,16 @@ SoftwareInfoSendRequest::SoftwareInfoSendRequest(
 void SoftwareInfoSendRequest::send() {
     ACSDK_DEBUG5(LX("send").d("firmwareVersion", m_firmwareVersion));
 
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender;
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        messageSender = m_messageSender;
+        if (!messageSender) {
+            ACSDK_ERROR(LX("failedToRetry").d("reason", "alreadyShutdown"));
+            return;
+        }
+    }
+
     std::string jsonContent;
     if (!buildJsonForSoftwareInfo(&jsonContent, m_firmwareVersion)) {
         ACSDK_ERROR(LX("sendFailed").d("reason", "buildJsonForSoftwareInfoFailed"));
@@ -153,7 +170,7 @@ void SoftwareInfoSendRequest::send() {
     }
     auto request = std::make_shared<MessageRequest>(jsonContent);
     request->addObserver(shared_from_this());
-    m_messageSender->sendMessage(request);
+    messageSender->sendMessage(request);
 }
 
 bool SoftwareInfoSendRequest::buildJsonForSoftwareInfo(std::string* jsonContent, FirmwareVersion firmwareVersion) {

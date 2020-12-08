@@ -18,6 +18,7 @@
 
 #include <memory>
 
+#include <acsdkManufactory/Annotated.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
@@ -28,8 +29,11 @@ namespace acsdkHTTPContentFetcher {
 /**
  * Manufactory Component definition for Libcurl implementation of HTTPContentFetcherInbterfaceFactoryInterface
  */
-using HTTPContentFetcherComponent =
-    acsdkManufactory::Component<std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>>;
+using HTTPContentFetcherComponent = acsdkManufactory::Component<
+    std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
+    acsdkManufactory::Import<acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface,
+        avsCommon::utils::libcurlUtils::LibcurlSetCurlOptionsCallbackFactoryInterface>>>;
 
 /**
  * Get the default @c Manufactory component for creating instances of HTTPContentFetcherInterfaceFactoryInterface.

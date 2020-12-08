@@ -16,13 +16,14 @@
 #ifndef ACSDKALERTS_STORAGE_SQLITEALERTSTORAGE_H_
 #define ACSDKALERTS_STORAGE_SQLITEALERTSTORAGE_H_
 
-#include "acsdkAlerts/Storage/AlertStorageInterface.h"
-
 #include <set>
 
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <SQLiteStorage/SQLiteDatabase.h>
+
+#include "acsdkAlerts/Storage/AlertStorageInterface.h"
 
 namespace alexaClientSDK {
 namespace acsdkAlerts {
@@ -39,6 +40,18 @@ public:
     /**
      * Factory method for creating a storage object for Alerts based on an SQLite database.
      *
+     * @param configurationRoot The global config object.
+     * @param audioFactory A factory that can produce default alert sounds.
+     * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
+     */
+    static std::shared_ptr<AlertStorageInterface> createAlertStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory);
+
+    /**
+     * Factory method for creating a storage object for Alerts based on an SQLite database.
+     *
+     * @deprecated
      * @param configurationRoot The global config object.
      * @param alertsAudioFactory A factory that can produce default alert sounds.
      * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
@@ -60,7 +73,8 @@ public:
 
     bool store(std::shared_ptr<Alert> alert) override;
 
-    bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime) override;
+    bool storeOfflineAlert(const std::string& token, const std::string& scheduledTime, const std::string& eventTime)
+        override;
 
     bool load(
         std::vector<std::shared_ptr<Alert>>* alertContainer,

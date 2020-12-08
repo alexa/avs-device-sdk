@@ -31,63 +31,101 @@ namespace test {
 class MockMessageRouterObserver : public MessageRouterObserverInterface {
 public:
     void reset() {
-        notifiedOfReceive = false;
-        notifiedOfStatusChanged = false;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_notifiedOfReceive = false;
+        m_notifiedOfStatusChanged = false;
     }
 
     bool wasNotifiedOfStatusChange() {
-        return notifiedOfStatusChanged;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return m_notifiedOfStatusChanged;
     }
 
     bool wasNotifiedOfReceive() {
-        return notifiedOfReceive;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return m_notifiedOfReceive;
     }
 
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status getLatestConnectionStatus() {
+        std::lock_guard<std::mutex> lock(m_mutex);
         return m_status;
     }
 
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason getLatestConnectionChangedReason() {
+        std::lock_guard<std::mutex> lock(m_mutex);
         return m_reason;
     }
 
+    bool waitForStatusChange(
+        std::chrono::milliseconds timeout,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        auto result = m_cv.wait_for(lock, timeout, [this, status, reason]() {
+            return m_notifiedOfStatusChanged && m_status == status && m_reason == reason;
+        });
+        return result;
+    }
+
     std::string getLatestMessage() {
+        std::lock_guard<std::mutex> lock(m_mutex);
         return m_message;
     }
 
     std::string getAttachmentContextId() {
+        std::lock_guard<std::mutex> lock(m_mutex);
         return m_attachmentContextId;
     }
 
 private:
-    virtual void onConnectionStatusChanged(
+    void onConnectionStatusChanged(
         const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
         const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
             engineConnectionStatuses) override {
         if (engineConnectionStatuses.empty()) {
             return;
         }
-        notifiedOfStatusChanged = true;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_notifiedOfStatusChanged = true;
         m_status = status;
         for (auto connectionStatus : engineConnectionStatuses) {
             if (connectionStatus.engineType == avsCommon::sdkInterfaces::ENGINE_TYPE_ALEXA_VOICE_SERVICES) {
                 m_reason = connectionStatus.reason;
             }
         }
+        m_cv.notify_all();
     }
 
-    virtual void receive(const std::string& contextId, const std::string& message) override {
-        notifiedOfReceive = true;
+    void receive(const std::string& contextId, const std::string& message) override {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_notifiedOfReceive = true;
         m_attachmentContextId = contextId;
         m_message = message;
     }
 
+    /// Mutex for serializing notification of status changes.
+    std::mutex m_mutex;
+
+    /// Condition variable used to wait for and notify of state change notifications.
+    std::condition_variable m_cv;
+
+    /// Last observed status
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status m_status;
+
+    /// Last observerd reason
     avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason m_reason;
+
+    /// Last observed context ID
     std::string m_attachmentContextId;
+
+    /// Last observerd message
     std::string m_message;
-    bool notifiedOfStatusChanged;
-    bool notifiedOfReceive;
+
+    /// Whether the observer has been notified of a stage change.
+    bool m_notifiedOfStatusChanged;
+
+    /// Whether a receove was observed.
+    bool m_notifiedOfReceive;
 };
 
 }  // namespace test

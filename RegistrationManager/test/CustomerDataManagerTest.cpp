@@ -27,7 +27,8 @@ namespace test {
 
 class MockCustomerDataHandler : public CustomerDataHandler {
 public:
-    MockCustomerDataHandler(std::shared_ptr<CustomerDataManager> dataManager) : CustomerDataHandler(dataManager) {
+    explicit MockCustomerDataHandler(std::shared_ptr<CustomerDataManager> dataManager) :
+            CustomerDataHandler(dataManager) {
     }
     MOCK_METHOD0(clearData, void());
 };

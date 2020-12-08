@@ -158,7 +158,7 @@ TEST_F(MessageRouterTest, test_disconnectDisconnectsConnectedTransports) {
     m_router->disable();
 }
 
-TEST_F(MessageRouterTest, test_serverSideDisconnectCreatesANewTransport) {
+TEST_F(MessageRouterTest, test_serverSideDisconnectWithLongDelayedReconnectReportsPending) {
     /*
      * This test is difficult to setup in a nice way. The idea is to replace the original
      * transport with a new one, call onServerSideDisconnect to make it the new active
@@ -173,16 +173,70 @@ TEST_F(MessageRouterTest, test_serverSideDisconnectCreatesANewTransport) {
 
     m_transportFactory->setMockTransport(newTransport);
 
-    // Reset the MessageRouterObserver, there should be no interactions with the observer
+    // Trigger server side disconnect handling
     m_router->onServerSideDisconnect(oldTransport);
+
+    // Simulate delayed reconnect, waiting for the server side disconnect grace period to expire so
+    // so that we can see the transition back to the PENDING state.
+    ASSERT_TRUE(m_mockMessageRouterObserver->waitForStatusChange(
+        TestableMessageRouter::SHORT_SERVER_SIDE_DISCONNECT_GRACE_PERIOD + SHORT_TIMEOUT_MS,
+        ConnectionStatusObserverInterface::Status::PENDING,
+        ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT))
+        << "status=" << m_mockMessageRouterObserver->getLatestConnectionStatus()
+        << "reason=" << m_mockMessageRouterObserver->getLatestConnectionChangedReason();
+
+    // mock the new transports connection
+    connectMockTransport(newTransport.get());
+    m_router->onConnected(newTransport);
 
     waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
     ASSERT_EQ(
-        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::PENDING);
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
     ASSERT_EQ(
         m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
-        ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    // mock the old transport disconnecting completely
+    disconnectMockTransport(oldTransport.get());
+    m_router->onDisconnected(oldTransport, ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    auto messageRequest = createMessageRequest();
+
+    EXPECT_CALL(*oldTransport.get(), onRequestEnqueued()).Times(0);
+
+    EXPECT_CALL(*newTransport.get(), onRequestEnqueued()).Times(1);
+
+    m_router->sendMessage(messageRequest);
+
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
+}
+
+TEST_F(MessageRouterTest, test_serverSideDisconnectWithReconnectDoesNotReportingPending) {
+    /*
+     * This test is difficult to setup in a nice way. The idea is to replace the original
+     * transport with a new one, call onServerSideDisconnect to make it the new active
+     * transport, and then send a message. The message should be sent on the new transport.
+     */
+    setupStateToConnected();
+
+    auto oldTransport = m_mockTransport;
+
+    auto newTransport = std::make_shared<NiceMock<MockTransport>>();
+    initializeMockTransport(newTransport.get());
+
+    m_transportFactory->setMockTransport(newTransport);
+
+    // Trigger server side disconnect handling
+    m_router->onServerSideDisconnect(oldTransport);
+
+    // Simulate slightly delayed reconnect, verifying that no transition to PENDING is reported.
+    ASSERT_FALSE(m_mockMessageRouterObserver->waitForStatusChange(
+        SHORT_TIMEOUT_MS,
+        ConnectionStatusObserverInterface::Status::PENDING,
+        ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT))
+        << "status=" << m_mockMessageRouterObserver->getLatestConnectionStatus()
+        << "reason=" << m_mockMessageRouterObserver->getLatestConnectionChangedReason();
 
     // mock the new transports connection
     connectMockTransport(newTransport.get());

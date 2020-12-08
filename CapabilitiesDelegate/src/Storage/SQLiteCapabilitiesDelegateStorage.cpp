@@ -96,9 +96,8 @@ bool SQLiteCapabilitiesDelegateStorage::createDatabase() {
         return false;
     }
 
-    if (!m_database.performQuery(CREATE_ENDPOINT_CONFIG_TABLE_SQL_STRING)) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "unable to create Endpoint Config table."));
-        close();
+    if (!createEndpointConfigTableLocked()) {
+        closeLocked();
         return false;
     }
 
@@ -107,12 +106,42 @@ bool SQLiteCapabilitiesDelegateStorage::createDatabase() {
 bool SQLiteCapabilitiesDelegateStorage::open() {
     ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
-    return m_database.open();
+
+    if (!m_database.open()) {
+        ACSDK_ERROR(LX("openFailed").d("reason", "failed to open database"));
+        return false;
+    }
+
+    /// Check if the endpoint config table exists. If not, create the table.
+    if (!m_database.tableExists(ENDPOINT_CONFIG_TABLE_NAME)) {
+        ACSDK_ERROR(LX(__func__).m("Endpoint Config Table not found. Creating..."));
+        if (!createEndpointConfigTableLocked()) {
+            closeLocked();
+            return false;
+        }
+    }
+
+    return true;
 }
 void SQLiteCapabilitiesDelegateStorage::close() {
     ACSDK_DEBUG5(LX(__func__));
     std::lock_guard<std::mutex> lock{m_mutex};
+    closeLocked();
+}
+
+void SQLiteCapabilitiesDelegateStorage::closeLocked() {
+    ACSDK_DEBUG5(LX(__func__));
     m_database.close();
+}
+
+bool SQLiteCapabilitiesDelegateStorage::createEndpointConfigTableLocked() {
+    if (!m_database.performQuery(CREATE_ENDPOINT_CONFIG_TABLE_SQL_STRING)) {
+        ACSDK_ERROR(LX("openFailed").d("reason", "unable to create Endpoint Config table."));
+        closeLocked();
+        return false;
+    }
+
+    return true;
 }
 
 bool SQLiteCapabilitiesDelegateStorage::storeLocked(const std::string& endpointId, const std::string& endpointConfig) {

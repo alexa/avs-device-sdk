@@ -70,14 +70,15 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
 
     std::string line(static_cast<const char*>(data), size * nmemb);
     std::transform(line.begin(), line.end(), line.begin(), ::tolower);
-    if (line.find("http") == 0) {
+
+    if (line.compare(0, 4, "http") == 0) {
         // To find lines like: "HTTP/1.1 200 OK"
         std::istringstream iss(line);
         std::string httpVersion;
         int statusCode = 0;
         iss >> httpVersion >> statusCode;
         fetcher->m_header.responseCode = intToHTTPResponseCode(statusCode);
-    } else if (line.find("content-type") == 0) {
+    } else if (line.compare(0, 12, "content-type") == 0) {
         // To find lines like: "Content-Type: audio/x-mpegurl; charset=utf-8"
         std::istringstream iss(line);
         std::string contentTypeBeginning;
@@ -90,13 +91,13 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
             contentType.erase(separator);
         }
         fetcher->m_header.contentType = contentType;
-    } else if (line.find("content-length") == 0) {
+    } else if (line.compare(0, 14, "content-length") == 0) {
         // To find lines like: "Content-Length: 12345"
         std::istringstream iss(line);
         std::string contentLengthBeginning;
         iss >> contentLengthBeginning >> fetcher->m_header.contentLength;
         ACSDK_DEBUG9(LX(__func__).d("type", "content-length").d("length", fetcher->m_header.contentLength));
-    } else if (line.find("content-range") == 0) {
+    } else if (line.compare(0, 13, "content-range") == 0) {
         // To find lines like: "Content-Range: bytes 1000-3979/3980"
         std::istringstream iss(line);
         std::string contentRangeBeginning;
@@ -201,16 +202,21 @@ size_t LibCurlHttpContentFetcher::noopCallback(char* data, size_t size, size_t n
     return 0;
 }
 
-LibCurlHttpContentFetcher::LibCurlHttpContentFetcher(const std::string& url) :
+LibCurlHttpContentFetcher::LibCurlHttpContentFetcher(
+    const std::string& url,
+    const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback) :
         m_state{HTTPContentFetcherInterface::State::INITIALIZED},
         m_url{url},
         m_effectiveUrl{url},
         m_currentContentReceivedLength{0},
         m_totalContentReceivedLength{0},
         m_done{false},
-        m_isShutdown{false} {
-    m_hasObjectBeenUsed.clear();
+        m_isShutdown{false},
+        m_hasObjectBeenUsed{false} {
     m_headerFuture = m_headerPromise.get_future();
+    if (setCurlOptionsCallback) {
+        setCurlOptionsCallback->processCallback(m_curlWrapper.curlOptionsSetter());
+    }
 }
 
 HTTPContentFetcherInterface::State LibCurlHttpContentFetcher::getState() {
@@ -268,9 +274,10 @@ void LibCurlHttpContentFetcher::shutdown() {
 
 std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getContent(
     FetchOptions fetchOption,
-    std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter> attachmentWriter,
+    std::unique_ptr<avsCommon::avs::attachment::AttachmentWriter>,
     const std::vector<std::string>& customHeaders) {
-    if (m_hasObjectBeenUsed.test_and_set()) {
+    bool notRunning = false;
+    if (!m_hasObjectBeenUsed.compare_exchange_strong(notRunning, true)) {
         ACSDK_ERROR(LX("getContentFailed").d("reason", "Object has already been used"));
         stateTransition(State::ERROR, false);
         return nullptr;
@@ -301,6 +308,19 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
         stateTransition(State::ERROR, false);
         return nullptr;
     }
+
+    // Use HTTP1.1 if url is not https
+    const std::string httpsString{"https"};
+    auto httpsFound = m_url.find(httpsString, 0);
+    if (httpsFound != 0) {
+        curlReturnValue = curl_easy_setopt(m_curlWrapper.getCurlHandle(), CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        if (curlReturnValue != CURLE_OK) {
+            ACSDK_ERROR(LX("getContentFailed").d("reason", "setHttpVersion").d("error", curlReturnValue));
+            stateTransition(State::ERROR, false);
+            return nullptr;
+        }
+    }
+
     if (!m_curlWrapper.setConnectionTimeout(TIMEOUT_CONNECTION)) {
         ACSDK_ERROR(LX("getContentFailed").d("reason", "setConnectionTimeoutFailed"));
         stateTransition(State::ERROR, false);
@@ -354,7 +374,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                 curlMultiHandle->addHandle(m_curlWrapper.getCurlHandle());
 
                 int numTransfersLeft = 1;
-                HTTPResponseCode finalResponseCode = HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED;
+                HTTPResponseCode finalResponseCode;
                 char* contentType = nullptr;
 
                 while (numTransfersLeft && !m_isShutdown) {
@@ -536,7 +556,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
     return nullptr;
 }
 
-curl_slist* LibCurlHttpContentFetcher::getCustomHeaderList(std::vector<std::string> customHeaders) {
+curl_slist* LibCurlHttpContentFetcher::getCustomHeaderList(const std::vector<std::string>& customHeaders) {
     struct curl_slist* headers = nullptr;
     for (const auto& header : customHeaders) {
         ACSDK_DEBUG9(LX("getCustomHeaderList").d("header", header.c_str()));

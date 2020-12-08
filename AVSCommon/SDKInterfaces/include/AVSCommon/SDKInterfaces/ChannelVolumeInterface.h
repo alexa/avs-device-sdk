@@ -72,6 +72,17 @@ public:
     virtual bool setUnduckedVolume(int8_t volume) = 0;
 
     /**
+     * Adjust the volume of the underlying speaker.
+     * If the underlying @c SpeakerInterface is ducked when this API is invoked,
+     * the corresponding unduckedVolume setting adjustment is reflected upon the next
+     * stopDucking call.
+     *
+     * @param delta the delta to change the volume by.
+     * @return @c true if the operation succeeded, @c false otherwise.
+     */
+    virtual bool adjustUnduckedVolume(int8_t delta);
+
+    /**
      * Set the mute state of the underlying speaker.
      *
      * @param mute the mute state to be set.
@@ -99,6 +110,15 @@ public:
     virtual Type getSpeakerType() const = 0;
 
     /**
+     * Get the unique identifier of the @c ChannelVolumeInterface.
+     *
+     * @return The unique identifier.
+     */
+    virtual std::size_t getId() const {
+        return std::size_t(this);
+    };
+
+    /**
      * Destructor
      */
     virtual ~ChannelVolumeInterface() = default;
@@ -122,6 +142,28 @@ inline std::ostream& operator<<(std::ostream& stream, ChannelVolumeInterface::Ty
     }
     stream << "UNKNOWN_CHANNEL_VOLUME_TYPE";
     return stream;
+}
+
+inline bool ChannelVolumeInterface::adjustUnduckedVolume(int8_t delta) {
+    if ((delta > avsCommon::avs::speakerConstants::AVS_ADJUST_VOLUME_MAX) ||
+        (delta < avsCommon::avs::speakerConstants::AVS_ADJUST_VOLUME_MIN)) {
+        return false;
+    }
+    if (0 == delta) {
+        /// No-op if delta is zero.
+        return true;
+    }
+    avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings settings;
+    if (!getSpeakerSettings(&settings)) {
+        return false;
+    }
+    int8_t volume = settings.volume + delta;
+    if (volume > avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX) {
+        return setUnduckedVolume(avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX);
+    } else if (volume < avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN) {
+        return setUnduckedVolume(avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN);
+    }
+    return setUnduckedVolume(volume);
 }
 
 }  // namespace sdkInterfaces

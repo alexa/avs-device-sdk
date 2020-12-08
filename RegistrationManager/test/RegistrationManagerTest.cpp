@@ -42,7 +42,7 @@ public:
 
 class MockCustomerDataHandler : public CustomerDataHandler {
 public:
-    MockCustomerDataHandler(std::shared_ptr<CustomerDataManager> manager) : CustomerDataHandler{manager} {
+    explicit MockCustomerDataHandler(std::shared_ptr<CustomerDataManager> manager) : CustomerDataHandler{manager} {
     }
     MOCK_METHOD0(clearData, void());
 };

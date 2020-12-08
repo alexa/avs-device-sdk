@@ -12,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include <thread>
 
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 
@@ -93,11 +94,11 @@ void SQLiteMiscStorageTest::createTestTable(
     const SQLiteMiscStorage::ValueType valueType) {
     if (m_miscStorage) {
         bool tableExists;
-        m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists);
+        ASSERT_TRUE(m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists));
         if (tableExists) {
-            m_miscStorage->clearTable(COMPONENT_NAME, tableName);
+            ASSERT_TRUE(m_miscStorage->clearTable(COMPONENT_NAME, tableName));
         } else {
-            m_miscStorage->createTable(COMPONENT_NAME, tableName, keyType, valueType);
+            ASSERT_TRUE(m_miscStorage->createTable(COMPONENT_NAME, tableName, keyType, valueType));
         }
     }
 }
@@ -105,10 +106,10 @@ void SQLiteMiscStorageTest::createTestTable(
 void SQLiteMiscStorageTest::deleteTestTable(const std::string& tableName) {
     if (m_miscStorage) {
         bool tableExists;
-        m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists);
+        ASSERT_TRUE(m_miscStorage->tableExists(COMPONENT_NAME, tableName, &tableExists));
         if (tableExists) {
-            m_miscStorage->clearTable(COMPONENT_NAME, tableName);
-            m_miscStorage->deleteTable(COMPONENT_NAME, tableName);
+            ASSERT_TRUE(m_miscStorage->clearTable(COMPONENT_NAME, tableName));
+            ASSERT_TRUE(m_miscStorage->deleteTable(COMPONENT_NAME, tableName));
         }
     }
 }
@@ -433,6 +434,73 @@ TEST_F(SQLiteMiscStorageTest, test_escapeSingleQuoteCharacters) {
     ASSERT_EQ(tableEntryValue, valueWithSingleQuote);
 
     deleteTestTable(tableName);
+}
+
+/// Tests with table entry add, remove, update, put in multiple threads
+TEST_F(SQLiteMiscStorageTest, test_tableEntryTestsMultiThread) {
+    const int NUMBER_OF_THREADS = 16;
+    std::thread threads[NUMBER_OF_THREADS];
+    for (int threadIndex = 0; threadIndex < NUMBER_OF_THREADS; ++threadIndex) {
+        threads[threadIndex] = std::thread([this, threadIndex]() {
+            std::string tableName = "SQLiteMiscStorageTableEntryTest" + std::to_string(threadIndex);
+            std::string tableEntryKey = "tableEntryTestsKey" + std::to_string(threadIndex);
+            std::string tableEntryAddedValue = "tableEntryAddedValue" + std::to_string(threadIndex);
+            std::string tableEntryPutValue = "tableEntryPutValue" + std::to_string(threadIndex);
+            std::string tableEntryAnotherPutValue = "tableEntryAnotherPutValue" + std::to_string(threadIndex);
+            std::string tableEntryUpdatedValue = "tableEntryUpdatedValue" + std::to_string(threadIndex);
+            std::string tableEntryValue;
+            deleteTestTable(tableName);
+
+            createTestTable(
+                tableName, SQLiteMiscStorage::KeyType::STRING_KEY, SQLiteMiscStorage::ValueType::STRING_VALUE);
+
+            /// Entry doesn't exist at first
+            bool tableEntryExists;
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_FALSE(tableEntryExists);
+
+            /// Ensure that add entry works
+            ASSERT_TRUE(m_miscStorage->add(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAddedValue));
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_TRUE(tableEntryExists);
+            ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+            ASSERT_EQ(tableEntryValue, tableEntryAddedValue);
+
+            /// Ensure that update entry works
+            ASSERT_TRUE(m_miscStorage->update(COMPONENT_NAME, tableName, tableEntryKey, tableEntryUpdatedValue));
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_TRUE(tableEntryExists);
+            ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+            ASSERT_EQ(tableEntryValue, tableEntryUpdatedValue);
+
+            /// Ensure that remove entry works
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_TRUE(tableEntryExists);
+            ASSERT_TRUE(m_miscStorage->remove(COMPONENT_NAME, tableName, tableEntryKey));
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_FALSE(tableEntryExists);
+
+            /// Ensure that put entry works
+            /// Try with a new entry for key
+            ASSERT_TRUE(m_miscStorage->put(COMPONENT_NAME, tableName, tableEntryKey, tableEntryPutValue));
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_TRUE(tableEntryExists);
+            ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+            ASSERT_EQ(tableEntryValue, tableEntryPutValue);
+            /// Try with an existing entry for key
+            ASSERT_TRUE(m_miscStorage->put(COMPONENT_NAME, tableName, tableEntryKey, tableEntryAnotherPutValue));
+            ASSERT_TRUE(m_miscStorage->tableEntryExists(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryExists));
+            ASSERT_TRUE(tableEntryExists);
+            ASSERT_TRUE(m_miscStorage->get(COMPONENT_NAME, tableName, tableEntryKey, &tableEntryValue));
+            ASSERT_EQ(tableEntryValue, tableEntryAnotherPutValue);
+
+            deleteTestTable(tableName);
+        });
+    }
+
+    for (int threadIndex = 0; threadIndex < NUMBER_OF_THREADS; ++threadIndex) {
+        threads[threadIndex].join();
+    }
 }
 
 }  // namespace test

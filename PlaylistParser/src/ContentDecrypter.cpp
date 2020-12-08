@@ -229,7 +229,13 @@ bool ContentDecrypter::decryptAndWrite(
     const ByteVector& encryptedContent,
     const ByteVector& key,
     const EncryptionInfo& encryptionInfo,
-    std::shared_ptr<AttachmentWriter> streamWriter) {
+    const std::shared_ptr<AttachmentWriter>& streamWriter,
+    const std::shared_ptr<Id3TagsRemover>& id3TagRemover) {
+    if (!id3TagRemover) {
+        ACSDK_WARN(LX("decryptAndWriteFailed").d("reason", "nullId3TagRemover"));
+        // fallback to not remove ID3 tags
+    }
+
     ByteVector ivByteArray;
     if (!convertIVToByteArray(encryptionInfo.initVector, &ivByteArray)) {
         ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "convertIVToByteArrayFailed"));
@@ -264,6 +270,9 @@ bool ContentDecrypter::decryptAndWrite(
             return false;
     }
 
+    if (id3TagRemover) {
+        id3TagRemover->stripID3Tags(decryptedContent);
+    }
     if (!writeToStream(decryptedContent, streamWriter)) {
         ACSDK_ERROR(LX("decryptAndWriteFailed").d("reason", "writeFailed"));
         return false;

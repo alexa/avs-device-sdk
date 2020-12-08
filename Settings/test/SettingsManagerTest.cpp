@@ -61,7 +61,7 @@ public:
         return true;
     }
 
-    SettingStub(const ValueT& value) : SettingInterface<ValueT>{value} {
+    explicit SettingStub(const ValueT& value) : SettingInterface<ValueT>{value} {
     }
 };
 
@@ -92,7 +92,10 @@ protected:
 
 void SettingsManagerTest::SetUp() {
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    m_manager = std::make_shared<SettingsManager<SettingInt, SettingString, SettingBool>>(customerDataManager);
+    std::tuple<SettingConfiguration<SettingInt>, SettingConfiguration<SettingString>, SettingConfiguration<SettingBool>>
+        settingConfigs;
+    m_manager =
+        std::make_shared<SettingsManager<SettingInt, SettingString, SettingBool>>(customerDataManager, settingConfigs);
 }
 
 /// Test add settings and setting the setting value.
@@ -108,7 +111,8 @@ TEST_F(SettingsManagerTest, test_setExistingSetting) {
 /// Test set value for setting that hasn't been registered.
 TEST_F(SettingsManagerTest, test_setSettingUnavailable) {
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    SettingsManager<SettingInt, SettingString> manager{customerDataManager};
+    std::tuple<SettingConfiguration<SettingInt>, SettingConfiguration<SettingString>> settingConfigs;
+    SettingsManager<SettingInt, SettingString> manager{customerDataManager, settingConfigs};
     EXPECT_EQ((m_manager->setValue<TEST_ID_INT>(NEW_INT_VALUE)), SetSettingResult::UNAVAILABLE_SETTING);
 }
 

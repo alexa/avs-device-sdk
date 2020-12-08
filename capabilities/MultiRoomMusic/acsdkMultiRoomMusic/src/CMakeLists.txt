@@ -12,7 +12,7 @@ if (AUXCONTROLLER)
     target_link_libraries(acsdkMultiRoomMusic AuxControllerCA)
 endif()
 
-if (MRM AND MRM_WITH_IPC)
+if (MRM AND MRM_STANDALONE_APP)
     target_link_libraries(acsdkMultiRoomMusic MRMHandlerProxy)
 elseif (MRM)
     target_link_libraries(acsdkMultiRoomMusic MRMHandler)

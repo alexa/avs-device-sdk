@@ -1694,7 +1694,7 @@ TEST_F(AudioPlayerTest, test_onPlaybackError) {
         }
         return true;
     });
-    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::IDLE, MY_WAIT_TIMEOUT));
     ASSERT_TRUE(result);
 }
 
@@ -2796,7 +2796,7 @@ TEST_F(AudioPlayerTest, test_playAfterOnPlaybackError) {
         ErrorType::MEDIA_ERROR_UNKNOWN,
         "TEST_ERROR",
         DEFAULT_MEDIA_PLAYER_STATE);
-    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::IDLE, MY_WAIT_TIMEOUT));
     ASSERT_EQ(std::future_status::ready, m_wakeReleaseChannelFuture.wait_for(MY_WAIT_TIMEOUT));
     m_audioPlayer->onFocusChanged(FocusState::NONE, MixingBehavior::MUST_STOP);
 
@@ -3117,11 +3117,18 @@ TEST_F(AudioPlayerTest, testTimer_playbackStartedCallbackAfterFocusLost) {
  * to ensure everything works smoothly.
  */
 void AudioPlayerTest::testPlayEnqueueFinishPlay() {
-    // send a play directive
-    sendPlayDirective();
-    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, MY_WAIT_TIMEOUT));
+    // send a play directive, but don't start playing yet
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+    std::string payload;
+    payload = createEnqueuePayloadTest(0);
+    std::shared_ptr<AVSDirective> playDirective =
+        AVSDirective::create("", avsMessageHeader, payload, m_attachmentManager, CONTEXT_ID_TEST);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_mockMediaPlayer->waitUntilNextSetSource(MY_WAIT_TIMEOUT);
+    m_audioPlayer->onBufferingComplete(m_mockMediaPlayer->getLatestSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
 
     // Enqueue 3 tracks
     for (int i = 0; i < 3; i++) {
@@ -3136,6 +3143,9 @@ void AudioPlayerTest::testPlayEnqueueFinishPlay() {
         m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
         m_audioPlayer->CapabilityAgent::handleDirective(msgId);
     }
+    // Now start playing
+    m_audioPlayer->onFocusChanged(FocusState::FOREGROUND, avs::MixingBehavior::PRIMARY);
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, MY_WAIT_TIMEOUT));
 
     m_audioPlayer->onPlaybackFinished(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
 

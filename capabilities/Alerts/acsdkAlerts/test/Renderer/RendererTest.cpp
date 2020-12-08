@@ -19,6 +19,7 @@
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/MockSetting.h>
@@ -30,6 +31,8 @@ namespace acsdkAlerts {
 namespace renderer {
 namespace test {
 
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces::test;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::mediaPlayer::test;
 using namespace settings::types;
@@ -194,6 +197,7 @@ protected:
     std::shared_ptr<MockRendererObserver> m_observer;
     std::shared_ptr<TestMediaPlayer> m_mediaPlayer;
     std::shared_ptr<Renderer> m_renderer;
+    std::shared_ptr<MockApplicationAudioPipelineFactory> m_audioPipelineFactory;
 
     static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> audioFactoryFunc() {
         return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
@@ -201,10 +205,25 @@ protected:
     }
 };
 
-RendererTest::RendererTest() :
-        m_observer{std::make_shared<MockRendererObserver>()},
-        m_mediaPlayer{TestMediaPlayer::create()},
-        m_renderer{Renderer::create(m_mediaPlayer, nullptr)} {
+RendererTest::RendererTest() : m_observer{std::make_shared<MockRendererObserver>()} {
+    m_audioPipelineFactory = std::make_shared<MockApplicationAudioPipelineFactory>();
+    m_mediaPlayer = TestMediaPlayer::create();
+
+    bool equalizerAvailable = false;
+    bool enableLiveMode = false;
+    bool isCaptionable = false;
+    avsCommon::sdkInterfaces::ChannelVolumeInterface::Type channelVolumeType =
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME;
+
+    EXPECT_CALL(
+        *(m_audioPipelineFactory.get()),
+        createApplicationMediaInterfaces(
+            ALERTS_MEDIA_PLAYER_NAME, equalizerAvailable, enableLiveMode, isCaptionable, channelVolumeType, _))
+        .Times(1)
+        .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
+            m_mediaPlayer, nullptr, nullptr, nullptr)));
+
+    m_renderer = Renderer::createAlertRenderer(m_audioPipelineFactory, nullptr);
 }
 
 RendererTest::~RendererTest() {
@@ -227,9 +246,19 @@ void RendererTest::TearDown() {
 /**
  * Test if the Renderer class creates an object appropriately and fails when it must
  */
-TEST_F(RendererTest, test_create) {
+TEST_F(RendererTest, test_createAlertRenderer) {
     /// m_renderer was created using create() in the constructor. Check if not null
     ASSERT_NE(m_renderer, nullptr);
+
+    /// confirm we return a nullptr if a nullptr was passed in
+    ASSERT_EQ(Renderer::createAlertRenderer(nullptr, nullptr), nullptr);
+}
+
+/**
+ * Test if the Renderer class creates an object appropriately and fails when it must
+ */
+TEST_F(RendererTest, test_create) {
+    ASSERT_NE(Renderer::create(m_mediaPlayer, nullptr), nullptr);
 
     /// confirm we return a nullptr if a nullptr was passed in
     ASSERT_EQ(Renderer::create(nullptr, nullptr), nullptr);

@@ -32,7 +32,7 @@ std::unique_ptr<std::istream> streamFromData(const unsigned char* data, size_t l
      */
     class ResourceStream : public std::istream {
     public:
-        ResourceStream(std::unique_ptr<Streambuf> buf) : std::istream(buf.get()), m_buf(std::move(buf)) {
+        explicit ResourceStream(std::unique_ptr<Streambuf> buf) : std::istream(buf.get()), m_buf(std::move(buf)) {
         }
 
     private:

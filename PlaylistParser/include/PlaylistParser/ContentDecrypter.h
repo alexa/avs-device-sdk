@@ -25,6 +25,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentWriter.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
+#include "PlaylistParser/Id3TagsRemover.h"
 #include "PlaylistParser/PlaylistParser.h"
 
 namespace alexaClientSDK {
@@ -59,13 +60,15 @@ public:
      * @param key The encryption key.
      * @param encryptionInfo The @c EncryptionInfo of the encrypted content.
      * @param streamWriter The writer to write decrypted content.
+     * @param id3TagRemover A component to remove ID3 tags from content.
      * @return @c true if decryption and write to stream is successful or @c false otherwise.
      */
     bool decryptAndWrite(
         const ByteVector& encryptedContent,
         const ByteVector& key,
         const avsCommon::utils::playlistParser::EncryptionInfo& encryptionInfo,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> streamWriter);
+        const std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter>& streamWriter,
+        const std::shared_ptr<Id3TagsRemover>& id3TagRemover);
 
     /**
      * Converts initialization vector from hex to byte array.

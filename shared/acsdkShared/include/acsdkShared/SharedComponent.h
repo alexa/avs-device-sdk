@@ -26,6 +26,7 @@
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h>
 #include <AVSCommon/Utils/Timing/MultiTimer.h>
+#include <AVSCommon/Utils/Timing/SystemClockMonitor.h>
 
 namespace alexaClientSDK {
 namespace acsdkShared {
@@ -37,6 +38,7 @@ using SharedComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>,
     std::shared_ptr<avsCommon::utils::timing::MultiTimer>,
+    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,

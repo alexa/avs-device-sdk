@@ -122,7 +122,6 @@ std::pair<AlexaResponseType, std::string> DefaultEndpointModeControllerHandler::
     int modeDelta,
     AlexaStateChangeCauseType cause) {
     std::list<std::shared_ptr<ModeControllerObserverInterface>> copyOfObservers;
-    bool notifyObserver = false;
 
     std::unique_lock<std::mutex> lock(m_mutex);
     auto itr = std::find(m_modes.begin(), m_modes.end(), m_currentMode);
@@ -140,17 +139,13 @@ std::pair<AlexaResponseType, std::string> DefaultEndpointModeControllerHandler::
     ConsolePrinter::prettyPrint(
         {"ENDPOINT: Default Endpoint", "INSTANCE: " + m_instance, "ADJUSTED MODE TO: " + m_currentMode});
     copyOfObservers = m_observers;
-    notifyObserver = true;
 
     lock.unlock();
-
-    if (notifyObserver) {
-        notifyObservers(
-            ModeControllerInterface::ModeState{
-                m_currentMode, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
-            cause,
-            copyOfObservers);
-    }
+    notifyObservers(
+        ModeControllerInterface::ModeState{
+            m_currentMode, avsCommon::utils::timing::TimePoint::now(), std::chrono::milliseconds(0)},
+        cause,
+        copyOfObservers);
 
     return std::make_pair(AlexaResponseType::SUCCESS, "");
 }

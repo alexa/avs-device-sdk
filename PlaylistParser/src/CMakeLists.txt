@@ -3,6 +3,7 @@ add_definitions("-DACSDK_LOG_MODULE=PlaylistParser")
 add_library(PlaylistParser SHARED
     ContentDecrypter.cpp
     FFMpegInputBuffer.cpp
+    Id3TagsRemover.cpp
     IterativePlaylistParser.cpp
     M3UParser.cpp
     PlaylistParser.cpp

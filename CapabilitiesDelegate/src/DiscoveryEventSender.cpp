@@ -185,7 +185,7 @@ MessageRequestObserverInterface::Status DiscoveryEventSender::sendDiscoveryEvent
     const std::shared_ptr<MessageSenderInterface>& messageSender,
     const std::string& eventString,
     bool waitForEventProcessed) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX(__func__).sensitive("discoveryEvent", eventString));
     std::unique_lock<std::mutex> lock{m_mutex};
     m_eventProcessedWaitEvent.reset();
     m_messageRequest.reset();

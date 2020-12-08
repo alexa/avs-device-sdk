@@ -18,6 +18,8 @@
 
 #include <AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h>
 
+#include "LibcurlSetCurlOptionsCallbackFactoryInterface.h"
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -31,15 +33,32 @@ public:
     /**
      * Create a new instance of @c LibcurlHTTP2ConnectionFactory.
      *
+     * @param curlOptionsCallbackFactory The optional factory for instances @c
+     * LibcurlSetCurlOptionsCallbackFactoryInterface.
      * @return A new instance of @c LibcurlHTTP2ConnectionFactory.
      */
     static std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionFactoryInterface>
-    createHTTP2ConnectionFactoryInterface();
+    createHTTP2ConnectionFactoryInterface(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& curlOptionsCallbackFactory = nullptr);
 
     /// @name HTTP2ConnectionFactoryInterface methods.
     /// @{
     std::shared_ptr<avsCommon::utils::http2::HTTP2ConnectionInterface> createHTTP2Connection() override;
     /// *}
+
+    /**
+     * Constructor.
+     *
+     * @param curlOptionsCallbackFactory The optional factory for instances @c
+     * LibcurlSetCurlOptionsCallbackFactoryInterface.
+     */
+    LibcurlHTTP2ConnectionFactory(
+        const std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface>& curlOptionsCallbackFactory = nullptr);
+
+private:
+    /// The optional @c LibcurlSetCurlOptionsCallbackFactoryInterface to set curl options when creating a new http2
+    /// connection.
+    std::shared_ptr<LibcurlSetCurlOptionsCallbackFactoryInterface> m_setCurlOptionsCallbackFactory;
 };
 
 }  // namespace libcurlUtils

@@ -97,10 +97,7 @@ std::shared_ptr<MetricEvent> MetricEventBuilder::build() {
 }
 
 MetricEventBuilder& MetricEventBuilder::removeDataPoint(const std::string& key) {
-    if (m_dataPoints.find(key) != m_dataPoints.end()) {
-        m_dataPoints.erase(key);
-    }
-
+    m_dataPoints.erase(key);
     return *this;
 }
 

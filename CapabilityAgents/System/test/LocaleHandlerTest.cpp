@@ -105,7 +105,9 @@ protected:
 
 void LocaleHandlerTest::SetUp() {
     auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
-    m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(customerDataManager);
+    DeviceSettingManagerSettingConfigurations configurations;
+
+    m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(customerDataManager, configurations);
     m_mockDeviceSettingStorage = std::make_shared<MockDeviceSettingStorage>();
     m_mockExceptionEncounteredSender =
         std::make_shared<avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender>();
