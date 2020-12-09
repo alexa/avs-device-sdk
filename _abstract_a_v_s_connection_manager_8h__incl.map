@@ -1,11 +1,22 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AbstractAVSConnectionManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AbstractAVSConnectionManager.h">
-<area shape="rect" id="node5" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="379,139,610,180"/>
-<area shape="rect" id="node8" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="697,228,943,269"/>
-<area shape="rect" id="node6" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="296,317,515,359"/>
-<area shape="rect" id="node11" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="77,317,272,359"/>
-<area shape="rect" id="node12" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="476,228,668,269"/>
-<area shape="rect" id="node13" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="539,325,789,351"/>
-<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="223,407,427,448"/>
-<area shape="rect" id="node20" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="536,407,779,448"/>
-<area shape="rect" id="node19" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="175,496,340,537"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AbstractAVSConnectionManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AbstractAVSConnectionManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="679,5,956,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,399,75,426"/>
+<area shape="rect" id="node3" title=" " alt="" coords="883,399,941,426"/>
+<area shape="rect" id="node4" title=" " alt="" coords="965,399,1069,426"/>
+<area shape="rect" id="node5" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="384,124,613,165"/>
+<area shape="rect" id="node8" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="695,213,940,255"/>
+<area shape="rect" id="node6" href="$_a_v_s_gateway_assigner_interface_8h.html" title=" " alt="" coords="296,303,512,344"/>
+<area shape="rect" id="node11" href="$_message_observer_interface_8h.html" title=" " alt="" coords="77,303,272,344"/>
+<area shape="rect" id="node12" href="$_message_sender_interface_8h.html" title=" " alt="" coords="475,213,666,255"/>
+<area shape="rect" id="node7" title=" " alt="" coords="145,399,199,426"/>
+<area shape="rect" id="node9" title=" " alt="" coords="844,489,916,515"/>
+<area shape="rect" id="node10" title=" " alt="" coords="800,399,859,426"/>
+<area shape="rect" id="node13" href="$_message_request_8h.html" title=" " alt="" coords="537,310,783,337"/>
+<area shape="rect" id="node14" title=" " alt="" coords="449,399,509,426"/>
+<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title=" " alt="" coords="224,392,424,433"/>
+<area shape="rect" id="node20" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="533,392,776,433"/>
+<area shape="rect" id="node16" title=" " alt="" coords="361,489,423,515"/>
+<area shape="rect" id="node17" title=" " alt="" coords="447,489,513,515"/>
+<area shape="rect" id="node18" title=" " alt="" coords="81,489,151,515"/>
+<area shape="rect" id="node19" href="$_reader_policy_8h.html" title=" " alt="" coords="175,481,337,523"/>
 </map>

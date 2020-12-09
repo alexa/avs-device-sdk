@@ -1,7 +1,8 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h">
-<area shape="rect" id="node2" href="$_iterative_playlist_parser_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/IterativePlaylist\lParser.cpp" alt="" coords="5,139,228,224"/>
-<area shape="rect" id="node3" href="$_m3_u_parser_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/M3UParser.cpp" alt="" coords="251,146,475,217"/>
-<area shape="rect" id="node4" href="$_playlist_parser_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/PlaylistParser.cpp" alt="" coords="500,146,739,217"/>
-<area shape="rect" id="node5" href="$_playlist_utils_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/src/PlaylistUtils.cpp" alt="" coords="763,146,991,217"/>
-<area shape="rect" id="node6" href="$_playlist_utils_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/PlaylistParser/test/PlaylistUtilsTest.cpp" alt="" coords="1015,146,1274,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h" name="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h">
+<area shape="rect" id="node1" title=" " alt="" coords="368,5,560,61"/>
+<area shape="rect" id="node2" href="$_iterative_playlist_parser_8cpp.html" title=" " alt="" coords="5,109,184,165"/>
+<area shape="rect" id="node3" href="$_m3_u_parser_8cpp.html" title=" " alt="" coords="208,109,363,165"/>
+<area shape="rect" id="node4" href="$_playlist_parser_8cpp.html" title=" " alt="" coords="387,109,541,165"/>
+<area shape="rect" id="node5" href="$_playlist_utils_8cpp.html" title=" " alt="" coords="565,109,720,165"/>
+<area shape="rect" id="node6" href="$_playlist_utils_test_8cpp.html" title=" " alt="" coords="745,109,903,165"/>
 </map>

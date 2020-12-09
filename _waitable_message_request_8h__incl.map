@@ -1,6 +1,18 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/WaitableMessageRequest.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/WaitableMessageRequest.h">
-<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="221,139,472,165"/>
-<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="787,213,1029,255"/>
-<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="558,213,762,255"/>
-<area shape="rect" id="node14" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="719,303,884,344"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/WaitableMessageRequest.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/WaitableMessageRequest.h">
+<area shape="rect" id="node1" title=" " alt="" coords="115,5,415,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="21,109,147,136"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,191,64,218"/>
+<area shape="rect" id="node4" href="$_message_request_8h.html" title=" " alt="" coords="223,109,470,136"/>
+<area shape="rect" id="node15" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="781,184,1024,225"/>
+<area shape="rect" id="node5" title=" " alt="" coords="89,191,149,218"/>
+<area shape="rect" id="node6" title=" " alt="" coords="173,191,243,218"/>
+<area shape="rect" id="node7" title=" " alt="" coords="267,191,322,218"/>
+<area shape="rect" id="node8" title=" " alt="" coords="347,191,451,218"/>
+<area shape="rect" id="node9" title=" " alt="" coords="475,191,533,218"/>
+<area shape="rect" id="node10" href="$_attachment_reader_8h.html" title=" " alt="" coords="557,184,757,225"/>
+<area shape="rect" id="node11" title=" " alt="" coords="447,281,508,307"/>
+<area shape="rect" id="node12" title=" " alt="" coords="533,281,598,307"/>
+<area shape="rect" id="node13" title=" " alt="" coords="623,281,692,307"/>
+<area shape="rect" id="node14" href="$_reader_policy_8h.html" title=" " alt="" coords="716,273,879,315"/>
+<area shape="rect" id="node16" title=" " alt="" coords="903,281,975,307"/>
 </map>

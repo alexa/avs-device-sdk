@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;" name="alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_shutdown_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockShutdownNotifier" alt="" coords="253,5,517,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockStartupNotifier\l\&lt; RequiresStartupInterface \&gt;" alt="" coords="261,71,509,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; ObserverType \&gt;" alt="" coords="285,152,485,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::test::MockStartupNotifier\&lt;\l RequiresStartupInterface \&gt;" alt="" coords="271,217,499,288"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,109,205,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_shutdown_notifier.html" title=" " alt="" coords="253,5,517,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title=" " alt="" coords="261,71,509,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title=" " alt="" coords="285,152,485,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title=" " alt="" coords="271,217,499,288"/>
 </map>

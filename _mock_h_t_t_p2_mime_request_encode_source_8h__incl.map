@@ -1,7 +1,12 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/HTTP2/MockHTTP2MimeRequestEncodeSource.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/HTTP2/MockHTTP2MimeRequestEncodeSource.h">
-<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeRequestSourceInterface.h" alt="" coords="217,153,469,195"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="381,243,599,284"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="623,243,802,284"/>
-<area shape="rect" id="node8" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="606,332,785,373"/>
-<area shape="rect" id="node9" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="395,332,582,373"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/HTTP2/MockHTTP2MimeRequestEncodeSource.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/HTTP2/MockHTTP2MimeRequestEncodeSource.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,276,91"/>
+<area shape="rect" id="node2" title=" " alt="" coords="300,325,355,351"/>
+<area shape="rect" id="node3" title=" " alt="" coords="162,325,221,351"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_source_interface_8h.html" title=" " alt="" coords="201,139,453,180"/>
+<area shape="rect" id="node5" title=" " alt="" coords="791,325,856,351"/>
+<area shape="rect" id="node6" title=" " alt="" coords="229,235,290,262"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title=" " alt="" coords="365,228,583,269"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_send_data_result_8h.html" title=" " alt="" coords="608,228,785,269"/>
+<area shape="rect" id="node8" href="$_h_t_t_p2_send_status_8h.html" title=" " alt="" coords="589,317,767,359"/>
+<area shape="rect" id="node9" href="$_platform_definitions_8h.html" title=" " alt="" coords="381,317,565,359"/>
 </map>

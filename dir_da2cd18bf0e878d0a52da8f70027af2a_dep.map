@@ -1,10 +1,10 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/Power" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/Power">
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/Power" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/AVSCommon/Utils/Power">
 <area shape="rect" id="node1" href="dir_da2cd18bf0e878d0a52da8f70027af2a.html" title="Power" alt="" coords="70,52,142,100"/>
 <area shape="rect" id="node2" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="5,148,113,196"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000209_000018.html" title="3" alt="" coords="83,128,91,142"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000219_000018.html" title="3" alt="" coords="82,128,90,143"/>
 <area shape="rect" id="node3" href="dir_957fc395b73dfe8b64ee3f74464f588a.html" title="include" alt="" coords="23,244,95,292"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000209_000160.html" title="3" alt="" coords="105,230,113,244"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000018_000160.html" title="39" alt="" coords="51,217,66,232"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000160_000018.html" title="21" alt="" coords="53,208,67,222"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000219_000168.html" title="3" alt="" coords="104,230,112,245"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000018_000168.html" title="39" alt="" coords="51,218,66,233"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000168_000018.html" title="21" alt="" coords="53,208,67,222"/>
 <area shape="rect" id="clust1" href="dir_834bf911d49030c30073fd5ed0d05185.html" title="Utils" alt="" coords="59,16,153,111"/>
 </map>

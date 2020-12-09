@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::playlistParser::PlayItem" name="alexaClientSDK::playlistParser::PlayItem">
-<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html" title="alexaClientSDK::avsCommon\l::utils::playlistParser\l::PlaylistEntry" alt="" coords="5,124,203,180"/>
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html" title="alexaClientSDK::avsCommon\l::utils::playlistParser\l::EncryptionInfo" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node1" title=" " alt="" coords="22,243,186,284"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_entry.html" title=" " alt="" coords="5,124,203,180"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_encryption_info.html" title=" " alt="" coords="5,5,203,61"/>
 </map>

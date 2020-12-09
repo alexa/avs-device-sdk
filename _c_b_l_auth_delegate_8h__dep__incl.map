@@ -1,9 +1,10 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
-<area shape="rect" id="node2" href="$_authorization_delegate_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkCBLAuthorization\lDelegate/src/AuthorizationDelegateComponent.cpp" alt="" coords="5,139,325,224"/>
-<area shape="rect" id="node3" href="$_default_sample_application_options_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/src/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="350,139,730,224"/>
-<area shape="rect" id="node4" href="$_a_c_l_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/ACLTestContext.cpp" alt="" coords="754,146,990,217"/>
-<area shape="rect" id="node5" href="$_auth_delegate_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/AuthDelegateTestContext.cpp" alt="" coords="1014,146,1303,217"/>
-<area shape="rect" id="node6" href="$_alexa_authorization_delegate_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlexaAuthorization\lDelegateTest.cpp" alt="" coords="1328,139,1555,224"/>
-<area shape="rect" id="node7" href="$_c_b_l_auth_delegate_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/Authorization/CBLAuthDelegate\l/src/CBLAuthDelegate.cpp" alt="" coords="1579,139,1861,224"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1886,146,2138,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
+<area shape="rect" id="node1" title=" " alt="" coords="823,5,1108,76"/>
+<area shape="rect" id="node2" href="$_authorization_delegate_component_8cpp.html" title=" " alt="" coords="5,131,325,187"/>
+<area shape="rect" id="node3" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="350,124,663,195"/>
+<area shape="rect" id="node4" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="688,131,840,187"/>
+<area shape="rect" id="node5" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="865,131,1066,187"/>
+<area shape="rect" id="node6" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="1091,131,1328,187"/>
+<area shape="rect" id="node7" href="$_c_b_l_auth_delegate_8cpp.html" title=" " alt="" coords="1353,131,1639,187"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title=" " alt="" coords="1664,139,1941,180"/>
 </map>

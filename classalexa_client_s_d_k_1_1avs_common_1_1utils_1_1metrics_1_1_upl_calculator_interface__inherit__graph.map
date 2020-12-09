@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::utils::metrics::UplCalculatorInterface" name="alexaClientSDK::avsCommon::utils::metrics::UplCalculatorInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_base_upl_calculator.html" title="alexaClientSDK::metrics\l::implementations::BaseUplCalculator" alt="" coords="253,5,495,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_media_upl_calculator.html" title="alexaClientSDK::metrics\l::implementations::MediaUplCalculator" alt="" coords="251,71,497,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_tts_upl_calculator.html" title="alexaClientSDK::metrics\l::implementations::TtsUplCalculator" alt="" coords="259,136,489,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,63,203,119"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_base_upl_calculator.html" title=" " alt="" coords="253,5,495,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_media_upl_calculator.html" title=" " alt="" coords="251,71,497,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_tts_upl_calculator.html" title=" " alt="" coords="259,136,489,177"/>
 </map>

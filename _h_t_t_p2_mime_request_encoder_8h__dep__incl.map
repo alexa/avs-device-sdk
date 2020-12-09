@@ -1,6 +1,7 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2Transport.cpp" alt="" coords="5,146,264,217"/>
-<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/MessageRequestHandler.cpp" alt="" coords="288,146,597,217"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/HTTP2\l/HTTP2MimeRequestEncoder.cpp" alt="" coords="622,139,845,224"/>
-<area shape="rect" id="node5" href="$_m_i_m_e_parser_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/MIMEParserTest.cpp" alt="" coords="869,146,1160,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h">
+<area shape="rect" id="node1" title=" " alt="" coords="294,5,547,76"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="5,124,164,180"/>
+<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="189,124,386,180"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title=" " alt="" coords="411,124,700,180"/>
+<area shape="rect" id="node5" href="$_m_i_m_e_parser_test_8cpp.html" title=" " alt="" coords="724,124,899,180"/>
 </map>

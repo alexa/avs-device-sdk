@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html" title="alexaClientSDK::afml\l::FocusManager" alt="" coords="333,5,481,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html" title="Mock class that implements the FocusManager. " alt="" coords="308,71,505,127"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,43,260,84"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_focus_manager.html" title=" " alt="" coords="333,5,481,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html" title="Mock class that implements the FocusManager." alt="" coords="308,71,505,127"/>
 </map>

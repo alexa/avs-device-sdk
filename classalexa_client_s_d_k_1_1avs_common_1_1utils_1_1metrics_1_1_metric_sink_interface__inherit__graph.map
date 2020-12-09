@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface" name="alexaClientSDK::avsCommon::utils::metrics::MetricSinkInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_sample_metric_sink.html" title="alexaClientSDK::metrics\l::implementations::SampleMetricSink" alt="" coords="280,5,519,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_upl_metric_sink.html" title="alexaClientSDK::metrics\l::implementations::UplMetricSink" alt="" coords="292,71,507,112"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,39,232,80"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_sample_metric_sink.html" title=" " alt="" coords="280,5,519,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_upl_metric_sink.html" title=" " alt="" coords="292,71,507,112"/>
 </map>

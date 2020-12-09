@@ -1,26 +1,27 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HTTPResponse.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HTTPResponse.h">
-<area shape="rect" id="node2" href="$_http_post_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/include/AVSCommon\l/Utils/LibcurlUtils/HttpPostInterface.h" alt="" coords="2567,139,2834,224"/>
-<area shape="rect" id="node22" href="$_http_put_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/include/AVSCommon\l/Utils/LibcurlUtils/HttpPutInterface.h" alt="" coords="3271,139,3538,224"/>
-<area shape="rect" id="node25" href="$_h_t_t_p_response_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/LibcurlUtils\l/HTTPResponse.cpp" alt="" coords="3563,139,3791,224"/>
-<area shape="rect" id="node3" href="$_authorization_delegate_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkCBLAuthorization\lDelegate/include/acsdkAuthorizationDelegate\l/AuthorizationDelegateComponent.h" alt="" coords="3375,272,3661,372"/>
-<area shape="rect" id="node6" href="$_default_sample_application_options_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/include/acsdkDefaultSampleApplicationOptions\l/DefaultSampleApplicationOptionsComponent.h" alt="" coords="2354,272,2701,372"/>
-<area shape="rect" id="node9" href="$_http_post_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/include/AVSCommon\l/Utils/LibcurlUtils/HttpPost.h" alt="" coords="793,279,1059,365"/>
-<area shape="rect" id="node14" href="$_c_b_l_auth_delegate_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/Authorization/CBLAuthDelegate\l/include/CBLAuthDelegate/CBLAuthDelegate.h" alt="" coords="1510,279,1806,365"/>
-<area shape="rect" id="node18" href="$_shared_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/shared/acsdkShared/include\l/acsdkShared/SharedComponent.h" alt="" coords="2761,279,2987,365"/>
-<area shape="rect" id="node4" href="$_authorization_delegate_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkCBLAuthorization\lDelegate/src/AuthorizationDelegateComponent.cpp" alt="" coords="3358,420,3678,505"/>
-<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="3943,420,4197,505"/>
-<area shape="rect" id="node7" href="$_default_sample_application_options_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/src/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="2337,420,2717,505"/>
-<area shape="rect" id="node8" href="$_sample_application_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplicationComponent.cpp" alt="" coords="1415,427,1733,498"/>
-<area shape="rect" id="node10" href="$_http_post_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/LibcurlUtils\l/HttpPost.cpp" alt="" coords="5,420,233,505"/>
-<area shape="rect" id="node11" href="$_auth_delegate_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/AuthDelegateTestContext.cpp" alt="" coords="257,427,547,498"/>
-<area shape="rect" id="node12" href="$_c_b_l_auth_delegate_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/Authorization/CBLAuthDelegate\l/src/CBLAuthDelegate.cpp" alt="" coords="571,420,854,505"/>
-<area shape="rect" id="node13" href="$_shared_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/shared/acsdkShared/src/SharedComponent.cpp" alt="" coords="2009,427,2313,498"/>
-<area shape="rect" id="node15" href="$_a_c_l_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/ACLTestContext.cpp" alt="" coords="1155,427,1391,498"/>
-<area shape="rect" id="node16" href="$_alexa_authorization_delegate_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlexaAuthorization\lDelegateTest.cpp" alt="" coords="1758,420,1985,505"/>
-<area shape="rect" id="node17" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="879,427,1131,498"/>
-<area shape="rect" id="node19" href="$_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="3031,420,3333,505"/>
-<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="3702,420,3918,505"/>
-<area shape="rect" id="node21" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="2742,427,3006,498"/>
-<area shape="rect" id="node23" href="$_http_put_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/include/AVSCommon\l/Utils/LibcurlUtils/HttpPut.h" alt="" coords="3943,279,4210,365"/>
-<area shape="rect" id="node24" href="$_http_put_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/LibcurlUtils\l/HttpPut.cpp" alt="" coords="4221,420,4449,505"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HTTPResponse.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HTTPResponse.h">
+<area shape="rect" id="node1" title=" " alt="" coords="2795,5,2995,76"/>
+<area shape="rect" id="node2" href="$_http_post_interface_8h.html" title=" " alt="" coords="2167,124,2377,195"/>
+<area shape="rect" id="node22" href="$_http_put_interface_8h.html" title=" " alt="" coords="2793,124,2996,195"/>
+<area shape="rect" id="node25" href="$_h_t_t_p_response_8cpp.html" title=" " alt="" coords="3021,131,3257,187"/>
+<area shape="rect" id="node3" href="$_authorization_delegate_component_8h.html" title=" " alt="" coords="2863,250,3150,321"/>
+<area shape="rect" id="node6" href="$_default_sample_application_options_component_8h.html" title=" " alt="" coords="1968,243,2267,328"/>
+<area shape="rect" id="node9" href="$_http_post_8h.html" title=" " alt="" coords="890,250,1070,321"/>
+<area shape="rect" id="node14" href="$_c_b_l_auth_delegate_8h.html" title=" " alt="" coords="1487,250,1772,321"/>
+<area shape="rect" id="node18" href="$_shared_component_8h.html" title=" " alt="" coords="2291,257,2562,313"/>
+<area shape="rect" id="node4" href="$_authorization_delegate_component_8cpp.html" title=" " alt="" coords="2847,383,3167,439"/>
+<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="3420,376,3649,447"/>
+<area shape="rect" id="node7" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="1983,376,2297,447"/>
+<area shape="rect" id="node8" href="$_sample_application_component_8cpp.html" title=" " alt="" coords="1239,383,1491,439"/>
+<area shape="rect" id="node10" href="$_http_post_8cpp.html" title=" " alt="" coords="5,383,200,439"/>
+<area shape="rect" id="node11" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="225,383,426,439"/>
+<area shape="rect" id="node12" href="$_c_b_l_auth_delegate_8cpp.html" title=" " alt="" coords="450,383,737,439"/>
+<area shape="rect" id="node13" href="$_shared_component_8cpp.html" title=" " alt="" coords="1777,383,1959,439"/>
+<area shape="rect" id="node15" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="1063,383,1215,439"/>
+<area shape="rect" id="node16" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="1516,383,1753,439"/>
+<area shape="rect" id="node17" href="$_sample_application_8cpp.html" title=" " alt="" coords="761,391,1039,432"/>
+<area shape="rect" id="node19" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="2511,376,2822,447"/>
+<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title=" " alt="" coords="3191,376,3395,447"/>
+<area shape="rect" id="node21" href="$_core_component_8cpp.html" title=" " alt="" coords="2321,383,2487,439"/>
+<area shape="rect" id="node23" href="$_http_put_8h.html" title=" " alt="" coords="3425,250,3605,321"/>
+<area shape="rect" id="node24" href="$_http_put_8cpp.html" title=" " alt="" coords="3673,383,3860,439"/>
 </map>

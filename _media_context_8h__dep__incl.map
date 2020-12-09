@@ -1,7 +1,8 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/MediaContext.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/MediaContext.h">
-<area shape="rect" id="node2" href="$_media_endpoint_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/include/BlueZ/MediaEndpoint.h" alt="" coords="244,139,459,224"/>
-<area shape="rect" id="node6" href="$_media_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/MediaContext.cpp" alt="" coords="483,139,697,224"/>
-<area shape="rect" id="node3" href="$_blue_z_a2_d_p_source_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZA2DPSource.cpp" alt="" coords="5,272,220,357"/>
-<area shape="rect" id="node4" href="$_blue_z_device_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZDeviceManager.cpp" alt="" coords="244,272,459,357"/>
-<area shape="rect" id="node5" href="$_media_endpoint_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/MediaEndpoint.cpp" alt="" coords="483,272,697,357"/>
+<map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/MediaContext.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/MediaContext.h">
+<area shape="rect" id="node1" title=" " alt="" coords="373,5,611,61"/>
+<area shape="rect" id="node2" href="$_media_endpoint_8h.html" title=" " alt="" coords="246,109,490,165"/>
+<area shape="rect" id="node6" href="$_media_context_8cpp.html" title=" " alt="" coords="515,109,717,165"/>
+<area shape="rect" id="node3" href="$_blue_z_a2_d_p_source_8cpp.html" title=" " alt="" coords="5,213,227,269"/>
+<area shape="rect" id="node4" href="$_blue_z_device_manager_8cpp.html" title=" " alt="" coords="251,213,485,269"/>
+<area shape="rect" id="node5" href="$_media_endpoint_8cpp.html" title=" " alt="" coords="509,213,712,269"/>
 </map>

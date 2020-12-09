@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::avs::test::TestDirectiveHandler" name="alexaClientSDK::avsCommon::avs::test::TestDirectiveHandler">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::DirectiveHandler\lInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node1" title="Minimal DirectiveHandlerInterface implementation so we can generate instance pointers." alt="" coords="7,109,218,151"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title=" " alt="" coords="5,5,220,61"/>
 </map>

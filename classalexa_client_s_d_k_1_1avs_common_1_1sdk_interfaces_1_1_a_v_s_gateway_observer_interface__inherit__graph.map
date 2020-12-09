@@ -1,7 +1,8 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallManagerInterface" alt="" coords="303,5,544,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lInterface" alt="" coords="305,71,542,127"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockAVSGatewayObserver" alt="" coords="325,151,522,207"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html" title="Mock class that implements the CapabilitiesDelegateInterface. " alt="" coords="595,35,792,91"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title="alexaClientSDK::capabilities\lDelegate::CapabilitiesDelegate" alt="" coords="592,116,795,157"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,71,252,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title=" " alt="" coords="300,5,541,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_interface.html" title=" " alt="" coords="302,71,539,127"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_observer.html" title=" " alt="" coords="322,151,519,207"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html" title="Mock class that implements the CapabilitiesDelegateInterface." alt="" coords="592,35,789,91"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title=" " alt="" coords="589,116,792,157"/>
 </map>

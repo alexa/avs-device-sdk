@@ -1,51 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AudioInputStream.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AudioInputStream.h">
-<area shape="rect" id="node2" href="$_android_s_l_e_s_buffer_queue_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/include/AndroidUtilities/AndroidSLESBufferQueue.h" alt="" coords="1633,146,1959,231"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_engine_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/src/AndroidSLESEngine.cpp" alt="" coords="315,442,541,527"/>
-<area shape="rect" id="node6" href="$_android_s_l_e_s_microphone_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/test/AndroidSLESMicrophoneTest.cpp" alt="" coords="1413,442,1661,527"/>
-<area shape="rect" id="node8" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/test/AndroidSLESBufferQueueTest.cpp" alt="" coords="1877,294,2131,379"/>
-<area shape="rect" id="node9" href="$_android_s_l_e_s_engine_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/include/AndroidUtilities/AndroidSLESEngine.h" alt="" coords="706,146,998,231"/>
-<area shape="rect" id="node15" href="$_audio_injector_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/Diagnostics\l/AudioInjectorInterface.h" alt="" coords="2379,139,2648,239"/>
-<area shape="rect" id="node19" href="$_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="2739,583,2949,668"/>
-<area shape="rect" id="node23" href="$_file_based_audio_injector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Diagnostics/src/FileBasedAudioInjector.cpp" alt="" coords="5428,449,5708,520"/>
-<area shape="rect" id="node24" href="$_key_word_observer_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/KeyWordObserver\lInterface.h" alt="" coords="4164,139,4471,239"/>
-<area shape="rect" id="node26" href="$_abstract_keyword_detector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/include/KWD/AbstractKeywordDetector.h" alt="" coords="4475,301,4779,372"/>
-<area shape="rect" id="node27" href="$_kitt_ai_key_word_detector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/include/KittAi\l/KittAiKeyWordDetector.h" alt="" coords="3979,442,4179,527"/>
-<area shape="rect" id="node29" href="$_kitt_ai_key_word_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/test/KittAiKeyWordDetector\lTest.cpp" alt="" coords="3707,583,3967,668"/>
-<area shape="rect" id="node30" href="$_keyword_detector_provider_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KWDProvider/include/KWDProvider\l/KeywordDetectorProvider.h" alt="" coords="5082,442,5353,527"/>
-<area shape="rect" id="node32" href="$_sensory_keyword_detector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/include/Sensory\l/SensoryKeywordDetector.h" alt="" coords="4203,442,4410,527"/>
-<area shape="rect" id="node34" href="$_sensory_keyword_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/test/SensoryKeywordDetector\lTest.cpp" alt="" coords="4631,583,4921,668"/>
-<area shape="rect" id="node36" href="$_abstract_keyword_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/test/AbstractKeywordDetectorTest.cpp" alt="" coords="4769,449,5058,520"/>
-<area shape="rect" id="node37" href="$_speech_interaction_handler_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/SpeechInteraction\lHandlerInterface.h" alt="" coords="2551,287,2857,387"/>
-<area shape="rect" id="node38" href="$_media_endpoint_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/include/BlueZ/MediaEndpoint.h" alt="" coords="5742,146,5957,231"/>
-<area shape="rect" id="node42" href="$_audio_provider_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/include\l/AIP/AudioProvider.h" alt="" coords="2896,146,3096,231"/>
-<area shape="rect" id="node46" href="$_audio_injector_microphone_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Diagnostics/include/Diagnostics\l/AudioInjectorMicrophone.h" alt="" coords="5377,146,5591,231"/>
-<area shape="rect" id="node48" href="$_port_audio_microphone_wrapper_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/PortAudioMicrophoneWrapper.h" alt="" coords="5981,146,6192,231"/>
-<area shape="rect" id="node49" href="$_speech_encoder_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SpeechEncoder/include/SpeechEncoder\l/SpeechEncoder.h" alt="" coords="3324,146,3583,231"/>
-<area shape="rect" id="node50" href="$_speech_encoder_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SpeechEncoder/test/SpeechEncoderTest.cpp" alt="" coords="3308,301,3599,372"/>
-<area shape="rect" id="node3" href="$_android_s_l_e_s_microphone_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/include/AndroidUtilities/AndroidSLESMicrophone.h" alt="" coords="1181,294,1499,379"/>
-<area shape="rect" id="node7" href="$_android_s_l_e_s_buffer_queue_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/src/AndroidSLESBufferQueue.cpp" alt="" coords="1625,294,1852,379"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_microphone_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/src/AndroidSLESMicrophone.cpp" alt="" coords="1096,442,1323,527"/>
-<area shape="rect" id="node10" href="$_android_application_audio_pipeline_factory_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkAndroidApplication\lAudioPipelineFactory/include/acsdkAndroidApplication\lAudioPipelineFactory/AndroidApplicationAudioPipelineFactory.h" alt="" coords="657,435,1047,535"/>
-<area shape="rect" id="node11" href="$_application_utilities_2_android_utilities_2include_2_android_utilities_2_platform_specific_values_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/AndroidUtilities\l/include/AndroidUtilities/PlatformSpecificValues.h" alt="" coords="794,294,1105,379"/>
-<area shape="rect" id="node12" href="$_android_s_l_e_s_media_player_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="138,287,390,387"/>
-<area shape="rect" id="node13" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="5,442,259,527"/>
-<area shape="rect" id="node14" href="$_android_s_l_e_s_speaker_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/include/AndroidSLESMediaPlayer\l/AndroidSLESSpeaker.h" alt="" coords="466,287,718,387"/>
-<area shape="rect" id="node16" href="$_diagnostics_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/Diagnostics\l/DiagnosticsInterface.h" alt="" coords="2207,287,2476,387"/>
-<area shape="rect" id="node18" href="$_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="2445,716,2654,801"/>
-<area shape="rect" id="node21" href="$_s_d_k_diagnostics_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SDKDiagnostics.h" alt="" coords="2266,442,2475,527"/>
-<area shape="rect" id="node22" href="$_file_based_audio_injector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Diagnostics/include/Diagnostics\l/FileBasedAudioInjector.h" alt="" coords="3623,294,3836,379"/>
-<area shape="rect" id="node17" href="$_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="2577,442,2815,527"/>
-<area shape="rect" id="node20" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="2720,716,2968,801"/>
-<area shape="rect" id="node25" href="$_audio_input_processor_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AudioInputProcessor\lIntegrationTest.cpp" alt="" coords="3347,442,3586,527"/>
-<area shape="rect" id="node35" href="$_abstract_keyword_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/src/AbstractKeywordDetector.cpp" alt="" coords="4485,449,4744,520"/>
-<area shape="rect" id="node28" href="$_kitt_ai_key_word_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/src/KittAiKeyWordDetector.cpp" alt="" coords="3991,590,4273,661"/>
-<area shape="rect" id="node31" href="$_keyword_detector_provider_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KWDProvider/src/KeywordDetector\lProvider.cpp" alt="" coords="5083,583,5352,668"/>
-<area shape="rect" id="node33" href="$_sensory_keyword_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/src/SensoryKeywordDetector.cpp" alt="" coords="4297,590,4607,661"/>
-<area shape="rect" id="node39" href="$_blue_z_a2_d_p_source_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZA2DPSource.cpp" alt="" coords="6219,294,6434,379"/>
-<area shape="rect" id="node40" href="$_blue_z_device_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZDeviceManager.cpp" alt="" coords="5742,294,5957,379"/>
-<area shape="rect" id="node41" href="$_media_endpoint_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/MediaEndpoint.cpp" alt="" coords="5981,294,6195,379"/>
-<area shape="rect" id="node43" href="$_audio_input_processor_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/include\l/AIP/AudioInputProcessor.h" alt="" coords="3033,294,3233,379"/>
-<area shape="rect" id="node44" href="$_alerts_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="2839,442,3051,527"/>
-<area shape="rect" id="node45" href="$_audio_player_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AudioPlayerIntegration\lTest.cpp" alt="" coords="3075,442,3323,527"/>
-<area shape="rect" id="node47" href="$_audio_injector_microphone_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Diagnostics/src/AudioInjectorMicrophone.cpp" alt="" coords="5429,301,5718,372"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AudioInputStream.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/AudioInputStream.h">
+<area shape="rect" id="node1" title=" " alt="" coords="3655,5,3907,61"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_buffer_queue_8h.html" title=" " alt="" coords="1607,109,1837,195"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_engine_8cpp.html" title=" " alt="" coords="330,391,613,447"/>
+<area shape="rect" id="node6" href="$_android_s_l_e_s_microphone_test_8cpp.html" title=" " alt="" coords="1319,383,1608,454"/>
+<area shape="rect" id="node8" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title=" " alt="" coords="1811,250,2068,321"/>
+<area shape="rect" id="node9" href="$_android_s_l_e_s_engine_8h.html" title=" " alt="" coords="753,117,1000,187"/>
+<area shape="rect" id="node15" href="$_audio_injector_interface_8h.html" title=" " alt="" coords="2301,117,2540,187"/>
+<area shape="rect" id="node19" href="$_keyword_observer_8h.html" title=" " alt="" coords="2969,509,3179,565"/>
+<area shape="rect" id="node23" href="$_file_based_audio_injector_8cpp.html" title=" " alt="" coords="5071,391,5255,447"/>
+<area shape="rect" id="node24" href="$_key_word_observer_interface_8h.html" title=" " alt="" coords="3980,117,4219,187"/>
+<area shape="rect" id="node26" href="$_abstract_keyword_detector_8h.html" title=" " alt="" coords="4317,257,4503,313"/>
+<area shape="rect" id="node27" href="$_kitt_ai_key_word_detector_8h.html" title=" " alt="" coords="3773,391,3980,447"/>
+<area shape="rect" id="node29" href="$_kitt_ai_key_word_detector_test_8cpp.html" title=" " alt="" coords="3573,509,3783,565"/>
+<area shape="rect" id="node30" href="$_keyword_detector_provider_8h.html" title=" " alt="" coords="4789,383,4996,454"/>
+<area shape="rect" id="node32" href="$_sensory_keyword_detector_8h.html" title=" " alt="" coords="4005,391,4242,447"/>
+<area shape="rect" id="node34" href="$_sensory_keyword_detector_test_8cpp.html" title=" " alt="" coords="4255,509,4480,565"/>
+<area shape="rect" id="node36" href="$_abstract_keyword_detector_test_8cpp.html" title=" " alt="" coords="4551,391,4765,447"/>
+<area shape="rect" id="node37" href="$_speech_interaction_handler_interface_8h.html" title=" " alt="" coords="2459,250,2697,321"/>
+<area shape="rect" id="node38" href="$_media_endpoint_8h.html" title=" " alt="" coords="5335,124,5579,180"/>
+<area shape="rect" id="node42" href="$_audio_provider_8h.html" title=" " alt="" coords="2729,124,2944,180"/>
+<area shape="rect" id="node46" href="$_audio_injector_microphone_8h.html" title=" " alt="" coords="5057,124,5310,180"/>
+<area shape="rect" id="node48" href="$_port_audio_microphone_wrapper_8h.html" title=" " alt="" coords="5603,117,5825,187"/>
+<area shape="rect" id="node49" href="$_speech_encoder_8h.html" title=" " alt="" coords="3178,124,3402,180"/>
+<area shape="rect" id="node50" href="$_speech_encoder_test_8cpp.html" title=" " alt="" coords="3205,257,3375,313"/>
+<area shape="rect" id="node3" href="$_android_s_l_e_s_microphone_8h.html" title=" " alt="" coords="1133,250,1407,321"/>
+<area shape="rect" id="node7" href="$_android_s_l_e_s_buffer_queue_8cpp.html" title=" " alt="" coords="1533,250,1786,321"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_microphone_8cpp.html" title=" " alt="" coords="984,391,1295,447"/>
+<area shape="rect" id="node10" href="$_android_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="649,376,960,461"/>
+<area shape="rect" id="node11" href="$_application_utilities_2_android_utilities_2include_2_android_utilities_2_platform_specific_values_8h.html" title=" " alt="" coords="843,243,1057,328"/>
+<area shape="rect" id="node12" href="$_android_s_l_e_s_media_player_8h.html" title=" " alt="" coords="175,250,434,321"/>
+<area shape="rect" id="node13" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="5,391,295,447"/>
+<area shape="rect" id="node14" href="$_android_s_l_e_s_speaker_8h.html" title=" " alt="" coords="509,250,767,321"/>
+<area shape="rect" id="node16" href="$_diagnostics_interface_8h.html" title=" " alt="" coords="2144,250,2383,321"/>
+<area shape="rect" id="node18" href="$_interaction_manager_8h.html" title=" " alt="" coords="2362,613,2581,669"/>
+<area shape="rect" id="node21" href="$_s_d_k_diagnostics_8h.html" title=" " alt="" coords="2178,391,2383,447"/>
+<area shape="rect" id="node22" href="$_file_based_audio_injector_8h.html" title=" " alt="" coords="3399,257,3642,313"/>
+<area shape="rect" id="node17" href="$_default_client_8h.html" title=" " alt="" coords="2458,383,2685,454"/>
+<area shape="rect" id="node20" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="2947,613,3201,669"/>
+<area shape="rect" id="node25" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="3135,383,3343,454"/>
+<area shape="rect" id="node35" href="$_abstract_keyword_detector_8cpp.html" title=" " alt="" coords="4317,391,4527,447"/>
+<area shape="rect" id="node28" href="$_kitt_ai_key_word_detector_8cpp.html" title=" " alt="" coords="3807,509,4007,565"/>
+<area shape="rect" id="node31" href="$_keyword_detector_provider_8cpp.html" title=" " alt="" coords="4782,509,5003,565"/>
+<area shape="rect" id="node33" href="$_sensory_keyword_detector_8cpp.html" title=" " alt="" coords="4032,509,4231,565"/>
+<area shape="rect" id="node39" href="$_blue_z_a2_d_p_source_8cpp.html" title=" " alt="" coords="5818,257,6039,313"/>
+<area shape="rect" id="node40" href="$_blue_z_device_manager_8cpp.html" title=" " alt="" coords="5333,257,5567,313"/>
+<area shape="rect" id="node41" href="$_media_endpoint_8cpp.html" title=" " alt="" coords="5591,257,5794,313"/>
+<area shape="rect" id="node43" href="$_audio_input_processor_8h.html" title=" " alt="" coords="2875,257,3129,313"/>
+<area shape="rect" id="node44" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2709,391,2879,447"/>
+<area shape="rect" id="node45" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2904,391,3111,447"/>
+<area shape="rect" id="node47" href="$_audio_injector_microphone_8cpp.html" title=" " alt="" coords="5114,257,5309,313"/>
 </map>

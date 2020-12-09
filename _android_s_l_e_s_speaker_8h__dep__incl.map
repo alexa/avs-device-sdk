@@ -1,6 +1,7 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESSpeaker.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESSpeaker.h">
-<area shape="rect" id="node2" href="$_android_application_audio_pipeline_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkAndroidApplication\lAudioPipelineFactory/src/AndroidApplication\lAudioPipelineFactory.cpp" alt="" coords="5,153,284,253"/>
-<area shape="rect" id="node3" href="$_android_s_l_e_s_media_player_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/src/AndroidSLESMediaPlayer.cpp" alt="" coords="308,161,560,246"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_speaker_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/src/AndroidSLESSpeaker.cpp" alt="" coords="584,161,836,246"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_speaker_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/AndroidSLESSpeakerTest.cpp" alt="" coords="860,161,1112,246"/>
+<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESSpeaker.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESSpeaker.h">
+<area shape="rect" id="node1" title=" " alt="" coords="469,5,727,76"/>
+<area shape="rect" id="node2" href="$_android_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="5,124,308,195"/>
+<area shape="rect" id="node3" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="333,131,591,187"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_speaker_8cpp.html" title=" " alt="" coords="615,131,855,187"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_speaker_test_8cpp.html" title=" " alt="" coords="880,131,1145,187"/>
 </map>

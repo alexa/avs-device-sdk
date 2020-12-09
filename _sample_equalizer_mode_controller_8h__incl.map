@@ -1,7 +1,17 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleEqualizerModeController.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleEqualizerModeController.h">
-<area shape="rect" id="node5" href="$_equalizer_mode_controller_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerModeControllerInterface.h" alt="" coords="245,139,476,180"/>
-<area shape="rect" id="node6" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="299,228,422,255"/>
-<area shape="rect" id="node10" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="440,303,633,344"/>
-<area shape="rect" id="node14" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="658,303,823,344"/>
-<area shape="rect" id="node15" href="$_result_8h.html" title="Result.h" alt="" coords="705,392,776,419"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleEqualizerModeController.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/SampleEqualizerModeController.h">
+<area shape="rect" id="node1" title=" " alt="" coords="34,5,261,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,131,44,158"/>
+<area shape="rect" id="node3" title=" " alt="" coords="69,131,138,158"/>
+<area shape="rect" id="node4" title=" " alt="" coords="162,131,221,158"/>
+<area shape="rect" id="node5" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="245,124,476,165"/>
+<area shape="rect" id="node6" href="$_equalizer_types_8h.html" title=" " alt="" coords="299,213,422,240"/>
+<area shape="rect" id="node7" title=" " alt="" coords="151,295,202,322"/>
+<area shape="rect" id="node8" title=" " alt="" coords="227,295,281,322"/>
+<area shape="rect" id="node9" title=" " alt="" coords="305,295,416,322"/>
+<area shape="rect" id="node10" href="$hash_8h.html" title=" " alt="" coords="440,288,631,329"/>
+<area shape="rect" id="node14" href="$_success_result_8h.html" title=" " alt="" coords="655,288,818,329"/>
+<area shape="rect" id="node11" title=" " alt="" coords="421,377,481,404"/>
+<area shape="rect" id="node12" title=" " alt="" coords="505,377,565,404"/>
+<area shape="rect" id="node13" title=" " alt="" coords="589,377,668,404"/>
+<area shape="rect" id="node15" href="$_result_8h.html" title=" " alt="" coords="701,377,772,404"/>
 </map>

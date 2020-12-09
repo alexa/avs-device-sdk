@@ -1,5 +1,10 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DeviceProtocolTracer.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DeviceProtocolTracer.h">
-<area shape="rect" id="node5" href="$_protocol_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/ProtocolTracerInterface.h" alt="" coords="265,139,511,180"/>
-<area shape="rect" id="node6" href="$_event_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/EventTracerInterface.h" alt="" coords="183,228,375,269"/>
-<area shape="rect" id="node8" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="399,228,593,269"/>
+<map id="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DeviceProtocolTracer.h" name="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DeviceProtocolTracer.h">
+<area shape="rect" id="node1" title=" " alt="" coords="52,5,287,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,117,75,143"/>
+<area shape="rect" id="node3" title=" " alt="" coords="99,117,157,143"/>
+<area shape="rect" id="node4" title=" " alt="" coords="181,117,240,143"/>
+<area shape="rect" id="node5" href="$_protocol_tracer_interface_8h.html" title=" " alt="" coords="265,109,511,151"/>
+<area shape="rect" id="node6" href="$_event_tracer_interface_8h.html" title=" " alt="" coords="183,199,374,240"/>
+<area shape="rect" id="node8" href="$_message_observer_interface_8h.html" title=" " alt="" coords="399,199,593,240"/>
+<area shape="rect" id="node7" title=" " alt="" coords="359,288,414,315"/>
 </map>

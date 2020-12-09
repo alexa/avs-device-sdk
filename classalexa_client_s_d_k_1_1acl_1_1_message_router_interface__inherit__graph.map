@@ -1,7 +1,8 @@
 <map id="alexaClientSDK::acl::MessageRouterInterface" name="alexaClientSDK::acl::MessageRouterInterface">
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="507,17,647,58"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html" title="alexaClientSDK::acl\l::test::MockMessageRouter" alt="" coords="485,82,669,123"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="5,5,216,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="12,86,209,127"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="717,17,920,58"/>
+<area shape="rect" id="node1" title=" " alt="" coords="264,50,437,91"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title=" " alt="" coords="507,17,647,58"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html" title=" " alt="" coords="485,82,669,123"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="12,86,209,127"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title=" " alt="" coords="717,17,919,58"/>
 </map>

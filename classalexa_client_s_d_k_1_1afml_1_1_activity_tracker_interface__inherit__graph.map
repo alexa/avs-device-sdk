@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::afml::ActivityTrackerInterface" name="alexaClientSDK::afml::ActivityTrackerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html" title="alexaClientSDK::afml\l::AudioActivityTracker" alt="" coords="237,5,388,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html" title="A test observer that mocks out the ActivityTrackerInterface#notifyOfActivityUpdates() call..." alt="" coords="223,71,403,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html" title="alexaClientSDK::afml\l::VisualActivityTracker" alt="" coords="235,152,390,193"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,79,175,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html" title=" " alt="" coords="237,5,388,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html" title="A test observer that mocks out the ActivityTrackerInterface#notifyOfActivityUpdates() call." alt="" coords="223,71,403,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html" title=" " alt="" coords="235,152,390,193"/>
 </map>

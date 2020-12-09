@@ -1,12 +1,13 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/CaptionTimingAdapter.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/CaptionTimingAdapter.h">
-<area shape="rect" id="node2" href="$_caption_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/include\l/Captions/CaptionManager.h" alt="" coords="201,139,417,224"/>
-<area shape="rect" id="node3" href="$_caption_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/src\l/CaptionManager.cpp" alt="" coords="5,272,205,357"/>
-<area shape="rect" id="node9" href="$_caption_timing_adapter_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/src\l/CaptionTimingAdapter.cpp" alt="" coords="441,139,641,224"/>
-<area shape="rect" id="node10" href="$_timing_adapter_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/src\l/TimingAdapterFactory.cpp" alt="" coords="665,139,865,224"/>
-<area shape="rect" id="node11" href="$_caption_timing_adapter_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/test\l/CaptionTimingAdapterTest.cpp" alt="" coords="890,139,1097,224"/>
-<area shape="rect" id="node4" href="$_caption_manager_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/test\l/CaptionManagerTest.cpp" alt="" coords="229,272,429,357"/>
-<area shape="rect" id="node5" href="$_mock_caption_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/test\l/MockCaptionManager.h" alt="" coords="453,272,653,357"/>
-<area shape="rect" id="node6" href="$_audio_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/AudioPlayer/acsdkAudio\lPlayer/test/AudioPlayerTest.cpp" alt="" coords="171,405,408,491"/>
-<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/SpeechSynthesizer\l/test/SpeechSynthesizerTest.cpp" alt="" coords="432,405,675,491"/>
-<area shape="rect" id="node8" href="$_libwebvtt_parser_adapter_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Captions/Implementation/test\l/LibwebvttParserAdapterTest.cpp" alt="" coords="699,405,915,491"/>
+<map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/CaptionTimingAdapter.h" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/CaptionTimingAdapter.h">
+<area shape="rect" id="node1" title=" " alt="" coords="415,5,682,61"/>
+<area shape="rect" id="node2" href="$_caption_manager_8h.html" title=" " alt="" coords="191,109,423,165"/>
+<area shape="rect" id="node3" href="$_caption_manager_8cpp.html" title=" " alt="" coords="5,213,201,269"/>
+<area shape="rect" id="node9" href="$_caption_timing_adapter_8cpp.html" title=" " alt="" coords="448,109,649,165"/>
+<area shape="rect" id="node10" href="$_timing_adapter_factory_8cpp.html" title=" " alt="" coords="673,109,872,165"/>
+<area shape="rect" id="node11" href="$_caption_timing_adapter_test_8cpp.html" title=" " alt="" coords="896,109,1127,165"/>
+<area shape="rect" id="node4" href="$_caption_manager_test_8cpp.html" title=" " alt="" coords="226,213,423,269"/>
+<area shape="rect" id="node5" href="$_mock_caption_manager_8h.html" title=" " alt="" coords="448,213,644,269"/>
+<area shape="rect" id="node6" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="196,317,427,388"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="451,317,641,388"/>
+<area shape="rect" id="node8" href="$_libwebvtt_parser_adapter_test_8cpp.html" title=" " alt="" coords="665,325,907,381"/>
 </map>

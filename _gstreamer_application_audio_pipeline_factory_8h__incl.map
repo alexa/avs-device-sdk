@@ -1,40 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkGstreamerApplicationAudioPipelineFactory/include/acsdkGstreamerApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkGstreamerApplicationAudioPipelineFactory/include/acsdkGstreamerApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h">
-<area shape="rect" id="node4" href="$_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="2888,153,3113,209"/>
-<area shape="rect" id="node5" href="$_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="2597,347,2791,388"/>
-<area shape="rect" id="node14" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="2711,540,2903,581"/>
-<area shape="rect" id="node16" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="1635,443,1844,485"/>
-<area shape="rect" id="node33" href="$_equalizer_runtime_setup_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerRuntimeSetupInterface.h" alt="" coords="4356,347,4581,388"/>
-<area shape="rect" id="node40" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="3887,443,4109,485"/>
-<area shape="rect" id="node42" href="$_channel_volume_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeFactoryInterface.h" alt="" coords="3461,347,3685,388"/>
-<area shape="rect" id="node43" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="3610,436,3813,492"/>
-<area shape="rect" id="node45" href="$_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="3119,257,3311,299"/>
-<area shape="rect" id="node47" href="$_caption_manager_interface_8h.html" title="Captions/CaptionManagerInterface.h" alt="" coords="1375,451,1610,477"/>
-<area shape="rect" id="node11" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="3114,443,3306,485"/>
-<area shape="rect" id="node31" href="$_pooled_application_media_interfaces_8h.html" title="PooledApplicationMediaInterfaces.h" alt="" coords="2732,265,2963,291"/>
-<area shape="rect" id="node6" href="$_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="4133,443,4303,485"/>
-<area shape="rect" id="node29" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="3349,540,3538,581"/>
-<area shape="rect" id="node7" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="4655,547,4778,574"/>
-<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="4748,629,4941,671"/>
-<area shape="rect" id="node10" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="4558,629,4723,671"/>
-<area shape="rect" id="node12" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="2978,540,3223,581"/>
-<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="551,540,755,581"/>
-<area shape="rect" id="node20" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="779,547,1001,574"/>
-<area shape="rect" id="node21" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1311,637,1507,663"/>
-<area shape="rect" id="node22" href="$_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="2245,540,2455,581"/>
-<area shape="rect" id="node23" href="$_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="1361,540,1571,581"/>
-<area shape="rect" id="node24" href="$_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="317,629,527,671"/>
-<area shape="rect" id="node25" href="$_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="2012,540,2221,581"/>
-<area shape="rect" id="node26" href="$_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="317,540,527,581"/>
-<area shape="rect" id="node27" href="$_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="1025,540,1235,581"/>
-<area shape="rect" id="node28" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="1776,547,1988,574"/>
-<area shape="rect" id="node35" href="$_equalizer_configuration_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerConfigurationInterface.h" alt="" coords="5175,443,5394,485"/>
-<area shape="rect" id="node37" href="$_equalizer_mode_controller_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerModeControllerInterface.h" alt="" coords="4652,443,4883,485"/>
-<area shape="rect" id="node38" href="$_equalizer_storage_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerStorageInterface.h" alt="" coords="4441,443,4627,485"/>
-<area shape="rect" id="node39" href="$_equalizer_controller_listener_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerControllerListenerInterface.h" alt="" coords="4907,443,5151,485"/>
-<area shape="rect" id="node41" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="4053,540,4210,581"/>
-<area shape="rect" id="node44" href="$_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="3714,540,3927,581"/>
-<area shape="rect" id="node46" href="$_speaker_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerObserverInterface.h" alt="" coords="3096,347,3335,388"/>
-<area shape="rect" id="node48" href="$_caption_data_8h.html" title="CaptionData.h" alt="" coords="1595,547,1702,574"/>
-<area shape="rect" id="node49" href="$_caption_frame_8h.html" title="CaptionFrame.h" alt="" coords="171,637,286,663"/>
-<area shape="rect" id="node50" href="$_caption_presenter_interface_8h.html" title="CaptionPresenterInterface.h" alt="" coords="5,547,191,574"/>
+<map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkGstreamerApplicationAudioPipelineFactory/include/acsdkGstreamerApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkGstreamerApplicationAudioPipelineFactory/include/acsdkGstreamerApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="2891,5,3211,105"/>
+<area shape="rect" id="node2" title=" " alt="" coords="3615,637,3685,663"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2668,637,2723,663"/>
+<area shape="rect" id="node4" href="$_application_audio_pipeline_factory_interface_8h.html" title=" " alt="" coords="2864,153,3089,209"/>
+<area shape="rect" id="node5" href="$_application_media_interfaces_8h.html" title=" " alt="" coords="2573,347,2767,388"/>
+<area shape="rect" id="node14" href="$_speaker_interface_8h.html" title=" " alt="" coords="2691,540,2881,581"/>
+<area shape="rect" id="node16" href="$_media_player_interface_8h.html" title=" " alt="" coords="1623,443,1829,485"/>
+<area shape="rect" id="node33" href="$_equalizer_runtime_setup_interface_8h.html" title=" " alt="" coords="4333,347,4559,388"/>
+<area shape="rect" id="node40" href="$_shutdown_notifier_interface_8h.html" title=" " alt="" coords="3864,443,4087,485"/>
+<area shape="rect" id="node42" href="$_channel_volume_factory_interface_8h.html" title=" " alt="" coords="3437,347,3661,388"/>
+<area shape="rect" id="node43" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title=" " alt="" coords="3586,436,3789,492"/>
+<area shape="rect" id="node45" href="$_speaker_manager_interface_8h.html" title=" " alt="" coords="3096,257,3287,299"/>
+<area shape="rect" id="node47" href="$_caption_manager_interface_8h.html" title=" " alt="" coords="1363,451,1598,477"/>
+<area shape="rect" id="node11" href="$_channel_volume_interface_8h.html" title=" " alt="" coords="3091,443,3281,485"/>
+<area shape="rect" id="node31" href="$_pooled_application_media_interfaces_8h.html" title=" " alt="" coords="2708,265,2939,291"/>
+<area shape="rect" id="node6" href="$_equalizer_interface_8h.html" title=" " alt="" coords="4111,443,4280,485"/>
+<area shape="rect" id="node29" href="$_requires_shutdown_8h.html" title=" " alt="" coords="3325,540,3511,581"/>
+<area shape="rect" id="node7" href="$_equalizer_types_8h.html" title=" " alt="" coords="4650,547,4773,574"/>
+<area shape="rect" id="node8" href="$hash_8h.html" title=" " alt="" coords="4667,629,4857,671"/>
+<area shape="rect" id="node10" href="$_success_result_8h.html" title=" " alt="" coords="4479,629,4642,671"/>
+<area shape="rect" id="node9" title=" " alt="" coords="4065,719,4144,745"/>
+<area shape="rect" id="node12" href="$_speaker_constants_8h.html" title=" " alt="" coords="2957,540,3199,581"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2250,637,2311,663"/>
+<area shape="rect" id="node15" title=" " alt="" coords="890,637,959,663"/>
+<area shape="rect" id="node17" title=" " alt="" coords="618,719,679,745"/>
+<area shape="rect" id="node18" title=" " alt="" coords="2612,547,2667,574"/>
+<area shape="rect" id="node19" href="$_attachment_reader_8h.html" title=" " alt="" coords="549,540,749,581"/>
+<area shape="rect" id="node20" href="$_audio_format_8h.html" title=" " alt="" coords="773,547,993,574"/>
+<area shape="rect" id="node21" href="$_optional_8h.html" title=" " alt="" coords="1299,637,1494,663"/>
+<area shape="rect" id="node22" href="$_media_player_factory_interface_8h.html" title=" " alt="" coords="2228,540,2435,581"/>
+<area shape="rect" id="node23" href="$_media_player_state_8h.html" title=" " alt="" coords="1351,540,1557,581"/>
+<area shape="rect" id="node24" href="$_playback_attributes_8h.html" title=" " alt="" coords="317,629,524,671"/>
+<area shape="rect" id="node25" href="$_playback_context_8h.html" title=" " alt="" coords="1997,540,2204,581"/>
+<area shape="rect" id="node26" href="$_playback_report_8h.html" title=" " alt="" coords="317,540,524,581"/>
+<area shape="rect" id="node27" href="$_source_config_8h.html" title=" " alt="" coords="1017,540,1224,581"/>
+<area shape="rect" id="node28" href="$_media_type_8h.html" title=" " alt="" coords="1764,547,1973,574"/>
+<area shape="rect" id="node30" title=" " alt="" coords="3387,637,3449,663"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2791,354,2895,381"/>
+<area shape="rect" id="node34" title=" " alt="" coords="4304,451,4343,477"/>
+<area shape="rect" id="node35" href="$_equalizer_configuration_interface_8h.html" title=" " alt="" coords="5153,443,5371,485"/>
+<area shape="rect" id="node37" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="4629,443,4860,485"/>
+<area shape="rect" id="node38" href="$_equalizer_storage_interface_8h.html" title=" " alt="" coords="4418,443,4605,485"/>
+<area shape="rect" id="node39" href="$_equalizer_controller_listener_interface_8h.html" title=" " alt="" coords="4884,443,5128,485"/>
+<area shape="rect" id="node36" title=" " alt="" coords="5134,547,5174,574"/>
+<area shape="rect" id="node41" href="$_notifier_interface_8h.html" title=" " alt="" coords="4026,540,4183,581"/>
+<area shape="rect" id="node44" href="$_h_t_t_p_content_fetcher_interface_8h.html" title=" " alt="" coords="3687,540,3901,581"/>
+<area shape="rect" id="node46" href="$_speaker_manager_observer_interface_8h.html" title=" " alt="" coords="3072,347,3311,388"/>
+<area shape="rect" id="node48" href="$_caption_data_8h.html" title=" " alt="" coords="1582,547,1689,574"/>
+<area shape="rect" id="node49" href="$_caption_frame_8h.html" title=" " alt="" coords="171,637,286,663"/>
+<area shape="rect" id="node50" href="$_caption_presenter_interface_8h.html" title=" " alt="" coords="5,547,191,574"/>
 </map>

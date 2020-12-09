@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSequencerFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSequencerFactory.h">
-<area shape="rect" id="node2" href="$_post_connect_sequencer_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/PostConnectSequencer\lFactory.cpp" alt="" coords="5,139,280,224"/>
-<area shape="rect" id="node3" href="$_post_connect_sequencer_factory_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/PostConnectSequencer\lFactoryTest.cpp" alt="" coords="305,139,583,224"/>
-<area shape="rect" id="node4" href="$_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="607,139,910,224"/>
-<area shape="rect" id="node5" href="$_a_c_l_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/ACLTestContext.cpp" alt="" coords="934,146,1170,217"/>
-<area shape="rect" id="node6" href="$_server_disconnect_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/ServerDisconnectIntegration\lTest.cpp" alt="" coords="1193,139,1476,224"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1501,146,1753,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSequencerFactory.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectSequencerFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="716,5,939,76"/>
+<area shape="rect" id="node2" href="$_post_connect_sequencer_factory_8cpp.html" title=" " alt="" coords="5,131,236,187"/>
+<area shape="rect" id="node3" href="$_post_connect_sequencer_factory_test_8cpp.html" title=" " alt="" coords="261,131,519,187"/>
+<area shape="rect" id="node4" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="544,124,855,195"/>
+<area shape="rect" id="node5" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="879,131,1031,187"/>
+<area shape="rect" id="node6" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="1056,124,1247,195"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="1271,139,1549,180"/>
 </map>

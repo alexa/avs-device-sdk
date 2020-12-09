@@ -1,7 +1,8 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZBluetoothDevice.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZBluetoothDevice.h">
-<area shape="rect" id="node2" href="$_blue_z_a_v_r_c_p_target_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/include/BlueZ/BlueZAVRCPTarget.h" alt="" coords="279,139,517,224"/>
-<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZBluetoothDevice.cpp" alt="" coords="491,272,705,357"/>
-<area shape="rect" id="node6" href="$_blue_z_device_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZDeviceManager.cpp" alt="" coords="615,139,829,224"/>
-<area shape="rect" id="node3" href="$_blue_z_a_v_r_c_p_target_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZAVRCPTarget.cpp" alt="" coords="5,272,220,357"/>
-<area shape="rect" id="node5" href="$_blue_z_a_v_r_c_p_target_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/test/BlueZAVRCPTargetTest.cpp" alt="" coords="245,272,466,357"/>
+<map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZBluetoothDevice.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZBluetoothDevice.h">
+<area shape="rect" id="node1" title=" " alt="" coords="513,5,749,76"/>
+<area shape="rect" id="node2" href="$_blue_z_a_v_r_c_p_target_8h.html" title=" " alt="" coords="295,124,569,180"/>
+<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title=" " alt="" coords="535,228,777,284"/>
+<area shape="rect" id="node6" href="$_blue_z_device_manager_8cpp.html" title=" " alt="" coords="668,124,903,180"/>
+<area shape="rect" id="node3" href="$_blue_z_a_v_r_c_p_target_8cpp.html" title=" " alt="" coords="5,228,232,284"/>
+<area shape="rect" id="node5" href="$_blue_z_a_v_r_c_p_target_test_8cpp.html" title=" " alt="" coords="257,228,511,284"/>
 </map>

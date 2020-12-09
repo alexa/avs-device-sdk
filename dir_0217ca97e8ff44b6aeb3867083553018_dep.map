@@ -1,15 +1,15 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkStartupManager" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkStartupManager">
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManager" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManager">
 <area shape="rect" id="node2" href="dir_5c4cba069bac1253ddfeaa5be2586c75.html" title="include" alt="" coords="107,159,179,207"/>
 <area shape="rect" id="node5" href="dir_fe5a1e31b2404c649ea4321e0ec6a380.html" title="acsdkNotifier" alt="" coords="5,255,104,303"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000550_000530.html" title="1" alt="" coords="92,239,100,254"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000560_000540.html" title="1" alt="" coords="91,240,99,254"/>
 <area shape="rect" id="node6" href="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html" title="acsdkStartupManagerInterfaces" alt="" coords="129,255,335,303"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000550_000554.html" title="3" alt="" coords="199,228,207,242"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000560_000564.html" title="3" alt="" coords="200,228,208,243"/>
 <area shape="rect" id="node3" href="dir_b6e5442a3ec03d0680129d211350001c.html" title="src" alt="" coords="155,63,227,111"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000552_000550.html" title="1" alt="" coords="167,138,175,153"/>
-<area shape="rect" id="node7" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="433,159,535,207"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000552_000017.html" title="1" alt="" coords="414,143,422,158"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000562_000560.html" title="1" alt="" coords="166,139,174,154"/>
+<area shape="rect" id="node7" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="433,159,533,207"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000562_000017.html" title="1" alt="" coords="414,143,422,158"/>
 <area shape="rect" id="node4" href="dir_4fd6d3ffe50acc56b098f56858cfa353.html" title="test" alt="" coords="59,63,131,111"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000553_000550.html" title="2" alt="" coords="126,131,134,145"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000563_000560.html" title="2" alt="" coords="126,131,134,146"/>
 <area shape="rect" id="clust2" href="dir_0217ca97e8ff44b6aeb3867083553018.html" alt="" coords="48,52,411,217"/>
 <area shape="rect" id="clust1" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="37,16,421,228"/>
 </map>

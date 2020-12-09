@@ -1,9 +1,11 @@
 <map id="alexaClientSDK::acl::HTTP2Transport" name="alexaClientSDK::acl::HTTP2Transport">
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title="alexaClientSDK::acl\l::TransportInterface" alt="" coords="305,71,445,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,71,203,112"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html" title="alexaClientSDK::acl\l::PostConnectObserverInterface" alt="" coords="269,136,480,177"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="269,202,480,258"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="251,283,499,324"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_connection_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2Connection\lObserverInterface" alt="" coords="271,349,478,405"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html" title="alexaClientSDK::acl\l::ExchangeHandlerContextInterface" alt="" coords="259,429,490,471"/>
+<area shape="rect" id="node1" title=" " alt="" coords="547,209,687,251"/>
+<area shape="rect" id="node2" title=" " alt="" coords="273,5,477,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html" title=" " alt="" coords="305,71,445,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="5,71,203,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_observer_interface.html" title=" " alt="" coords="269,136,480,177"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="269,202,480,258"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title=" " alt="" coords="251,283,499,324"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_connection_observer_interface.html" title=" " alt="" coords="271,349,478,405"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1acl_1_1_exchange_handler_context_interface.html" title=" " alt="" coords="259,429,490,471"/>
 </map>

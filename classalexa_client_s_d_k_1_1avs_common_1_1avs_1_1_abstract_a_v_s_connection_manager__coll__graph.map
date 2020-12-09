@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager" name="alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="300,45,511,101"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="23,5,234,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSGatewayAssigner\lInterface" alt="" coords="5,85,252,141"/>
+<area shape="rect" id="node1" title=" " alt="" coords="555,53,804,94"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title=" " alt="" coords="299,45,507,101"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="23,5,233,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title=" " alt="" coords="5,85,251,141"/>
 </map>

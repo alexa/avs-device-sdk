@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device_manager.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::test::MockBluetoothDeviceManager" alt="" coords="280,5,519,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device_manager.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::BlueZBluetoothDeviceManager" alt="" coords="294,85,505,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_device_manager.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::BlueZDeviceManager" alt="" coords="311,165,487,221"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,232,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device_manager.html" title=" " alt="" coords="280,5,519,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device_manager.html" title=" " alt="" coords="294,85,505,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_device_manager.html" title=" " alt="" coords="311,165,487,221"/>
 </map>

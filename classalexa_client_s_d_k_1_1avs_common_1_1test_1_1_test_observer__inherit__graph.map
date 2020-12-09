@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::test::TestObserver" name="alexaClientSDK::avsCommon::test::TestObserver">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="5,5,209,61"/>
+<area shape="rect" id="node1" title="A test observer that mocks out the DialogUXStateObserverInterface#onDialogUXStateChanged() call." alt="" coords="9,109,206,151"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer." alt="" coords="5,5,209,61"/>
 </map>

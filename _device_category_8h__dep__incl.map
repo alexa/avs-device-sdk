@@ -1,25 +1,26 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/DeviceCategory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/DeviceCategory.h">
-<area shape="rect" id="node2" href="$_bluetooth_device_connection_rule_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/Bluetooth\l/BluetoothDeviceConnectionRuleInterface.h" alt="" coords="693,139,970,239"/>
-<area shape="rect" id="node19" href="$_bluetooth_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/test/BluetoothTest.cpp" alt="" coords="1043,435,1287,520"/>
-<area shape="rect" id="node23" href="$_bluetooth_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/include/acsdkBluetooth/Bluetooth.h" alt="" coords="709,294,953,379"/>
-<area shape="rect" id="node24" href="$_s_q_lite_bluetooth_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/SQLiteBluetoothStorage.cpp" alt="" coords="1312,146,1556,231"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="1058,1116,1306,1201"/>
-<area shape="rect" id="node4" href="$_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="780,435,1019,520"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="5,1123,257,1194"/>
-<area shape="rect" id="node18" href="$_mock_bluetooth_device_connection_rule_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/test\l/AVSCommon/SDKInterfaces/Bluetooth\l/MockBluetoothDeviceConnectionRule.h" alt="" coords="978,287,1237,387"/>
-<area shape="rect" id="node20" href="$_basic_device_connection_rule_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/include/acsdkBluetooth/BasicDeviceConnectionRule.h" alt="" coords="243,294,585,379"/>
-<area shape="rect" id="node5" href="$_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="1028,568,1243,653"/>
-<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="652,701,861,787"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="795,568,1004,653"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="532,835,741,920"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="817,842,1072,913"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="786,968,1034,1068"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="277,975,487,1061"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="511,983,762,1053"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="507,1116,761,1201"/>
-<area shape="rect" id="node10" href="$preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="786,1116,1034,1201"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="282,1123,482,1194"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="886,709,1134,779"/>
-<area shape="rect" id="node21" href="$_basic_device_connection_rule_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/BasicDeviceConnectionRule.cpp" alt="" coords="244,435,488,520"/>
-<area shape="rect" id="node22" href="$_bluetooth_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/Bluetooth.cpp" alt="" coords="512,435,756,520"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/DeviceCategory.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/DeviceCategory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="1022,5,1210,76"/>
+<area shape="rect" id="node2" href="$_bluetooth_device_connection_rule_interface_8h.html" title=" " alt="" coords="637,124,912,209"/>
+<area shape="rect" id="node19" href="$_bluetooth_test_8cpp.html" title=" " alt="" coords="1044,383,1295,439"/>
+<area shape="rect" id="node23" href="$_bluetooth_8h.html" title=" " alt="" coords="647,257,902,328"/>
+<area shape="rect" id="node24" href="$_s_q_lite_bluetooth_storage_8cpp.html" title=" " alt="" coords="1319,131,1556,202"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="1019,933,1274,989"/>
+<area shape="rect" id="node4" href="$_default_client_8h.html" title=" " alt="" coords="793,376,1020,447"/>
+<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title=" " alt="" coords="5,940,283,981"/>
+<area shape="rect" id="node18" href="$_mock_bluetooth_device_connection_rule_8h.html" title=" " alt="" coords="927,257,1244,328"/>
+<area shape="rect" id="node20" href="$_basic_device_connection_rule_8h.html" title=" " alt="" coords="285,257,539,328"/>
+<area shape="rect" id="node5" href="$_default_client_8cpp.html" title=" " alt="" coords="1004,495,1233,551"/>
+<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title=" " alt="" coords="595,599,813,655"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title=" " alt="" coords="769,495,980,551"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title=" " alt="" coords="523,703,738,759"/>
+<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="813,703,1019,759"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="756,807,1009,877"/>
+<area shape="rect" id="node11" href="$_sample_application_8h.html" title=" " alt="" coords="289,814,505,870"/>
+<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="530,814,731,870"/>
+<area shape="rect" id="node9" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="528,925,757,996"/>
+<area shape="rect" id="node10" href="$preview_main_8cpp.html" title=" " alt="" coords="781,933,995,989"/>
+<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="307,940,504,981"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="837,606,1109,647"/>
+<area shape="rect" id="node21" href="$_basic_device_connection_rule_8cpp.html" title=" " alt="" coords="239,376,521,447"/>
+<area shape="rect" id="node22" href="$_bluetooth_8cpp.html" title=" " alt="" coords="546,383,769,439"/>
 </map>

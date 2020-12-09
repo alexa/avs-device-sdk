@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender" name="alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaInterface\lMessageSenderInterface" alt="" coords="21,5,222,61"/>
+<area shape="rect" id="node1" title="Mock class that implements the AlexaInterfaceResponseSender." alt="" coords="5,109,237,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title=" " alt="" coords="21,5,222,61"/>
 </map>

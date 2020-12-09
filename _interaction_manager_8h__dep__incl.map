@@ -1,12 +1,13 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h">
-<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="825,139,1034,224"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="1058,146,1313,217"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="417,272,665,372"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="825,279,1034,365"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="1059,287,1309,357"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,420,253,505"/>
-<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="278,420,533,505"/>
-<area shape="rect" id="node6" href="$preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="557,420,805,505"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="829,427,1029,498"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1054,427,1306,498"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/InteractionManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="882,5,1101,61"/>
+<area shape="rect" id="node2" href="$_user_input_manager_8h.html" title=" " alt="" coords="767,109,981,165"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="1006,109,1211,165"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="381,213,634,284"/>
+<area shape="rect" id="node7" href="$_sample_application_8h.html" title=" " alt="" coords="766,221,982,277"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="1007,221,1208,277"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,339,260,395"/>
+<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="285,332,514,403"/>
+<area shape="rect" id="node6" href="$preview_main_8cpp.html" title=" " alt="" coords="538,339,751,395"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title=" " alt="" coords="775,347,973,388"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title=" " alt="" coords="997,347,1274,388"/>
 </map>

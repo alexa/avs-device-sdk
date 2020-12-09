@@ -1,33 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SynchronizeStateSender/include/SynchronizeStateSender/SynchronizeStateSenderFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SynchronizeStateSender/include/SynchronizeStateSender/SynchronizeStateSenderFactory.h">
-<area shape="rect" id="node3" href="$_post_connect_operation_provider_registrar_interface_8h.html" title="acsdkPostConnectOperation\lProviderRegistrarInterfaces\l/PostConnectOperationProviderRegistrar\lInterface.h" alt="" coords="224,421,483,492"/>
-<area shape="rect" id="node5" href="$_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="93,540,299,596"/>
-<area shape="rect" id="node35" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1637,153,1829,195"/>
-<area shape="rect" id="node19" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1929,555,2125,581"/>
-<area shape="rect" id="node6" href="$_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="94,644,314,685"/>
-<area shape="rect" id="node7" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="291,733,483,775"/>
-<area shape="rect" id="node8" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="747,830,997,857"/>
-<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="910,912,1114,953"/>
-<area shape="rect" id="node17" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1480,912,1723,953"/>
-<area shape="rect" id="node20" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1455,644,1631,685"/>
-<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1572,733,1748,775"/>
-<area shape="rect" id="node24" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1241,912,1455,953"/>
-<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1797,912,1973,953"/>
-<area shape="rect" id="node28" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2696,823,2872,864"/>
-<area shape="rect" id="node33" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1694,823,1887,864"/>
-<area shape="rect" id="node34" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="392,823,568,864"/>
-<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2696,912,2872,953"/>
-<area shape="rect" id="node32" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2415,1001,2591,1043"/>
-<area shape="rect" id="node36" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="2189,436,2384,477"/>
-<area shape="rect" id="node37" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1367,243,1582,284"/>
-<area shape="rect" id="node38" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="1705,436,1919,477"/>
-<area shape="rect" id="node39" href="$_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="1719,332,1956,373"/>
-<area shape="rect" id="node44" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2715,243,2909,284"/>
-<area shape="rect" id="node49" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2076,243,2268,284"/>
-<area shape="rect" id="node40" href="$_capability_state_8h.html" title="AVSCommon/AVS/Capability\lState.h" alt="" coords="2459,436,2653,477"/>
-<area shape="rect" id="node42" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="2200,823,2376,864"/>
-<area shape="rect" id="node43" href="$_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="2048,912,2224,953"/>
-<area shape="rect" id="node45" href="$_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="2553,339,2775,366"/>
-<area shape="rect" id="node47" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="2287,332,2479,373"/>
-<area shape="rect" id="node48" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3077,644,3277,685"/>
-<area shape="rect" id="node50" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1981,332,2211,373"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SynchronizeStateSender/include/SynchronizeStateSender/SynchronizeStateSenderFactory.h" name="/workplace/avs&#45;device&#45;sdk/SynchronizeStateSender/include/SynchronizeStateSender/SynchronizeStateSenderFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="202,5,425,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="293,890,363,917"/>
+<area shape="rect" id="node3" href="$_post_connect_operation_provider_registrar_interface_8h.html" title=" " alt="" coords="184,392,443,463"/>
+<area shape="rect" id="node5" href="$_post_connect_operation_provider_interface_8h.html" title=" " alt="" coords="43,511,250,567"/>
+<area shape="rect" id="node29" href="$_context_manager_interface_8h.html" title=" " alt="" coords="2357,124,2547,165"/>
+<area shape="rect" id="node45" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="373,124,552,165"/>
+<area shape="rect" id="node4" title=" " alt="" coords="921,890,980,917"/>
+<area shape="rect" id="node11" href="$_optional_8h.html" title=" " alt="" coords="1929,525,2124,552"/>
+<area shape="rect" id="node6" href="$_post_connect_operation_interface_8h.html" title=" " alt="" coords="171,615,391,656"/>
+<area shape="rect" id="node7" href="$_message_sender_interface_8h.html" title=" " alt="" coords="631,704,822,745"/>
+<area shape="rect" id="node8" href="$_message_request_8h.html" title=" " alt="" coords="666,801,913,827"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1496,890,1555,917"/>
+<area shape="rect" id="node10" title=" " alt="" coords="2321,972,2375,999"/>
+<area shape="rect" id="node12" href="$_logger_utils_8h.html" title=" " alt="" coords="1930,615,2105,656"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1917,890,1979,917"/>
+<area shape="rect" id="node14" href="$_logger_8h.html" title=" " alt="" coords="1658,704,1833,745"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1799,801,1860,827"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2241,890,2311,917"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title=" " alt="" coords="1562,793,1774,835"/>
+<area shape="rect" id="node21" href="$_level_8h.html" title=" " alt="" coords="1297,883,1471,924"/>
+<area shape="rect" id="node22" href="$_log_entry_8h.html" title=" " alt="" coords="2389,793,2563,835"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1293,793,1486,835"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="467,793,642,835"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1633,890,1698,917"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1348,972,1420,999"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1723,890,1763,917"/>
+<area shape="rect" id="node23" title=" " alt="" coords="2385,890,2460,917"/>
+<area shape="rect" id="node24" title=" " alt="" coords="2485,890,2563,917"/>
+<area shape="rect" id="node25" href="$_log_entry_stream_8h.html" title=" " alt="" coords="2690,883,2865,924"/>
+<area shape="rect" id="node26" title=" " alt="" coords="3057,972,3127,999"/>
+<area shape="rect" id="node30" href="$_capability_tag_8h.html" title=" " alt="" coords="3155,407,3346,448"/>
+<area shape="rect" id="node31" href="$_state_refresh_policy_8h.html" title=" " alt="" coords="1644,213,1855,255"/>
+<area shape="rect" id="node32" href="$_alexa_state_change_cause_type_8h.html" title=" " alt="" coords="2555,407,2767,448"/>
+<area shape="rect" id="node33" href="$_context_manager_observer_interface_8h.html" title=" " alt="" coords="2069,303,2307,344"/>
+<area shape="rect" id="node38" href="$_context_requester_interface_8h.html" title=" " alt="" coords="2443,213,2637,255"/>
+<area shape="rect" id="node43" href="$_state_provider_interface_8h.html" title=" " alt="" coords="2941,213,3131,255"/>
+<area shape="rect" id="node34" href="$_capability_state_8h.html" title=" " alt="" coords="2115,407,2306,448"/>
+<area shape="rect" id="node35" title=" " alt="" coords="2273,525,2335,552"/>
+<area shape="rect" id="node36" href="$_time_point_8h.html" title=" " alt="" coords="2125,704,2299,745"/>
+<area shape="rect" id="node37" href="$_time_utils_8h.html" title=" " alt="" coords="2087,793,2262,835"/>
+<area shape="rect" id="node39" href="$_a_v_s_context_8h.html" title=" " alt="" coords="2433,310,2647,337"/>
+<area shape="rect" id="node41" href="$_context_request_token_8h.html" title=" " alt="" coords="2825,303,3015,344"/>
+<area shape="rect" id="node42" href="$_endpoint_identifier_8h.html" title=" " alt="" coords="2894,615,3093,656"/>
+<area shape="rect" id="node40" title=" " alt="" coords="2433,414,2479,441"/>
+<area shape="rect" id="node44" href="$_namespace_and_name_8h.html" title=" " alt="" coords="3040,303,3267,344"/>
+<area shape="rect" id="node46" href="$_metric_event_8h.html" title=" " alt="" coords="797,407,976,448"/>
+<area shape="rect" id="node47" title=" " alt="" coords="599,525,710,552"/>
+<area shape="rect" id="node48" href="$_data_point_8h.html" title=" " alt="" coords="1039,793,1217,835"/>
+<area shape="rect" id="node50" href="$_priority_8h.html" title=" " alt="" coords="735,518,913,559"/>
+<area shape="rect" id="node49" href="$_data_type_8h.html" title=" " alt="" coords="1040,883,1219,924"/>
 </map>

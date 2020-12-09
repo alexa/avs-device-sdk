@@ -1,51 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h">
-<area shape="rect" id="node2" href="$_downchannel_handler_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/DownchannelHandler.h" alt="" coords="1070,139,1270,224"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/HTTP2Transport.h" alt="" coords="1574,139,1774,224"/>
-<area shape="rect" id="node11" href="$_h_t_t_p2_transport_factory_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/HTTP2TransportFactory.h" alt="" coords="2197,272,2397,357"/>
-<area shape="rect" id="node17" href="$_message_request_handler_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/MessageRequestHandler.h" alt="" coords="1294,139,1494,224"/>
-<area shape="rect" id="node19" href="$_message_router_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/MessageRouter.h" alt="" coords="3046,272,3246,357"/>
-<area shape="rect" id="node21" href="$_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="5316,553,5555,639"/>
-<area shape="rect" id="node29" href="$_mime_response_sink_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/MimeResponseSink.h" alt="" coords="513,139,713,224"/>
-<area shape="rect" id="node31" href="$_transport_factory_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/TransportFactoryInterface.h" alt="" coords="3046,139,3246,224"/>
-<area shape="rect" id="node33" href="$_attachment_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/include/AVSCommon\l/AVS/Attachment/AttachmentManager.h" alt="" coords="4899,272,5166,357"/>
-<area shape="rect" id="node45" href="$_speech_synthesizer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/SpeechSynthesizer\l/test/SpeechSynthesizerTest.cpp" alt="" coords="6991,413,7234,498"/>
-<area shape="rect" id="node46" href="$_a_v_s_directive_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/include/AVSCommon\l/AVS/AVSDirective.h" alt="" coords="7359,139,7626,224"/>
-<area shape="rect" id="node47" href="$_mock_attachment_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/test/AVSCommon\l/AVS/Attachment/MockAttachmentManager.h" alt="" coords="7650,139,7938,224"/>
-<area shape="rect" id="node48" href="$_diagnostics_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/include\l/AVSCommon/SDKInterfaces/Diagnostics\l/DiagnosticsInterface.h" alt="" coords="7309,405,7578,505"/>
-<area shape="rect" id="node49" href="$_core_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/include/acsdkCore\l/CoreComponent.h" alt="" coords="2656,139,2887,224"/>
-<area shape="rect" id="node50" href="$_sample_application_component_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplicationComponent.h" alt="" coords="1707,553,1919,639"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/DownchannelHandler.cpp" alt="" coords="308,279,595,350"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2Transport.cpp" alt="" coords="1265,279,1523,350"/>
-<area shape="rect" id="node6" href="$_exchange_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/ExchangeHandler.cpp" alt="" coords="1599,279,1864,350"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2TransportFactory.cpp" alt="" coords="1487,420,1789,491"/>
-<area shape="rect" id="node8" href="$_message_request_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/MessageRequestHandler.cpp" alt="" coords="619,279,929,350"/>
-<area shape="rect" id="node9" href="$_ping_handler_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/PingHandler.cpp" alt="" coords="1888,279,2121,350"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_transport_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/HTTP2TransportTest.cpp" alt="" coords="2472,420,2761,491"/>
-<area shape="rect" id="node12" href="$_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="2145,413,2448,498"/>
-<area shape="rect" id="node13" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="2943,820,3191,905"/>
-<area shape="rect" id="node14" href="$_a_c_l_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/ACLTestContext.cpp" alt="" coords="2503,694,2739,765"/>
-<area shape="rect" id="node15" href="$_server_disconnect_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/ServerDisconnectIntegration\lTest.cpp" alt="" coords="2383,553,2666,639"/>
-<area shape="rect" id="node16" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1829,827,2081,898"/>
-<area shape="rect" id="node18" href="$_message_request_handler_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/MessageRequestHandler\lTest.cpp" alt="" coords="953,272,1241,357"/>
-<area shape="rect" id="node20" href="$_message_router_factory_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/MessageRouterFactory.h" alt="" coords="3390,413,3590,498"/>
-<area shape="rect" id="node25" href="$_message_router_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/MessageRouter.cpp" alt="" coords="2785,420,3040,491"/>
-<area shape="rect" id="node26" href="$_message_router_test_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/test/Transport/MessageRouterTest.h" alt="" coords="3613,420,3884,491"/>
-<area shape="rect" id="node27" href="$_a_c_l_test_context_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/include/Integration\l/ACLTestContext.h" alt="" coords="3047,553,3247,639"/>
-<area shape="rect" id="node28" href="$_auth_delegate_test_context_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/include/Integration\l/AuthDelegateTestContext.h" alt="" coords="3115,413,3315,498"/>
-<area shape="rect" id="node22" href="$_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="6472,687,6687,772"/>
-<area shape="rect" id="node23" href="$_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="5331,820,5540,905"/>
-<area shape="rect" id="node24" href="$_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="4076,687,4285,772"/>
-<area shape="rect" id="node30" href="$_mime_response_sink_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/MimeResponseSink.cpp" alt="" coords="5,279,284,350"/>
-<area shape="rect" id="node32" href="$_message_router_factory_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/include/ACL/Transport\l/MessageRouterFactoryInterface.h" alt="" coords="3325,272,3549,357"/>
-<area shape="rect" id="node34" href="$_directive_processor_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ADSL/test/DirectiveProcessorTest.cpp" alt="" coords="3959,420,4213,491"/>
-<area shape="rect" id="node35" href="$_directive_router_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ADSL/test/DirectiveRouterTest.cpp" alt="" coords="4237,420,4471,491"/>
-<area shape="rect" id="node36" href="$_directive_sequencer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ADSL/test/DirectiveSequencerTest.cpp" alt="" coords="4495,420,4751,491"/>
-<area shape="rect" id="node37" href="$_message_interpreter_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ADSL/test/MessageInterpreterTest.cpp" alt="" coords="4776,420,5031,491"/>
-<area shape="rect" id="node38" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="5055,413,5271,498"/>
-<area shape="rect" id="node39" href="$_attachment_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/src/Attachment\l/AttachmentManager.cpp" alt="" coords="5296,413,5527,498"/>
-<area shape="rect" id="node40" href="$_attachment_manager_v2_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/test/Attachment\l/AttachmentManagerV2Test.cpp" alt="" coords="5551,413,5786,498"/>
-<area shape="rect" id="node41" href="$_capability_agent_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/AVS/test/CapabilityAgent\lTest.cpp" alt="" coords="5810,413,6069,498"/>
-<area shape="rect" id="node42" href="$_mime_utils_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/AVSCommon\l/Utils/Common/MimeUtils.h" alt="" coords="6092,413,6339,498"/>
-<area shape="rect" id="node43" href="$_testable_attachment_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/AVSCommon\l/Utils/Common/TestableAttachmentManager.h" alt="" coords="6363,413,6655,498"/>
-<area shape="rect" id="node44" href="$_audio_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/AudioPlayer/acsdkAudio\lPlayer/test/AudioPlayerTest.cpp" alt="" coords="6679,413,6917,498"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h">
+<area shape="rect" id="node1" title=" " alt="" coords="2072,5,2277,76"/>
+<area shape="rect" id="node2" href="$_downchannel_handler_8h.html" title=" " alt="" coords="573,131,792,187"/>
+<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8h.html" title=" " alt="" coords="1083,131,1277,187"/>
+<area shape="rect" id="node11" href="$_h_t_t_p2_transport_factory_8h.html" title=" " alt="" coords="1517,250,1752,306"/>
+<area shape="rect" id="node17" href="$_message_request_handler_8h.html" title=" " alt="" coords="816,131,1059,187"/>
+<area shape="rect" id="node19" href="$_message_router_8h.html" title=" " alt="" coords="2243,250,2429,306"/>
+<area shape="rect" id="node21" href="$_default_client_8h.html" title=" " alt="" coords="2925,480,3152,551"/>
+<area shape="rect" id="node29" href="$_mime_response_sink_8h.html" title=" " alt="" coords="257,131,471,187"/>
+<area shape="rect" id="node31" href="$_transport_factory_interface_8h.html" title=" " alt="" coords="2213,131,2459,187"/>
+<area shape="rect" id="node33" href="$_attachment_manager_8h.html" title=" " alt="" coords="3937,243,4141,313"/>
+<area shape="rect" id="node45" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="5787,361,5976,432"/>
+<area shape="rect" id="node46" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="6102,131,6327,187"/>
+<area shape="rect" id="node47" href="$_mock_attachment_manager_8h.html" title=" " alt="" coords="6351,124,6555,195"/>
+<area shape="rect" id="node48" href="$_diagnostics_interface_8h.html" title=" " alt="" coords="6051,361,6290,432"/>
+<area shape="rect" id="node49" href="$_core_component_8h.html" title=" " alt="" coords="1862,131,2061,187"/>
+<area shape="rect" id="node50" href="$_sample_application_component_8h.html" title=" " alt="" coords="969,487,1252,543"/>
+<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title=" " alt="" coords="198,250,373,306"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="866,250,1025,306"/>
+<area shape="rect" id="node6" href="$_exchange_handler_8cpp.html" title=" " alt="" coords="1101,250,1259,306"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_transport_factory_8cpp.html" title=" " alt="" coords="989,369,1179,425"/>
+<area shape="rect" id="node8" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="397,250,595,306"/>
+<area shape="rect" id="node9" href="$_ping_handler_8cpp.html" title=" " alt="" coords="1283,250,1442,306"/>
+<area shape="rect" id="node10" href="$_h_t_t_p2_transport_test_8cpp.html" title=" " alt="" coords="1815,369,1988,425"/>
+<area shape="rect" id="node12" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="1479,361,1790,432"/>
+<area shape="rect" id="node13" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="2226,703,2481,759"/>
+<area shape="rect" id="node14" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="1948,599,2100,655"/>
+<area shape="rect" id="node15" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="1663,480,1854,551"/>
+<area shape="rect" id="node16" href="$_sample_application_8cpp.html" title=" " alt="" coords="1151,710,1428,751"/>
+<area shape="rect" id="node18" href="$_message_request_handler_test_8cpp.html" title=" " alt="" coords="619,250,842,306"/>
+<area shape="rect" id="node20" href="$_message_router_factory_8h.html" title=" " alt="" coords="2575,369,2806,425"/>
+<area shape="rect" id="node25" href="$_message_router_8cpp.html" title=" " alt="" coords="2013,369,2171,425"/>
+<area shape="rect" id="node26" href="$_message_router_test_8h.html" title=" " alt="" coords="2831,369,2993,425"/>
+<area shape="rect" id="node27" href="$_a_c_l_test_context_8h.html" title=" " alt="" coords="2193,487,2391,543"/>
+<area shape="rect" id="node28" href="$_auth_delegate_test_context_8h.html" title=" " alt="" coords="2247,369,2499,425"/>
+<area shape="rect" id="node22" href="$_default_client_8cpp.html" title=" " alt="" coords="4316,599,4545,655"/>
+<area shape="rect" id="node23" href="$_interaction_manager_8h.html" title=" " alt="" coords="2929,703,3148,759"/>
+<area shape="rect" id="node24" href="$_keyword_observer_8h.html" title=" " alt="" coords="2568,599,2779,655"/>
+<area shape="rect" id="node30" href="$_mime_response_sink_8cpp.html" title=" " alt="" coords="5,250,173,306"/>
+<area shape="rect" id="node32" href="$_message_router_factory_interface_8h.html" title=" " alt="" coords="2517,243,2739,313"/>
+<area shape="rect" id="node34" href="$_directive_processor_test_8cpp.html" title=" " alt="" coords="3068,369,3295,425"/>
+<area shape="rect" id="node35" href="$_directive_router_test_8cpp.html" title=" " alt="" coords="3319,369,3526,425"/>
+<area shape="rect" id="node36" href="$_directive_sequencer_test_8cpp.html" title=" " alt="" coords="3550,369,3781,425"/>
+<area shape="rect" id="node37" href="$_message_interpreter_test_8cpp.html" title=" " alt="" coords="3805,369,4033,425"/>
+<area shape="rect" id="node38" href="$_default_client_component_8cpp.html" title=" " alt="" coords="4057,361,4261,432"/>
+<area shape="rect" id="node39" href="$_attachment_manager_8cpp.html" title=" " alt="" coords="4285,369,4523,425"/>
+<area shape="rect" id="node40" href="$_attachment_manager_v2_test_8cpp.html" title=" " alt="" coords="4547,361,4778,432"/>
+<area shape="rect" id="node41" href="$_capability_agent_test_8cpp.html" title=" " alt="" coords="4803,369,4987,425"/>
+<area shape="rect" id="node42" href="$_mime_utils_8h.html" title=" " alt="" coords="5011,361,5173,432"/>
+<area shape="rect" id="node43" href="$_testable_attachment_manager_8h.html" title=" " alt="" coords="5197,361,5456,432"/>
+<area shape="rect" id="node44" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="5481,361,5711,432"/>
 </map>

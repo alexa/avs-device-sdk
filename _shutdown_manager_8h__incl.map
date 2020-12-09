@@ -1,6 +1,12 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownManager.h">
-<area shape="rect" id="node3" href="$_shutdown_manager_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownManagerInterface.h" alt="" coords="531,153,754,195"/>
-<area shape="rect" id="node4" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="285,153,507,195"/>
-<area shape="rect" id="node5" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="336,243,493,284"/>
-<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="21,243,211,284"/>
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownManager.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="277,5,515,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="259,303,328,329"/>
+<area shape="rect" id="node3" href="$_shutdown_manager_interface_8h.html" title=" " alt="" coords="531,124,754,165"/>
+<area shape="rect" id="node4" href="$_shutdown_notifier_interface_8h.html" title=" " alt="" coords="285,124,507,165"/>
+<area shape="rect" id="node5" href="$_notifier_interface_8h.html" title=" " alt="" coords="335,213,492,255"/>
+<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title=" " alt="" coords="23,213,209,255"/>
+<area shape="rect" id="node6" title=" " alt="" coords="374,303,453,329"/>
+<area shape="rect" id="node8" title=" " alt="" coords="168,303,229,329"/>
+<area shape="rect" id="node9" title=" " alt="" coords="5,303,64,329"/>
+<area shape="rect" id="node10" title=" " alt="" coords="89,303,143,329"/>
 </map>

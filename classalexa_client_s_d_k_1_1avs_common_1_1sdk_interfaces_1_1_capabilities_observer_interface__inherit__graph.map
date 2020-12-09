@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::CapabilitiesObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_observer.html" title="alexaClientSDK::capabilities\lDelegate::test::MockCapabilities\lObserver" alt="" coords="292,5,504,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="304,86,492,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..." alt="" coords="304,151,492,193"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,79,244,135"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_observer.html" title=" " alt="" coords="292,5,504,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="304,86,492,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions." alt="" coords="304,151,492,193"/>
 </map>

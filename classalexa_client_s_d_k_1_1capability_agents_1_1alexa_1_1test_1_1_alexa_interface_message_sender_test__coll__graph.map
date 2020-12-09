@@ -1,3 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::alexa::test::AlexaInterfaceMessageSenderTest" name="alexaClientSDK::capabilityAgents::alexa::test::AlexaInterfaceMessageSenderTest">
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html" title="alexaClientSDK::avsCommon\l::avs::AVSContext" alt="" coords="92,5,289,47"/>
+<area shape="rect" id="node1" title="Test harness for AlexaInterfaceMessageSender class." alt="" coords="5,109,229,165"/>
+<area shape="rect" id="node2" title=" " alt="" coords="21,13,67,39"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html" title=" " alt="" coords="92,5,289,47"/>
 </map>

@@ -1,4 +1,6 @@
 <map id="alexaClientSDK::capabilityAgents::modeController::test::ModeControllerCapabilityAgentTest" name="alexaClientSDK::capabilityAgents::modeController::test::ModeControllerCapabilityAgentTest">
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_a68ca516ee040fd25d723727839f1c0c.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::modeController\l::ModeControllerObserverInterface\l::ModeState" alt="" coords="339,57,561,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimePoint" alt="" coords="5,71,203,113"/>
+<area shape="rect" id="node1" title=" " alt="" coords="717,19,924,90"/>
+<area shape="rect" id="node2" title=" " alt="" coords="427,5,473,32"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_a68ca516ee040fd25d723727839f1c0c.html" title=" " alt="" coords="339,57,561,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html" title=" " alt="" coords="5,71,203,113"/>
 </map>

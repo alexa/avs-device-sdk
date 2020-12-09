@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpoint" name="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpoint">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::endpoints\l::EndpointInterface" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node1" title="Mocks an endpoint object." alt="" coords="5,109,203,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_interface.html" title=" " alt="" coords="5,5,203,61"/>
 </map>

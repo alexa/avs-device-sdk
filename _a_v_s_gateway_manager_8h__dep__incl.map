@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h">
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,139,253,224"/>
-<area shape="rect" id="node3" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="277,139,493,224"/>
-<area shape="rect" id="node4" href="$_a_v_s_gateway_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/AVSGatewayManager.cpp" alt="" coords="518,146,853,217"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/AVSGatewayManager\lTest.cpp" alt="" coords="877,139,1192,224"/>
-<area shape="rect" id="node6" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="1216,146,1480,217"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1505,146,1757,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/AVSGatewayManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="631,5,829,76"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,131,260,187"/>
+<area shape="rect" id="node3" href="$_default_client_component_8cpp.html" title=" " alt="" coords="284,124,488,195"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_manager_8cpp.html" title=" " alt="" coords="512,131,711,187"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_test_8cpp.html" title=" " alt="" coords="735,131,965,187"/>
+<area shape="rect" id="node6" href="$_core_component_8cpp.html" title=" " alt="" coords="989,131,1154,187"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="1178,139,1455,180"/>
 </map>

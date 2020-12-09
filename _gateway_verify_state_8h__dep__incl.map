@@ -1,16 +1,17 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/GatewayVerifyState.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/GatewayVerifyState.h">
-<area shape="rect" id="node2" href="$_post_connect_verify_gateway_sender_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/PostConnectVerify\lGatewaySender.h" alt="" coords="458,139,727,239"/>
-<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/Storage/AVSGateway\lManagerStorageInterface.h" alt="" coords="807,139,1093,239"/>
-<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/AVSGatewayManager.cpp" alt="" coords="5,442,340,513"/>
-<area shape="rect" id="node4" href="$_post_connect_verify_gateway_sender_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/PostConnectVerify\lGatewaySender.cpp" alt="" coords="93,294,383,379"/>
-<area shape="rect" id="node5" href="$_post_connect_verify_gateway_sender_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/PostConnect\lVerifyGatewaySenderTest.cpp" alt="" coords="407,294,669,379"/>
-<area shape="rect" id="node7" href="$_a_v_s_gateway_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/AVSGatewayManager.h" alt="" coords="801,294,1099,379"/>
-<area shape="rect" id="node13" href="$_a_v_s_gateway_manager_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/Storage/AVSGateway\lManagerStorage.h" alt="" coords="1376,287,1663,387"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="703,435,951,520"/>
-<area shape="rect" id="node9" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="1541,435,1757,520"/>
-<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/AVSGatewayManager\lTest.cpp" alt="" coords="365,435,679,520"/>
-<area shape="rect" id="node11" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="975,442,1239,513"/>
-<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1264,442,1516,513"/>
-<area shape="rect" id="node14" href="$_a_v_s_gateway_manager_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/Storage\l/AVSGatewayManagerStorage.cpp" alt="" coords="2055,435,2282,520"/>
-<area shape="rect" id="node15" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/Storage\l/AVSGatewayManagerStorageTest.cpp" alt="" coords="1781,435,2031,520"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/GatewayVerifyState.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/GatewayVerifyState.h">
+<area shape="rect" id="node1" title=" " alt="" coords="534,5,733,76"/>
+<area shape="rect" id="node2" href="$_post_connect_verify_gateway_sender_8h.html" title=" " alt="" coords="365,124,603,195"/>
+<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title=" " alt="" coords="768,124,1077,195"/>
+<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_8cpp.html" title=" " alt="" coords="205,369,403,425"/>
+<area shape="rect" id="node4" href="$_post_connect_verify_gateway_sender_8cpp.html" title=" " alt="" coords="5,250,280,306"/>
+<area shape="rect" id="node5" href="$_post_connect_verify_gateway_sender_test_8cpp.html" title=" " alt="" coords="305,243,519,313"/>
+<area shape="rect" id="node7" href="$_a_v_s_gateway_manager_8h.html" title=" " alt="" coords="823,243,1022,313"/>
+<area shape="rect" id="node13" href="$_a_v_s_gateway_manager_storage_8h.html" title=" " alt="" coords="1292,243,1551,313"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="682,369,937,425"/>
+<area shape="rect" id="node9" href="$_default_client_component_8cpp.html" title=" " alt="" coords="1453,361,1657,432"/>
+<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_test_8cpp.html" title=" " alt="" coords="428,369,657,425"/>
+<area shape="rect" id="node11" href="$_core_component_8cpp.html" title=" " alt="" coords="961,369,1127,425"/>
+<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title=" " alt="" coords="1151,376,1428,417"/>
+<area shape="rect" id="node14" href="$_a_v_s_gateway_manager_storage_8cpp.html" title=" " alt="" coords="1933,361,2157,432"/>
+<area shape="rect" id="node15" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title=" " alt="" coords="1681,361,1909,432"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointBuilder" name="alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointBuilder">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::endpoints\l::EndpointBuilderInterface" alt="" coords="307,5,504,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::endpoints\l::EndpointCapabilitiesRegistrarInterface" alt="" coords="5,5,259,61"/>
+<area shape="rect" id="node1" title="Mocks an endpoint builder." alt="" coords="552,5,749,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html" title=" " alt="" coords="307,5,504,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html" title=" " alt="" coords="5,5,259,61"/>
 </map>

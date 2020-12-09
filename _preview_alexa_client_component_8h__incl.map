@@ -1,46 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkPreviewAlexaClient/include/acsdkPreviewAlexaClient/PreviewAlexaClientComponent.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkPreviewAlexaClient/include/acsdkPreviewAlexaClient/PreviewAlexaClientComponent.h">
-<area shape="rect" id="node5" href="$_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="111,153,337,209"/>
-<area shape="rect" id="node12" href="$_equalizer_mode_controller_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerModeControllerInterface.h" alt="" coords="611,347,842,388"/>
-<area shape="rect" id="node13" href="$_equalizer_runtime_setup_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerRuntimeSetupInterface.h" alt="" coords="763,257,989,299"/>
-<area shape="rect" id="node18" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2219,265,2429,291"/>
-<area shape="rect" id="node21" href="$_shutdown_manager_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownManagerInterface.h" alt="" coords="1014,161,1237,202"/>
-<area shape="rect" id="node22" href="$_startup_manager_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupManagerInterface.h" alt="" coords="1261,161,1467,202"/>
-<area shape="rect" id="node23" href="$_audio_focus_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/AudioFocusAnnotation.h" alt="" coords="1492,161,1684,202"/>
-<area shape="rect" id="node24" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2255,161,2447,202"/>
-<area shape="rect" id="node26" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1622,257,1853,299"/>
-<area shape="rect" id="node31" href="$_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="3056,257,3264,299"/>
-<area shape="rect" id="node33" href="$_channel_volume_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeFactoryInterface.h" alt="" coords="312,347,536,388"/>
-<area shape="rect" id="node34" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1293,347,1485,388"/>
-<area shape="rect" id="node35" href="$_diagnostics_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h" alt="" coords="1949,161,2179,202"/>
-<area shape="rect" id="node36" href="$_expect_speech_timeout_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExpectSpeechTimeoutHandlerInterface.h" alt="" coords="2522,161,2787,202"/>
-<area shape="rect" id="node37" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3821,347,4013,388"/>
-<area shape="rect" id="node38" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="4186,257,4403,299"/>
-<area shape="rect" id="node39" href="$_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="4342,347,4551,388"/>
-<area shape="rect" id="node40" href="$_alexa_client_s_d_k_init_8h.html" title="AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="2825,257,3031,299"/>
-<area shape="rect" id="node41" href="$_initialization_parameters_8h.html" title="AVSCommon/AVS/Initialization\l/InitializationParameters.h" alt="" coords="2633,347,2839,388"/>
-<area shape="rect" id="node42" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3582,347,3797,388"/>
-<area shape="rect" id="node43" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="3951,265,4161,291"/>
-<area shape="rect" id="node44" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="4637,525,4873,567"/>
-<area shape="rect" id="node45" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="4479,257,4723,299"/>
-<area shape="rect" id="node46" href="$_certified_sender_8h.html" title="CertifiedSender/Certified\lSender.h" alt="" coords="1759,161,1924,202"/>
-<area shape="rect" id="node47" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="1163,257,1335,299"/>
-<area shape="rect" id="node48" href="$_interrupt_model_8h.html" title="InterruptModel/Interrupt\lModel.h" alt="" coords="2541,257,2699,299"/>
-<area shape="rect" id="node49" href="$_sample_app_2include_2_sample_app_2_platform_specific_values_8h.html" title="SampleApp/PlatformSpecific\lValues.h" alt="" coords="4529,161,4719,202"/>
-<area shape="rect" id="node50" href="$_u_i_manager_8h.html" title="SampleApp/UIManager.h" alt="" coords="3799,168,3967,195"/>
-<area shape="rect" id="node7" href="$_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="93,347,288,388"/>
-<area shape="rect" id="node10" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="95,436,287,477"/>
-<area shape="rect" id="node11" href="$_pooled_application_media_interfaces_8h.html" title="PooledApplicationMediaInterfaces.h" alt="" coords="186,265,417,291"/>
-<area shape="rect" id="node8" href="$_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="489,436,658,477"/>
-<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="905,533,1028,559"/>
-<area shape="rect" id="node15" href="$_equalizer_configuration_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerConfigurationInterface.h" alt="" coords="1084,436,1303,477"/>
-<area shape="rect" id="node16" href="$_equalizer_storage_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerStorageInterface.h" alt="" coords="968,347,1155,388"/>
-<area shape="rect" id="node17" href="$_equalizer_controller_listener_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerControllerListenerInterface.h" alt="" coords="765,436,1009,477"/>
-<area shape="rect" id="node19" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2382,347,2557,388"/>
-<area shape="rect" id="node20" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="2131,347,2306,388"/>
-<area shape="rect" id="node25" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="3399,257,3591,299"/>
-<area shape="rect" id="node27" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="1787,525,2005,567"/>
-<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="3312,347,3557,388"/>
-<area shape="rect" id="node29" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="1568,525,1763,567"/>
-<area shape="rect" id="node30" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1509,347,1701,388"/>
-<area shape="rect" id="node32" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="2965,347,3187,388"/>
+<map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkPreviewAlexaClient/include/acsdkPreviewAlexaClient/PreviewAlexaClientComponent.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkPreviewAlexaClient/include/acsdkPreviewAlexaClient/PreviewAlexaClientComponent.h">
+<area shape="rect" id="node1" title=" " alt="" coords="2351,5,2604,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="22,139,87,165"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2307,414,2376,441"/>
+<area shape="rect" id="node4" title=" " alt="" coords="3395,414,3453,441"/>
+<area shape="rect" id="node5" href="$_application_audio_pipeline_factory_interface_8h.html" title=" " alt="" coords="111,124,337,180"/>
+<area shape="rect" id="node12" href="$_equalizer_mode_controller_interface_8h.html" title=" " alt="" coords="611,317,842,359"/>
+<area shape="rect" id="node13" href="$_equalizer_runtime_setup_interface_8h.html" title=" " alt="" coords="765,228,990,269"/>
+<area shape="rect" id="node18" href="$_component_8h.html" title=" " alt="" coords="2215,235,2425,262"/>
+<area shape="rect" id="node21" href="$_shutdown_manager_interface_8h.html" title=" " alt="" coords="1009,131,1231,173"/>
+<area shape="rect" id="node22" href="$_startup_manager_interface_8h.html" title=" " alt="" coords="1255,131,1462,173"/>
+<area shape="rect" id="node23" href="$_audio_focus_annotation_8h.html" title=" " alt="" coords="1486,131,1677,173"/>
+<area shape="rect" id="node24" href="$_auth_delegate_interface_8h.html" title=" " alt="" coords="2249,131,2439,173"/>
+<area shape="rect" id="node26" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="1621,228,1851,269"/>
+<area shape="rect" id="node31" href="$_capabilities_delegate_interface_8h.html" title=" " alt="" coords="3045,228,3253,269"/>
+<area shape="rect" id="node33" href="$_channel_volume_factory_interface_8h.html" title=" " alt="" coords="312,317,536,359"/>
+<area shape="rect" id="node34" href="$_context_manager_interface_8h.html" title=" " alt="" coords="1293,317,1483,359"/>
+<area shape="rect" id="node35" href="$_diagnostics_interface_8h.html" title=" " alt="" coords="1942,131,2173,173"/>
+<area shape="rect" id="node36" href="$_expect_speech_timeout_handler_interface_8h.html" title=" " alt="" coords="2515,131,2781,173"/>
+<area shape="rect" id="node37" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="3807,317,3998,359"/>
+<area shape="rect" id="node38" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="4170,228,4387,269"/>
+<area shape="rect" id="node39" href="$_media_player_factory_interface_8h.html" title=" " alt="" coords="4327,317,4534,359"/>
+<area shape="rect" id="node40" href="$_alexa_client_s_d_k_init_8h.html" title=" " alt="" coords="2819,228,3021,269"/>
+<area shape="rect" id="node41" href="$_initialization_parameters_8h.html" title=" " alt="" coords="2629,317,2832,359"/>
+<area shape="rect" id="node42" href="$_configuration_node_8h.html" title=" " alt="" coords="3571,317,3783,359"/>
+<area shape="rect" id="node43" href="$_device_info_8h.html" title=" " alt="" coords="3937,235,4146,262"/>
+<area shape="rect" id="node44" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title=" " alt="" coords="4621,496,4857,537"/>
+<area shape="rect" id="node45" href="$_c_b_l_auth_requester_interface_8h.html" title=" " alt="" coords="4463,228,4707,269"/>
+<area shape="rect" id="node46" href="$_certified_sender_8h.html" title=" " alt="" coords="1752,131,1917,173"/>
+<area shape="rect" id="node47" href="$_customer_data_manager_8h.html" title=" " alt="" coords="1164,228,1335,269"/>
+<area shape="rect" id="node48" href="$_interrupt_model_8h.html" title=" " alt="" coords="2536,228,2693,269"/>
+<area shape="rect" id="node49" href="$_sample_app_2include_2_sample_app_2_platform_specific_values_8h.html" title=" " alt="" coords="4513,131,4703,173"/>
+<area shape="rect" id="node50" href="$_u_i_manager_8h.html" title=" " alt="" coords="3785,139,3951,165"/>
+<area shape="rect" id="node6" title=" " alt="" coords="3427,585,3482,612"/>
+<area shape="rect" id="node7" href="$_application_media_interfaces_8h.html" title=" " alt="" coords="93,317,288,359"/>
+<area shape="rect" id="node10" href="$_channel_volume_interface_8h.html" title=" " alt="" coords="95,407,286,448"/>
+<area shape="rect" id="node11" href="$_pooled_application_media_interfaces_8h.html" title=" " alt="" coords="186,235,417,262"/>
+<area shape="rect" id="node8" href="$_equalizer_interface_8h.html" title=" " alt="" coords="489,407,658,448"/>
+<area shape="rect" id="node9" href="$_equalizer_types_8h.html" title=" " alt="" coords="905,503,1028,530"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1230,325,1269,351"/>
+<area shape="rect" id="node15" href="$_equalizer_configuration_interface_8h.html" title=" " alt="" coords="1084,407,1303,448"/>
+<area shape="rect" id="node16" href="$_equalizer_storage_interface_8h.html" title=" " alt="" coords="968,317,1155,359"/>
+<area shape="rect" id="node17" href="$_equalizer_controller_listener_interface_8h.html" title=" " alt="" coords="765,407,1009,448"/>
+<area shape="rect" id="node19" href="$_cook_book_8h.html" title=" " alt="" coords="2379,317,2554,359"/>
+<area shape="rect" id="node20" href="$_component__imp_8h.html" title=" " alt="" coords="2129,317,2303,359"/>
+<area shape="rect" id="node25" href="$_auth_observer_interface_8h.html" title=" " alt="" coords="3385,228,3575,269"/>
+<area shape="rect" id="node27" href="$_a_v_s_gateway_assigner_interface_8h.html" title=" " alt="" coords="1787,496,2003,537"/>
+<area shape="rect" id="node28" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="3301,317,3547,359"/>
+<area shape="rect" id="node29" href="$_message_observer_interface_8h.html" title=" " alt="" coords="1568,496,1763,537"/>
+<area shape="rect" id="node30" href="$_message_sender_interface_8h.html" title=" " alt="" coords="1507,317,1698,359"/>
+<area shape="rect" id="node32" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title=" " alt="" coords="2958,317,3175,359"/>
 </map>

@@ -1,12 +1,13 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h">
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/AVSGatewayManager.h" alt="" coords="933,161,1232,246"/>
-<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/include\l/AVSGatewayManager/Storage/AVSGateway\lManagerStorage.h" alt="" coords="1371,153,1658,253"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,301,253,387"/>
-<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="975,301,1191,387"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/AVSGatewayManager.cpp" alt="" coords="277,309,611,379"/>
-<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/AVSGatewayManager\lTest.cpp" alt="" coords="636,301,951,387"/>
-<area shape="rect" id="node7" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="1215,309,1479,379"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1503,309,1755,379"/>
-<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/src/Storage\l/AVSGatewayManagerStorage.cpp" alt="" coords="1780,301,2007,387"/>
-<area shape="rect" id="node11" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/Storage\l/AVSGatewayManagerStorageTest.cpp" alt="" coords="2031,301,2281,387"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h">
+<area shape="rect" id="node1" title=" " alt="" coords="835,5,1145,76"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title=" " alt="" coords="764,124,963,195"/>
+<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title=" " alt="" coords="1087,124,1346,195"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,250,260,306"/>
+<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title=" " alt="" coords="761,243,965,313"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8cpp.html" title=" " alt="" coords="284,250,483,306"/>
+<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_test_8cpp.html" title=" " alt="" coords="507,250,737,306"/>
+<area shape="rect" id="node7" href="$_core_component_8cpp.html" title=" " alt="" coords="990,250,1155,306"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title=" " alt="" coords="1179,257,1457,299"/>
+<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_storage_8cpp.html" title=" " alt="" coords="1481,243,1705,313"/>
+<area shape="rect" id="node11" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title=" " alt="" coords="1729,243,1957,313"/>
 </map>

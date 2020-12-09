@@ -1,5 +1,7 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h">
-<area shape="rect" id="node2" href="$_external_media_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/ExternalMediaPlayer\l/acsdkExternalMediaPlayer/test\l/ExternalMediaPlayerTest.cpp" alt="" coords="5,153,220,253"/>
-<area shape="rect" id="node3" href="$_notification_renderer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="244,153,475,253"/>
-<area shape="rect" id="node4" href="$_speech_synthesizer_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/SpeechSynthesizer\l/test/SpeechSynthesizerTest.cpp" alt="" coords="499,161,742,246"/>
+<map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="289,5,601,91"/>
+<area shape="rect" id="node2" href="$_renderer_test_8cpp.html" title=" " alt="" coords="5,139,184,209"/>
+<area shape="rect" id="node3" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="209,139,431,209"/>
+<area shape="rect" id="node4" href="$_notification_renderer_test_8cpp.html" title=" " alt="" coords="455,139,686,209"/>
+<area shape="rect" id="node5" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="711,139,900,209"/>
 </map>

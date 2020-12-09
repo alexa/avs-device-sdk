@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::acsdkNotificationsInterfaces::NotificationsObserverInterface" name="alexaClientSDK::acsdkNotificationsInterfaces::NotificationsObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_observer.html" title="alexaClientSDK::acsdkNotifications\l::test::TestNotificationsObserver" alt="" coords="321,5,551,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="319,71,553,127"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="342,152,530,193"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="601,79,791,120"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,79,271,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_observer.html" title=" " alt="" coords="321,5,551,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title=" " alt="" coords="319,71,553,127"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="342,152,530,193"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title=" " alt="" coords="601,79,791,120"/>
 </map>

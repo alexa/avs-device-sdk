@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::test::MockUserInactivityMonitor" name="alexaClientSDK::avsCommon::sdkInterfaces::test::MockUserInactivityMonitor">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::UserInactivity\lMonitorInterface" alt="" coords="5,5,204,61"/>
+<area shape="rect" id="node1" title="Mock class that implements UserInactivityMonitorInterface." alt="" coords="6,109,203,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html" title=" " alt="" coords="5,5,204,61"/>
 </map>

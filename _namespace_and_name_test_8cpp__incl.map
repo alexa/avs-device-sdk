@@ -1,14 +1,33 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/test/NamespaceAndNameTest.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/test/NamespaceAndNameTest.cpp">
-<area shape="rect" id="node6" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="1385,139,1615,180"/>
-<area shape="rect" id="node7" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="1345,228,1540,269"/>
-<area shape="rect" id="node9" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1047,317,1243,344"/>
-<area shape="rect" id="node10" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="853,392,1029,433"/>
-<area shape="rect" id="node12" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="853,481,1029,523"/>
-<area shape="rect" id="node17" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="478,571,693,612"/>
-<area shape="rect" id="node23" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="941,660,1117,701"/>
-<area shape="rect" id="node24" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1216,571,1392,612"/>
-<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="913,571,1106,612"/>
-<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1148,749,1324,791"/>
-<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="507,660,683,701"/>
-<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="507,749,683,791"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/NamespaceAndNameTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/NamespaceAndNameTest.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="1645,5,1849,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1427,727,1482,754"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1691,117,1802,143"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1826,117,1921,143"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1945,117,2060,143"/>
+<area shape="rect" id="node6" href="$_namespace_and_name_8h.html" title=" " alt="" coords="1389,109,1616,151"/>
+<area shape="rect" id="node7" href="$_capability_tag_8h.html" title=" " alt="" coords="1349,199,1539,240"/>
+<area shape="rect" id="node8" title=" " alt="" coords="343,727,412,754"/>
+<area shape="rect" id="node9" href="$_optional_8h.html" title=" " alt="" coords="1049,288,1244,315"/>
+<area shape="rect" id="node10" href="$_logger_utils_8h.html" title=" " alt="" coords="854,363,1029,404"/>
+<area shape="rect" id="node11" title=" " alt="" coords="45,638,107,665"/>
+<area shape="rect" id="node12" href="$_logger_8h.html" title=" " alt="" coords="854,452,1029,493"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1131,549,1192,575"/>
+<area shape="rect" id="node14" title=" " alt="" coords="859,638,917,665"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1395,638,1464,665"/>
+<area shape="rect" id="node16" title=" " alt="" coords="205,809,264,836"/>
+<area shape="rect" id="node17" href="$_configuration_node_8h.html" title=" " alt="" coords="481,541,693,583"/>
+<area shape="rect" id="node23" href="$_level_8h.html" title=" " alt="" coords="942,631,1117,672"/>
+<area shape="rect" id="node24" href="$_log_entry_8h.html" title=" " alt="" coords="1217,541,1391,583"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="913,541,1106,583"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1150,720,1325,761"/>
+<area shape="rect" id="node18" title=" " alt="" coords="131,638,197,665"/>
+<area shape="rect" id="node19" title=" " alt="" coords="876,727,948,754"/>
+<area shape="rect" id="node20" title=" " alt="" coords="685,809,755,836"/>
+<area shape="rect" id="node21" title=" " alt="" coords="272,638,312,665"/>
+<area shape="rect" id="node22" title=" " alt="" coords="336,638,483,665"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1141,638,1216,665"/>
+<area shape="rect" id="node26" title=" " alt="" coords="1241,638,1319,665"/>
+<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title=" " alt="" coords="507,631,682,672"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="507,720,682,761"/>
+<area shape="rect" id="node29" title=" " alt="" coords="555,809,635,836"/>
 </map>

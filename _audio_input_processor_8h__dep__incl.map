@@ -1,28 +1,29 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h">
-<area shape="rect" id="node2" href="$_connection_retry_trigger_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/ConnectionRetryTrigger.h" alt="" coords="794,146,1094,231"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="1013,287,1251,372"/>
-<area shape="rect" id="node19" href="$_external_capabilities_builder_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/ExternalCapabilities\lBuilderInterface.h" alt="" coords="1169,139,1436,239"/>
-<area shape="rect" id="node22" href="$_device_settings_manager_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DeviceSettingsManagerBuilder.cpp" alt="" coords="1461,146,1713,231"/>
-<area shape="rect" id="node23" href="$_audio_input_processor_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/src/AudioInput\lProcessor.cpp" alt="" coords="1737,146,1975,231"/>
-<area shape="rect" id="node24" href="$_audio_input_processor_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/AIP/test\l/AudioInputProcessorTest.cpp" alt="" coords="2000,146,2200,231"/>
-<area shape="rect" id="node25" href="$_alerts_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="2223,146,2435,231"/>
-<area shape="rect" id="node26" href="$_audio_input_processor_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AudioInputProcessor\lIntegrationTest.cpp" alt="" coords="2459,146,2698,231"/>
-<area shape="rect" id="node27" href="$_audio_player_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AudioPlayerIntegration\lTest.cpp" alt="" coords="2723,146,2971,231"/>
-<area shape="rect" id="node18" href="$_connection_retry_trigger_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/ConnectionRetryTrigger.cpp" alt="" coords="774,287,989,372"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="907,420,1122,505"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="791,553,1001,639"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="1146,420,1355,505"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="549,687,758,772"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="782,694,1037,765"/>
-<area shape="rect" id="node7" href="$_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="280,820,528,920"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="553,827,762,913"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/UserInputManager.cpp" alt="" coords="787,835,1037,905"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="951,968,1199,1053"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="278,968,533,1053"/>
-<area shape="rect" id="node10" href="$preview_main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/previewMain.cpp" alt="" coords="5,968,253,1053"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/main.cpp" alt="" coords="557,975,757,1046"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1247,975,1499,1046"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="1112,561,1360,631"/>
-<area shape="rect" id="node20" href="$_external_capabilities_builder_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/ExternalCapabilitiesBuilder.h" alt="" coords="1435,827,1645,913"/>
-<area shape="rect" id="node21" href="$_external_capabilities_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/ExternalCapabilities\lBuilder.cpp" alt="" coords="1524,968,1759,1053"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/include/AIP/AudioInputProcessor.h">
+<area shape="rect" id="node1" title=" " alt="" coords="1386,5,1641,61"/>
+<area shape="rect" id="node2" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="580,109,809,180"/>
+<area shape="rect" id="node3" href="$_connection_retry_trigger_8h.html" title=" " alt="" coords="833,109,1060,180"/>
+<area shape="rect" id="node4" href="$_default_client_8h.html" title=" " alt="" coords="984,228,1211,299"/>
+<area shape="rect" id="node20" href="$_external_capabilities_builder_interface_8h.html" title=" " alt="" coords="1135,109,1379,180"/>
+<area shape="rect" id="node23" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="1404,117,1623,173"/>
+<area shape="rect" id="node24" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="1647,109,1846,180"/>
+<area shape="rect" id="node25" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="1871,117,2041,173"/>
+<area shape="rect" id="node26" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="2065,109,2273,180"/>
+<area shape="rect" id="node27" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2298,117,2505,173"/>
+<area shape="rect" id="node19" href="$_connection_retry_trigger_8cpp.html" title=" " alt="" coords="733,228,960,299"/>
+<area shape="rect" id="node5" href="$_default_client_8cpp.html" title=" " alt="" coords="861,347,1091,403"/>
+<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title=" " alt="" coords="720,451,939,507"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8h.html" title=" " alt="" coords="1115,347,1325,403"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title=" " alt="" coords="495,555,710,611"/>
+<area shape="rect" id="node16" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="735,555,940,611"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="220,659,473,729"/>
+<area shape="rect" id="node12" href="$_sample_application_8h.html" title=" " alt="" coords="497,666,713,722"/>
+<area shape="rect" id="node15" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="738,666,939,722"/>
+<area shape="rect" id="node9" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="850,785,1105,841"/>
+<area shape="rect" id="node10" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="243,777,472,848"/>
+<area shape="rect" id="node11" href="$preview_main_8cpp.html" title=" " alt="" coords="5,785,219,841"/>
+<area shape="rect" id="node13" href="$main_8cpp.html" title=" " alt="" coords="507,792,704,833"/>
+<area shape="rect" id="node14" href="$_sample_application_8cpp.html" title=" " alt="" coords="1157,792,1435,833"/>
+<area shape="rect" id="node18" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="1015,458,1287,499"/>
+<area shape="rect" id="node21" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="1361,659,1575,729"/>
+<area shape="rect" id="node22" href="$_external_capabilities_builder_8cpp.html" title=" " alt="" coords="1459,785,1651,841"/>
 </map>

@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::afml::AudioActivityTracker" name="alexaClientSDK::afml::AudioActivityTracker">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="33,5,230,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html" title="alexaClientSDK::afml\l::ActivityTrackerInterface" alt="" coords="47,71,216,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,137,257,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="33,217,230,273"/>
+<area shape="rect" id="node1" title=" " alt="" coords="305,108,456,149"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="33,5,230,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html" title=" " alt="" coords="47,71,216,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title=" " alt="" coords="5,137,257,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title=" " alt="" coords="33,217,230,273"/>
 </map>

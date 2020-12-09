@@ -1,51 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteDatabase.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteDatabase.h">
-<area shape="rect" id="node2" href="$_s_q_lite_alert_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Alerts/acsdkAlerts\l/include/acsdkAlerts/Storage/SQLiteAlert\lStorage.h" alt="" coords="1020,146,1280,246"/>
-<area shape="rect" id="node7" href="$_bluetooth_storage_interface_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/include/acsdkBluetooth/BluetoothStorageInterface.h" alt="" coords="2187,309,2513,394"/>
-<area shape="rect" id="node23" href="$_s_q_lite_notifications_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/SQLiteNotifications\lStorage.h" alt="" coords="482,139,733,253"/>
-<area shape="rect" id="node26" href="$_s_q_lite_capabilities_delegate_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilitiesDelegate/include\l/CapabilitiesDelegate/Storage\l/SQLiteCapabilitiesDelegateStorage.h" alt="" coords="5609,146,5851,246"/>
-<area shape="rect" id="node31" href="$_s_q_lite_message_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CertifiedSender/include/CertifiedSender\l/SQLiteMessageStorage.h" alt="" coords="1584,153,1839,239"/>
-<area shape="rect" id="node34" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/Authorization/CBLAuthDelegate\l/include/CBLAuthDelegate/SQLiteCBLAuthDelegate\lStorage.h" alt="" coords="3957,146,4282,246"/>
-<area shape="rect" id="node41" href="$_s_q_lite_device_setting_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Settings/include/Settings\l/Storage/SQLiteDeviceSettingStorage.h" alt="" coords="266,1123,519,1209"/>
-<area shape="rect" id="node44" href="$_s_q_lite_misc_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/include\l/SQLiteStorage/SQLiteMiscStorage.h" alt="" coords="5028,153,5267,239"/>
-<area shape="rect" id="node46" href="$_s_q_lite_misc_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/test\l/SQLiteMiscStorageTest.cpp" alt="" coords="5205,309,5405,394"/>
-<area shape="rect" id="node47" href="$_s_q_lite_utils_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/include\l/SQLiteStorage/SQLiteUtils.h" alt="" coords="2535,153,2741,239"/>
-<area shape="rect" id="node48" href="$_s_q_lite_database_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/src\l/SQLiteDatabase.cpp" alt="" coords="2762,309,2962,394"/>
-<area shape="rect" id="node50" href="$_s_q_lite_database_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/test\l/SQLiteDatabaseTest.cpp" alt="" coords="5875,153,6075,239"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="679,1264,927,1349"/>
-<area shape="rect" id="node4" href="$_s_q_lite_alert_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Alerts/acsdkAlerts\l/src/Storage/SQLiteAlertStorage.cpp" alt="" coords="1330,309,1565,394"/>
-<area shape="rect" id="node5" href="$_alerts_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlertsIntegration\lTest.cpp" alt="" coords="1044,309,1256,394"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="2191,1271,2443,1342"/>
-<area shape="rect" id="node8" href="$_default_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/include/DefaultClient/DefaultClient.h" alt="" coords="1287,583,1525,668"/>
-<area shape="rect" id="node17" href="$_bluetooth_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/include/acsdkBluetooth/Bluetooth.h" alt="" coords="1683,449,1927,535"/>
-<area shape="rect" id="node20" href="$_s_q_lite_bluetooth_storage_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/include/acsdkBluetooth/SQLiteBluetoothStorage.h" alt="" coords="2227,449,2543,535"/>
-<area shape="rect" id="node21" href="$_s_q_lite_bluetooth_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/SQLiteBluetoothStorage.cpp" alt="" coords="2085,583,2329,668"/>
-<area shape="rect" id="node9" href="$_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="1689,716,1904,801"/>
-<area shape="rect" id="node10" href="$_interaction_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/InteractionManager.h" alt="" coords="1301,849,1511,935"/>
-<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/KeywordObserver.h" alt="" coords="1456,716,1665,801"/>
-<area shape="rect" id="node11" href="$_user_input_manager_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/UserInputManager.h" alt="" coords="1045,983,1255,1068"/>
-<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/InteractionManager.cpp" alt="" coords="1279,990,1533,1061"/>
-<area shape="rect" id="node12" href="$_preview_alexa_client_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/include/acsdkPreviewAlexaClient\l/PreviewAlexaClient.h" alt="" coords="722,1116,970,1216"/>
-<area shape="rect" id="node13" href="$_sample_application_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/include/SampleApp\l/SampleApplication.h" alt="" coords="1815,1123,2024,1209"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/KeywordObserver.cpp" alt="" coords="1609,857,1857,927"/>
-<area shape="rect" id="node18" href="$_bluetooth_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/Bluetooth.cpp" alt="" coords="1549,583,1793,668"/>
-<area shape="rect" id="node19" href="$_bluetooth_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/test/BluetoothTest.cpp" alt="" coords="1817,583,2061,668"/>
-<area shape="rect" id="node22" href="$_s_q_lite_bluetooth_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/test/SQLiteBluetoothStorageTest.cpp" alt="" coords="2405,583,2649,668"/>
-<area shape="rect" id="node24" href="$_s_q_lite_notifications_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/src/SQLiteNotifications\lStorage.cpp" alt="" coords="645,301,919,401"/>
-<area shape="rect" id="node25" href="$_notifications_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lStorageTest.cpp" alt="" coords="282,301,519,401"/>
-<area shape="rect" id="node27" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="6071,309,6287,394"/>
-<area shape="rect" id="node28" href="$_s_q_lite_capabilities_delegate_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilitiesDelegate/src/Storage\l/SQLiteCapabilitiesDelegateStorage.cpp" alt="" coords="6311,309,6567,394"/>
-<area shape="rect" id="node29" href="$_s_q_lite_capabilities_delegate_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilitiesDelegate/test\l/Storage/SQLiteCapabilitiesDelegateStorage\lTest.cpp" alt="" coords="5767,301,6047,401"/>
-<area shape="rect" id="node30" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="5429,316,5693,387"/>
-<area shape="rect" id="node32" href="$_s_q_lite_message_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CertifiedSender/src/SQLiteMessageStorage.cpp" alt="" coords="1857,316,2163,387"/>
-<area shape="rect" id="node33" href="$_message_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CertifiedSender/test/MessageStorage\lTest.cpp" alt="" coords="1589,309,1833,394"/>
-<area shape="rect" id="node35" href="$_authorization_delegate_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkCBLAuthorization\lDelegate/src/AuthorizationDelegateComponent.cpp" alt="" coords="3293,309,3613,394"/>
-<area shape="rect" id="node36" href="$_default_sample_application_options_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/src/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="3637,309,4017,394"/>
-<area shape="rect" id="node37" href="$_auth_delegate_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/AuthDelegateTestContext.cpp" alt="" coords="4267,316,4556,387"/>
-<area shape="rect" id="node38" href="$_alexa_authorization_delegate_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlexaAuthorization\lDelegateTest.cpp" alt="" coords="4581,309,4807,394"/>
-<area shape="rect" id="node39" href="$_alexa_communications_library_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/AlexaCommunications\lLibraryTest.cpp" alt="" coords="4831,309,5079,394"/>
-<area shape="rect" id="node40" href="$_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/Authorization/CBLAuthDelegate\l/src/SQLiteCBLAuthDelegateStorage.cpp" alt="" coords="2986,309,3269,394"/>
-<area shape="rect" id="node42" href="$_s_q_lite_device_setting_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Settings/src/Storage/SQLiteDeviceSetting\lStorage.cpp" alt="" coords="300,1264,571,1349"/>
-<area shape="rect" id="node43" href="$_s_q_lite_device_setting_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Settings/test/SQLiteDeviceSettingStorage\lTest.cpp" alt="" coords="5,1264,276,1349"/>
-<area shape="rect" id="node45" href="$_s_q_lite_misc_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/src\l/SQLiteMiscStorage.cpp" alt="" coords="4042,309,4242,394"/>
-<area shape="rect" id="node49" href="$_s_q_lite_utils_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Storage/SQLiteStorage/src\l/SQLiteUtils.cpp" alt="" coords="2538,309,2738,394"/>
+<map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteDatabase.h" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteDatabase.h">
+<area shape="rect" id="node1" title=" " alt="" coords="3313,5,3580,61"/>
+<area shape="rect" id="node2" href="$_s_q_lite_alert_storage_8h.html" title=" " alt="" coords="707,117,920,187"/>
+<area shape="rect" id="node8" href="$_bluetooth_storage_interface_8h.html" title=" " alt="" coords="1686,243,1941,313"/>
+<area shape="rect" id="node23" href="$_s_q_lite_notifications_storage_8h.html" title=" " alt="" coords="4443,109,4693,195"/>
+<area shape="rect" id="node26" href="$_s_q_lite_capabilities_delegate_storage_8h.html" title=" " alt="" coords="5371,117,5661,187"/>
+<area shape="rect" id="node29" href="$_s_q_lite_capabilities_delegate_storage_test_8cpp.html" title=" " alt="" coords="6013,243,6222,313"/>
+<area shape="rect" id="node31" href="$_s_q_lite_message_storage_8h.html" title=" " alt="" coords="1239,117,1414,187"/>
+<area shape="rect" id="node34" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title=" " alt="" coords="3304,117,3589,187"/>
+<area shape="rect" id="node41" href="$_s_q_lite_device_setting_storage_8h.html" title=" " alt="" coords="397,599,605,669"/>
+<area shape="rect" id="node44" href="$_s_q_lite_misc_storage_8h.html" title=" " alt="" coords="4915,117,5143,187"/>
+<area shape="rect" id="node46" href="$_s_q_lite_misc_storage_test_8cpp.html" title=" " alt="" coords="5074,250,5289,306"/>
+<area shape="rect" id="node47" href="$_s_q_lite_utils_8h.html" title=" " alt="" coords="2147,124,2386,180"/>
+<area shape="rect" id="node48" href="$_s_q_lite_database_8cpp.html" title=" " alt="" coords="2174,250,2359,306"/>
+<area shape="rect" id="node50" href="$_s_q_lite_database_test_8cpp.html" title=" " alt="" coords="5737,124,5935,180"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="919,1051,1174,1107"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="432,1044,661,1115"/>
+<area shape="rect" id="node5" href="$_s_q_lite_alert_storage_8cpp.html" title=" " alt="" coords="985,243,1151,313"/>
+<area shape="rect" id="node6" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="789,250,960,306"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="2360,725,2637,766"/>
+<area shape="rect" id="node9" href="$_default_client_8h.html" title=" " alt="" coords="1064,480,1291,551"/>
+<area shape="rect" id="node17" href="$_bluetooth_8h.html" title=" " alt="" coords="1397,361,1651,432"/>
+<area shape="rect" id="node20" href="$_s_q_lite_bluetooth_storage_8h.html" title=" " alt="" coords="1749,361,2003,432"/>
+<area shape="rect" id="node21" href="$_s_q_lite_bluetooth_storage_8cpp.html" title=" " alt="" coords="2205,480,2443,551"/>
+<area shape="rect" id="node10" href="$_default_client_8cpp.html" title=" " alt="" coords="1344,606,1573,662"/>
+<area shape="rect" id="node11" href="$_interaction_manager_8h.html" title=" " alt="" coords="912,717,1131,773"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title=" " alt="" coords="1059,606,1269,662"/>
+<area shape="rect" id="node12" href="$_user_input_manager_8h.html" title=" " alt="" coords="635,821,850,877"/>
+<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="925,821,1131,877"/>
+<area shape="rect" id="node13" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="584,925,837,996"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="1205,725,1477,766"/>
+<area shape="rect" id="node18" href="$_bluetooth_8cpp.html" title=" " alt="" coords="1315,487,1538,543"/>
+<area shape="rect" id="node19" href="$_bluetooth_test_8cpp.html" title=" " alt="" coords="1563,487,1813,543"/>
+<area shape="rect" id="node22" href="$_s_q_lite_bluetooth_storage_test_8cpp.html" title=" " alt="" coords="1939,480,2181,551"/>
+<area shape="rect" id="node24" href="$_s_q_lite_notifications_storage_8cpp.html" title=" " alt="" coords="2659,243,2933,313"/>
+<area shape="rect" id="node25" href="$_notifications_storage_test_8cpp.html" title=" " alt="" coords="4449,243,4687,313"/>
+<area shape="rect" id="node27" href="$_default_client_component_8cpp.html" title=" " alt="" coords="5554,243,5758,313"/>
+<area shape="rect" id="node28" href="$_s_q_lite_capabilities_delegate_storage_8cpp.html" title=" " alt="" coords="5783,243,5988,313"/>
+<area shape="rect" id="node30" href="$_core_component_8cpp.html" title=" " alt="" coords="5313,250,5479,306"/>
+<area shape="rect" id="node32" href="$_s_q_lite_message_storage_8cpp.html" title=" " alt="" coords="1451,250,1661,306"/>
+<area shape="rect" id="node33" href="$_message_storage_test_8cpp.html" title=" " alt="" coords="1227,250,1427,306"/>
+<area shape="rect" id="node35" href="$_authorization_delegate_component_8cpp.html" title=" " alt="" coords="4105,250,4425,306"/>
+<area shape="rect" id="node36" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="3009,243,3322,313"/>
+<area shape="rect" id="node37" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="3346,250,3547,306"/>
+<area shape="rect" id="node38" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="3572,250,3809,306"/>
+<area shape="rect" id="node39" href="$_alexa_communications_library_test_8cpp.html" title=" " alt="" coords="3834,250,4081,306"/>
+<area shape="rect" id="node40" href="$_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html" title=" " alt="" coords="2384,243,2635,313"/>
+<area shape="rect" id="node42" href="$_s_q_lite_device_setting_storage_8cpp.html" title=" " alt="" coords="5,717,224,773"/>
+<area shape="rect" id="node43" href="$_s_q_lite_device_setting_storage_test_8cpp.html" title=" " alt="" coords="248,717,459,773"/>
+<area shape="rect" id="node45" href="$_s_q_lite_misc_storage_8cpp.html" title=" " alt="" coords="4761,250,4948,306"/>
+<area shape="rect" id="node49" href="$_s_q_lite_utils_8cpp.html" title=" " alt="" coords="1965,250,2150,306"/>
 </map>

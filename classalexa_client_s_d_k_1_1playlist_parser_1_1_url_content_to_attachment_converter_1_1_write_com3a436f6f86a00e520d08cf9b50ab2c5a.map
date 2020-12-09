@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface" name="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter::WriteCompleteObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="47,109,242,151"/>
+<area shape="rect" id="node1" title="Class to allow notification when writing to the attachment is complete." alt="" coords="5,5,283,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title=" " alt="" coords="47,109,241,151"/>
 </map>

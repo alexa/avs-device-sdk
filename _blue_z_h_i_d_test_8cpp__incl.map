@@ -1,7 +1,12 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/test/BlueZHIDTest.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/test/BlueZHIDTest.cpp">
-<area shape="rect" id="node4" href="$_blue_z_h_i_d_8h.html" title="BlueZ/BlueZHID.h" alt="" coords="263,139,393,165"/>
-<area shape="rect" id="node6" href="$_h_i_d_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/HIDInterface.h" alt="" coords="215,213,441,255"/>
-<area shape="rect" id="node10" href="$_s_d_p_records_8h.html" title="AVSCommon/Utils/Bluetooth\l/SDPRecords.h" alt="" coords="433,310,625,351"/>
-<area shape="rect" id="node7" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="215,303,409,359"/>
-<area shape="rect" id="node8" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="281,407,492,463"/>
+<map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/test/BlueZHIDTest.cpp" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/test/BlueZHIDTest.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="91,5,293,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,109,120,136"/>
+<area shape="rect" id="node3" title=" " alt="" coords="145,109,239,136"/>
+<area shape="rect" id="node4" href="$_blue_z_h_i_d_8h.html" title=" " alt="" coords="263,109,393,136"/>
+<area shape="rect" id="node5" title=" " alt="" coords="165,392,235,419"/>
+<area shape="rect" id="node6" href="$_h_i_d_interface_8h.html" title=" " alt="" coords="215,184,441,225"/>
+<area shape="rect" id="node10" href="$_s_d_p_records_8h.html" title=" " alt="" coords="434,281,625,322"/>
+<area shape="rect" id="node7" href="$_bluetooth_service_interface_8h.html" title=" " alt="" coords="215,273,409,329"/>
+<area shape="rect" id="node8" href="$_s_d_p_record_interface_8h.html" title=" " alt="" coords="281,377,492,433"/>
+<area shape="rect" id="node9" title=" " alt="" coords="430,481,485,508"/>
 </map>

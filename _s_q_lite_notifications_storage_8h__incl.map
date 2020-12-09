@@ -1,8 +1,21 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/SQLiteNotificationsStorage.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/SQLiteNotificationsStorage.h">
-<area shape="rect" id="node2" href="$_notifications_storage_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsStorageInterface.h" alt="" coords="233,168,439,209"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="665,168,879,209"/>
-<area shape="rect" id="node16" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="1121,175,1340,202"/>
-<area shape="rect" id="node3" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="5,265,235,291"/>
-<area shape="rect" id="node5" href="$_notification_indicator_8h.html" title="acsdkNotifications\l/NotificationIndicator.h" alt="" coords="259,257,413,299"/>
-<area shape="rect" id="node18" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="1303,265,1526,291"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/SQLiteNotificationsStorage.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/SQLiteNotificationsStorage.h">
+<area shape="rect" id="node1" title=" " alt="" coords="529,5,779,91"/>
+<area shape="rect" id="node2" href="$_notifications_storage_interface_8h.html" title=" " alt="" coords="228,139,435,180"/>
+<area shape="rect" id="node7" title=" " alt="" coords="431,235,490,262"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title=" " alt="" coords="660,139,872,180"/>
+<area shape="rect" id="node16" href="$_s_q_lite_database_8h.html" title=" " alt="" coords="1115,146,1334,173"/>
+<area shape="rect" id="node3" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title=" " alt="" coords="5,235,231,262"/>
+<area shape="rect" id="node5" href="$_notification_indicator_8h.html" title=" " alt="" coords="255,228,407,269"/>
+<area shape="rect" id="node4" title=" " alt="" coords="83,317,153,344"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1120,317,1175,344"/>
+<area shape="rect" id="node9" title=" " alt="" coords="514,235,575,262"/>
+<area shape="rect" id="node10" title=" " alt="" coords="600,235,665,262"/>
+<area shape="rect" id="node11" title=" " alt="" coords="690,235,762,262"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1154,235,1223,262"/>
+<area shape="rect" id="node13" title=" " alt="" coords="786,235,826,262"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1071,235,1130,262"/>
+<area shape="rect" id="node15" title=" " alt="" coords="850,235,997,262"/>
+<area shape="rect" id="node17" title=" " alt="" coords="1488,317,1559,344"/>
+<area shape="rect" id="node18" href="$_s_q_lite_statement_8h.html" title=" " alt="" coords="1299,235,1521,262"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1391,317,1429,344"/>
 </map>

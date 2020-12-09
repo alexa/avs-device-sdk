@@ -1,7 +1,15 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/EqualizerLinearBandMapper.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/EqualizerLinearBandMapper.h">
-<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerTypes.h" alt="" coords="322,228,491,269"/>
-<area shape="rect" id="node13" href="$_equalizer_band_mapper_interface_8h.html" title="EqualizerBandMapperInterface.h" alt="" coords="159,153,369,180"/>
-<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="117,317,310,359"/>
-<area shape="rect" id="node11" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="624,317,789,359"/>
-<area shape="rect" id="node12" href="$_result_8h.html" title="Result.h" alt="" coords="671,407,742,433"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/EqualizerLinearBandMapper.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/EqualizerLinearBandMapper.h">
+<area shape="rect" id="node1" title=" " alt="" coords="25,5,281,91"/>
+<area shape="rect" id="node2" title=" " alt="" coords="11,392,89,419"/>
+<area shape="rect" id="node3" title=" " alt="" coords="37,139,106,165"/>
+<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title=" " alt="" coords="293,213,463,255"/>
+<area shape="rect" id="node13" href="$_equalizer_band_mapper_interface_8h.html" title=" " alt="" coords="130,139,341,165"/>
+<area shape="rect" id="node5" title=" " alt="" coords="438,310,489,337"/>
+<area shape="rect" id="node6" title=" " alt="" coords="513,310,568,337"/>
+<area shape="rect" id="node7" title=" " alt="" coords="303,310,413,337"/>
+<area shape="rect" id="node8" href="$hash_8h.html" title=" " alt="" coords="88,303,279,344"/>
+<area shape="rect" id="node11" href="$_success_result_8h.html" title=" " alt="" coords="593,303,755,344"/>
+<area shape="rect" id="node9" title=" " alt="" coords="133,392,193,419"/>
+<area shape="rect" id="node10" title=" " alt="" coords="217,392,277,419"/>
+<area shape="rect" id="node12" href="$_result_8h.html" title=" " alt="" coords="639,392,709,419"/>
 </map>

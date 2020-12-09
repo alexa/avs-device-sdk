@@ -1,6 +1,14 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityState.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityState.h">
-<area shape="rect" id="node4" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="176,139,352,180"/>
-<area shape="rect" id="node5" href="$_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="251,228,427,269"/>
-<area shape="rect" id="node8" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="241,325,455,351"/>
-<area shape="rect" id="node10" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="529,317,705,359"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityState.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityState.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,243,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="25,117,87,143"/>
+<area shape="rect" id="node3" title=" " alt="" coords="97,295,151,322"/>
+<area shape="rect" id="node4" href="$_time_point_8h.html" title=" " alt="" coords="162,109,337,151"/>
+<area shape="rect" id="node5" href="$_time_utils_8h.html" title=" " alt="" coords="237,199,411,240"/>
+<area shape="rect" id="node6" title=" " alt="" coords="188,377,249,404"/>
+<area shape="rect" id="node7" title=" " alt="" coords="458,377,513,404"/>
+<area shape="rect" id="node8" href="$_retry_timer_8h.html" title=" " alt="" coords="227,295,437,322"/>
+<area shape="rect" id="node10" href="$_safe_c_time_access_8h.html" title=" " alt="" coords="513,288,687,329"/>
+<area shape="rect" id="node9" title=" " alt="" coords="303,377,361,404"/>
+<area shape="rect" id="node11" title=" " alt="" coords="641,377,711,404"/>
+<area shape="rect" id="node12" title=" " alt="" coords="559,377,617,404"/>
 </map>

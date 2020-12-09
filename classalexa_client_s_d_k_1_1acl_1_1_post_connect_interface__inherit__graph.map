@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::acl::PostConnectInterface" name="alexaClientSDK::acl::PostConnectInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_sequencer.html" title="alexaClientSDK::acl\l::PostConnectSequencer" alt="" coords="211,5,379,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_post_connect.html" title="alexaClientSDK::acl\l::test::MockPostConnect" alt="" coords="211,71,379,112"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,39,163,80"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_post_connect_sequencer.html" title=" " alt="" coords="211,5,379,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_post_connect.html" title=" " alt="" coords="211,71,379,112"/>
 </map>

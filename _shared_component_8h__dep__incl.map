@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h">
-<area shape="rect" id="node2" href="$_default_sample_application_options_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkDefaultSampleApplication\lOptions/src/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="5,139,385,224"/>
-<area shape="rect" id="node3" href="$_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="409,139,712,224"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClientComponent.cpp" alt="" coords="736,139,991,224"/>
-<area shape="rect" id="node5" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="1015,139,1231,224"/>
-<area shape="rect" id="node6" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="1255,146,1519,217"/>
-<area shape="rect" id="node7" href="$_shared_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/shared/acsdkShared/src/SharedComponent.cpp" alt="" coords="1543,146,1847,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShared/include/acsdkShared/SharedComponent.h">
+<area shape="rect" id="node1" title=" " alt="" coords="777,5,1048,61"/>
+<area shape="rect" id="node2" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="5,109,319,180"/>
+<area shape="rect" id="node3" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="343,109,653,180"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="678,109,907,180"/>
+<area shape="rect" id="node5" href="$_default_client_component_8cpp.html" title=" " alt="" coords="932,109,1136,180"/>
+<area shape="rect" id="node6" href="$_core_component_8cpp.html" title=" " alt="" coords="1161,117,1326,173"/>
+<area shape="rect" id="node7" href="$_shared_component_8cpp.html" title=" " alt="" coords="1350,117,1531,173"/>
 </map>

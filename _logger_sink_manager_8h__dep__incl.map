@@ -1,10 +1,11 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="5,139,253,224"/>
-<area shape="rect" id="node3" href="$_logger_sink_manager_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/Logger\l/LoggerSinkManager.cpp" alt="" coords="277,139,480,224"/>
-<area shape="rect" id="node4" href="$_module_logger_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/Logger\l/ModuleLogger.cpp" alt="" coords="504,139,707,224"/>
-<area shape="rect" id="node5" href="$_logger_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/test/LoggerTest.cpp" alt="" coords="731,146,989,217"/>
-<area shape="rect" id="node6" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="1013,139,1267,224"/>
-<area shape="rect" id="node7" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/AndroidSLESMediaQueueTest.cpp" alt="" coords="1291,139,1546,224"/>
-<area shape="rect" id="node8" href="$_f_fmpeg_decoder_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/AndroidSLESMediaPlayer\l/test/FFmpegDecoderTest.cpp" alt="" coords="1570,139,1822,224"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1846,146,2098,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/LoggerSinkManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="866,5,1061,76"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,124,260,180"/>
+<area shape="rect" id="node3" href="$_logger_sink_manager_8cpp.html" title=" " alt="" coords="284,124,515,180"/>
+<area shape="rect" id="node4" href="$_module_logger_8cpp.html" title=" " alt="" coords="539,124,735,180"/>
+<area shape="rect" id="node5" href="$_logger_test_8cpp.html" title=" " alt="" coords="759,124,919,180"/>
+<area shape="rect" id="node6" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="944,124,1233,180"/>
+<area shape="rect" id="node7" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title=" " alt="" coords="1258,124,1549,180"/>
+<area shape="rect" id="node8" href="$_f_fmpeg_decoder_test_8cpp.html" title=" " alt="" coords="1573,124,1813,180"/>
+<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title=" " alt="" coords="1837,131,2114,173"/>
 </map>

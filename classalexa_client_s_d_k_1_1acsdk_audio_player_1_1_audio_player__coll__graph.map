@@ -1,16 +1,18 @@
 <map id="alexaClientSDK::acsdkAudioPlayer::AudioPlayer" name="alexaClientSDK::acsdkAudioPlayer::AudioPlayer">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityAgent" alt="" coords="303,133,501,174"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::DirectiveHandler\lInterface" alt="" coords="9,5,224,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ChannelObserver\lInterface" alt="" coords="7,85,226,141"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="18,165,215,221"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="5,245,228,301"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_progress_timer_1_1_context_interface.html" title="alexaClientSDK::acsdkAudio\lPlayer::ProgressTimer::\lContextInterface" alt="" coords="307,199,497,255"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html" title="alexaClientSDK::acsdkAudio\lPlayerInterfaces::AudioPlayerInterface" alt="" coords="279,279,525,321"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MediaProperties\lInterface" alt="" coords="297,345,507,401"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::RenderPlayerInfo\lCardsProviderInterface" alt="" coords="293,425,511,481"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="276,505,528,561"/>
-<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::LocalPlayback\lHandlerInterface" alt="" coords="301,585,503,641"/>
-<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface" alt="" coords="295,665,509,721"/>
-<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lFactoryObserverInterface" alt="" coords="295,745,509,801"/>
-<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="303,826,501,867"/>
+<area shape="rect" id="node1" title=" " alt="" coords="576,513,767,554"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html" title=" " alt="" coords="303,133,501,174"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_handler_interface.html" title=" " alt="" coords="9,5,224,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title=" " alt="" coords="7,85,226,141"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title=" " alt="" coords="18,165,215,221"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title=" " alt="" coords="5,245,228,301"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_progress_timer_1_1_context_interface.html" title=" " alt="" coords="307,199,497,255"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_interface.html" title=" " alt="" coords="279,279,525,321"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_media_properties_interface.html" title=" " alt="" coords="297,345,507,401"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_interface.html" title=" " alt="" coords="293,425,511,481"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title=" " alt="" coords="276,505,528,561"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html" title=" " alt="" coords="301,585,503,641"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title=" " alt="" coords="295,665,509,721"/>
+<area shape="rect" id="node14" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_observer_interface.html" title=" " alt="" coords="295,745,509,801"/>
+<area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="303,826,501,867"/>
+<area shape="rect" id="node16" title=" " alt="" coords="314,891,490,933"/>
 </map>

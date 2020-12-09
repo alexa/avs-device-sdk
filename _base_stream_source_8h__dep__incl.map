@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/BaseStreamSource.h">
-<area shape="rect" id="node2" href="$_attachment_reader_source_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/include/MediaPlayer/AttachmentReaderSource.h" alt="" coords="81,139,389,224"/>
-<area shape="rect" id="node5" href="$_i_stream_source_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/include/MediaPlayer/IStreamSource.h" alt="" coords="413,139,659,224"/>
-<area shape="rect" id="node7" href="$_base_stream_source_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/src/BaseStreamSource.cpp" alt="" coords="683,139,920,224"/>
-<area shape="rect" id="node3" href="$_attachment_reader_source_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/src/AttachmentReaderSource.cpp" alt="" coords="5,272,243,357"/>
-<area shape="rect" id="node4" href="$_media_player_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/src/MediaPlayer.cpp" alt="" coords="267,272,504,357"/>
-<area shape="rect" id="node6" href="$_i_stream_source_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/MediaPlayer/GStreamerMediaPlayer\l/src/IStreamSource.cpp" alt="" coords="528,272,765,357"/>
+<map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/BaseStreamSource.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/BaseStreamSource.h">
+<area shape="rect" id="node1" title=" " alt="" coords="413,5,639,76"/>
+<area shape="rect" id="node2" href="$_attachment_reader_source_8h.html" title=" " alt="" coords="164,124,389,195"/>
+<area shape="rect" id="node5" href="$_i_stream_source_8h.html" title=" " alt="" coords="413,124,639,195"/>
+<area shape="rect" id="node7" href="$_base_stream_source_8cpp.html" title=" " alt="" coords="663,131,888,187"/>
+<area shape="rect" id="node3" href="$_attachment_reader_source_8cpp.html" title=" " alt="" coords="5,243,265,299"/>
+<area shape="rect" id="node4" href="$_media_player_8cpp.html" title=" " alt="" coords="289,243,515,299"/>
+<area shape="rect" id="node6" href="$_i_stream_source_8cpp.html" title=" " alt="" coords="539,243,764,299"/>
 </map>

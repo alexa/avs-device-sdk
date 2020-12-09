@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h">
-<area shape="rect" id="node2" href="$_s_d_p_records_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/Utils/src/Bluetooth\l/SDPRecords.cpp" alt="" coords="5,153,224,239"/>
-<area shape="rect" id="node3" href="$_blue_z_h_f_p_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/include/BlueZ/BlueZHFP.h" alt="" coords="249,153,463,239"/>
-<area shape="rect" id="node7" href="$_bluetooth_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Bluetooth/acsdkBluetooth\l/src/Bluetooth.cpp" alt="" coords="487,153,731,239"/>
-<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZBluetoothDevice.cpp" alt="" coords="10,287,225,372"/>
-<area shape="rect" id="node5" href="$_blue_z_h_f_p_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/src/BlueZHFP.cpp" alt="" coords="249,287,463,372"/>
-<area shape="rect" id="node6" href="$_blue_z_h_f_p_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/BluetoothImplementations/BlueZ\l/test/BlueZHFPTest.cpp" alt="" coords="487,287,702,372"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h">
+<area shape="rect" id="node1" title=" " alt="" coords="253,5,492,76"/>
+<area shape="rect" id="node2" href="$_s_d_p_records_8cpp.html" title=" " alt="" coords="31,124,240,180"/>
+<area shape="rect" id="node3" href="$_blue_z_h_f_p_8h.html" title=" " alt="" coords="264,124,481,180"/>
+<area shape="rect" id="node7" href="$_bluetooth_8cpp.html" title=" " alt="" coords="505,124,728,180"/>
+<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title=" " alt="" coords="5,228,247,284"/>
+<area shape="rect" id="node5" href="$_blue_z_h_f_p_8cpp.html" title=" " alt="" coords="271,228,474,284"/>
+<area shape="rect" id="node6" href="$_blue_z_h_f_p_test_8cpp.html" title=" " alt="" coords="498,228,701,284"/>
 </map>

@@ -1,47 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/src/KeywordObserver.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/src/KeywordObserver.cpp">
-<area shape="rect" id="node2" href="$_keyword_observer_8h.html" title="SampleApp/KeywordObserver.h" alt="" coords="632,124,840,151"/>
-<area shape="rect" id="node5" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="637,467,835,508"/>
-<area shape="rect" id="node9" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="43,377,237,419"/>
-<area shape="rect" id="node11" href="$_default_client_8h.html" title="DefaultClient/DefaultClient.h" alt="" coords="2820,199,3009,225"/>
-<area shape="rect" id="node6" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="404,645,569,687"/>
-<area shape="rect" id="node7" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="404,556,569,597"/>
-<area shape="rect" id="node12" href="$_message_router_8h.html" title="ACL/Transport/MessageRouter.h" alt="" coords="3171,563,3386,590"/>
-<area shape="rect" id="node13" href="$_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="2491,645,2696,687"/>
-<area shape="rect" id="node14" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="3064,645,3256,687"/>
-<area shape="rect" id="node15" href="$_message_router_factory_8h.html" title="ACL/Transport/MessageRouter\lFactory.h" alt="" coords="3053,377,3256,419"/>
-<area shape="rect" id="node16" href="$_manufactory_8h.html" title="acsdkManufactory/Manufactory.h" alt="" coords="1061,385,1277,411"/>
-<area shape="rect" id="node17" href="$_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="1491,385,1677,411"/>
-<area shape="rect" id="node18" href="$_audio_activity_tracker_8h.html" title="AFML/AudioActivityTracker.h" alt="" coords="1505,563,1698,590"/>
-<area shape="rect" id="node19" href="$_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="1211,645,1466,687"/>
-<area shape="rect" id="node20" href="$_focus_manager_8h.html" title="AFML/FocusManager.h" alt="" coords="2059,288,2218,315"/>
-<area shape="rect" id="node21" href="$_visual_activity_tracker_8h.html" title="AFML/VisualActivityTracker.h" alt="" coords="1131,563,1327,590"/>
-<area shape="rect" id="node22" href="$_audio_input_processor_8h.html" title="AIP/AudioInputProcessor.h" alt="" coords="2242,288,2422,315"/>
-<area shape="rect" id="node23" href="$_dialog_u_x_state_aggregator_8h.html" title="AVSCommon/AVS/DialogUXState\lAggregator.h" alt="" coords="2211,377,2435,419"/>
-<area shape="rect" id="node24" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="2363,556,2608,597"/>
-<area shape="rect" id="node25" href="$_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="2363,467,2591,508"/>
-<area shape="rect" id="node26" href="$_expect_speech_timeout_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExpectSpeechTimeoutHandlerInterface.h" alt="" coords="2510,377,2775,419"/>
-<area shape="rect" id="node27" href="$_audio_provider_8h.html" title="AudioProvider.h" alt="" coords="1352,385,1467,411"/>
-<area shape="rect" id="node28" href="$_alerts_capability_agent_8h.html" title="acsdkAlerts/AlertsCapability\lAgent.h" alt="" coords="4053,467,4240,508"/>
-<area shape="rect" id="node29" href="$_renderer_8h.html" title="acsdkAlerts/Renderer\l/Renderer.h" alt="" coords="4302,556,4450,597"/>
-<area shape="rect" id="node30" href="$_alert_storage_interface_8h.html" title="acsdkAlerts/Storage\l/AlertStorageInterface.h" alt="" coords="1925,556,2085,597"/>
-<area shape="rect" id="node31" href="$_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="4525,273,4750,329"/>
-<area shape="rect" id="node32" href="$_alexa_interface_capability_agent_8h.html" title="Alexa/AlexaInterfaceCapability\lAgent.h" alt="" coords="3534,281,3735,322"/>
-<area shape="rect" id="node33" href="$_endpoint_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointBuilderInterface.h" alt="" coords="3635,377,3877,419"/>
-<area shape="rect" id="node34" href="$_endpoint_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="3777,467,3978,508"/>
-<area shape="rect" id="node35" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="3853,556,4075,597"/>
-<area shape="rect" id="node36" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="4149,645,4349,687"/>
-<area shape="rect" id="node37" href="$_alexa_interface_message_sender_8h.html" title="Alexa/AlexaInterfaceMessage\lSender.h" alt="" coords="3777,645,3973,687"/>
-<area shape="rect" id="node38" href="$_api_gateway_capability_agent_8h.html" title="ApiGateway/ApiGatewayCapability\lAgent.h" alt="" coords="880,556,1107,597"/>
-<area shape="rect" id="node39" href="$_a_v_s_gateway_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayManagerInterface.h" alt="" coords="2721,645,2938,687"/>
-<area shape="rect" id="node40" href="$_audio_player_8h.html" title="acsdkAudioPlayer/AudioPlayer.h" alt="" coords="594,563,806,590"/>
-<area shape="rect" id="node41" href="$_audio_player_observer_interface_8h.html" title="acsdkAudioPlayerInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="4773,281,4984,322"/>
-<area shape="rect" id="node42" href="$_exception_encountered_sender_8h.html" title="AVSCommon/AVS/ExceptionEncountered\lSender.h" alt="" coords="3281,645,3549,687"/>
-<area shape="rect" id="node43" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1601,467,1831,508"/>
-<area shape="rect" id="node44" href="$_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AudioFactoryInterface.h" alt="" coords="213,281,416,322"/>
-<area shape="rect" id="node45" href="$_bluetooth_device_connection_rule_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceConnection\lRuleInterface.h" alt="" coords="4154,273,4401,329"/>
-<area shape="rect" id="node46" href="$_call_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CallManagerInterface.h" alt="" coords="3051,467,3243,508"/>
-<area shape="rect" id="node47" href="$_capabilities_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="2717,467,2925,508"/>
-<area shape="rect" id="node48" href="$_capabilities_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilitiesObserverInterface.h" alt="" coords="2683,556,2893,597"/>
-<area shape="rect" id="node49" href="$_diagnostics_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h" alt="" coords="1753,377,1983,419"/>
-<area shape="rect" id="node50" href="$_internet_connection_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionMonitorInterface.h" alt="" coords="451,281,693,322"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/KeywordObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/KeywordObserver.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="4476,5,4748,47"/>
+<area shape="rect" id="node2" href="$_keyword_observer_8h.html" title=" " alt="" coords="4509,95,4716,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="2883,720,2952,747"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1316,720,1370,747"/>
+<area shape="rect" id="node5" href="$_audio_input_stream_8h.html" title=" " alt="" coords="4159,437,4354,479"/>
+<area shape="rect" id="node9" href="$_key_word_observer_interface_8h.html" title=" " alt="" coords="4616,348,4811,389"/>
+<area shape="rect" id="node11" href="$_default_client_8h.html" title=" " alt="" coords="2484,169,2674,196"/>
+<area shape="rect" id="node6" href="$_shared_data_stream_8h.html" title=" " alt="" coords="4191,623,4354,665"/>
+<area shape="rect" id="node7" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="4140,527,4303,568"/>
+<area shape="rect" id="node8" title=" " alt="" coords="2044,631,2103,657"/>
+<area shape="rect" id="node10" title=" " alt="" coords="4687,445,4740,471"/>
+<area shape="rect" id="node12" href="$_message_router_8h.html" title=" " alt="" coords="3247,534,3460,561"/>
+<area shape="rect" id="node13" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="3294,623,3499,665"/>
+<area shape="rect" id="node14" href="$_auth_delegate_interface_8h.html" title=" " alt="" coords="2756,623,2946,665"/>
+<area shape="rect" id="node15" href="$_message_router_factory_8h.html" title=" " alt="" coords="2844,251,3047,293"/>
+<area shape="rect" id="node16" href="$_manufactory_8h.html" title=" " alt="" coords="4150,259,4365,285"/>
+<area shape="rect" id="node17" href="$_directive_sequencer_8h.html" title=" " alt="" coords="4389,259,4574,285"/>
+<area shape="rect" id="node18" href="$_audio_activity_tracker_8h.html" title=" " alt="" coords="1071,445,1263,471"/>
+<area shape="rect" id="node19" href="$_default_endpoint_annotation_8h.html" title=" " alt="" coords="1293,527,1548,568"/>
+<area shape="rect" id="node20" href="$_focus_manager_8h.html" title=" " alt="" coords="2642,355,2799,382"/>
+<area shape="rect" id="node21" href="$_visual_activity_tracker_8h.html" title=" " alt="" coords="2106,445,2300,471"/>
+<area shape="rect" id="node22" href="$_audio_input_processor_8h.html" title=" " alt="" coords="2067,259,2246,285"/>
+<area shape="rect" id="node23" href="$_dialog_u_x_state_aggregator_8h.html" title=" " alt="" coords="2194,348,2414,389"/>
+<area shape="rect" id="node24" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="2498,527,2743,568"/>
+<area shape="rect" id="node25" href="$_dialog_u_x_state_observer_interface_8h.html" title=" " alt="" coords="1701,437,1929,479"/>
+<area shape="rect" id="node26" href="$_expect_speech_timeout_handler_interface_8h.html" title=" " alt="" coords="1752,348,2017,389"/>
+<area shape="rect" id="node27" href="$_audio_provider_8h.html" title=" " alt="" coords="3493,355,3606,382"/>
+<area shape="rect" id="node28" href="$_alerts_capability_agent_8h.html" title=" " alt="" coords="1388,437,1575,479"/>
+<area shape="rect" id="node29" href="$_audio_factory_interface_8h.html" title=" " alt="" coords="2919,527,3122,568"/>
+<area shape="rect" id="node30" href="$_renderer_8h.html" title=" " alt="" coords="218,527,366,568"/>
+<area shape="rect" id="node31" href="$_application_audio_pipeline_factory_interface_8h.html" title=" " alt="" coords="48,616,273,672"/>
+<area shape="rect" id="node32" href="$_alert_storage_interface_8h.html" title=" " alt="" coords="1724,527,1884,568"/>
+<area shape="rect" id="node33" href="$_alexa_interface_capability_agent_8h.html" title=" " alt="" coords="933,251,1134,293"/>
+<area shape="rect" id="node34" href="$_endpoint_builder_interface_8h.html" title=" " alt="" coords="754,348,996,389"/>
+<area shape="rect" id="node35" href="$_endpoint_interface_8h.html" title=" " alt="" coords="661,437,862,479"/>
+<area shape="rect" id="node36" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title=" " alt="" coords="645,527,862,568"/>
+<area shape="rect" id="node37" href="$_endpoint_identifier_8h.html" title=" " alt="" coords="450,623,649,665"/>
+<area shape="rect" id="node38" href="$_alexa_interface_message_sender_8h.html" title=" " alt="" coords="3073,623,3269,665"/>
+<area shape="rect" id="node39" href="$_api_gateway_capability_agent_8h.html" title=" " alt="" coords="3839,527,4066,568"/>
+<area shape="rect" id="node40" href="$_a_v_s_gateway_manager_interface_8h.html" title=" " alt="" coords="3524,623,3738,665"/>
+<area shape="rect" id="node41" href="$_audio_player_8h.html" title=" " alt="" coords="3039,445,3250,471"/>
+<area shape="rect" id="node42" href="$_audio_player_observer_interface_8h.html" title=" " alt="" coords="274,251,484,293"/>
+<area shape="rect" id="node43" href="$_exception_encountered_sender_8h.html" title=" " alt="" coords="1570,623,1834,665"/>
+<area shape="rect" id="node44" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="3735,437,3964,479"/>
+<area shape="rect" id="node45" href="$_bluetooth_device_connection_rule_interface_8h.html" title=" " alt="" coords="3072,244,3318,300"/>
+<area shape="rect" id="node46" href="$_call_manager_interface_8h.html" title=" " alt="" coords="2773,437,2964,479"/>
+<area shape="rect" id="node47" href="$_capabilities_delegate_interface_8h.html" title=" " alt="" coords="2324,437,2532,479"/>
+<area shape="rect" id="node48" href="$_capabilities_observer_interface_8h.html" title=" " alt="" coords="2213,527,2422,568"/>
+<area shape="rect" id="node49" href="$_diagnostics_interface_8h.html" title=" " alt="" coords="3682,348,3913,389"/>
+<area shape="rect" id="node50" href="$_internet_connection_monitor_interface_8h.html" title=" " alt="" coords="3885,251,4126,293"/>
 </map>

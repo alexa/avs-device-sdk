@@ -1,12 +1,12 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/KWDProvider" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/KWDProvider">
+<map id="/workplace/avs&#45;device&#45;sdk/KWD/KWDProvider" name="/workplace/avs&#45;device&#45;sdk/KWD/KWDProvider">
 <area shape="rect" id="node2" href="dir_9d4ae4016b26aa9beb737196ea1eaf71.html" title="include" alt="" coords="37,159,109,207"/>
-<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="21,351,123,399"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000458_000017.html" title="4" alt="" coords="69,324,77,338"/>
+<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="22,351,122,399"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000468_000017.html" title="4" alt="" coords="69,324,77,339"/>
 <area shape="rect" id="node5" href="dir_8dea89c1bb4f7e14d42e016f897bd2de.html" title="include" alt="" coords="73,255,145,303"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000458_000450.html" title="1" alt="" coords="98,227,106,242"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000468_000460.html" title="1" alt="" coords="98,227,106,242"/>
 <area shape="rect" id="node3" href="dir_75b03e7b1e301cc37138f8f5b30006c4.html" title="src" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000460_000458.html" title="1" alt="" coords="78,133,86,147"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000450_000017.html" title="4" alt="" coords="92,329,100,344"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000470_000468.html" title="1" alt="" coords="78,133,86,148"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000460_000017.html" title="4" alt="" coords="92,330,100,344"/>
 <area shape="rect" id="clust2" href="dir_c9a193c1c2edbf088be64b91af50d436.html" alt="" coords="27,52,248,217"/>
 <area shape="rect" id="clust1" href="dir_d0ae40f34093660421d9f00fd3d110f5.html" title="KWD" alt="" coords="16,16,259,228"/>
 </map>

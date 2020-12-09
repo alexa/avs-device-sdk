@@ -1,6 +1,7 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Storage/StubMiscStorage.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Storage/StubMiscStorage.h">
-<area shape="rect" id="node2" href="$_stub_misc_storage_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSCommon/SDKInterfaces/test\l/src/StubMiscStorage.cpp" alt="" coords="5,161,228,246"/>
-<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/AVSGatewayManager/test/Storage\l/AVSGatewayManagerStorageTest.cpp" alt="" coords="253,161,503,246"/>
-<area shape="rect" id="node4" href="$_misc_d_b_equalizer_storage_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/capabilities/Equalizer/acsdkEqualizer\lImplementations/test/MiscDBEqualizerStorage\lTest.cpp" alt="" coords="528,153,823,253"/>
-<area shape="rect" id="node5" href="$_report_state_handler_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/CapabilityAgents/System/test\l/ReportStateHandlerTest.cpp" alt="" coords="847,161,1047,246"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Storage/StubMiscStorage.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Storage/StubMiscStorage.h">
+<area shape="rect" id="node1" title=" " alt="" coords="383,5,603,76"/>
+<area shape="rect" id="node2" href="$_stub_misc_storage_8cpp.html" title=" " alt="" coords="5,131,224,187"/>
+<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title=" " alt="" coords="249,124,477,195"/>
+<area shape="rect" id="node4" href="$_misc_d_b_equalizer_storage_test_8cpp.html" title=" " alt="" coords="501,124,749,195"/>
+<area shape="rect" id="node5" href="$_report_state_handler_test_8cpp.html" title=" " alt="" coords="773,124,989,195"/>
 </map>

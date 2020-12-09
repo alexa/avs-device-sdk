@@ -1,24 +1,42 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/src/PostConnectOperationProviderRegistrar.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/src/PostConnectOperationProviderRegistrar.cpp">
-<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="467,555,643,596"/>
-<area shape="rect" id="node25" href="$_post_connect_operation_provider_registrar_8h.html" title="acsdkPostConnectOperation\lProviderRegistrar/PostConnectOperation\lProviderRegistrar.h" alt="" coords="863,139,1121,195"/>
-<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="246,733,461,775"/>
-<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="485,733,661,775"/>
-<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="728,644,904,685"/>
-<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="323,644,517,685"/>
-<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2025,644,2201,685"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1448,733,1624,775"/>
-<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1448,823,1624,864"/>
-<area shape="rect" id="node26" href="$_post_connect_operation_provider_registrar_interface_8h.html" title="acsdkPostConnectOperation\lProviderRegistrarInterfaces\l/PostConnectOperationProviderRegistrar\lInterface.h" alt="" coords="696,243,955,313"/>
-<area shape="rect" id="node27" href="$_post_connect_operation_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationProvider\lInterface.h" alt="" coords="2154,361,2361,417"/>
-<area shape="rect" id="node38" href="$_requires_startup_interface_8h.html" title="acsdkStartupManagerInterfaces\l/RequiresStartupInterface.h" alt="" coords="2678,644,2885,685"/>
-<area shape="rect" id="node39" href="$_startup_notifier_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h" alt="" coords="2491,555,2698,596"/>
-<area shape="rect" id="node36" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="591,376,787,403"/>
-<area shape="rect" id="node28" href="$_post_connect_operation_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PostConnectOperationInterface.h" alt="" coords="2150,465,2370,507"/>
-<area shape="rect" id="node29" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1917,555,2109,596"/>
-<area shape="rect" id="node30" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1728,651,1979,678"/>
-<area shape="rect" id="node33" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1751,733,1955,775"/>
-<area shape="rect" id="node35" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1029,733,1272,775"/>
-<area shape="rect" id="node34" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1883,823,2048,864"/>
-<area shape="rect" id="node37" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="467,465,643,507"/>
-<area shape="rect" id="node40" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="2445,644,2603,685"/>
+<map id="/workplace/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/src/PostConnectOperationProviderRegistrar.cpp" name="/workplace/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/src/PostConnectOperationProviderRegistrar.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="381,5,662,76"/>
+<area shape="rect" id="node2" href="$_logger_8h.html" title=" " alt="" coords="463,540,638,581"/>
+<area shape="rect" id="node25" href="$_post_connect_operation_provider_registrar_8h.html" title=" " alt="" coords="859,124,1117,180"/>
+<area shape="rect" id="node3" title=" " alt="" coords="588,637,649,663"/>
+<area shape="rect" id="node4" title=" " alt="" coords="153,815,215,842"/>
+<area shape="rect" id="node5" title=" " alt="" coords="949,815,1008,842"/>
+<area shape="rect" id="node6" title=" " alt="" coords="681,726,751,753"/>
+<area shape="rect" id="node7" title=" " alt="" coords="236,897,295,924"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title=" " alt="" coords="246,719,458,760"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title=" " alt="" coords="482,719,657,760"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title=" " alt="" coords="725,629,899,671"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="319,629,513,671"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="2018,629,2193,671"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1695,815,1761,842"/>
+<area shape="rect" id="node10" title=" " alt="" coords="533,815,605,842"/>
+<area shape="rect" id="node11" title=" " alt="" coords="2264,897,2333,924"/>
+<area shape="rect" id="node12" title=" " alt="" coords="460,815,500,842"/>
+<area shape="rect" id="node13" title=" " alt="" coords="745,815,799,842"/>
+<area shape="rect" id="node14" title=" " alt="" coords="239,815,385,842"/>
+<area shape="rect" id="node17" title=" " alt="" coords="775,726,849,753"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1643,726,1722,753"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1445,719,1619,760"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1785,815,1855,842"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1445,808,1619,849"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1492,897,1572,924"/>
+<area shape="rect" id="node26" href="$_post_connect_operation_provider_registrar_interface_8h.html" title=" " alt="" coords="692,228,951,299"/>
+<area shape="rect" id="node27" href="$_post_connect_operation_provider_interface_8h.html" title=" " alt="" coords="2146,347,2353,403"/>
+<area shape="rect" id="node38" href="$_requires_startup_interface_8h.html" title=" " alt="" coords="2670,629,2877,671"/>
+<area shape="rect" id="node39" href="$_startup_notifier_interface_8h.html" title=" " alt="" coords="2483,540,2690,581"/>
+<area shape="rect" id="node36" href="$_optional_8h.html" title=" " alt="" coords="588,361,783,388"/>
+<area shape="rect" id="node28" href="$_post_connect_operation_interface_8h.html" title=" " alt="" coords="2142,451,2362,492"/>
+<area shape="rect" id="node29" href="$_message_sender_interface_8h.html" title=" " alt="" coords="1910,540,2101,581"/>
+<area shape="rect" id="node30" href="$_message_request_8h.html" title=" " alt="" coords="1723,637,1970,663"/>
+<area shape="rect" id="node31" title=" " alt="" coords="1971,726,2031,753"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2056,726,2160,753"/>
+<area shape="rect" id="node33" href="$_attachment_reader_8h.html" title=" " alt="" coords="1747,719,1947,760"/>
+<area shape="rect" id="node35" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="1025,719,1268,760"/>
+<area shape="rect" id="node34" href="$_reader_policy_8h.html" title=" " alt="" coords="1879,808,2041,849"/>
+<area shape="rect" id="node37" href="$_logger_utils_8h.html" title=" " alt="" coords="463,451,638,492"/>
+<area shape="rect" id="node40" href="$_notifier_interface_8h.html" title=" " alt="" coords="2437,629,2595,671"/>
 </map>

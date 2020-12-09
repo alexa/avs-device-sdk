@@ -1,12 +1,13 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h">
-<area shape="rect" id="node2" href="$_kitt_ai_key_word_detector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/include/KittAi\l/KittAiKeyWordDetector.h" alt="" coords="341,124,541,209"/>
-<area shape="rect" id="node5" href="$_keyword_detector_provider_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KWDProvider/include/KWDProvider\l/KeywordDetectorProvider.h" alt="" coords="608,124,879,209"/>
-<area shape="rect" id="node7" href="$_sensory_keyword_detector_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/include/Sensory\l/SensoryKeywordDetector.h" alt="" coords="928,124,1135,209"/>
-<area shape="rect" id="node10" href="$_abstract_keyword_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/src/AbstractKeywordDetector.cpp" alt="" coords="1159,131,1418,202"/>
-<area shape="rect" id="node11" href="$_abstract_keyword_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/test/AbstractKeywordDetectorTest.cpp" alt="" coords="1443,131,1732,202"/>
-<area shape="rect" id="node3" href="$_kitt_ai_key_word_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/src/KittAiKeyWordDetector.cpp" alt="" coords="5,265,287,335"/>
-<area shape="rect" id="node4" href="$_kitt_ai_key_word_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KittAi/test/KittAiKeyWordDetector\lTest.cpp" alt="" coords="311,257,571,343"/>
-<area shape="rect" id="node6" href="$_keyword_detector_provider_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/KWDProvider/src/KeywordDetector\lProvider.cpp" alt="" coords="595,257,865,343"/>
-<area shape="rect" id="node8" href="$_sensory_keyword_detector_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/src/SensoryKeywordDetector.cpp" alt="" coords="889,265,1200,335"/>
-<area shape="rect" id="node9" href="$_sensory_keyword_detector_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/KWD/Sensory/test/SensoryKeywordDetector\lTest.cpp" alt="" coords="1224,257,1513,343"/>
+<map id="/workplace/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h" name="/workplace/avs&#45;device&#45;sdk/KWD/include/KWD/AbstractKeywordDetector.h">
+<area shape="rect" id="node1" title=" " alt="" coords="723,5,909,61"/>
+<area shape="rect" id="node2" href="$_kitt_ai_key_word_detector_8h.html" title=" " alt="" coords="231,117,438,173"/>
+<area shape="rect" id="node5" href="$_keyword_detector_provider_8h.html" title=" " alt="" coords="466,109,673,180"/>
+<area shape="rect" id="node7" href="$_sensory_keyword_detector_8h.html" title=" " alt="" coords="697,117,935,173"/>
+<area shape="rect" id="node10" href="$_abstract_keyword_detector_8cpp.html" title=" " alt="" coords="959,117,1169,173"/>
+<area shape="rect" id="node11" href="$_abstract_keyword_detector_test_8cpp.html" title=" " alt="" coords="1193,117,1407,173"/>
+<area shape="rect" id="node3" href="$_kitt_ai_key_word_detector_8cpp.html" title=" " alt="" coords="5,228,205,284"/>
+<area shape="rect" id="node4" href="$_kitt_ai_key_word_detector_test_8cpp.html" title=" " alt="" coords="229,228,440,284"/>
+<area shape="rect" id="node6" href="$_keyword_detector_provider_8cpp.html" title=" " alt="" coords="464,228,685,284"/>
+<area shape="rect" id="node8" href="$_sensory_keyword_detector_8cpp.html" title=" " alt="" coords="714,228,913,284"/>
+<area shape="rect" id="node9" href="$_sensory_keyword_detector_test_8cpp.html" title=" " alt="" coords="937,228,1162,284"/>
 </map>

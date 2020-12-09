@@ -1,9 +1,11 @@
 <map id="alexaClientSDK::acl::AVSConnectionManager" name="alexaClientSDK::acl::AVSConnectionManager">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html" title="alexaClientSDK::avsCommon\l::avs::AbstractAVSConnectionManager" alt="" coords="559,53,809,94"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="300,45,511,101"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="23,5,234,61"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSGatewayAssigner\lInterface" alt="" coords="5,85,252,141"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html" title="alexaClientSDK::acl\l::MessageRouterObserverInterface" alt="" coords="571,118,797,159"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::InternetConnection\lObserverInterface" alt="" coords="571,184,797,240"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="585,265,783,306"/>
+<area shape="rect" id="node1" title=" " alt="" coords="852,191,1023,233"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_abstract_a_v_s_connection_manager.html" title=" " alt="" coords="555,53,804,94"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title=" " alt="" coords="299,45,507,101"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="23,5,233,61"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title=" " alt="" coords="5,85,251,141"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router_observer_interface.html" title=" " alt="" coords="566,118,793,159"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html" title=" " alt="" coords="566,184,793,240"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="581,265,778,306"/>
+<area shape="rect" id="node9" title=" " alt="" coords="556,330,803,371"/>
 </map>

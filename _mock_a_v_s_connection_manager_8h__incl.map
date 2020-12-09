@@ -1,11 +1,23 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h">
-<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="194,153,425,195"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="164,332,383,373"/>
-<area shape="rect" id="node7" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="876,332,1121,373"/>
-<area shape="rect" id="node10" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="77,243,272,284"/>
-<area shape="rect" id="node11" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="391,243,583,284"/>
-<area shape="rect" id="node12" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="407,339,657,366"/>
-<area shape="rect" id="node16" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="178,421,382,463"/>
-<area shape="rect" id="node21" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="703,421,945,463"/>
-<area shape="rect" id="node20" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="129,511,295,552"/>
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAVSConnectionManager.h">
+<area shape="rect" id="node1" title=" " alt="" coords="101,5,321,76"/>
+<area shape="rect" id="node2" title=" " alt="" coords="56,131,171,158"/>
+<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="195,124,424,165"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,399,75,426"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_assigner_interface_8h.html" title=" " alt="" coords="164,303,380,344"/>
+<area shape="rect" id="node7" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="872,303,1117,344"/>
+<area shape="rect" id="node10" href="$_message_observer_interface_8h.html" title=" " alt="" coords="77,213,272,255"/>
+<area shape="rect" id="node11" href="$_message_sender_interface_8h.html" title=" " alt="" coords="390,213,581,255"/>
+<area shape="rect" id="node6" title=" " alt="" coords="99,399,154,426"/>
+<area shape="rect" id="node8" title=" " alt="" coords="904,489,976,515"/>
+<area shape="rect" id="node9" title=" " alt="" coords="965,399,1024,426"/>
+<area shape="rect" id="node12" href="$_message_request_8h.html" title=" " alt="" coords="405,310,651,337"/>
+<area shape="rect" id="node13" title=" " alt="" coords="531,399,591,426"/>
+<area shape="rect" id="node14" title=" " alt="" coords="616,399,675,426"/>
+<area shape="rect" id="node15" title=" " alt="" coords="403,399,507,426"/>
+<area shape="rect" id="node16" href="$_attachment_reader_8h.html" title=" " alt="" coords="179,392,379,433"/>
+<area shape="rect" id="node21" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="699,392,941,433"/>
+<area shape="rect" id="node17" title=" " alt="" coords="316,489,377,515"/>
+<area shape="rect" id="node18" title=" " alt="" coords="402,489,467,515"/>
+<area shape="rect" id="node19" title=" " alt="" coords="36,489,105,515"/>
+<area shape="rect" id="node20" href="$_reader_policy_8h.html" title=" " alt="" coords="129,481,292,523"/>
 </map>

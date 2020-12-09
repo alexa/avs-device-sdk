@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_source.html" title="A data source class which can generate an aribrary amount of data at a specified rate and block size..." alt="" coords="5,5,203,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,20,128,47"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits_1_1_condition_variable.html" title="A ConditionVariable type with the minimum functionality required by SDS." alt="" coords="176,5,375,61"/>
 </map>

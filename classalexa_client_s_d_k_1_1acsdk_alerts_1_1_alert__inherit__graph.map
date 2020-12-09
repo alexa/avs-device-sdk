@@ -1,8 +1,10 @@
 <map id="alexaClientSDK::acsdkAlerts::Alert" name="alexaClientSDK::acsdkAlerts::Alert">
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alarm.html" title="alexaClientSDK::acsdkAlerts\l::Alarm" alt="" coords="536,5,728,47"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_reminder.html" title="alexaClientSDK::acsdkAlerts\l::Reminder" alt="" coords="536,71,728,112"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html" title="alexaClientSDK::acsdkAlerts\l::test::MockAlert" alt="" coords="536,136,728,177"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert.html" title="alexaClientSDK::acsdkAlerts\l::test::TestAlert" alt="" coords="536,201,728,243"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_timer.html" title="alexaClientSDK::acsdkAlerts\l::Timer" alt="" coords="536,267,728,308"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_observer_interface.html" title="alexaClientSDK::acsdkAlerts\l::renderer::RendererObserverInterface" alt="" coords="5,103,248,144"/>
+<area shape="rect" id="node1" title=" " alt="" coords="296,136,488,177"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alarm.html" title=" " alt="" coords="536,5,728,47"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_reminder.html" title=" " alt="" coords="536,71,728,112"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html" title=" " alt="" coords="536,136,728,177"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert.html" title=" " alt="" coords="536,201,728,243"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_timer.html" title=" " alt="" coords="536,267,728,308"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_observer_interface.html" title=" " alt="" coords="5,103,248,144"/>
+<area shape="rect" id="node3" title=" " alt="" coords="60,168,193,209"/>
 </map>

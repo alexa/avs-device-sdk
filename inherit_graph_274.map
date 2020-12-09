@@ -1,5 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_stream.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryStream" alt="" coords="379,27,577,69"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogEntryBuffer" alt="" coords="133,57,331,98"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1stream_1_1_streambuf.html" title="alexaClientSDK::avsCommon\l::utils::stream::Streambuf" alt="" coords="133,122,331,163"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_set_curl_options_callback_factory_interface.html" title=" " alt="" coords="5,5,249,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_default_set_curl_options_callback_factory.html" title=" " alt="" coords="297,13,545,69"/>
 </map>

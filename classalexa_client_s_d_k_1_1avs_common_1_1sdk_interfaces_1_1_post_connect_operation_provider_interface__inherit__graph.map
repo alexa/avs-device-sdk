@@ -1,7 +1,8 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::PostConnectOperationProviderInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::PostConnectOperationProviderInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_post_connect_operation_provider.html" title="alexaClientSDK::acl\l::transport::test::MockPost\lConnectOperationProvider" alt="" coords="349,5,528,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_post_connect_operation_provider.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::test::MockPostConnectOperationProvider" alt="" coords="303,85,575,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html" title="alexaClientSDK::avsGateway\lManager::AVSGatewayManager" alt="" coords="334,166,543,207"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title="alexaClientSDK::capabilities\lDelegate::CapabilitiesDelegate" alt="" coords="337,231,540,273"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html" title="alexaClientSDK::synchronize\lStateSender::SynchronizeStateSender\lFactory" alt="" coords="315,297,562,353"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,159,255,215"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_post_connect_operation_provider.html" title=" " alt="" coords="349,5,528,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_post_connect_operation_provider.html" title=" " alt="" coords="303,85,575,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html" title=" " alt="" coords="335,166,542,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title=" " alt="" coords="337,231,540,273"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_synchronize_state_sender_factory.html" title=" " alt="" coords="315,297,562,353"/>
 </map>

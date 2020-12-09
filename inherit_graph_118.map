@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; ObserverType \&gt;" alt="" coords="5,97,205,153"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_shutdown_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockShutdownNotifier" alt="" coords="253,5,517,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockStartupNotifier" alt="" coords="261,71,509,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; ObserverType \&gt;" alt="" coords="285,136,485,177"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::test::MockStartupNotifier" alt="" coords="271,202,499,258"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title=" " alt="" coords="5,97,205,153"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_shutdown_notifier.html" title=" " alt="" coords="253,5,517,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title=" " alt="" coords="261,71,509,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title=" " alt="" coords="285,136,485,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title=" " alt="" coords="271,202,499,258"/>
 </map>

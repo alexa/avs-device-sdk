@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html" title="alexaClientSDK::defaultClient\l::ExternalCapabilitiesBuilderInterface" alt="" coords="5,5,243,47"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1sample_app_1_1_external_capabilities_builder.html" title="alexaClientSDK::sampleApp\l::ExternalCapabilitiesBuilder" alt="" coords="291,5,479,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_message_storage_interface.html" title=" " alt="" coords="5,71,225,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_message_storage.html" title=" " alt="" coords="293,5,485,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_s_q_lite_message_storage.html" title=" " alt="" coords="284,71,493,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html" title=" " alt="" coords="273,136,504,177"/>
 </map>

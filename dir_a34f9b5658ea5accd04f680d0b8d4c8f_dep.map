@@ -1,11 +1,14 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/DoNotDisturb" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/DoNotDisturb">
-<area shape="rect" id="node2" href="dir_8a5e9e6006e7295a4ae796de14be24e0.html" title="acsdkDoNotDisturb" alt="" coords="38,63,175,111"/>
-<area shape="rect" id="node3" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="33,159,105,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000258_000513.html" title="14" alt="" coords="86,137,101,152"/>
-<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="18,255,121,303"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000258_000017.html" title="20" alt="" coords="101,238,116,252"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000513_000017.html" title="53" alt="" coords="61,228,76,243"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000017_000513.html" title="1" alt="" coords="66,218,74,233"/>
-<area shape="rect" id="clust2" href="dir_a34f9b5658ea5accd04f680d0b8d4c8f.html" alt="" coords="27,52,313,121"/>
-<area shape="rect" id="clust1" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="16,16,324,132"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb" name="/workplace/avs&#45;device&#45;sdk/capabilities/DoNotDisturb">
+<area shape="rect" id="node2" href="dir_8a5e9e6006e7295a4ae796de14be24e0.html" title="acsdkDoNotDisturb" alt="" coords="46,63,183,111"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="5,159,77,207"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000268_000533.html" title="7" alt="" coords="73,142,81,157"/>
+<area shape="rect" id="node4" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="41,351,113,399"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000268_000523.html" title="14" alt="" coords="117,336,132,351"/>
+<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="27,255,127,303"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000268_000017.html" title="27" alt="" coords="86,231,101,246"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000533_000017.html" title="14" alt="" coords="63,227,77,242"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000523_000017.html" title="54" alt="" coords="71,314,85,329"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000017_000523.html" title="1" alt="" coords="73,325,81,339"/>
+<area shape="rect" id="clust2" href="dir_a34f9b5658ea5accd04f680d0b8d4c8f.html" alt="" coords="35,52,321,121"/>
+<area shape="rect" id="clust1" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="24,16,332,132"/>
 </map>

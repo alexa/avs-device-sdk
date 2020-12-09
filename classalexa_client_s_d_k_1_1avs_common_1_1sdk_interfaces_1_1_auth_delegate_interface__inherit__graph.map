@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::acl\l::test::MockAuthDelegate" alt="" coords="334,5,505,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate" alt="" coords="300,71,539,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::capabilities\lDelegate::test::MockAuthDelegate" alt="" coords="308,136,531,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,71,252,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_auth_delegate.html" title=" " alt="" coords="334,5,505,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title=" " alt="" coords="300,71,539,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html" title=" " alt="" coords="308,136,531,177"/>
 </map>

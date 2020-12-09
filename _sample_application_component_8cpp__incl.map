@@ -1,38 +1,52 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/src/SampleApplicationComponent.cpp" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/SampleApp/src/SampleApplicationComponent.cpp">
-<area shape="rect" id="node2" href="$_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="464,124,664,165"/>
-<area shape="rect" id="node11" href="$_constructor_adapter_8h.html" title="acsdkManufactory/Constructor\lAdapter.h" alt="" coords="1337,124,1538,165"/>
-<area shape="rect" id="node12" href="$_context_manager_8h.html" title="ContextManager/ContextManager.h" alt="" coords="3987,131,4216,158"/>
-<area shape="rect" id="node32" href="$_sample_application_c_b_l_auth_requester_8h.html" title="acsdkSampleApplicationCBLAuth\lRequester/SampleApplicationCBLAuth\lRequester.h" alt="" coords="2145,213,2391,269"/>
-<area shape="rect" id="node35" href="$_default_sample_application_options_component_8h.html" title="acsdkDefaultSampleApplication\lOptions/DefaultSampleApplication\lOptionsComponent.h" alt="" coords="2416,213,2637,269"/>
-<area shape="rect" id="node42" href="$_http_post_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPost.h" alt="" coords="2040,317,2243,359"/>
-<area shape="rect" id="node46" href="$_locale_assets_manager_8h.html" title="SampleApp/LocaleAssetsManager.h" alt="" coords="4527,228,4761,255"/>
-<area shape="rect" id="node49" href="$_sample_application_component_8h.html" title="SampleApp/SampleApplication\lComponent.h" alt="" coords="2729,124,2930,165"/>
-<area shape="rect" id="node50" href="$_u_i_manager_8h.html" title="SampleApp/UIManager.h" alt="" coords="2661,228,2829,255"/>
-<area shape="rect" id="node4" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="557,325,768,351"/>
-<area shape="rect" id="node5" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="643,407,818,448"/>
-<area shape="rect" id="node8" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="5,228,187,255"/>
-<area shape="rect" id="node9" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="211,221,386,262"/>
-<area shape="rect" id="node10" href="$_component_accumulator__imp_8h.html" title="acsdkManufactory/internal\l/ComponentAccumulator_imp.h" alt="" coords="461,221,667,262"/>
-<area shape="rect" id="node17" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="4980,407,5175,448"/>
-<area shape="rect" id="node19" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="5121,496,5317,523"/>
-<area shape="rect" id="node20" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="3994,317,4209,359"/>
-<area shape="rect" id="node21" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3860,221,4052,262"/>
-<area shape="rect" id="node23" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3623,317,3817,359"/>
-<area shape="rect" id="node25" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3352,407,3552,448"/>
-<area shape="rect" id="node26" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="4980,317,5172,359"/>
-<area shape="rect" id="node27" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="3337,325,3548,351"/>
-<area shape="rect" id="node28" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3133,317,3313,359"/>
-<area shape="rect" id="node29" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="4044,407,4239,448"/>
-<area shape="rect" id="node30" href="$_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="4335,317,4511,359"/>
-<area shape="rect" id="node24" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3743,407,3919,448"/>
-<area shape="rect" id="node33" href="$_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="2267,317,2490,359"/>
-<area shape="rect" id="node34" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="2565,317,2809,359"/>
-<area shape="rect" id="node36" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1672,407,1864,448"/>
-<area shape="rect" id="node37" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="1430,317,1661,359"/>
-<area shape="rect" id="node38" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="1405,407,1597,448"/>
-<area shape="rect" id="node39" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1095,317,1355,359"/>
-<area shape="rect" id="node40" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="2717,407,2920,448"/>
-<area shape="rect" id="node41" href="$_customer_data_manager_8h.html" title="RegistrationManager\l/CustomerDataManager.h" alt="" coords="2885,317,3057,359"/>
-<area shape="rect" id="node45" href="$_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="2288,407,2491,448"/>
-<area shape="rect" id="node48" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="4535,317,4753,359"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleApplicationComponent.cpp" name="/workplace/avs&#45;device&#45;sdk/SampleApp/src/SampleApplicationComponent.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="2399,5,2651,61"/>
+<area shape="rect" id="node2" href="$_component_accumulator_8h.html" title=" " alt="" coords="464,109,664,151"/>
+<area shape="rect" id="node11" href="$_constructor_adapter_8h.html" title=" " alt="" coords="1335,109,1537,151"/>
+<area shape="rect" id="node12" href="$_context_manager_8h.html" title=" " alt="" coords="3978,117,4206,143"/>
+<area shape="rect" id="node32" href="$_sample_application_c_b_l_auth_requester_8h.html" title=" " alt="" coords="2143,199,2390,255"/>
+<area shape="rect" id="node35" href="$_default_sample_application_options_component_8h.html" title=" " alt="" coords="2415,199,2636,255"/>
+<area shape="rect" id="node42" href="$_http_post_8h.html" title=" " alt="" coords="2040,303,2240,344"/>
+<area shape="rect" id="node46" href="$_locale_assets_manager_8h.html" title=" " alt="" coords="4515,213,4747,240"/>
+<area shape="rect" id="node49" href="$_sample_application_component_8h.html" title=" " alt="" coords="2727,109,2929,151"/>
+<area shape="rect" id="node50" href="$_u_i_manager_8h.html" title=" " alt="" coords="2661,213,2827,240"/>
+<area shape="rect" id="node3" title=" " alt="" coords="1521,481,1591,508"/>
+<area shape="rect" id="node4" href="$_component_8h.html" title=" " alt="" coords="557,310,768,337"/>
+<area shape="rect" id="node5" href="$_cook_book_8h.html" title=" " alt="" coords="643,392,818,433"/>
+<area shape="rect" id="node8" href="$_import_8h.html" title=" " alt="" coords="5,213,187,240"/>
+<area shape="rect" id="node9" href="$_type_traits_helper_8h.html" title=" " alt="" coords="211,206,386,247"/>
+<area shape="rect" id="node10" href="$_component_accumulator__imp_8h.html" title=" " alt="" coords="461,206,667,247"/>
+<area shape="rect" id="node6" title=" " alt="" coords="675,481,786,508"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1393,481,1497,508"/>
+<area shape="rect" id="node13" title=" " alt="" coords="4143,481,4204,508"/>
+<area shape="rect" id="node14" title=" " alt="" coords="3263,399,3302,426"/>
+<area shape="rect" id="node15" title=" " alt="" coords="4065,481,4119,508"/>
+<area shape="rect" id="node16" title=" " alt="" coords="3951,481,4009,508"/>
+<area shape="rect" id="node17" href="$_capability_tag_8h.html" title=" " alt="" coords="4967,392,5158,433"/>
+<area shape="rect" id="node19" href="$_optional_8h.html" title=" " alt="" coords="5108,481,5303,508"/>
+<area shape="rect" id="node20" href="$_state_refresh_policy_8h.html" title=" " alt="" coords="3987,303,4197,344"/>
+<area shape="rect" id="node21" href="$_context_manager_interface_8h.html" title=" " alt="" coords="3854,206,4045,247"/>
+<area shape="rect" id="node23" href="$_context_requester_interface_8h.html" title=" " alt="" coords="3616,303,3811,344"/>
+<area shape="rect" id="node25" href="$_endpoint_identifier_8h.html" title=" " alt="" coords="3346,392,3545,433"/>
+<area shape="rect" id="node26" href="$_state_provider_interface_8h.html" title=" " alt="" coords="4967,303,5158,344"/>
+<area shape="rect" id="node27" href="$_device_info_8h.html" title=" " alt="" coords="3331,310,3541,337"/>
+<area shape="rect" id="node28" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="3128,303,3307,344"/>
+<area shape="rect" id="node29" href="$_executor_8h.html" title=" " alt="" coords="4037,392,4229,433"/>
+<area shape="rect" id="node30" href="$_multi_timer_8h.html" title=" " alt="" coords="4323,303,4498,344"/>
+<area shape="rect" id="node18" title=" " alt="" coords="2975,481,3030,508"/>
+<area shape="rect" id="node22" title=" " alt="" coords="3793,481,3855,508"/>
+<area shape="rect" id="node24" href="$_logger_8h.html" title=" " alt="" coords="3737,392,3911,433"/>
+<area shape="rect" id="node31" title=" " alt="" coords="4607,399,4654,426"/>
+<area shape="rect" id="node33" href="$_u_i_manager_interface_8h.html" title=" " alt="" coords="2265,303,2487,344"/>
+<area shape="rect" id="node34" href="$_c_b_l_auth_requester_interface_8h.html" title=" " alt="" coords="2563,303,2807,344"/>
+<area shape="rect" id="node36" href="$_auth_delegate_interface_8h.html" title=" " alt="" coords="1673,392,1863,433"/>
+<area shape="rect" id="node37" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="1432,303,1661,344"/>
+<area shape="rect" id="node38" href="$_message_sender_interface_8h.html" title=" " alt="" coords="1406,392,1597,433"/>
+<area shape="rect" id="node39" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="1097,303,1357,344"/>
+<area shape="rect" id="node40" href="$_http_post_interface_8h.html" title=" " alt="" coords="2715,392,2915,433"/>
+<area shape="rect" id="node41" href="$_customer_data_manager_8h.html" title=" " alt="" coords="2883,303,3053,344"/>
+<area shape="rect" id="node43" title=" " alt="" coords="2182,481,2261,508"/>
+<area shape="rect" id="node44" title=" " alt="" coords="2091,399,2163,426"/>
+<area shape="rect" id="node45" href="$_curl_easy_handle_wrapper_8h.html" title=" " alt="" coords="2288,392,2488,433"/>
+<area shape="rect" id="node47" title=" " alt="" coords="4765,399,4805,426"/>
+<area shape="rect" id="node48" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="4522,303,4739,344"/>
 </map>

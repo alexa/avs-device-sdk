@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointBuilder.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointBuilder.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClient.cpp" alt="" coords="115,139,330,224"/>
-<area shape="rect" id="node3" href="$_default_endpoint_builder_8h.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/include/Endpoints\l/DefaultEndpointBuilder.h" alt="" coords="355,139,555,224"/>
-<area shape="rect" id="node6" href="$_default_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/DefaultEndpointBuilder.cpp" alt="" coords="534,279,802,350"/>
-<area shape="rect" id="node7" href="$_endpoint_builder_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Endpoints/src/EndpointBuilder.cpp" alt="" coords="629,146,856,217"/>
-<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ApplicationUtilities/DefaultClient\l/src/DefaultClientComponent.cpp" alt="" coords="5,272,221,357"/>
-<area shape="rect" id="node5" href="$_core_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/core/acsdkCore/src/CoreComponent.cpp" alt="" coords="245,279,509,350"/>
+<map id="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointBuilder.h" name="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/EndpointBuilder.h">
+<area shape="rect" id="node1" title=" " alt="" coords="356,5,545,61"/>
+<area shape="rect" id="node2" href="$_default_client_8cpp.html" title=" " alt="" coords="5,109,235,165"/>
+<area shape="rect" id="node3" href="$_default_endpoint_builder_8h.html" title=" " alt="" coords="259,109,490,165"/>
+<area shape="rect" id="node6" href="$_default_endpoint_builder_8cpp.html" title=" " alt="" coords="447,221,675,277"/>
+<area shape="rect" id="node7" href="$_endpoint_builder_8cpp.html" title=" " alt="" coords="565,109,752,165"/>
+<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title=" " alt="" coords="29,213,233,284"/>
+<area shape="rect" id="node5" href="$_core_component_8cpp.html" title=" " alt="" coords="257,221,423,277"/>
 </map>

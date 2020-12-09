@@ -1,7 +1,13 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h">
-<area shape="rect" id="node2" href="$_channel_volume_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeFactoryInterface.h" alt="" coords="5,153,229,195"/>
-<area shape="rect" id="node10" href="$_channel_volume_manager_8h.html" title="SpeakerManager/ChannelVolume\lManager.h" alt="" coords="253,153,469,195"/>
-<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="147,243,339,284"/>
-<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="120,332,365,373"/>
-<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="389,332,581,373"/>
+<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager/DefaultChannelVolumeFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="107,5,370,91"/>
+<area shape="rect" id="node2" href="$_channel_volume_factory_interface_8h.html" title=" " alt="" coords="5,139,229,180"/>
+<area shape="rect" id="node10" href="$_channel_volume_manager_8h.html" title=" " alt="" coords="253,139,469,180"/>
+<area shape="rect" id="node3" title=" " alt="" coords="53,235,123,262"/>
+<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title=" " alt="" coords="147,228,338,269"/>
+<area shape="rect" id="node5" title=" " alt="" coords="19,325,98,351"/>
+<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title=" " alt="" coords="122,317,363,359"/>
+<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title=" " alt="" coords="387,317,578,359"/>
+<area shape="rect" id="node7" title=" " alt="" coords="212,407,273,433"/>
+<area shape="rect" id="node9" title=" " alt="" coords="448,407,517,433"/>
+<area shape="rect" id="node11" title=" " alt="" coords="363,235,421,262"/>
 </map>

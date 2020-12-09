@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::utils::bluetooth::AVRCPTargetRecord" name="alexaClientSDK::avsCommon::utils::bluetooth::AVRCPTargetRecord">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_d_p_record.html" title="Base class for an SDPRecord object used. " alt="" coords="261,13,459,54"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service..." alt="" coords="5,5,213,61"/>
+<area shape="rect" id="node1" title="A SDP record representing AVRCPTarget." alt="" coords="507,5,711,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_d_p_record.html" title="Base class for an SDPRecord object used." alt="" coords="261,13,459,54"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service." alt="" coords="5,5,213,61"/>
 </map>

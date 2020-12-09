@@ -1,8 +1,9 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/ACL/src/Transport/HTTP2TransportFactory.cpp" alt="" coords="5,146,308,217"/>
-<area shape="rect" id="node3" href="$_alexa_communications_component_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkLibcurlAlexaCommunications\l/src/AlexaCommunicationsComponent.cpp" alt="" coords="332,139,635,224"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/applications/acsdkPreviewAlexaClient\l/src/PreviewAlexaClient.cpp" alt="" coords="659,139,907,224"/>
-<area shape="rect" id="node5" href="$_a_c_l_test_context_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/src/ACLTestContext.cpp" alt="" coords="931,146,1167,217"/>
-<area shape="rect" id="node6" href="$_server_disconnect_integration_test_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/Integration/test/ServerDisconnectIntegration\lTest.cpp" alt="" coords="1190,139,1473,224"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/home/ANT.AMAZON.COM\l/womw/workspace/alexaClient\lSDK/release/avs&#45;device&#45;sdk\l/SampleApp/src/SampleApplication.cpp" alt="" coords="1497,146,1749,217"/>
+<map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/HTTP2TransportFactory.h">
+<area shape="rect" id="node1" title=" " alt="" coords="678,5,913,61"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8cpp.html" title=" " alt="" coords="5,117,196,173"/>
+<area shape="rect" id="node3" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="220,109,531,180"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="555,117,809,173"/>
+<area shape="rect" id="node5" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="834,117,986,173"/>
+<area shape="rect" id="node6" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="1011,109,1201,180"/>
+<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title=" " alt="" coords="1226,124,1503,165"/>
 </map>

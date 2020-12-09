@@ -1,7 +1,16 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/StaticExternalMediaPlayerAdapterHandler.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/StaticExternalMediaPlayerAdapterHandler.h">
-<area shape="rect" id="node3" href="$_external_media_adapter_handler_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lHandlerInterface.h" alt="" coords="222,168,434,224"/>
-<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="482,376,672,417"/>
-<area shape="rect" id="node11" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="151,272,363,328"/>
-<area shape="rect" id="node14" href="$_external_media_player_common_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lCommon.h" alt="" coords="520,272,724,328"/>
-<area shape="rect" id="node13" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="160,383,394,410"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/StaticExternalMediaPlayerAdapterHandler.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/StaticExternalMediaPlayerAdapterHandler.h">
+<area shape="rect" id="node1" title=" " alt="" coords="93,5,373,91"/>
+<area shape="rect" id="node2" title=" " alt="" coords="86,153,196,180"/>
+<area shape="rect" id="node3" href="$_external_media_adapter_handler_interface_8h.html" title=" " alt="" coords="220,139,432,195"/>
+<area shape="rect" id="node4" title=" " alt="" coords="24,354,85,381"/>
+<area shape="rect" id="node5" title=" " alt="" coords="171,436,226,463"/>
+<area shape="rect" id="node6" title=" " alt="" coords="436,257,494,284"/>
+<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title=" " alt="" coords="477,347,664,388"/>
+<area shape="rect" id="node11" href="$_external_media_adapter_interface_8h.html" title=" " alt="" coords="148,243,360,299"/>
+<area shape="rect" id="node14" href="$_external_media_player_common_8h.html" title=" " alt="" coords="519,243,723,299"/>
+<area shape="rect" id="node8" title=" " alt="" coords="624,436,685,463"/>
+<area shape="rect" id="node9" title=" " alt="" coords="448,436,517,463"/>
+<area shape="rect" id="node10" title=" " alt="" coords="541,436,600,463"/>
+<area shape="rect" id="node12" title=" " alt="" coords="413,354,453,381"/>
+<area shape="rect" id="node13" href="$_play_requestor_8h.html" title=" " alt="" coords="160,354,389,381"/>
 </map>

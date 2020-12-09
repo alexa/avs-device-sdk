@@ -1,25 +1,50 @@
-<map id="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/ComponentAccumulator_imp.h" name="/home/ANT.AMAZON.COM/womw/workspace/alexaClientSDK/release/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/ComponentAccumulator_imp.h">
-<area shape="rect" id="node2" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="1032,228,1243,255"/>
-<area shape="rect" id="node47" href="$_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="1179,139,1379,180"/>
-<area shape="rect" id="node3" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1318,303,1493,344"/>
-<area shape="rect" id="node46" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="1050,303,1225,344"/>
-<area shape="rect" id="node10" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1832,578,2035,605"/>
-<area shape="rect" id="node11" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="1694,749,1869,791"/>
-<area shape="rect" id="node12" href="$_pointer_cache_8h.html" title="acsdkManufactory/internal\l/PointerCache.h" alt="" coords="1531,660,1706,701"/>
-<area shape="rect" id="node13" href="$_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="1281,660,1455,701"/>
-<area shape="rect" id="node37" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="805,392,979,433"/>
-<area shape="rect" id="node17" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1441,928,1617,969"/>
-<area shape="rect" id="node23" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="889,749,1065,791"/>
-<area shape="rect" id="node36" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="1141,749,1315,791"/>
-<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1704,1017,1880,1059"/>
-<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1704,1107,1880,1148"/>
-<area shape="rect" id="node25" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="893,839,1069,880"/>
-<area shape="rect" id="node28" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="594,928,809,969"/>
-<area shape="rect" id="node33" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1160,1017,1336,1059"/>
-<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="885,928,1078,969"/>
-<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1356,1107,1532,1148"/>
-<area shape="rect" id="node42" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1067,481,1242,523"/>
-<area shape="rect" id="node44" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="289,481,463,523"/>
-<area shape="rect" id="node43" href="$_runtime_manufactory__imp_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory_imp.h" alt="" coords="1344,571,1531,612"/>
-<area shape="rect" id="node45" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="5,578,187,605"/>
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/ComponentAccumulator_imp.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/ComponentAccumulator_imp.h">
+<area shape="rect" id="node1" title=" " alt="" coords="747,5,997,76"/>
+<area shape="rect" id="node2" href="$_component_8h.html" title=" " alt="" coords="625,213,836,240"/>
+<area shape="rect" id="node48" href="$_component_accumulator_8h.html" title=" " alt="" coords="772,124,972,165"/>
+<area shape="rect" id="node3" href="$_cook_book_8h.html" title=" " alt="" coords="1195,288,1370,329"/>
+<area shape="rect" id="node47" href="$_component__imp_8h.html" title=" " alt="" coords="643,288,818,329"/>
+<area shape="rect" id="node4" title=" " alt="" coords="1635,1010,1714,1037"/>
+<area shape="rect" id="node5" title=" " alt="" coords="1717,1181,1787,1208"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1386,742,1465,769"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1401,563,1511,590"/>
+<area shape="rect" id="node8" title=" " alt="" coords="393,385,497,411"/>
+<area shape="rect" id="node9" title=" " alt="" coords="608,1181,667,1208"/>
+<area shape="rect" id="node10" href="$_annotated_8h.html" title=" " alt="" coords="1739,563,1941,590"/>
+<area shape="rect" id="node11" href="$_abstract_pointer_cache_8h.html" title=" " alt="" coords="1489,735,1663,776"/>
+<area shape="rect" id="node12" href="$_pointer_cache_8h.html" title=" " alt="" coords="1438,645,1613,687"/>
+<area shape="rect" id="node13" href="$_type_index_8h.html" title=" " alt="" coords="886,645,1061,687"/>
+<area shape="rect" id="node38" href="$_cook_book__imp_8h.html" title=" " alt="" coords="522,377,697,419"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1141,1010,1211,1037"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1026,1099,1081,1126"/>
+<area shape="rect" id="node16" title=" " alt="" coords="48,831,131,858"/>
+<area shape="rect" id="node17" href="$_log_entry_8h.html" title=" " alt="" coords="1235,913,1410,955"/>
+<area shape="rect" id="node23" href="$_logger_utils_8h.html" title=" " alt="" coords="565,735,739,776"/>
+<area shape="rect" id="node36" href="$_platform_definitions_8h.html" title=" " alt="" coords="975,735,1159,776"/>
+<area shape="rect" id="node37" href="$_type_traits_helper_8h.html" title=" " alt="" coords="150,735,325,776"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1485,1010,1560,1037"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1235,1003,1410,1044"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1288,1099,1357,1126"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="726,1092,901,1133"/>
+<area shape="rect" id="node22" title=" " alt="" coords="773,1181,853,1208"/>
+<area shape="rect" id="node24" title=" " alt="" coords="144,1010,205,1037"/>
+<area shape="rect" id="node25" href="$_logger_8h.html" title=" " alt="" coords="601,824,775,865"/>
+<area shape="rect" id="node26" title=" " alt="" coords="589,921,651,947"/>
+<area shape="rect" id="node27" title=" " alt="" coords="229,1010,288,1037"/>
+<area shape="rect" id="node28" href="$_configuration_node_8h.html" title=" " alt="" coords="353,913,565,955"/>
+<area shape="rect" id="node33" href="$_level_8h.html" title=" " alt="" coords="891,1003,1066,1044"/>
+<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="726,913,919,955"/>
+<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1525,1092,1699,1133"/>
+<area shape="rect" id="node29" title=" " alt="" coords="363,1010,429,1037"/>
+<area shape="rect" id="node30" title=" " alt="" coords="289,1099,361,1126"/>
+<area shape="rect" id="node31" title=" " alt="" coords="827,1010,867,1037"/>
+<area shape="rect" id="node32" title=" " alt="" coords="453,1010,600,1037"/>
+<area shape="rect" id="node39" title=" " alt="" coords="647,474,686,501"/>
+<area shape="rect" id="node40" title=" " alt="" coords="446,474,493,501"/>
+<area shape="rect" id="node41" title=" " alt="" coords="517,474,571,501"/>
+<area shape="rect" id="node42" title=" " alt="" coords="213,563,264,590"/>
+<area shape="rect" id="node43" href="$_runtime_manufactory_8h.html" title=" " alt="" coords="1039,467,1214,508"/>
+<area shape="rect" id="node45" href="$_utils_8h.html" title=" " alt="" coords="94,467,269,508"/>
+<area shape="rect" id="node44" href="$_runtime_manufactory__imp_8h.html" title=" " alt="" coords="1189,556,1376,597"/>
+<area shape="rect" id="node46" href="$_import_8h.html" title=" " alt="" coords="629,563,811,590"/>
 </map>
