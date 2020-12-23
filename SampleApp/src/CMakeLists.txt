@@ -1,3 +1,5 @@
+option(BUILD_SAMPLE_APP "SampleApp application will be built with the libraries" ON)
+
 set(LibSampleApp_SOURCES)
 list(APPEND LibSampleApp_SOURCES
         CaptionPresenter.cpp
@@ -139,10 +141,13 @@ endif()
 
 add_rpath_to_target("LibSampleApp")
 
-add_executable(SampleApp
-        main.cpp)
+if (BUILD_SAMPLE_APP)
+    add_executable(SampleApp
+            main.cpp)
 
-target_link_libraries(SampleApp LibSampleApp)
+    target_link_libraries(SampleApp LibSampleApp)
+    asdk_install_targets(SampleApp TRUE)
+endif()
 
 # install target
 asdk_install_targets(LibSampleApp TRUE)
