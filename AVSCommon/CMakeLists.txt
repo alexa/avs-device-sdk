@@ -6,7 +6,7 @@ add_subdirectory("AVS")
 add_subdirectory("SDKInterfaces")
 add_subdirectory("Utils")
 
-add_library(AVSCommon SHARED
+add_library(AVSCommon ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AVS/src/AVSContext.cpp
     AVS/src/AVSDirective.cpp
     AVS/src/AVSMessage.cpp

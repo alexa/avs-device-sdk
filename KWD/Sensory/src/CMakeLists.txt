@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=sensoryKeywordDetector")
-add_library(SENSORY SHARED
+add_library(SENSORY ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     SensoryKeywordDetector.cpp)
 
 target_include_directories(SENSORY PUBLIC

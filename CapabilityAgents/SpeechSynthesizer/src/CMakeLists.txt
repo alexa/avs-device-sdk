@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=speechSynthesizer")
 
-add_library(SpeechSynthesizer SHARED
+add_library(SpeechSynthesizer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         SpeechSynthesizer.cpp)
 
 target_include_directories(SpeechSynthesizer PUBLIC

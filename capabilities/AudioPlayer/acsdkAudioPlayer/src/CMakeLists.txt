@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=audioplayer")
-add_library(acsdkAudioPlayer SHARED
+add_library(acsdkAudioPlayer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AudioPlayer.cpp
     AudioPlayerComponent.cpp
     ProgressTimer.cpp)

@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=alerts")
 
-add_library(acsdkAlerts SHARED
+add_library(acsdkAlerts ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         Renderer/Renderer.cpp
         Storage/SQLiteAlertStorage.cpp
         Alarm.cpp

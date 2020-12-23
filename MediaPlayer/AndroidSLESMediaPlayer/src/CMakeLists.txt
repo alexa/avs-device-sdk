@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=androidSLESMediaPlayer")
-add_library(AndroidSLESMediaPlayer SHARED
+add_library(AndroidSLESMediaPlayer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         AndroidSLESMediaQueue.cpp
         AndroidSLESMediaPlayer.cpp
         AndroidSLESSpeaker.cpp

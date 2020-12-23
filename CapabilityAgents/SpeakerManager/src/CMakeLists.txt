@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=speakerManager")
 
-add_library(SpeakerManager SHARED SpeakerManager.cpp
+add_library(SpeakerManager ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} SpeakerManager.cpp
                                   ChannelVolumeManager.cpp
                                   DefaultChannelVolumeFactory.cpp
                                   SpeakerManagerComponent.cpp

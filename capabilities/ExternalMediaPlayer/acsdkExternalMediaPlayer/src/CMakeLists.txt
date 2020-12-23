@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=ExternalMediaPlayer")
 
-add_library(acsdkExternalMediaPlayer SHARED
+add_library(acsdkExternalMediaPlayer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AuthorizedSender.cpp
     ExternalMediaAdapterHandler.cpp
     ExternalMediaPlayer.cpp

@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=toggleController")
 
-add_library(ToggleController SHARED
+add_library(ToggleController ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     ToggleControllerAttributeBuilder.cpp
     ToggleControllerCapabilityAgent.cpp)
 

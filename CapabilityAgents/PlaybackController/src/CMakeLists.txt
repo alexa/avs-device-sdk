@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=playbackcontroller")
 
-add_library(PlaybackController SHARED
+add_library(PlaybackController ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     "${CMAKE_CURRENT_LIST_DIR}/PlaybackController.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/PlaybackControllerComponent.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/PlaybackRouter.cpp"

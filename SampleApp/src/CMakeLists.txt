@@ -1,3 +1,5 @@
+option(BUILD_SAMPLE_APP "SampleApp application will be built with the libraries" ON)
+
 set(LibSampleApp_SOURCES)
 list(APPEND LibSampleApp_SOURCES
         CaptionPresenter.cpp
@@ -59,7 +61,7 @@ if(EXTERNAL_MEDIA_ADAPTERS)
     list(APPEND LibSampleApp_SOURCES ${ALL_EMP_ADAPTER_REGISTRATION_FILES})
 endif ()
 
-add_library(LibSampleApp SHARED ${LibSampleApp_SOURCES})
+add_library(LibSampleApp ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} ${LibSampleApp_SOURCES})
 
 target_include_directories(LibSampleApp PUBLIC
         # This is relative to project(SampleApp).
@@ -139,10 +141,13 @@ endif()
 
 add_rpath_to_target("LibSampleApp")
 
-add_executable(SampleApp
-        main.cpp)
+if (BUILD_SAMPLE_APP)
+    add_executable(SampleApp
+            main.cpp)
 
-target_link_libraries(SampleApp LibSampleApp)
+    target_link_libraries(SampleApp LibSampleApp)
+    asdk_install_targets(SampleApp TRUE)
+endif()
 
 # install target
 asdk_install_targets(LibSampleApp TRUE)

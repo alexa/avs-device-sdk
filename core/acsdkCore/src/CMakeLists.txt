@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkCore")
-add_library(acsdkCore SHARED
+add_library(acsdkCore ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     CoreComponent.cpp)
 
 target_include_directories(acsdkCore PUBLIC

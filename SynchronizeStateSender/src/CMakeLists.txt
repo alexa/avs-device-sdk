@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=synchronizeStateSender")
-add_library(SynchronizeStateSender SHARED
+add_library(SynchronizeStateSender ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         SynchronizeStateSenderFactory.cpp
         PostConnectSynchronizeStateSender.cpp)
 

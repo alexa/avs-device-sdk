@@ -1,4 +1,4 @@
-add_library(UplCalculator SHARED
+add_library(UplCalculator ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
 	BaseUplCalculator.cpp
 	MediaUplCalculator.cpp
 	TtsUplCalculator.cpp

@@ -1,4 +1,4 @@
-add_library(MetricRecorder SHARED MetricRecorder.cpp)
+add_library(MetricRecorder ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} MetricRecorder.cpp)
 
 target_include_directories(MetricRecorder	PUBLIC
 	"${MetricRecorder_SOURCE_DIR}/include"

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=mediaPlayer")
-add_library(MediaPlayer SHARED
+add_library(MediaPlayer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AttachmentReaderSource.cpp
     BaseStreamSource.cpp
     ErrorTypeConversion.cpp

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=certifiedSender")
-add_library(CertifiedSender SHARED
+add_library(CertifiedSender ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         CertifiedSender.cpp
         SQLiteMessageStorage.cpp)
 

@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=modeController")
 
-add_library(ModeController SHARED
+add_library(ModeController ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     ModeControllerAttributeBuilder.cpp
     ModeControllerCapabilityAgent.cpp)
 

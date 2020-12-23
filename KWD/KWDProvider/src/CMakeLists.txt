@@ -1,4 +1,4 @@
-add_library(KeywordDetectorProvider SHARED
+add_library(KeywordDetectorProvider ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     KeywordDetectorProvider.cpp)
 
 target_include_directories(KeywordDetectorProvider PUBLIC

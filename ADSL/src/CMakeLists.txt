@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 find_package(Threads ${THREADS_PACKAGE_CONFIG})
 add_definitions("-DACSDK_LOG_MODULE=adsl")
-add_library(ADSL SHARED
+add_library(ADSL ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     DirectiveProcessor.cpp
     DirectiveRouter.cpp
     DirectiveSequencer.cpp

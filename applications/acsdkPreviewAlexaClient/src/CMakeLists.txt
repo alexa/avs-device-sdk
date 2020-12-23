@@ -3,7 +3,7 @@ list(APPEND LibPreviewAlexaClient_SOURCES
         PreviewAlexaClient.cpp
         PreviewAlexaClientComponent.cpp)
 
-add_library(LibPreviewAlexaClient SHARED ${LibPreviewAlexaClient_SOURCES})
+add_library(LibPreviewAlexaClient ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} ${LibPreviewAlexaClient_SOURCES})
 
 target_include_directories(LibPreviewAlexaClient PUBLIC
         "${acsdkPreviewAlexaClient_SOURCE_DIR}/include")

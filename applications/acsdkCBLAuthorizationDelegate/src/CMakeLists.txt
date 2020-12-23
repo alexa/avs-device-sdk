@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkCBLAuthorizationDelegate")
-add_library(acsdkCBLAuthorizationDelegate SHARED
+add_library(acsdkCBLAuthorizationDelegate ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AuthorizationDelegateComponent.cpp)
 
 target_include_directories(acsdkCBLAuthorizationDelegate PUBLIC
