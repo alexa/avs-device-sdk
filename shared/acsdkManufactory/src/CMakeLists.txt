@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 add_definitions("-DACSDK_LOG_MODULE=Manufactory")
 
-add_library(acsdkManufactory SHARED
+add_library(acsdkManufactory ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     CookBook.cpp)
 
 target_link_libraries(acsdkManufactory AVSCommon)

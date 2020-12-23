@@ -1,7 +1,7 @@
 find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
 add_definitions("-DACSDK_LOG_MODULE=cblAuthDelegate")
-add_library(CBLAuthDelegate SHARED
+add_library(CBLAuthDelegate ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     CBLAuthDelegate.cpp
     CBLAuthDelegateConfiguration.cpp
     SQLiteCBLAuthDelegateStorage.cpp)

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkDefaultDeviceSettingsManager")
-add_library(acsdkDefaultDeviceSettingsManager SHARED
+add_library(acsdkDefaultDeviceSettingsManager ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         DeviceSettingsManagerBuilder.cpp
         DeviceSettingsManagerComponent.cpp)
 

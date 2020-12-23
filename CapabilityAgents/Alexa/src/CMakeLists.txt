@@ -1,7 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=alexa")
 
 add_library(
-        Alexa SHARED
+        Alexa ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         AlexaInterfaceCapabilityAgent.cpp
         AlexaInterfaceMessageSender.cpp
 )

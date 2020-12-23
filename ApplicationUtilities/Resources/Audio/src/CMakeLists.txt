@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-add_library(AudioResources SHARED
+add_library(AudioResources ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         AlertsAudioFactory.cpp
         AudioFactory.cpp
         NotificationsAudioFactory.cpp

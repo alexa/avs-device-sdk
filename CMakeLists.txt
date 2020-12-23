@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
+option(BUILD_STATIC_LIBS "Build static library" OFF)
+if (BUILD_STATIC_LIBS)
+	set(AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE STATIC)
+else()
+	set(AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE SHARED)
+endif()
+
 # Set project information
 project(AlexaClientSDK VERSION 1.22.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")

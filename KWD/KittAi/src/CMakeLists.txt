@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=kittAiKeyWordDetector")
-add_library(KITTAI SHARED
+add_library(KITTAI ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     SnowboyWrapper.cpp
     KittAiKeyWordDetector.cpp)
 

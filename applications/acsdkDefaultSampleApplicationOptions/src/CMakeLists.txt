@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkDefaultSampleApplicationOptions")
-add_library(acsdkDefaultSampleApplicationOptions SHARED
+add_library(acsdkDefaultSampleApplicationOptions ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         DefaultSampleApplicationOptionsComponent.cpp)
 
 target_include_directories(acsdkDefaultSampleApplicationOptions PUBLIC

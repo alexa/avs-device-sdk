@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=speechEncoder")
 
-add_library(SpeechEncoder SHARED
+add_library(SpeechEncoder ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
 	SpeechEncoder.cpp
 )
 

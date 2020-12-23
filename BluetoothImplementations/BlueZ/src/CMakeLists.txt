@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=bluetoothImplementationsBlueZ")
 
-add_library(BluetoothImplementationsBlueZ SHARED
+add_library(BluetoothImplementationsBlueZ ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     BlueZA2DPSink.cpp
     BlueZA2DPSource.cpp
     BlueZAVRCPController.cpp

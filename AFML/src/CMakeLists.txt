@@ -1,4 +1,4 @@
-add_library(AFML SHARED
+add_library(AFML ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     AudioActivityTracker.cpp
     Channel.cpp
     FocusManagementComponent.cpp

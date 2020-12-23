@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=rangeController")
 
-add_library(RangeController SHARED
+add_library(RangeController ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     RangeControllerAttributeBuilder.cpp
     RangeControllerCapabilityAgent.cpp)
 

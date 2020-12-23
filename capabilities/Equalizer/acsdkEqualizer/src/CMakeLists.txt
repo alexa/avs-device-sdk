@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=equalizer")
 
-add_library(acsdkEqualizer SHARED
+add_library(acsdkEqualizer ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         EqualizerCapabilityAgent.cpp)
 
 target_include_directories(acsdkEqualizer PUBLIC

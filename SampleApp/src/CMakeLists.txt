@@ -59,7 +59,7 @@ if(EXTERNAL_MEDIA_ADAPTERS)
     list(APPEND LibSampleApp_SOURCES ${ALL_EMP_ADAPTER_REGISTRATION_FILES})
 endif ()
 
-add_library(LibSampleApp SHARED ${LibSampleApp_SOURCES})
+add_library(LibSampleApp ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} ${LibSampleApp_SOURCES})
 
 target_include_directories(LibSampleApp PUBLIC
         # This is relative to project(SampleApp).

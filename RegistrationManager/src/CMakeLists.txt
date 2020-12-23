@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=registrationManager")
 
-add_library(RegistrationManager SHARED RegistrationManager.cpp CustomerDataManager.cpp CustomerDataHandler.cpp)
+add_library(RegistrationManager ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} RegistrationManager.cpp CustomerDataManager.cpp CustomerDataHandler.cpp)
 
 target_include_directories(RegistrationManager PUBLIC
     "${RegistrationManager_SOURCE_DIR}/include")

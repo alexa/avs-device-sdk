@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkShutdownManager")
-add_library(acsdkShutdownManager SHARED
+add_library(acsdkShutdownManager ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     ShutdownManager.cpp)
 
 target_include_directories(acsdkShutdownManager PUBLIC

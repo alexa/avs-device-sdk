@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=defaultClient")
-add_library(DefaultClient SHARED
+add_library(DefaultClient ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     ConnectionRetryTrigger.cpp
     DefaultClient.cpp
     DefaultClientComponent.cpp

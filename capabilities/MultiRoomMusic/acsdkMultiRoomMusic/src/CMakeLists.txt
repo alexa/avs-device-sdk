@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkMultiRoomMusic")
 
-add_library(acsdkMultiRoomMusic SHARED
+add_library(acsdkMultiRoomMusic ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
         MRMCapabilityAgent.cpp)
 
 target_include_directories(acsdkMultiRoomMusic PUBLIC

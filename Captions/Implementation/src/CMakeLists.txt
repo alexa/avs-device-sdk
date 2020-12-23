@@ -11,7 +11,7 @@ if (CAPTIONS)
     list(APPEND CaptionsLib_SOURCES LibwebvttParserAdapter.cpp)
 endif()
 
-add_library(CaptionsLib SHARED ${CaptionsLib_SOURCES})
+add_library(CaptionsLib ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE} ${CaptionsLib_SOURCES})
 
 target_include_directories(CaptionsLib PUBLIC
         "${Captions_SOURCE_DIR}/Implementation/include")

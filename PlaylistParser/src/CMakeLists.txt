@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=PlaylistParser")
 
-add_library(PlaylistParser SHARED
+add_library(PlaylistParser ${AVS_DEVICE_SDK_BUILD_LIBRARY_TYPE}
     ContentDecrypter.cpp
     FFMpegInputBuffer.cpp
     Id3TagsRemover.cpp
