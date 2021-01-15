@@ -138,7 +138,7 @@ public:
     void setDecoder(GstElement* decoder) override;
     GstElement* getDecoder() const override;
     GstElement* getPipeline() const override;
-    guint queueCallback(const std::function<gboolean()>* callback) override;
+    guint queueCallback(std::function<gboolean()>&& callback) override;
     guint attachSource(GSource* source) override;
     gboolean removeSource(guint tag) override;
     /// @}
