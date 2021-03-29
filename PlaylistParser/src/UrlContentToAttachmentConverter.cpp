@@ -139,7 +139,9 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             if (INVALID_DURATION == duration) {
                 m_startStreamingPointPromise.set_value(m_runningTotal);
                 // Allow to start streaming below
-            } else if (m_runningTotal + duration <= m_desiredStreamPoint) {
+            } else if (
+                avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING == parseResult &&
+                m_runningTotal + duration <= m_desiredStreamPoint) {
                 m_runningTotal += duration;
                 return;
             } else {

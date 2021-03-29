@@ -10,5 +10,7 @@ target_include_directories(acsdkShutdownManagerInterfaces INTERFACE
 target_link_libraries(acsdkShutdownManagerInterfaces INTERFACE
     acsdkNotifierInterfaces AVSCommon)
 
+add_subdirectory("test")
+
 # install interface
 asdk_install_interface()

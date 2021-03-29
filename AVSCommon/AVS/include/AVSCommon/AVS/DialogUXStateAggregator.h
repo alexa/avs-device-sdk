@@ -42,7 +42,6 @@ namespace avs {
 class DialogUXStateAggregator
         : public sdkInterfaces::AudioInputProcessorObserverInterface
         , public sdkInterfaces::SpeechSynthesizerObserverInterface
-        , public sdkInterfaces::MessageObserverInterface
         , public sdkInterfaces::ConnectionStatusObserverInterface
         , public sdkInterfaces::InteractionModelRequestProcessingObserverInterface {
 public:
@@ -113,8 +112,6 @@ public:
         const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
         const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) override;
 
-    void receive(const std::string& contextId, const std::string& message) override;
-
     /// @name InteractionModelRequestProcessingObserverInterface Functions
     /// @{
     void onRequestProcessingStarted() override;
@@ -138,13 +135,13 @@ private:
     /**
      * Sets the internal state to @c IDLE if both @c SpeechSynthesizer and @c AudioInputProcessor are in idle state.
      */
-    void tryEnterIdleState();
+    void executeTryEnterIdleState();
 
     /**
      * An event has occurred which may transition @c DialogUXStateAggregator out of THINKING mode. This function
      * evaluates if the transition is valid and performs the necessary logic to prepare for the transition.
      */
-    void tryExitThinkingState();
+    void executeTryExitThinkingState();
 
     /**
      * Transitions the internal state from THINKING to IDLE.

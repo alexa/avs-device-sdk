@@ -85,13 +85,13 @@ std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface> 
 ExternalCapabilitiesBuilder& ExternalCapabilitiesBuilder::withInternetConnectionMonitor(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>
         internetConnectionMonitor) {
-    // ExternalCapabilitiesBuilder doesn't need the internetConnectionMonitor to build any object.
+    m_internetConnectionMonitor = std::move(internetConnectionMonitor);
     return *this;
 }
 
 ExternalCapabilitiesBuilder& ExternalCapabilitiesBuilder::withDialogUXStateAggregator(
     std::shared_ptr<alexaClientSDK::avsCommon::avs::DialogUXStateAggregator> dialogUXStateAggregator) {
-    // ExternalCapabilitiesBuilder doesn't need the dialogUXStateAggregator to build any object.
+    m_dialogUXStateAggregator = std::move(dialogUXStateAggregator);
     return *this;
 }
 
@@ -122,7 +122,8 @@ ExternalCapabilitiesBuilder::buildCapabilities(
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
-    std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) {
+    std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
+    std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter) {
     ACSDK_DEBUG5(LX(__func__));
     std::pair<
         std::list<ExternalCapabilitiesBuilder::Capability>,
@@ -150,7 +151,8 @@ ExternalCapabilitiesBuilder::buildCapabilities(
             audioFactory->communications(),
             avsGatewayURL,
             speakerManager,
-            ringtoneChannelVolumeInterface)) {
+            ringtoneChannelVolumeInterface,
+            powerResourceManager)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateCallManager"));
         return retValue;
     }
@@ -163,6 +165,8 @@ ExternalCapabilitiesBuilder::buildCapabilities(
     std::shared_ptr<avsCommon::avs::ComponentConfiguration> commsConfig =
         avsCommon::avs::ComponentConfiguration::createComponentConfiguration(COMMS_NAMESPACE, commsVersion);
     softwareComponentReporter->addConfiguration(commsConfig);
+    m_dialogUXStateAggregator->addObserver(callManager);
+    m_internetConnectionMonitor->addInternetConnectionObserver(callManager);
     connectionManager->addConnectionStatusObserver(callManager);
     avsGatewayManager->addObserver(m_callManager);
 

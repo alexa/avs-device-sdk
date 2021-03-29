@@ -100,6 +100,10 @@ protected:
     virtual void SetUp() {
         m_encoderCtx = std::make_shared<MockEncoderContext>();
         m_encoder = std::make_shared<SpeechEncoder>(m_encoderCtx);
+
+        EXPECT_CALL(*m_encoderCtx, getInputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_INPUT_FRAME_SIZE));
+        EXPECT_CALL(*m_encoderCtx, getAudioFormat()).WillRepeatedly(Return(MOCK_ENCODER_FORMAT));
+        EXPECT_CALL(*m_encoderCtx, getOutputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_OUTPUT_FRAME_SIZE));
     }
 };
 
@@ -122,10 +126,6 @@ TEST_F(SpeechEncoderTest, testTimer_startEncoding) {
 
     // EncoderContext::init should be called once.
     EXPECT_CALL(*m_encoderCtx, init(_)).Times(1).WillOnce(Return(true));
-
-    EXPECT_CALL(*m_encoderCtx, getInputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_INPUT_FRAME_SIZE));
-    EXPECT_CALL(*m_encoderCtx, getAudioFormat()).WillRepeatedly(Return(MOCK_ENCODER_FORMAT));
-    EXPECT_CALL(*m_encoderCtx, getOutputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_OUTPUT_FRAME_SIZE));
 
     // Mock encoder requires fully read.
     EXPECT_CALL(*m_encoderCtx, requiresFullyRead()).WillRepeatedly(Return(true));
@@ -178,10 +178,6 @@ TEST_F(SpeechEncoderTest, test_shutdownOnBlockingWrite) {
     // EncoderContext::init should be called once.
     EXPECT_CALL(*m_encoderCtx, init(_)).Times(1).WillOnce(Return(true));
 
-    EXPECT_CALL(*m_encoderCtx, getInputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_INPUT_FRAME_SIZE));
-    EXPECT_CALL(*m_encoderCtx, getAudioFormat()).WillRepeatedly(Return(MOCK_ENCODER_FORMAT));
-    EXPECT_CALL(*m_encoderCtx, getOutputFrameSize()).WillRepeatedly(Return(MOCK_ENCODER_OUTPUT_FRAME_SIZE));
-
     // Mock encoder requires fully read.
     EXPECT_CALL(*m_encoderCtx, requiresFullyRead()).WillRepeatedly(Return(true));
 
@@ -224,6 +220,54 @@ TEST_F(SpeechEncoderTest, test_shutdownOnBlockingWrite) {
 
     // Simulate a shutdown.
     m_encoder.reset();
+}
+
+/**
+ * Test if encoding thread will exit and create again when stopEncoding() and startEncoding() is called in quick
+ * succession.
+ */
+TEST_F(SpeechEncoderTest, test_stopAndStartEncoder) {
+    const AudioFormat audioFormat = {
+        AudioFormat::Encoding::LPCM,
+        AudioFormat::Endianness::LITTLE,
+        16000,
+        FRAME_WORDSIZE * CHAR_BIT,
+        1,
+        false,
+        AudioFormat::Layout::INTERLEAVED,
+    };
+
+    // number of start and stop encoding to run
+    const int numRunOfTest = 10;
+
+    auto inputBufferSize = AudioInputStream::calculateBufferSize(INPUT_WORD_COUNT, FRAME_WORDSIZE, 1);
+    auto buffer = std::make_shared<AudioInputStream::Buffer>(inputBufferSize);
+    std::shared_ptr<AudioInputStream> inputStream = AudioInputStream::create(buffer, FRAME_WORDSIZE, 1);
+    ASSERT_TRUE(inputStream);
+
+    // EncoderContext::init should be called numRunOfTest times
+    EXPECT_CALL(*m_encoderCtx, init(_)).Times(numRunOfTest).WillRepeatedly(Return(true));
+
+    // Mock encoder requires fully read.
+    EXPECT_CALL(*m_encoderCtx, requiresFullyRead()).WillRepeatedly(Return(true));
+
+    // EncoderContext::start should be called numRunOfTest times.
+    EXPECT_CALL(*m_encoderCtx, start()).Times(numRunOfTest).WillRepeatedly(Return(true));
+
+    // EncoderContext::close should be called numRunOfTest times.
+    EXPECT_CALL(*m_encoderCtx, close()).Times(numRunOfTest);
+
+    // EncoderContext::processSamples should be called with MOCK_ENCODER_INPUT_FRAME_SIZE size.
+    EXPECT_CALL(*m_encoderCtx, processSamples(_, MOCK_ENCODER_INPUT_FRAME_SIZE, _))
+        .WillRepeatedly(Return(MOCK_ENCODER_OUTPUT_FRAME_SIZE));
+
+    for (auto i = 0; i < numRunOfTest; ++i) {
+        // Start the encoder.
+        m_encoder->startEncoding(inputStream, audioFormat, 0, AudioInputStream::Reader::Reference::ABSOLUTE);
+
+        // Stop the encoder
+        m_encoder->stopEncoding(true);
+    }
 }
 
 }  // namespace test

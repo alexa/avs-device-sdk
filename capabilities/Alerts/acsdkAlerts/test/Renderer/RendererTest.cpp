@@ -16,10 +16,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
-#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/MockSetting.h>
@@ -198,6 +199,7 @@ protected:
     std::shared_ptr<TestMediaPlayer> m_mediaPlayer;
     std::shared_ptr<Renderer> m_renderer;
     std::shared_ptr<MockApplicationAudioPipelineFactory> m_audioPipelineFactory;
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> m_shutdownNotifier;
 
     static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> audioFactoryFunc() {
         return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
@@ -207,6 +209,7 @@ protected:
 
 RendererTest::RendererTest() : m_observer{std::make_shared<MockRendererObserver>()} {
     m_audioPipelineFactory = std::make_shared<MockApplicationAudioPipelineFactory>();
+    m_shutdownNotifier = std::make_shared<NiceMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
     m_mediaPlayer = TestMediaPlayer::create();
 
     bool equalizerAvailable = false;
@@ -223,7 +226,7 @@ RendererTest::RendererTest() : m_observer{std::make_shared<MockRendererObserver>
         .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
             m_mediaPlayer, nullptr, nullptr, nullptr)));
 
-    m_renderer = Renderer::createAlertRenderer(m_audioPipelineFactory, nullptr);
+    m_renderer = Renderer::createAlertRenderer(m_audioPipelineFactory, nullptr, m_shutdownNotifier);
 }
 
 RendererTest::~RendererTest() {
@@ -251,7 +254,7 @@ TEST_F(RendererTest, test_createAlertRenderer) {
     ASSERT_NE(m_renderer, nullptr);
 
     /// confirm we return a nullptr if a nullptr was passed in
-    ASSERT_EQ(Renderer::createAlertRenderer(nullptr, nullptr), nullptr);
+    ASSERT_EQ(Renderer::createAlertRenderer(nullptr, nullptr, nullptr), nullptr);
 }
 
 /**

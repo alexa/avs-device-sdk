@@ -21,6 +21,10 @@
 #include <string>
 #include <vector>
 
+#include <AVSCommon/SDKInterfaces/CapabilityConfigurationChangeObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsObserverInterface.h>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
@@ -33,7 +37,7 @@ namespace sdkInterfaces {
  *
  * The methods @c prepareAssets and @c cancelPrepare MUST be thread safe.
  */
-class LocaleAssetsManagerInterface {
+class LocaleAssetsManagerInterface : public CapabilityConfigurationChangeObserverInterface {
 public:
     /**
      * Alias for the locale. The locale should follow <a href="https://tools.ietf.org/html/bcp47">BCP 47 format</a> and
@@ -143,6 +147,28 @@ public:
      * @return The valid concurrent wake words sets of the given locale.
      */
     virtual WakeWordsSets getSupportedWakeWords(const Locale& locale) const = 0;
+
+    /**
+     * Add a locale assets observer to be notified when locale assets have updated.
+     *
+     * @param observer The observer to add.
+     */
+    virtual void addLocaleAssetsObserver(const std::shared_ptr<LocaleAssetsObserverInterface>& observer) = 0;
+
+    /**
+     * Remove a previously registered observer.
+     *
+     * @param observer The observer to be removed.
+     */
+    virtual void removeLocaleAssetsObserver(const std::shared_ptr<LocaleAssetsObserverInterface>& observer) = 0;
+
+    /**
+     * Set the @c EndpointRegistrationManager to update locales/wakewords capabilities.
+     *
+     * @param manager The pointer to @c EndpointRegistrationManager.
+     */
+    virtual void setEndpointRegistrationManager(
+        const std::shared_ptr<endpoints::EndpointRegistrationManagerInterface>& manager) = 0;
 
     /**
      * Destructor.

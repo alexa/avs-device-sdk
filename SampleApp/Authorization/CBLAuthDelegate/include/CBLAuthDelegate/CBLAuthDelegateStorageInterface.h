@@ -24,6 +24,9 @@ namespace cblAuthDelegate {
 
 /**
  * The interface to persistent storage needed by a CBLAuthDelegate (Code Based Linking AuthDelegate).
+ *
+ * IMPORTANT: Your token storage MUST be encrypted.
+ * Note that in the default SDK implementation, we do not provide encryption.
  */
 class CBLAuthDelegateStorageInterface {
 public:

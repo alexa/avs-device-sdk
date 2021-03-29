@@ -55,9 +55,11 @@ target_link_libraries(DefaultClient
     acsdkAlertsInterfaces
     acsdkAudioPlayer
     acsdkBluetooth
+    acsdkBluetoothInterfaces
     acsdkEqualizer
     acsdkExternalMediaPlayer
     acsdkStartupManagerInterfaces
+    acsdkSystemClockMonitorInterfaces
     )
 
 if (CAPTIONS)

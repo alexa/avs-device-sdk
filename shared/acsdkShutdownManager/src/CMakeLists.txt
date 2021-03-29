@@ -1,6 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkShutdownManager")
 add_library(acsdkShutdownManager SHARED
-    ShutdownManager.cpp)
+    ShutdownManager.cpp
+    ShutdownNotifier.cpp)
 
 target_include_directories(acsdkShutdownManager PUBLIC
     "${acsdkShutdownManager_SOURCE_DIR}/include")

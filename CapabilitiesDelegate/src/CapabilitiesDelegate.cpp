@@ -127,8 +127,8 @@ CapabilitiesDelegate::CapabilitiesDelegate(
     const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager) :
         RequiresShutdown{"CapabilitiesDelegate"},
         CustomerDataHandler{customerDataManager},
-        m_capabilitiesState{CapabilitiesObserverInterface::State::UNINITIALIZED},
-        m_capabilitiesError{CapabilitiesObserverInterface::Error::UNINITIALIZED},
+        m_capabilitiesState{CapabilitiesDelegateObserverInterface::State::UNINITIALIZED},
+        m_capabilitiesError{CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED},
         m_authDelegate{authDelegate},
         m_capabilitiesDelegateStorage{capabilitiesDelegateStorage},
         m_isConnected{false},
@@ -170,7 +170,7 @@ bool CapabilitiesDelegate::init() {
     return true;
 }
 
-void CapabilitiesDelegate::addCapabilitiesObserver(std::shared_ptr<CapabilitiesObserverInterface> observer) {
+void CapabilitiesDelegate::addCapabilitiesObserver(std::shared_ptr<CapabilitiesDelegateObserverInterface> observer) {
     if (!observer) {
         ACSDK_ERROR(LX("addCapabilitiesObserverFailed").d("reason", "nullObserver"));
         return;
@@ -190,7 +190,7 @@ void CapabilitiesDelegate::addCapabilitiesObserver(std::shared_ptr<CapabilitiesO
         m_capabilitiesState, m_capabilitiesError, std::vector<std::string>{}, std::vector<std::string>{});
 }
 
-void CapabilitiesDelegate::removeCapabilitiesObserver(std::shared_ptr<CapabilitiesObserverInterface> observer) {
+void CapabilitiesDelegate::removeCapabilitiesObserver(std::shared_ptr<CapabilitiesDelegateObserverInterface> observer) {
     if (!observer) {
         ACSDK_ERROR(LX("removeCapabilitiesObserverFailed").d("reason", "nullObserver"));
         return;
@@ -205,13 +205,14 @@ void CapabilitiesDelegate::removeCapabilitiesObserver(std::shared_ptr<Capabiliti
 }
 
 void CapabilitiesDelegate::setCapabilitiesState(
-    const CapabilitiesObserverInterface::State newCapabilitiesState,
-    const CapabilitiesObserverInterface::Error newCapabilitiesError,
+    const CapabilitiesDelegateObserverInterface::State newCapabilitiesState,
+    const CapabilitiesDelegateObserverInterface::Error newCapabilitiesError,
     const std::vector<EndpointIdentifier>& addOrUpdateReportEndpoints,
     const std::vector<EndpointIdentifier>& deleteReportEndpoints) {
     ACSDK_DEBUG5(LX("setCapabilitiesState").d("newCapabilitiesState", newCapabilitiesState));
 
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface>> capabilitiesObservers;
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface>>
+        capabilitiesObservers;
     {
         std::lock_guard<std::mutex> lock(m_observerMutex);
         capabilitiesObservers = m_capabilitiesObservers;
@@ -425,8 +426,8 @@ void CapabilitiesDelegate::executeSendPendingEndpoints() {
         ACSDK_ERROR(LX("failedExecuteSendPendingEndpoints").d("reason", "failed to create DiscoveryEventSender"));
         moveInFlightEndpointsToPending();
         setCapabilitiesState(
-            CapabilitiesObserverInterface::State::FATAL_ERROR,
-            CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+            CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+            CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
             getEndpointIdentifiers(addOrUpdateEndpointsToSend),
             getEndpointIdentifiers(deleteEndpointsToSend));
         return;
@@ -521,8 +522,8 @@ std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostC
     /// CapabilitiesDelegate.
     if (addOrUpdateEndpointsToSend.empty() && !originalPendingAddOrUpdateEndpoints.empty()) {
         setCapabilitiesState(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             getEndpointIdentifiers(originalPendingAddOrUpdateEndpoints),
             std::vector<std::string>{});
     }
@@ -572,8 +573,8 @@ void CapabilitiesDelegate::onDiscoveryCompleted(
     if (!updateEndpointConfigInStorage(addOrUpdateReportEndpoints, deleteReportEndpoints)) {
         ACSDK_ERROR(LX("publishCapabilitiesFailed").d("reason", "failed to save endpointConfig to database"));
         setCapabilitiesState(
-            CapabilitiesObserverInterface::State::FATAL_ERROR,
-            CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+            CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+            CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
             addOrUpdateReportEndpointIdentifiers,
             deleteReportEndpointIdentifiers);
         return;
@@ -583,8 +584,8 @@ void CapabilitiesDelegate::onDiscoveryCompleted(
     resetCurrentDiscoveryEventSender();
 
     setCapabilitiesState(
-        CapabilitiesObserverInterface::State::SUCCESS,
-        CapabilitiesObserverInterface::Error::SUCCESS,
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
         addOrUpdateReportEndpointIdentifiers,
         deleteReportEndpointIdentifiers);
 
@@ -610,8 +611,8 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR,
-                CapabilitiesObserverInterface::Error::FORBIDDEN,
+                CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+                CapabilitiesDelegateObserverInterface::Error::FORBIDDEN,
                 addOrUpdateReportEndpointIdentifiers,
                 deleteReportEndpointIdentifiers);
             break;
@@ -621,8 +622,8 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
-                CapabilitiesObserverInterface::State::FATAL_ERROR,
-                CapabilitiesObserverInterface::Error::BAD_REQUEST,
+                CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+                CapabilitiesDelegateObserverInterface::Error::BAD_REQUEST,
                 addOrUpdateReportEndpointIdentifiers,
                 deleteReportEndpointIdentifiers);
             break;
@@ -632,8 +633,8 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             }
 
             setCapabilitiesState(
-                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
-                CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR,
+                CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR,
+                CapabilitiesDelegateObserverInterface::Error::SERVER_INTERNAL_ERROR,
                 addOrUpdateReportEndpointIdentifiers,
                 deleteReportEndpointIdentifiers);
             break;
@@ -643,8 +644,8 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
             }
 
             setCapabilitiesState(
-                CapabilitiesObserverInterface::State::RETRIABLE_ERROR,
-                CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+                CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR,
+                CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
                 addOrUpdateReportEndpointIdentifiers,
                 deleteReportEndpointIdentifiers);
             break;

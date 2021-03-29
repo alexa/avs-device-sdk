@@ -21,6 +21,7 @@
 #include "acsdkAudioPlayer/AudioPlayer.h"
 
 #include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -121,6 +122,14 @@ static const char PLAYBACK_ATTRIBUTES_KEY[] = "playbackAttributes";
 
 /// The name key used in @c AudioPlayer events.
 static const char NAME_KEY[] = "name";
+
+#ifdef ENABLE_DEVICE_CONTEXT_IN_EVENT
+/// The namespace key use in @c AudioPlayer event context
+static const char NAMESPACE_KEY[] = "namespace";
+
+/// The value key use in @c AudioPlayer event context
+static const char VALUE_KEY[] = "value";
+#endif
 
 /// The codec key used in @c AudioPlayer events.
 static const char CODEC_KEY[] = "codec";
@@ -271,6 +280,8 @@ static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioPlayerCa
  * @param msgId The message id string retrieved from the directive.
  * @param trackId The track id string retrieved from the directive.
  * @param requesterType The requester type string retrieved from the directive, defaults to empty string.
+ * @param trackProtection The track protection on the track.
+ * @param trackType Track type meta data.
  */
 static void submitMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
@@ -1374,8 +1385,12 @@ void AudioPlayer::executeProvideState(bool sendToken, unsigned int stateRequestT
         policy = StateRefreshPolicy::ALWAYS;
     }
 
+    auto token = m_currentlyPlaying->audioItem.stream.token;
+    if (token.empty() && m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
+        token = m_audioPlayQueue.front()->audioItem.stream.token;
+    }
     rapidjson::Document state(rapidjson::kObjectType);
-    state.AddMember(TOKEN_KEY, m_currentlyPlaying->audioItem.stream.token, state.GetAllocator());
+    state.AddMember(TOKEN_KEY, token, state.GetAllocator());
     state.AddMember(
         OFFSET_KEY,
         (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(getOffset()).count(),
@@ -1391,10 +1406,11 @@ void AudioPlayer::executeProvideState(bool sendToken, unsigned int stateRequestT
     }
 
     SetStateResult result;
+    m_cachedContext = buffer.GetString();
     if (sendToken) {
-        result = m_contextManager->setState(STATE, buffer.GetString(), policy, stateRequestToken);
+        result = m_contextManager->setState(STATE, m_cachedContext, policy, stateRequestToken);
     } else {
-        result = m_contextManager->setState(STATE, buffer.GetString(), policy);
+        result = m_contextManager->setState(STATE, m_cachedContext, policy);
     }
     if (result != SetStateResult::SUCCESS) {
         ACSDK_ERROR(LX("executeProvideState")
@@ -1435,6 +1451,12 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                      .d("MixingBehavior", behavior));
 
     if ((m_focus == newFocus) && (m_mixingBehavior == behavior)) {
+        // HACK to work around an internal corner-case
+        if (newFocus == FocusState::FOREGROUND && m_currentState == AudioPlayerState::BUFFERING &&
+            !m_audioPlayQueue.empty() && !m_isStartingPlayback) {
+            ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "playNextItem").m("specialCase"));
+            playNextItem();
+        }
         return;
     }
     auto previousFocus = m_focus;
@@ -1494,22 +1516,7 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                         return;
                     }
                     // A focus change to foreground when paused means we should resume the current song.
-                    ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "resumeMediaPlayer"));
-                    if (!m_currentlyPlaying->mediaPlayer->resume(m_currentlyPlaying->sourceId)) {
-                        sendPlaybackFailedEvent(
-                            m_currentlyPlaying->audioItem.stream.token,
-                            ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
-                            "failed to resume media player",
-                            getMediaPlayerState());
-                        ACSDK_ERROR(LX("executeOnFocusChangedFailed").d("reason", "resumeFailed"));
-                        m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
-                        return;
-                    }
-                }
-                    return;
-                case AudioPlayerState::PLAYING:
-                case AudioPlayerState::BUFFER_UNDERRUN:
-                    if (m_isPausingPlayback) {
+                    if (!m_isStartingPlayback) {
                         ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "resumeMediaPlayer"));
                         if (!m_currentlyPlaying->mediaPlayer->resume(m_currentlyPlaying->sourceId)) {
                             sendPlaybackFailedEvent(
@@ -1521,6 +1528,25 @@ void AudioPlayer::executeOnFocusChanged(FocusState newFocus, MixingBehavior beha
                             m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
                             return;
                         }
+                        m_isStartingPlayback = true;
+                    }
+                }
+                    return;
+                case AudioPlayerState::PLAYING:
+                case AudioPlayerState::BUFFER_UNDERRUN:
+                    if (m_isPausingPlayback && !m_isStartingPlayback) {
+                        ACSDK_DEBUG1(LX("executeOnFocusChanged").d("action", "resumeMediaPlayer"));
+                        if (!m_currentlyPlaying->mediaPlayer->resume(m_currentlyPlaying->sourceId)) {
+                            sendPlaybackFailedEvent(
+                                m_currentlyPlaying->audioItem.stream.token,
+                                ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+                                "failed to resume media player",
+                                getMediaPlayerState());
+                            ACSDK_ERROR(LX("executeOnFocusChangedFailed").d("reason", "resumeFailed"));
+                            m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                            return;
+                        }
+                        m_isStartingPlayback = true;
                     }
                     // We should already have foreground focus in these states; break out to the warning below.
                     break;
@@ -1668,16 +1694,16 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
         return;
     }
 
-    // Note: Send playback started event before changeState below to send the offset closer to when onPlaybackStarted
-    // was actually emitted
-    sendPlaybackStartedEvent(state);
-
     /*
      * When @c AudioPlayer is the active player, @c PlaybackController which is
      * the default playback handler, should handle playback button presses.
      */
     m_playbackRouter->useDefaultHandlerWith(shared_from_this());
     changeState(AudioPlayerState::PLAYING);
+
+    // Note: Send playback started event changeState below to make sure the device context / state is current
+    sendPlaybackStartedEvent(state);
+
     if (m_isAutoProgressing) {
         m_isAutoProgressing = false;
         submitMetric(
@@ -1702,6 +1728,12 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
     }
 
     m_progressTimer.start();
+
+    if (m_currentlyPlaying->cachedMetadata) {
+        ACSDK_DEBUG0(LX(__FUNCTION__).d("reason", "sendDelayedMetadata"));
+        sendStreamMetadataExtractedEvent(m_currentlyPlaying->audioItem, m_currentlyPlaying->cachedMetadata, state);
+        m_currentlyPlaying->cachedMetadata = nullptr;
+    }
 
     if (m_mediaResourceProvider->isMediaPlayerAvailable() && m_currentlyPlaying->isBuffered) {
         sendPlaybackNearlyFinishedEvent(state);
@@ -1747,26 +1779,6 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id, const MediaPlayerState& 
     ACSDK_DEBUG1(LX("executeOnPlaybackStopped").d("id", id).d("state", state));
 
     if (id != m_currentlyPlaying->sourceId) {
-        // See if SourceId identifies a loading track. If so, send error now.
-        if (!m_audioPlayQueue.empty()) {
-            for (auto& it : m_audioPlayQueue) {
-                if (it->sourceId == id && !it->errorMsg.empty()) {
-                    // Only send the event to the server if playing or buffering (or variations - PAUSED is OK too)
-                    // if we send an error after stopped, the server will send a PLAY for the next track - not what we
-                    // want.
-                    if (m_currentState != AudioPlayerState::IDLE) {
-                        ACSDK_ERROR(LX("executeOnPlaybackStopped").d("reportingPrebufferedError", id));
-                        sendPlaybackFailedEvent(
-                            it->audioItem.stream.token, it->errorType, it->errorMsg, MediaPlayerState());
-                    } else {
-                        ACSDK_WARN(LX(__FUNCTION__).d("reason", "notReportingPrebufferedError").d("id", id));
-                    }
-                    it->errorMsg.clear();  // make sure we only send once
-                    return;
-                }
-            }
-        }
-
         ACSDK_DEBUG(LX("executeOnPlaybackStopped")
                         .d("reason", "sourceIdDoesNotMatchCurrentTrack")
                         .d("id", id)
@@ -1788,9 +1800,23 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id, const MediaPlayerState& 
             m_okToRequestNextTrack = false;
             if (!m_playNextItemAfterStopped || m_audioPlayQueue.empty()) {
                 handlePlaybackCompleted();
-            } else if (avsCommon::avs::FocusState::FOREGROUND == m_focus && m_playNextItemAfterStopped) {
-                m_playNextItemAfterStopped = false;
-                playNextItem();
+            } else if (m_playNextItemAfterStopped) {
+                if (avsCommon::avs::FocusState::FOREGROUND == m_focus ||
+                    (avsCommon::avs::FocusState::BACKGROUND == m_focus &&
+                     m_audioPlayQueue.front()->mixingBehavior == audio::MixingBehavior::BEHAVIOR_DUCK &&
+                     MixingBehavior::MAY_DUCK == m_mixingBehavior)) {
+                    ACSDK_DEBUG1(LX(__FUNCTION__).d("action", "playNextItem").d("focus", m_focus));
+
+                    m_playNextItemAfterStopped = false;
+                    playNextItem();
+
+                    // If the last track was non-mixable, then we paused instead of ducked, so we need to make sure
+                    // to start up ducked.
+                    if (m_currentState == AudioPlayerState::PAUSED &&
+                        avsCommon::avs::FocusState::BACKGROUND == m_focus) {
+                        executeStartDucking();
+                    }
+                }
             }
             m_isStopCalled = false;
             return;
@@ -1856,7 +1882,9 @@ void AudioPlayer::executeOnPlaybackFinished(SourceId id, const MediaPlayerState&
                     } else {
                         m_autoProgressTimeMetricData.startDurationTimer();
                         m_isAutoProgressing = true;
-                        playNextItem();
+                        // This defers 'playNextItem' call one more time, so the executor queue can catch up
+                        // allowing the context to have correct info
+                        m_executor.submit([this] { playNextItem(); });
                     }
                 });
             }
@@ -1990,8 +2018,8 @@ void AudioPlayer::executeOnPlaybackPaused(SourceId id, const MediaPlayerState& s
     }
 
     m_progressTimer.pause();
-    sendPlaybackPausedEvent(state);
     changeState(AudioPlayerState::PAUSED);
+    sendPlaybackPausedEvent(state);
 }
 
 void AudioPlayer::executeOnPlaybackResumed(SourceId id, const MediaPlayerState& state) {
@@ -2011,9 +2039,10 @@ void AudioPlayer::executeOnPlaybackResumed(SourceId id, const MediaPlayerState& 
         return;
     }
 
+    m_isStartingPlayback = false;
+    changeState(AudioPlayerState::PLAYING);
     sendPlaybackResumedEvent(state);
     m_progressTimer.resume();
-    changeState(AudioPlayerState::PLAYING);
 }
 
 void AudioPlayer::executeOnBufferUnderrun(SourceId id, const MediaPlayerState& state) {
@@ -2034,9 +2063,9 @@ void AudioPlayer::executeOnBufferUnderrun(SourceId id, const MediaPlayerState& s
     }
 
     m_bufferUnderrunTimestamp = std::chrono::steady_clock::now();
-    sendPlaybackStutterStartedEvent(state);
     m_progressTimer.pause();
     changeState(AudioPlayerState::BUFFER_UNDERRUN);
+    sendPlaybackStutterStartedEvent(state);
 }
 
 void AudioPlayer::executeOnBufferRefilled(SourceId id, const MediaPlayerState& state) {
@@ -2051,9 +2080,9 @@ void AudioPlayer::executeOnBufferRefilled(SourceId id, const MediaPlayerState& s
         return;
     }
 
-    sendPlaybackStutterFinishedEvent(state);
     m_progressTimer.resume();
     changeState(AudioPlayerState::PLAYING);
+    sendPlaybackStutterFinishedEvent(state);
 }
 
 void AudioPlayer::executeOnSeeked(SourceId id, const MediaPlayerState& startState, const MediaPlayerState& endState) {
@@ -2090,10 +2119,10 @@ void AudioPlayer::executeOnTags(
     ACSDK_DEBUG1(LX("executeOnTags").d("id", id).d("state", state));
 
     if (id != m_currentlyPlaying->sourceId) {
-        // See if SourceId identifies a loading track
+        // See if SourceId identifies a loading track and cache metadata to send it in future.
         for (const auto& it : m_audioPlayQueue) {
             if (it->sourceId == id) {
-                sendStreamMetadataExtractedEvent(it->audioItem, vectorOfTags, state);
+                it->cachedMetadata = vectorOfTags;
                 return;
             }
         }
@@ -2599,6 +2628,7 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                                 std::string("Could not acquire ") + CHANNEL_NAME + " for " + NAMESPACE,
                                 getMediaPlayerState());
                         }
+                        m_currentlyPlaying->initialOffset = getOffset();
                     } else {
                         m_currentlyPlaying->initialOffset = getOffset();
                         success.set_value(m_currentlyPlaying->mediaPlayer->play(m_currentlyPlaying->sourceId));
@@ -2625,7 +2655,7 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
             case AudioPlayerState::BUFFERING:
                 if (op != PlaybackOperation::RESUME_PLAYBACK) {
                     // Make sure we have the offset cached before stopping.
-                    m_currentlyPlaying->initialOffset = getOffset();
+                    getOffset();
                     // Request to stop.
                     m_playNextItemAfterStopped = false;
                     if (op == PlaybackOperation::STOP_PLAYBACK) {
@@ -2721,8 +2751,13 @@ void AudioPlayer::sendEventWithTokenAndOffset(
     const std::string& eventName,
     bool includePlaybackReports,
     std::chrono::milliseconds offset) {
+    auto token = m_currentlyPlaying->audioItem.stream.token;
+    if (token.empty() && m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
+        token = m_audioPlayQueue.front()->audioItem.stream.token;
+    }
+
     rapidjson::Document payload(rapidjson::kObjectType);
-    payload.AddMember(TOKEN_KEY, m_currentlyPlaying->audioItem.stream.token, payload.GetAllocator());
+    payload.AddMember(TOKEN_KEY, token, payload.GetAllocator());
     // Note: offset is an optional parameter, which defaults to MEDIA_PLAYER_INVALID_OFFSET.  Per documentation,
     // this function will use the current MediaPlayer offset is a valid offset was not provided.
     if (MEDIA_PLAYER_INVALID_OFFSET == offset) {
@@ -2748,7 +2783,7 @@ void AudioPlayer::sendEventWithTokenAndOffset(
         return;
     }
 
-    sendEvent(eventName, "", buffer.GetString());
+    sendEvent(eventName, "", buffer.GetString(), packageContextForEvent(offset));
 }
 
 void AudioPlayer::sendPlaybackStartedEvent(const MediaPlayerState& state) {
@@ -2784,7 +2819,7 @@ void AudioPlayer::sendPlaybackStutterFinishedEvent(const MediaPlayerState& state
         return;
     }
 
-    sendEvent("PlaybackStutterFinished", "", buffer.GetString());
+    sendEvent("PlaybackStutterFinished", "", buffer.GetString(), packageContextForEvent(state.offset));
 }
 
 void AudioPlayer::sendPlaybackFinishedEvent(const MediaPlayerState& state) {
@@ -2825,7 +2860,7 @@ void AudioPlayer::sendPlaybackFailedEvent(
         return;
     }
 
-    sendEvent("PlaybackFailed", "", buffer.GetString());
+    sendEvent("PlaybackFailed", "", buffer.GetString(), packageContextForEvent(state.offset));
 }
 
 void AudioPlayer::sendPlaybackStoppedEvent(const MediaPlayerState& state) {
@@ -3156,7 +3191,6 @@ void AudioPlayer::parseHeadersFromPlayDirective(const rapidjson::Value& httpHead
         }
     } else {
         ACSDK_ERROR(LX(__FUNCTION__).m("audioItem is null"));
-        return;
     }
 }
 
@@ -3201,6 +3235,36 @@ avsCommon::avs::PlayerActivity AudioPlayer::activityFromState(AudioPlayerState s
     }
     // Just to make cppcheck happy
     return PlayerActivity::IDLE;
+}
+
+std::string AudioPlayer::packageContextForEvent(std::chrono::milliseconds offsetOverride) const {
+#ifdef ENABLE_DEVICE_CONTEXT_IN_EVENT
+    if (!m_cachedContext.empty()) {
+        rapidjson::Document context;
+        rapidjson::ParseResult result = context.Parse(m_cachedContext);
+        if (!result) {
+            return "";
+        }
+        if (offsetOverride != MEDIA_PLAYER_INVALID_OFFSET) {
+            context.RemoveMember(OFFSET_KEY);
+            context.AddMember(
+                OFFSET_KEY,
+                (int64_t)std::chrono::duration_cast<std::chrono::milliseconds>(offsetOverride).count(),
+                context.GetAllocator());
+        }
+        rapidjson::Document wrapper(rapidjson::kObjectType);
+        wrapper.AddMember(NAMESPACE_KEY, NAMESPACE, wrapper.GetAllocator());
+        wrapper.AddMember(NAME_KEY, "PlaybackState", wrapper.GetAllocator());
+        wrapper.AddMember(VALUE_KEY, context, wrapper.GetAllocator());
+
+        rapidjson::StringBuffer buf;
+        rapidjson::Writer<rapidjson::StringBuffer> write(buf);
+        if (wrapper.Accept(write)) {
+            return buf.GetString();
+        }
+    }
+#endif
+    return "";
 }
 
 }  // namespace acsdkAudioPlayer

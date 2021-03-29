@@ -53,14 +53,20 @@ static const std::string DATABASE_COLUMN_ID_NAME = "id";
 static const std::string DATABASE_COLUMN_MESSAGE_TEXT_NAME = "message_text";
 /// The name of the 'uriPathExtension' field corresponding to the uri path extension of the message.
 static const std::string DATABASE_COLUMN_URI = "uri";
-
+/// The name of the 'timestamp' field is the creation time of the message.
+static const std::string DATABASE_COLUMN_TIMESTAMP = "timestamp";
+/// The limit for the load() from the storage, it should be equal to CERTIFIED_SENDER_QUEUE_SIZE_WARN_LIMIT
+static const std::string DATABASE_MESSAGE_SIZE_LIMIT = "25";
+/// The age limit of the message that can stay in the database
+static const std::string DATABASE_MESSAGE_AGE_LIMIT = "5 minutes";
 // clang-format off
 
 /// The SQL string to create the alerts table.
 static const std::string CREATE_MESSAGES_TABLE_SQL_STRING = std::string("CREATE TABLE ") + MESSAGES_TABLE_NAME + " (" +
                                                             DATABASE_COLUMN_ID_NAME + " INT PRIMARY KEY NOT NULL," +
                                                             DATABASE_COLUMN_URI + " TEXT NOT NULL," +
-                                                            DATABASE_COLUMN_MESSAGE_TEXT_NAME + " TEXT NOT NULL);";
+                                                            DATABASE_COLUMN_MESSAGE_TEXT_NAME + " TEXT NOT NULL," +
+                                                            DATABASE_COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP);" ;
 
 // clang-format on
 
@@ -116,16 +122,50 @@ bool SQLiteMessageStorage::createDatabase() {
 
 bool SQLiteMessageStorage::open() {
     if (!m_database.open()) {
+        ACSDK_ERROR(LX("openFailed").d("reason", "Cannot open Certified Sender database"));
         return false;
     }
 
     // We need to check if the opened database contains the correct table.
-    if (!m_database.tableExists(MESSAGES_TABLE_NAME) && !m_database.performQuery(CREATE_MESSAGES_TABLE_SQL_STRING)) {
-        ACSDK_ERROR(LX("openFailed").d("sqlString", CREATE_MESSAGES_TABLE_SQL_STRING));
-        close();
+    // If the table does not exist and we can create a new table,
+    // the table is not legacy and it is a new table with new schema
+    if (!m_database.tableExists(MESSAGES_TABLE_NAME)) {
+        if (!m_database.performQuery(CREATE_MESSAGES_TABLE_SQL_STRING)) {
+            ACSDK_ERROR(LX("openFailed").d("sqlStatement", CREATE_MESSAGES_TABLE_SQL_STRING));
+            close();
+            return false;
+        }
+
+    }
+    // If the table exists, check if it is legacy database.
+    else {
+        // If it is legacy, delete the table and create the new one
+        int database_status = isDatabaseLegacy();
+        if (database_status == 1) {
+            if (!dropTable() || !m_database.performQuery(CREATE_MESSAGES_TABLE_SQL_STRING)) {
+                close();
+                ACSDK_ERROR(LX("openFailed").d("database_status", "Cannot drop and create new database"));
+                return false;
+            }
+        }
+        // The database is pre-exist but errors in isDatabaseLegacy()
+        else if (database_status == -1) {
+            ACSDK_ERROR(LX("openFailed").d("database_status", "Pre-exist database but errors"));
+            return false;
+        }
+    }
+
+    if (!eraseMessageOverAgeLimit()) {
+        ACSDK_ERROR(LX("openFailed").d("eraseMessageOverAgeLimit", "Cannot erase messages over age limit"));
         return false;
     }
 
+    if (!eraseMessageOverSizeLimit()) {
+        ACSDK_ERROR(LX("openFailed").d("eraseMessageOverSizeLimit", "Cannot erase messages over size limit"));
+        return false;
+    }
+
+    // The database is pre-exist and not legacy
     return true;
 }
 
@@ -261,6 +301,94 @@ bool SQLiteMessageStorage::erase(int messageId) {
 bool SQLiteMessageStorage::clearDatabase() {
     if (!m_database.clearTable(MESSAGES_TABLE_NAME)) {
         ACSDK_ERROR(LX("clearDatabaseFailed").m("could not clear messages table."));
+        return false;
+    }
+
+    return true;
+}
+
+int SQLiteMessageStorage::isDatabaseLegacy() {
+    auto sqlStatement = m_database.createStatement("PRAGMA table_info(" + MESSAGES_TABLE_NAME + ");");
+
+    if ((!sqlStatement) || (!sqlStatement->step())) {
+        ACSDK_ERROR(LX("isDatabaseLegacy").d("reason", "failed checking legacy database"));
+        return -1;
+    }
+
+    const std::string tableInfoColumnName = "name";
+
+    std::string columnName;
+    while (SQLITE_ROW == sqlStatement->getStepResult()) {
+        int columnCount = sqlStatement->getColumnCount();
+
+        for (int i = 0; i < columnCount; i++) {
+            std::string tableColumnName = sqlStatement->getColumnName(i);
+
+            if (tableInfoColumnName == tableColumnName) {
+                columnName = sqlStatement->getColumnText(i);
+                if (DATABASE_COLUMN_TIMESTAMP == columnName) {
+                    ACSDK_DEBUG9(LX("isDatabaseLegacy").d("reason", "databaseNotLegacy"));
+                    return 0;
+                }
+            }
+        }
+        if (!sqlStatement->step()) {
+            ACSDK_ERROR(LX("isDatabaseLegacy").d("reason", "failed checking legacy database"));
+            return -1;
+        }
+    }
+
+    ACSDK_INFO(LX("isDatabaseLegacy").d("reason", "legacy database found"));
+    return 1;
+}
+
+bool SQLiteMessageStorage::dropTable() {
+    const std::string sqlString = "DROP TABLE IF EXISTS " + MESSAGES_TABLE_NAME + ";";
+
+    auto statement = m_database.performQuery(sqlString);
+
+    if (!statement) {
+        ACSDK_ERROR(LX("dropTableFailed").m("could not drop messages table."));
+        return false;
+    }
+
+    return true;
+}
+
+bool SQLiteMessageStorage::eraseMessageOverAgeLimit() {
+    std::string sqlString = "DELETE FROM " + MESSAGES_TABLE_NAME + " WHERE DATETIME('now', '-" +
+                            DATABASE_MESSAGE_AGE_LIMIT + "')  >= " + DATABASE_COLUMN_TIMESTAMP + ";";
+
+    auto statement = m_database.createStatement(sqlString);
+
+    if (!statement) {
+        ACSDK_ERROR(LX("eraseMessageOverAgeLimitFailed").m("Could not create statement."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX("eraseMessageOverAgeLimitFailed").m("Could not perform step."));
+        return false;
+    }
+
+    return true;
+}
+
+bool SQLiteMessageStorage::eraseMessageOverSizeLimit() {
+    std::string sqlString = "DELETE FROM " + MESSAGES_TABLE_NAME + " WHERE " + DATABASE_COLUMN_ID_NAME +
+                            " NOT IN ( SELECT " + DATABASE_COLUMN_ID_NAME + " FROM " + MESSAGES_TABLE_NAME +
+                            " ORDER BY " + DATABASE_COLUMN_ID_NAME + " DESC LIMIT " + DATABASE_MESSAGE_SIZE_LIMIT +
+                            " ); ";
+
+    auto statement = m_database.createStatement(sqlString);
+
+    if (!statement) {
+        ACSDK_ERROR(LX("eraseMessageOverSizeLimit").m("Could not create statement."));
+        return false;
+    }
+
+    if (!statement->step()) {
+        ACSDK_ERROR(LX("eraseMessageOverSizeLimit").m("Could not perform step."));
         return false;
     }
 

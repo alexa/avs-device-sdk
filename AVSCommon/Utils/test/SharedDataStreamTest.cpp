@@ -1296,6 +1296,27 @@ TEST_F(SharedDataStreamTest, test_writerClosedBeforeAttachingReader) {
     ASSERT_EQ(error, Sds::Reader::Error::CLOSED);
 }
 
+/// This tests a race condition and the first reader creation. For a new SDS with blockable writer, the first reader can
+/// seek the very beginning of the stream. There was a race condition between reader and writer. Using
+/// "--gtest_repeat=1000 --gtest_break_on_failure" failed this test case before the bug fix.
+TEST_F(SharedDataStreamTest, test_firstReaderCanSeekSDSBeginning) {
+    size_t wordSize = 1;
+    size_t wordCount = 11000;
+    size_t bufferSize = Sds::calculateBufferSize(wordCount, wordSize, 3);
+    auto buffer = std::make_shared<Sds::Buffer>(bufferSize);
+    std::shared_ptr<Sds> sds = Sds::create(buffer, wordSize, 3);
+
+    auto writer = sds->createWriter(Sds::Writer::Policy::BLOCKING);
+
+    Source source;
+    source.run(std::move(writer), 10000, 1, 0);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    auto reader = sds->createReader(Sds::Reader::Policy::NONBLOCKING);
+    // Give time to fill all buffer
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    EXPECT_TRUE(reader->seek(0, Sds::Reader::Reference::ABSOLUTE));
+}
+
 }  // namespace test
 }  // namespace sds
 }  // namespace utils

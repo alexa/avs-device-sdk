@@ -16,7 +16,7 @@
 #include <AVSCommon/Utils/Bluetooth/DeviceCategory.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "acsdkBluetooth/BluetoothStorageInterface.h"
+#include "acsdkBluetoothInterfaces/BluetoothStorageInterface.h"
 #include "acsdkBluetooth/SQLiteBluetoothStorage.h"
 
 /// String to identify log entries originating from this file.
@@ -59,6 +59,20 @@ const std::string SQL_CREATE_UUID_TABLE_QUERY = "CREATE TABLE " + UUID_TABLE_NAM
     COLUMN_MAC + " text not null unique, " +
     COLUMN_CATEGORY + " text not null default "+ deviceCategoryToString(DeviceCategory::UNKNOWN) +");";
 // clang-format on
+
+std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> SQLiteBluetoothStorage::
+    createBluetoothStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    ACSDK_DEBUG5(LX(__func__));
+    auto bluetoothStorage = create(*configurationRoot);
+
+    if (!bluetoothStorage) {
+        ACSDK_ERROR(LX("createBluetoothStorageInterfaceFailed").m("nullSQLiteBluetoothStorage"));
+        return nullptr;
+    }
+
+    return std::move(bluetoothStorage);
+}
 
 std::unique_ptr<SQLiteBluetoothStorage> SQLiteBluetoothStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {

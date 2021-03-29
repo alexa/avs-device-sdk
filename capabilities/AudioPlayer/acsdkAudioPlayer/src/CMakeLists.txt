@@ -1,3 +1,6 @@
+if (ENABLE_DEVICE_CONTEXT_IN_EVENT)
+    add_definitions("-DENABLE_DEVICE_CONTEXT_IN_EVENT")
+endif()
 add_definitions("-DACSDK_LOG_MODULE=audioplayer")
 add_library(acsdkAudioPlayer SHARED
     AudioPlayer.cpp

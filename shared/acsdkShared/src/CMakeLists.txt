@@ -10,6 +10,7 @@ target_link_libraries(acsdkShared PUBLIC
     acsdkNotifier
     acsdkShutdownManager
     acsdkStartupManager
+    acsdkSystemClockMonitor
     AVSCommon)
 
 # install target

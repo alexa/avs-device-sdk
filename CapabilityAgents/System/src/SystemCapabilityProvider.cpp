@@ -62,18 +62,32 @@ static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSystemCapabil
     const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager);
 
 std::shared_ptr<SystemCapabilityProvider> SystemCapabilityProvider::create(
-    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager) {
+    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+    const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier) {
     if (!localeAssetsManager) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullLocaleAssetsManager"));
         return nullptr;
+    } else if (!capabilityChangeNotifier) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullCapabilityChangeNotifier"));
+        return nullptr;
     }
+    auto systemCapabilityProvider = std::shared_ptr<SystemCapabilityProvider>(
+        new SystemCapabilityProvider(localeAssetsManager, capabilityChangeNotifier));
 
-    return std::shared_ptr<SystemCapabilityProvider>(new SystemCapabilityProvider(localeAssetsManager));
+    if (!systemCapabilityProvider->initialize()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "initializationFailed"));
+        return nullptr;
+    }
+    return systemCapabilityProvider;
 }
 
 SystemCapabilityProvider::SystemCapabilityProvider(
-    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager) {
-    m_capabilityConfigurations.insert(getSystemCapabilityConfiguration(localeAssetsManager));
+    const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,
+    const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier) :
+        m_assetsManager{localeAssetsManager},
+        m_capabilityChangeNotifier{capabilityChangeNotifier} {
+    auto capabilityConfiguration = getSystemCapabilityConfiguration(localeAssetsManager);
+    m_capabilityConfigurations.insert(capabilityConfiguration);
 }
 
 std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSystemCapabilityConfiguration(
@@ -89,12 +103,34 @@ std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSystemCapabilityConf
         LOCALE_COMBINATION_CONFIGURATION_KEY, localeAssetsManager->getSupportedLocaleCombinations());
     configMap.insert({CAPABILITY_INTERFACE_CONFIGURATIONS_KEY, generator.toString()});
 
+    ACSDK_DEBUG5(LX(__func__).d("locales", generator.toString()));
+
     return std::make_shared<avsCommon::avs::CapabilityConfiguration>(configMap);
 }
 
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> SystemCapabilityProvider::
     getCapabilityConfigurations() {
+    std::lock_guard<std::mutex> lock(m_mutex);
     return m_capabilityConfigurations;
+}
+
+void SystemCapabilityProvider::onLocaleAssetsChanged() {
+    ACSDK_DEBUG(LX(__func__));
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_capabilityConfigurations.clear();
+    auto newLocales = getSystemCapabilityConfiguration(m_assetsManager);
+    m_capabilityConfigurations.insert(newLocales);
+    lock.unlock();
+    m_capabilityChangeNotifier->notifyObservers(
+        [newLocales](
+            std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationChangeObserverInterface> observer) {
+            observer->onConfigurationChanged(*newLocales);
+        });
+}
+
+bool SystemCapabilityProvider::initialize() {
+    m_assetsManager->addLocaleAssetsObserver(shared_from_this());
+    return true;
 }
 
 }  // namespace system

@@ -18,6 +18,9 @@
 #include <fstream>
 #include <sstream>
 
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
+#include <acsdkBluetoothInterfaces/MockBluetoothDeviceObserver.h>
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/MockBluetoothDevice.h>
@@ -38,6 +41,7 @@
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 #include <AVSCommon/Utils/Bluetooth/DeviceCategory.h>
 #include <AVSCommon/Utils/Bluetooth/SDPRecords.h>
@@ -50,8 +54,9 @@
 
 #include "acsdkBluetooth/BasicDeviceConnectionRule.h"
 #include "acsdkBluetooth/Bluetooth.h"
+#include "acsdkBluetooth/BluetoothNotifier.h"
+#include "acsdkBluetooth/DeviceConnectionRulesAdapter.h"
 #include "acsdkBluetooth/SQLiteBluetoothStorage.h"
-#include "acsdkBluetoothInterfaces/MockBluetoothDeviceObserver.h"
 
 namespace alexaClientSDK {
 namespace acsdkBluetooth {
@@ -373,6 +378,12 @@ public:
     std::shared_ptr<MockContextManager> m_mockContextManager;
 
     /// @c FocusManager to request focus to the CONTENT channel.
+    acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::AudioFocusAnnotation,
+            avsCommon::sdkInterfaces::FocusManagerInterface>  m_annotatedFocusManager;
+
+    /// The mock focus manager, wrapped by m_annotatedFocusManager. Keeping a reference to this mock is
+    /// required in order to set expectations on it.
     std::shared_ptr<MockFocusManager> m_mockFocusManager;
 
     /// A message sender used to send events to AVS.
@@ -387,9 +398,6 @@ public:
     /// Player to send the audio to.
     std::shared_ptr<MockMediaPlayer> m_mockBluetoothMediaPlayer;
 
-    /// A set of device connection rules.
-    std::unordered_set<std::shared_ptr<BluetoothDeviceConnectionRuleInterface>> m_mockEnabledConnectionRules;
-
     /// A bus to abstract Bluetooth stack specific messages.
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
 
@@ -402,6 +410,22 @@ public:
     /// The list of discovered devices to create @c MockBluetoothDeviceManager
     std::list<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface>>
         m_mockDiscoveredBluetoothDevices;
+
+    /// The mock @c ApplicationAudioPipelineFactoryInterface.
+    std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::test::MockApplicationAudioPipelineFactory>
+            m_mockAudioPipelineFactory;
+
+    /// An endpoint capabilities registrar with which to register the Bluetooth CA.
+    acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>
+            m_mockEndpointCapabilitiesRegistrar;
+
+    /// An object that provides the Bluetooth device connection rules.
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface> m_connectionRulesProvider;
+
+    /// Object to notify the Bluetooth CA when to shut down.
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> m_shutdownNotifier;
 
     /// Bluetooth devices used to test the Bluetooth CA connection logic.
     std::shared_ptr<MockBluetoothDevice> m_mockBluetoothDevice1;
@@ -425,6 +449,9 @@ public:
 
     /// A @c ChannelVolumeInterface object to control volume
     std::shared_ptr<MockChannelVolumeInterface> m_mockChannelVolumeInterface;
+
+    /// A @c BluetoothNotifierInterface to notify observers.
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface> m_bluetoothNotifier;
 
     /// Condition variable to wake on a message being sent.
     std::condition_variable m_messageSentTrigger;
@@ -484,9 +511,23 @@ protected:
 
 void BluetoothTest::SetUp() {
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
-    m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
     m_mockExceptionSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
+    m_bluetoothNotifier = std::make_shared<acsdkBluetooth::BluetoothNotifier>();
+    m_shutdownNotifier = std::make_shared<NiceMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
+    m_mockAudioPipelineFactory =
+            std::make_shared<acsdkApplicationAudioPipelineFactoryInterfaces::test::MockApplicationAudioPipelineFactory>();
+
+    auto registrar =
+            std::make_shared<NiceMock<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>>();
+    m_mockEndpointCapabilitiesRegistrar = acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>(
+            registrar);
+    m_mockFocusManager = std::make_shared<NiceMock<MockFocusManager>>();
+    m_annotatedFocusManager = acsdkManufactory::
+    Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>(
+            m_mockFocusManager);
 
     m_eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
     m_mockBluetoothHostController = std::make_shared<NiceMock<MockBluetoothHostController>>();
@@ -494,6 +535,8 @@ void BluetoothTest::SetUp() {
     m_mockBluetoothDeviceObserver = std::make_shared<NiceMock<acsdkBluetoothInterfaces::test::MockBluetoothDeviceObserver>>();
     m_mockBluetoothMediaPlayer = MockMediaPlayer::create();
     m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+
+    m_bluetoothNotifier->addObserver(m_mockBluetoothDeviceObserver);
 
     /*
      * Create Mock Devices.
@@ -552,14 +595,29 @@ void BluetoothTest::SetUp() {
     m_remoteControlConnectionRule->setExplicitlyConnect(false);
     m_remoteControlConnectionRule->setExplicitlyDisconnect(false);
 
-    m_mockEnabledConnectionRules =
+    std::unordered_set<std::shared_ptr<BluetoothDeviceConnectionRuleInterface>> mockConnectionRules =
         {m_remoteControlConnectionRule, m_gadgetConnectionRule, BasicDeviceConnectionRule::create()};
+    m_connectionRulesProvider = std::make_shared<acsdkBluetooth::DeviceConnectionRulesAdapter>(mockConnectionRules);
 
    /**
     * create MockChannelVolumeInterface for ducking.
     */
     m_mockChannelVolumeInterface = std::make_shared<MockChannelVolumeInterface>();
     m_mockChannelVolumeInterface->DelegateToReal();
+
+    /**
+     * Set up expected calls to injected objects.
+     */
+    EXPECT_CALL(
+            *(m_mockAudioPipelineFactory.get()),
+            createApplicationMediaInterfaces(acsdkBluetooth::BLUETOOTH_MEDIA_PLAYER_NAME, _, _, _, _, _))
+            .WillRepeatedly(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
+                    m_mockBluetoothMediaPlayer, nullptr, nullptr, nullptr, m_mockChannelVolumeInterface)));
+    EXPECT_CALL(
+            *(registrar.get()),
+            withCapability(A<const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>&>(), _))
+            .WillRepeatedly(ReturnRef(
+                    *(std::make_shared<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>()).get()));
 
     /*
      * Generate a Bluetooth database for testing.
@@ -582,25 +640,27 @@ void BluetoothTest::SetUp() {
     m_bluetoothStorage->insertByMac(TEST_BLUETOOTH_DEVICE_MAC_3, TEST_BLUETOOTH_UUID_3, true);
     m_bluetoothStorage->close();
 
-    m_Bluetooth = Bluetooth::create(
+    m_Bluetooth = Bluetooth::createBluetoothCapabilityAgent(
         m_mockContextManager,
-        m_mockFocusManager,
         m_mockMessageSender,
         m_mockExceptionSender,
         m_bluetoothStorage,
         avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
             m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
         m_eventBus,
-        m_mockBluetoothMediaPlayer,
         m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+        m_mockAudioPipelineFactory,
+        m_annotatedFocusManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
+        m_connectionRulesProvider,
+        nullptr,
+        m_bluetoothNotifier);
     ASSERT_THAT(m_Bluetooth, NotNull());
-    m_Bluetooth->addObserver(m_mockBluetoothDeviceObserver);
 }
 
 void BluetoothTest::TearDown() {
+    m_bluetoothNotifier->removeObserver(m_mockBluetoothDeviceObserver);
     if (m_Bluetooth) {
         m_Bluetooth->shutdown();
     }
@@ -684,156 +744,212 @@ void BluetoothTest::verifyMessagesCount(std::shared_ptr<alexaClientSDK::avsCommo
 /// Test that create() returns a nullptr if called with invalid arguments.
 TEST_F(BluetoothTest, test_createBTWithNullParams) {
     // Create Bluetooth CapabilityAgent with null @c ContextManager.
-    auto bluetooth1 = Bluetooth::create(
-        nullptr,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth1 = Bluetooth::createBluetoothCapabilityAgent(
+            nullptr,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth1, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c FocusManager
-    auto bluetooth2 = Bluetooth::create(
-        m_mockContextManager,
-        nullptr,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth2 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            nullptr,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth2, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c MessageSender
-    auto bluetooth3 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        nullptr,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth3 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            nullptr,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth3, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c ExceptionEncounterSender
-    auto bluetooth4 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        nullptr,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth4 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            nullptr,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth4, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c BluetoothStorage
-    auto bluetooth5 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        nullptr,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth5 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            nullptr,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth5, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c DeviceManager
-    auto bluetooth6 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        nullptr,
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth6 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            nullptr,
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth6, IsNull());
 
     // Create Bluetooth CapabilityAgent with null @c BluetoothEventBus
-    auto bluetooth7 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        nullptr,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    auto bluetooth7 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            nullptr,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth7, IsNull());
 
-    // Create Bluetooth CapabilityAgent with null @c MediaPlayer
-    auto bluetooth8 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        nullptr,
-        m_customerDataManager,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    // Create Bluetooth CapabilityAgent with null @c ApplicationAudioPipelineFactoryInterface
+    auto bluetooth8 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            nullptr,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth8, IsNull());
 
-    // Create Bluetooth CapabilityAgent with null @c MediaPlayer
-    auto bluetooth9 = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        nullptr,
-        m_mockEnabledConnectionRules,
-        m_mockChannelVolumeInterface,
-        nullptr);
+    // Create Bluetooth CapabilityAgent with null @c EndpointCapabilitiesRegistrar.
+    auto bluetooth9 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            nullptr,
+            m_connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     EXPECT_THAT(bluetooth9, IsNull());
+
+    // Create Bluetooth CapabilityAgent with null @c BluetoothNotifier.
+    auto bluetooth10 = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            m_connectionRulesProvider,
+            nullptr,
+            nullptr);
+    EXPECT_THAT(bluetooth10, IsNull());
+
+    // Create Bluetooth CapabilityAgent with null @c ShutdownNotifier.
+    auto bluetooth11 = Bluetooth::createBluetoothCapabilityAgent(
+                    m_mockContextManager,
+                    m_mockMessageSender,
+                    m_mockExceptionSender,
+                    m_bluetoothStorage,
+                    avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+                    m_eventBus,
+                    m_customerDataManager,
+                    m_mockAudioPipelineFactory,
+                    m_annotatedFocusManager,
+                    nullptr,
+                    m_mockEndpointCapabilitiesRegistrar,
+                    m_connectionRulesProvider,
+                    nullptr,
+                    m_bluetoothNotifier);
+     EXPECT_THAT(bluetooth11, IsNull());
 }
 
 /**
@@ -850,19 +966,25 @@ TEST_F(BluetoothTest, test_createBTWithDuplicateDeviceCategoriesInConnectionRule
         std::make_shared<MockBluetoothDeviceConnectionRule>(categories2, dependentProfiles);
     std::unordered_set<std::shared_ptr<BluetoothDeviceConnectionRuleInterface>> enabledRules =
         {mockDeviceConnectionRule1, mockDeviceConnectionRule2};
-    auto bluetooth = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        enabledRules,
-        m_mockChannelVolumeInterface);
+
+    auto connectionRulesProvider = std::make_shared<acsdkBluetooth::DeviceConnectionRulesAdapter>(enabledRules);
+
+    auto bluetooth = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     ASSERT_THAT(bluetooth, IsNull());
 }
 
@@ -876,19 +998,25 @@ TEST_F(BluetoothTest, test_createBTWithLackOfProfilesInConnectionRules) {
     auto mockDeviceConnectionRule = std::make_shared<MockBluetoothDeviceConnectionRule>(categories, dependentProfiles);
     std::unordered_set<std::shared_ptr<BluetoothDeviceConnectionRuleInterface>> enabledRules =
         {mockDeviceConnectionRule};
-    auto bluetooth = Bluetooth::create(
-        m_mockContextManager,
-        m_mockFocusManager,
-        m_mockMessageSender,
-        m_mockExceptionSender,
-        m_bluetoothStorage,
-        avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
-            m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
-        m_eventBus,
-        m_mockBluetoothMediaPlayer,
-        m_customerDataManager,
-        enabledRules,
-        m_mockChannelVolumeInterface);
+
+    auto connectionRulesProvider = std::make_shared<acsdkBluetooth::DeviceConnectionRulesAdapter>(enabledRules);
+
+    auto bluetooth = Bluetooth::createBluetoothCapabilityAgent(
+            m_mockContextManager,
+            m_mockMessageSender,
+            m_mockExceptionSender,
+            m_bluetoothStorage,
+            avsCommon::utils::memory::make_unique<NiceMock<MockBluetoothDeviceManager>>(
+                    m_mockBluetoothHostController, m_mockDiscoveredBluetoothDevices, m_eventBus),
+            m_eventBus,
+            m_customerDataManager,
+            m_mockAudioPipelineFactory,
+            m_annotatedFocusManager,
+            m_shutdownNotifier,
+            m_mockEndpointCapabilitiesRegistrar,
+            connectionRulesProvider,
+            nullptr,
+            m_bluetoothNotifier);
     ASSERT_THAT(bluetooth, IsNull());
 }
 
@@ -1466,7 +1594,7 @@ TEST_F(BluetoothTest, test_streamingStateChange) {
  */
 TEST_F(BluetoothTest, test_focusStateChange) {
     m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_3, deviceCategoryToString(DeviceCategory::PHONE));
-
+    
     EXPECT_CALL(*m_mockFocusManager, acquireChannel(_, _)).Times(1).WillOnce(Return(true));
     EXPECT_CALL(*m_mockBluetoothMediaPlayer, play(_)).Times(1).WillOnce(Return(true));
     EXPECT_CALL(*m_mockFocusManager, releaseChannel(_, _)).Times(0);

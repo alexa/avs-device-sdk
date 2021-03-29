@@ -1,6 +1,9 @@
 find_package(Threads ${THREADS_PACKAGE_CONFIG})
 
 add_definitions("-DACSDK_LOG_MODULE=cblAuthDelegate")
+
+message(WARNING "\nWARNING! Default SQLiteCBLAuthDelegateStorage is NOT encrypted. Your application's auth token storage MUST be encrypted for certification.\n")
+
 add_library(CBLAuthDelegate SHARED
     CBLAuthDelegate.cpp
     CBLAuthDelegateConfiguration.cpp

@@ -250,12 +250,12 @@ TEST_F(AndroidSLESMediaPlayerTest, test_bQMediaPlayer) {
 
 /// Test buffer queue with media player and raw file.
 TEST_F(AndroidSLESMediaPlayerTest, test_bQRawMediaPlayer) {
-    auto format = avsCommon::utils::AudioFormat{.dataSigned = true,
-                                                .numChannels = 2,
-                                                .sampleSizeInBits = 16,
-                                                .sampleRateHz = 48000,
+    auto format = avsCommon::utils::AudioFormat{.encoding = avsCommon::utils::AudioFormat::Encoding::LPCM,
                                                 .endianness = avsCommon::utils::AudioFormat::Endianness::LITTLE,
-                                                .encoding = avsCommon::utils::AudioFormat::Encoding::LPCM};
+                                                .sampleRateHz = 48000,
+                                                .sampleSizeInBits = 16,
+                                                .numChannels = 2,
+                                                .dataSigned = true};
     m_reader = std::make_shared<MockAttachmentReader>(RAW_INPUT_CSTR, RAW_INPUT_SIZE);
     auto id = m_player->setSource(m_reader, &format);
 

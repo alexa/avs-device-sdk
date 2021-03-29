@@ -19,7 +19,7 @@
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/MockEndpoint.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointRegistrationObserver.h>
@@ -84,7 +84,7 @@ protected:
     std::shared_ptr<StrictMock<MockDirectiveSequencer>> m_sequencer;
     std::shared_ptr<StrictMock<MockCapabilitiesDelegate>> m_capabilitiesDelegate;
     std::shared_ptr<StrictMock<MockEndpointRegistrationObserver>> m_registrationObserver;
-    std::shared_ptr<CapabilitiesObserverInterface> m_capabilitiesObserver;
+    std::shared_ptr<CapabilitiesDelegateObserverInterface> m_capabilitiesObserver;
     std::unique_ptr<EndpointRegistrationManager> m_manager;
 };
 
@@ -94,8 +94,9 @@ void EndpointRegistrationManagerTest::SetUp() {
     m_registrationObserver = std::make_shared<StrictMock<MockEndpointRegistrationObserver>>();
 
     EXPECT_CALL(*m_capabilitiesDelegate, addCapabilitiesObserver(_))
-        .WillOnce(Invoke(
-            [this](std::shared_ptr<CapabilitiesObserverInterface> observer) { m_capabilitiesObserver = observer; }));
+        .WillOnce(Invoke([this](std::shared_ptr<CapabilitiesDelegateObserverInterface> observer) {
+            m_capabilitiesObserver = observer;
+        }));
     m_manager = EndpointRegistrationManager::create(m_sequencer, m_capabilitiesDelegate, DEFAULT_ENDPOINT_ID);
     m_manager->addObserver(m_registrationObserver);
 
@@ -163,8 +164,8 @@ TEST_F(EndpointRegistrationManagerTest, test_shutdownResolvesPendingPromises) {
     // Successfully add an endpoint so we can test resolving the pending delete on shutdown.
     auto result = m_manager->registerEndpoint(endpointToDelete);
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS,
-        CapabilitiesObserverInterface::Error::SUCCESS,
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
         {endpointIdToDelete},
         {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
@@ -216,7 +217,10 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointSucceeds) {
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 }
@@ -246,7 +250,10 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointSucceeds) {
 
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
 
     ASSERT_EQ(addResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(addResult.get(), RegistrationResult::SUCCEEDED);
@@ -255,7 +262,10 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointSucceeds) {
     auto deleteResult = m_manager->deregisterEndpoint(endpointId);
     EXPECT_CALL(*m_registrationObserver, onEndpointDeregistration(endpointId, DeregistrationResult::SUCCEEDED));
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {}, {endpointId});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {},
+        {endpointId});
     ASSERT_EQ(deleteResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(deleteResult.get(), DeregistrationResult::SUCCEEDED);
 }
@@ -292,8 +302,8 @@ TEST_F(EndpointRegistrationManagerTest, test_modifyDefaultEndpointFails) {
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS,
-        CapabilitiesObserverInterface::Error::SUCCESS,
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
         {DEFAULT_ENDPOINT_ID},
         {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
@@ -343,8 +353,8 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhenCapabilityRegis
         *m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::CONFIGURATION_ERROR));
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::FATAL_ERROR,
-        CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+        CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+        CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
         {endpointId},
         {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
@@ -427,7 +437,10 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileDeregistration
     // Check that register endpoint succeeded.
     auto result = m_manager->registerEndpoint(endpoint);
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -468,7 +481,10 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileDeregistrati
     // Check that register endpoint succeeded.
     auto result = m_manager->registerEndpoint(endpoint);
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -601,7 +617,10 @@ TEST_F(EndpointRegistrationManagerTest, test_registerExistingEndpointSucceeds) {
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -610,7 +629,10 @@ TEST_F(EndpointRegistrationManagerTest, test_registerExistingEndpointSucceeds) {
     ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(updateResult.get(), RegistrationResult::SUCCEEDED);
 }
@@ -662,7 +684,10 @@ TEST_F(
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -672,8 +697,8 @@ TEST_F(
 
     // Fail the update.
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::FATAL_ERROR,
-        CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+        CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+        CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
         {endpointId},
         {});
     ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
@@ -722,7 +747,10 @@ TEST_F(EndpointRegistrationManagerTest, test_revertWhenRegisterExistingEndpointF
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -768,7 +796,10 @@ TEST_F(
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
@@ -777,8 +808,8 @@ TEST_F(
     ASSERT_EQ(deleteResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::FATAL_ERROR,
-        CapabilitiesObserverInterface::Error::UNKNOWN_ERROR,
+        CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
+        CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
         {},
         {endpointId});
     ASSERT_EQ(deleteResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
@@ -819,7 +850,10 @@ TEST_F(EndpointRegistrationManagerTest, test_revertWhenDeregisterEndpointFailsDu
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, {endpointId}, {});
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
     ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 

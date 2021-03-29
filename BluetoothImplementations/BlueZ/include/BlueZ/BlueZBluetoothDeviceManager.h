@@ -26,14 +26,24 @@ namespace bluetoothImplementations {
 namespace blueZ {
 
 /**
- * BlueZ simplementation of @c BluetoothDeviceManagerInterface. This class is required to allow only one instance
+ * BlueZ implementation of @c BluetoothDeviceManagerInterface. This class is required to allow only one instance
  * of @c BluetoothDeviceManagerInterface in the SDK.
  */
 class BlueZBluetoothDeviceManager : public avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface {
 public:
     /**
+     * Factory method to create a @c BluetoothDeviceManagerInterface.
+     *
+     * @param eventBus @c BluetoothEvent typed @c EventBus to be used for event routing.
+     * @return A unique pointer to a new @c BluetoothDeviceManagerInterface on success, nullptr otherwise.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface>
+    createBluetoothDeviceManagerInterface(std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus);
+
+    /**
      * Factory method to create a class.
      *
+     * @deprecated
      * @param eventBus @c BluethoothEvent typed @c EventBus to be used for event routing.
      * @return A new instance of BlueZBluetoothDeviceManager on success, nullptr otherwise.
      */

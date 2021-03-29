@@ -43,7 +43,7 @@ using namespace avsCommon::utils::power;
 const static std::string AVS_EVENT_URL_PATH_EXTENSION = "/v20160207/events";
 
 /// Boundary for mime encoded requests
-const static std::string MIME_BOUNDARY = "WhooHooZeerOoonie!";
+const static std::string MIME_BOUNDARY = "WhooHooZeerOoonie=";
 
 /// Timeout for transmission of data on a given stream
 static const std::chrono::seconds STREAM_PROGRESS_TIMEOUT = std::chrono::seconds(15);
@@ -200,7 +200,8 @@ MessageRequestHandler::MessageRequestHandler(
         m_wasMessageRequestAcknowledgeReported{false},
         m_wasMessageRequestFinishedReported{false},
         m_responseCode{0},
-        m_powerResource{powerResource} {
+        m_powerResource{powerResource},
+        m_resultStatus{MessageRequestObserverInterface::Status::PENDING} {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (m_powerResource) {
@@ -324,8 +325,6 @@ void MessageRequestHandler::onActivity() {
 bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
     ACSDK_DEBUG7(LX(__func__).d("responseCode", responseCode));
 
-    // TODO ACSDK-1839: Provide MessageRequestObserverInterface immediate notification of receipt of response code.
-
     reportMessageRequestAcknowledged();
 
     if (HTTPResponseCode::CLIENT_ERROR_FORBIDDEN == intToHTTPResponseCode(responseCode)) {
@@ -333,6 +332,30 @@ bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
     }
 
     m_responseCode = responseCode;
+
+    // Map HTTPResponseCode values to MessageRequestObserverInterface::Status values.
+    static const std::unordered_map<long, MessageRequestObserverInterface::Status> responseToResult = {
+        {HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
+        {HTTPResponseCode::SUCCESS_OK, MessageRequestObserverInterface::Status::SUCCESS},
+        {HTTPResponseCode::SUCCESS_ACCEPTED, MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED},
+        {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
+        {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
+        {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},
+        {HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION, MessageRequestObserverInterface::Status::THROTTLED},
+        {HTTPResponseCode::SERVER_ERROR_INTERNAL, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2},
+        {HTTPResponseCode::SERVER_UNAVAILABLE, MessageRequestObserverInterface::Status::REFUSED}};
+
+    auto responseIterator = responseToResult.find(m_responseCode);
+    if (responseIterator != responseToResult.end()) {
+        m_resultStatus = responseIterator->second;
+    } else {
+        m_resultStatus = MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR;
+    }
+
+    ACSDK_DEBUG7(LX("responseCodeTranslated").d("responseStatus", m_resultStatus));
+
+    m_messageRequest->responseStatusReceived(m_resultStatus);
+
     return true;
 }
 
@@ -350,51 +373,35 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
         m_messageRequest->exceptionReceived(nonMimeBody);
     }
 
-    // Hash to allow use of HTTP2ResponseFinishedStatus as the key in an unordered_map.
-    struct statusHash {
-        size_t operator()(const HTTP2ResponseFinishedStatus& key) const {
-            return static_cast<size_t>(key);
-        }
-    };
+    bool receivedResponseCode = MessageRequestObserverInterface::Status::PENDING != m_resultStatus;
 
-    // Mapping HTTP2ResponseFinishedStatus to a MessageRequestObserverInterface::Status.  Note that no mapping is
-    // provided from the COMPLETE status so that the logic below falls through to map the HTTPResponseCode value
-    // from the completed requests to the appropriate MessageRequestObserverInterface value.
-    static const std::unordered_map<HTTP2ResponseFinishedStatus, MessageRequestObserverInterface::Status, statusHash>
-        statusToResult = {
-            {HTTP2ResponseFinishedStatus::INTERNAL_ERROR, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
-            {HTTP2ResponseFinishedStatus::CANCELLED, MessageRequestObserverInterface::Status::CANCELED},
-            {HTTP2ResponseFinishedStatus::TIMEOUT, MessageRequestObserverInterface::Status::TIMEDOUT}};
+    // Map HTTP2ResponseFinishedStatus to a MessageRequestObserverInterface::Status.
 
-    // Map HTTPResponseCode values to MessageRequestObserverInterface::Status values.
-    static const std::unordered_map<long, MessageRequestObserverInterface::Status> responseToResult = {
-        {HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED, MessageRequestObserverInterface::Status::INTERNAL_ERROR},
-        {HTTPResponseCode::SUCCESS_OK, MessageRequestObserverInterface::Status::SUCCESS},
-        {HTTPResponseCode::SUCCESS_ACCEPTED, MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED},
-        {HTTPResponseCode::SUCCESS_NO_CONTENT, MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT},
-        {HTTPResponseCode::CLIENT_ERROR_BAD_REQUEST, MessageRequestObserverInterface::Status::BAD_REQUEST},
-        {HTTPResponseCode::CLIENT_ERROR_FORBIDDEN, MessageRequestObserverInterface::Status::INVALID_AUTH},
-        {HTTPResponseCode::CLIENT_ERROR_THROTTLING_EXCEPTION, MessageRequestObserverInterface::Status::THROTTLED},
-        {HTTPResponseCode::SERVER_ERROR_INTERNAL, MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2},
-        {HTTPResponseCode::SERVER_UNAVAILABLE, MessageRequestObserverInterface::Status::REFUSED}};
-
-    auto result = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
-
-    if (HTTP2ResponseFinishedStatus::COMPLETE == status) {
-        auto responseIterator = responseToResult.find(m_responseCode);
-        if (responseIterator != responseToResult.end()) {
-            result = responseIterator->second;
-        } else {
-            result = MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR;
-        }
-    } else {
-        auto statusIterator = statusToResult.find(status);
-        if (statusIterator != statusToResult.end()) {
-            result = statusIterator->second;
-        }
+    switch (status) {
+        case HTTP2ResponseFinishedStatus::COMPLETE:
+            if (!receivedResponseCode) {
+                m_resultStatus = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
+            }
+            break;
+        case HTTP2ResponseFinishedStatus::TIMEOUT:
+            m_resultStatus = MessageRequestObserverInterface::Status::TIMEDOUT;
+            break;
+        case HTTP2ResponseFinishedStatus::CANCELLED:
+            m_resultStatus = MessageRequestObserverInterface::Status::CANCELED;
+            break;
+        case HTTP2ResponseFinishedStatus::INTERNAL_ERROR:
+            m_resultStatus = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
+            break;
+        default:
+            ACSDK_ERROR(LX("unhandledHTTP2ResponseFinishedStatus").d("status", status));
+            m_resultStatus = MessageRequestObserverInterface::Status::INTERNAL_ERROR;
     }
 
-    m_messageRequest->sendCompleted(result);
+    if (!receivedResponseCode) {
+        m_messageRequest->responseStatusReceived(m_resultStatus);
+    }
+
+    m_messageRequest->sendCompleted(m_resultStatus);
 }
 
 }  // namespace acl

@@ -167,6 +167,31 @@ TEST(AVSDirectiveTest, test_parseWithEndpointCookie) {
     EXPECT_EQ(endpoint.cookies["key"], "value");
 }
 
+TEST(AVSDirectiveTest, test_getAttachementReaderCallIfAttachementManagerIsNullptr) {
+    // clang-format off
+    std::string directiveJson = R"({
+        "directive": {
+        "header": {
+            "namespace": "Namespace",
+            "name": "Name",
+            "messageId": "Id",
+            "correlationToken": "Token123",
+            "eventCorrelationToken": "Event123"
+        },
+        "payload": {
+            "key":"value"
+        }
+    }})";
+    // clang-format on
+
+    auto parseResult = AVSDirective::create(directiveJson, nullptr, "");
+    EXPECT_EQ(parseResult.second, AVSDirective::ParseStatus::SUCCESS);
+    ASSERT_THAT(parseResult.first, NotNull());
+
+    auto& directive = *parseResult.first;
+    ASSERT_THAT(directive.getAttachmentReader("Token123", sds::ReaderPolicy::NONBLOCKING), IsNull());
+}
+
 }  // namespace test
 }  // namespace avs
 }  // namespace avsCommon

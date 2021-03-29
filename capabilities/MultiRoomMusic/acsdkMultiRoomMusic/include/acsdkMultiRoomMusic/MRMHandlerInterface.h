@@ -23,7 +23,7 @@
 #include <AVSCommon/AVS/AVSDirective.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
+#include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
@@ -37,7 +37,9 @@ namespace mrm {
  * The api provided here is minimal and
  * sufficient with respect to integration with other AVS Client SDK components.
  */
-class MRMHandlerInterface : public avsCommon::utils::RequiresShutdown {
+class MRMHandlerInterface
+        : public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /**
      * Constructor.
@@ -70,13 +72,6 @@ public:
         const std::string& name,
         const std::string& messageId,
         const std::string& payload) = 0;
-
-    /**
-     * Function to handle if a speaker setting has changed.  MRM only needs to know the type of the speaker.
-     *
-     * @param type The type of the speaker which has changed.
-     */
-    virtual void onSpeakerSettingsChanged(const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type) = 0;
 
     /**
      * Function to be called when a System.UserInactivityReportSent Event has been sent to AVS.

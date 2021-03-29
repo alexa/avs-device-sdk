@@ -18,6 +18,8 @@
 
 #include <tuple>
 
+#include <AVSCommon/Utils/Logger/LoggerUtils.h>
+
 #include "acsdkManufactory/Component.h"
 #include "acsdkManufactory/Manufactory.h"
 #include "acsdkManufactory/internal/Utils.h"
@@ -33,6 +35,7 @@ inline std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
 
     using MissingExports = typename internal::RemoveTypes<std::tuple<Exports...>, std::tuple<Parameters...>>::type;
 
+    // coverity[set_but_not_used]
     ACSDK_STATIC_ASSERT_IS_SAME(
         std::tuple<>,
         MissingExports,
@@ -46,10 +49,26 @@ inline std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::create(
 }
 
 template <typename... Exports>
+template <typename... Superset>
+std::unique_ptr<Manufactory<Exports...>> Manufactory<Exports...>::createSubsetManufactory(
+    const std::shared_ptr<Manufactory<Superset...>>& input) {
+    using MissingExports = typename internal::RemoveTypes<std::tuple<Exports...>, std::tuple<Superset...>>::type;
+    ACSDK_STATIC_ASSERT_IS_SAME(std::tuple<>, MissingExports, "input does not provide all required exports...");
+    if (!input) {
+        avsCommon::utils::logger::acsdkError(
+            avsCommon::utils::logger::LogEntry("Manufactory", "createSubsetManufactoryFailed")
+                .d("reason", "nullSuperSetManufactory"));
+        return nullptr;
+    }
+    return Manufactory<Exports...>::create(input->m_runtimeManufactory);
+}
+
+template <typename... Exports>
 template <typename... Subset>
 inline std::unique_ptr<Manufactory<Subset...>> Manufactory<Exports...>::createSubsetManufactory() {
     using MissingExports = typename internal::RemoveTypes<std::tuple<Subset...>, std::tuple<Exports...>>::type;
 
+    // coverity[set_but_not_used]
     ACSDK_STATIC_ASSERT_IS_SAME(std::tuple<>, MissingExports, "Manufactory does not export all types in Subset...");
 
     return Manufactory<Subset...>::create(m_runtimeManufactory);

@@ -15,10 +15,10 @@
 
 #include <MediaPlayer/MediaPlayer.h>
 
-#include "acsdkGstreamerApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h"
+#include "acsdkApplicationAudioPipelineFactory/GstreamerApplicationAudioPipelineFactory.h"
 
 namespace alexaClientSDK {
-namespace acsdkGstreamerApplicationAudioPipelineFactory {
+namespace acsdkApplicationAudioPipelineFactory {
 
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkEqualizerInterfaces;
@@ -38,7 +38,7 @@ static const std::string TAG("GstreamerApplicationAudioPipelineFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
-GstreamerApplicationAudioPipelineFactory::create(
+GstreamerApplicationAudioPipelineFactory::createApplicationAudioPipelineFactoryInterface(
     const std::shared_ptr<ChannelVolumeFactoryInterface>& channelVolumeFactory,
     const std::shared_ptr<SpeakerManagerInterface>& speakerManager,
     const std::shared_ptr<EqualizerRuntimeSetupInterface>& equalizerRuntimeSetup,
@@ -173,5 +173,5 @@ GstreamerApplicationAudioPipelineFactory::GstreamerApplicationAudioPipelineFacto
         m_captionManager{captionManager} {
 }
 
-}  // namespace acsdkGstreamerApplicationAudioPipelineFactory
+}  // namespace acsdkApplicationAudioPipelineFactory
 }  // namespace alexaClientSDK

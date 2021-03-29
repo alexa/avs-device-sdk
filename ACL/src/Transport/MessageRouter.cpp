@@ -150,6 +150,13 @@ void MessageRouter::sendMessage(std::shared_ptr<MessageRequest> request) {
         ACSDK_ERROR(LX("sendFailed").d("reason", "nullRequest"));
         return;
     }
+
+    if (!request->isResolved()) {
+        ACSDK_ERROR(LX("sendFailed").d("reason", "requestNotReady"));
+        request->sendCompleted(MessageRequestObserverInterface::Status::BAD_REQUEST);
+        return;
+    }
+
     std::unique_lock<std::mutex> lock{m_connectionMutex};
     if (m_activeTransport) {
         m_requestQueue->enqueueRequest(request);

@@ -157,13 +157,13 @@ inline bool ChannelVolumeInterface::adjustUnduckedVolume(int8_t delta) {
     if (!getSpeakerSettings(&settings)) {
         return false;
     }
-    int8_t volume = settings.volume + delta;
+    int volume = static_cast<int>(settings.volume) + static_cast<int>(delta);
     if (volume > avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX) {
         return setUnduckedVolume(avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MAX);
     } else if (volume < avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN) {
         return setUnduckedVolume(avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN);
     }
-    return setUnduckedVolume(volume);
+    return setUnduckedVolume(static_cast<int8_t>(volume));
 }
 
 }  // namespace sdkInterfaces

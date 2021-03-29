@@ -672,9 +672,88 @@ private:
     };
 
     /**
-     * Common signature of functions used to call get<Type>() for all required types.
+     * A collection of GetWrappers. This class guarantees that a CookBook will only have one GetWrapper per TypeIndex
+     * (by maintaining a map of <TypeIndex, vector index of GetWrapper>), but also ensures that the order of
+     * instantiation for objects in the manufactory is predictable and consistent at runtime (by adding the GetWrappers
+     * to a vector, which will be iterated through when instantiating the objects).
+     *
+     * Simply iterating through a set of <TypeIndex, GetWrapper> is insufficient because when the SDK is loaded
+     * dynamically and ENABLE_RTTI=OFF, the TypeIndex value may actually change each time the SDK runs. This can lead
+     * to unpredictable instantiation order in the manufactory.
      */
-    using GetWrapper = bool (*)(RuntimeManufactory& runtimeManufactory);
+    class GetWrapperCollection {
+        /**
+         * Common signature of functions used to call get<Type>() for all required and primary types.
+         */
+        using GetWrapper = bool (*)(RuntimeManufactory& runtimeManufactory);
+
+        /// Aliases for readability.
+        using GetWrapperIterator =
+            std::vector<bool (*)(RuntimeManufactory&), std::allocator<bool (*)(RuntimeManufactory&)>>::iterator;
+        using ConstGetWrapperIterator =
+            std::vector<bool (*)(RuntimeManufactory&), std::allocator<bool (*)(RuntimeManufactory&)>>::const_iterator;
+
+    public:
+        /**
+         * Template function to append a @c GetWrapper for a given @c TypeIndex to this collection.
+         * @tparam Type The Type of value this @c GetWrapper will create.
+         * @param getWrapper  The @c GetWrapper for the given type.
+         * @return Whether appending was successful. If a @c GetWrapper for this @c Type is already part of the
+         * collection, then this fails.
+         */
+        template <typename Type>
+        bool append(GetWrapper getWrapper);
+
+        /**
+         * Append another @c GetWrapperCollection to this one. If this collection already contains one of the
+         * @c TypeIndex, that @c TypeIndex and associated @c GetWrapper will not be added, but the rest of the
+         * collection will still be processed.
+         */
+        void append(const std::shared_ptr<GetWrapperCollection>& collection);
+
+        /*
+         * Return iterator to beginning of m_getWrappers.
+         * @return iterator of beginning of m_getWrappers.
+         */
+        GetWrapperIterator begin();
+
+        /*
+         * Return iterator to end of m_getWrappers.
+         * @return iterator of end of m_getWrappers.
+         */
+        GetWrapperIterator end();
+
+        /*
+         * Return const_iterator to beginning of m_getWrappers.
+         * @return const_iterator of beginning of m_getWrappers.
+         */
+        ConstGetWrapperIterator cbegin() const;
+
+        /*
+         * Return const_iterator to end of m_getWrappers.
+         * @return const_iterator of end of m_getWrappers.
+         */
+        ConstGetWrapperIterator cend() const;
+
+        /*
+         * Return const_iterator to beginning of m_getWrappers.
+         * @return const_iterator of beginning of m_getWrappers.
+         */
+        ConstGetWrapperIterator begin() const;
+
+        /*
+         * Return const_iterator to end of m_getWrappers.
+         * @return const_iterator of end of m_getWrappers.
+         */
+        ConstGetWrapperIterator end() const;
+
+    private:
+        /// Map of TypeIndex to the index of the GetWrapper in m_orderedGetWrappers.
+        std::unordered_map<TypeIndex, std::size_t> m_types;
+
+        /// Vector of GetWrappers.
+        std::vector<GetWrapper> m_orderedGetWrappers;
+    };
 
     /**
      * Template type used to describe the signature of an std::function used to create instances.
@@ -773,11 +852,13 @@ private:
     /// Map from interface types to the recipe for getting an instance of that type.
     std::unordered_map<TypeIndex, std::shared_ptr<AbstractRecipe>> m_recipes;
 
-    /// Functions that need to be called to trigger @c get<Type>() calls for all primary types in this @ CookBook.
-    std::unordered_set<GetWrapper> m_primaryGets;
+    /// The collection of functions that need to be called to trigger @c get<Type>() calls for all primary types in this
+    /// @c CookBook.
+    std::shared_ptr<GetWrapperCollection> m_primaryGets;
 
-    /// Functions that need to be called to trigger @c get<Type>() calls for all required types in this @ CookBook.
-    std::unordered_set<GetWrapper> m_requiredGets;
+    /// The collection of  that need to be called to trigger @c get<Type>() calls for all required types in this @c
+    /// CookBook.
+    std::shared_ptr<GetWrapperCollection> m_requiredGets;
 };
 
 }  // namespace internal

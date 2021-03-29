@@ -609,7 +609,7 @@ TEST_F(LoggerTest, test_obfuscatedDataIsMangled) {
     auto presentInOriginalForm = g_log->m_lastText.find(TEST_MESSAGE_STRING) != std::string::npos;
     ASSERT_TRUE(presentInOriginalForm);
 
-    // a private value should not appear, the blacklist word itself should
+    // a private value should not appear, the denylist word itself should
     ACSDK_INFO(LX("testing metadata obfuscation")
                    .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
     auto lastLineAfterPrivateSubmission = g_log->m_lastText;

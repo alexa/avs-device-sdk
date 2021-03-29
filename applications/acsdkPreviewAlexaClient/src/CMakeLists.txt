@@ -10,7 +10,9 @@ target_include_directories(LibPreviewAlexaClient PUBLIC
 
 target_link_libraries(LibPreviewAlexaClient
         ${ACSDKALEXACOMMUNICATIONS_LIB}
+        ${ACSDKAPPLICATIONAUDIOPIPELINEFACTORY_LIB}
         ${ACSDKAUTHORIZATIONDELEGATE_LIB}
+        ${ACSDKBLUETOOTHIMPLEMENTATIONS_LIB}
         ${ACSDKDEVICESETTINGSMANAGER_LIB}
         ${ACSDKHTTPCONTENTFETCHER_LIB}
         ${ACSDKINTERNETCONNECTIONMONITOR_LIB}
@@ -26,14 +28,6 @@ target_link_libraries(LibPreviewAlexaClient
 
 if (EXTERNAL_MEDIA_ADAPTERS)
     target_link_libraries(LibPreviewAlexaClient acsdkExternalMediaPlayerAdapters)
-endif()
-
-if (ANDROID_MEDIA_PLAYER)
-    target_link_libraries(LibPreviewAlexaClient acsdkAndroidApplicationAudioPipelineFactory)
-elseif (GSTREAMER_MEDIA_PLAYER)
-    target_link_libraries(LibPreviewAlexaClient acsdkGstreamerApplicationAudioPipelineFactory)
-elseif (CUSTOM_MEDIA_PLAYER)
-    target_link_libraries(LibPreviewAlexaClient acsdkCustomApplicationAudioPipelineFactory)
 endif()
 
 add_rpath_to_target("LibPreviewAlexaClient")

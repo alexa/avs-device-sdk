@@ -412,6 +412,26 @@ public:
      * Should be called when the user wants to mute/unmute a call.
      */
     void muteCallToggle();
+
+    /**
+     * Should be called when the user wants to mute a call.
+     */
+    void muteSelf();
+
+    /**
+     * Should be called when the user wants to unmute a call.
+     */
+    void unmuteSelf();
+
+    /**
+     * Should be called when the user wants to enable the video of local device.
+     */
+    void enableVideo();
+
+    /**
+     * Should be called when the user wants to disable the video of local device.
+     */
+    void disableVideo();
 #endif
 
     /**

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(acsdkEqualizerInterfaces LANGUAGES CXX)
 
-include(${AVS_CORE}/build/BuildDefaults.cmake)
+include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
 
 add_library(acsdkEqualizerInterfaces INTERFACE)
 

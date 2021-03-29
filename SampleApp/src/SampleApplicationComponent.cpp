@@ -14,17 +14,16 @@
  */
 
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <acsdkManufactory/ConstructorAdapter.h>
 #include <ContextManager/ContextManager.h>
-#include <acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h>
 
 #ifdef ACSDK_ACS_UTILS
 #include <acsdkACSSampleApplicationOptions/ACSSampleApplicationOptionsComponent.h>
 #else
+#include <acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h>
 #include <acsdkDefaultSampleApplicationOptions/DefaultSampleApplicationOptionsComponent.h>
-#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
-
 #endif
+
+#include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 
 #include "SampleApp/LocaleAssetsManager.h"
 #include "SampleApp/SampleApplicationComponent.h"
@@ -47,8 +46,30 @@ static std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface> cre
     return uiManager;
 }
 
+/**
+ * Function that returns a factory to instantiate @c LocaleAssetsManagerInterface.
+ *
+ * @param requiresShutdownList - The vector of @c RequiresShutdown pointers to which the @c LocaleAssetsManager will be
+ * added.
+ * @return An std::function to instantiate @c LocaleAssetsManagerInterface.
+ */
+static std::function<std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>(
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>&)>
+getCreateLocaleAssetsManagerInterface(
+    std::vector<std::shared_ptr<avsCommon::utils::RequiresShutdown>>& requiresShutdownList) {
+    return
+        [&requiresShutdownList](const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configNode) {
+            auto manager = sampleApp::LocaleAssetsManager::createLocaleAssetsManager(configNode);
+            if (manager) {
+                requiresShutdownList.push_back(manager);
+            }
+            return manager;
+        };
+}
+
 SampleApplicationComponent getComponent(
     std::unique_ptr<avsCommon::avs::initialization::InitializationParameters> initParams,
+    std::vector<std::shared_ptr<avsCommon::utils::RequiresShutdown>>& requiresShutdownList,
     const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
     const std::shared_ptr<avsCommon::utils::logger::Logger>& logger) {
@@ -62,17 +83,16 @@ SampleApplicationComponent getComponent(
     /// Applications may also directly pass pre-built custom implementations of AuthDelegateInterface, Logger, or
     /// MetricRecorderInterface to the SampleApplicationOptionsComponent.
 #ifdef ACSDK_ACS_UTILS
-        .addComponent(acsdkACSSampleApplicationOptions::getComponent())
+        .addComponent(acsdkSampleApplication::getSampleApplicationOptionsComponent())
 #else
         .addComponent(
             acsdkSampleApplication::getSampleApplicationOptionsComponent(authDelegate, metricRecorder, logger))
-#endif
-
         /// These interfaces are implemented for the Sample App, but applications may want to customize these (e.g. the
         /// CBLAuthRequesterInterface).
         .addRetainedFactory(
             acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester::createCBLAuthRequesterInterface)
-        .addRetainedFactory(sampleApp::LocaleAssetsManager::createLocaleAssetsManagerInterface)
+#endif
+        .addRetainedFactory(getCreateLocaleAssetsManagerInterface(requiresShutdownList))
         .addRetainedFactory(sampleApp::UIManager::create)
         .addRetainedFactory(createUIManagerInterface)
 
@@ -80,9 +100,9 @@ SampleApplicationComponent getComponent(
         .addRetainedFactory(avsCommon::utils::DeviceInfo::createFromConfiguration)
         .addRetainedFactory(avsCommon::utils::configuration::ConfigurationNode::createRoot)
         .addUniqueFactory(avsCommon::utils::libcurlUtils::HttpPost::createHttpPostInterface)
+        .addRetainedFactory(avsCommon::utils::timing::MultiTimer::createMultiTimer)
         .addRetainedFactory(contextManager::ContextManager::createContextManagerInterface)
-        .addRetainedFactory(ConstructorAdapter<avsCommon::utils::timing::MultiTimer>::get())
-        .addRetainedFactory(ConstructorAdapter<registrationManager::CustomerDataManager>::get());
+        .addRetainedFactory(registrationManager::CustomerDataManager::createCustomerDataManager);
 }
 
 }  // namespace acsdkSampleApplication

@@ -33,6 +33,7 @@
 #include <acsdkAudioPlayer/AudioPlayer.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
+#include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
@@ -365,6 +366,7 @@ protected:
             std::make_shared<NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
             m_mockWakeWordConfirmationSetting,
             m_mockSpeechConfirmationSetting,
+            std::make_shared<avsCommon::avs::CapabilityChangeNotifier>(),
             nullptr,
             nullptr,
             AudioProvider::null(),

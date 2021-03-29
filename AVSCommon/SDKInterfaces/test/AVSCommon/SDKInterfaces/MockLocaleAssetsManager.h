@@ -32,6 +32,12 @@ class MockLocaleAssetsManager : public LocaleAssetsManagerInterface {
 public:
     MOCK_METHOD2(changeAssets, bool(const Locales& locale, const WakeWords& wakeWords));
     MOCK_METHOD0(cancelOngoingChange, void());
+    MOCK_METHOD1(addLocaleAssetsObserver, void(const std::shared_ptr<LocaleAssetsObserverInterface>& observer));
+    MOCK_METHOD1(removeLocaleAssetsObserver, void(const std::shared_ptr<LocaleAssetsObserverInterface>& observer));
+    MOCK_METHOD1(onConfigurationChanged, void(const avs::CapabilityConfiguration& configuration));
+    MOCK_METHOD1(
+        setEndpointRegistrationManager,
+        void(const std::shared_ptr<endpoints::EndpointRegistrationManagerInterface>& manager));
     MOCK_CONST_METHOD0(getDefaultSupportedWakeWords, WakeWordsSets());
     MOCK_CONST_METHOD0(getLanguageSpecificWakeWords, std::map<LanguageTag, WakeWordsSets>());
     MOCK_CONST_METHOD0(getLocaleSpecificWakeWords, std::map<Locale, WakeWordsSets>());

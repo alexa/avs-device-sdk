@@ -71,6 +71,8 @@ static const std::string TEST_MESSAGE =
     "{\"directive\":{\"header\":{\"namespace\":\"SpeechRecognizer\",\"name\":"
     "\"StopCapture\",\"messageId\":\"4e5612af-e05c-4611-8910-1e23f47ffb41\"},"
     "\"payload\":{}}}";
+/// The " char
+static const std::string QUOTE_CHAR = "\"";
 
 // The following *_LINES definitions are raw mime text for various test parts. Each one assumes that
 // it will be prefixed by a boundary and a CRLF. These get concatenated by constructTestMimeString()
@@ -228,17 +230,17 @@ TEST_F(MIMEParserTest, test_encodingSanity) {
  * Helper method to run boundary check tests.
  */
 void runDecodingBoundariesTest(
-    std::vector<std::pair<std::string, size_t>> partsToIndex,
-    std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders,
-    std::vector<std::string> testCaseExpectedData,
-    std::string boundary,
+    const std::vector<std::pair<std::string, size_t>>& partsToIndex,
+    const std::vector<std::multimap<std::string, std::string>>& testCaseExpectedHeaders,
+    const std::vector<std::string>& testCaseExpectedData,
+    const std::vector<std::string>& headers,
     HTTP2ReceiveDataStatus expectedStatus = HTTP2ReceiveDataStatus::SUCCESS) {
-    const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
     auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
     HTTP2MimeResponseDecoder decoder{sink};
     HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
-    bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
-    ASSERT_TRUE(resp);
+    for (auto header : headers) {
+        ASSERT_TRUE(decoder.onReceiveHeaderLine(header));
+    }
     decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
     // send the data part by part like the cloud does.
     for (auto part : partsToIndex) {
@@ -247,10 +249,156 @@ void runDecodingBoundariesTest(
         // this assertion is trying to detect if a partEnd call happened, we use m_index to detect that
         ASSERT_EQ(sink->m_index, part.second);
     }
-    ASSERT_EQ(expectedStatus, status);
     ASSERT_EQ(sink->m_index, partsToIndex.back().second);
     ASSERT_EQ(sink->m_headers, testCaseExpectedHeaders);
     ASSERT_EQ(sink->m_data, testCaseExpectedData);
+    ASSERT_EQ(expectedStatus, status);
+}
+
+/*
+ * Helper method to run boundary tests with a default payload, and provided headers
+ */
+void generatePayloadAndTest(const std::vector<std::string>& headers, const std::string& payloadBoundary) {
+    std::vector<std::pair<std::string, size_t>> parts = {
+        {"--" + payloadBoundary + "\r\ncontent-type: multipart/related\r\n\r\n", 0},
+        {"1111", 0},
+        {"2222", 0},
+        {"3333", 0},
+        {"\r\n--" + payloadBoundary, 1},  // the boundary is sent on its own and we want to detect a part end here.
+        {"\r\ncontent-type: multipart/related\r\n\r\nlast\r\n--" + payloadBoundary, 2},
+        {"--\r\n", 2}};
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
+    const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
+}
+
+/*
+ * Helper method to run boundary tests with a default payload, and provided boundary
+ */
+void generatePayloadAndTest(const std::string& headerBoundary, const std::string& payloadBoundary) {
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + headerBoundary};
+    generatePayloadAndTest(headers, payloadBoundary);
+}
+
+/*
+ * Given a partition and a payload, send each part of the payload individually.
+ * Assert if the parsing is correct and if the content is as expected.
+ */
+void runTestForCombination(std::vector<int>& partition, const std::string& payload, const std::string& boundary) {
+    // we can skip a combination that has a empty partition, this means that the same combination will appear elsewhere.
+    // example numberOfPartitions = 3 => [][a][bcd] is the same as numberOfPartitions = 2 => [a][bcd]
+    if (std::find(partition.begin(), partition.end(), 0) != partition.end()) {
+        return;
+    }
+
+    const std::vector<std::string> testCaseExpectedData = {"data"};
+    const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
+    auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
+    HTTP2MimeResponseDecoder decoder{sink};
+    HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
+    bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
+    ASSERT_TRUE(resp);
+    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+
+    size_t pIndex = 0;
+    for (size_t i = 0; i < partition.size(); i++) {
+        // send a part of the payload to the parser
+        status = decoder.onReceiveData(payload.c_str() + pIndex, partition[i]);
+        ASSERT_EQ(status, HTTP2ReceiveDataStatus::SUCCESS);
+        pIndex += partition[i];
+    }
+    // at the end of all parts check if the message contents is as expected.
+    ASSERT_EQ(sink->m_data, testCaseExpectedData);
+}
+
+void generateCombinationsAndRunTest(
+    std::vector<int>& partitions,
+    size_t pos,
+    size_t remaining,
+    const std::string& words,
+    const std::string& boundary) {
+    if (remaining == 0) {
+        runTestForCombination(partitions, words, boundary);
+        return;
+    }
+    if (pos == partitions.size()) {
+        return;
+    }
+    for (int i = remaining; i >= 0; --i) {
+        partitions[pos] = i;
+        generateCombinationsAndRunTest(partitions, pos + 1, remaining - i, words, boundary);
+    }
+}
+
+/*
+ * This test will split the payload into groups [abcd] of a given size k.
+ * We then vary k to have all possible group sizes.
+ * numberOfPartitions = 1 => [abcd]
+ * numberOfPartitions = 2 => [abc,d], [ab,cd], [a,bcd]
+ * until numberOfPartitions = payload.size (one char at a time)
+ */
+TEST_F(MIMEParserTest, test_multipleCombinations) {
+    std::string payload =
+        "--WWWoooAAA\r\nContent-Type: "
+        "application/json\r\n\r\ndata\r\n--WWWoooAAA--\r\n";
+    size_t numberOfPartitionsIncrement = 1;
+    // this test can be really slow, so the maxNumberOfPartitions is chosen so it can run fast
+    // if any potential problem is detected in MIME parser this can be changed to payload.length to run all possible
+    // combinations this will take at least 4 hours to run as it tests all possible combinations
+    size_t maxNumberOfPartitions = 3;
+
+    for (size_t numberOfPartitions = 1; numberOfPartitions <= maxNumberOfPartitions;
+         numberOfPartitions += numberOfPartitionsIncrement) {
+        std::vector<int> partitions(numberOfPartitions);
+        generateCombinationsAndRunTest(partitions, 0, payload.size(), payload, "WWWoooAAA");
+    }
+}
+
+/*
+ * Test: Sends the data in groups of fixed size (from 1 to the size of the payload)
+ *  example string: abcdef, group size = 3
+ *     [abc],[def]
+ * Expected Result: Pass
+ */
+TEST_F(MIMEParserTest, test_fixedSizeGroups) {
+    std::string parts =
+        "--whoLetTheDogsOut\r\ncharset: UTF-8\r\nContent-Type: "
+        "application/json\r\n\r\n{json-content1}\r\n--whoLetTheDogsOut\r\ncharset: UTF-8\r\nContent-Type: "
+        "application/json\r\n\r\n{json-content2}\r\n--whoLetTheDogsOut--\r\n";
+
+    const std::vector<std::string> testCaseExpectedData = {"{json-content1}", "{json-content2}"};
+
+    for (size_t groupSize = 1; groupSize <= parts.size(); groupSize++) {
+        const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + "whoLetTheDogsOut"};
+        auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
+        HTTP2MimeResponseDecoder decoder{sink};
+        HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
+        bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
+        ASSERT_TRUE(resp);
+        decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+
+        std::vector<std::string> groups;
+        int nGroups = (parts.size() + groupSize - 1) / groupSize;
+        for (int i = 0; i < nGroups; i++) {
+            groups.push_back("");
+        }
+
+        int currentGroup = 0;
+        for (size_t i = 0; i < parts.size(); ++i) {
+            if (i != 0 && i % groupSize == 0) {
+                currentGroup++;
+            }
+            groups[currentGroup] = groups[currentGroup] + parts[i];
+        }
+
+        // send the data part by part
+        for (auto part : groups) {
+            status = decoder.onReceiveData(part.c_str(), part.size());
+            ASSERT_EQ(status, HTTP2ReceiveDataStatus::SUCCESS);
+        }
+        ASSERT_EQ(sink->m_data, testCaseExpectedData);
+    }
 }
 
 /*
@@ -270,11 +418,12 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithoutCRLF) {
                                                          {"\r\ncontent-type: multipart/related\r\n\r\n", 1},
                                                          {"Part2\r\n", 1},
                                                          {"--wooohooo--\r\n", 1}};
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"Part1"};
     runDecodingBoundariesTest(
-        parts, testCaseExpectedHeaders, testCaseExpectedData, boundary, HTTP2ReceiveDataStatus::ABORT);
+        parts, testCaseExpectedHeaders, testCaseExpectedData, headers, HTTP2ReceiveDataStatus::ABORT);
 }
 
 /*
@@ -296,7 +445,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithTerminatorShouldIg
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"Part1"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -318,7 +468,115 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendDuplicatedBoundaryAsHeader) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart2/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"Part1", "Part2"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
+}
+
+/*
+ * Test: sends boundaries using the allowed chars
+ * Expected Result: all cases pass
+ */
+TEST_F(MIMEParserTest, test_decodingRandomBoundaries) {
+    const std::string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'()+_,-.:=?";
+    std::random_device random_device;
+    std::mt19937 generator(random_device());
+    std::uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
+
+    for (size_t length = 5; length < 50; length++) {
+        std::string quotedRandomBoundary = QUOTE_CHAR;
+        std::string randomBoundary = "";
+        for (std::size_t i = 0; i < length; ++i) {
+            char newChar = CHARACTERS[distribution(generator)];
+            quotedRandomBoundary += newChar;
+            randomBoundary += newChar;
+        }
+        quotedRandomBoundary += QUOTE_CHAR;
+        generatePayloadAndTest(quotedRandomBoundary, randomBoundary);
+        generatePayloadAndTest(randomBoundary, randomBoundary);
+    }
+}
+
+/*
+ * The RFC is not extra clear on the quoted boundary cases, so we are being lenient
+ * when there's a quote inside the boundary we ignore what's after the second quote and process the rest
+ * using the same rule as the unquoted case.
+ */
+TEST_F(MIMEParserTest, test_decodingBoundariesWithQuotesAndMoreHeaders) {
+    std::string payloadBoundary = "mybou";
+    std::string unquotedBoundary = payloadBoundary + QUOTE_CHAR + "ndary";
+    std::string quotedBoundary = QUOTE_CHAR + unquotedBoundary + QUOTE_CHAR;
+    std::vector<std::string> headerAfterBoundary = {"", ";otherprop=yes", " somethingelse"};
+    for (auto extraHeader : headerAfterBoundary) {
+        std::string boundaryHeader = quotedBoundary + extraHeader;
+        generatePayloadAndTest(boundaryHeader, payloadBoundary);
+    }
+}
+
+/*
+ * Test: sends invalid boundaries
+ * Expected Result: all cases should fail
+ */
+TEST_F(MIMEParserTest, test_decodingInvalidBoundaries) {
+    std::vector<std::string> headerAfterBoundary = {"", ";otherprop=yes", " somethingelse"};
+    std::vector<std::string> invalid_boundaries = {
+        "",
+        "thisstringhasmorethanseventycharacterssoitsinvalid123123123123123123123",
+        "^invalidchar",
+        "\"^invalidchar\""};
+    for (auto boundary : invalid_boundaries) {
+        for (auto header : headerAfterBoundary) {
+            const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary + header};
+            auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
+            HTTP2MimeResponseDecoder decoder{sink};
+            ASSERT_FALSE(decoder.onReceiveHeaderLine(boundaryHeader));
+        }
+    }
+}
+
+/*
+ * Test: sends a header without boundary followed by a header with a bondary
+ * Expected Result: pass
+ */
+TEST_F(MIMEParserTest, test_decodingBoundaryAfteraNonBoundaryHeader) {
+    std::string boundary = "myboundary";
+    const std::vector<std::string> headers = {"content-type:nana;myprop:abc\r\n", BOUNDARY_HEADER_PREFIX + boundary};
+    generatePayloadAndTest(headers, boundary);
+}
+
+/*
+ * Test: sends a header without boundary followed by a header with a bondary
+ * Expected Result: pass
+ */
+TEST_F(MIMEParserTest, test_decodingValidBoundariesWithMoreHeaders) {
+    std::vector<std::string> headerAfterBoundary = {"", ";otherprop=yes", " somethingelse"};
+    std::string boundary = "myboundary";
+    for (auto header : headerAfterBoundary) {
+        const std::string boundaryHeader{boundary + header};
+        generatePayloadAndTest(boundaryHeader, boundary);
+    }
+}
+
+/*
+ * Test: sends a boundary terminated by CRLF (real server case)
+ * Expected Result: pass
+ */
+TEST_F(MIMEParserTest, test_decodingBoundaryTerminatedWithCRLF) {
+    const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
+        {{"content-type", "application/json"}}};
+    const std::vector<std::string> testCaseExpectedData = {"data"};
+    const std::string boundaryHeader = "content-type: multipart/related; boundary=directives\r\n";
+    std::string payload = "--directives\r\ncontent-type: application/json\r\n\r\ndata";
+    auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
+    HTTP2MimeResponseDecoder decoder{sink};
+    HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
+    bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
+    ASSERT_TRUE(resp);
+    decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
+    // send the data part by part like the cloud does.
+    status = decoder.onReceiveData(payload.c_str(), payload.size());
+    ASSERT_EQ(sink->m_headers, testCaseExpectedHeaders);
+    ASSERT_EQ(sink->m_data, testCaseExpectedData);
+    ASSERT_EQ(status, HTTP2ReceiveDataStatus::SUCCESS);
 }
 
 /*
@@ -341,7 +599,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesAvs) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -364,7 +623,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendFakeBoundaryAsData) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"1111aa--wooohooo2222", "last"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -385,7 +645,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendFakeBoundaryAsOnlyData) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"aa--wooohooo", "last"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -409,7 +670,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithCRLF) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -431,7 +693,8 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendEndBoundaryWithoutCRLF) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}, {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"111122223333", "last"};
-    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, boundary);
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
+    runDecodingBoundariesTest(parts, testCaseExpectedHeaders, testCaseExpectedData, headers);
 }
 
 /*
@@ -453,8 +716,9 @@ TEST_F(MIMEParserTest, test_decodingBoundariesSendBoundaryWithData) {
     const std::vector<std::multimap<std::string, std::string>> testCaseExpectedHeaders = {
         {{"content-type", "multipart/related"}}};
     const std::vector<std::string> testCaseExpectedData = {"1111"};
+    const std::vector<std::string> headers = {BOUNDARY_HEADER_PREFIX + boundary};
     runDecodingBoundariesTest(
-        parts, testCaseExpectedHeaders, testCaseExpectedData, boundary, HTTP2ReceiveDataStatus::ABORT);
+        parts, testCaseExpectedHeaders, testCaseExpectedData, headers, HTTP2ReceiveDataStatus::ABORT);
 }
 
 TEST_F(MIMEParserTest, test_decodingSanity) {

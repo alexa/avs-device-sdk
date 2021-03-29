@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(acsdkStartupManagerInterfaces LANGUAGES CXX)
 
+include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
+
 add_library(acsdkStartupManagerInterfaces INTERFACE)
 
 target_include_directories(acsdkStartupManagerInterfaces INTERFACE

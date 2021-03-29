@@ -21,9 +21,12 @@
 #include <string>
 #include <unordered_set>
 
+#include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 #include <acsdkManufactory/Annotated.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockNotifierInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/FocusState.h>
@@ -35,14 +38,12 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
-#include <AVSCommon/SDKInterfaces/SystemClockMonitorObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
-#include <AVSCommon/Utils/Timing/SystemClockMonitor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <RegistrationManager/CustomerDataManager.h>
@@ -67,14 +68,15 @@ class AlertsCapabilityAgent
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public avsCommon::sdkInterfaces::FocusManagerObserverInterface
-        , public avsCommon::sdkInterfaces::SystemClockMonitorObserverInterface
         , public acsdkAlertsInterfaces::AlertObserverInterface
+        , public acsdkAlertsInterfaces::AlertsCapabilityAgentInterface
+        , public acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public registrationManager::CustomerDataHandler
         , public std::enable_shared_from_this<AlertsCapabilityAgent> {
 public:
     /**
-     * Factory method that creates a new @c AlertsCapabilityAgent.
+     * Factory method that creates a new @c AlertsCapabilityAgentInterface.
      *
      * @param alertRenderer An alert renderer, which Alerts will use to generate user-perceivable effects when active.
      * @param shutdownNotifier An object to notify this CA when to shut down.
@@ -97,7 +99,7 @@ public:
      * this is set to false, no alert scheduling will occur until onSystemClockSynchronized is called.
      * @return A pointer to an object of this type, or nullptr if there were problems during construction.
      */
-    static std::shared_ptr<AlertsCapabilityAgent> createAlertsCapabilityAgent(
+    static std::shared_ptr<AlertsCapabilityAgentInterface> createAlertsCapabilityAgent(
         const std::shared_ptr<acsdkAlerts::renderer::Renderer>& alertRenderer,
         const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
         const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
@@ -114,7 +116,7 @@ public:
             avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
             avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
         const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
-        const std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>& systemClockMonitor,
+        const std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>& systemClockMonitor,
         const std::shared_ptr<certifiedSender::CertifiedSender>& certifiedSender,
         const std::shared_ptr<registrationManager::CustomerDataManager>& dataManager,
         const std::shared_ptr<settings::DeviceSettingsManager>& settingsManager,
@@ -160,7 +162,7 @@ public:
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
         bool startAlertSchedulingOnInitialization = true,
-        std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor> systemClockMonitor = nullptr);
+        std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface> systemClockMonitor = nullptr);
 
     /// @name CapabilityAgent Functions
     /// @{
@@ -210,37 +212,21 @@ public:
     void onSystemClockSynchronized() override;
     /// @}
 
-    /**
-     * Adds an observer to be notified of alert status changes.
-     *
-     * @param observer The observer to add.
-     */
-    void addObserver(std::shared_ptr<acsdkAlertsInterfaces::AlertObserverInterface> observer);
-
-    /**
-     * Removes an observer from being notified of alert status changes.
-     *
-     * @param observer The observer to remove.
-     */
-    void removeObserver(std::shared_ptr<acsdkAlertsInterfaces::AlertObserverInterface> observer);
-
-    /**
-     * A function that allows an application to clear all alerts from storage.  This may be useful for a scenario
-     * where a user logs out of a device, and another user will log in.  As the first user logs out, their pending
-     * alerts should not go off.
-     */
-    void removeAllAlerts();
-
-    /**
-     * This function provides a way for application code to request this object stop any active alert as the result
-     * of a user action, such as pressing a physical 'stop' button on the device.
-     */
-    void onLocalStop();
-
+    /// @name CustomerDataHandler Functions
+    /// @{
     /**
      * Clear all scheduled alerts.
      */
     void clearData() override;
+    /// @}
+
+    /// @name AlertsCapabilityAgentInterface Functions
+    /// @{
+    void addObserver(std::shared_ptr<acsdkAlertsInterfaces::AlertObserverInterface> observer) override;
+    void removeObserver(std::shared_ptr<acsdkAlertsInterfaces::AlertObserverInterface> observer) override;
+    void removeAllAlerts() override;
+    void onLocalStop() override;
+    /// @}
 
     /**
      * Return the alarm volume ramp event metadata.
@@ -290,7 +276,7 @@ private:
         std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
-        std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor> systemClockMonitor);
+        std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface> systemClockMonitor);
 
     void doShutdown() override;
 
@@ -654,7 +640,7 @@ private:
     std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
 
     /// The system clock monitor.
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor> m_systemClockMonitor;
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface> m_systemClockMonitor;
 };
 
 }  // namespace acsdkAlerts

@@ -20,6 +20,7 @@
 #include "acsdkAlerts/Renderer/RendererObserverInterface.h"
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -59,12 +60,14 @@ public:
      * @param audioPipelineFactory The @c ApplicationAudioPlayerInterface instance to use to create the notifications
      * media player for rendering audio.
      * @param metricRecorder the metric recorder.
+     * @param shutdownNotifier the @c ShutdownNotifier to notify if a shutdown occurred.
      * @return The @c Renderer object.
      */
     static std::shared_ptr<Renderer> createAlertRenderer(
         const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
             audioPipelineFactory,
-        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier);
 
     /**
      * Creates a @c Renderer.

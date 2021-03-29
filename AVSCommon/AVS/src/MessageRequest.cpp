@@ -14,6 +14,7 @@
  */
 
 #include "AVSCommon/AVS/MessageRequest.h"
+#include "AVSCommon/AVS/EditableMessageRequest.h"
 #include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
@@ -42,11 +43,22 @@ MessageRequest::MessageRequest(
     const std::string& jsonContent,
     bool isSerialized,
     const std::string& uriPathExtension,
-    std::vector<std::pair<std::string, std::string>> headers) :
+    std::vector<std::pair<std::string, std::string>> headers,
+    MessageRequestResolveFunction resolver) :
         m_jsonContent{jsonContent},
         m_isSerialized{isSerialized},
         m_uriPathExtension{uriPathExtension},
-        m_headers(std::move(headers)) {
+        m_headers(std::move(headers)),
+        m_resolver{resolver} {
+}
+
+MessageRequest::MessageRequest(const MessageRequest& messageRequest) :
+        m_jsonContent{messageRequest.m_jsonContent},
+        m_isSerialized{messageRequest.m_isSerialized},
+        m_uriPathExtension{messageRequest.m_uriPathExtension},
+        m_readers{messageRequest.m_readers},
+        m_headers{messageRequest.m_headers},
+        m_resolver{messageRequest.m_resolver} {
 }
 
 MessageRequest::~MessageRequest() {
@@ -80,13 +92,23 @@ int MessageRequest::attachmentReadersCount() const {
     return m_readers.size();
 }
 
-std::shared_ptr<MessageRequest::NamedReader> MessageRequest::getAttachmentReader(size_t index) {
+std::shared_ptr<MessageRequest::NamedReader> MessageRequest::getAttachmentReader(size_t index) const {
     if (m_readers.size() <= index) {
         ACSDK_ERROR(LX("getAttachmentReaderFailed").d("reason", "index out of bound").d("index", index));
         return nullptr;
     }
 
     return m_readers[index];
+}
+
+void MessageRequest::responseStatusReceived(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
+    std::unique_lock<std::mutex> lock{m_observerMutex};
+    auto observers = m_observers;
+    lock.unlock();
+
+    for (auto observer : observers) {
+        observer->onResponseStatusReceived(status);
+    }
 }
 
 void MessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) {
@@ -134,6 +156,25 @@ void MessageRequest::removeObserver(
 
 const std::vector<std::pair<std::string, std::string>>& MessageRequest::getHeaders() const {
     return m_headers;
+}
+
+bool MessageRequest::isResolved() const {
+    return !m_resolver;
+}
+
+std::shared_ptr<MessageRequest> MessageRequest::resolveRequest(const std::string& resolveKey) const {
+    if (m_resolver) {
+        auto editableReq = std::make_shared<EditableMessageRequest>(*this);
+        if (m_resolver(editableReq, resolveKey)) {
+            // Set MessageRequest to resolved state
+            editableReq->setMessageRequestResolveFunction(nullptr);
+            return editableReq;
+        }
+        ACSDK_ERROR(LX("Failed to resolve MessageRequest."));
+        return nullptr;
+    }
+    ACSDK_ERROR(LX("ResolveRequest is called for a resolved MessageRequest."));
+    return nullptr;
 }
 
 }  // namespace avs

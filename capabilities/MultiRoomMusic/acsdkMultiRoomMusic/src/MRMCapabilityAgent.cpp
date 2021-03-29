@@ -237,7 +237,7 @@ void MRMCapabilityAgent::onSpeakerSettingsChanged(
     const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
     const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG5(LX(__func__).d("type", type));
-    m_executor.submit([this, type]() { executeOnSpeakerSettingsChanged(type); });
+    m_executor.submit([this, source, type, settings]() { executeOnSpeakerSettingsChanged(source, type, settings); });
 }
 
 void MRMCapabilityAgent::onCallStateChange(avsCommon::sdkInterfaces::CallStateObserverInterface::CallState callState) {
@@ -294,9 +294,11 @@ void MRMCapabilityAgent::executeHandleDirectiveImmediately(std::shared_ptr<Direc
 }
 
 void MRMCapabilityAgent::executeOnSpeakerSettingsChanged(
-    const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type) {
+    const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
+    const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
+    const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG5(LX(__func__));
-    m_mrmHandler->onSpeakerSettingsChanged(type);
+    m_mrmHandler->onSpeakerSettingsChanged(source, type, settings);
 }
 
 void MRMCapabilityAgent::executeOnUserInactivityReportSent() {

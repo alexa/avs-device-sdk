@@ -14,8 +14,6 @@
  */
 
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <acsdkManufactory/ConstructorAdapter.h>
-#include <acsdkNotifier/Notifier.h>
 #include <acsdkShutdownManager/ShutdownManager.h>
 #include <acsdkShutdownManager/ShutdownNotifier.h>
 #include <acsdkStartupManager/StartupManager.h>
@@ -41,13 +39,12 @@ using namespace avsCommon::utils::timing;
 SharedComponent getComponent() {
     return ComponentAccumulator<>()
         .addRetainedFactory(ConfigurationNode::createRoot)
-        .addRetainedFactory(ConstructorAdapter<MultiTimer>::get())
+        .addRetainedFactory(avsCommon::utils::timing::MultiTimer::createMultiTimer)
         .addUniqueFactory(HttpPost::createHttpPostInterface)
         .addRetainedFactory(ShutdownManager::createShutdownManagerInterface)
-        .addRetainedFactory(ConstructorAdapter<ShutdownNotifierInterface, ShutdownNotifier>::get())
+        .addRetainedFactory(ShutdownNotifier::createShutdownNotifierInterface)
         .addRetainedFactory(StartupManager::createStartupManagerInterface)
-        .addRetainedFactory(ConstructorAdapter<StartupNotifierInterface, StartupNotifier>::get())
-        .addRetainedFactory(SystemClockMonitor::createSystemClockMonitor);
+        .addRetainedFactory(StartupNotifier::createStartupNotifierInterface);
 }
 
 }  // namespace acsdkShared

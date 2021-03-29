@@ -5,12 +5,14 @@ SET(LIBRARIES
         acsdkApplicationAudioPipelineFactoryInterfaces
         acsdkManufactory
         acsdkShutdownManagerInterfaces
+        acsdkSystemClockMonitorInterfaces
         ApplicationAudioPipelineFactoryTestLib
         AVSCommon
         AVSCommonTestLib
         DeviceSettingsTests
         RegistrationManager
         UtilsCommonTestLib
+        ShutdownManagerTestLib
         SDKInterfacesTests)
 
 discover_unit_tests("" "${LIBRARIES}")

@@ -18,7 +18,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/WaitEvent.h>
@@ -28,7 +28,7 @@
 #include <CapabilitiesDelegate/Utils/DiscoveryUtils.h>
 
 #include "MockAuthDelegate.h"
-#include "MockCapabilitiesObserver.h"
+#include "MockCapabilitiesDelegateObserver.h"
 #include "MockCapabilitiesStorage.h"
 #include "MockDiscoveryEventSender.h"
 
@@ -138,8 +138,8 @@ protected:
     /// The mock Capabilities Storage instance.
     std::shared_ptr<MockCapabilitiesDelegateStorage> m_mockCapabilitiesStorage;
 
-    /// The mock Capabilities observer instance.
-    std::shared_ptr<MockCapabilitiesObserver> m_mockCapabilitiesObserver;
+    /// The mock CapabilitiesDelegate observer instance.
+    std::shared_ptr<MockCapabilitiesDelegateObserver> m_mockCapabilitiesDelegateObserver;
 
     /// The data manager required to build the base object
     std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
@@ -154,7 +154,7 @@ protected:
 void CapabilitiesDelegateTest::SetUp() {
     m_mockCapabilitiesStorage = std::make_shared<StrictMock<MockCapabilitiesDelegateStorage>>();
     m_mockAuthDelegate = std::make_shared<StrictMock<MockAuthDelegate>>();
-    m_mockCapabilitiesObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
+    m_mockCapabilitiesDelegateObserver = std::make_shared<StrictMock<MockCapabilitiesDelegateObserver>>();
     m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
     m_mockMessageSender = std::make_shared<StrictMock<avsCommon::sdkInterfaces::test::MockMessageSender>>();
 
@@ -164,19 +164,19 @@ void CapabilitiesDelegateTest::SetUp() {
     ASSERT_NE(m_capabilitiesDelegate, nullptr);
 
     /// Add a new observer and it receives notifications of the current capabilities state.
-    m_mockCapabilitiesObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    m_mockCapabilitiesDelegateObserver = std::make_shared<StrictMock<MockCapabilitiesDelegateObserver>>();
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
-    m_capabilitiesDelegate->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    m_capabilitiesDelegate->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
     m_capabilitiesDelegate->setMessageSender(m_mockMessageSender);
 }
 
@@ -229,12 +229,15 @@ void CapabilitiesDelegateTest::addEndpoint(
         .WillOnce(Return(true));
 
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, _, _))
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+            _,
+            _))
         .Times(1)
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) { e.wakeUp(); }));
 
@@ -327,15 +330,15 @@ TEST_F(CapabilitiesDelegateTest, test_addCapabilitiesObserver) {
     m_capabilitiesDelegate->addCapabilitiesObserver(nullptr);
 
     /// Add a new observer and it receives notifications of the current capabilities state.
-    auto mockObserver = std::make_shared<StrictMock<MockCapabilitiesObserver>>();
+    auto mockObserver = std::make_shared<StrictMock<MockCapabilitiesDelegateObserver>>();
 
     EXPECT_CALL(*mockObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
@@ -355,13 +358,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompleted) {
     EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(true));
     EXPECT_CALL(*m_mockCapabilitiesStorage, erase(deleteReportEndpoints)).WillOnce(Return(true));
 
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::SUCCESS);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
 
             std::sort(addOrUpdateReportEndpointIdentifiers.begin(), addOrUpdateReportEndpointIdentifiers.end());
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, (std::vector<std::string>{"add_1", "update_1"}));
@@ -372,7 +375,7 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompleted) {
     m_capabilitiesDelegate->onDiscoveryCompleted(addOrUpdateReportEndpoints, deleteReportEndpoints);
 
     /// Check removing observer does not send notifications to the observer.
-    m_capabilitiesDelegate->removeCapabilitiesObserver(m_mockCapabilitiesObserver);
+    m_capabilitiesDelegate->removeCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
 
     EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(true));
     EXPECT_CALL(*m_mockCapabilitiesStorage, erase(deleteReportEndpoints)).WillOnce(Return(true));
@@ -391,13 +394,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompletedButStorageFails) {
 
     EXPECT_CALL(*m_mockCapabilitiesStorage, store(addOrUpdateReportEndpoints)).WillOnce(Return(false));
 
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::FATAL_ERROR);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR);
 
             std::sort(addOrUpdateReportEndpointIdentifiers.begin(), addOrUpdateReportEndpointIdentifiers.end());
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, (std::vector<std::string>{"add_1", "update_1"}));
@@ -413,13 +416,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryCompletedButStorageFails) {
  */
 TEST_F(CapabilitiesDelegateTest, test_onDiscoveryFailure) {
     /// validate retriable error response
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::RETRIABLE_ERROR);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::SERVER_INTERNAL_ERROR);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::SERVER_INTERNAL_ERROR);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
@@ -427,13 +430,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryFailure) {
     m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
 
     /// validate invalid auth error response
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::FORBIDDEN);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::FATAL_ERROR);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::FORBIDDEN);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
@@ -441,13 +444,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryFailure) {
     m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::INVALID_AUTH);
 
     /// validate bad request error response
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::FATAL_ERROR);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::BAD_REQUEST);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::FATAL_ERROR);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::BAD_REQUEST);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
@@ -455,13 +458,13 @@ TEST_F(CapabilitiesDelegateTest, test_onDiscoveryFailure) {
     m_capabilitiesDelegate->onDiscoveryFailure(MessageRequestObserverInterface::Status::BAD_REQUEST);
 
     /// other responses
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::RETRIABLE_ERROR);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNKNOWN_ERROR);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
@@ -533,13 +536,13 @@ TEST_F(CapabilitiesDelegateTest, test_dynamicAddOrUpdateEndpoint) {
         .WillOnce(Return(true));
 
     /// Expect callback to CapabilitiesObserver.
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
-            EXPECT_EQ(state, CapabilitiesObserverInterface::State::SUCCESS);
-            EXPECT_EQ(error, CapabilitiesObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
             EXPECT_EQ(addedEndpoints, (std::vector<std::string>{"endpointId"}));
             EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
 
@@ -605,13 +608,13 @@ TEST_F(CapabilitiesDelegateTest, test_dynamicDeleteEndpoint) {
         .WillOnce(Return(true));
 
     /// Expect callback to CapabilitiesObserver.
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
-            EXPECT_EQ(state, CapabilitiesObserverInterface::State::SUCCESS);
-            EXPECT_EQ(error, CapabilitiesObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
             EXPECT_EQ(addedEndpoints, (std::vector<std::string>{}));
             EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{"deleteId"}));
             e.wakeUp();
@@ -681,29 +684,29 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithPendingEndpo
                 storedEndpoints->insert({endpointAttributes.endpointId, endpointConfig});
                 return true;
             }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
     instance->addOrUpdateEndpoint(endpointAttributes, capabilityConfigs);
 
     /// Endpoint config is same as the endpoint config created with the test endpoint attributes so a
     /// post connect operation is not created. However, we do expect an observer callback as there were pending
     /// endpoints.
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             std::vector<std::string>{endpointAttributes.endpointId},
             _));
     auto publisher = instance->createPostConnectOperation();
@@ -735,29 +738,29 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithoutPendingEn
                 storedEndpoints->insert({endpointAttributes.endpointId, endpointConfig});
                 return true;
             }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
 
     /// Add the endpoint here before creating the initial post-connect, which forces the endpoint to be cached in
     /// CapabilitiesDelegate.
     /// Here we do expect an observer callback because there is a pending endpoint. This is test set-up.s
     instance->addOrUpdateEndpoint(endpointAttributes, capabilityConfigs);
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             std::vector<std::string>{endpointAttributes.endpointId},
             _));
     auto publisher = instance->createPostConnectOperation();
@@ -805,19 +808,19 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationCachesEndpoints)
                 /// time, we can verify that it creates a non-null post-connect publisher to send the cached endpoint.
                 return true;
             }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
 
     /// Endpoint config is same as the endpoint config created with the test endpoint attributes so a
     /// post connect operation is not created, but we add the endpoint here so that it is cached in CapabilitiesDelegate
@@ -825,10 +828,10 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationCachesEndpoints)
     /// Expect an observer callback here, since there is a pending endpoint.
     instance->addOrUpdateEndpoint(endpointAttributes, capabilityConfigs);
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             std::vector<std::string>{endpointAttributes.endpointId},
             _));
     auto publisher = instance->createPostConnectOperation();
@@ -882,28 +885,28 @@ TEST_F(
             storedEndpoints->insert({staleEndpointAttributes.endpointId, staleEndpointConfig});
             return true;
         }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
 
     /// Endpoint config is same as the endpoint config created with the test endpoint attributes so a
     /// post connect operation is not created, but add it here so that it is cached in CapabilitiesDelegate.
     instance->addOrUpdateEndpoint(endpointAttributes, capabilityConfigs);
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             std::vector<std::string>{endpointAttributes.endpointId},
             _));
     auto publisher = instance->createPostConnectOperation();
@@ -940,19 +943,19 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithStaleEndpoin
             storedEndpoints->insert({staleEndpointAttributes.endpointId, staleEndpointConfig});
             return true;
         }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
 
     /// There is a stale endpoint to be deleted, so we expect a non-null post connect publisher.
     auto publisher = instance->createPostConnectOperation();
@@ -996,28 +999,28 @@ TEST_F(
                 storedEndpoints->insert({staleEndpointAttributes.endpointId, staleEndpointConfig});
                 return true;
             }));
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([](CapabilitiesObserverInterface::State newState,
-                            CapabilitiesObserverInterface::Error newError,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
                             std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
                             std::vector<std::string> deleteReportEndpointIdentifiers) {
-            EXPECT_EQ(newState, CapabilitiesObserverInterface::State::UNINITIALIZED);
-            EXPECT_EQ(newError, CapabilitiesObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
             EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
             EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
         }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addCapabilitiesObserver(m_mockCapabilitiesObserver);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
     instance->addOrUpdateEndpoint(unchangedEndpointAttributes, unchangedCapabilityConfigs);
 
     /// Observer callback should only contain the pending endpoint to add (since that is already registered),
     /// but not the stale endpoint to delete (since that still needs to be sent to AVS).
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS,
-            CapabilitiesObserverInterface::Error::SUCCESS,
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
             std::vector<std::string>{unchangedEndpointAttributes.endpointId},
             std::vector<std::string>{}));
 
@@ -1193,13 +1196,13 @@ TEST_F(CapabilitiesDelegateTest, test_reconnectWhenStorageIsEmpty) {
         .WillOnce(Return(true));
 
     /// Expect calls to CapabilitiesObserver.
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
-            EXPECT_EQ(state, CapabilitiesObserverInterface::State::SUCCESS);
-            EXPECT_EQ(error, CapabilitiesObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
 
             std::sort(addedEndpoints.begin(), addedEndpoints.end());
             EXPECT_EQ(addedEndpoints, (std::vector<std::string>{firstEndpointId, secondEndpointId}));
@@ -1265,7 +1268,7 @@ TEST_F(CapabilitiesDelegateTest, test_deferSendDiscoveryEventsWhileDiscoveryEven
 
     /// Expect no callback to CapabilitiesObserver, since these endpoints remain in pending.
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
             _, _, std::vector<std::string>{firstEndpointId}, std::vector<std::string>{secondEndpointId}))
         .Times(0);
@@ -1317,21 +1320,24 @@ TEST_F(CapabilitiesDelegateTest, test_observerCallingIntoCapabilitiesDelegateOnS
 
     /// On the first successful capabilities change, call from observer back into CapabilitiesDelegate.
     EXPECT_CALL(
-        *m_mockCapabilitiesObserver,
+        *m_mockCapabilitiesDelegateObserver,
         onCapabilitiesStateChange(
-            CapabilitiesObserverInterface::State::SUCCESS, CapabilitiesObserverInterface::Error::SUCCESS, _, _))
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+            _,
+            _))
         .Times(2)
         .WillOnce(Invoke([&, this](
-                             CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+                             CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
             /// If the below is false with "endpoint not registered", this means that the CapabilitiesDelegate
             /// state is not correct when it notifies its observers.
             ASSERT_TRUE(m_capabilitiesDelegate->deleteEndpoint(endpointAttributes, {capabilityConfig}));
         }))
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) { e.wakeUp(); }));
 
@@ -1395,13 +1401,13 @@ TEST_F(CapabilitiesDelegateTest, test_reconnectTriggersSendPendingEndpoints) {
         .WillOnce(Return(true));
 
     /// Expect calls to CapabilitiesObserver.
-    EXPECT_CALL(*m_mockCapabilitiesObserver, onCapabilitiesStateChange(_, _, _, _))
-        .WillOnce(Invoke([&](CapabilitiesObserverInterface::State state,
-                             CapabilitiesObserverInterface::Error error,
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
                              std::vector<std::string> addedEndpoints,
                              std::vector<std::string> deletedEndpoints) {
-            EXPECT_EQ(state, CapabilitiesObserverInterface::State::SUCCESS);
-            EXPECT_EQ(error, CapabilitiesObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
 
             std::sort(addedEndpoints.begin(), addedEndpoints.end());
             EXPECT_EQ(addedEndpoints, (std::vector<std::string>{firstEndpointId, secondEndpointId}));

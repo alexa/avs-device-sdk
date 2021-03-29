@@ -1,6 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkStartupManager")
 add_library(acsdkStartupManager SHARED
-    StartupManager.cpp)
+    StartupManager.cpp
+    StartupNotifier.cpp)
 
 target_include_directories(acsdkStartupManager PUBLIC
     "${acsdkStartupManager_SOURCE_DIR}/include")

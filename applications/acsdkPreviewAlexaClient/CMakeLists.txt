@@ -12,7 +12,7 @@ endif()
 
 if (VALID)
     project(acsdkPreviewAlexaClient LANGUAGES CXX)
-    include("${AVS_CORE}/build/BuildDefaults.cmake")
+    include("${AVS_CMAKE_BUILD}/BuildDefaults.cmake")
 
     add_subdirectory("src")
 else()

@@ -33,6 +33,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/Optional.h>
@@ -157,6 +158,7 @@ public:
 #endif
      * @param powerResourceManager Object to manage power resource.
      * @param softwareComponentReporter Object to report adapters' versions.
+     * @param playbackRouter Object to route local playback control command.
      * @return A list with all capabilities as well as objects that require explicit shutdown. Shutdown will be
      * performed in the reverse order of occurrence.
      */
@@ -185,7 +187,8 @@ public:
         std::shared_ptr<avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter) = 0;
 };
 
 }  // namespace defaultClient

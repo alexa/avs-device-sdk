@@ -136,6 +136,15 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
 }
 
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+    std::chrono::milliseconds offsetAdjustment,
+    const avsCommon::utils::AudioFormat* format,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
+    m_offsetAdjustment = offsetAdjustment;
+    return ERROR;
+}
+
+AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds offset,
     const avsCommon::utils::mediaPlayer::SourceConfig& config,
@@ -591,7 +600,8 @@ AndroidSLESMediaPlayer::AndroidSLESMediaPlayer(
         m_player{playInterface},
         m_config{config},
         m_almostDone{false},
-        m_hasShutdown{false} {
+        m_hasShutdown{false},
+        m_offsetAdjustment{std::chrono::milliseconds::zero()} {
 }
 
 void AndroidSLESMediaPlayer::onQueueEvent(

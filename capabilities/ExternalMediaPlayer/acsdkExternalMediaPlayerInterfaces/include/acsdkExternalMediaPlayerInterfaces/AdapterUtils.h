@@ -20,6 +20,7 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
+#include <map>
 
 #include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/Utils/RetryTimer.h>
@@ -65,6 +66,9 @@ extern const avsCommon::avs::NamespaceAndName LOGOUT;
 extern const avsCommon::avs::NamespaceAndName PLAYER_EVENT;
 extern const avsCommon::avs::NamespaceAndName PLAYER_ERROR_EVENT;
 
+// helper map for mapping adapter event type to its namespace and name
+extern std::map<AdapterEvent, std::pair<std::string, std::string>> eventNameSpaceNameMap;
+
 /**
  * Method to iterate over a collection of supported operation in playback state
  * and convert to JSON.
@@ -77,6 +81,21 @@ extern const avsCommon::avs::NamespaceAndName PLAYER_ERROR_EVENT;
  */
 rapidjson::Value buildSupportedOperations(
     const std::set<acsdkExternalMediaPlayerInterfaces::SupportedPlaybackOperation>& supportedOperations,
+    rapidjson::Document::AllocatorType& allocator);
+
+/**
+ * Method to convert a Media state to JSON.
+ *
+ * @param document The JSON Value to write the Media state into.
+ * @param playbackState The playback state of the adapter.
+ * @param The rapidjson allocator, required for the results of this function to
+ * be merge-able with other rapidjson::Value objects.
+ * @return @c true if the build of Media state was successful, @c false
+ * otherwise.
+ */
+bool buildMediaState(
+    rapidjson::Value* document,
+    const AdapterPlaybackState& playbackState,
     rapidjson::Document::AllocatorType& allocator);
 
 /**
@@ -113,6 +132,14 @@ rapidjson::Value buildSessionState(
  * otherwise.
  */
 bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::AllocatorType& allocator);
+
+/**
+ * Method to get EmpContext string. Specifically for spotify adapter state.
+ *
+ * @param adapterState The state of the adapter.
+ * @return string Representing session state and playback state for the Spotify adapter state
+ */
+std::string getEmpContextString(acsdkExternalMediaPlayerInterfaces::AdapterState adapterState);
 
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK

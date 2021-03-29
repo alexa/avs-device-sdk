@@ -85,16 +85,7 @@ bool OpusEncoderContext::init(AudioFormat inputFormat) {
         return false;
     }
 
-    m_outputFormat = {
-        .encoding = AudioFormat::Encoding::OPUS,
-        .endianness = AudioFormat::Endianness::LITTLE,
-        .sampleRateHz = inputFormat.sampleRateHz,
-        .sampleSizeInBits = 16,
-        .numChannels = inputFormat.numChannels,
-        .dataSigned = false,
-        .layout = AudioFormat::Layout::INTERLEAVED,
-    };
-
+    m_outputFormat.numChannels = inputFormat.numChannels;
     return true;
 }
 
@@ -194,6 +185,18 @@ void OpusEncoderContext::close() {
         opus_encoder_destroy(m_encoder);
         m_encoder = NULL;
     }
+}
+
+OpusEncoderContext::OpusEncoderContext() :
+        m_outputFormat{
+            AudioFormat::Encoding::OPUS,
+            AudioFormat::Endianness::LITTLE,
+            SAMPLE_RATE,
+            16,
+            0,
+            false,
+            AudioFormat::Layout::INTERLEAVED,
+        } {
 }
 
 }  // namespace speechencoder

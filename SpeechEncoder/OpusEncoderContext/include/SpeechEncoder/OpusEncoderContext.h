@@ -41,7 +41,7 @@ public:
     /**
      * Constructor.
      */
-    OpusEncoderContext() = default;
+    OpusEncoderContext();
 
     /**
      * Destructor.

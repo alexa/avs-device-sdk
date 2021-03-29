@@ -24,7 +24,7 @@
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 
@@ -57,7 +57,7 @@ public:
      * if the capabilities are empty; if the attributes or capability configurations are invalid;
      * if the endpoint is already pending deletion or registration. If this function returns true,
      * the endpoint will be published to AVS. Callers can be notified of published endpoints using
-     * @c CapabilitiesObserverInterface.
+     * @c CapabilitiesDelegateObserverInterface.
      */
     virtual bool addOrUpdateEndpoint(
         const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
@@ -74,7 +74,7 @@ public:
      * if the endpoint is not registered; if the capabilities are empty; if the attributes or capability
      * configurations are invalid; if the endpoint is already pending deletion or registration. If this
      * function returns true, the endpoint will be deregistered from AVS. Callers can be notified of
-     * deregistered endpoints using @c CapabilitiesObserverInterface.
+     * deregistered endpoints using @c CapabilitiesDelegateObserverInterface.
      */
     virtual bool deleteEndpoint(
         const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
@@ -88,7 +88,7 @@ public:
      * @param observer The object to observe the state of this CapabilitiesDelegate.
      */
     virtual void addCapabilitiesObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer) = 0;
 
     /**
      * Remove an observer.
@@ -96,7 +96,7 @@ public:
      * @param observer The observer to remove.
      */
     virtual void removeCapabilitiesObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) = 0;
+        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer) = 0;
 
     /**
      * Invalidates the capabilities reported to the AVS last. Capabilities information should be rebuilt and reported

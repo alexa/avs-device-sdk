@@ -70,6 +70,14 @@ MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
 }
 
 MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+    std::chrono::milliseconds offsetAdjustment,
+    const avsCommon::utils::AudioFormat* audioFormat,
+    const SourceConfig&) {
+    return attachmentSetSource(attachmentReader, audioFormat);
+}
+
+MediaPlayerInterface::SourceId MockMediaPlayer::setSource(
     const std::string& url,
     std::chrono::milliseconds,
     const SourceConfig&,

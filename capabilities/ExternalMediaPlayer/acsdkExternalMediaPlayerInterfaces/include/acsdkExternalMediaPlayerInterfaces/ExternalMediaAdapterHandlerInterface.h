@@ -130,7 +130,8 @@ public:
         const std::string& playbackSessionId,
         const std::string& navigation,
         bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor) = 0;
+        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+        std::string playbackTarget) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...

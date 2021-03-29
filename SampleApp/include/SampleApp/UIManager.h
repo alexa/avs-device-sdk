@@ -23,7 +23,7 @@
 
 #include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
@@ -51,7 +51,7 @@ namespace sampleApp {
 class UIManager
         : public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::AuthObserverInterface
-        , public avsCommon::sdkInterfaces::CapabilitiesObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface
         , public avsCommon::sdkInterfaces::ConnectionStatusObserverInterface
         , public avsCommon::sdkInterfaces::SingleSettingObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
@@ -113,11 +113,11 @@ public:
         avsCommon::sdkInterfaces::AuthObserverInterface::Error newError) override;
     /// }
 
-    /// @name CapabilitiesObserverInterface Methods
+    /// @name CapabilitiesDelegateObserverInterface Methods
     /// @{
     void onCapabilitiesStateChange(
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::State newState,
+        avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::Error newError,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) override;
     /// }

@@ -107,12 +107,13 @@ void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserv
 }
 
 void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterface::State state) {
+    ACSDK_DEBUG0(LX(__func__).d("AudioInputProcessorState", state));
     m_audioInputProcessorState = state;
-
     m_executor.submit([this, state]() {
+        ACSDK_DEBUG0(LX("onStateChangedLambda").d("AudioInputProcessorState", state));
         switch (state) {
             case AudioInputProcessorObserverInterface::State::IDLE:
-                tryEnterIdleState();
+                executeTryEnterIdleState();
                 return;
             case AudioInputProcessorObserverInterface::State::RECOGNIZING:
                 onActivityStarted();
@@ -144,9 +145,10 @@ void DialogUXStateAggregator::onStateChanged(
     const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
     const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
     const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) {
+    ACSDK_DEBUG0(LX(__func__).d("SpeechSynthesizerState", state));
     m_speechSynthesizerState = state;
-
     m_executor.submit([this, state]() {
+        ACSDK_DEBUG0(LX("onStateChangedLambda").d("SpeechSynthesizerState", state));
         switch (state) {
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
                 onActivityStarted();
@@ -154,7 +156,7 @@ void DialogUXStateAggregator::onStateChanged(
                 return;
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
-                tryEnterIdleState();
+                executeTryEnterIdleState();
                 return;
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::LOSING_FOCUS:
                 return;
@@ -166,28 +168,21 @@ void DialogUXStateAggregator::onStateChanged(
     });
 }
 
-void DialogUXStateAggregator::receive(const std::string& contextId, const std::string& message) {
-    tryExitThinkingState();
-}
-
-void DialogUXStateAggregator::tryExitThinkingState() {
-    m_executor.submit([this]() {
-        if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState &&
-            SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS != m_speechSynthesizerState) {
-            ACSDK_DEBUG5(
-                LX("Kicking off short timer").d("shortTimeout in ms", m_shortTimeoutForThinkingToIdle.count()));
-            /*
-             * Stop the long timer and start a short timer so that either the state will change (i.e. Speech begins)
-             * or we automatically go to idle after the short timeout (i.e. the directive received isn't related to
-             * speech, like a setVolume directive). Cannot automatically goto IDLE because it will cause
-             * SpeechSynthesizer to release focus, which may happen before the Speak has rendered.
-             */
-            m_thinkingTimeoutTimer.stop();
-            m_thinkingTimeoutTimer.start(
-                m_shortTimeoutForThinkingToIdle,
-                std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this));
-        }
-    });
+void DialogUXStateAggregator::executeTryExitThinkingState() {
+    ACSDK_DEBUG0(LX(__func__));
+    if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState &&
+        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS != m_speechSynthesizerState) {
+        ACSDK_DEBUG5(LX("Kicking off short timer").d("shortTimeout in ms", m_shortTimeoutForThinkingToIdle.count()));
+        /*
+         * Stop the long timer and start a short timer so that either the state will change (i.e. Speech begins)
+         * or we automatically go to idle after the short timeout (i.e. the directive received isn't related to
+         * speech, like a setVolume directive). Cannot automatically goto IDLE because it will cause
+         * SpeechSynthesizer to release focus, which may happen before the Speak has rendered.
+         */
+        m_thinkingTimeoutTimer.stop();
+        m_thinkingTimeoutTimer.start(
+            m_shortTimeoutForThinkingToIdle, std::bind(&DialogUXStateAggregator::transitionFromThinkingTimedOut, this));
+    }
 }
 
 void DialogUXStateAggregator::onConnectionStatusChanged(
@@ -201,13 +196,11 @@ void DialogUXStateAggregator::onConnectionStatusChanged(
 }
 
 void DialogUXStateAggregator::onRequestProcessingStarted() {
-    ACSDK_DEBUG(LX("onRequestProcessingStarted"));
+    ACSDK_DEBUG0(LX("onRequestProcessingStarted"));
     m_executor.submit([this]() {
+        ACSDK_DEBUG0(LX("onRequestProcessingStartedLambda").d("currentState", m_currentState));
         // Stop the listening timer
         m_listeningTimeoutTimer.stop();
-
-        ACSDK_DEBUG0(LX("onRequestProcessingStartedLambda").d("currentState", m_currentState));
-
         switch (m_currentState) {
             // IDLE is included for the theoretical edgecase that RPS is received after the listening timeout occurs.
             case DialogUXStateObserverInterface::DialogUXState::IDLE:
@@ -233,9 +226,16 @@ void DialogUXStateAggregator::onRequestProcessingStarted() {
 }
 
 void DialogUXStateAggregator::onRequestProcessingCompleted() {
-    // If receive() calls occur before onRequestProcessStarted() happens, we need to use this method as a fallback to
-    // exit THINKING mode.
-    tryExitThinkingState();
+    ACSDK_DEBUG(LX("onRequestProcessingCompleted"));
+    m_executor.submit([this]() {
+        if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
+            /// It is possible that the cloud sends RPC without sending RPS. In those situations, if we are in
+            /// LISTENING state, switch back to IDLE.
+            executeSetState(DialogUXStateObserverInterface::DialogUXState::IDLE);
+        } else {
+            executeTryExitThinkingState();
+        }
+    });
 }
 
 void DialogUXStateAggregator::notifyObserversOfState() {
@@ -315,7 +315,7 @@ bool DialogUXStateAggregator::executeSetState(sdkInterfaces::DialogUXStateObserv
     return true;
 }
 
-void DialogUXStateAggregator::tryEnterIdleState() {
+void DialogUXStateAggregator::executeTryEnterIdleState() {
     ACSDK_DEBUG5(LX(__func__));
     m_thinkingTimeoutTimer.stop();
     m_multiturnSpeakingToListeningTimer.stop();

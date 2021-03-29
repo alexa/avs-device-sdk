@@ -16,6 +16,7 @@ target_include_directories(acsdkAlerts PUBLIC
 
 target_link_libraries(acsdkAlerts PUBLIC
         acsdkAlertsInterfaces
+        acsdkSystemClockMonitorInterfaces
         DeviceSettings)
 
 target_link_libraries(acsdkAlerts PRIVATE

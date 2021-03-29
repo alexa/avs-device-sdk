@@ -17,6 +17,7 @@
 
 #include <AVSCommon/Utils/Stream/StreamFunctions.h>
 
+#include "Audio/Data/med_alerts_notification_03.mp3.h"
 #include "Audio/Data/med_system_alerts_melodic_01.mp3.h"
 #include "Audio/Data/med_system_alerts_melodic_01_short.wav.h"
 #include "Audio/Data/med_system_alerts_melodic_02.mp3.h"
@@ -56,14 +57,14 @@ static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaTyp
 static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> reminderDefaultFactory() {
     return std::make_pair(
         avsCommon::utils::stream::streamFromData(
-            data::med_system_alerts_melodic_01_mp3, sizeof(data::med_system_alerts_melodic_01_mp3)),
-        avsCommon::utils::MimeTypeToMediaType(data::med_system_alerts_melodic_01_mp3_mimetype));
+            data::med_alerts_notification_03_mp3, sizeof(data::med_alerts_notification_03_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_alerts_notification_03_mp3_mimetype));
 }
 static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> reminderShortFactory() {
     return std::make_pair(
         avsCommon::utils::stream::streamFromData(
-            data::med_system_alerts_melodic_01_short_wav, sizeof(data::med_system_alerts_melodic_01_short_wav)),
-        avsCommon::utils::MimeTypeToMediaType(data::med_system_alerts_melodic_01_short_wav_mimetype));
+            data::med_alerts_notification_03_mp3, sizeof(data::med_alerts_notification_03_mp3)),
+        avsCommon::utils::MimeTypeToMediaType(data::med_alerts_notification_03_mp3_mimetype));
 }
 
 std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>()> AlertsAudioFactory::

@@ -53,7 +53,7 @@ private:
      */
     ShutdownManager(const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& notifier);
 
-    /// The notifier to use to invoke RequiresStartupInterface::doStartup().
+    /// The notifier to use to invoke RequiresShutdown::shutdown().
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> m_notifier;
 };
 

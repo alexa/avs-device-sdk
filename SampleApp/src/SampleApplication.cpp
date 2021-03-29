@@ -831,7 +831,8 @@ bool SampleApplication::initialize(
      * myCustomMetricRecorder, myCustomLogger);
      *
      */
-    SampleApplicationComponent sampleAppComponent = acsdkSampleApplication::getComponent(std::move(initParams));
+    SampleApplicationComponent sampleAppComponent =
+        acsdkSampleApplication::getComponent(std::move(initParams), m_shutdownRequiredList);
     auto manufactory = Manufactory<
         std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,

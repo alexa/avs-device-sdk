@@ -55,7 +55,7 @@ inline std::ostream& operator<<(std::ostream& stream, HTTP2ResponseFinishedStatu
         case HTTP2ResponseFinishedStatus::INTERNAL_ERROR:
             return stream << "INTERNAL_ERROR";
     }
-    return stream << "";
+    return stream << "Invalid(" << static_cast<int>(status) << ")";
 }
 
 }  // namespace http2

@@ -392,16 +392,16 @@ EndpointRegistrationManager::~EndpointRegistrationManager() {
 }
 
 void EndpointRegistrationManager::CapabilityRegistrationProxy::onCapabilitiesStateChange(
-    CapabilitiesObserverInterface::State newState,
-    CapabilitiesObserverInterface::Error newError,
+    CapabilitiesDelegateObserverInterface::State newState,
+    CapabilitiesDelegateObserverInterface::Error newError,
     const std::vector<EndpointIdentifier>& addedOrUpdatedEndpointIds,
     const std::vector<EndpointIdentifier>& deletedEndpointIds) {
     ACSDK_DEBUG5(LX(__func__).d("state", newState).d("error", newError).d("callback", static_cast<bool>(m_callback)));
-    if (m_callback && (CapabilitiesObserverInterface::State::RETRIABLE_ERROR != newState)) {
-        auto registrationResult = (CapabilitiesObserverInterface::State::SUCCESS == newState)
+    if (m_callback && (CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR != newState)) {
+        auto registrationResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == newState)
                                       ? RegistrationResult::SUCCEEDED
                                       : RegistrationResult::CONFIGURATION_ERROR;
-        auto deregistrationResult = (CapabilitiesObserverInterface::State::SUCCESS == newState)
+        auto deregistrationResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == newState)
                                         ? DeregistrationResult::SUCCEEDED
                                         : DeregistrationResult::CONFIGURATION_ERROR;
         m_callback(

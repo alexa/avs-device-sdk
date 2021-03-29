@@ -132,9 +132,9 @@ public:
 
     /**
      * Add data in the form of a @c key, @c value pair to the metadata of this log entry.
-     * If the value includes a privacy blacklist entry, the portion after that will be obfuscated.
+     * If the value includes a privacy denylist entry, the portion after that will be obfuscated.
      * This is done in a distinct method (instead of m or d)  to avoid the cost of always checking
-     * against the blacklist.
+     * against the denylist.
      *
      * @param key The key identifying the value to add to this LogEntry.
      * @param value The value to add to this LogEntry, obfuscated if needed.
@@ -197,9 +197,9 @@ private:
     void prefixMessage();
 
     /// Return a list of labels we will obfuscate if sent to obfuscatePrivateData
-    static std::vector<std::string> getPrivateLabelBlacklist() {
-        static std::vector<std::string> privateLabelBlacklist = {"ssid"};
-        return privateLabelBlacklist;
+    static std::vector<std::string> getPrivateLabelDenyList() {
+        static std::vector<std::string> privateLabelDenyList = {"ssid"};
+        return privateLabelDenyList;
     }
 
     /**
@@ -253,13 +253,13 @@ LogEntry& LogEntry::obfuscatePrivateData(const char* key, const std::string& val
     // since it can (but shouldn't) contain multiple,  obfuscate from the earliest one found onward
     auto firstPosition = value.length();
 
-    for (auto privateLabel : getPrivateLabelBlacklist()) {
+    for (auto privateLabel : getPrivateLabelDenyList()) {
         auto it = std::search(
             value.begin(),
             value.end(),
             privateLabel.begin(),
             privateLabel.end(),
-            [](char valueChar, char blackListChar) { return std::tolower(valueChar) == std::tolower(blackListChar); });
+            [](char valueChar, char denyListChar) { return std::tolower(valueChar) == std::tolower(denyListChar); });
         if (it != value.end()) {
             // capture the least value
             auto thisPosition = std::distance(value.begin(), it) + privateLabel.length();

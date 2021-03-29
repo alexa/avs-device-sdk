@@ -16,16 +16,26 @@
 #ifndef ACSDKSHUTDOWNMANAGER_SHUTDOWNNOTIFIER_H_
 #define ACSDKSHUTDOWNMANAGER_SHUTDOWNNOTIFIER_H_
 
+#include <memory>
+
 #include <acsdkNotifier/Notifier.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace acsdkShutdownManager {
 
 /**
- * Implementation of ShutdownNotifierInterface.
+ * Relays notification when it's time to shut down.
  */
-using ShutdownNotifier = acsdkNotifier::Notifier<avsCommon::utils::RequiresShutdown>;
+class ShutdownNotifier : public acsdkNotifier::Notifier<avsCommon::utils::RequiresShutdown> {
+public:
+    /**
+     * Factory method.
+     * @return A new instance of @c ShutdownNotifierInterface.
+     */
+    static std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> createShutdownNotifierInterface();
+};
 
 }  // namespace acsdkShutdownManager
 }  // namespace alexaClientSDK

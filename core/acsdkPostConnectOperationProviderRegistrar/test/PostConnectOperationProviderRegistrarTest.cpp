@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-/// @file StartupManagerTest.cpp
+/// @file PostConnectOperationProviderRegistrarTest.cpp
 
 #include <memory>
 

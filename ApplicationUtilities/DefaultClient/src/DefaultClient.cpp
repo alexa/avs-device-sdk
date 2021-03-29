@@ -14,12 +14,13 @@
  */
 
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterConstants.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
+#include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
-#include <AVSCommon/SDKInterfaces/SystemClockMonitorObserverInterface.h>
 #include <AVSCommon/Utils/Bluetooth/BluetoothEventBus.h>
 #include <AVSCommon/Utils/MediaPlayer/PooledMediaResourceProvider.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -33,6 +34,8 @@
 #include <System/TimeZoneHandler.h>
 #include <System/UserInactivityMonitor.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
+#include <acsdkBluetooth/Bluetooth.h>
+#include <acsdkBluetooth/DeviceConnectionRulesAdapter.h>
 
 #ifdef ENABLE_OPUS
 #include <SpeechEncoder/OpusEncoderContext.h>
@@ -47,11 +50,6 @@
 #include <AVSCommon/SDKInterfaces/Calendar/CalendarClientInterface.h>
 #include <AVSCommon/SDKInterfaces/Meeting/MeetingClientInterface.h>
 #include <MeetingClientController/MeetingClientController.h>
-#endif
-
-#ifdef BLUETOOTH_BLUEZ
-#include <BlueZ/BlueZBluetoothDeviceManager.h>
-#include <acsdkBluetooth/BluetoothMediaInputTransformer.h>
 #endif
 
 #include "DefaultClient/DefaultClient.h"
@@ -85,13 +83,9 @@ static const std::string VISUAL_CHANNEL_CONFIG_KEY = "visualChannels";
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::unique_ptr<DefaultClient> DefaultClient::create(
-    const std::shared_ptr<DefaultClientManufactory>& manufactory,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
+    const std::shared_ptr<DefaultClientSubsetManufactory>& manufactory,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
-    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
     const std::multimap<
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
@@ -110,30 +104,22 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
-    std::shared_ptr<acsdkBluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
     bool isGuiSupported,
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
-        enabledConnectionRules,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
-    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
     const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
     capabilityAgents::aip::AudioProvider firstInteractionAudioProvider) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
             manufactory,
-            bluetoothMediaPlayer,
             ringtoneMediaPlayer,
-            systemSoundMediaPlayer,
-            bluetoothSpeaker,
             ringtoneSpeaker,
-            systemSoundSpeaker,
             additionalSpeakers,
 #ifdef ENABLE_PCC
             phoneSpeaker,
@@ -150,15 +136,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             sharedDataStream,
 #endif
             notificationsStorage,
-            bluetoothStorage,
             alexaDialogStateObservers,
             connectionObservers,
             isGuiSupported,
-            enabledConnectionRules,
             firmwareVersion,
             sendSoftwareInfoOnConnected,
             softwareInfoSenderObserver,
-            std::move(bluetoothDeviceManager),
             diagnostics,
             externalCapabilitiesBuilder,
             firstInteractionAudioProvider)) {
@@ -213,7 +196,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
     std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
-    std::shared_ptr<acsdkBluetooth::BluetoothStorageInterface> bluetoothStorage,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> bluetoothStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
@@ -247,6 +230,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         equalizerRuntimeSetup = std::make_shared<defaultClient::EqualizerRuntimeSetup>(false);
     }
 
+    auto bluetoothConnectionRulesProvider =
+        std::make_shared<acsdkBluetooth::DeviceConnectionRulesAdapter>(enabledConnectionRules);
+
     auto stubAudioPipelineFactory = StubApplicationAudioPipelineFactory::create(channelVolumeFactory);
     if (!stubAudioPipelineFactory) {
         ACSDK_ERROR(LX("createFailed").d("reason", "failed to create audio pipeline"));
@@ -260,6 +246,13 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         acsdkAlerts::ALERTS_MEDIA_PLAYER_NAME, alertsMediaPlayer, alertsSpeaker);
     stubAudioPipelineFactory->addApplicationMediaInterfaces(
         capabilityAgents::speechSynthesizer::SPEAK_MEDIA_PLAYER_NAME, speakMediaPlayer, speakSpeaker);
+    stubAudioPipelineFactory->addApplicationMediaInterfaces(
+        applicationUtilities::systemSoundPlayer::SYSTEM_SOUND_MEDIA_PLAYER_NAME,
+        systemSoundMediaPlayer,
+        systemSoundSpeaker);
+    stubAudioPipelineFactory->addApplicationMediaInterfaces(
+        acsdkBluetooth::BLUETOOTH_MEDIA_PLAYER_NAME, bluetoothMediaPlayer, bluetoothSpeaker);
+
     for (const auto& adapter : adapterCreationMap) {
         auto mediaPlayerIt = externalMusicProviderMediaPlayers.find(adapter.first);
         auto speakerIt = externalMusicProviderSpeakers.find(adapter.first);
@@ -315,7 +308,10 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         std::move(deviceSettingStorage),
         startAlertSchedulingOnInitialization,
         audioFactory,
-        std::move(alertStorage));
+        std::move(alertStorage),
+        std::move(bluetoothDeviceManager),
+        std::move(bluetoothStorage),
+        bluetoothConnectionRulesProvider);
     auto manufactory = DefaultClientManufactory::create(component);
 
     auto speakerManager = manufactory->get<std::shared_ptr<SpeakerManagerInterface>>();
@@ -336,12 +332,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 
     return create(
         std::move(manufactory),
-        bluetoothMediaPlayer,
         ringtoneMediaPlayer,
-        systemSoundMediaPlayer,
-        bluetoothSpeaker,
         ringtoneSpeaker,
-        systemSoundSpeaker,
         additionalSpeakers,
 #ifdef ENABLE_PCC
         phoneSpeaker,
@@ -358,15 +350,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         sharedDataStream,
 #endif
         notificationsStorage,
-        bluetoothStorage,
         alexaDialogStateObservers,
         connectionObservers,
         isGuiSupported,
-        enabledConnectionRules,
         firmwareVersion,
         sendSoftwareInfoOnConnected,
         softwareInfoSenderObserver,
-        std::move(bluetoothDeviceManager),
         diagnostics,
         externalCapabilitiesBuilder,
         firstInteractionAudioProvider);
@@ -374,12 +363,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 
 bool DefaultClient::initialize(
     const std::shared_ptr<DefaultClientManufactory>& manufactory,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> bluetoothMediaPlayer,
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
-    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> systemSoundMediaPlayer,
-    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> bluetoothSpeaker,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> ringtoneSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> systemSoundSpeaker,
     const std::multimap<
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
@@ -398,33 +383,19 @@ bool DefaultClient::initialize(
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
-    std::shared_ptr<acsdkBluetooth::BluetoothStorageInterface> bluetoothStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
         connectionObservers,
     bool isGuiSupported,
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
-        enabledConnectionRules,
     avsCommon::sdkInterfaces::softwareInfo::FirmwareVersion firmwareVersion,
     bool sendSoftwareInfoOnConnected,
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
-    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
     const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
     capabilityAgents::aip::AudioProvider firstInteractionAudioProvider) {
-    if (!bluetoothMediaPlayer) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullBluetoothMediaPlayer"));
-        return false;
-    }
-
     if (!ringtoneMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
-        return false;
-    }
-
-    if (!systemSoundMediaPlayer) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSystemSoundMediaPlayer"));
         return false;
     }
 
@@ -603,6 +574,7 @@ bool DefaultClient::initialize(
     m_shutdownManager = manufactory->get<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>>();
     if (!m_shutdownManager) {
         ACSDK_ERROR(LX("initializeFailed").m("Failed to get ShutdownManager!"));
+        return false;
     }
 
     m_certifiedSender = manufactory->get<std::shared_ptr<certifiedSender::CertifiedSender>>();
@@ -624,16 +596,28 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    m_systemClockMonitor = manufactory->get<std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>>();
+    m_systemClockMonitor =
+        manufactory->get<std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>>();
     if (!m_systemClockMonitor) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSystemClockMonitor"));
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullSystemClockMonitorManager"));
         return false;
     }
 
-    m_alertsCapabilityAgent = manufactory->get<std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>>();
+    m_alertsCapabilityAgent =
+        manufactory->get<std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>>();
     if (!m_alertsCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlertsCapabilityAgent"));
         return false;
+    }
+
+    m_bluetoothNotifier = manufactory->get<std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>>();
+    if (!m_bluetoothNotifier) {
+#ifdef BLUETOOTH_ENABLED
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateBluetoothNotifier"));
+        return false;
+#else
+        ACSDK_DEBUG5(LX("nullBluetoothNotifier").m("Bluetooth disabled"));
+#endif
     }
 
     m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>(metricRecorder);
@@ -654,13 +638,9 @@ bool DefaultClient::initialize(
         m_connectionManager->addConnectionStatusObserver(observer);
     }
 
-    m_connectionManager->addMessageObserver(m_dialogUXStateAggregator);
-
     for (auto observer : alexaDialogStateObservers) {
         m_dialogUXStateAggregator->addObserver(observer);
     }
-
-    m_connectionManager->addMessageObserver(m_dialogUXStateAggregator);
 
     /*
      * Creating the Directive Sequencer - This is the component that deals with
@@ -704,6 +684,7 @@ bool DefaultClient::initialize(
         ACSDK_ERROR(LX("initializeFailed").d("reason", "endpointRegistrationManagerCreateFailed"));
         return false;
     }
+    localeAssetsManager->setEndpointRegistrationManager(m_endpointRegistrationManager);
 
     /*
      * Creating the User Inactivity Monitor - This component is responsibly for
@@ -717,14 +698,13 @@ bool DefaultClient::initialize(
         return false;
     }
 
-    m_systemSoundPlayer = applicationUtilities::systemSoundPlayer::SystemSoundPlayer::create(
-        systemSoundMediaPlayer, audioFactory->systemSounds());
-
     auto wakeWordConfirmationSetting =
         m_deviceSettingsManager->getSetting<settings::DeviceSettingsIndex::WAKEWORD_CONFIRMATION>();
     auto speechConfirmationSetting =
         m_deviceSettingsManager->getSetting<settings::DeviceSettingsIndex::SPEECH_CONFIRMATION>();
     auto wakeWordsSetting = m_deviceSettingsManager->getSetting<settings::DeviceSettingsIndex::WAKE_WORDS>();
+    auto capabilityChangeNotifier = std::make_shared<avsCommon::avs::CapabilityChangeNotifier>();
+    capabilityChangeNotifier->addObserver(localeAssetsManager);
 
 /*
  * Creating the Audio Input Processor - This component is the Capability Agent
@@ -739,10 +719,11 @@ bool DefaultClient::initialize(
         m_dialogUXStateAggregator,
         m_exceptionSender,
         m_userInactivityMonitor,
-        m_systemSoundPlayer,
+        manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>>(),
         localeAssetsManager,
         wakeWordConfirmationSetting,
         speechConfirmationSetting,
+        capabilityChangeNotifier,
         wakeWordsSetting,
         std::make_shared<speechencoder::SpeechEncoder>(std::make_shared<speechencoder::OpusEncoderContext>()),
         firstInteractionAudioProvider,
@@ -758,10 +739,11 @@ bool DefaultClient::initialize(
         m_dialogUXStateAggregator,
         m_exceptionSender,
         m_userInactivityMonitor,
-        m_systemSoundPlayer,
+        manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>>(),
         localeAssetsManager,
         wakeWordConfirmationSetting,
         speechConfirmationSetting,
+        capabilityChangeNotifier,
         wakeWordsSetting,
         nullptr,
         firstInteractionAudioProvider,
@@ -809,7 +791,7 @@ bool DefaultClient::initialize(
     m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
     // create @c SpeakerInterfaces for each @c Type
-    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allAvsSpeakers{systemSoundSpeaker};
+    std::vector<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> allAvsSpeakers{};
     // parse additional Speakers into the right speaker list.
     for (const auto& it : additionalSpeakers) {
         if (ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME == it.first) {
@@ -837,11 +819,6 @@ bool DefaultClient::initialize(
     for (auto& it : allAvsSpeakers) {
         allAvsChannelVolumeInterfaces.push_back(channelVolumeFactory->createChannelVolumeInterface(it));
     }
-
-    // create @c ChannelVolumeInterface for bluetoothSpeaker (later used by Bluetooth CapabilityAgent)
-    std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> bluetoothChannelVolumeInterface =
-        channelVolumeFactory->createChannelVolumeInterface(bluetoothSpeaker);
-    allAvsChannelVolumeInterfaces.push_back(bluetoothChannelVolumeInterface);
 
     // create @c ChannelVolumeInterface for ringtoneSpeaker
     std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> ringtoneChannelVolumeInterface =
@@ -1075,7 +1052,8 @@ bool DefaultClient::initialize(
      * publishing information about the System
      * capability agent.
      */
-    auto systemCapabilityProvider = capabilityAgents::system::SystemCapabilityProvider::create(localeAssetsManager);
+    auto systemCapabilityProvider =
+        capabilityAgents::system::SystemCapabilityProvider::create(localeAssetsManager, capabilityChangeNotifier);
     if (!systemCapabilityProvider) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateSystemCapabilityProvider"));
         return false;
@@ -1094,39 +1072,6 @@ bool DefaultClient::initialize(
         return false;
     }
 #endif
-
-    if (bluetoothDeviceManager) {
-        ACSDK_DEBUG5(LX(__func__).m("Creating Bluetooth CA"));
-
-        // Create a temporary pointer to the eventBus inside of
-        // bluetoothDeviceManager so that
-        // the unique ptr for bluetoothDeviceManager can be moved.
-        auto eventBus = bluetoothDeviceManager->getEventBus();
-
-        auto bluetoothMediaInputTransformer =
-            acsdkBluetooth::BluetoothMediaInputTransformer::create(eventBus, m_playbackRouter);
-
-        /*
-         * Creating the Bluetooth Capability Agent - This component is responsible
-         * for handling directives from AVS
-         * regarding bluetooth functionality.
-         */
-        m_bluetooth = acsdkBluetooth::Bluetooth::create(
-            m_contextManager,
-            m_audioFocusManager,
-            m_connectionManager,
-            m_exceptionSender,
-            std::move(bluetoothStorage),
-            std::move(bluetoothDeviceManager),
-            std::move(eventBus),
-            bluetoothMediaPlayer,
-            customerDataManager,
-            enabledConnectionRules,
-            bluetoothChannelVolumeInterface,
-            bluetoothMediaInputTransformer);
-    } else {
-        ACSDK_DEBUG5(LX("bluetoothCapabilityAgentDisabled").d("reason", "nullBluetoothDeviceManager"));
-    }
 
     m_apiGatewayCapabilityAgent =
         capabilityAgents::apiGateway::ApiGatewayCapabilityAgent::create(m_avsGatewayManager, m_exceptionSender);
@@ -1197,10 +1142,6 @@ bool DefaultClient::initialize(
     m_defaultEndpointBuilder->withCapability(m_notificationsCapabilityAgent, m_notificationsCapabilityAgent);
     m_defaultEndpointBuilder->withCapability(m_interactionCapabilityAgent, m_interactionCapabilityAgent);
 
-    if (m_bluetooth) {
-        m_defaultEndpointBuilder->withCapability(m_bluetooth, m_bluetooth);
-    }
-
     if (m_equalizerCapabilityAgent) {
         m_defaultEndpointBuilder->withCapability(m_equalizerCapabilityAgent, m_equalizerCapabilityAgent);
     }
@@ -1252,7 +1193,8 @@ bool DefaultClient::initialize(
             sharedDataStream,
 #endif
             powerResourceManager,
-            m_softwareReporterCapabilityAgent);
+            m_softwareReporterCapabilityAgent,
+            m_playbackRouter);
         for (auto& capability : externalCapabilities.first) {
             if (capability.configuration.hasValue()) {
                 m_defaultEndpointBuilder->withCapability(capability.configuration.value(), capability.directiveHandler);
@@ -1466,19 +1408,18 @@ void DefaultClient::setCaptionMediaPlayers(
 
 void DefaultClient::addBluetoothDeviceObserver(
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface> observer) {
-    if (!m_bluetooth) {
-        ACSDK_DEBUG5(LX(__func__).m("bluetooth is disabled, not adding observer"));
+    if (!m_bluetoothNotifier) {
+        ACSDK_DEBUG5(LX(__func__).m("Bluetooth disabled"));
         return;
     }
-    m_bluetooth->addObserver(observer);
+    m_bluetoothNotifier->addObserver(observer);
 }
 
 void DefaultClient::removeBluetoothDeviceObserver(
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface> observer) {
-    if (!m_bluetooth) {
-        return;
+    if (m_bluetoothNotifier) {
+        m_bluetoothNotifier->removeObserver(observer);
     }
-    m_bluetooth->removeObserver(observer);
 }
 
 #ifdef ENABLE_REVOKE_AUTH
@@ -1762,8 +1703,20 @@ void DefaultClient::unmuteCommsCall() {
     }
 }
 
+void DefaultClient::enableVideo() {
+    if (m_callManager) {
+        m_callManager->enableVideo();
+    }
+}
+
+void DefaultClient::disableVideo() {
+    if (m_callManager) {
+        m_callManager->disableVideo();
+    }
+}
+
 void DefaultClient::onSystemClockSynchronized() {
-    m_systemClockMonitor->notifySystemClockSynchronized();
+    m_systemClockMonitor->onSystemClockSynchronized();
 }
 
 void DefaultClient::registerExternalMediaPlayerAdapterHandler(
@@ -1827,10 +1780,6 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("NotificationsRendererShutdown."));
         m_notificationsRenderer->shutdown();
     }
-    if (m_bluetooth) {
-        ACSDK_DEBUG5(LX("BluetoothShutdown."));
-        m_bluetooth->shutdown();
-    }
 
     if (m_userInactivityMonitor) {
         ACSDK_DEBUG5(LX("UserInactivityMonitorShutdown."));
@@ -1888,5 +1837,13 @@ DefaultClient::~DefaultClient() {
     }
 }
 
+bool DefaultClient::setEncodingAudioFormat(AudioFormat::Encoding encoding) {
+    return m_audioInputProcessor->setEncodingAudioFormat(encoding);
+}
+
+capabilityAgents::aip::AudioInputProcessor::EncodingFormatResponse DefaultClient::requestEncodingAudioFormats(
+    const capabilityAgents::aip::AudioInputProcessor::EncodingFormatRequest& encodings) {
+    return m_audioInputProcessor->requestEncodingAudioFormats(encodings);
+}
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

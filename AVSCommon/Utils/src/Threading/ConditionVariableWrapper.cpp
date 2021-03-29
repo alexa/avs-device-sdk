@@ -169,22 +169,46 @@ bool ConditionVariableWrapper::waitForInner(
         return m_cv.wait_for(lock, relTime, pred);
     }
 
-    bool timedOut = false;
     timing::Timer timer;
-    std::mutex& outerMutex = *lock.mutex();
+    /*
+     * The timer task may execute even after the original predicate (pred()) has returned true.
+     * This is because:
+     *
+     * 1. The timer may expire before stop() is called but after wait(...) has returned.
+     * 2. Calling Timer::stop() does not halt any currently executing task.
+     *
+     * Reusing the outer lock (lock) in the timer task will result in deadlock in the above scenarios.
+     * This is becase wait(...) will have returned, thus lock will be locked.
+     *
+     * We use a separate lock to ensure that timedOut is synchronized.
+     * Using an atomic is insufficient because it's possible that
+     * timedOut and notifyAll() are called after the predicateOrTimedout logic is evaluated,
+     * which would cause this notification to be missed.
+     *
+     * 1. predicateOrTimedout is called and timedOut is evaluated to be false. Before thread waits, Step 2 happens.
+     * 2. Timer task fires.
+     * 3. timedOut is set to true.
+     * 4. notifyAll() is called. Thread in Step 1 is still running, thus no threads are blocked.
+     * 5. Timer task exits.
+     * 6. Thread in step 1 goes to wait, misses notification.
+     */
+    std::mutex timerMutex;
+    bool timedOut = false;
 
-    timer.start(relTime, [this, &timedOut, &outerMutex]() {
-        ACSDK_DEBUG9(LX("timer").d("reason", "timedOut"));
+    timer.start(relTime, [this, &timedOut, &timerMutex]() {
+        ACSDK_DEBUG9(LX("timeoutTask").d("reason", "timerExpired"));
+        std::lock_guard<std::mutex> timerLock(timerMutex);
 
-        std::unique_lock<std::mutex> timerLock(outerMutex);
         timedOut = true;
-        timerLock.unlock();
 
         // Wake up all threads to re-evaluate predicates.
         notifyAll();
     });
 
-    auto predicateOrTimedout = [pred, &timedOut]() { return pred() || timedOut; };
+    auto predicateOrTimedout = [pred, &timedOut, &timerMutex]() {
+        std::lock_guard<std::mutex> timerLock(timerMutex);
+        return pred() || timedOut;
+    };
 
     wait(lock, predicateOrTimedout);
 

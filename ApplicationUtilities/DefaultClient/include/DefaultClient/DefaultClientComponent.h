@@ -20,11 +20,16 @@
 
 #include <ACL/Transport/MessageRouterFactoryInterface.h>
 #include <acsdkAlerts/Storage/AlertStorageInterface.h>
+#include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothDeviceConnectionRulesProviderInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
 #include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayer.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
@@ -42,6 +47,8 @@
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/RenderPlayerInfoCardsProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
@@ -51,7 +58,6 @@
 #include <CertifiedSender/MessageStorageInterface.h>
 #include <InterruptModel/InterruptModel.h>
 #include <RegistrationManager/CustomerDataManager.h>
-#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 
 #include "DefaultClient/EqualizerRuntimeSetup.h"
 #include "DefaultClient/StubApplicationAudioPipelineFactory.h"
@@ -66,11 +72,12 @@ namespace defaultClient {
  * non-manufactory method of initialization.
  */
 using DefaultClientComponent = acsdkManufactory::Component<
-    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
+    std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
-    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,  /// Applications should not use this export.
+    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
@@ -93,6 +100,7 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
@@ -102,7 +110,7 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
@@ -143,7 +151,11 @@ DefaultClientComponent getComponent(
     const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& deviceSettingStorage,
     bool startAlertSchedulingOnInitialization,
     const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
-    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage);
+    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage,
+    const std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface>& bluetoothDeviceManager,
+    const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface>& bluetoothStorage,
+    const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface>&
+        bluetoothConnectionRulesProvider);
 
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

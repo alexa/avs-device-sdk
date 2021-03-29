@@ -36,7 +36,9 @@ public:
         // The call occurred as a result of an AVS Directive.
         DIRECTIVE,
         // The call occurred as a result of a local API call.
-        LOCAL_API
+        LOCAL_API,
+        // The call occurred from an external client
+        EXTERNAL_CLIENT
     };
 
     /**
@@ -71,6 +73,9 @@ inline std::ostream& operator<<(std::ostream& stream, SpeakerManagerObserverInte
             return stream;
         case SpeakerManagerObserverInterface::Source::LOCAL_API:
             stream << "LOCAL_API";
+            return stream;
+        case SpeakerManagerObserverInterface::Source::EXTERNAL_CLIENT:
+            stream << "EXTERNAL_CLIENT";
             return stream;
     }
     stream << "UNKNOWN";

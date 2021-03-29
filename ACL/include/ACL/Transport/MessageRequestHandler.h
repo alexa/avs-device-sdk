@@ -21,6 +21,7 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/EventTracerInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/Utils/Power/PowerResource.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -142,6 +143,9 @@ private:
 
     /// The reference to @c PowerResource to prevent device from going into LPM.
     std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
+
+    /// Status to be reported back to the @c MessageRequest.
+    avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status m_resultStatus;
 };
 
 }  // namespace acl

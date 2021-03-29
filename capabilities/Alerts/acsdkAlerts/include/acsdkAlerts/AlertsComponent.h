@@ -18,26 +18,29 @@
 
 #include <memory>
 
+#include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <acsdkManufactory/Annotated.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
-#include <AVSCommon/Utils/Timing/SystemClockMonitor.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 
-#include "acsdkAlerts/AlertsCapabilityAgent.h"
+#include <acsdkAlerts/Storage/AlertStorageInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkAlerts {
@@ -46,10 +49,11 @@ namespace acsdkAlerts {
  * Definition of a Manufactory component that exports an Alerts Capability Agent.
  */
 using AlertsComponent = acsdkManufactory::Component<
-    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
+    std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     acsdkManufactory::Import<
         std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>>,
@@ -63,7 +67,6 @@ using AlertsComponent = acsdkManufactory::Component<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>>,
     acsdkManufactory::Import<std::shared_ptr<certifiedSender::CertifiedSender>>,
     acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>,
     acsdkManufactory::Import<std::shared_ptr<settings::DeviceSettingsManager>>,

@@ -84,12 +84,11 @@ bool CapabilityResources::addFriendlyNameWithText(
             CapabilityResources::FriendlyName(
                 {text, utils::Optional<sdkInterfaces::LocaleAssetsManagerInterface::Locale>(locale)})) !=
         m_items.end()) {
-        ACSDK_ERROR(LX("addFriendlyNameWithTextFailed")
-                        .d("reason", "duplicateText")
-                        .sensitive("text", text)
-                        .sensitive("locale", locale));
-        m_isValid = false;
-        return false;
+        ACSDK_WARN(LX("addFriendlyNameWithTextSucceeded")
+                       .d("reason", "duplicateText")
+                       .sensitive("text", text)
+                       .sensitive("locale", locale));
+        return true;
     }
 
     m_items.push_back({text, utils::Optional<sdkInterfaces::LocaleAssetsManagerInterface::Locale>(locale)});

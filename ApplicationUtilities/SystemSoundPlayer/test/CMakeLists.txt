@@ -4,4 +4,4 @@ set(INCLUDE_PATH
     "${SystemSoundPlayer_INCLUDE_DIRS}"
 	"${AVSCommon_SOURCE_DIR}/Utils/test")
 
-discover_unit_tests("${INCLUDE_PATH}" "SystemSoundPlayer;UtilsCommonTestLib;SDKInterfacesTests")
+discover_unit_tests("${INCLUDE_PATH}" "SystemSoundPlayer;UtilsCommonTestLib;SDKInterfacesTests;ApplicationAudioPipelineFactoryTestLib")

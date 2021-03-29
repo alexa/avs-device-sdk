@@ -148,12 +148,6 @@ static const NamespaceAndName UNFAVORITE_DIRECTIVE{FAVORITESCONTROLLER_NAMESPACE
 static const NamespaceAndName SESSION_STATE{EXTERNALMEDIAPLAYER_STATE_NAMESPACE, EXTERNALMEDIAPLAYER_NAME};
 static const NamespaceAndName PLAYBACK_STATE{PLAYBACKSTATEREPORTER_STATE_NAMESPACE, PLAYBACKSTATEREPORTER_NAME};
 
-/// The const char for the players key field in the context.
-static const char PLAYERS[] = "players";
-
-/// The const char for the playerInFocus key field in the context.
-static const char PLAYER_IN_FOCUS[] = "playerInFocus";
-
 /// The max relative time in the past that we can  seek to in
 /// milliseconds(-12hours in ms).
 static const int64_t MAX_PAST_OFFSET = -86400000;
@@ -161,16 +155,6 @@ static const int64_t MAX_PAST_OFFSET = -86400000;
 /// The max relative time in the past that we can  seek to in milliseconds(+12
 /// hours in ms).
 static const int64_t MAX_FUTURE_OFFSET = 86400000;
-
-/// The root key for configuration values for the ExternalMediaPlayer.
-static const std::string EMP_CONFIG_KEY("externalMediaPlayer");
-
-/// The agent key.
-static const char AGENT_KEY[] = "agent";
-
-/// Key for the @c agent id string unter the @c EMP_CONFIG_KEY configuration
-/// node
-static const std::string EMP_AGENT_KEY("agentString");
 
 /// The authorized key.
 static const char AUTHORIZED[] = "authorized";
@@ -1098,6 +1082,11 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
         }
     }
 
+    std::string alias;
+    if (!jsonUtils::retrieveValue(payload, "aliasName", &alias)) {
+        ACSDK_INFO(LX("handleDirective").m("No playback traget"));
+    }
+
     auto messageId = info->directive->getMessageId();
 
     m_executor.submit([this,
@@ -1111,7 +1100,8 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
                        navigation,
                        preload,
                        playRequestor,
-                       messageId]() {
+                       messageId,
+                       alias]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1124,7 +1114,8 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
                     playbackSessionId,
                     navigation,
                     preload,
-                    playRequestor)) {
+                    playRequestor,
+                    alias)) {
                 submitMetric(
                     m_metricRecorder,
                     PLAY_DIRECTIVE_RECEIVED,
@@ -1133,7 +1124,6 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
                     playbackSessionId,
                     playerId);
             }
-
             setHandlingCompleted(info);
         } else {
             ACSDK_ERROR(LX("handlePlayDirectiveFailedInExecutor").d("reason", "unauthorizedPlayerId"));

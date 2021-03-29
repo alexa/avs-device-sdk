@@ -26,7 +26,7 @@
 
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
@@ -92,7 +92,7 @@ private:
     /**
      * Class used to observe changes to the capabilities registration.
      */
-    class CapabilityRegistrationProxy : public avsCommon::sdkInterfaces::CapabilitiesObserverInterface {
+    class CapabilityRegistrationProxy : public avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface {
     public:
         /**
          * Sets the callback function.
@@ -104,7 +104,7 @@ private:
                 const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
                 const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints)> callback);
 
-        /// @name CapabilitiesObserverInterface methods.
+        /// @name CapabilitiesDelegateObserverInterface methods.
         /// @{
         void onCapabilitiesStateChange(
             State newState,

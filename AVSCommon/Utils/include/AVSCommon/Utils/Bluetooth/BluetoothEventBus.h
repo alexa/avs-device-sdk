@@ -37,6 +37,12 @@ namespace bluetooth {
 class BluetoothEventBus {
 public:
     /**
+     * Factory method to create a shared pointer to @c BluetoothEventBus.
+     * @return A new instance of @c BluetoothEventBus.
+     */
+    static std::shared_ptr<BluetoothEventBus> createBluetoothEventBus();
+
+    /**
      * Constructor
      */
     BluetoothEventBus();

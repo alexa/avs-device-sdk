@@ -975,8 +975,14 @@ TEST_F(HTTP2TransportTest, test_onSendCompletedNotification) {
     // Check that we got the right onSendCompleted notifications.
     for (unsigned messageNum = 0; messageNum < messagesCount; messageNum++) {
         if (messageObservers[messageNum]->m_status.waitFor(RESPONSE_TIMEOUT)) {
-            auto expectedMessageObserverStatus = std::get<2>(messageResponseMap[messageNum]);
-            ASSERT_EQ(messageObservers[messageNum]->m_status.getValue(), expectedMessageObserverStatus);
+            auto& item = messageResponseMap[messageNum];
+            auto responseCode = std::get<0>(item);
+            auto responseFinished = std::get<1>(item);
+            auto expectedMessageObserverStatus = std::get<2>(item);
+            ASSERT_EQ(messageObservers[messageNum]->m_status.getValue(), expectedMessageObserverStatus)
+                << "messageNum=" << messageNum << " responseCode=" << responseCode
+                << " responseFinished=" << responseFinished
+                << " expectedMessageObserverStatus=" << expectedMessageObserverStatus;
         }
     }
 }

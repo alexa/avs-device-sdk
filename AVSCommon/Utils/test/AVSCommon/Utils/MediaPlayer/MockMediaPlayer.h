@@ -104,6 +104,11 @@ public:
         const avsCommon::utils::AudioFormat* audioFormat = nullptr,
         const SourceConfig& config = emptySourceConfig()) /*override*/;
     SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        std::chrono::milliseconds offsetAdjustment,
+        const avsCommon::utils::AudioFormat* audioFormat = nullptr,
+        const SourceConfig& config = emptySourceConfig()) /*override*/;
+    SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const SourceConfig& config = emptySourceConfig(),

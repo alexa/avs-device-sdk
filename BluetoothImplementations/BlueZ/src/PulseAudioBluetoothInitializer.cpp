@@ -291,12 +291,12 @@ void PulseAudioBluetoothInitializer::setStateAndNotify(pa_context_state_t state)
         // Connected and ready to receive calls.
         case PA_CONTEXT_READY:
             m_connected = true;
-        // These are failed cases.
+            // These are failed cases.
         case PA_CONTEXT_FAILED:
         case PA_CONTEXT_TERMINATED:
             m_mainThreadCv.notify_one();
             break;
-        // Intermediate states that can be ignored.
+            // Intermediate states that can be ignored.
         case PA_CONTEXT_UNCONNECTED:
         case PA_CONTEXT_CONNECTING:
         case PA_CONTEXT_AUTHORIZING:

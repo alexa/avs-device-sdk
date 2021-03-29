@@ -65,7 +65,8 @@ public:
         const std::string& playbackSessionId,
         const std::string& navigation,
         bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor) override;
+        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+        std::string playbackTarget) override;
     bool playControl(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType)
         override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;

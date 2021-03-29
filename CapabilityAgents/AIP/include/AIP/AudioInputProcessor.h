@@ -19,15 +19,19 @@
 #include <chrono>
 #include <map>
 #include <memory>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/AVS/CapabilityChangeNotifierInterface.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/DirectiveHandlerConfiguration.h>
 #include <AVSCommon/AVS/ExceptionErrorType.h>
+#include <AVSCommon/AVS/EditableMessageRequest.h>
+#include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/SDKInterfaces/AudioInputProcessorObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
@@ -39,11 +43,13 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/InternetConnectionObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/LocaleAssetsObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageRequestObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
+#include <AVSCommon/Utils/AudioFormat.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
@@ -74,6 +80,7 @@ namespace aip {
 class AudioInputProcessor
         : public avsCommon::avs::CapabilityAgent
         , public avsCommon::sdkInterfaces::CapabilityConfigurationInterface
+        , public avsCommon::sdkInterfaces::LocaleAssetsObserverInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
         , public avsCommon::sdkInterfaces::MessageRequestObserverInterface
         , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
@@ -82,6 +89,21 @@ class AudioInputProcessor
 public:
     /// Alias to the @c AudioInputProcessorObserverInterface for brevity.
     using ObserverInterface = avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface;
+
+    /**
+     * Request to configure @c AudioInputProcessor to provide multiple audio streams for a single Recognize event. Key
+     * in the map is resolve key, which will be used by caller to resolve the unresolved @c MessageRequest. Each resolve
+     * key correlates to a pair of encoding formats. The first format is the preferred format, and the second one is the
+     * fallback format which is used if the preferred one is not supported.
+     */
+    using EncodingFormatRequest = std::
+        map<std::string, std::pair<avsCommon::utils::AudioFormat::Encoding, avsCommon::utils::AudioFormat::Encoding>>;
+
+    /**
+     * Response to caller when AIP receives EncodingFormatRequest. Key in the map is resolve key from the request, and
+     * corresponding value is the confirmed encoding format that AIP will provide for this resolve key.
+     */
+    using EncodingFormatResponse = std::map<std::string, avsCommon::utils::AudioFormat::Encoding>;
 
     /**
      * This function allows applications to tell the @c AudioInputProcessor that the @c ExpectSpeech directive's timeout
@@ -123,6 +145,8 @@ public:
      * @param assetsManager Responsible for retrieving and changing the wake words and locale.
      * @param wakeWordConfirmation The wake word confirmation setting.
      * @param speechConfirmation The end of speech confirmation setting.
+     * @param capabilityChangeNotifier The object with which to notify observers of @c AudioInputProcessor capability
+     *     configurations change.
      * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
      * device supports wake words.
      * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
@@ -149,6 +173,7 @@ public:
         const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& assetsManager,
         std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+        const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting = nullptr,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null(),
@@ -255,6 +280,7 @@ public:
 
     /// @name MessageRequestObserverInterface Functions
     /// @{
+    void onResponseStatusReceived(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) override;
     void onSendCompleted(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status) override;
     void onExceptionReceived(const std::string& exceptionMessage) override;
     /// @}
@@ -285,6 +311,11 @@ public:
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
     /// @}
 
+    /// @name LocaleAssetsObserverInterface Functions
+    /// @{
+    void onLocaleAssetsChanged() override;
+    /// @}
+
     /// @name InternetConnectionObserverInterface Functions
     /// @{
     void onConnectionStatusChanged(bool connected) override;
@@ -311,7 +342,42 @@ public:
      */
     static settings::SettingEventMetadata getSpeechConfirmationMetadata();
 
+    /**
+     * Set encoding for the audio format. The new encoding will be used for future utterances. Any audio stream already
+     * in progress will not be affected. This is an alternative API to @c requestEncodingAudioFormats(), but will
+     * configure @c AudioInputProcessor to only produce one audio stream.
+     *
+     * @param encoding The encoding format to use.
+     * @return @true on success, @c false on failure to set the encoding.
+     */
+    bool setEncodingAudioFormat(avsCommon::utils::AudioFormat::Encoding encoding);
+
+    /**
+     * Function to request multiple audio streams from @c AudioInputProcessor in a single Recognize event. This is an
+     * alternative API to @c setEncodingAudioFormat().
+     * @param encodings A map of resolveKey to a pair of encoding formats. Each resolveKey stands for an audio stream.
+     * The first encoding format is the requested format, and the second one is backup format if the requested one isn't
+     * supported by @c AudioInputProcessor.
+     * @return A map of resolveKey to result encoding format. If the requested format is supported, the result will be
+     * the requested one. If not, @c AudioInputProcessor will check backup format. If neither of them is supported, the
+     * corresponding resolve key will be removed from result.
+     */
+    EncodingFormatResponse requestEncodingAudioFormats(const EncodingFormatRequest& encodings);
+
+    /**
+     * Function to get encoding audio formats.
+     * @return Encoding formats requested for multiple audio streams.
+     */
+    EncodingFormatResponse getEncodingAudioFormats() const;
+
 private:
+    /**
+     * Inintialize audio input processor.
+     *
+     * @return @c true on success, @c false on failure to initialize
+     */
+    bool initialize();
+
     /**
      * Constructor.
      *
@@ -329,6 +395,8 @@ private:
      *     to @c AudioProvider::null().
      * @param wakeWordConfirmation The wake word confirmation setting.
      * @param speechConfirmation The end of speech confirmation setting.
+     * @param capabilityChangeNotifier The object with which to notify observers of @c AudioInputProcessor capability
+     *     configurations change.
      * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
      * device supports wake words.
      * @param capabilitiesConfiguration The SpeechRecognizer capabilities configuration.
@@ -350,10 +418,12 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
+        const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& assetsManager,
         std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
         AudioProvider defaultAudioProvider,
         std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
+        const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
         std::shared_ptr<avsCommon::avs::CapabilityConfiguration> capabilitiesConfiguration,
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
@@ -572,6 +642,11 @@ private:
     void executeDisconnected();
 
     /**
+     * This function is called whenever locale assets of @c LocaleAssetsManagerInterface are changed.
+     */
+    void executeOnLocaleAssetsChanged();
+
+    /**
      * This function updates the @c AudioInputProcessor state and notifies the state observer.  Any changes to
      * @c m_state should be made through this function.
      *
@@ -621,6 +696,44 @@ private:
      */
     void managePowerResource(ObserverInterface::State newState);
 
+    /**
+     * Helper function to create @c MessageRequestResolveFunction for ongoing Recognize event.
+     * @return MessageRequestResolver function with respect to current @c m_encodingAudioFormats, and attachment readers
+     * @note This function is not thread-safe, caller should requires @c m_encodingFormatMutex for synchronization
+     */
+    avsCommon::avs::MessageRequest::MessageRequestResolveFunction getMessageRequestResolverLocked() const;
+
+    /**
+     * Helper function to close both KWD metadata and audio attachment readers in @c AudioInputProcessor regardless
+     * how many streams it's configured to produce.
+     * @param closePoint Close the reader immediately or after draining buffer
+     * @note For the sake of thread safety, this helper function can only be called by @c m_executor thread
+     */
+    void closeAttachmentReaders(
+        avsCommon::avs::attachment::AttachmentReader::ClosePoint closePoint =
+            avsCommon::avs::attachment::AttachmentReader::ClosePoint::AFTER_DRAINING_CURRENT_BUFFER);
+
+    /**
+     * Helper function to check whether provided encoding audio format is supported by audio stream provider or encoder.
+     * @param encodingFormat Encoding format to check.
+     * @return @c true if it's supported, else @c false
+     */
+    bool isEncodingFormatSupported(avsCommon::utils::AudioFormat::Encoding encodingFormat) const;
+
+    /**
+     * Helper function to indicate if audio encoder is being used.
+     * @return @c true if encoder is used, else @c false
+     * @note This function is not thread-safe, caller should requires @c m_encodingFormatMutex for synchronization
+     */
+    bool isUsingEncoderLocked() const;
+
+    /**
+     * Helper function to indicate if @c AudioInputProcessor is configured to produce multiple audio streams
+     * @return @c true if multiple streams are being requested, else @c false
+     * @note This function is not thread-safe, caller should acquire @c m_encodingFormatMutex for synchronization
+     */
+    bool multiStreamsRequestedLocked() const;
+
     /// The metric recorder.
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
@@ -643,7 +756,7 @@ private:
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;
 
     /// The Speech Encoder to encode input stream.
-    std::shared_ptr<speechencoder::SpeechEncoder> m_encoder;
+    const std::shared_ptr<speechencoder::SpeechEncoder> m_encoder;
 
     /**
      * @name Executor Thread Variables
@@ -669,18 +782,15 @@ private:
     AudioProvider m_lastAudioProvider;
 
     /**
-     * The attachment reader which is currently being used to stream audio for a Recognize event.  This pointer is
-     * valid during the @c RECOGNIZING state, and is retained by @c AudioInputProcessor so that it can close the
-     * stream from @c executeStopCapture().
+     * The attachment readers which are currently being used to stream audio for a Recognize event. These readers are
+     * valid during the @c RECOGNIZING state, and are retained by @c AudioInputProcessor so that they can close the
+     * stream from @c executeStopCapture(). These attachment readers are grouped by resolve key, which aims to support
+     * multiple audio stream use case. Attachment readers include both KWD metadata and audio stream, and they're
+     * ordered properly in the vector, and ready to use to assemble @c MessageRequest.
+     * @note For the sake of thread safety, this member data should only be updated by @c m_executor thread.
      */
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_reader;
-
-    /**
-     * The attachment reader used for the wake word engine metadata. It's is populated by a call to @c
-     * executeRecognize(), and later consumed by a call to @c executeOnContextAvailable() when the context arrives and
-     * the full @c MessageRequest can be assembled.  This reader is only relevant during the @c RECOGNIZING state.
-     */
-    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> m_KWDMetadataReader;
+    std::unordered_map<std::string, std::vector<std::shared_ptr<avsCommon::avs::MessageRequest::NamedReader>>>
+        m_attachmentReaders;
 
     /**
      * The payload for a Recognize event.  This string is populated by a call to @c executeRecognize(), and later
@@ -727,8 +837,16 @@ private:
      */
     bool m_localStopCapturePerformed;
 
+    /**
+     * This flag indicates if the event stream is closed while the device is still in @c RECOGNIZING.
+     */
+    bool m_streamIsClosedInRecognizingState;
+
     /// The system sound player.
     std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;
+
+    /// The locale assets manager.
+    std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> m_assetsManager;
 
     /**
      * The initiator value from the preceding ExpectSpeech directive. The ExpectSpeech directive's initiator
@@ -751,6 +869,9 @@ private:
     /// The end of speech confirmation setting.
     std::shared_ptr<settings::SpeechConfirmationSetting> m_speechConfirmation;
 
+    /// The object to notify of @c AudioInputProcessor capability configurations change.
+    std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface> m_capabilityChangeNotifier;
+
     /// The wake words setting. This field is optional and it is only used if the device supports wake words.
     std::shared_ptr<settings::WakeWordsSetting> m_wakeWordsSetting;
 
@@ -767,14 +888,6 @@ private:
     std::shared_ptr<ExpectSpeechTimeoutHandler> m_expectSpeechTimeoutHandler;
 
     /**
-     * @c Executor which queues up operations from asynchronous API calls.
-     *
-     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
-     *     before the Executor Thread Variables are destroyed.
-     */
-    avsCommon::utils::threading::Executor m_executor;
-
-    /**
      * Temporary value of dialogRequestId generated when onRecognize starts. This should be cleared after being
      * passed to the directive sequencer.
      */
@@ -784,6 +897,43 @@ private:
      * Value that will contain the time since last wake from suspend when AIP acquires the wakelock.
      */
     std::chrono::milliseconds m_timeSinceLastResumeMS;
+
+    /**
+     * Value to indicate if audio encoder is being used.
+     */
+    bool m_usingEncoder;
+
+    /**
+     * Mutex to serialize access to m_capabilityConfigurations.
+     */
+    std::mutex m_mutex;
+
+    /**
+     * Resolve function to pass to @c MessageRequest when multiple audio streams are requested.
+     */
+    avsCommon::avs::MessageRequest::MessageRequestResolveFunction m_messageRequestResolver;
+
+    /**
+     * Encoding formats used to encode audio streams. This is a map from resolveKey to corresponding encoding format. If
+     * there is only one format in the map, @c AudioInputProcess will send resolved @c MessageRequest, and the
+     * resolveKey will be ignored. If there are multiple formats in the map, @c AudioInputProcessor will send unresolved
+     * @c MessageRequest with audio streams of all provided formats, and user needs to use the corresponding resolveKey
+     * to resolve the @c MessageRequest to a valid one containing only the audio with the right format.
+     */
+    EncodingFormatResponse m_encodingAudioFormats;
+
+    /**
+     * Mutex to synchronize updates to @c m_encodingAudioFormats.
+     */
+    mutable std::mutex m_encodingFormatMutex;
+
+    /**
+     * @c Executor which queues up operations from asynchronous API calls.
+     *
+     * @note This declaration needs to come *after* the Executor Thread Variables above so that the thread shuts down
+     *     before the Executor Thread Variables are destroyed.
+     */
+    avsCommon::utils::threading::Executor m_executor;
 };
 
 }  // namespace aip

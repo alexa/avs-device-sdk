@@ -2,6 +2,7 @@ add_definitions("-DACSDK_LOG_MODULE=alexa")
 
 add_library(
         Alexa SHARED
+        AlexaEventProcessedNotifier.cpp
         AlexaInterfaceCapabilityAgent.cpp
         AlexaInterfaceMessageSender.cpp
 )

@@ -38,6 +38,7 @@ add_library(AVSCommon SHARED
     AVS/src/HandlerAndPolicy.cpp
     AVS/src/MessageRequest.cpp
     AVS/src/NamespaceAndName.cpp
+    AVS/src/EditableMessageRequest.cpp
     AVS/src/WaitableMessageRequest.cpp
     Utils/src/Bluetooth/SDPRecords.cpp
     Utils/src/BluetoothEventBus.cpp
@@ -102,7 +103,6 @@ add_library(AVSCommon SHARED
     Utils/src/Stream/StreamFunctions.cpp
     Utils/src/Stream/Streambuf.cpp
     Utils/src/StringUtils.cpp
-    Utils/src/SystemClockMonitor.cpp
     Utils/src/TaskThread.cpp
     Utils/src/ThreadPool.cpp
     Utils/src/Threading/ConditionVariableWrapper.cpp

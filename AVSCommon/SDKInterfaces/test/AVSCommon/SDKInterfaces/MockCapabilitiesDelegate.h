@@ -40,10 +40,10 @@ public:
             const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities));
     MOCK_METHOD1(
         addCapabilitiesObserver,
-        void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer));
+        void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer));
     MOCK_METHOD1(
         removeCapabilitiesObserver,
-        void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer));
+        void(std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer));
     MOCK_METHOD0(invalidateCapabilities, void());
     MOCK_METHOD1(
         setMessageSender,

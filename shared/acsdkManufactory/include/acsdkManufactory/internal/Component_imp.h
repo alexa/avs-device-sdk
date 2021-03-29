@@ -34,12 +34,14 @@ inline Component<Parameters...>::Component(
     using MissingExports =
         typename internal::RemoveTypes<typename ComponentTypes::exports, typename AccumulatorTypes::exports>::type;
 
+    // coverity[set_but_not_used]
     ACSDK_STATIC_ASSERT_IS_SAME(
         std::tuple<>, MissingExports, "One or more export declared by this Component was not provided.");
 
     using MissingImports =
         typename internal::RemoveTypes<typename AccumulatorTypes::imports, typename ComponentTypes::imports>::type;
 
+    // coverity[set_but_not_used]
     ACSDK_STATIC_ASSERT_IS_SAME(
         std::tuple<>, MissingImports, "One or more Import<Type> was not declared by this Component.");
 }

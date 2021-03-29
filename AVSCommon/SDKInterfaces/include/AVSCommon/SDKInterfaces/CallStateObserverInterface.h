@@ -41,6 +41,32 @@ public:
         NONE
     };
 
+    /// An struct containing call state information
+    typedef struct CallStateInfo {
+        /// An enum representing the state of a call.
+        CallState callState;
+        /// The type of the call.
+        std::string callType;
+        /// Previous sipUserAgent state.
+        std::string previousSipUserAgentState;
+        /// Current sipUserAgent state.
+        std::string currentSipUserAgentState;
+        /// Contact name to be displayed.
+        std::string displayName;
+        /// Information about the endpoint of the contact.
+        std::string endpointLabel;
+        /// Name of callee for whom incoming call is intended.
+        std::string inboundCalleeName;
+        /// Textual description of exact call provider type.
+        std::string callProviderType;
+        /// Inbound ringtone url.
+        std::string inboundRingtoneUrl;
+        /// Outbound ringtone url.
+        std::string outboundRingbackUrl;
+        /// This indicates if it's a drop in call or not
+        bool isDropIn;
+    } CallStateInfo;
+
     /**
      * Destructor
      */
@@ -54,7 +80,15 @@ public:
     virtual void onCallStateChange(CallState state) = 0;
 
     /**
-     * Checks the state of the provided call state to determine if a call is in an "active" state
+     * Allows the observer to react to a change in call state info.
+     *
+     * @param stateInfo The new CallStateInfo.
+     */
+    virtual void onCallStateInfoChange(const CallStateInfo& stateInfo);
+
+    /**
+     * Checks the state of the provided call state to determine if a call is in
+     * an "active" state
      * Active states are: CONNECTING
      *                    INBOUND_RINGING
      *                    CALL_CONNETED
@@ -104,6 +138,11 @@ inline bool CallStateObserverInterface::isStateActive(const CallStateObserverInt
             return false;
     }
     return false;
+}
+
+inline void CallStateObserverInterface::onCallStateInfoChange(
+    const CallStateObserverInterface::CallStateInfo& stateInfo) {
+    return;
 }
 
 }  // namespace sdkInterfaces

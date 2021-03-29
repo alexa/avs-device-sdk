@@ -37,6 +37,7 @@
 #include <Audio/AlertsAudioFactory.h>
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
+#include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -376,6 +377,7 @@ protected:
             std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
             m_mockWakeWordConfirmationSetting,
             m_mockSpeechConfirmationSetting,
+            std::make_shared<avsCommon::avs::CapabilityChangeNotifier>(),
             nullptr,
             nullptr,
             AudioProvider::null(),

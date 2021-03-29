@@ -16,10 +16,10 @@
 #include <AndroidSLESMediaPlayer/AndroidSLESMediaPlayer.h>
 #include <AndroidSLESMediaPlayer/AndroidSLESSpeaker.h>
 
-#include "acsdkAndroidApplicationAudioPipelineFactory/AndroidApplicationAudioPipelineFactory.h"
+#include "acsdkApplicationAudioPipelineFactory/AndroidApplicationAudioPipelineFactory.h"
 
 namespace alexaClientSDK {
-namespace acsdkAndroidApplicationAudioPipelineFactory {
+namespace acsdkApplicationAudioPipelineFactory {
 
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkEqualizerInterfaces;
@@ -39,24 +39,30 @@ static const std::string TAG("AndroidApplicationAudioPipelineFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
-AndroidApplicationAudioPipelineFactory::create(
+AndroidApplicationAudioPipelineFactory::createApplicationAudioPipelineFactoryInterface(
     const std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>& channelVolumeFactory,
     const std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>& speakerManager,
     const std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>& equalizerRuntimeSetup,
     const std::shared_ptr<HTTPContentFetcherInterfaceFactoryInterface>& httpContentFetcherFactory,
     const std::shared_ptr<ShutdownNotifierInterface>& shutdownNotifier,
-    const std::shared_ptr<AndroidSLESEngine>& openSlEngine,
+    const std::shared_ptr<applicationUtilities::androidUtilities::PlatformSpecificValues>& platformSpecificValues,
     const std::shared_ptr<CaptionManagerInterface>& captionManager) {
     ACSDK_DEBUG5(LX(__func__));
     if (!channelVolumeFactory || !speakerManager || !equalizerRuntimeSetup || !httpContentFetcherFactory ||
-        !shutdownNotifier || !openSlEngine) {
+        !shutdownNotifier || !platformSpecificValues) {
         ACSDK_ERROR(LX("createFailed")
                         .d("isChannelVolumeFactoryNull", !channelVolumeFactory)
                         .d("isSpeakerManagerNull", !speakerManager)
                         .d("isEqualizerRuntimeSetupNull", !equalizerRuntimeSetup)
                         .d("isHttpContentFetcherFactoryNull", !httpContentFetcherFactory)
                         .d("isShutdownNotifierNull", !shutdownNotifier)
-                        .d("isOpenSLEngineNull", !openSlEngine));
+                        .d("isPlatformSpecificValuesNull", !platformSpecificValues));
+        return nullptr;
+    }
+
+    auto openSlEngine = platformSpecificValues->openSlEngine;
+    if (!openSlEngine) {
+        ACSDK_ERROR(LX("createApplicationAudioPipelineFactoryInterfaceFailed").m("openSlEngine is null"));
         return nullptr;
     }
 
@@ -186,5 +192,5 @@ AndroidApplicationAudioPipelineFactory::AndroidApplicationAudioPipelineFactory(
         m_captionManager{captionManager} {
 }
 
-}  // namespace acsdkAndroidApplicationAudioPipelineFactory
+}  // namespace acsdkApplicationAudioPipelineFactory
 }  // namespace alexaClientSDK

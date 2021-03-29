@@ -244,6 +244,7 @@ bool tableExists(sqlite3* dbHandle, const std::string& tableName) {
         return false;
     }
 
+    // sqlite_master can be replaced with sqlite_schema in versions > 3.33.0
     std::string sqlString = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='" + tableName + "';";
 
     SQLiteStatement statement(dbHandle, sqlString);

@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_MESSAGEREQUEST_H_
 
 #include <cstdlib>
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -29,6 +30,8 @@
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
+
+class EditableMessageRequest;
 
 /**
  * This is a wrapper class which allows a client to send a Message to AVS, and be notified when the attempt to
@@ -57,6 +60,16 @@ public:
     };
 
     /**
+     * Function to resolve an editable message request based on the provided resolveKey by updating the MessageRequest.
+     * @param[in,out] req Target editable request message that will be modified in place.
+     * @param resolveKey Key used to resolve the message request
+     * @return @c true if resolving successfully, else @ false
+     * @note This function need to be thread-safe, and is allowed to block.
+     */
+    using MessageRequestResolveFunction =
+        std::function<bool(const std::shared_ptr<EditableMessageRequest>& req, const std::string& resolveKey)>;
+
+    /**
      * Constructor.
      *
      * @param jsonContent The message to be sent to AVS.
@@ -73,12 +86,25 @@ public:
      * @param uriPathExtension An optional uri path extension which will be appended to the base url of the AVS.
      * @param headers key/value pairs of extra HTTP headers to use with this request.
      * endpoint.  If not specified, the default AVS path extension should be used by the sender implementation.
+     * @param resolver Function to resolve message. Null if message doesn't need resolving. Resolving function aims to
+     * support the use case that one message request will be sent to multiple places with some fields having different
+     * values for different destinations. In such use cases, @c MessageRequest works as a container with all required
+     * info to build different versions of requests. The resolving function contains the logic to build the target
+     * message request based on the info in the original request, and provided resolveKey.
      */
     MessageRequest(
         const std::string& jsonContent,
         bool isSerialized,
         const std::string& uriPathExtension = "",
-        std::vector<std::pair<std::string, std::string>> headers = {});
+        std::vector<std::pair<std::string, std::string>> headers = {},
+        MessageRequestResolveFunction resolver = nullptr);
+
+    /**
+     * Constructor to construct a MessageRequest which contains a copy of the data in @c MessageRequest.
+     * @param messageRequest MessageRequest to copy from
+     * @note Observers are not considered data and don't get copied by this constructor.
+     */
+    MessageRequest(const MessageRequest& messageRequest);
 
     /**
      * Destructor.
@@ -131,7 +157,14 @@ public:
      * @return @c NamedReader of the ith attachment in the message.
      * A null pointer is returned when @c index is out of bound.
      */
-    std::shared_ptr<NamedReader> getAttachmentReader(size_t index);
+    std::shared_ptr<NamedReader> getAttachmentReader(size_t index) const;
+
+    /**
+     * Called when the Response code is received.
+     *
+     * @param status The status of the response that was received.
+     */
+    virtual void responseStatusReceived(avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status status);
 
     /**
      * This is called once the send request has completed.  The status parameter indicates success or failure.
@@ -167,6 +200,19 @@ public:
      */
     const std::vector<std::pair<std::string, std::string>>& getHeaders() const;
 
+    /**
+     * Check whether message is resolved and ready to send.
+     * @return @c true if message is already resolved, else @c false
+     */
+    bool isResolved() const;
+
+    /**
+     * Resolve message to a valid message by updating the content of the message based on provided resolveKey
+     * @param resolveKey Key used to resolve message
+     * @return New resolved MessageRequest
+     */
+    std::shared_ptr<MessageRequest> resolveRequest(const std::string& resolveKey) const;
+
 protected:
     /// Mutex to guard access of m_observers.
     std::mutex m_observerMutex;
@@ -188,6 +234,9 @@ protected:
 
     /// Optional headers to send with this request to AVS.
     std::vector<std::pair<std::string, std::string>> m_headers;
+
+    /// Resolver function to resolve current message request to a valid state. Null if message is already resolved.
+    MessageRequestResolveFunction m_resolver;
 };
 
 }  // namespace avs

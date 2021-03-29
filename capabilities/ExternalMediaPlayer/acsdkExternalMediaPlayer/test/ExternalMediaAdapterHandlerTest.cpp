@@ -73,7 +73,7 @@ public:
             bool forceLogin,
             std::chrono::milliseconds tokenRefreshInterval));
     MOCK_METHOD1(handleLogout, bool(const std::string& localPlayerId));
-    MOCK_METHOD9(
+    MOCK_METHOD10(
         handlePlay,
         bool(
             const std::string& localPlayerId,
@@ -84,7 +84,8 @@ public:
             const std::string& playbackSessionId,
             const acsdkExternalMediaPlayerInterfaces::Navigation& navigation,
             bool preload,
-            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor));
+            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+            std::string playbackTarget));
     MOCK_METHOD2(
         handlePlayControl,
         bool(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType));
@@ -194,9 +195,19 @@ TEST_F(ExternalMediaPlayerTest, testHandlePlay) {
             SESSION_ID,
             acsdkExternalMediaPlayerInterfaces::Navigation::NONE,
             false,
-            PLAY_REQUESTOR));
+            PLAY_REQUESTOR,
+            ""));
     m_externalMediaPlayerAdapterHandler->play(
-        PLAYER_ID, PLAY_CONTEXT_TOKEN, 0, PLAY_OFFSET, SKILL_TOKEN, SESSION_ID, NAVIGATION_NONE, false, PLAY_REQUESTOR);
+        PLAYER_ID,
+        PLAY_CONTEXT_TOKEN,
+        0,
+        PLAY_OFFSET,
+        SKILL_TOKEN,
+        SESSION_ID,
+        NAVIGATION_NONE,
+        false,
+        PLAY_REQUESTOR,
+        "");
 }
 
 /**

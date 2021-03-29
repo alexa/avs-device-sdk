@@ -16,17 +16,27 @@
 #ifndef ACSDKSTARTUPMANAGER_STARTUPNOTIFIER_H_
 #define ACSDKSTARTUPMANAGER_STARTUPNOTIFIER_H_
 
+#include <memory>
+
 #include <acsdkNotifier/Notifier.h>
 
 #include "acsdkStartupManagerInterfaces/RequiresStartupInterface.h"
+#include "acsdkStartupManagerInterfaces/StartupNotifierInterface.h"
 
 namespace alexaClientSDK {
 namespace acsdkStartupManager {
 
 /**
- * Implementation of StartupNotifierInterface.
+ * Relays the notification when it's time to start up.
  */
-using StartupNotifier = acsdkNotifier::Notifier<acsdkStartupManagerInterfaces::RequiresStartupInterface>;
+class StartupNotifier : public acsdkNotifier::Notifier<acsdkStartupManagerInterfaces::RequiresStartupInterface> {
+public:
+    /**
+     * Factory method.
+     * @return A new instance of @c StartupNotifierInterface.
+     */
+    static std::shared_ptr<acsdkStartupManagerInterfaces::StartupNotifierInterface> createStartupNotifierInterface();
+};
 
 }  // namespace acsdkStartupManager
 }  // namespace alexaClientSDK

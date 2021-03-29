@@ -34,7 +34,7 @@ install_dependencies() {
   PACMAN_ARGS="--noconfirm --needed"
 
   # Build tools and make (mingw32-make fails building portAudio)
-  pacman -S ${PACMAN_ARGS} git mingw-w64-x86_64-toolchain mingw-w64-x86_64-lld mingw-w64-x86_64-cmake msys/tar msys/make
+  pacman -S ${PACMAN_ARGS} git mingw-w64-x86_64-toolchain mingw-w64-x86_64-clang mingw-w64-x86_64-cmake msys/tar msys/make
 
   # required by the SDK
   pacman -S ${PACMAN_ARGS} mingw-w64-x86_64-sqlite3
@@ -55,6 +55,10 @@ install_dependencies() {
 
 run_os_specifics() {
   build_port_audio
+
+  # Use clang to compile the SDK.
+  export CC=`which clang`
+  export CXX=`which clang++`
 }
 
 generate_start_script() {

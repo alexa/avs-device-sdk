@@ -1,5 +1,8 @@
 ## ChangeLog
 
+### Version 1.23.0 - March 29 2021
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
+
 ### Version 1.22.0 - December 8 2020
 Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
 

@@ -40,6 +40,46 @@ static std::shared_future<bool> getFalseFuture() {
     return errPromise.get_future();
 }
 
+std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> SystemSoundPlayer::
+    createSystemSoundPlayerInterface(
+        std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
+            audioPipelineFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory) {
+    if (!audioPipelineFactory) {
+        ACSDK_ERROR(LX("createSystemSoundPlayerInterfaceFailed").d("reason", "nullMediaPlayer"));
+        return nullptr;
+    }
+    if (!audioFactory) {
+        ACSDK_ERROR(LX("createSystemSoundPlayerInterfaceFailed").d("reason", "nullAudioFactory"));
+        return nullptr;
+    }
+
+    auto applicationMediaInterfaces =
+        audioPipelineFactory->createApplicationMediaInterfaces(SYSTEM_SOUND_MEDIA_PLAYER_NAME);
+    if (!applicationMediaInterfaces) {
+        ACSDK_ERROR(LX("createSystemSoundPlayerInterfaceFailed").d("reason", "nullApplicationMediaInterfaces"));
+        return nullptr;
+    }
+
+    auto mediaPlayer = applicationMediaInterfaces->mediaPlayer;
+    if (!mediaPlayer) {
+        ACSDK_ERROR(LX("createSystemSoundPlayerInterfaceFailed").d("reason", "nullMediaPlayer"));
+        return nullptr;
+    }
+
+    auto systemSoundsAudioFactory = audioFactory->systemSounds();
+    if (!systemSoundsAudioFactory) {
+        ACSDK_ERROR(LX("createSystemSoundPlayerInterfaceFailed").d("reason", "nullSystemSoundsAudioFactory"));
+        return nullptr;
+    }
+
+    auto systemSoundPlayer =
+        std::shared_ptr<SystemSoundPlayer>(new SystemSoundPlayer(mediaPlayer, systemSoundsAudioFactory));
+    mediaPlayer->addObserver(systemSoundPlayer);
+
+    return systemSoundPlayer;
+}
+
 std::shared_ptr<SystemSoundPlayer> SystemSoundPlayer::create(
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> soundPlayerAudioFactory) {

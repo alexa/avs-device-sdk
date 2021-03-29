@@ -18,9 +18,13 @@
 
 #include <map>
 #include <memory>
+#include <mutex>
 #include <set>
+#include <unordered_set>
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -31,14 +35,29 @@ namespace sampleApp {
  * This manager will use the @c AlexaClientSDKConfig.json to retrieve the supported locales. For devices with wake word
  * enabled this class will support "ALEXA" only.
  */
-class LocaleAssetsManager : public avsCommon::sdkInterfaces::LocaleAssetsManagerInterface {
+class LocaleAssetsManager
+        : public avsCommon::sdkInterfaces::LocaleAssetsManagerInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /**
-     * Create an instance of LocaleAssetsManagerInterface.
+     * Create an instance of @c LocaleAssetsManagerInterface.
      *
+     * @param configurationNode A pointer to the @c ConfigurationNode instance.
+     * @param shutdownNotifier A pointer to the @c ShutdownNotifier instance.
+     * @return A pointer to the @c LocaleAssetsManagerInterface.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> createLocaleAssetsManagerInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationNode,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier);
+
+    /**
+     * Create an instance of @c LocaleAssetsManager.
+     *
+     * @param configurationNode A pointer to the @c ConfigurationNode instance.
      * @return A pointer to a new LocaleAssetsManager object if it succeeds; otherwise, @c nullptr.
      */
-    static std::shared_ptr<LocaleAssetsManagerInterface> createLocaleAssetsManagerInterface();
+    static std::shared_ptr<LocaleAssetsManager> createLocaleAssetsManager(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationNode);
 
     /**
      * Create a LocaleAssetsManager object.
@@ -59,6 +78,22 @@ public:
     std::set<Locale> getSupportedLocales() const override;
     LocaleCombinations getSupportedLocaleCombinations() const override;
     Locale getDefaultLocale() const override;
+    void addLocaleAssetsObserver(
+        const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>& observer)
+        override;
+    void removeLocaleAssetsObserver(
+        const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>& observer)
+        override;
+    void onConfigurationChanged(const alexaClientSDK::avsCommon::avs::CapabilityConfiguration& configuration) override;
+    void setEndpointRegistrationManager(
+        const std::shared_ptr<
+            alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>& manager)
+        override;
+    /// @}
+
+    /// @name RequiresShutdown methods
+    /// @{
+    void doShutdown() override;
     /// @}
 private:
     /**
@@ -69,10 +104,19 @@ private:
     /**
      * Initialize the assets manager object.
      *
-     * @param enableWakeWord Indicates whether wake words are enabled in this device or not.
+     * @param configurationNode The @c ConfigurationNode pointer.
      * @return @c true if it succeeds; otherwise, return @c false.
      */
-    bool initialize(bool enableWakeWord);
+    bool initialize(const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationNode);
+
+    /**
+     * Initialize the assets manager object.
+     *
+     * @param enableWakeWord Indicates whether wake words are enabled in this device or not.
+     * @param configurationNode The @c ConfigurationNode instance.
+     * @return @c true if it succeeds; otherwise, return @c false.
+     */
+    bool initialize(bool enableWakeWord, const avsCommon::utils::configuration::ConfigurationNode& configurationNode);
 
     /// Set with the supported wake words. This object doesn't support different wake words per locale.
     WakeWordsSets m_supportedWakeWords;
@@ -85,6 +129,22 @@ private:
 
     /// The default locale.
     Locale m_defaultLocale;
+
+    /// Mutex to synchronize access to observers.
+    mutable std::mutex m_observersMutex;
+
+    /// Mutex to synchronize access to @c EndpointRegistrationManager.
+    std::mutex m_ermMutex;
+
+    //// Members below are modified after initialization and hence should be synchronized.
+
+    /// Set with observers.
+    std::unordered_set<std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>>
+        m_observers;
+
+    /// Dynamically update wakewords/locales capabilitie changes.
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>
+        m_endpointRegistrationManager;
 };
 
 }  // namespace sampleApp

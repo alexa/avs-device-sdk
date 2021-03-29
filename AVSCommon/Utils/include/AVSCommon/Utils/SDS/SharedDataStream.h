@@ -485,8 +485,13 @@ std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::creat
         for (int i = 0; i < MAX_READER_CREATION_RETRIES; i++) {
             auto offset = m_bufferLayout->getDataSize();
             auto writeStartCursor = headerPtr->writeStartCursor.load();
+            auto reference = Reader::Reference::BEFORE_WRITER;
             if (writeStartCursor < offset) {
-                offset = writeStartCursor;
+                // For SDS without buffer overwritten, seek the very beginning of the stream using ABSOLUTE reference
+                // ABSOLUTE reference prevents a race condition between blocking writer and reader seek when writer
+                // writes more data to buffer, and writing cursor moves forward.
+                offset = 0;
+                reference = Reader::Reference::ABSOLUTE;
             } else {
                 auto writeEndCursor = headerPtr->writeEndCursor.load();
                 if (writeEndCursor < writeStartCursor) {
@@ -505,7 +510,7 @@ std::unique_ptr<typename SharedDataStream<T>::Reader> SharedDataStream<T>::creat
                 offset -= wordsBeingWritten;
             }
 
-            if (reader->seek(offset, Reader::Reference::BEFORE_WRITER)) {
+            if (reader->seek(offset, reference)) {
                 // Note: seek() will call updateUnconsumedCursor() if it returns true.
                 return reader;
             }

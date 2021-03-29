@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(CapabilityAgents LANGUAGES CXX)
 
-include(${AVS_CORE}/build/BuildDefaults.cmake)
+include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
 
 set(CAPABILITY_AGENTS
         "AIP"

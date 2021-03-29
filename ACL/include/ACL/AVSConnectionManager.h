@@ -176,8 +176,13 @@ private:
 
     void receive(const std::string& contextId, const std::string& message) override;
 
+    std::shared_ptr<MessageRouterInterface> getMessageRouter() const;
+
     /// Mutex to serialize access to @c m_isEnabled
     std::mutex m_isEnabledMutex;
+
+    /// Mutex to serialize access to @c m_messageRouter
+    mutable std::mutex m_messageRouterMutex;
 
     /// Internal state to indicate if the Connection object is enabled for making an AVS connection.
     bool m_isEnabled;

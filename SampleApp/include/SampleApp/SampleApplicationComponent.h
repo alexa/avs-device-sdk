@@ -28,8 +28,12 @@
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
+
+#ifndef ACSDK_ACS_UTILS
 #include <CBLAuthDelegate/CBLAuthDelegateStorageInterface.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
+#endif
+
 #include <RegistrationManager/CustomerDataManager.h>
 
 #include "SampleApp/UIManager.h"
@@ -42,7 +46,9 @@ namespace acsdkSampleApplication {
  *
  */
 using SampleApplicationComponent = acsdkManufactory::Component<
+#ifndef ACSDK_ACS_UTILS
     std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>,
+#endif
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
@@ -59,7 +65,8 @@ using SampleApplicationComponent = acsdkManufactory::Component<
  * For applications that have not transitioned to using the manufactory to instantiate SDK components, they can
  * provide pre-built custom implementations of the @c AuthDelegateInterface and @c MetricRecorderInterface.
  *
- * param initParams The @c InitializationParameters to use when initializing the SDK Sample App.
+ * @param initParams The @c InitializationParameters to use when initializing the SDK Sample App.
+ * @param requiresShutdownList The @c RequiresShutdown vector to which newly instantiated objects can be added.
  * @param authDelegate Optional pre-built implementation of @c AuthDelegateInterface to add to the manufactory. Default
  * is nullptr.
  * @param MetricRecorderInterface Optional pre-built implementation of @c MetricRecorderInterface to add to the
@@ -69,6 +76,7 @@ using SampleApplicationComponent = acsdkManufactory::Component<
  */
 SampleApplicationComponent getComponent(
     std::unique_ptr<avsCommon::avs::initialization::InitializationParameters> initParams,
+    std::vector<std::shared_ptr<avsCommon::utils::RequiresShutdown>>& requiresShutdownList,
     const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate = nullptr,
     const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr,
     const std::shared_ptr<avsCommon::utils::logger::Logger>& logger = nullptr);

@@ -122,7 +122,8 @@ bool ExternalMediaAdapterHandler::play(
     const std::string& playbackSessionId,
     const std::string& navigation,
     bool preload,
-    const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor) {
+    const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+    std::string playbackTarget) {
     if (!validatePlayer(localPlayerId)) {
         ACSDK_WARN(LX("playFailed")
                        .d("reason", "player is not configured or not authorized")
@@ -144,7 +145,8 @@ bool ExternalMediaAdapterHandler::play(
         playbackSessionId,
         getNavigationEnum(navigation),
         preload,
-        playRequestor);
+        playRequestor,
+        playbackTarget);
 }
 
 bool ExternalMediaAdapterHandler::playControl(

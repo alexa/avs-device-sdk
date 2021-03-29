@@ -16,13 +16,15 @@
 #include <ACL/AVSConnectionManager.h>
 #include <acsdkAlerts/AlertsComponent.h>
 #include <acsdkAudioPlayer/AudioPlayerComponent.h>
+#include <acsdkBluetooth/BluetoothComponent.h>
 #include <acsdkDeviceSettingsManager/DeviceSettingsManagerComponent.h>
 #include <acsdkDoNotDisturb/DoNotDisturbComponent.h>
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayerComponent.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <acsdkManufactory/ConstructorAdapter.h>
 #include <acsdkShared/SharedComponent.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <acsdkSystemClockMonitor/SystemClockMonitor.h>
+#include <acsdkSystemClockMonitor/SystemClockNotifier.h>
 #include <AFML/FocusManagementComponent.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
@@ -40,8 +42,10 @@
 #include <ContextManager/ContextManager.h>
 #include <Endpoints/DefaultEndpointBuilder.h>
 #include <PlaybackController/PlaybackControllerComponent.h>
+#include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <SpeakerManager/SpeakerManagerComponent.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
+#include <SystemSoundPlayer/SystemSoundPlayer.h>
 #include <TemplateRuntime/RenderPlayerInfoCardsProviderRegistrar.h>
 
 #include "DefaultClient/DefaultClientComponent.h"
@@ -57,6 +61,7 @@ using namespace acsdkAlexaEventProcessedNotifierInterfaces;
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkManufactory;
 using namespace acsdkShutdownManagerInterfaces;
+using namespace applicationUtilities;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::libcurlUtils;
@@ -198,7 +203,18 @@ DefaultClientComponent getComponent(
     const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& deviceSettingStorage,
     bool startAlertSchedulingOnInitialization,
     const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
-    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage) {
+    const std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface>& alertStorage,
+    const std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface>& bluetoothDeviceManager,
+    const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface>& bluetoothStorage,
+    const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface>&
+        bluetoothConnectionRulesProvider) {
+    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> bluetoothEventBus;
+    if (bluetoothDeviceManager) {
+        bluetoothEventBus = bluetoothDeviceManager->getEventBus();
+    } else {
+        bluetoothEventBus = nullptr;
+    }
+
     return ComponentAccumulator<>()
         /// Instead of using factory methods to instantiate these interfaces, DefaultClientComponent accepts pre-made
         /// implementations and adds them to the manufactory.
@@ -223,12 +239,18 @@ DefaultClientComponent getComponent(
         .addInstance(systemTimeZone)
         .addInstance(audioFactory)
         .addInstance(alertStorage)
+        .addInstance(bluetoothConnectionRulesProvider)
+        .addInstance(bluetoothDeviceManager)
+        .addInstance(bluetoothEventBus)
+        .addInstance(bluetoothStorage)
         .addRetainedFactory(getCreateApplicationAudioPipelineFactory(stubAudioPipelineFactory))
         .addRetainedFactory(getCreateDeviceSettingStorageInterface(deviceSettingStorage))
 
         /// Baseline SDK components. Applications are not expected to modify these.
         .addComponent(acsdkDeviceSettingsManager::getComponent())
         .addComponent(acsdkShared::getComponent())
+        .addRetainedFactory(acsdkSystemClockMonitor::SystemClockMonitor::createSystemClockMonitorInterface)
+        .addRetainedFactory(acsdkSystemClockMonitor::SystemClockNotifier::createSystemClockNotifierInterface)
         .addRetainedFactory(afml::interruptModel::InterruptModel::createInterruptModel)
         .addComponent(afml::getComponent())
         .addRetainedFactory(AlexaInterfaceMessageSender::createAlexaInterfaceMessageSender)
@@ -246,6 +268,7 @@ DefaultClientComponent getComponent(
         .addRetainedFactory(DefaultSetCurlOptionsCallbackFactory::createSetCurlOptionsCallbackFactoryInterface)
         .addRetainedFactory(HTTPContentFetcherFactory::createHTTPContentFetcherInterfaceFactoryInterface)
         .addRetainedFactory(getCreateMessageRouter(messageRouterFactory))
+        .addRetainedFactory(systemSoundPlayer::SystemSoundPlayer::createSystemSoundPlayerInterface)
         .addUniqueFactory(capabilitiesDelegate::storage::SQLiteCapabilitiesDelegateStorage::
                               createCapabilitiesDelegateStorageInterface)
 
@@ -255,6 +278,7 @@ DefaultClientComponent getComponent(
         /// Capability Agents. Most CAs are still instantiated in DefaultClient.cpp.
         .addComponent(acsdkAlerts::getComponent(startAlertSchedulingOnInitialization))
         .addComponent(acsdkAudioPlayer::getBackwardsCompatibleComponent())
+        .addComponent(acsdkBluetooth::getComponent())
         .addComponent(acsdkDoNotDisturb::getComponent())
         .addComponent(acsdkExternalMediaPlayer::getBackwardsCompatibleComponent(adapterCreationMap))
         .addComponent(capabilityAgents::playbackController::getComponent())

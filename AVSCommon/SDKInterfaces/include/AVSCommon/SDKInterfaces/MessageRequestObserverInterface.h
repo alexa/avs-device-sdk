@@ -85,8 +85,17 @@ public:
      */
     virtual ~MessageRequestObserverInterface() = default;
 
+    /**
+     * Called when the Response code is received.
+     *
+     * @param status The status of the response that was received.
+     */
+    virtual void onResponseStatusReceived(MessageRequestObserverInterface::Status status){};
+
     /*
      * Called when a message request has been processed by AVS.
+     *
+     * @param status The status of the response that was received.
      */
     virtual void onSendCompleted(MessageRequestObserverInterface::Status status) = 0;
 

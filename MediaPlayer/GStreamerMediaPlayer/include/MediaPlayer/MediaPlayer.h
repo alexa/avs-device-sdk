@@ -95,6 +95,13 @@ public:
             avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
 
     SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        std::chrono::milliseconds offsetAdjustment,
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const avsCommon::utils::mediaPlayer::SourceConfig& config =
+            avsCommon::utils::mediaPlayer::emptySourceConfig()) override;
+
+    SourceId setSource(
         const std::string& url,
         std::chrono::milliseconds offset = std::chrono::milliseconds::zero(),
         const avsCommon::utils::mediaPlayer::SourceConfig& config = avsCommon::utils::mediaPlayer::emptySourceConfig(),
@@ -713,6 +720,9 @@ private:
 
     /// Flag to indicate if the player is in live mode.
     const bool m_isLiveMode;
+
+    /// Adjustment made to offset reported
+    std::chrono::milliseconds m_offsetAdjustment;
 };
 
 }  // namespace mediaPlayer

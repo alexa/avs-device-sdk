@@ -122,21 +122,37 @@ void AVSConnectionManager::doShutdown() {
         std::lock_guard<std::mutex> lock{m_messageObserverMutex};
         m_messageObservers.clear();
     }
+    std::unique_lock<std::mutex> lock{m_messageRouterMutex};
+    /* There is still a potential deadlock if the reset of m_messageRouter triggers a delete of the message router,
+    and that delete blocks on code that could call back into AVSConnectionManager and try to acquire that new mutex.
+    We can get around this by having doShutdown() swap m_messageRouter with a local variable while holding the lock,
+    and then resetting the local variable after new mutex is released.
+     */
+    auto messageRouter = m_messageRouter;
     m_messageRouter.reset();
+    lock.unlock();
+
+    messageRouter.reset();
 }
 
 void AVSConnectionManager::enable() {
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
     ACSDK_DEBUG5(LX(__func__));
     m_isEnabled = true;
-    m_messageRouter->enable();
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        messageRouter->enable();
+    }
 }
 
 void AVSConnectionManager::disable() {
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
     ACSDK_DEBUG5(LX(__func__));
     m_isEnabled = false;
-    m_messageRouter->disable();
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        messageRouter->disable();
+    }
 }
 
 bool AVSConnectionManager::isEnabled() {
@@ -148,39 +164,76 @@ void AVSConnectionManager::reconnect() {
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
     ACSDK_DEBUG5(LX(__func__).d("isEnabled", m_isEnabled));
     if (m_isEnabled) {
-        m_messageRouter->disable();
-        m_messageRouter->enable();
+        auto messageRouter = getMessageRouter();
+        if (messageRouter) {
+            messageRouter->disable();
+            messageRouter->enable();
+        }
     }
 }
 
 void AVSConnectionManager::sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
-    m_messageRouter->sendMessage(request);
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        messageRouter->sendMessage(request);
+    } else {
+        ACSDK_WARN(LX("sendMessageFailed")
+                       .d("reason", "nullMessageRouter")
+                       .m("setting status for request to NOT_CONNECTED")
+                       .d("request", request->getJsonContent()));
+        request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
+    }
 }
 
 bool AVSConnectionManager::isConnected() const {
-    return m_messageRouter->getConnectionStatus().first == ConnectionStatusObserverInterface::Status::CONNECTED;
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        return messageRouter->getConnectionStatus().first == ConnectionStatusObserverInterface::Status::CONNECTED;
+    }
+    return false;
 }
 
 void AVSConnectionManager::onWakeConnectionRetry() {
     ACSDK_DEBUG9(LX(__func__));
-    m_messageRouter->onWakeConnectionRetry();
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        messageRouter->onWakeConnectionRetry();
+    } else {
+        ACSDK_WARN(LX("onWakeConnectionRetryFailed").d("reason", "nullMessageRouter"));
+    }
 }
 
 void AVSConnectionManager::setAVSGateway(const std::string& avsGateway) {
-    m_messageRouter->setAVSGateway(avsGateway);
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        messageRouter->setAVSGateway(avsGateway);
+    } else {
+        ACSDK_WARN(LX("setAVSGatewayFailed").d("reason", "nullMessageRouter"));
+    }
 }
 
 std::string AVSConnectionManager::getAVSGateway() const {
-    return m_messageRouter->getAVSGateway();
+    auto messageRouter = getMessageRouter();
+    if (messageRouter) {
+        return messageRouter->getAVSGateway();
+    } else {
+        ACSDK_WARN(LX("getAVSGatewayFailed").d("reason", "nullMessageRouter"));
+    }
+    return "";
 }
 
 void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
     ACSDK_DEBUG5(LX(__func__).d("connected", connected).d("isEnabled", m_isEnabled));
     if (m_isEnabled) {
-        if (connected) {
-            m_messageRouter->onWakeConnectionRetry();
+        auto messageRouter = getMessageRouter();
+        if (messageRouter) {
+            if (connected) {
+                messageRouter->onWakeConnectionRetry();
+            } else {
+                messageRouter->onWakeVerifyConnectivity();
+            }
         } else {
-            m_messageRouter->onWakeVerifyConnectivity();
+            ACSDK_WARN(LX("onConnectionStatusChangedFailed").d("reason", "nullMessageRouter"));
         }
     }
 }
@@ -226,6 +279,11 @@ void AVSConnectionManager::receive(const std::string& contextId, const std::stri
             observer->receive(contextId, message);
         }
     }
+}
+
+std::shared_ptr<MessageRouterInterface> AVSConnectionManager::getMessageRouter() const {
+    std::lock_guard<std::mutex> lock{m_messageRouterMutex};
+    return m_messageRouter;
 }
 
 }  // namespace acl

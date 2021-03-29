@@ -44,7 +44,6 @@
 #include <AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h>
 #include <AVSGatewayManager/AVSGatewayManager.h>
 #include <CapabilitiesDelegate/CapabilitiesDelegate.h>
-#include <ContextManager/ContextManager.h>
 #include <InterruptModel/config/InterruptModelConfiguration.h>
 #include <SampleApp/CaptionPresenter.h>
 #include <SampleApp/ExternalCapabilitiesBuilder.h>
@@ -80,7 +79,7 @@
 #endif
 
 #ifdef CUSTOM_MEDIA_PLAYER
-#include <acsdkCustomApplicationAudioPipelineFactory/CustomApplicationAudioPipelineFactory.h>
+#include <acsdkApplicationAudioPipelineFactory/CustomApplicationAudioPipelineFactory.h>
 #endif
 
 #ifdef ANDROID
@@ -182,14 +181,16 @@ using ApplicationMediaInterfaces = alexaClientSDK::avsCommon::sdkInterfaces::App
  * manufactory integration is finished.
  */
 using PreviewAlexaClientManufactory = Manufactory<
-    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
+    std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
-    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,  /// Applications should not use this export.
+    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
     std::shared_ptr<afml::interruptModel::InterruptModel>,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
@@ -211,6 +212,7 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
@@ -220,7 +222,6 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
@@ -804,7 +805,8 @@ bool PreviewAlexaClient::initialize(
     auto previewAlexaClientComponent = acsdkPreviewAlexaClient::getComponent(
         std::move(initParams), diagnostics, platformSpecificValues, nullptr, powerResourceManager);
 
-    auto manufactory = PreviewAlexaClientManufactory::create(previewAlexaClientComponent);
+    std::shared_ptr<PreviewAlexaClientManufactory> manufactory =
+        PreviewAlexaClientManufactory::create(previewAlexaClientComponent);
 
     m_sdkInit = manufactory->get<std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>>();
 
@@ -853,14 +855,6 @@ bool PreviewAlexaClient::initialize(
         return false;
     }
 
-    auto bluetoothMediaInterfaces =
-        createApplicationMediaPlayer(httpContentFetcherFactory, false, "BluetoothMediaPlayer");
-    if (!bluetoothMediaInterfaces) {
-        ACSDK_CRITICAL(LX("Failed to create application media interfaces for bluetooth!"));
-        return false;
-    }
-    m_bluetoothMediaPlayer = bluetoothMediaInterfaces->mediaPlayer;
-
     auto ringtoneMediaInterfaces =
         createApplicationMediaPlayer(httpContentFetcherFactory, false, "RingtoneMediaPlayer");
     if (!ringtoneMediaInterfaces) {
@@ -880,14 +874,6 @@ bool PreviewAlexaClient::initialize(
     m_commsMediaPlayer = commsMediaInterfaces->mediaPlayer;
     auto commsSpeaker = commsMediaInterfaces->speaker;
 #endif
-
-    auto systemSoundMediaInterfaces =
-        createApplicationMediaPlayer(httpContentFetcherFactory, false, "SystemSoundMediaPlayer");
-    if (!systemSoundMediaInterfaces) {
-        ACSDK_CRITICAL(LX("Failed to create application media interfaces for system sound player!"));
-        return false;
-    }
-    m_systemSoundMediaPlayer = systemSoundMediaInterfaces->mediaPlayer;
 
 #ifdef ENABLE_PCC
     auto phoneMediaInterfaces = createApplicationMediaPlayer(httpContentFetcherFactory, false, "PhoneMediaPlayer");
@@ -914,11 +900,6 @@ bool PreviewAlexaClient::initialize(
      * Creating notifications storage object to be used for storing notification indicators.
      */
     auto notificationsStorage = alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage::create(config);
-
-    /*
-     * Creating bluetooth storage object to be used for storing uuid to mac mappings for devices.
-     */
-    auto bluetoothStorage = alexaClientSDK::acsdkBluetooth::SQLiteBluetoothStorage::create(config);
 
     /*
      * Create sample locale asset manager.
@@ -1078,83 +1059,10 @@ bool PreviewAlexaClient::initialize(
     }
 
     /*
-     * Create the BluetoothDeviceManager to communicate with the Bluetooth stack.
-     */
-    std::unique_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> bluetoothDeviceManager;
-
-    /*
-     * Create the connectionRules to communicate with the Bluetooth stack.
-     */
-    std::unordered_set<
-        std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
-        enabledConnectionRules;
-    enabledConnectionRules.insert(alexaClientSDK::acsdkBluetooth::BasicDeviceConnectionRule::create());
-
-#ifdef BLUETOOTH_BLUEZ
-    auto eventBus = std::make_shared<avsCommon::utils::bluetooth::BluetoothEventBus>();
-
-#ifdef BLUETOOTH_BLUEZ_PULSEAUDIO_OVERRIDE_ENDPOINTS
-    /*
-     * Create PulseAudio initializer object. Subscribe to BLUETOOTH_DEVICE_MANAGER_INITIALIZED event before we create
-     * the BT Device Manager, otherwise may miss it.
-     */
-    m_pulseAudioInitializer = bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer::create(eventBus);
-#endif
-
-    bluetoothDeviceManager = bluetoothImplementations::blueZ::BlueZBluetoothDeviceManager::create(eventBus);
-#endif
-
-    /*
      * Create a 'subset' of the SampleApp Manufactory that provides the types directly consumed by DefaultClient.
      */
-    std::shared_ptr<defaultClient::DefaultClient::DefaultClientManufactory> subsetManufactory =
-        manufactory->createSubsetManufactory<
-            std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
-            std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
-            std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
-            std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
-            std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,  /// Applications should not use this
-                                                                             /// export.
-            std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
-            std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
-            std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
-            std::shared_ptr<afml::interruptModel::InterruptModel>,
-            std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
-            acsdkManufactory::Annotated<
-                avsCommon::sdkInterfaces::AudioFocusAnnotation,
-                avsCommon::sdkInterfaces::FocusManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
-            acsdkManufactory::Annotated<
-                avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
-                avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
-            std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
-            std::shared_ptr<avsCommon::utils::DeviceInfo>,
-            std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
-            std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-            std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
-            std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
-            std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
-            std::shared_ptr<captions::CaptionManagerInterface>,
-            std::shared_ptr<certifiedSender::CertifiedSender>,
-            std::shared_ptr<registrationManager::CustomerDataManager>,
-            std::shared_ptr<settings::DeviceSettingsManager>,
-            std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>();
+    std::shared_ptr<defaultClient::DefaultClient::DefaultClientSubsetManufactory> subsetManufactory =
+        defaultClient::DefaultClient::DefaultClientSubsetManufactory::createSubsetManufactory(manufactory);
 
     alexaClientSDK::avsCommon::utils::AudioFormat compatibleAudioFormat;
     compatibleAudioFormat.sampleRateHz = SAMPLE_RATE_HZ;
@@ -1201,12 +1109,8 @@ bool PreviewAlexaClient::initialize(
      */
     std::shared_ptr<defaultClient::DefaultClient> client = alexaClientSDK::defaultClient::DefaultClient::create(
         subsetManufactory,
-        m_bluetoothMediaPlayer,
         m_ringtoneMediaPlayer,
-        m_systemSoundMediaPlayer,
-        bluetoothMediaInterfaces->speaker,
         ringtoneMediaInterfaces->speaker,
-        systemSoundMediaInterfaces->speaker,
         {},
 #ifdef ENABLE_PCC
         phoneSpeaker,
@@ -1223,15 +1127,12 @@ bool PreviewAlexaClient::initialize(
         sharedDataStream,
 #endif
         std::move(notificationsStorage),
-        std::move(bluetoothStorage),
         {userInterfaceManager},
         {userInterfaceManager},
         displayCardsSupported,
-        enabledConnectionRules,
         firmwareVersion,
         true,
         nullptr,
-        std::move(bluetoothDeviceManager),
         diagnostics,
         std::make_shared<alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder>(deviceInfo),
         tapToTalkAudioProvider);

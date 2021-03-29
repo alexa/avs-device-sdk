@@ -109,6 +109,42 @@ std::string CookBook::getLoggerTag() {
     return TAG;
 }
 
+////////// CookBook::GetWrapperCollection
+
+void CookBook::GetWrapperCollection::append(const std::shared_ptr<GetWrapperCollection>& collection) {
+    auto typesToAdd = collection->m_types;
+    auto getWrappersToAdd = collection->m_orderedGetWrappers;
+
+    for (auto type : typesToAdd) {
+        if (m_types.end() == m_types.find(type.first)) {
+            m_orderedGetWrappers.push_back(getWrappersToAdd[type.second]);
+            m_types.insert({type.first, m_orderedGetWrappers.size() - 1});
+        }
+    }
+}
+
+CookBook::GetWrapperCollection::GetWrapperIterator CookBook::GetWrapperCollection::begin() {
+    return m_orderedGetWrappers.begin();
+}
+CookBook::GetWrapperCollection::GetWrapperIterator CookBook::GetWrapperCollection::end() {
+    return m_orderedGetWrappers.end();
+}
+CookBook::GetWrapperCollection::ConstGetWrapperIterator CookBook::GetWrapperCollection::cbegin() const {
+    return m_orderedGetWrappers.cbegin();
+}
+
+CookBook::GetWrapperCollection::ConstGetWrapperIterator CookBook::GetWrapperCollection::cend() const {
+    return m_orderedGetWrappers.cend();
+}
+
+CookBook::GetWrapperCollection::ConstGetWrapperIterator CookBook::GetWrapperCollection::begin() const {
+    return m_orderedGetWrappers.begin();
+}
+
+CookBook::GetWrapperCollection::ConstGetWrapperIterator CookBook::GetWrapperCollection::end() const {
+    return m_orderedGetWrappers.end();
+}
+
 }  // namespace internal
 }  // namespace acsdkManufactory
 }  // namespace alexaClientSDK

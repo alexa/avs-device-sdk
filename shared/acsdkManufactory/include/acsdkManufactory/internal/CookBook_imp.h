@@ -56,7 +56,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>
         SharedPointerFunctionRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         function);
 
-    m_primaryGets.insert(
+    m_primaryGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -70,7 +70,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation,
         SharedPointerFunctionRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         function);
 
-    m_primaryGets.insert(
+    m_primaryGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -84,7 +84,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(De
         SharedPointerFactoryRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         factory);
 
-    m_primaryGets.insert(
+    m_primaryGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -98,7 +98,7 @@ inline CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*facto
         SharedPointerFactoryRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         factory);
 
-    m_primaryGets.insert(
+    m_primaryGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -112,7 +112,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type
         SharedPointerFunctionRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         function);
 
-    m_requiredGets.insert(
+    m_requiredGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -126,7 +126,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation
         SharedPointerFunctionRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         function);
 
-    m_requiredGets.insert(
+    m_requiredGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -140,7 +140,7 @@ inline CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(D
         SharedPointerFactoryRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         factory);
 
-    m_requiredGets.insert(
+    m_requiredGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -154,7 +154,7 @@ inline CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*fact
         SharedPointerFactoryRecipe<RequiredPointerCache<ResultType, Dependencies...>, ResultType, Dependencies...>>(
         factory);
 
-    m_requiredGets.insert(
+    m_requiredGets->append<Type>(
         [](RuntimeManufactory& runtimeManufactory) { return static_cast<bool>(runtimeManufactory.get<ResultType>()); });
 
     return *this;
@@ -275,20 +275,21 @@ inline CookBook& CookBook::addCookBook(const CookBook& cookBook) {
         }
     }
 
-    m_primaryGets.insert(cookBook.m_primaryGets.begin(), cookBook.m_primaryGets.end());
-    m_requiredGets.insert(cookBook.m_requiredGets.begin(), cookBook.m_requiredGets.end());
+    m_primaryGets->append(cookBook.m_primaryGets);
+    m_requiredGets->append(cookBook.m_requiredGets);
 
     return *this;
 };
 
 inline bool CookBook::doRequiredGets(
     alexaClientSDK::acsdkManufactory::internal::RuntimeManufactory& runtimeManufactory) {
-    for (auto getFcn : m_primaryGets) {
+    for (auto getFcn : *m_primaryGets) {
         if (!getFcn || !getFcn(runtimeManufactory)) {
             return false;
         }
     }
-    for (auto getFcn : m_requiredGets) {
+
+    for (auto getFcn : *m_requiredGets) {
         if (!getFcn || !getFcn(runtimeManufactory)) {
             return false;
         }
@@ -341,7 +342,10 @@ inline std::unique_ptr<PointerCache<Type>> CookBook::createPointerCache() {
     return std::unique_ptr<PointerCache<Type>>();
 }
 
-inline CookBook::CookBook() : m_isValid{true} {
+inline CookBook::CookBook() :
+        m_isValid{true},
+        m_primaryGets{std::make_shared<GetWrapperCollection>()},
+        m_requiredGets{std::make_shared<GetWrapperCollection>()} {
 }
 
 inline bool CookBook::checkCompleteness() {
@@ -682,6 +686,22 @@ inline CookBook::InstancePointerCache<Type>::InstancePointerCache(Type instance)
 template <typename Type>
 inline Type CookBook::InstancePointerCache<Type>::get(RuntimeManufactory& runtimeManufactory) {
     return m_instance;
+}
+
+////////// CookBook::GetWrapperCollection
+
+template <typename Type>
+inline bool CookBook::GetWrapperCollection::append(GetWrapper getWrapper) {
+    auto typeIndex = getTypeIndex<Type>();
+
+    if (m_types.end() == m_types.find(typeIndex)) {
+        m_orderedGetWrappers.push_back(getWrapper);
+        m_types.insert({typeIndex, m_orderedGetWrappers.size() - 1});
+
+        return true;
+    }
+
+    return false;
 }
 
 }  // namespace internal

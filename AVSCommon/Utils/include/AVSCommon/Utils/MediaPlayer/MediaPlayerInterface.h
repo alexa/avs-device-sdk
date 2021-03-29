@@ -97,6 +97,28 @@ public:
         const SourceConfig& config = emptySourceConfig()) = 0;
 
     /**
+     * Set an @c AttachmentReader source to play. The source should be set before making calls to any of the playback
+     * control APIs. If any source was set prior to this call, that source will be discarded.
+     *
+     * @note A @c MediaPlayerInterface implementation must handle only one source at a time. An implementation must call
+     * @c MediaPlayerObserverInterface::onPlaybackStopped() with the previous source's id if there was a source set.
+     * Also, an implementation must call @c MediaPlayerObserverInterface::onBufferingComplete() when this source has
+     * been fully buffered
+     *
+     * @param attachmentReader Object with which to read an incoming audio attachment.
+     * @param format The audioFormat to be used to interpret raw audio data.
+     * @param offsetAdjustment Offset adjustment required for the offset reported
+     * @param config Media configuration of source.
+     * @return The @c SourceId that represents the source being handled as a result of this call. @c ERROR will be
+     *     returned if the source failed to be set.  Must be unique across all instances.
+     */
+    virtual SourceId setSource(
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+        std::chrono::milliseconds offsetAdjustment,
+        const avsCommon::utils::AudioFormat* format = nullptr,
+        const SourceConfig& config = emptySourceConfig()) = 0;
+
+    /**
      * Set a url source to play. The source should be set before making calls to any of the playback control APIs. If
      * any source was set prior to this call, that source will be discarded.
      *

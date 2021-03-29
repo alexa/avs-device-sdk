@@ -249,12 +249,12 @@ bool convertToValue(const rapidjson::Value& documentNode, double* value) {
 bool jsonArrayExists(const rapidjson::Value& parsedDocument, const std::string& key) {
     auto iter = parsedDocument.FindMember(key);
     if (parsedDocument.MemberEnd() == iter) {
-        ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "keyNotFound").d("key", key));
+        ACSDK_DEBUG0(LX(__func__).d("reason", "keyNotFound").d("key", key));
         return false;
     }
 
     if (!iter->value.IsArray()) {
-        ACSDK_ERROR(LX("lookupArrayExistsFailed").d("reason", "notArrayType"));
+        ACSDK_DEBUG0(LX(__func__).d("reason", "notArrayType").d("key", key).d("type", parsedDocument.GetType()));
         return false;
     }
 

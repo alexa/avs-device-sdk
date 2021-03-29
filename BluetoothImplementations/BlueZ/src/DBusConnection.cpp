@@ -131,7 +131,6 @@ void DBusConnection::close() {
 }
 
 DBusConnection::~DBusConnection() {
-    ACSDK_DEBUG7(LX(__func__));
     close();
 }
 

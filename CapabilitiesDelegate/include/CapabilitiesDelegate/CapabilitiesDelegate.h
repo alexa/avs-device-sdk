@@ -32,7 +32,7 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
-#include <AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
@@ -116,10 +116,10 @@ public:
         const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) override;
 
     void addCapabilitiesObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer) override;
 
     void removeCapabilitiesObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface> observer) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface> observer) override;
 
     void invalidateCapabilities() override;
 
@@ -210,8 +210,8 @@ private:
      * deletion.
      */
     void setCapabilitiesState(
-        const avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        const avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        const avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::State newState,
+        const avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::Error newError,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addOrUpdateReportEndpoints,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deleteReportEndpoints);
 
@@ -289,14 +289,14 @@ private:
     std::mutex m_observerMutex;
 
     /// Authorization state change observers. Access is synchronized with @c m_capabilitiesMutex.
-    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesObserverInterface>>
+    std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface>>
         m_capabilitiesObservers;
 
     /// Current state of CapabilitiesDelegate. Access is synchronized with @c m_capabilitiesMutex.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State m_capabilitiesState;
+    avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::State m_capabilitiesState;
 
     /// Current CapabilitiesDelegate error. Access is synchronized with @c m_capabilitiesMutex.
-    avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error m_capabilitiesError;
+    avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::Error m_capabilitiesError;
 
     /// Auth delegate used to get the access token
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;

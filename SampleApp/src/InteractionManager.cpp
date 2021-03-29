@@ -573,6 +573,46 @@ void InteractionManager::dtmfControl() {
 void InteractionManager::errorDtmf() {
     m_executor.submit([this]() { m_userInterface->printDtmfErrorScreen(); });
 }
+
+void InteractionManager::muteSelf() {
+    m_executor.submit([this]() {
+        if (m_client->isCommsEnabled()) {
+            m_client->muteCommsCall();
+        } else {
+            m_userInterface->printCommsNotSupported();
+        }
+    });
+}
+
+void InteractionManager::unmuteSelf() {
+    m_executor.submit([this]() {
+        if (m_client->isCommsEnabled()) {
+            m_client->unmuteCommsCall();
+        } else {
+            m_userInterface->printCommsNotSupported();
+        }
+    });
+}
+
+void InteractionManager::enableVideo() {
+    m_executor.submit([this]() {
+        if (m_client->isCommsEnabled()) {
+            m_client->enableVideo();
+        } else {
+            m_userInterface->printCommsNotSupported();
+        }
+    });
+}
+
+void InteractionManager::disableVideo() {
+    m_executor.submit([this]() {
+        if (m_client->isCommsEnabled()) {
+            m_client->disableVideo();
+        } else {
+            m_userInterface->printCommsNotSupported();
+        }
+    });
+}
 #endif
 
 void InteractionManager::onDialogUXStateChanged(DialogUXState state) {

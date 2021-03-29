@@ -14,7 +14,7 @@ endif()
 
 if (VALID)
     project(SampleApp LANGUAGES CXX)
-    include("${AVS_CORE}/build/BuildDefaults.cmake")
+    include("${AVS_CMAKE_BUILD}/BuildDefaults.cmake")
 
     add_subdirectory("src")
 else()

@@ -292,6 +292,10 @@ std::unique_ptr<AVSDirective> AVSDirective::create(
 std::unique_ptr<AttachmentReader> AVSDirective::getAttachmentReader(
     const std::string& contentId,
     sds::ReaderPolicy readerPolicy) const {
+    if (!m_attachmentManager) {
+        ACSDK_ERROR(LX("getAttachmentReaderFailed").d("reason", "nullAttachmentManager"));
+        return nullptr;
+    }
     auto attachmentId = m_attachmentManager->generateAttachmentId(m_attachmentContextId, contentId);
     return m_attachmentManager->createReader(attachmentId, readerPolicy);
 }

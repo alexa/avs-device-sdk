@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <vector>
 
 #include <acsdkNotifierInterfaces/NotifierInterface.h>
 

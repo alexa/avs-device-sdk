@@ -95,7 +95,9 @@ TestExceptionEncounteredSender::ExceptionParams TestExceptionEncounteredSender::
     return ret;
 }
 
-TestExceptionEncounteredSender::ExceptionParams::ExceptionParams() : type{Type::UNSET} {
+TestExceptionEncounteredSender::ExceptionParams::ExceptionParams() :
+        type{Type::UNSET},
+        exceptionError{avsCommon::avs::ExceptionErrorType::INTERNAL_ERROR} {
 }
 
 }  // namespace test

@@ -450,11 +450,32 @@ bool SQLiteAlertStorage::open() {
     if (!m_db.open()) {
         return false;
     }
-    /// After adding new table for offline alerts, it is possible that during OTA the offline table
-    /// will not exist, so creating here.
+    /// Check if any tables are missing, if they are, add them.
+    if (!m_db.tableExists(ALERTS_V2_TABLE_NAME)) {
+        if (!createAlertsTable(&m_db)) {
+            ACSDK_ERROR(LX("openFailed").m("Alert table could not be created."));
+            close();
+            return false;
+        }
+    }
+    if (!m_db.tableExists(ALERT_ASSETS_TABLE_NAME)) {
+        if (!createAlertAssetsTable(&m_db)) {
+            ACSDK_ERROR(LX("openFailed").m("AlertAssets table could not be created."));
+            close();
+            return false;
+        }
+    }
+    if (!m_db.tableExists(ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME)) {
+        if (!createAlertAssetPlayOrderItemsTable(&m_db)) {
+            ACSDK_ERROR(LX("openFailed").m("AlertAssetPlayOrderItems table could not be created."));
+            close();
+            return false;
+        }
+    }
     if (!m_db.tableExists(OFFLINE_ALERTS_TABLE_NAME)) {
         if (!createOfflineAlertsTable(&m_db)) {
-            ACSDK_ERROR(LX("creatingOfflineAlertsTableFailed").m("Offline Alerts table could not be created."));
+            ACSDK_ERROR(LX("openFailed").m("Offline Alerts table could not be created."));
+            close();
             return false;
         }
     }

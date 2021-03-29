@@ -22,7 +22,14 @@ target_include_directories(AVSSystem PUBLIC
         "${RegistrationManager_SOURCE_DIR}/include"
         "${DeviceSettings_SOURCE_DIR}/include")
 
-target_link_libraries(AVSSystem AVSCommon ACL CertifiedSender SQLiteStorage RegistrationManager DeviceSettings)
+target_link_libraries(AVSSystem
+    AVSCommon
+    ACL
+    CertifiedSender
+    SQLiteStorage
+    RegistrationManager
+    DeviceSettings
+    acsdkNotifier)
 
 # install target
 asdk_install()

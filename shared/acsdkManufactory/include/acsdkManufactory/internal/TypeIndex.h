@@ -37,7 +37,7 @@ namespace internal {
  * but with optional use of RTTI.
  */
 struct TypeIndex {
-#if ACSDK_USE_RTTI
+#ifdef ACSDK_USE_RTTI
 
     /// Type of value used to identify discrete types.  With RTTI enabled we can just use std::type_index.
     using Value = std::type_index;
@@ -107,7 +107,7 @@ private:
     Value m_value;
 };
 
-#if ACSDK_USE_RTTI
+#ifdef ACSDK_USE_RTTI
 
 /**
  * Get the TypeIndex value for @c Type.

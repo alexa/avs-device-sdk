@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-include(${AVS_CORE}/build/BuildDefaults.cmake)
+include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
 
 add_library(acsdkEqualizerInterfacesTestUtils INTERFACE)
 

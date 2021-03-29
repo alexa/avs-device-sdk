@@ -381,6 +381,7 @@ ContextRequestToken ContextManager::getContextInternal(
         std::function<void()> contextAvailableCallback = NoopCallback;
         {
             std::lock_guard<std::mutex> statesLock{m_endpointsStateMutex};
+
             for (auto& capability : m_endpointsState[requestEndpointId]) {
                 auto stateInfo = capability.second;
                 auto stateProvider = capability.second.stateProvider;
@@ -419,7 +420,7 @@ ContextRequestToken ContextManager::getContextInternal(
 std::function<void()> ContextManager::getContextFailureCallbackLocked(
     unsigned int requestToken,
     ContextRequestError error) {
-    ACSDK_DEBUG5(LX(__func__).d("token", requestToken));
+    ACSDK_ERROR(LX(__func__).d("token", requestToken).d("error", error));
     // Make sure the request gets cleared in the end of this function no matter the outcome.
     error::FinallyGuard clearRequestGuard{[this, requestToken] {
         auto requestIt = m_pendingRequests.find(requestToken);
@@ -436,6 +437,9 @@ std::function<void()> ContextManager::getContextFailureCallbackLocked(
         return NoopCallback;
     }
     for (auto& pendingState : m_pendingStateRequest[requestToken]) {
+        ACSDK_ERROR(LX(__func__)
+                        .d("pendingStateProviderName", pendingState.name)
+                        .d("pendingStateProviderNamespace", pendingState.nameSpace));
         auto metricName = STATE_PROVIDER_TIMEOUT_METRIC_PREFIX + pendingState.nameSpace;
         recordMetric(
             m_metricRecorder,

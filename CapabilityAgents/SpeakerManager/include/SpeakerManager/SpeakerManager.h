@@ -357,7 +357,7 @@ private:
     /**
      * Function to set a limit on the maximum volume. This runs on a worker thread.
      *
-     * @param type The type of speaker to modify mute for.
+     * @param type The type of speaker to set a limit on the maximum volume.
      * @return A bool indicating success.
      */
     bool executeSetMaximumVolumeLimit(const int8_t maximumVolumeLimit);
@@ -367,13 +367,33 @@ private:
      * Function to get the speaker settings for a specific @c ChannelVolumeInterface Type.
      * This runs on a worker thread.
      *
-     * @param type The type of speaker to modify mute for.
+     * @param type The type of speaker to get speaker settings.
      * @param[out] settings The settings if successful.
      * @return A bool indicating success.
      */
     bool executeGetSpeakerSettings(
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
         avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
+
+    /**
+     * Function to set the speaker settings for a specific @c ChannelVolumeInterface Type.
+     * This runs on a worker thread.
+     *
+     * @param type The type of speaker to set speaker settings.
+     * @param settings The new settings.
+     * @return A bool indicating success.
+     */
+    bool executeSetSpeakerSettings(
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
+
+    /**
+     * Function that initializes and populates @c m_speakerSettings for the given @c type's speaker settings.
+     *
+     * @param type The type of speaker to initialize
+     * @return A bool indicating success.
+     */
+    bool executeInitializeSpeakerSettings(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type);
 
     /**
      * Function to send events when settings have changed.
@@ -401,17 +421,6 @@ private:
         const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
         const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
-
-    /**
-     * Validates that all speakers with the given @c Type have the same @c SpeakerSettings.
-     *
-     * @param type The type of speaker to validate.
-     * @param[out] settings The settings that will be return if consistent.
-     * @return A bool indicating success.
-     */
-    bool validateSpeakerSettingsConsistency(
-        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
-        avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings);
 
     /**
      * Get the maximum volume limit.
@@ -469,6 +478,12 @@ private:
 
     /// maximumVolumeLimit The maximum volume level speakers in this system can reach.
     int8_t m_maximumVolumeLimit;
+
+    /// Mapping of each speaker type to its speaker settings.
+    std::map<
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type,
+        avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings>
+        m_speakerSettings;
 
     /// An executor to perform operations on a worker thread.
     avsCommon::utils::threading::Executor m_executor;

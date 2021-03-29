@@ -174,9 +174,7 @@ static AuthObserverInterface::Error getErrorCode(const std::string& error) {
  */
 static std::chrono::steady_clock::time_point calculateTimeToRetry(int retryCount) {
     /**
-     * Table of retry backoff values based upon page 77 of
-     * @see https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/
-     * doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide.pdf
+     * Table of retry backoff values
      */
     const static std::vector<int> retryBackoffTimes = {
         0,      // Retry 1:  0.00s range with 50% randomization: [ 0.0s.  0.0s]

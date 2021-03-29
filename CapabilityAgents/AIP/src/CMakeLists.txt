@@ -17,7 +17,8 @@ target_link_libraries(AIP
     AFML
     DeviceSettings
     SpeechEncoder
-    SystemSoundPlayer)
+    SystemSoundPlayer
+    acsdkNotifier)
 
 # install target
 asdk_install()

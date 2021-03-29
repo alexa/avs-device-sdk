@@ -32,7 +32,7 @@ namespace sampleApp {
 /// Observes user input from the console and notifies the interaction manager of the user's intentions.
 class UserInputManager
         : public avsCommon::sdkInterfaces::AuthObserverInterface
-        , public avsCommon::sdkInterfaces::CapabilitiesObserverInterface
+        , public avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface
         , public registrationManager::RegistrationObserverInterface {
 public:
     /**
@@ -148,10 +148,10 @@ private:
     void onAuthStateChange(AuthObserverInterface::State newState, AuthObserverInterface::Error newError) override;
     /// @}
 
-    /// @name CapabilitiesObserverInterface Methods
+    /// @name CapabilitiesDelegateObserverInterface Methods
     void onCapabilitiesStateChange(
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::State newState,
-        avsCommon::sdkInterfaces::CapabilitiesObserverInterface::Error newError,
+        avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::State newState,
+        avsCommon::sdkInterfaces::CapabilitiesDelegateObserverInterface::Error newError,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& addedOrUpdatedEndpoints,
         const std::vector<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier>& deletedEndpoints) override;
     /// }

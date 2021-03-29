@@ -36,6 +36,7 @@
 #include <Audio/SystemSoundAudioFactory.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentWriter.h>
 #include <AVSCommon/AVS/BlockingPolicy.h>
+#include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/SDKInterfaces/ChannelObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
@@ -504,6 +505,7 @@ protected:
             std::make_shared<::testing::NiceMock<sdkInterfaces::test::MockLocaleAssetsManager>>(),
             m_wakeWordConfirmation,
             m_speechConfirmation,
+            std::make_shared<avsCommon::avs::CapabilityChangeNotifier>(),
             nullptr,
             nullptr,
             AudioProvider::null(),

@@ -80,6 +80,7 @@ std::string AttachmentManager::generateAttachmentId(const std::string& contextId
 
 bool AttachmentManager::setAttachmentTimeoutMinutes(std::chrono::minutes minutes) {
     if (minutes < ATTACHMENT_MANAGER_TIMOUT_MINUTES_MINIMUM) {
+        /* coverity[dead_error_line] */
         int minimumMinutes = ATTACHMENT_MANAGER_TIMOUT_MINUTES_MINIMUM.count();
         std::string minutePrintString = (1 == minimumMinutes) ? " minute" : " minutes";
         ACSDK_ERROR(LX("setAttachmentTimeoutError")

@@ -15,6 +15,7 @@
 
 #include <gtest/gtest.h>
 
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <AVSCommon/SDKInterfaces/Audio/MockSystemSoundAudioFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 
@@ -25,20 +26,75 @@ namespace applicationUtilities {
 namespace systemSoundPlayer {
 namespace test {
 
+using namespace acsdkApplicationAudioPipelineFactoryInterfaces::test;
+using namespace avsCommon::sdkInterfaces::audio;
 using namespace avsCommon::sdkInterfaces::audio::test;
 using namespace avsCommon::utils::mediaPlayer::test;
 using namespace ::testing;
 
+/// Stub class that implements AudioFactoryInterface.
+class StubAudioFactory : public AudioFactoryInterface {
+public:
+    static std::shared_ptr<StubAudioFactory> createStubAudioFactory(
+        std::shared_ptr<SystemSoundAudioFactoryInterface> systemSoundFactory);
+
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alerts() const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notifications() const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> communications()
+        const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> systemSounds() const override;
+
+private:
+    StubAudioFactory(std::shared_ptr<SystemSoundAudioFactoryInterface> systemSoundFactory);
+
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> m_systemSoundAudioFactory;
+};
+
+StubAudioFactory::StubAudioFactory(std::shared_ptr<SystemSoundAudioFactoryInterface> systemSoundFactory) :
+        m_systemSoundAudioFactory{systemSoundFactory} {
+}
+
+std::shared_ptr<StubAudioFactory> StubAudioFactory::createStubAudioFactory(
+    std::shared_ptr<SystemSoundAudioFactoryInterface> systemSoundFactory) {
+    return std::shared_ptr<StubAudioFactory>(new StubAudioFactory(systemSoundFactory));
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> StubAudioFactory::alerts() const {
+    return nullptr;
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> StubAudioFactory::notifications()
+    const {
+    return nullptr;
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> StubAudioFactory::communications()
+    const {
+    return nullptr;
+}
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> StubAudioFactory::systemSounds()
+    const {
+    return m_systemSoundAudioFactory;
+}
+
+/// SystemSoundPlayerTest unit tests.
 class SystemSoundPlayerTest : public ::testing::Test {
 public:
     void SetUp() override;
     void TearDown() override;
 
     /// @c SystemSoundPlayer to test
-    std::shared_ptr<SystemSoundPlayer> m_systemSoundPlayer;
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> m_systemSoundPlayer;
 
     /// Player to send the audio to.
     std::shared_ptr<MockMediaPlayer> m_mockMediaPlayer;
+
+    /// Mock application audio pipeline factory.
+    std::shared_ptr<MockApplicationAudioPipelineFactory> m_mockAudioPipelineFactory;
+
+    /// Factory to provide the mock system sound audio factory.
+    std::shared_ptr<StubAudioFactory> m_stubAudioFactory;
 
     /// Factory to generate the system sound audio streams.
     std::shared_ptr<MockSystemSoundAudioFactory> m_mockSystemSoundAudioFactory;
@@ -47,12 +103,61 @@ public:
 void SystemSoundPlayerTest::SetUp() {
     m_mockSystemSoundAudioFactory = MockSystemSoundAudioFactory::create();
     m_mockMediaPlayer = MockMediaPlayer::create();
+    m_stubAudioFactory = StubAudioFactory::createStubAudioFactory(m_mockSystemSoundAudioFactory);
+    m_mockAudioPipelineFactory = std::make_shared<StrictMock<MockApplicationAudioPipelineFactory>>();
 
-    m_systemSoundPlayer = SystemSoundPlayer::create(m_mockMediaPlayer, m_mockSystemSoundAudioFactory);
+    EXPECT_CALL(
+        *(m_mockAudioPipelineFactory.get()),
+        createApplicationMediaInterfaces(SYSTEM_SOUND_MEDIA_PLAYER_NAME, _, _, _, _, _))
+        .WillRepeatedly(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
+            m_mockMediaPlayer, nullptr, nullptr, nullptr, nullptr)));
+
+    m_systemSoundPlayer =
+        SystemSoundPlayer::createSystemSoundPlayerInterface(m_mockAudioPipelineFactory, m_stubAudioFactory);
 }
 
 void SystemSoundPlayerTest::TearDown() {
     m_mockMediaPlayer->shutdown();
+}
+
+/**
+ * Test createSystemSoundPlayerInterface() simple failure cases
+ */
+TEST_F(SystemSoundPlayerTest, test_createSystemSoundPlayerInterfaceFailureCases) {
+    /// Expect failure with null audio pipeline factory.
+    auto testSystemSoundPlayer = SystemSoundPlayer::createSystemSoundPlayerInterface(nullptr, m_stubAudioFactory);
+    EXPECT_EQ(testSystemSoundPlayer, nullptr);
+
+    /// Expect failure with null audio factory.
+    testSystemSoundPlayer = SystemSoundPlayer::createSystemSoundPlayerInterface(m_mockAudioPipelineFactory, nullptr);
+    EXPECT_EQ(testSystemSoundPlayer, nullptr);
+
+    /// Expect failure when audio pipeline factory returns a nullptr for the application media interfaces.
+    auto failedAudioPipelineFactory = std::make_shared<StrictMock<MockApplicationAudioPipelineFactory>>();
+    EXPECT_CALL(
+        *(failedAudioPipelineFactory.get()),
+        createApplicationMediaInterfaces(SYSTEM_SOUND_MEDIA_PLAYER_NAME, _, _, _, _, _))
+        .WillOnce(Return(std::shared_ptr<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(nullptr)));
+    testSystemSoundPlayer =
+        SystemSoundPlayer::createSystemSoundPlayerInterface(failedAudioPipelineFactory, m_stubAudioFactory);
+    EXPECT_EQ(testSystemSoundPlayer, nullptr);
+
+    /// Expect failure when application media interfaces contains a null media player.
+    failedAudioPipelineFactory = std::make_shared<StrictMock<MockApplicationAudioPipelineFactory>>();
+    EXPECT_CALL(
+        *(failedAudioPipelineFactory.get()),
+        createApplicationMediaInterfaces(SYSTEM_SOUND_MEDIA_PLAYER_NAME, _, _, _, _, _))
+        .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
+            nullptr, nullptr, nullptr, nullptr, nullptr)));
+    testSystemSoundPlayer =
+        SystemSoundPlayer::createSystemSoundPlayerInterface(failedAudioPipelineFactory, m_stubAudioFactory);
+    EXPECT_EQ(testSystemSoundPlayer, nullptr);
+
+    /// Expect failure when audio factory returns a nullptr for the system sounds audio factory.
+    auto failedAudioFactory = StubAudioFactory::createStubAudioFactory(nullptr);
+    testSystemSoundPlayer =
+        SystemSoundPlayer::createSystemSoundPlayerInterface(m_mockAudioPipelineFactory, failedAudioFactory);
+    EXPECT_EQ(testSystemSoundPlayer, nullptr);
 }
 
 /**

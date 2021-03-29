@@ -21,6 +21,8 @@
 #include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockNotifierInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
 #include <AFML/ActivityTrackerInterface.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
@@ -58,6 +60,8 @@ using CoreComponent = acsdkManufactory::Component<
     std::shared_ptr<registrationManager::CustomerDataManager>,
     std::shared_ptr<
         acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>,
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>,
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface>,
@@ -77,7 +81,6 @@ using CoreComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::timing::MultiTimer>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>>>;

@@ -88,9 +88,15 @@ static void submitMetric(
 std::shared_ptr<Renderer> Renderer::createAlertRenderer(
     const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
         audioPipelineFactory,
-    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier) {
     if (!audioPipelineFactory) {
         ACSDK_ERROR(LX("createFailed").m("audioPipelineFactory parameter was nullptr."));
+        return nullptr;
+    }
+
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createAlertRenderFailed").d("reason", "null shutdown notifier"));
         return nullptr;
     }
 
@@ -109,6 +115,8 @@ std::shared_ptr<Renderer> Renderer::createAlertRenderer(
 
     auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder});
     mediaPlayer->addObserver(renderer);
+    shutdownNotifier->addObserver(renderer);
+
     return renderer;
 }
 

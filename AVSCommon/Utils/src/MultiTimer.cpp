@@ -37,6 +37,10 @@ static const std::string TAG("MultiTimer");
 /// Grace period used to avoid restarting the internal thread too often.
 static const std::chrono::milliseconds GRACE_PERIOD{500};
 
+std::shared_ptr<MultiTimer> MultiTimer::createMultiTimer() {
+    return std::make_shared<MultiTimer>();
+}
+
 MultiTimer::MultiTimer() : m_isRunning{false}, m_isBeingDestroyed{false}, m_nextToken{0} {
 }
 

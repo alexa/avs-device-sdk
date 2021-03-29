@@ -41,6 +41,9 @@ enum class RequestType {
     /// Logout
     LOGOUT,
 
+    /// Register
+    REGISTER,
+
     /// Play
     PLAY,
 
@@ -498,6 +501,8 @@ public:
      * identified content only but not begin playback.
      * @param playRequestor The @c PlayRequestor object that is used to
      * distinguish if it's a music alarm or not.
+     * @param playbackTarget The @c PlaybackTarget is used to specify the targeted device
+     * that will handle the playback action.
      */
     virtual void handlePlay(
         std::string& playContextToken,
@@ -507,7 +512,8 @@ public:
         const std::string& playbackSessionId,
         const std::string& navigation,
         bool preload,
-        const avsCommon::avs::PlayRequestor& playRequestor) = 0;
+        const avsCommon::avs::PlayRequestor& playRequestor,
+        std::string playbackTarget = "") = 0;
 
     /**
      * Method to initiate the different types of play control like
@@ -574,6 +580,89 @@ inline AdapterPlaybackState::AdapterPlaybackState() :
 
 inline ExternalMediaAdapterInterface::ExternalMediaAdapterInterface(const std::string& adapterName) :
         RequiresShutdown{adapterName} {
+}
+
+/**
+ * Convert a @c RequestType to an AVS-compliant @c std::string.
+ *
+ * @param requestType The @c RequestType to convert.
+ * @return The AVS-compliant string representation of @c RequestType
+ */
+inline std::string RequestTypeToString(RequestType requestType) {
+    switch (requestType) {
+        case RequestType::INIT:
+            return "INIT";
+        case RequestType::DEINIT:
+            return "DEINIT";
+        case RequestType::LOGIN:
+            return "LOGIN";
+        case RequestType::LOGOUT:
+            return "LOGOUT";
+        case RequestType::REGISTER:
+            return "REGISTER";
+        case RequestType::PLAY:
+            return "PLAY";
+        case RequestType::RESUME:
+            return "RESUME";
+        case RequestType::PAUSE:
+            return "PAUSE";
+        case RequestType::STOP:
+            return "STOP";
+        case RequestType::PAUSE_RESUME_TOGGLE:
+            return "PAUSE_RESUME_TOGGLE";
+        case RequestType::NEXT:
+            return "NEXT";
+        case RequestType::PREVIOUS:
+            return "PREVIOUS";
+        case RequestType::START_OVER:
+            return "START_OVER";
+        case RequestType::FAST_FORWARD:
+            return "FAST_FORWARD";
+        case RequestType::REWIND:
+            return "REWIND";
+        case RequestType::ENABLE_REPEAT_ONE:
+            return "ENABLE_REPEAT_ONE";
+        case RequestType::DISABLE_REPEAT_ONE:
+            return "DISABLE_REPEAT_ONE";
+        case RequestType::ENABLE_REPEAT:
+            return "ENABLE_REPEAT";
+        case RequestType::DISABLE_REPEAT:
+            return "DISABLE_REPEAT";
+        case RequestType::ENABLE_SHUFFLE:
+            return "ENABLE_SHUFFLE";
+        case RequestType::DISABLE_SHUFFLE:
+            return "DISABLE_SHUFFLE";
+        case RequestType::FAVORITE:
+            return "FAVORITE";
+        case RequestType::DESELECT_FAVORITE:
+            return "DESELECT_FAVORITE";
+        case RequestType::UNFAVORITE:
+            return "UNFAVORITE";
+        case RequestType::DESELECT_UNFAVORITE:
+            return "DESELECT_UNFAVORITE";
+        case RequestType::SEEK:
+            return "SEEK";
+        case RequestType::ADJUST_SEEK:
+            return "ADJUST_SEEK";
+        case RequestType::SET_VOLUME:
+            return "SET_VOLUME";
+        case RequestType::ADJUST_VOLUME:
+            return "ADJUST_VOLUME";
+        case RequestType::SET_MUTE:
+            return "SET_MUTE";
+        case RequestType::SET_DISPLAY_NAME:
+            return "SET_DISPLAY_NAME";
+        case RequestType::GET_INFO:
+            return "GET_INFO";
+        case RequestType::ADD_USER:
+            return "ADD_USER";
+        case RequestType::RESET_USER:
+            return "RESET_USER";
+        case RequestType::NONE:
+            return "NONE";
+    }
+
+    return "unknown request type";
 }
 
 /**

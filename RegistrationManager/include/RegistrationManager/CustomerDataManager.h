@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_REGISTRATIONMANAGER_INCLUDE_REGISTRATIONMANAGER_CUSTOMERDATAMANAGER_H_
 
 #include <list>
+#include <memory>
 #include <mutex>
 #include <unordered_set>
 
@@ -31,6 +32,12 @@ namespace registrationManager {
  */
 class CustomerDataManager {
 public:
+    /**
+     * Factory method that creates a shared pointer to a CustomerDataManager.
+     * @return A new instance of CustomerDataManager.
+     */
+    static std::shared_ptr<CustomerDataManager> createCustomerDataManager();
+
     /**
      * CustomerDataManager destructor.
      */

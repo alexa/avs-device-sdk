@@ -222,14 +222,17 @@ void SpeakerManager::addChannelVolumeInterfaceIntoSpeakerMap(
     auto type = channelVolumeInterface->getSpeakerType();
     auto it = m_speakerMap.find(type);
     if (m_speakerMap.end() == it) {
-        // If we have one AVS_SPEAKER_VOLUME speaker, update the Context initially.
         SpeakerSet speakerSet;
         speakerSet.insert(channelVolumeInterface);
         m_speakerMap.insert(std::make_pair(type, speakerSet));
+        if (!executeInitializeSpeakerSettings(type)) {
+            ACSDK_ERROR(LX("executeInitializeSpeakerSettings failed"));
+        }
+        // If we have one AVS_SPEAKER_VOLUME speaker, update the Context initially.
         if (ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME == type) {
             SpeakerInterface::SpeakerSettings settings;
-            if (!validateSpeakerSettingsConsistency(type, &settings) || !updateContextManager(type, settings)) {
-                ACSDK_ERROR(LX(__func__).m("speakerSettingsInconsistent or initialUpdateContextManagerFailed"));
+            if (!executeGetSpeakerSettings(type, &settings) || !updateContextManager(type, settings)) {
+                ACSDK_ERROR(LX(__func__).m("getSpeakerSettingsFailed or initialUpdateContextManagerFailed"));
             }
         }
     } else {
@@ -252,11 +255,11 @@ std::shared_ptr<CapabilityConfiguration> getSpeakerCapabilityConfiguration() {
 }
 
 DirectiveHandlerConfiguration SpeakerManager::getConfiguration() const {
-    auto audioNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
+    auto neitherNonBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUMS_NONE, false);
     DirectiveHandlerConfiguration configuration;
-    configuration[SET_VOLUME] = audioNonBlockingPolicy;
-    configuration[ADJUST_VOLUME] = audioNonBlockingPolicy;
-    configuration[SET_MUTE] = audioNonBlockingPolicy;
+    configuration[SET_VOLUME] = neitherNonBlockingPolicy;
+    configuration[ADJUST_VOLUME] = neitherNonBlockingPolicy;
+    configuration[SET_MUTE] = neitherNonBlockingPolicy;
     return configuration;
 }
 
@@ -514,63 +517,6 @@ void SpeakerManager::removeSpeakerManagerObserver(
     });
 }
 
-bool SpeakerManager::validateSpeakerSettingsConsistency(
-    ChannelVolumeInterface::Type type,
-    SpeakerInterface::SpeakerSettings* settings) {
-    auto it = m_speakerMap.find(type);
-    if (m_speakerMap.end() == it) {
-        ACSDK_ERROR(
-            LX("validateSpeakerSettingsConsistencyFailed").d("reason", "noSpeakersWithTypeFound").d("type", type));
-        submitMetric(m_metricRecorder, "noSpeakersWithType", 1);
-        return false;
-    }
-    submitMetric(m_metricRecorder, "noSpeakersWithType", 0);
-
-    // Get settings value to compare the rest against.
-    SpeakerInterface::SpeakerSettings comparator;
-    auto begin = it->second.begin();
-    if (!(*begin)->getSpeakerSettings(&comparator)) {
-        ACSDK_ERROR(LX("validateSpeakerSettingsConsistencyFailed").d("reason", "gettingSpeakerSettingsFailed"));
-        submitMetric(m_metricRecorder, "speakersCannotGetSetting", 1);
-        return false;
-    }
-
-    // Iterate through speakers and ensure all have the same volume.
-    bool consistent = true;
-    while (++begin != it->second.end()) {
-        SpeakerInterface::SpeakerSettings currentSpeaker;
-        if (!(*begin)->getSpeakerSettings(&currentSpeaker)) {
-            ACSDK_ERROR(LX("validateSpeakerSettingsConsistencyFailed").d("reason", "gettingSpeakerSettingsFailed"));
-            submitMetric(m_metricRecorder, "speakersCannotGetSetting", 1);
-            return false;
-        }
-        if (comparator.volume != currentSpeaker.volume || comparator.mute != currentSpeaker.mute) {
-            submitMetric(m_metricRecorder, "speakersInconsistent", 1);
-            ACSDK_ERROR(LX("validateSpeakerSettingsConsistencyFailed")
-                            .d("reason", "inconsistentSpeakerSettings")
-                            .d("comparatorVolume", static_cast<int>(comparator.volume))
-                            .d("comparatorMute", comparator.mute)
-                            .d("volume", static_cast<int>(currentSpeaker.volume))
-                            .d("mute", currentSpeaker.mute));
-            consistent = false;
-            break;
-        }
-    }
-
-    ACSDK_DEBUG9(LX("validateSpeakerSettingsConsistencyResult").d("consistent", consistent));
-    submitMetric(m_metricRecorder, "speakersCannotGetSetting", 0);
-
-    if (consistent && settings) {
-        submitMetric(m_metricRecorder, "speakersInconsistent", 0);
-        settings->volume = comparator.volume;
-        settings->mute = comparator.mute;
-        ACSDK_DEBUG9(
-            LX("validateSpeakerSettings").d("volume", static_cast<int>(settings->volume)).d("mute", settings->mute));
-    }
-
-    return consistent;
-}
-
 bool SpeakerManager::updateContextManager(
     const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
@@ -662,7 +608,7 @@ bool SpeakerManager::executeSetVolume(
 
     SpeakerInterface::SpeakerSettings settings;
     if (!executeGetSpeakerSettings(type, &settings)) {
-        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "speakerSettingsInconsistent"));
+        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "executeGetSpeakerSettingsFailed"));
         return false;
     }
     const int8_t previousVolume = settings.volume;
@@ -684,9 +630,9 @@ bool SpeakerManager::executeSetVolume(
         return true;
     });
 
-    // All initialized speakers controlled by directives with the same type should have the same state.
-    if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "speakerSettingsInconsistent"));
+    settings.volume = adjustedVolume;
+    if (!executeSetSpeakerSettings(type, settings)) {
+        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "executeSetSpeakerSettingsFailed"));
         return false;
     }
 
@@ -711,9 +657,8 @@ bool SpeakerManager::executeRestoreVolume(
     SpeakerManagerObserverInterface::Source source) {
     SpeakerInterface::SpeakerSettings settings;
 
-    // All initialized speakers controlled by directives with the same type should have the same state.
-    if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "initialSpeakerSettingsInconsistent"));
+    if (!executeGetSpeakerSettings(type, &settings)) {
+        ACSDK_ERROR(LX("executeRestoreVolumeFailed").d("reason", "getSpeakerSettingsFailed"));
         return false;
     }
 
@@ -767,37 +712,49 @@ bool SpeakerManager::executeAdjustVolume(
     submitMetric(m_metricRecorder, "adjustVolume", 1);
     SpeakerInterface::SpeakerSettings settings;
     if (!executeGetSpeakerSettings(type, &settings)) {
-        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "speakerSettingsInconsistent"));
+        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "executeGetSpeakerSettingsFailed"));
         return false;
     }
-
-    auto maxVolumeLimit = getMaximumVolumeLimit();
-    // if the current volume settings is higher than the maxVolumelimit, reset it to maxVolumeLimit to apply delta to.
-    if (settings.volume > maxVolumeLimit) {
-        ACSDK_DEBUG0(LX("adjustingSettingsVolumeValue")
-                         .d("reason", "valueHigherThanLimit")
-                         .d("value", (int)settings.volume)
-                         .d("maximumVolumeLimitSetting", (int)maxVolumeLimit));
-        settings.volume = maxVolumeLimit;
-    }
-
     const int8_t previousVolume = settings.volume;
 
-    // recalculate the delta if needed.
-    if (delta > 0) {
-        delta = std::min(static_cast<int>(settings.volume + delta), static_cast<int>(maxVolumeLimit)) - settings.volume;
-    } else {
-        delta =
-            std::max(static_cast<int>(settings.volume + delta), static_cast<int>(AVS_SET_VOLUME_MIN)) - settings.volume;
-    }
-
+    auto maxVolumeLimit = getMaximumVolumeLimit();
     auto begin = it->second.begin();
     auto end = it->second.end();
-    retryAndApplySettings([&begin, end, delta] {
+
+    retryAndApplySettings([&begin, end, delta, maxVolumeLimit] {
         // Go through list of Speakers with ChannelVolumeInterface::Type equal
         // to type, and call adjustUnduckedVolume.
+        SpeakerInterface::SpeakerSettings speakerSettings;
         while (begin != end) {
-            if (!(*begin)->adjustUnduckedVolume(delta)) {
+            if (!(*begin)->getSpeakerSettings(&speakerSettings)) {
+                return false;
+            }
+            // if the current volume settings is higher than the maxVolumelimit, reset it to maxVolumeLimit to apply
+            // delta to.
+            if (speakerSettings.volume > maxVolumeLimit) {
+                ACSDK_DEBUG0(LX("adjustingSettingsVolumeValue")
+                                 .d("reason", "valueHigherThanLimit")
+                                 .d("value", (int)speakerSettings.volume)
+                                 .d("maximumVolumeLimitSetting", (int)maxVolumeLimit));
+                speakerSettings.volume = maxVolumeLimit;
+            }
+            // recalculate the delta if needed.
+            int8_t newDelta = delta;
+            if (delta > 0) {
+                newDelta = static_cast<int8_t>(
+                    std::min(
+                        static_cast<int>(speakerSettings.volume) + static_cast<int>(delta),
+                        static_cast<int>(maxVolumeLimit)) -
+                    speakerSettings.volume);
+            } else {
+                newDelta = static_cast<int8_t>(
+                    std::max(
+                        static_cast<int>(speakerSettings.volume) + static_cast<int>(delta),
+                        static_cast<int>(AVS_SET_VOLUME_MIN)) -
+                    speakerSettings.volume);
+            }
+
+            if (!(*begin)->adjustUnduckedVolume(newDelta)) {
                 return false;
             }
             begin++;
@@ -805,8 +762,15 @@ bool SpeakerManager::executeAdjustVolume(
         return true;
     });
 
-    if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "speakerSettingsInconsistent"));
+    if (delta > 0) {
+        settings.volume = static_cast<int8_t>(
+            std::min(static_cast<int>(settings.volume) + static_cast<int>(delta), static_cast<int>(maxVolumeLimit)));
+    } else {
+        settings.volume = static_cast<int8_t>(std::max(
+            static_cast<int>(settings.volume) + static_cast<int>(delta), static_cast<int>(AVS_SET_VOLUME_MIN)));
+    }
+    if (!executeSetSpeakerSettings(type, settings)) {
+        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "executeSetSpeakerSettingsFailed"));
         return false;
     }
 
@@ -857,18 +821,16 @@ bool SpeakerManager::executeSetMute(
     bool mute,
     const SpeakerManagerInterface::NotificationProperties& properties) {
     ACSDK_DEBUG9(LX("executeSetMuteCalled").d("mute", mute));
+    SpeakerInterface::SpeakerSettings settings;
+    if (!executeGetSpeakerSettings(type, &settings)) {
+        ACSDK_ERROR(LX("executeSetMuteFailed").d("reason", "executeGetSpeakerSettingsFailed"));
+        return false;
+    }
 
     // if unmuting an already unmute speaker, then ignore the request
-    if (!mute) {
-        SpeakerInterface::SpeakerSettings settings;
-        // All initialized speakers controlled by directives with the same type should have the same state.
-        if (!validateSpeakerSettingsConsistency(type, &settings)) {
-            ACSDK_WARN(LX("executeSetMuteWarn")
-                           .m("cannot check if device is muted")
-                           .d("reason", "speakerSettingsInconsistent"));
-        } else if (!settings.mute) {
-            return true;
-        }
+    if (!mute && !settings.mute) {
+        ACSDK_DEBUG5(LX("executeSetMute").m("Device is already unmuted"));
+        return true;
     }
 
     auto it = m_speakerMap.find(type);
@@ -891,11 +853,9 @@ bool SpeakerManager::executeSetMute(
     });
 
     submitMetric(m_metricRecorder, mute ? "setMute" : "setUnMute", 1);
-    SpeakerInterface::SpeakerSettings settings;
-
-    // All initialized speakers controlled by directives with the same type should have the same state.
-    if (!validateSpeakerSettingsConsistency(type, &settings)) {
-        ACSDK_ERROR(LX("executeSetMute").d("reason", "speakerSettingsInconsistent"));
+    settings.mute = mute;
+    if (!executeSetSpeakerSettings(type, settings)) {
+        ACSDK_ERROR(LX("executeSetMuteFailed").d("reason", "executeSetSpeakerSettingsFailed"));
         return false;
     }
 
@@ -991,16 +951,55 @@ bool SpeakerManager::executeGetSpeakerSettings(
     ChannelVolumeInterface::Type type,
     SpeakerInterface::SpeakerSettings* settings) {
     ACSDK_DEBUG9(LX("executeGetSpeakerSettingsCalled"));
+    if (!settings) {
+        ACSDK_ERROR(LX("executeGetSpeakerSettingsFailed").d("reason", "nullSettings"));
+        return false;
+    }
     if (m_speakerMap.find(type) == m_speakerMap.end()) {
         ACSDK_ERROR(LX("executeGetSpeakerSettingsFailed").d("reason", "noSpeakersWithType").d("type", type));
         return false;
     }
-    // All initialized speakers controlled by directives with the same type should have the same state.
-    if (!validateSpeakerSettingsConsistency(type, settings)) {
-        ACSDK_ERROR(LX("executeGetSpeakerSettingsCalled").d("reason", "speakerSettingsInconsistent"));
+    // m_speakerSettings is the main source of truth, only query actual speaker as a fallback
+    if (m_speakerSettings.find(type) == m_speakerSettings.end()) {
+        ACSDK_WARN(LX("executeGetSpeakerSettings").m("noSpeakerSettingsWithType, initializing it").d("type", type));
+        if (!executeInitializeSpeakerSettings(type)) {
+            ACSDK_ERROR(LX("executeGetSpeakerSettingsFailed").d("reason", "initializeSpeakerSettingsFailed"));
+            return false;
+        }
+    }
+    *settings = m_speakerSettings[type];
+    return true;
+}
+
+bool SpeakerManager::executeInitializeSpeakerSettings(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type) {
+    ACSDK_DEBUG5(LX("executeInitializeSpeakerSettings").d("type", type));
+    auto it = m_speakerMap.find(type);
+    if (m_speakerMap.end() == it) {
+        ACSDK_ERROR(LX("executeInitializeSpeakerSettings").d("reason", "noSpeakersWithTypeFound").d("type", type));
         return false;
     }
 
+    auto begin = it->second.begin();
+    SpeakerInterface::SpeakerSettings settings;
+    if (!(*begin)->getSpeakerSettings(&settings)) {
+        ACSDK_ERROR(LX("executeInitializeSpeakerSettings").d("reason", "gettingSpeakerSettingsFailed").d("type", type));
+        return false;
+    }
+
+    m_speakerSettings[type] = settings;
+    return true;
+}
+
+bool SpeakerManager::executeSetSpeakerSettings(
+    const ChannelVolumeInterface::Type type,
+    const SpeakerInterface::SpeakerSettings& settings) {
+    ACSDK_DEBUG9(LX("executeSetSpeakerSettingsCalled"));
+    if (m_speakerMap.end() == m_speakerMap.find(type)) {
+        ACSDK_ERROR(LX("executeSetSpeakerSettings").d("reason", "noSpeakersWithTypeFound").d("type", type));
+        return false;
+    }
+
+    m_speakerSettings[type] = settings;
     return true;
 }
 

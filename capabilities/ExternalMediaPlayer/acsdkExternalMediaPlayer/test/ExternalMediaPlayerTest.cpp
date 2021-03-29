@@ -322,7 +322,7 @@ public:
             bool forceLogin,
             std::chrono::milliseconds tokenRefreshInterval));
     MOCK_METHOD0(handleLogout, void());
-    MOCK_METHOD8(
+    MOCK_METHOD9(
         handlePlay,
         void(
             std::string& playContextToken,
@@ -332,7 +332,8 @@ public:
             const std::string& playbackSessionId,
             const std::string& navigation,
             bool preload,
-            const avsCommon::avs::PlayRequestor& playRequestor));
+            const avsCommon::avs::PlayRequestor& playRequestor,
+            std::string playbackTarget));
     MOCK_METHOD1(handlePlayControl, void(RequestType requestType));
     MOCK_METHOD1(handleSeek, void(std::chrono::milliseconds offset));
     MOCK_METHOD1(handleAdjustSeek, void(std::chrono::milliseconds deltaOffset));
@@ -409,7 +410,7 @@ public:
             bool forceLogin,
             std::chrono::milliseconds tokenRefreshInterval));
     MOCK_METHOD1(handleLogout, bool(const std::string& localPlayerId));
-    MOCK_METHOD9(
+    MOCK_METHOD10(
         handlePlay,
         bool(
             const std::string& localPlayerId,
@@ -420,7 +421,8 @@ public:
             const std::string& playbackSessionId,
             const Navigation& navigation,
             bool preload,
-            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor));
+            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+            std::string playbackTarget));
     MOCK_METHOD2(
         handlePlayControl,
         bool(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType));
@@ -1659,7 +1661,7 @@ TEST_F(ExternalMediaPlayerTest, test_playNoOffset) {
 
     EXPECT_CALL(
         *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
-        handlePlay(_, _, _, _, _, _, _, PlayRequestor{}));
+        handlePlay(_, _, _, _, _, _, _, PlayRequestor{}, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1687,7 +1689,7 @@ TEST_F(ExternalMediaPlayerTest, testPlaywithPlayRequestor) {
 
     EXPECT_CALL(
         *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter),
-        handlePlay(_, _, _, _, _, _, _, testPlayRequestor));
+        handlePlay(_, _, _, _, _, _, _, testPlayRequestor, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1713,7 +1715,7 @@ TEST_F(ExternalMediaPlayerTest, test_playNoIndex) {
         "");
 
     EXPECT_CALL(
-        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlay(_, _, _, _, _, _, _, _));
+        *(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlay(_, _, _, _, _, _, _, _, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));

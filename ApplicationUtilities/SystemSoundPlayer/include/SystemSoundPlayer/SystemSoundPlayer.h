@@ -19,6 +19,8 @@
 #include <future>
 #include <memory>
 
+#include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/SystemSoundAudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -29,6 +31,9 @@ namespace alexaClientSDK {
 namespace applicationUtilities {
 namespace systemSoundPlayer {
 
+/// String to identify the system sound media player to render system sounds.
+static const constexpr char* SYSTEM_SOUND_MEDIA_PLAYER_NAME = "SystemSoundMediaPlayer";
+
 /**
  * This class implements the @c SystemSoundPlayerInterface. This class is responsible for playing the system sounds that
  * Alexa devices make.
@@ -38,8 +43,22 @@ class SystemSoundPlayer
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface {
 public:
     /**
+     * Creates a new @c SystemSoundPlayerInterface instance.
+     *
+     * @param audioPipelineFactory The audio pipeline factory to create the media player and related interfaces.
+     * @param audioFactory The audio factory that produces the system sound streams.
+     *
+     * @return A @c std::shared_ptr to the new @c SystemSoundPlayer instance or nullptr if invalid arguments.
+     */
+    static std::shared_ptr<SystemSoundPlayerInterface> createSystemSoundPlayerInterface(
+        std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
+            audioPipelineFactory,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface> audioFactory);
+
+    /**
      * Creates a new @c SystemSoundPlayer instance.
      *
+     * @deprecated Use createSystemSoundPlayerInterface.
      * @param mediaPlayer The mediaPlayer that will play the system sound audio streams.
      * @param soundPlayerAudioFactory The audio factory that produces the system sound streams
      *

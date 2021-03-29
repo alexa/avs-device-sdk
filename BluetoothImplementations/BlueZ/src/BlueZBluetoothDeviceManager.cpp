@@ -42,6 +42,12 @@ std::list<std::shared_ptr<BluetoothDeviceInterface>> BlueZBluetoothDeviceManager
     return m_deviceManager->getDiscoveredDevices();
 }
 
+std::shared_ptr<BluetoothDeviceManagerInterface> BlueZBluetoothDeviceManager::createBluetoothDeviceManagerInterface(
+    std::shared_ptr<BluetoothEventBus> eventBus) {
+    auto bluetooth = create(eventBus);
+    return std::move(bluetooth);
+}
+
 std::unique_ptr<BlueZBluetoothDeviceManager> BlueZBluetoothDeviceManager::create(
     std::shared_ptr<BluetoothEventBus> eventBus) {
     auto deviceManager = BlueZDeviceManager::create(eventBus);

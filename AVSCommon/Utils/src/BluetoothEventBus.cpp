@@ -32,6 +32,10 @@ static const std::string TAG{"BluetoothEventBus"};
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<BluetoothEventBus> BluetoothEventBus::createBluetoothEventBus() {
+    return std::make_shared<BluetoothEventBus>();
+}
+
 BluetoothEventBus::BluetoothEventBus() {
 }
 

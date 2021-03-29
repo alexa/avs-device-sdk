@@ -339,7 +339,7 @@ static void submitMetric(
     recordMetric(metricRecorder, metricEvent);
 }
 
-std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::createAlertsCapabilityAgent(
+std::shared_ptr<AlertsCapabilityAgentInterface> AlertsCapabilityAgent::createAlertsCapabilityAgent(
     const std::shared_ptr<acsdkAlerts::renderer::Renderer>& alertRenderer,
     const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
     const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
@@ -355,7 +355,7 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::createAlertsCapabi
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
     const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
-    const std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>& systemClockMonitor,
+    const std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>& systemClockMonitor,
     const std::shared_ptr<certifiedSender::CertifiedSender>& certifiedSender,
     const std::shared_ptr<registrationManager::CustomerDataManager>& dataManager,
     const std::shared_ptr<settings::DeviceSettingsManager>& settingsManager,
@@ -404,7 +404,7 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::createAlertsCapabi
         systemClockMonitor);
 
     shutdownNotifier->addObserver(alertsCapabilityAgent);
-    systemClockMonitor->addSystemClockMonitorObserver(alertsCapabilityAgent);
+    systemClockMonitor->addObserver(alertsCapabilityAgent);
     endpointCapabilitiesRegistrar->withCapability(alertsCapabilityAgent, alertsCapabilityAgent);
 
     return alertsCapabilityAgent;
@@ -426,7 +426,7 @@ std::shared_ptr<AlertsCapabilityAgent> AlertsCapabilityAgent::create(
     std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     bool startAlertSchedulingOnInitialization,
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor> systemClockMonitor) {
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface> systemClockMonitor) {
     if (!alarmVolumeRampSetting) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAlarmVolumeRampSetting"));
         return nullptr;
@@ -542,11 +542,12 @@ void AlertsCapabilityAgent::onFocusChanged(const std::string& channelName, avsCo
             if (speakerSettings.volume > m_lastReportedSpeakerSettings.volume) {
                 // Alert is sounding with volume higher than Base Volume. Assume that it was adjusted because of
                 // content being played and reset it to the base one. Keep lower values, though.
+                // Do not send a volumeChanged event
                 m_speakerManager->setVolume(
                     ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
                     m_lastReportedSpeakerSettings.volume,
                     SpeakerManagerInterface::NotificationProperties(
-                        SpeakerManagerObserverInterface::Source::DIRECTIVE));
+                        SpeakerManagerObserverInterface::Source::DIRECTIVE, false, false));
             }
         }
     }
@@ -608,7 +609,7 @@ AlertsCapabilityAgent::AlertsCapabilityAgent(
     std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
     std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor> systemClockMonitor) :
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface> systemClockMonitor) :
         CapabilityAgent("Alerts", exceptionEncounteredSender),
         RequiresShutdown("AlertsCapabilityAgent"),
         CustomerDataHandler(dataManager),
@@ -701,7 +702,7 @@ static void submitMetricWithMetadata(
 
 void AlertsCapabilityAgent::doShutdown() {
     if (m_systemClockMonitor) {
-        m_systemClockMonitor->removeSystemClockMonitorObserver(shared_from_this());
+        m_systemClockMonitor->removeObserver(shared_from_this());
         m_systemClockMonitor.reset();
     }
     m_executor.shutdown();
@@ -1238,11 +1239,12 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             if (getSpeakerVolumeSettings(&contentSpeakerSettings)) {
                 if (m_lastReportedSpeakerSettings.volume < contentSpeakerSettings.volume) {
                     // Adjust alerts volume to be at least as loud as content volume
+                    // Do not send a volumeChanged event
                     m_speakerManager->setVolume(
                         ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME,
                         contentSpeakerSettings.volume,
                         SpeakerManagerInterface::NotificationProperties(
-                            SpeakerManagerObserverInterface::Source::DIRECTIVE));
+                            SpeakerManagerObserverInterface::Source::DIRECTIVE, false, false));
                 }
             }
         }

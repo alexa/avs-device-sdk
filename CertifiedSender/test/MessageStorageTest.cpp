@@ -17,7 +17,7 @@
 #include <gmock/gmock.h>
 
 #include <CertifiedSender/SQLiteMessageStorage.h>
-
+#include <SQLiteStorage/SQLiteStatement.h>
 #include <AVSCommon/Utils/File/FileUtils.h>
 
 #include <fstream>
@@ -34,8 +34,6 @@ using namespace avsCommon::utils::file;
 
 /// The filename we will use for the test database file.
 static const std::string TEST_DATABASE_FILE_PATH = "messageStorageTestDatabase.db";
-/// The filename we will use for the test database file.
-static const std::string TEST_SECOND_DATABASE_FILE_PATH = "messageStorageSecondTestDatabase.db";
 /// The path delimiter used by the OS to identify file locations.
 static const std::string PATH_DELIMITER = "/";
 /// The full filepath to the database file we will create and delete during tests.
@@ -48,7 +46,20 @@ static const std::string TEST_MESSAGE_TWO = "test_message_two";
 static const std::string TEST_MESSAGE_THREE = "test_message_three";
 /// A test message uri.
 static const std::string TEST_MESSAGE_URI = "/v20160207/events/SpeechRecognizer/Recognize";
-
+/// The name of the alerts table.
+static const std::string MESSAGES_TABLE_NAME = "messages_with_uri";
+/// The name of the 'id' field we will use as the primary key in our tables.
+static const std::string DATABASE_COLUMN_ID_NAME = "id";
+/// The name of the 'message_text' field we will use as the primary key in our tables.
+static const std::string DATABASE_COLUMN_MESSAGE_TEXT_NAME = "message_text";
+/// The name of the 'uriPathExtension' field corresponding to the uri path extension of the message.
+static const std::string DATABASE_COLUMN_URI = "uri";
+/// The name of the 'timestamp' field is the creation time of the message.
+static const std::string DATABASE_COLUMN_TIMESTAMP = "timestamp";
+/// The SQL string to create the alerts table.
+static const std::string CREATE_LEGACY_MESSAGES_TABLE_SQL_STRING =
+    std::string("CREATE TABLE ") + MESSAGES_TABLE_NAME + " (" + DATABASE_COLUMN_ID_NAME + " INT PRIMARY KEY NOT NULL," +
+    DATABASE_COLUMN_URI + " TEXT NOT NULL," + DATABASE_COLUMN_MESSAGE_TEXT_NAME + " TEXT NOT NULL);";
 /**
  * A class which helps drive this unit test suite.
  */
@@ -57,41 +68,48 @@ public:
     /**
      * Constructor.
      */
-    MessageStorageTest() : m_storage{std::make_shared<SQLiteMessageStorage>(g_dbTestFilePath)} {
-        cleanupLocalDbFile();
-    }
+    MessageStorageTest();
 
     /**
      * Destructor.
      */
-    ~MessageStorageTest() {
-        m_storage->close();
-        cleanupLocalDbFile();
-    }
+    ~MessageStorageTest();
 
     /**
      * Utility function to create the database, using the global filename.
      */
-    void createDatabase() {
-        m_storage->createDatabase();
-    }
+    void createDatabase();
+
+    /**
+     * Utility function to create legacy database that does not have timestamp column
+     */
+    bool createLegacyDatabase();
 
     /**
      * Utility function to cleanup the test database file, if it exists.
      */
-    void cleanupLocalDbFile() {
-        if (g_dbTestFilePath.empty()) {
-            return;
-        }
+    void cleanupLocalDbFile();
 
-        if (fileExists(g_dbTestFilePath)) {
-            removeFile(g_dbTestFilePath.c_str());
-        }
-    }
+    /**
+     * Utility function to check if the current table is legacy or not
+     * EXPECT: 1 = DB is legacy, 0 = DB is not legacy, -1 = errors
+     */
+    int isDatabaseLegacy();
+
+    /**
+     * Utility function to insert old messages in the storage
+     */
+    bool insertOldMessagesToDatabase(int id, const std::string& record_age);
+
+    /**
+     * Utility function to create old messages in the storage
+     */
+    bool createOldMessages();
 
 protected:
     /// The message database object we will test.
     std::shared_ptr<MessageStorageInterface> m_storage;
+    std::unique_ptr<alexaClientSDK::storage::sqliteStorage::SQLiteDatabase> m_legacyDB;
 };
 
 /**
@@ -105,6 +123,126 @@ static bool isOpen(const std::shared_ptr<MessageStorageInterface>& storage) {
     return storage->load(&dummyMessages);
 }
 
+MessageStorageTest::MessageStorageTest() : m_storage{std::make_shared<SQLiteMessageStorage>(g_dbTestFilePath)} {
+    cleanupLocalDbFile();
+}
+
+MessageStorageTest::~MessageStorageTest() {
+    m_storage->close();
+    if (m_legacyDB) {
+        m_legacyDB->close();
+    }
+    cleanupLocalDbFile();
+}
+
+void MessageStorageTest::createDatabase() {
+    m_storage->createDatabase();
+}
+
+bool MessageStorageTest::createLegacyDatabase() {
+    m_legacyDB = std::unique_ptr<alexaClientSDK::storage::sqliteStorage::SQLiteDatabase>(
+        new alexaClientSDK::storage::sqliteStorage::SQLiteDatabase(g_dbTestFilePath));
+
+    if (!m_legacyDB || !m_legacyDB->initialize()) {
+        return false;
+    }
+
+    if (!m_legacyDB->performQuery(CREATE_LEGACY_MESSAGES_TABLE_SQL_STRING)) {
+        m_legacyDB->close();
+        return false;
+    }
+
+    return true;
+}
+
+void MessageStorageTest::cleanupLocalDbFile() {
+    if (g_dbTestFilePath.empty()) {
+        return;
+    }
+
+    if (fileExists(g_dbTestFilePath)) {
+        removeFile(g_dbTestFilePath.c_str());
+    }
+}
+
+int MessageStorageTest::isDatabaseLegacy() {
+    auto sqlStatement = m_legacyDB->createStatement("PRAGMA table_info(" + MESSAGES_TABLE_NAME + ");");
+
+    if ((!sqlStatement) || (!sqlStatement->step())) {
+        return -1;
+    }
+
+    const std::string tableInfoColumnName = "name";
+
+    std::string columnName;
+    while (SQLITE_ROW == sqlStatement->getStepResult()) {
+        int columnCount = sqlStatement->getColumnCount();
+
+        for (int i = 0; i < columnCount; i++) {
+            std::string tableColumnName = sqlStatement->getColumnName(i);
+
+            if (tableInfoColumnName == tableColumnName) {
+                columnName = sqlStatement->getColumnText(i);
+                if (DATABASE_COLUMN_TIMESTAMP == columnName) {
+                    return 0;
+                }
+            }
+        }
+
+        if (!sqlStatement->step()) {
+            return -1;
+        }
+    }
+    return 1;
+}
+
+bool MessageStorageTest::insertOldMessagesToDatabase(int id, const std::string& record_age) {
+    if (!m_legacyDB) {
+        return false;
+    }
+
+    std::string sqlString = std::string("INSERT INTO " + MESSAGES_TABLE_NAME + " (") + DATABASE_COLUMN_ID_NAME + ", " +
+                            DATABASE_COLUMN_URI + ", " + DATABASE_COLUMN_MESSAGE_TEXT_NAME + ", " +
+                            DATABASE_COLUMN_TIMESTAMP + ") VALUES (?, ?, ?, datetime('now', ?));";
+
+    auto statement = m_legacyDB->createStatement(sqlString);
+    int boundParam = 1;
+    std::string uriPathExtension = "testURI";
+    std::string message = "testURI";
+    if (!statement->bindIntParameter(boundParam++, id) ||
+        !statement->bindStringParameter(boundParam++, uriPathExtension) ||
+        !statement->bindStringParameter(boundParam++, message) ||
+        !statement->bindStringParameter(boundParam, record_age)) {
+        return false;
+    }
+    if (!statement->step()) {
+        return false;
+    }
+
+    return true;
+}
+
+bool MessageStorageTest::createOldMessages() {
+    m_legacyDB = std::unique_ptr<alexaClientSDK::storage::sqliteStorage::SQLiteDatabase>(
+        new alexaClientSDK::storage::sqliteStorage::SQLiteDatabase(g_dbTestFilePath));
+
+    m_legacyDB->open();
+    // Insert 60 records 1 month ago
+    for (int id = 1; id <= 60; ++id) {
+        if (!insertOldMessagesToDatabase(id, "-1 months")) {
+            return false;
+        }
+    }
+
+    // Insert 60 record at this moment
+    for (int id = 61; id <= 120; ++id) {
+        if (!insertOldMessagesToDatabase(id, "-0 seconds")) {
+            return false;
+        }
+    }
+
+    return true;
+}
 /**
  * Test basic construction.  Database should not be open.
  */
@@ -231,7 +369,7 @@ TEST_F(MessageStorageTest, test_databaseClear) {
 /**
  * Test storing records with URI in the database.
  */
-TEST_F(MessageStorageTest, testDatabaseStoreAndLoadWithURI) {
+TEST_F(MessageStorageTest, test_DatabaseStoreAndLoadWithURI) {
     createDatabase();
     EXPECT_TRUE(isOpen(m_storage));
 
@@ -245,6 +383,54 @@ TEST_F(MessageStorageTest, testDatabaseStoreAndLoadWithURI) {
     EXPECT_TRUE(m_storage->load(&dbMessages));
     EXPECT_EQ(dbMessages.front().message, TEST_MESSAGE_ONE);
     EXPECT_EQ(dbMessages.front().uriPathExtension, TEST_MESSAGE_URI);
+}
+
+/**
+ * Test legacy database
+ */
+TEST_F(MessageStorageTest, test_LegacyDatabase) {
+    EXPECT_TRUE(createLegacyDatabase());
+    EXPECT_EQ(isDatabaseLegacy(), 1);
+
+    // Perform opening it to change it to new database
+    // and check if it is legacy and it works
+    EXPECT_TRUE(m_storage->open());
+    EXPECT_TRUE(isOpen(m_storage));
+    EXPECT_EQ(isDatabaseLegacy(), 0);
+
+    // Close it and check the file
+    m_storage->close();
+    EXPECT_FALSE(isOpen(m_storage));
+}
+
+/**
+ * Test erase legacy message
+ */
+TEST_F(MessageStorageTest, test_EraseMessageOverAgeAndSizeLimit) {
+    createDatabase();
+    // Create old messages over age and database size limit
+    EXPECT_TRUE(createOldMessages());
+
+    std::queue<MessageStorageInterface::StoredMessage> dbMessagesBefore;
+    EXPECT_TRUE(m_storage->load(&dbMessagesBefore));
+    EXPECT_EQ(static_cast<int>(dbMessagesBefore.size()), 120);
+
+    // The mocking database opens and deletes over age and size limit
+    m_storage->close();
+    EXPECT_TRUE(m_storage->open());
+    EXPECT_TRUE(isOpen(m_storage));
+
+    std::queue<MessageStorageInterface::StoredMessage> dbMessagesAfter;
+    EXPECT_TRUE(m_storage->load(&dbMessagesAfter));
+    // eraseMessageOverAgeLimit() takes out the first 60 inserted 1 month ago
+    // eraseMessageOverSizeLimit() takes out the next 35 messages
+
+    EXPECT_EQ(static_cast<int>(dbMessagesAfter.size()), 25);
+    for (int id = 96; id <= 120; ++id) {
+        EXPECT_EQ(static_cast<int>(dbMessagesAfter.front().id), id);
+        dbMessagesAfter.pop();
+    }
+    EXPECT_EQ(static_cast<int>(dbMessagesAfter.size()), 0);
 }
 
 }  // namespace test

@@ -104,8 +104,6 @@ private:
 
     /// Save pointer to the OpenSL ES speaker object which must be valid for us to use the volume interface.
     /// See "Object and Interfaces" section of OpenSL ES for Android
-    /// <a href=https://googlesamples.github.io/android-audio-high-performance/guides/opensl_es.html> documentation </a>
-    /// for a more detailed explanation.
     std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESObject> m_speakerObject;
 
     /// The OpenSL ES volume interface.

@@ -183,9 +183,14 @@ private:
     /**
      * This function handles when a speaker setting has changed.
      *
-     * @param type The type of the Speaker which changed.
+     * @param source. This indicates the origin of the call.
+     * @param type. This indicates the type of @c ChannelVolumeInterface that was modified.
+     * @param settings. This indicates the current settings after the change.
      */
-    void executeOnSpeakerSettingsChanged(const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type);
+    void executeOnSpeakerSettingsChanged(
+        const avsCommon::sdkInterfaces::SpeakerManagerObserverInterface::Source& source,
+        const avsCommon::sdkInterfaces::ChannelVolumeInterface::Type& type,
+        const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
      * This function handles when the CallState has been changed.

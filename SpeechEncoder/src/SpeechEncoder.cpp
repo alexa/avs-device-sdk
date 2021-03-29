@@ -112,6 +112,7 @@ void SpeechEncoder::stopEncoding(bool stopImmediately) {
         // Stop after all frames are encoded
         m_stopRequested = true;
     }
+    m_executor.waitForSubmittedTasks();
 }
 
 std::shared_ptr<AudioInputStream> SpeechEncoder::getEncodedStream() {

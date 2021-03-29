@@ -14,6 +14,7 @@
  */
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <unordered_set>
 
 #include "AVSCommon/Utils/HTTP/HttpResponseCode.h"
 #include "AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h"
@@ -37,19 +38,21 @@ static const std::string TAG("HTTP2MimeResponseDecoder");
 
 /// ASCII value of CR
 static const char CARRIAGE_RETURN_ASCII = 13;
+/// ASCII value of Double Quotes (")
+static const char QUOTES_CHAR = '\"';
 /// ASCII value of LF
 static const char LINE_FEED_ASCII = 10;
 /// CRLF sequence
 static const char CRLF_SEQUENCE[] = {CARRIAGE_RETURN_ASCII, LINE_FEED_ASCII};
 /// Size of CLRF in chars
 static const int LEADING_CRLF_CHAR_SIZE = sizeof(CRLF_SEQUENCE) / sizeof(*CRLF_SEQUENCE);
-
 /// MIME boundary string prefix in HTTP header.
 static const std::string BOUNDARY_PREFIX = "boundary=";
-/// Size in chars of the MIME boundary string prefix
-static const int BOUNDARY_PREFIX_SIZE = BOUNDARY_PREFIX.size();
-/// MIME HTTP header value delimiter
-static const std::string BOUNDARY_DELIMITER = ";";
+/// Non alpha-numeric chars that are allowed as part of the Boundary as per RFC2046
+static const std::unordered_set<char> BOUNDARY_ALLOWED_NON_ALPHA_CHARS =
+    {'\'', '(', ')', '+', '_', ',', '-', '.', '/', ':', '=', '?'};
+///  Max length of the boundary as per RFC2046 (inclusive)
+static const size_t BOUNDARY_MAX_LENGTH = 70;
 
 HTTP2MimeResponseDecoder::HTTP2MimeResponseDecoder(std::shared_ptr<HTTP2MimeResponseSinkInterface> sink) :
         m_sink{sink},
@@ -87,11 +90,33 @@ bool HTTP2MimeResponseDecoder::onReceiveHeaderLine(const std::string& line) {
     }
 
     if (!m_boundaryFound) {
-        if (line.find(BOUNDARY_PREFIX) != std::string::npos) {
-            std::string boundary{line.substr(line.find(BOUNDARY_PREFIX))};
-            boundary = boundary.substr(BOUNDARY_PREFIX_SIZE, boundary.find(BOUNDARY_DELIMITER) - BOUNDARY_PREFIX_SIZE);
-            m_multipartReader.setBoundary(boundary);
-            m_boundaryFound = true;
+        size_t boundaryPosition = line.find(BOUNDARY_PREFIX);
+        if (boundaryPosition != std::string::npos) {
+            size_t boundaryIndexStart = boundaryPosition + BOUNDARY_PREFIX.size();
+            if (line[boundaryIndexStart] == QUOTES_CHAR) {
+                ++boundaryIndexStart;
+            }
+            size_t boundaryIndex = boundaryIndexStart;
+            for (; boundaryIndex < line.size(); boundaryIndex++) {
+                char currentChar = line[boundaryIndex];
+                // if the char is not an alpha-numeric of not in the allowed chars, stop
+                // this case also handles the closing quotes (discarding everything after the second ")
+                if ((!isalnum(currentChar) &&
+                     (BOUNDARY_ALLOWED_NON_ALPHA_CHARS.find(currentChar) == BOUNDARY_ALLOWED_NON_ALPHA_CHARS.end()))) {
+                    break;
+                }
+            }
+            std::string boundary = line.substr(boundaryIndexStart, boundaryIndex - boundaryIndexStart);
+            // as per NFC2046 the boundary should range from 1 to 70 chars
+            if (boundary.size() > 0 && boundary.size() <= BOUNDARY_MAX_LENGTH) {
+                m_multipartReader.setBoundary(boundary);
+                m_boundaryFound = true;
+                ACSDK_DEBUG9(LX(__func__).d("boundary", boundary));
+            } else {
+                // this happens when a we find a 'boundary=X' where X is invalid as per RFC
+                ACSDK_ERROR(LX("invalidBoundary"));
+                return false;
+            }
         }
     }
 

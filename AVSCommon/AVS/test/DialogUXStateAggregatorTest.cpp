@@ -288,15 +288,15 @@ TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveGoesToIdleAfterLongTimeou
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, TRANSITION_TIMEOUT);
 }
 
 /**
- * Tests that the LISTENING state goes to SPEAKING but not IDLE after both a message is received and a SpeechSynthesizer
- * speak state is received.
+ * Tests that the LISTENING state goes to SPEAKING but not IDLE after both RequestProcessingStarted and
+ * RequestProcessingCompleted are received followed by SpeechSynthesizer PLAYING.
  */
-TEST_F(DialogUXAggregatorTest, test_listeningThenReceiveThenSpeakGoesToSpeakButNotIdle) {
+TEST_F(DialogUXAggregatorTest, test_listeningThenRequestProcessingCompletedThenSpeakGoesToSpeakButNotIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
@@ -305,7 +305,7 @@ TEST_F(DialogUXAggregatorTest, test_listeningThenReceiveThenSpeakGoesToSpeakButN
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
 
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING,
@@ -327,14 +327,13 @@ TEST_F(DialogUXAggregatorTest, test_speakingAndRecognizingFinishedGoesToIdle) {
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
 
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING,
         TEST_SOURCE_ID,
         m_testMediaPlayerState,
         m_testAudioAnalyzerState);
-
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::IDLE);
@@ -395,7 +394,7 @@ TEST_F(DialogUXAggregatorTest, test_speakingFinishedDoesNotGoesToIdleImmediately
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
 
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING,
@@ -414,13 +413,13 @@ TEST_F(DialogUXAggregatorTest, test_speakingFinishedDoesNotGoesToIdleImmediately
     assertNoStateChange(m_testObserver);
 }
 
-/// Tests that a simple message receive does nothing.
+/// Test that requestProcessingCompleted while SPEAKING does nothing.
 TEST_F(DialogUXAggregatorTest, test_simpleReceiveDoesNothing) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingStarted();
 
-    assertNoStateChange(m_testObserver);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING,
@@ -430,7 +429,7 @@ TEST_F(DialogUXAggregatorTest, test_simpleReceiveDoesNothing) {
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::SPEAKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
 
     assertNoStateChange(m_testObserver);
 }
@@ -445,7 +444,7 @@ TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveRemainsInThinkingIfSpeech
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
 
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS,
@@ -454,8 +453,6 @@ TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveRemainsInThinkingIfSpeech
         m_testAudioAnalyzerState);
 
     // Make sure after SpeechSynthesizer reports GAINING_FOCUS, that it would stay in THINKING state
-    m_aggregator->receive("", "");
-
     assertNoStateChange(m_testObserver, TRANSITION_TIMEOUT);
 }
 
@@ -465,14 +462,14 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
-    m_aggregator->receive("", "");
+    m_aggregator->onRequestProcessingCompleted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING,
@@ -497,19 +494,17 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
     assertNoStateChange(m_testObserver);
 }
 
-/// Test that if receive() happens before RequestProcessingCompleted directive is handled, we exit THINKING mode.
+/// Test that if RequestProcessingCompleted directive is handled, we exit THINKING mode.
 TEST_F(DialogUXAggregatorTest, test_receiveThenRPCTransitionsOutOfThinking) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
-    m_aggregator->receive("", "");
-    m_aggregator->receive("", "");
-
     m_aggregator->onRequestProcessingStarted();
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
     m_aggregator->onRequestProcessingCompleted();
+
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
 
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
@@ -527,6 +522,21 @@ TEST_F(DialogUXAggregatorTest, test_receiveAIPBusyAfterRPS) {
 
     m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertNoStateChange(m_testObserver);
+}
+
+/// Test that we transition from LISTENING to IDLE when RequestProcessingCompleted is received without
+/// RequestProcessingStarted.
+TEST_F(DialogUXAggregatorTest, test_receiveRPCwithoutRPS) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    assertNoStateChange(m_testObserver);
+
+    m_aggregator->onRequestProcessingCompleted();
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 }
 
 }  // namespace test

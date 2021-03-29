@@ -32,6 +32,10 @@ static const std::string TAG("CustomerDataManager");
 namespace alexaClientSDK {
 namespace registrationManager {
 
+std::shared_ptr<CustomerDataManager> CustomerDataManager::createCustomerDataManager() {
+    return std::make_shared<CustomerDataManager>();
+}
+
 void CustomerDataManager::addDataHandler(CustomerDataHandler* handler) {
     if (handler == nullptr) {
         ACSDK_ERROR(LX("addDataHandlerFailed").m("Cannot register a NULL handler."));

@@ -20,12 +20,15 @@
 #include <memory>
 #include <vector>
 
+#include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
 #include <acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h>
 #include <acsdkEqualizerInterfaces/EqualizerRuntimeSetupInterface.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
+#include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
@@ -64,11 +67,12 @@ namespace acsdkPreviewAlexaClient {
  * remain stable.
  */
 using PreviewAlexaClientComponent = acsdkManufactory::Component<
-    std::shared_ptr<acsdkAlerts::AlertsCapabilityAgent>,
+    std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
-    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,  /// Applications should not use this export.
+    std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
@@ -94,6 +98,7 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
     acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
@@ -102,7 +107,7 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-    std::shared_ptr<avsCommon::utils::timing::SystemClockMonitor>,
+    std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,

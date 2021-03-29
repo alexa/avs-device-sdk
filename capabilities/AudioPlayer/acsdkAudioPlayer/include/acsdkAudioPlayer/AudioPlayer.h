@@ -364,6 +364,9 @@ private:
         /// Duration builder for queue time metric
         avsCommon::utils::metrics::DataPointDurationBuilder queueTimeMetricData;
 
+        /// Cached metadata.
+        std::shared_ptr<const VectorOfTags> cachedMetadata;
+
         /**
          * Constructor.
          *
@@ -946,6 +949,16 @@ private:
     std::string getTrackProtectionName(const avsCommon::utils::mediaPlayer::MediaPlayerState& mediaPlayerState) const;
 
     /**
+     * Re-package the cached device context for AudioPlayer to a format compatible with
+     * events.
+     *
+     * @param offsetOverride if valid override the offset in the context with this value
+     * @return json string of the context
+     */
+    std::string packageContextForEvent(
+        std::chrono::milliseconds offsetOverride = avsCommon::utils::mediaPlayer::MEDIA_PLAYER_INVALID_OFFSET) const;
+
+    /**
      * Convert from internal state to external activity
      *
      * @param state Internal state value
@@ -1114,6 +1127,9 @@ private:
 
     /// @c ChannelVolumeInterface instance to do volume adjustments with.
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> m_audioChannelVolumeInterfaces;
+
+    /// Cached vopy of the device context set
+    std::string m_cachedContext;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

@@ -39,7 +39,7 @@ using namespace avsCommon::utils::bluetooth;
  *
  * @c G_BUS_TYPE_SESSION is being used because @c G_BUS_TYPE_SYSTEM has stricter permissions.
  */
-static std::shared_ptr<DBusConnection> g_connection = DBusConnection::create(G_BUS_TYPE_SESSION);
+static std::shared_ptr<DBusConnection> g_connection;
 
 /// Unique bus name to allow DBus method invocations.
 static const std::string UNIQUE_BUS = "org.avscppsdk.test.unique";
@@ -52,6 +52,24 @@ class MockListener : public BluetoothEventListenerInterface {
 public:
     MOCK_METHOD1(onEventFired, void(const BluetoothEvent& event));
 };
+
+/// Class used to properly initialize and tear down g_connection.
+class Environment : public testing::Environment {
+public:
+    /// Test Program SetUp.
+    void SetUp() override;
+
+    /// Test Program TearDown.
+    void TearDown() override;
+};
+
+void Environment::SetUp() {
+    g_connection = DBusConnection::create(G_BUS_TYPE_SESSION);
+}
+
+void Environment::TearDown() {
+    g_connection.reset();
+}
 
 /**
  * Test fixture for the base tests. DBus objects are not mockable, so we use live calls to DBus for these tests.
@@ -263,3 +281,14 @@ TEST_P(MPRISPlayerUnsupportedTest, test_unsupportedMethod) {
 }  // namespace blueZ
 }  // namespace bluetoothImplementations
 }  // namespace alexaClientSDK
+
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+
+    alexaClientSDK::bluetoothImplementations::blueZ::test::Environment* env =
+        new alexaClientSDK::bluetoothImplementations::blueZ::test::Environment();
+
+    // gmock owns the lifecyle of any registered environment, there is no need to free.
+    AddGlobalTestEnvironment(env);
+    return RUN_ALL_TESTS();
+}

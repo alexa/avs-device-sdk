@@ -13,10 +13,10 @@
  * permissions and limitations under the License.
  */
 
-#include "acsdkCustomApplicationAudioPipelineFactory/CustomApplicationAudioPipelineFactory.h"
+#include "acsdkApplicationAudioPipelineFactory/CustomApplicationAudioPipelineFactory.h"
 
 namespace alexaClientSDK {
-namespace acsdkCustomApplicationAudioPipelineFactory {
+namespace acsdkApplicationAudioPipelineFactory {
 
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkEqualizerInterfaces;
@@ -35,7 +35,7 @@ static const std::string TAG("CustomApplicationAudioPipelineFactory");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
-CustomApplicationAudioPipelineFactory::create(
+CustomApplicationAudioPipelineFactory::createApplicationAudioPipelineFactoryInterface(
     const std::shared_ptr<ChannelVolumeFactoryInterface>& channelVolumeFactory,
     const std::shared_ptr<SpeakerManagerInterface>& speakerManager,
     const std::shared_ptr<EqualizerRuntimeSetupInterface>& equalizerRuntimeSetup,
@@ -168,5 +168,5 @@ CustomApplicationAudioPipelineFactory::CustomApplicationAudioPipelineFactory(
         m_captionManager{captionManager} {
 }
 
-}  // namespace acsdkCustomApplicationAudioPipelineFactory
+}  // namespace acsdkApplicationAudioPipelineFactory
 }  // namespace alexaClientSDK

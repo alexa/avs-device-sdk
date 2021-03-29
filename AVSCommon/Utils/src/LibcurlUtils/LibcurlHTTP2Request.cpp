@@ -151,12 +151,20 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
             m_stream.setTransferType(CurlEasyHandleWrapper::TransferType::kGET);
             break;
         case HTTP2RequestType::POST:
-            curl_easy_setopt(m_stream.getCurlHandle(), CURLOPT_POST, 1L);
+            CURLcode ret = curl_easy_setopt(m_stream.getCurlHandle(), CURLOPT_POST, 1L);
+            if (ret != CURLE_OK) {
+                ACSDK_WARN(
+                    LX("Configuring the request").d("reason", "curlFailure").d("error", curl_easy_strerror(ret)));
+            }
             m_stream.setReadCallback(LibcurlHTTP2Request::readCallback, this);
             break;
     }
-    m_stream.setURL(config.getUrl());
-    m_stream.setWriteCallback(LibcurlHTTP2Request::writeCallback, this);
+    if (!m_stream.setURL(config.getUrl())) {
+        ACSDK_WARN(LX("Configuring the request").d("reason", "setURL failed"));
+    }
+    if (!m_stream.setWriteCallback(LibcurlHTTP2Request::writeCallback, this)) {
+        ACSDK_WARN(LX("Configuring the request").d("reason", "setWriteCallback failed"));
+    }
     m_stream.setHeaderCallback(LibcurlHTTP2Request::headerCallback, this);
     m_stream.curlOptionsSetter().setopt(CURLOPT_TCP_KEEPALIVE, 1);
     m_stream.curlOptionsSetter().setopt(CURLOPT_STREAM_WEIGHT, config.getPriority());
@@ -168,7 +176,10 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
         m_source = config.getSource();
         auto headers = m_source->getRequestHeaderLines();
         for (const auto& header : headers) {
-            m_stream.addHTTPHeader(header);
+            bool result = m_stream.addHTTPHeader(header);
+            if (!result) {
+                ACSDK_WARN(LX("addHTTPHeader failed"));
+            }
         }
     }
     if (config.getSink()) {

@@ -50,6 +50,20 @@ public:
     /**
      * Create an @c Manufactory that is a subset of another @c Manufactory.
      *
+     * Note that template parameters of the this requested and the input Manufactory's are used to perform
+     * a compile time check that all types in Exports... are also in Superset...
+     *
+     * @tparam Superset types provided by the input @c Manufactory.
+     * @param input The @c Manufactory from which to create a subset @c Manufactory.
+     * @return A new @c Manufactory or nullptr if the @c Component was invalid.
+     */
+    template <typename... Superset>
+    static std::unique_ptr<Manufactory<Exports...>> createSubsetManufactory(
+        const std::shared_ptr<Manufactory<Superset...>>& input);
+
+    /**
+     * Create an @c Manufactory that is a subset of another @c Manufactory.
+     *
      * Note that template parameters of the this and the requested Manufactorys are used to perform a compile time
      * check that all types in Subset... are also in Exports...
      *

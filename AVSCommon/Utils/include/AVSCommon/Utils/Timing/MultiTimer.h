@@ -21,6 +21,7 @@
 #include <condition_variable>
 #include <functional>
 #include <map>
+#include <memory>
 #include <mutex>
 
 #include "AVSCommon/Utils/Threading/Executor.h"
@@ -39,6 +40,12 @@ class MultiTimer {
 public:
     /// Alias for the token used to identify a task. This can be used to cancel a task execution.
     using Token = uint64_t;
+
+    /**
+     * Factory method that creates a shared pointer to a MultiTimer.
+     * @return A new instance of MultiTimer.
+     */
+    static std::shared_ptr<MultiTimer> createMultiTimer();
 
     /**
      * Constructor.

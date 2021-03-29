@@ -33,6 +33,10 @@ static const std::string TAG("LocaleAssetsManager");
 namespace alexaClientSDK {
 namespace sampleApp {
 
+using namespace acsdkShutdownManagerInterfaces;
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::configuration;
+
 /// The key in our config file to find the root of settings for this database.
 static const std::string SETTING_CONFIGURATION_ROOT_KEY = "deviceSettings";
 
@@ -51,23 +55,42 @@ static const std::string DEFAULT_LOCALE_VALUE = "en-US";
 /// The default supported wake word.
 static const std::string DEFAULT_SUPPORTED_WAKEWORD = "ALEXA";
 
-std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> LocaleAssetsManager::
-    createLocaleAssetsManagerInterface() {
-    auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
-#ifdef KWD
-    static constexpr bool enableWakeWord = true;
-#else
-    static constexpr bool enableWakeWord = false;
-#endif
-    if (!manager->initialize(enableWakeWord)) {
+std::shared_ptr<LocaleAssetsManagerInterface> LocaleAssetsManager::createLocaleAssetsManagerInterface(
+    const std::shared_ptr<ConfigurationNode>& configurationNode,
+    const std::shared_ptr<ShutdownNotifierInterface>& shutdownNotifier) {
+    if (!shutdownNotifier) {
+        ACSDK_ERROR(LX("createLocaleAssetsManagerInterfaceFailed").d("reason", "null shutdown notifier"));
         return nullptr;
     }
+
+    auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
+    if (!manager->initialize(configurationNode)) {
+        ACSDK_ERROR(LX("createLocaleAssetsManagerInterfaceFailed").d("reason", "initialize failed"));
+        return nullptr;
+    }
+
+    if (manager) {
+        shutdownNotifier->addObserver(manager);
+    }
+
+    return manager;
+}
+
+std::shared_ptr<LocaleAssetsManager> LocaleAssetsManager::createLocaleAssetsManager(
+    const std::shared_ptr<ConfigurationNode>& configurationNode) {
+    auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
+    if (!manager->initialize(configurationNode)) {
+        ACSDK_ERROR(LX("createLocaleAssetsManager").d("reason", "initialize failed"));
+        return nullptr;
+    }
+
     return manager;
 }
 
 std::shared_ptr<LocaleAssetsManager> LocaleAssetsManager::create(bool enableWakeWord) {
     auto manager = std::shared_ptr<LocaleAssetsManager>(new LocaleAssetsManager());
-    if (!manager->initialize(enableWakeWord)) {
+    if (!manager->initialize(enableWakeWord, ConfigurationNode::getRoot())) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "initialize failed"));
         return nullptr;
     }
     return manager;
@@ -85,8 +108,23 @@ void LocaleAssetsManager::cancelOngoingChange() {
     // No work is done by changeAssets.
 }
 
-bool LocaleAssetsManager::initialize(bool enableWakeWord) {
-    auto settingsConfig = avsCommon::utils::configuration::ConfigurationNode::getRoot()[SETTING_CONFIGURATION_ROOT_KEY];
+bool LocaleAssetsManager::initialize(const std::shared_ptr<ConfigurationNode>& configurationNode) {
+    if (!configurationNode) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "null configuration node"));
+        return false;
+    }
+
+#ifdef KWD
+    static constexpr bool enableWakeWord = true;
+#else
+    static constexpr bool enableWakeWord = false;
+#endif
+
+    return initialize(enableWakeWord, *configurationNode);
+}
+
+bool LocaleAssetsManager::initialize(bool enableWakeWord, const ConfigurationNode& configurationNode) {
+    auto settingsConfig = configurationNode[SETTING_CONFIGURATION_ROOT_KEY];
     if (!settingsConfig) {
         ACSDK_ERROR(LX("initializeFailed")
                         .d("reason", "configurationKeyNotFound")
@@ -190,7 +228,56 @@ LocaleAssetsManager::Locale LocaleAssetsManager::getDefaultLocale() const {
     return m_defaultLocale;
 }
 
-LocaleAssetsManager::LocaleAssetsManager() : m_defaultLocale{DEFAULT_LOCALE_VALUE} {
+void LocaleAssetsManager::addLocaleAssetsObserver(
+    const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>& observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer == nullptr) {
+        ACSDK_ERROR(LX("addLocaleAssetsObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    m_observers.insert(observer);
+}
+
+void LocaleAssetsManager::removeLocaleAssetsObserver(
+    const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>& observer) {
+    std::lock_guard<std::mutex> lock{m_observersMutex};
+    if (observer == nullptr) {
+        ACSDK_ERROR(LX("removeLocaleAssetsObserverFailed").d("reason", "nullObserver"));
+        return;
+    }
+    m_observers.erase(observer);
+}
+
+void LocaleAssetsManager::setEndpointRegistrationManager(
+    const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>&
+        manager) {
+    std::lock_guard<std::mutex> lock{m_ermMutex};
+    if (manager == nullptr) {
+        ACSDK_ERROR(LX("setEndpointRegistrationManagerFailed").m("null EndpointRegistrationManager"));
+        return;
+    }
+    m_endpointRegistrationManager = manager;
+}
+
+void LocaleAssetsManager::onConfigurationChanged(
+    const alexaClientSDK::avsCommon::avs::CapabilityConfiguration& configuration) {
+    // No-op
+}
+
+LocaleAssetsManager::LocaleAssetsManager() :
+        RequiresShutdown{"LocaleAssetsManager"},
+        m_defaultLocale{DEFAULT_LOCALE_VALUE} {
+}
+
+void LocaleAssetsManager::doShutdown() {
+    {
+        std::lock_guard<std::mutex> lock{m_ermMutex};
+        m_endpointRegistrationManager.reset();
+    }
+    {
+        std::lock_guard<std::mutex> lock{m_observersMutex};
+        m_observers.clear();
+    }
 }
 
 }  // namespace sampleApp

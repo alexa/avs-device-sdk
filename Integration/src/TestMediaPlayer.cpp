@@ -50,6 +50,15 @@ avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::s
 }
 
 avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
+    std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> attachmentReader,
+    std::chrono::milliseconds offsetAdjustment,
+    const avsCommon::utils::AudioFormat* audioFormat,
+    const avsCommon::utils::mediaPlayer::SourceConfig& config) {
+    m_attachmentReader = std::move(attachmentReader);
+    return ++g_sourceId;
+}
+
+avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TestMediaPlayer::setSource(
     std::shared_ptr<std::istream> stream,
     bool repeat,
     const avsCommon::utils::mediaPlayer::SourceConfig& config,

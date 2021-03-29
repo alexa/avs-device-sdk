@@ -31,6 +31,9 @@ namespace cblAuthDelegate {
 
 /**
  * An implementation of CBLAuthDelegateStorageInterface using SQLite.
+ *
+ * IMPORTANT NOTE: Your token storage MUST be encrypted.
+ * Note that in this default SDK implementation, we do not provide encryption.
  */
 class SQLiteCBLAuthDelegateStorage : public CBLAuthDelegateStorageInterface {
 public:

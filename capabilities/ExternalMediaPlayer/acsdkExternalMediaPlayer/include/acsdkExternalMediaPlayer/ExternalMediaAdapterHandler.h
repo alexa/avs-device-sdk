@@ -168,7 +168,8 @@ protected:
         const std::string& playbackSessionId,
         const acsdkExternalMediaPlayerInterfaces::Navigation& navigation,
         bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor) = 0;
+        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+        std::string playbackTarget) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
@@ -256,7 +257,8 @@ public:
         const std::string& playbackSessionId,
         const std::string& navigation,
         bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor) override;
+        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+        std::string playbackTarget) override;
     bool playControl(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType)
         override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;

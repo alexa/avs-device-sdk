@@ -56,8 +56,8 @@ static const std::string TAG("EndpointBuilder");
 /// String used to join attributes in the generation of the derived endpoint id.
 const std::string ENDPOINT_ID_CONCAT = "::";
 
-/// We will limit the suffix length to 10 characters for now to ensure that we don't go over the endpointId length.
-static constexpr size_t MAX_SUFFIX_LENGTH = 10;
+/// We will limit the EndpointId length to 256 characters
+static constexpr size_t MAX_ENDPOINTID_LENGTH = 256;
 
 /// The display category for the AVS device endpoint;
 const std::string ALEXA_DISPLAY_CATEGORY = "ALEXA_VOICE_ENABLED";
@@ -134,10 +134,6 @@ void EndpointBuilder::configureDefaultEndpoint() {
         m_deviceInfo->getDeviceSerialNumber(),
         m_deviceInfo->getRegistrationKey(),
         m_deviceInfo->getProductIdKey()));
-
-    if (!m_deviceInfo->getFriendlyName().empty()) {
-        m_attributes.friendlyName = m_deviceInfo->getFriendlyName();
-    }
 }
 
 EndpointBuilder& EndpointBuilder::withDerivedEndpointId(const std::string& suffix) {
@@ -146,12 +142,15 @@ EndpointBuilder& EndpointBuilder::withDerivedEndpointId(const std::string& suffi
         return *this;
     }
 
-    if (suffix.length() > MAX_SUFFIX_LENGTH) {
-        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "suffixMaxLengthExceeded").d("suffix", suffix));
+    std::string fullEndpointId = m_deviceInfo->getDefaultEndpointId() + ENDPOINT_ID_CONCAT + suffix;
+    if (fullEndpointId.length() > MAX_ENDPOINTID_LENGTH) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed")
+                        .d("reason", "EndpointIdMaxLengthExceeded")
+                        .sensitive("fullEndpointId", fullEndpointId));
         return *this;
     }
 
-    m_attributes.endpointId = m_deviceInfo->getDefaultEndpointId() + ENDPOINT_ID_CONCAT + suffix;
+    m_attributes.endpointId = fullEndpointId;
     return *this;
 }
 

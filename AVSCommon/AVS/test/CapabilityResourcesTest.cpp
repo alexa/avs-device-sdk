@@ -39,6 +39,11 @@ static std::string expectedFriendlyNamesJson =
     R"({"@type":"text","value":{"text":"air conditioner","locale":"en-US"}},)"
     R"({"@type":"asset","value":{"assetId":"Alexa.Setting.Temperature"}}])"
     R"(})";
+/// The expected friendly names json with a single value.
+static std::string expectedSimpleFriendlyNameJson = R"({)"
+                                                    R"("friendlyNames":[)"
+                                                    R"({"@type":"text","value":{"text":"fan","locale":"en-US"}}])"
+                                                    R"(})";
 
 /**
  * The test harness for @c CapabilityResources.
@@ -100,14 +105,15 @@ TEST_F(CapabilityResourcesTest, test_addFriendlyNameWithEmptyLocale) {
 }
 
 /**
- * Test if the addFriendlyNameWithText method checks for duplicate entries.
+ * Test if the addFriendlyNameWithText method checks for duplicate entries. It should succeed but skip the duplicate.
  */
 TEST_F(CapabilityResourcesTest, test_addFriendlyNameWithDuplicateText) {
     CapabilityResources capabilityResources;
     ASSERT_TRUE(capabilityResources.addFriendlyNameWithText(FAN_FRIENDLY_NAME, TEST_LOCALE));
-    ASSERT_FALSE(capabilityResources.addFriendlyNameWithText(FAN_FRIENDLY_NAME, TEST_LOCALE));
-    ASSERT_FALSE(capabilityResources.isValid());
-    ASSERT_EQ(capabilityResources.toJson(), "{}");
+    ASSERT_TRUE(capabilityResources.isValid());
+    ASSERT_TRUE(capabilityResources.addFriendlyNameWithText(FAN_FRIENDLY_NAME, TEST_LOCALE));
+    ASSERT_TRUE(capabilityResources.isValid());
+    ASSERT_EQ(capabilityResources.toJson(), expectedSimpleFriendlyNameJson);
 }
 
 /**

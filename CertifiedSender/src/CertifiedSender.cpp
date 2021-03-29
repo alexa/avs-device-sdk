@@ -21,6 +21,8 @@
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <RegistrationManager/CustomerDataManager.h>
 
+#include <queue>
+
 namespace alexaClientSDK {
 namespace certifiedSender {
 
@@ -173,6 +175,23 @@ bool CertifiedSender::init() {
     m_powerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG);
     if (m_powerResource) {
         m_powerResource->acquire();
+    }
+
+    /// Load stored messages from storage.
+    std::queue<MessageStorageInterface::StoredMessage> storedMessages;
+    if (!m_storage->load(&storedMessages)) {
+        ACSDK_ERROR(LX("initFailed").m("Could not load messages from database file."));
+        return false;
+    }
+
+    while (!storedMessages.empty() && static_cast<int>(storedMessages.size()) <= m_queueSizeHardLimit) {
+        auto storedMessage = storedMessages.front();
+        {
+            std::lock_guard<std::mutex> lock{m_mutex};
+            m_messagesToSend.push_back(std::make_shared<CertifiedMessageRequest>(
+                storedMessage.message, storedMessage.id, storedMessage.uriPathExtension));
+        }
+        storedMessages.pop();
     }
 
     m_workerThread = std::thread(&CertifiedSender::mainloop, this);

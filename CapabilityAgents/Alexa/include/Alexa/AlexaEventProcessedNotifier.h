@@ -16,6 +16,9 @@
 #ifndef ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALEXA_INCLUDE_ALEXA_ALEXAEVENTPROCESSEDNOTIFIER_H_
 #define ALEXA_CLIENT_SDK_CAPABILITYAGENTS_ALEXA_INCLUDE_ALEXA_ALEXAEVENTPROCESSEDNOTIFIER_H_
 
+#include <memory>
+
+#include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
 #include <acsdkNotifier/Notifier.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 
@@ -24,10 +27,18 @@ namespace capabilityAgents {
 namespace alexa {
 
 /**
- * Implementation of AlexaEventProcessedNotifierInterface.
+ * Relays notifications when Alexa.EventProcessed directive is received.
  */
-using AlexaEventProcessedNotifier =
-    acsdkNotifier::Notifier<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>;
+class AlexaEventProcessedNotifier
+        : public acsdkNotifier::Notifier<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface> {
+public:
+    /**
+     * Factory method.
+     * @return A new instance of @c AlexaEventProcessedNotifierInterface.
+     */
+    static std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>
+    createAlexaEventProcessedNotifierInterface();
+};
 
 }  // namespace alexa
 }  // namespace capabilityAgents

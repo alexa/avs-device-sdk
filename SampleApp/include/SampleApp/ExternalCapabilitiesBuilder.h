@@ -85,7 +85,8 @@ public:
         std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter) override;
     /// @}
 
 private:
@@ -97,6 +98,13 @@ private:
 
     /// When COMMS is enabled, this will hold the CallManager.
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface> m_callManager;
+
+    /// When COMMS is enabled, this will hold the DialogUXStateAggregator
+    std::shared_ptr<alexaClientSDK::avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
+
+    /// When COMMS is enabled, this will hold the InternetConnectionMonitor.
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>
+        m_internetConnectionMonitor;
 };
 
 }  // namespace sampleApp

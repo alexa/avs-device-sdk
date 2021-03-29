@@ -116,6 +116,16 @@ public:
     virtual void unmuteSelf() = 0;
 
     /**
+     * Enable the video of local device in an active call.
+     */
+    virtual void enableVideo();
+
+    /**
+     * Disable the video of local device in an active call.
+     */
+    virtual void disableVideo();
+
+    /**
      * Check if the call is muted.
      *
      * @return Whether the call is muted.
@@ -129,6 +139,14 @@ inline CallManagerInterface::CallManagerInterface(
     std::shared_ptr<sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender) :
         utils::RequiresShutdown{objectName},
         avsCommon::avs::CapabilityAgent{avsNamespace, exceptionEncounteredSender} {
+}
+
+inline void CallManagerInterface::enableVideo() {
+    return;
+}
+
+inline void CallManagerInterface::disableVideo() {
+    return;
 }
 
 }  // namespace sdkInterfaces

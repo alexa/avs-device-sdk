@@ -3,9 +3,13 @@ add_definitions("-DACSDK_LOG_MODULE=bluetooth")
 add_library(
     acsdkBluetooth SHARED
     BasicDeviceConnectionRule.cpp
+    BasicDeviceConnectionRulesProvider.cpp
     Bluetooth.cpp
+    BluetoothComponent.cpp
     BluetoothEventState.cpp
     BluetoothMediaInputTransformer.cpp
+    BluetoothNotifier.cpp
+    DeviceConnectionRulesAdapter.cpp
     SQLiteBluetoothStorage.cpp
 )
 
@@ -15,6 +19,9 @@ target_include_directories(acsdkBluetooth PUBLIC
 
 target_link_libraries(acsdkBluetooth
     acsdkBluetoothInterfaces
+    acsdkManufactory
+    acsdkNotifier
+    acsdkShutdownManagerInterfaces
     AVSCommon
     RegistrationManager
     SQLiteStorage

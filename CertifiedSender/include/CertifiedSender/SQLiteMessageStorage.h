@@ -77,6 +77,40 @@ public:
 private:
     /// The underlying database class.
     alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_database;
+
+    /**
+     * Utility that checks if database is legacy.
+     *
+     * @return
+     * 1 if the database is legacy
+     * 0 if the database is not legacy
+     * -1 if there is an error while checking the database is legacy
+     */
+    int isDatabaseLegacy();
+
+    /**
+     * Utility that drops the current database.
+     * WARNING: Action cannot be undone.
+     *
+     * @return true if success, otherwise false.
+     */
+    bool dropTable();
+
+    /**
+     * Utility that deletes all message that older than 5 mins
+     * WARNING: Action cannot be undone
+     *
+     * @return true if success, otherwise false.
+     */
+    bool eraseMessageOverAgeLimit();
+
+    /**
+     * Utility that keeps the size of the messages at most 25
+     * WARNING: Action cannot be undone
+     *
+     * @return true if success, otherwise false.
+     */
+    bool eraseMessageOverSizeLimit();
 };
 
 }  // namespace certifiedSender
