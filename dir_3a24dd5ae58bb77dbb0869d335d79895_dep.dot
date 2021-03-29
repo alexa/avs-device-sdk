@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufactory/internal" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e735da532a289b2e044598d047ba71b8 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkManufactory" fontname="Helvetica", fontsize="10", URL="dir_e735da532a289b2e044598d047ba71b8.html"]
+  dir_3a24dd5ae58bb77dbb0869d335d79895 [shape=box, label="internal", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3a24dd5ae58bb77dbb0869d335d79895.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_3a24dd5ae58bb77dbb0869d335d79895->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000553_000017.html"];
+}

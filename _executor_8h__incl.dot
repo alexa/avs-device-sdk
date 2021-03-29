@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Threading/Executor.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Threading/Executor.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/Utils/include\l/AVSCommon/Utils/Threading\l/Executor.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Threading/Executor.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="atomic",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -45,4 +45,17 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AV
   Node15 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node15 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node10 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="AVSCommon/Utils/Power\l/PowerResource.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_8h.html"];
+  Node16 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node17 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node17 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

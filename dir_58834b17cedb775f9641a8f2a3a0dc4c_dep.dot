@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/SystemSoundPlayer/include/SystemSoundPlayer" {
+digraph "/workplace/avs-device-sdk/ApplicationUtilities/SystemSoundPlayer/include/SystemSoundPlayer" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -6,6 +6,9 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ap
     graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_d19411ffb58b9117a34e9aa8a9a1ec2a.html"]
   dir_58834b17cedb775f9641a8f2a3a0dc4c [shape=box, label="SystemSoundPlayer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_58834b17cedb775f9641a8f2a3a0dc4c.html"];
   }
+  dir_a6e4fee11f07c3b70486e88fe92cbbdc [shape=box label="applications" fillcolor="white" style="filled" color="red" URL="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_58834b17cedb775f9641a8f2a3a0dc4c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000047_000017.html"];
+  dir_a6e4fee11f07c3b70486e88fe92cbbdc->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="111", labeldistance=1.5 headhref="dir_000028_000017.html"];
+  dir_58834b17cedb775f9641a8f2a3a0dc4c->dir_a6e4fee11f07c3b70486e88fe92cbbdc [headlabel="1", labeldistance=1.5 headhref="dir_000124_000028.html"];
+  dir_58834b17cedb775f9641a8f2a3a0dc4c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000124_000017.html"];
 }

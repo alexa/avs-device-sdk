@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/ExternalMediaPlayer/src/AuthorizedSender.cpp"
+digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/src/AuthorizedSender.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/ExternalMedia\lPlayer/src/AuthorizedSender.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/src/AuthorizedSender.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="AVSCommon/Utils/JSON\l/JSONUtils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_j_s_o_n_utils_8h.html"];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -81,7 +81,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   Node0 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node30 [label="rapidjson/writer.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node31 [label="ExternalMediaPlayer\l/AuthorizedSender.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorized_sender_8h.html"];
+  Node31 [label="acsdkExternalMediaPlayer\l/AuthorizedSender.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorized_sender_8h.html"];
   Node31 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -92,6 +92,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   Node34 [label="AVSCommon/AVS/MessageRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_message_request_8h.html"];
   Node34 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node35 [label="cstdlib",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node34 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -131,18 +132,27 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   Node44 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node44 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 [label="ThreadPool.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_thread_pool_8h.html"];
+  Node46 [label="ThreadPool.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_thread_pool_8h.html"];
   Node46 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 [label="list",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node46 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node46 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 [label="WorkerThread.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_worker_thread_8h.html"];
+  Node48 [label="WorkerThread.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_worker_thread_8h.html"];
   Node48 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node44 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="AVSCommon/Utils/Power\l/PowerResource.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_8h.html"];
+  Node49 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node50 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -1,0 +1,19 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkLibcurlAlexaCommunications/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_dd3a3f4bad9cc2f3e4d0c1debdf7be7c {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkLibcurlAlexaCommunications" fontname="Helvetica", fontsize="10", URL="dir_dd3a3f4bad9cc2f3e4d0c1debdf7be7c.html"]
+  subgraph clusterdir_603a5cd888c887071426d308cd8f88ec {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_603a5cd888c887071426d308cd8f88ec.html"];
+    dir_603a5cd888c887071426d308cd8f88ec [shape=plaintext label="include"];
+    dir_88f13f20bd89cae2f73485b13f7baa77 [shape=box label="acsdkAlexaCommunications" color="black" fillcolor="white" style="filled" URL="dir_88f13f20bd89cae2f73485b13f7baa77.html"];
+  }
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000549_000017.html"];
+  dir_88f13f20bd89cae2f73485b13f7baa77->dir_9982052f7ce695d12571567315b2fafa [headlabel="3", labeldistance=1.5 headhref="dir_000072_000549.html"];
+  dir_88f13f20bd89cae2f73485b13f7baa77->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000072_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000549.html"];
+}

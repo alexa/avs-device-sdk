@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/core/acsdkSystemClockMonitor/include/acsdkSystemClockMonitor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1b7bd8613db1a05906df498f7c571108 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_1b7bd8613db1a05906df498f7c571108.html"]
+  dir_c3d213add259a51b23c1bc31bbb09de6 [shape=box, label="acsdkSystemClockMonitor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_c3d213add259a51b23c1bc31bbb09de6.html"];
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_330edef272a752e9bbc7c394eda31c01 [shape=box label="acsdkSystemClockMonitorInterfaces" fillcolor="white" style="filled" color="red" URL="dir_330edef272a752e9bbc7c394eda31c01.html"];
+  dir_330edef272a752e9bbc7c394eda31c01->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000447_000549.html"];
+  dir_c3d213add259a51b23c1bc31bbb09de6->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000444_000549.html"];
+  dir_c3d213add259a51b23c1bc31bbb09de6->dir_330edef272a752e9bbc7c394eda31c01 [headlabel="5", labeldistance=1.5 headhref="dir_000444_000447.html"];
+}

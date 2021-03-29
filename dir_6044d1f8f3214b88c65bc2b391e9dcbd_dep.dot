@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_da75a2d73952d6c6519269aed5b47a37 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_da75a2d73952d6c6519269aed5b47a37.html"]
+  dir_6044d1f8f3214b88c65bc2b391e9dcbd [shape=box, label="acsdkAudioPlayerInterfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6044d1f8f3214b88c65bc2b391e9dcbd.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_6044d1f8f3214b88c65bc2b391e9dcbd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000262_000017.html"];
+}

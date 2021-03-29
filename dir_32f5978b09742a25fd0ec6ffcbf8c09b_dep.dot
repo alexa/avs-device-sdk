@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/PowerController" {
+digraph "/workplace/avs-device-sdk/CapabilityAgents/PowerController" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -13,9 +13,9 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000235_000233.html"];
-  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000235_000017.html"];
-  dir_5373cc4a2a660f7130b6ded797fc2fed->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000233_000017.html"];
-  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000236_000233.html"];
-  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000236_000017.html"];
+  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000362_000360.html"];
+  dir_4b5c6d815351d1c84cb6f2c040ee433c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000362_000017.html"];
+  dir_5373cc4a2a660f7130b6ded797fc2fed->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000360_000017.html"];
+  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_5373cc4a2a660f7130b6ded797fc2fed [headlabel="1", labeldistance=1.5 headhref="dir_000363_000360.html"];
+  dir_43cd3a85d8a0e6b28bcbca1785b1ab8a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000363_000017.html"];
 }

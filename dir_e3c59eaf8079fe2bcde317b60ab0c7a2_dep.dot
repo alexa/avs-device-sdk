@@ -1,0 +1,13 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_ee116be5d1129358ffaec72096859541 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_ee116be5d1129358ffaec72096859541.html"]
+  dir_e3c59eaf8079fe2bcde317b60ab0c7a2 [shape=box, label="Power", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_e3c59eaf8079fe2bcde317b60ab0c7a2.html"];
+  }
+  dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
+  dir_b1ce483046d32a8e8b3f8295633729f3 [shape=box label="functional" URL="dir_b1ce483046d32a8e8b3f8295633729f3.html"];
+  dir_e3c59eaf8079fe2bcde317b60ab0c7a2->dir_97afc8111b754cf401b73024f872f45d [headlabel="4", labeldistance=1.5 headhref="dir_000196_000018.html"];
+  dir_e3c59eaf8079fe2bcde317b60ab0c7a2->dir_b1ce483046d32a8e8b3f8295633729f3 [headlabel="1", labeldistance=1.5 headhref="dir_000196_000184.html"];
+}

@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/AVSDirective.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/AVSDirective.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AVSDirective.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AVSDirective.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="iostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -37,6 +37,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AV
   Node14 [label="AVSCommon/AVS/Attachment\l/AttachmentWriter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_attachment_writer_8h.html"];
   Node14 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node14 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node15 [label="AVSCommon/Utils/SDS\l/InProcessSDS.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_in_process_s_d_s_8h.html"];
   Node15 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SampleApp/include/SampleApp/SDKDiagnostics.h"
+digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/SDKDiagnostics.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node106 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/SDKDiagnostics.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node106 -> Node107 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node107 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/SDKDiagnostics.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_diagnostics_8cpp.html"];
+  Node139 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SDKDiagnostics.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node139 -> Node140 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node140 [label="/workplace/avs-device\l-sdk/SampleApp/src/SDKDiagnostics.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_diagnostics_8cpp.html"];
 }

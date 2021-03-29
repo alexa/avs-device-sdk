@@ -1,0 +1,10 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkLibcurlHTTPContentFetcher/include/acsdkHTTPContentFetcher/HTTPContentFetcherComponent.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node69 [label="/workplace/avs-device\l-sdk/applications/acsdkLibcurl\lHTTPContentFetcher/include\l/acsdkHTTPContentFetcher/HTTPContent\lFetcherComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node69 -> Node70 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="/workplace/avs-device\l-sdk/applications/acsdkLibcurl\lHTTPContentFetcher/src/HTTPContent\lFetcherComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p_content_fetcher_component_8cpp.html"];
+  Node69 -> Node71 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+}

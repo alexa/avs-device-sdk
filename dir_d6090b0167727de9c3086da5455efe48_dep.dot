@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_49e7ef86a01cb3657c71ebf485bcc68a {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Bluetooth" fontname="Helvetica", fontsize="10", URL="dir_49e7ef86a01cb3657c71ebf485bcc68a.html"]
+  subgraph clusterdir_d6090b0167727de9c3086da5455efe48 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_d6090b0167727de9c3086da5455efe48.html"];
+    dir_d6090b0167727de9c3086da5455efe48 [shape=plaintext label="acsdkBluetoothInterfaces"];
+    dir_cbaa0c2bd1e08c672f344a40c1ff8458 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_cbaa0c2bd1e08c672f344a40c1ff8458.html"];
+    dir_51151b4f914b95f599bec8a21269e6ad [shape=box label="test" color="red" fillcolor="white" style="filled" URL="dir_51151b4f914b95f599bec8a21269e6ad.html"];
+  }
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000549_000017.html"];
+  dir_51151b4f914b95f599bec8a21269e6ad->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000272_000270.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000549.html"];
+  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000270_000549.html"];
+  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000270_000017.html"];
+}

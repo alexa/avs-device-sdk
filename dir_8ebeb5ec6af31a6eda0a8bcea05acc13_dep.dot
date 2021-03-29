@@ -1,0 +1,23 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkShared/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_094f047ad0cb3b6aaf74594655cf574d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkShared" fontname="Helvetica", fontsize="10", URL="dir_094f047ad0cb3b6aaf74594655cf574d.html"]
+  subgraph clusterdir_8ebeb5ec6af31a6eda0a8bcea05acc13 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_8ebeb5ec6af31a6eda0a8bcea05acc13.html"];
+    dir_8ebeb5ec6af31a6eda0a8bcea05acc13 [shape=plaintext label="include"];
+    dir_794d5da4d95fe6f32c03383123ea3663 [shape=box label="acsdkShared" color="black" fillcolor="white" style="filled" URL="dir_794d5da4d95fe6f32c03383123ea3663.html"];
+  }
+  }
+  dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [shape=box label="acsdkStartupManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0ca348091c23ede3b6afd50c8666ff04 [shape=box label="acsdkManufactory" fillcolor="white" style="filled" color="red" URL="dir_0ca348091c23ede3b6afd50c8666ff04.html"];
+  dir_327d2d2447c2d09118d81200f3476bc6 [shape=box label="acsdkShutdownManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_327d2d2447c2d09118d81200f3476bc6.html"];
+  dir_0ca348091c23ede3b6afd50c8666ff04->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000550_000017.html"];
+  dir_794d5da4d95fe6f32c03383123ea3663->dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [headlabel="2", labeldistance=1.5 headhref="dir_000565_000582.html"];
+  dir_794d5da4d95fe6f32c03383123ea3663->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000565_000017.html"];
+  dir_794d5da4d95fe6f32c03383123ea3663->dir_0ca348091c23ede3b6afd50c8666ff04 [headlabel="1", labeldistance=1.5 headhref="dir_000565_000550.html"];
+  dir_794d5da4d95fe6f32c03383123ea3663->dir_327d2d2447c2d09118d81200f3476bc6 [headlabel="2", labeldistance=1.5 headhref="dir_000565_000572.html"];
+  dir_327d2d2447c2d09118d81200f3476bc6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000572_000017.html"];
+}

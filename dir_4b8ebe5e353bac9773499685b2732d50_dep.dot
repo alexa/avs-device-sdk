@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/src/Configuration" {
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/src/Configuration" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -7,5 +7,5 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AV
   dir_4b8ebe5e353bac9773499685b2732d50 [shape=box, label="Configuration", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_4b8ebe5e353bac9773499685b2732d50.html"];
   }
   dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
-  dir_4b8ebe5e353bac9773499685b2732d50->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="3", labeldistance=1.5 headhref="dir_000125_000096.html"];
+  dir_4b8ebe5e353bac9773499685b2732d50->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="3", labeldistance=1.5 headhref="dir_000209_000176.html"];
 }

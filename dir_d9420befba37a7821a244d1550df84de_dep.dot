@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/ApplicationUtilities/SDKComponent/include/SDKComponent" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_c6c91765eb832e33b7519ffca04eccaa {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_c6c91765eb832e33b7519ffca04eccaa.html"]
+  dir_d9420befba37a7821a244d1550df84de [shape=box, label="SDKComponent", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d9420befba37a7821a244d1550df84de.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_d9420befba37a7821a244d1550df84de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000119_000017.html"];
+}

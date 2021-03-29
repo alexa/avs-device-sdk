@@ -7,5 +7,7 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleContr
   Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="alexaClientSDK::capability\lAgents::toggleController\l::test::MockToggleControllerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html"];
   Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::sampleApp\l::ToggleControllerHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_toggle_controller_handler.html"];
+  Node2 [label="alexaClientSDK::sampleApp\l::DefaultEndpointToggleController\lHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::sampleApp\l::PeripheralEndpointToggleController\lHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html"];
 }

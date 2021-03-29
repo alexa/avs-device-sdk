@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManager/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f2d4964515b42f85363ee844ecf71fd {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkShutdownManager" fontname="Helvetica", fontsize="10", URL="dir_1f2d4964515b42f85363ee844ecf71fd.html"]
+  dir_89bb97067f72466e6c03f8e4563103ce [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_89bb97067f72466e6c03f8e4563103ce.html"];
+  }
+  dir_1e2775583cf3746421efce1d388d8147 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_1e2775583cf3746421efce1d388d8147.html"];
+  dir_89bb97067f72466e6c03f8e4563103ce->dir_1e2775583cf3746421efce1d388d8147 [headlabel="2", labeldistance=1.5 headhref="dir_000571_000568.html"];
+}

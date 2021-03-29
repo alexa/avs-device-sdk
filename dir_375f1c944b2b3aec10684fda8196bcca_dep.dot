@@ -1,0 +1,16 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkAndroidApplicationAudioPipelineFactory/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1cf53dd7f9966fe965530490bbad7057 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkAndroidApplicationAudioPipelineFactory" fontname="Helvetica", fontsize="10", URL="dir_1cf53dd7f9966fe965530490bbad7057.html"]
+  dir_375f1c944b2b3aec10684fda8196bcca [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_375f1c944b2b3aec10684fda8196bcca.html"];
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_17f2aaa44c0ff33b634df8d6348022d5 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_17f2aaa44c0ff33b634df8d6348022d5.html"];
+  dir_9d34932954f3d83257e5e12e3f421a72 [shape=box label="MediaPlayer" fillcolor="white" style="filled" color="red" URL="dir_9d34932954f3d83257e5e12e3f421a72.html"];
+  dir_17f2aaa44c0ff33b634df8d6348022d5->dir_9982052f7ce695d12571567315b2fafa [headlabel="4", labeldistance=1.5 headhref="dir_000030_000549.html"];
+  dir_375f1c944b2b3aec10684fda8196bcca->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000038_000549.html"];
+  dir_375f1c944b2b3aec10684fda8196bcca->dir_17f2aaa44c0ff33b634df8d6348022d5 [headlabel="2", labeldistance=1.5 headhref="dir_000038_000030.html"];
+  dir_375f1c944b2b3aec10684fda8196bcca->dir_9d34932954f3d83257e5e12e3f421a72 [headlabel="2", labeldistance=1.5 headhref="dir_000038_000494.html"];
+}

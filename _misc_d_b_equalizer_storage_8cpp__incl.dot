@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/EqualizerImplementations/src/MiscDBEqualizerStorage.cpp"
+digraph "/workplace/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerImplementations/src/MiscDBEqualizerStorage.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/EqualizerImplementations\l/src/MiscDBEqualizerStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/MiscDBEqualizerStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -67,11 +67,11 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Eq
   Node24 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node25 [label="EqualizerImplementations\l/MiscDBEqualizerStorage.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_8h.html"];
+  Node25 [label="acsdkEqualizerImplementations\l/MiscDBEqualizerStorage.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_8h.html"];
   Node25 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="AVSCommon/SDKInterfaces\l/Audio/EqualizerStorageInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_storage_interface_8h.html"];
+  Node26 [label="acsdkEqualizerInterfaces\l/EqualizerStorageInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_storage_interface_8h.html"];
   Node26 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node26 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="AVSCommon/Utils/Error\l/SuccessResult.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_success_result_8h.html"];
@@ -98,7 +98,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Eq
   Node35 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node25 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node36 [label="EqualizerImplementations\l/EqualizerUtils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_utils_8h.html"];
+  Node36 [label="acsdkEqualizerImplementations\l/EqualizerUtils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_utils_8h.html"];
   Node36 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node36 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

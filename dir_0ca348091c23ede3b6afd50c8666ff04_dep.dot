@@ -1,0 +1,20 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkManufactory" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9982052f7ce695d12571567315b2fafa {
+    graph [ bgcolor="#ddddee", pencolor="black", label="shared" fontname="Helvetica", fontsize="10", URL="dir_9982052f7ce695d12571567315b2fafa.html"]
+  subgraph clusterdir_0ca348091c23ede3b6afd50c8666ff04 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_0ca348091c23ede3b6afd50c8666ff04.html"];
+    dir_0ca348091c23ede3b6afd50c8666ff04 [shape=plaintext label="acsdkManufactory"];
+    dir_a5accd2ae782eec48f12ec2c237e1ecf [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_a5accd2ae782eec48f12ec2c237e1ecf.html"];
+    dir_53ebe3b84db62eab1ae9ae4d19318589 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_53ebe3b84db62eab1ae9ae4d19318589.html"];
+    dir_bf4caf5cfca980a29e7df13c2277faae [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_bf4caf5cfca980a29e7df13c2277faae.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_a5accd2ae782eec48f12ec2c237e1ecf->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000551_000017.html"];
+  dir_53ebe3b84db62eab1ae9ae4d19318589->dir_a5accd2ae782eec48f12ec2c237e1ecf [headlabel="1", labeldistance=1.5 headhref="dir_000554_000551.html"];
+  dir_53ebe3b84db62eab1ae9ae4d19318589->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000554_000017.html"];
+  dir_bf4caf5cfca980a29e7df13c2277faae->dir_a5accd2ae782eec48f12ec2c237e1ecf [headlabel="5", labeldistance=1.5 headhref="dir_000555_000551.html"];
+}

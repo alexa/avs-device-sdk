@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include" {
+digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -11,16 +11,17 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Me
   }
   }
   dir_748b5abbb33df61eda67007924a1a0cb [shape=box label="ApplicationUtilities" fillcolor="white" style="filled" color="red" URL="dir_748b5abbb33df61eda67007924a1a0cb.html"];
-  dir_63c328d9f040c398ed3a99417a38689e [shape=box label="EqualizerImplementations" fillcolor="white" style="filled" color="red" URL="dir_63c328d9f040c398ed3a99417a38689e.html"];
   dir_655fbec917b1f23289d3ed8ec9803bf1 [shape=box label="PlaylistParser" fillcolor="white" style="filled" color="red" URL="dir_655fbec917b1f23289d3ed8ec9803bf1.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_748b5abbb33df61eda67007924a1a0cb->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000028_000300.html"];
-  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="94", labeldistance=1.5 headhref="dir_000028_000017.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000338_000028.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_63c328d9f040c398ed3a99417a38689e [headlabel="1", labeldistance=1.5 headhref="dir_000338_000300.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000338_000355.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="16", labeldistance=1.5 headhref="dir_000338_000017.html"];
-  dir_63c328d9f040c398ed3a99417a38689e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="34", labeldistance=1.5 headhref="dir_000300_000017.html"];
-  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="36", labeldistance=1.5 headhref="dir_000355_000017.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="1", labeldistance=1.5 headhref="dir_000017_000028.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1 [shape=box label="capabilities" fillcolor="white" style="filled" color="red" URL="dir_55f1e16e469d547c636a522dac21b8a1.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="140", labeldistance=1.5 headhref="dir_000097_000017.html"];
+  dir_748b5abbb33df61eda67007924a1a0cb->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="40", labeldistance=1.5 headhref="dir_000097_000133.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000497_000097.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000497_000518.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000497_000017.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="2", labeldistance=1.5 headhref="dir_000497_000133.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="43", labeldistance=1.5 headhref="dir_000518_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="1", labeldistance=1.5 headhref="dir_000017_000097.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="4", labeldistance=1.5 headhref="dir_000017_000133.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="496", labeldistance=1.5 headhref="dir_000133_000017.html"];
 }

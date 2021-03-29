@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::capability\lAgents::audioPlayer::AudioItem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1audio_player_1_1_audio_item.html",tooltip="Struct which contains all the fields which define an audio item for a Play directive. "];
+  Node0 [label="alexaClientSDK::avsCommon\l::utils::DeviceInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_device_info.html"];
 }

@@ -3,7 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::rangeController\l::RangeControllerAttributeBuilderInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_attribute_builder_interface.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::capability\lAgents::rangeController\l::RangeControllerAttributeBuilder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_attribute_builder.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::RemoveTypes\< std\l::tuple\< Types... \>, std::tuple\l\< Unwanted... \> \>::RemoveTypesOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_remove_types_3_01std_1_1tuple_3_0158e85a1d3c18ff284df08bf64aab668a.html"];
 }

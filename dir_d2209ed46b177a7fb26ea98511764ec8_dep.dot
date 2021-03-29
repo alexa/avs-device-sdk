@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/Metrics/UplCalculator/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9f62398617d82962c1cec148da29c672 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="UplCalculator" fontname="Helvetica", fontsize="10", URL="dir_9f62398617d82962c1cec148da29c672.html"]
+  subgraph clusterdir_d2209ed46b177a7fb26ea98511764ec8 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_d2209ed46b177a7fb26ea98511764ec8.html"];
+    dir_d2209ed46b177a7fb26ea98511764ec8 [shape=plaintext label="include"];
+    dir_a13b0e3a07c750602793d1149d6d15ec [shape=box label="Metrics" color="black" fillcolor="white" style="filled" URL="dir_a13b0e3a07c750602793d1149d6d15ec.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_a13b0e3a07c750602793d1149d6d15ec->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000516_000017.html"];
+}

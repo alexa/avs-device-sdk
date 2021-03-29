@@ -1,0 +1,18 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_5f7911d5aff7f3db61b81ea8d608701d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkApplicationAudioPipelineFactoryInterfaces" fontname="Helvetica", fontsize="10", URL="dir_5f7911d5aff7f3db61b81ea8d608701d.html"]
+  subgraph clusterdir_fc676eaecce12a36e749725406072b62 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_fc676eaecce12a36e749725406072b62.html"];
+    dir_fc676eaecce12a36e749725406072b62 [shape=plaintext label="test"];
+    dir_630406a0b957503544c824e102a44734 [shape=box label="acsdkApplicationAudioPipelineFactoryInterfaces" color="black" fillcolor="white" style="filled" URL="dir_630406a0b957503544c824e102a44734.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9dc20e5d3b40ef1b522acfc9b2156f22 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_9dc20e5d3b40ef1b522acfc9b2156f22.html"];
+  dir_630406a0b957503544c824e102a44734->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000045_000017.html"];
+  dir_630406a0b957503544c824e102a44734->dir_9dc20e5d3b40ef1b522acfc9b2156f22 [headlabel="1", labeldistance=1.5 headhref="dir_000045_000042.html"];
+  dir_9dc20e5d3b40ef1b522acfc9b2156f22->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000042_000017.html"];
+}

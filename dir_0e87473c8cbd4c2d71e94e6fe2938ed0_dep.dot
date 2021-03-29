@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3491af9c7a0337dc87347d0c47f83a8a {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_3491af9c7a0337dc87347d0c47f83a8a.html"]
+  dir_0e87473c8cbd4c2d71e94e6fe2938ed0 [shape=box, label="acsdkExternalMediaPlayerInterfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0e87473c8cbd4c2d71e94e6fe2938ed0.html"];
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_0e87473c8cbd4c2d71e94e6fe2938ed0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000306_000017.html"];
+}

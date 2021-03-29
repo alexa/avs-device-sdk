@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkSampleApplicationCBLAuthRequester/src/SampleApplicationCBLAuthRequester.cpp"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="/workplace/avs-device\l-sdk/applications/acsdkSample\lApplicationCBLAuthRequester\l/src/SampleApplicationCBLAuthRequester.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="iostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="acsdkSampleApplicationCBLAuth\lRequester/SampleApplicationCBLAuth\lRequester.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_c_b_l_auth_requester_8h.html"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_u_i_manager_interface_8h.html"];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="CBLAuthDelegate/CBLAuthRequester\lInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_b_l_auth_requester_interface_8h.html"];
+  Node7 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

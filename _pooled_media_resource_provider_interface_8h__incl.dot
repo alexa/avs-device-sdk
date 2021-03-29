@@ -1,0 +1,28 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/PooledMediaResource\lProviderInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_channel_volume_interface_8h.html"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_constants_8h.html"];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="cstdint",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="AVSCommon/SDKInterfaces\l/SpeakerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_interface_8h.html"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_player_factory_interface_8h.html"];
+  Node9 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_player_factory_observer_interface_8h.html"];
+}

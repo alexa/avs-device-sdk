@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockFocusManagerObserver.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockFocusManagerObserver.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node9 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockFocusManagerObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node9 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockFocusManagerObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AFML/test/FocusManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_focus_manager_test_8cpp.html"];
+  Node10 [label="/workplace/avs-device\l-sdk/AFML/test/FocusManager\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_focus_manager_test_8cpp.html"];
 }

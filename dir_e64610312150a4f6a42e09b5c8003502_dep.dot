@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/acsdkPostConnectOperationProviderRegistrarInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_4270bfced15e0e73154b13468c7c9ad9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="core" fontname="Helvetica", fontsize="10", URL="dir_4270bfced15e0e73154b13468c7c9ad9.html"]
+  subgraph clusterdir_e64610312150a4f6a42e09b5c8003502 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_e64610312150a4f6a42e09b5c8003502.html"];
+    dir_e64610312150a4f6a42e09b5c8003502 [shape=plaintext label="acsdkPostConnectOperationProviderRegistrarInterfaces"];
+    dir_7f60d73a456b0e62c5fd083e5c80673e [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_7f60d73a456b0e62c5fd083e5c80673e.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_7f60d73a456b0e62c5fd083e5c80673e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000440_000017.html"];
+}

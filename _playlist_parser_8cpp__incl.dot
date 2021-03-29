@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/PlaylistParser/src/PlaylistParser.cpp"
+digraph "/workplace/avs-device-sdk/PlaylistParser/src/PlaylistParser.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/PlaylistParser/src\l/PlaylistParser.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/PlaylistParser/src\l/PlaylistParser.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -149,7 +149,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Pl
   Node58 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="utility",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node58 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 [label="AVSCommon/Utils/Threading\l/TaskThread.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_task_thread_8h.html"];
+  Node60 [label="AVSCommon/Utils/Threading\l/TaskThread.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_task_thread_8h.html"];
   Node60 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node60 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node60 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -160,18 +160,16 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Pl
   Node62 [label="ThreadPool.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_thread_pool_8h.html"];
   Node62 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node62 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node62 -> Node64 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 [label="WorkerThread.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_worker_thread_8h.html"];
-  Node64 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 -> Node61 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 -> Node64 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node65 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node65 [label="PlaylistParser/PlaylistUtils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playlist_utils_8h.html"];
-  Node65 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 -> Node65 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="AVSCommon/Utils/Power\l/PowerResource.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_power_resource_8h.html"];
+  Node65 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node65 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node65 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node65 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node67 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 [label="PlaylistParser/PlaylistUtils.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playlist_utils_8h.html"];
+  Node67 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

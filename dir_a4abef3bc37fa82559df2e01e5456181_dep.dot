@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkStartupManagerInterfaces/include/acsdkStartupManagerInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_5ebe73012e0b50c4004a537d2162c809 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_5ebe73012e0b50c4004a537d2162c809.html"]
+  dir_a4abef3bc37fa82559df2e01e5456181 [shape=box, label="acsdkStartupManagerInterfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a4abef3bc37fa82559df2e01e5456181.html"];
+  }
+  dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
+  dir_a4abef3bc37fa82559df2e01e5456181->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000584_000560.html"];
+}

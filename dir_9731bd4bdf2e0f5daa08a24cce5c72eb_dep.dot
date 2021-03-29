@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SpeechEncoder/src" {
+digraph "/workplace/avs-device-sdk/SpeechEncoder/src" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Sp
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
-  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000392_000017.html"];
-  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000392_000386.html"];
-  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000386_000017.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000592_000017.html"];
+  dir_9731bd4bdf2e0f5daa08a24cce5c72eb->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000592_000586.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000586_000017.html"];
 }

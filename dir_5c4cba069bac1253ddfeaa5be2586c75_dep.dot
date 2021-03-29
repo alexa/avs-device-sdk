@@ -1,0 +1,17 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkStartupManager/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0217ca97e8ff44b6aeb3867083553018 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkStartupManager" fontname="Helvetica", fontsize="10", URL="dir_0217ca97e8ff44b6aeb3867083553018.html"]
+  subgraph clusterdir_5c4cba069bac1253ddfeaa5be2586c75 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_5c4cba069bac1253ddfeaa5be2586c75.html"];
+    dir_5c4cba069bac1253ddfeaa5be2586c75 [shape=plaintext label="include"];
+    dir_e5bb4076b101112d45121a4e797ae2bb [shape=box label="acsdkStartupManager" color="black" fillcolor="white" style="filled" URL="dir_e5bb4076b101112d45121a4e797ae2bb.html"];
+  }
+  }
+  dir_fe5a1e31b2404c649ea4321e0ec6a380 [shape=box label="acsdkNotifier" fillcolor="white" style="filled" color="red" URL="dir_fe5a1e31b2404c649ea4321e0ec6a380.html"];
+  dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [shape=box label="acsdkStartupManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html"];
+  dir_e5bb4076b101112d45121a4e797ae2bb->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000579_000556.html"];
+  dir_e5bb4076b101112d45121a4e797ae2bb->dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [headlabel="4", labeldistance=1.5 headhref="dir_000579_000582.html"];
+}

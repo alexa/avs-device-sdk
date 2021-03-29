@@ -1,14 +1,14 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/Resources/Audio/include/Audio/Data/med_alerts_notification_01.mp3.h"
+digraph "/workplace/avs-device-sdk/ApplicationUtilities/Resources/Audio/include/Audio/Data/med_alerts_notification_01.mp3.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/include/Audio\l/Data/med_alerts_notification_01.mp3.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/include\l/Audio/Data/med_alerts_notification\l_01.mp3.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/src/Notifications\lAudioFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_audio_factory_8cpp.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/src/Notifications\lAudioFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_audio_factory_8cpp.html"];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html"];
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegAttachmentInputController\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_attachment_input_controller_test_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegAttachmentInputController\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_attachment_input_controller_test_8cpp.html"];
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegStreamInputController\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_test_8cpp.html"];
+  Node5 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegStreamInputController\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_f_fmpeg_stream_input_controller_test_8cpp.html"];
 }

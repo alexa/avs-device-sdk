@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/InterruptModel/config/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9c916b96ccc8100ddc8807b42abe16a5 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="config" fontname="Helvetica", fontsize="10", URL="dir_9c916b96ccc8100ddc8807b42abe16a5.html"]
+  dir_bb9381d228436e4e3074dfd0529ad393 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_bb9381d228436e4e3074dfd0529ad393.html"];
+  }
+  dir_424ea585b39fc1bfc6b6ce70aae6947d [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_424ea585b39fc1bfc6b6ce70aae6947d.html"];
+  dir_bb9381d228436e4e3074dfd0529ad393->dir_424ea585b39fc1bfc6b6ce70aae6947d [headlabel="1", labeldistance=1.5 headhref="dir_000470_000467.html"];
+}

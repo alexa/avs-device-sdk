@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Captions/Interface" {
+digraph "/workplace/avs-device-sdk/Captions/Interface" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -13,8 +13,8 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_a01820aaba30b018211dccc95cc93b0a->dir_8e66a004f8be64c7ee13a362fe0e9b56 [headlabel="4", labeldistance=1.5 headhref="dir_000277_000275.html"];
-  dir_a01820aaba30b018211dccc95cc93b0a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000277_000017.html"];
-  dir_8e66a004f8be64c7ee13a362fe0e9b56->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000275_000017.html"];
-  dir_5be4970cea35543a2d51c725b288c515->dir_8e66a004f8be64c7ee13a362fe0e9b56 [headlabel="7", labeldistance=1.5 headhref="dir_000278_000275.html"];
+  dir_a01820aaba30b018211dccc95cc93b0a->dir_8e66a004f8be64c7ee13a362fe0e9b56 [headlabel="4", labeldistance=1.5 headhref="dir_000413_000411.html"];
+  dir_a01820aaba30b018211dccc95cc93b0a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000413_000017.html"];
+  dir_8e66a004f8be64c7ee13a362fe0e9b56->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000411_000017.html"];
+  dir_5be4970cea35543a2d51c725b288c515->dir_8e66a004f8be64c7ee13a362fe0e9b56 [headlabel="7", labeldistance=1.5 headhref="dir_000414_000411.html"];
 }

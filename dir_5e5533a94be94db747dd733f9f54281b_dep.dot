@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/capabilities/MultiRoomMusic/acsdkMultiRoomMusic/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f937f6a1a8ab80b392c3458823bb390 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkMultiRoomMusic" fontname="Helvetica", fontsize="10", URL="dir_1f937f6a1a8ab80b392c3458823bb390.html"]
+  subgraph clusterdir_5e5533a94be94db747dd733f9f54281b {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_5e5533a94be94db747dd733f9f54281b.html"];
+    dir_5e5533a94be94db747dd733f9f54281b [shape=plaintext label="include"];
+    dir_243381b1d11579d3bdad05137bbb605c [shape=box label="acsdkMultiRoomMusic" color="black" fillcolor="white" style="filled" URL="dir_243381b1d11579d3bdad05137bbb605c.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_243381b1d11579d3bdad05137bbb605c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000311_000017.html"];
+}

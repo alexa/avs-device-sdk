@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include" {
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -12,10 +12,10 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AV
   }
   dir_80711c2a226d5fced33fce22558d3784 [shape=box label="AVS" fillcolor="white" style="filled" color="red" URL="dir_80711c2a226d5fced33fce22558d3784.html"];
   dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
-  dir_ced5fe410515ed61d81f9a22ef3eef03->dir_80711c2a226d5fced33fce22558d3784 [headlabel="5", labeldistance=1.5 headhref="dir_000097_000050.html"];
-  dir_ced5fe410515ed61d81f9a22ef3eef03->dir_97afc8111b754cf401b73024f872f45d [headlabel="12", labeldistance=1.5 headhref="dir_000097_000018.html"];
-  dir_80711c2a226d5fced33fce22558d3784->dir_ced5fe410515ed61d81f9a22ef3eef03 [headlabel="75", labeldistance=1.5 headhref="dir_000050_000097.html"];
-  dir_80711c2a226d5fced33fce22558d3784->dir_97afc8111b754cf401b73024f872f45d [headlabel="26", labeldistance=1.5 headhref="dir_000050_000018.html"];
-  dir_97afc8111b754cf401b73024f872f45d->dir_ced5fe410515ed61d81f9a22ef3eef03 [headlabel="39", labeldistance=1.5 headhref="dir_000018_000097.html"];
-  dir_97afc8111b754cf401b73024f872f45d->dir_80711c2a226d5fced33fce22558d3784 [headlabel="55", labeldistance=1.5 headhref="dir_000018_000050.html"];
+  dir_ced5fe410515ed61d81f9a22ef3eef03->dir_80711c2a226d5fced33fce22558d3784 [headlabel="6", labeldistance=1.5 headhref="dir_000177_000127.html"];
+  dir_ced5fe410515ed61d81f9a22ef3eef03->dir_97afc8111b754cf401b73024f872f45d [headlabel="20", labeldistance=1.5 headhref="dir_000177_000018.html"];
+  dir_80711c2a226d5fced33fce22558d3784->dir_ced5fe410515ed61d81f9a22ef3eef03 [headlabel="94", labeldistance=1.5 headhref="dir_000127_000177.html"];
+  dir_80711c2a226d5fced33fce22558d3784->dir_97afc8111b754cf401b73024f872f45d [headlabel="30", labeldistance=1.5 headhref="dir_000127_000018.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_ced5fe410515ed61d81f9a22ef3eef03 [headlabel="39", labeldistance=1.5 headhref="dir_000018_000177.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_80711c2a226d5fced33fce22558d3784 [headlabel="58", labeldistance=1.5 headhref="dir_000018_000127.html"];
 }

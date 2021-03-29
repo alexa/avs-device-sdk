@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkSampleApplicationCBLAuthRequester/include/acsdkSampleApplicationCBLAuthRequester" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_81dea7f558d5f2775a4ee1b40d718b20 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_81dea7f558d5f2775a4ee1b40d718b20.html"]
+  dir_be90750fb70307604638997b03047c68 [shape=box, label="acsdkSampleApplicationCBLAuthRequester", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_be90750fb70307604638997b03047c68.html"];
+  }
+  dir_0c573f6f99f98abb37dc81ba5bc6038c [shape=box label="acsdkSampleApplicationInterfaces" fillcolor="white" style="filled" color="red" URL="dir_0c573f6f99f98abb37dc81ba5bc6038c.html"];
+  dir_69fa8d0f4fee2820ffc8601fbf428b42 [shape=box label="SampleApp" fillcolor="white" style="filled" color="red" URL="dir_69fa8d0f4fee2820ffc8601fbf428b42.html"];
+  dir_69fa8d0f4fee2820ffc8601fbf428b42->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000101_000094.html"];
+  dir_be90750fb70307604638997b03047c68->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000092_000094.html"];
+  dir_be90750fb70307604638997b03047c68->dir_69fa8d0f4fee2820ffc8601fbf428b42 [headlabel="1", labeldistance=1.5 headhref="dir_000092_000101.html"];
+}

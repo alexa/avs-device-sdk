@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/Power" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_834bf911d49030c30073fd5ed0d05185 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_834bf911d49030c30073fd5ed0d05185.html"]
+  dir_da2cd18bf0e878d0a52da8f70027af2a [shape=box, label="Power", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_da2cd18bf0e878d0a52da8f70027af2a.html"];
+  }
+  dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
+  dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="39", labeldistance=1.5 headhref="dir_000018_000176.html"];
+  dir_da2cd18bf0e878d0a52da8f70027af2a->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000227_000018.html"];
+  dir_da2cd18bf0e878d0a52da8f70027af2a->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="3", labeldistance=1.5 headhref="dir_000227_000176.html"];
+  dir_957fc395b73dfe8b64ee3f74464f588a->dir_97afc8111b754cf401b73024f872f45d [headlabel="20", labeldistance=1.5 headhref="dir_000176_000018.html"];
+}

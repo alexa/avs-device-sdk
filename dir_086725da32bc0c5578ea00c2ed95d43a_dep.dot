@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/shared/acsdkNotifier/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_fe5a1e31b2404c649ea4321e0ec6a380 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkNotifier" fontname="Helvetica", fontsize="10", URL="dir_fe5a1e31b2404c649ea4321e0ec6a380.html"]
+  subgraph clusterdir_086725da32bc0c5578ea00c2ed95d43a {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_086725da32bc0c5578ea00c2ed95d43a.html"];
+    dir_086725da32bc0c5578ea00c2ed95d43a [shape=plaintext label="include"];
+    dir_b170ce45316ac9f00b9eaf5564266dfb [shape=box label="acsdkNotifier" color="black" fillcolor="white" style="filled" URL="dir_b170ce45316ac9f00b9eaf5564266dfb.html"];
+  }
+  }
+  dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
+  dir_b170ce45316ac9f00b9eaf5564266dfb->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000558_000560.html"];
+}

@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ApplicationUtilities/Resources/Audio/include/Audio/Data/med_comms_outbound_ringtone.mp3.h"
+digraph "/workplace/avs-device-sdk/ApplicationUtilities/Resources/Audio/include/Audio/Data/med_comms_outbound_ringtone.mp3.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/include/Audio\l/Data/med_comms_outbound_ringtone.mp3.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/include\l/Audio/Data/med_comms_outbound\l_ringtone.mp3.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/src/Communications\lAudioFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_communications_audio_factory_8cpp.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/Resources/Audio/src/Communications\lAudioFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_communications_audio_factory_8cpp.html"];
 }

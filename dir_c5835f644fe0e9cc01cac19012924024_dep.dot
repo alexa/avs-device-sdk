@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/KWD/KittAi/test" {
+digraph "/workplace/avs-device-sdk/KWD/KittAi/test" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -8,7 +8,7 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/KW
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_729485d88e0eb81a3a496bdd4eb780b4 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_729485d88e0eb81a3a496bdd4eb780b4.html"];
-  dir_c5835f644fe0e9cc01cac19012924024->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000323_000017.html"];
-  dir_c5835f644fe0e9cc01cac19012924024->dir_729485d88e0eb81a3a496bdd4eb780b4 [headlabel="1", labeldistance=1.5 headhref="dir_000323_000320.html"];
-  dir_729485d88e0eb81a3a496bdd4eb780b4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000320_000017.html"];
+  dir_c5835f644fe0e9cc01cac19012924024->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000482_000017.html"];
+  dir_c5835f644fe0e9cc01cac19012924024->dir_729485d88e0eb81a3a496bdd4eb780b4 [headlabel="1", labeldistance=1.5 headhref="dir_000482_000479.html"];
+  dir_729485d88e0eb81a3a496bdd4eb780b4->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000479_000017.html"];
 }

@@ -1,0 +1,13 @@
+digraph "/workplace/avs-device-sdk/core/acsdkSystemClockMonitor/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a75b81623657c8016f8a3814f6ad93db {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkSystemClockMonitor" fontname="Helvetica", fontsize="10", URL="dir_a75b81623657c8016f8a3814f6ad93db.html"]
+  dir_60222db980a66d8fa031bcaf642c5863 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_60222db980a66d8fa031bcaf642c5863.html"];
+  }
+  dir_1b7bd8613db1a05906df498f7c571108 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_1b7bd8613db1a05906df498f7c571108.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_60222db980a66d8fa031bcaf642c5863->dir_1b7bd8613db1a05906df498f7c571108 [headlabel="2", labeldistance=1.5 headhref="dir_000445_000443.html"];
+  dir_60222db980a66d8fa031bcaf642c5863->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000445_000017.html"];
+}

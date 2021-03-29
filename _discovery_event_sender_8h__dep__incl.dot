@@ -1,0 +1,32 @@
+digraph "/workplace/avs-device-sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/DiscoveryEventSender.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node54 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/DiscoveryEventSender.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node54 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_capabilities_delegate_8h.html"];
+  Node55 -> Node56 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node55 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
+  Node55 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_capabilities_delegate_8cpp.html"];
+  Node55 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node59 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_capabilities_delegate_test_8cpp.html"];
+  Node55 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="/workplace/avs-device\l-sdk/core/acsdkCore/src\l/CoreComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_core_component_8cpp.html"];
+  Node55 -> Node61 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node61 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html"];
+  Node61 -> Node62 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node62 [label="/workplace/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html"];
+  Node61 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node63 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node55 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node64 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/src/DiscoveryEventSender.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_discovery_event_sender_8cpp.html"];
+  Node54 -> Node65 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/src/PostConnectCapabilitiesPublisher.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_capabilities_publisher_8cpp.html"];
+  Node54 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node66 [label="/workplace/avs-device\l-sdk/CapabilitiesDelegate\l/test/DiscoveryEventSenderTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_discovery_event_sender_test_8cpp.html"];
+}

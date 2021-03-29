@@ -4,5 +4,5 @@ digraph "alexaClientSDK::bluetoothImplementations::blueZ::test::MPRISPlayerTest"
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node4 [label="alexaClientSDK::bluetooth\lImplementations::blueZ\l::test::MPRISPlayerTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="testing::Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node5 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

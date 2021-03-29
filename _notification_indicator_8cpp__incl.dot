@@ -1,10 +1,10 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/Notifications/src/NotificationIndicator.cpp"
+digraph "/workplace/avs-device-sdk/capabilities/Notifications/acsdkNotifications/src/NotificationIndicator.cpp"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/Notifications\l/src/NotificationIndicator.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notification\lIndicator.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="Notifications/Notification\lIndicator.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notification_indicator_8h.html"];
+  Node1 [label="acsdkNotifications\l/NotificationIndicator.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notification_indicator_8h.html"];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

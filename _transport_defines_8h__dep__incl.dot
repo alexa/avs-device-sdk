@@ -1,10 +1,10 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/ACL/include/ACL/Transport/TransportDefines.h"
+digraph "/workplace/avs-device-sdk/ACL/include/ACL/Transport/TransportDefines.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node4 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ACL/include/ACL/Transport\l/TransportDefines.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 [label="/workplace/avs-device\l-sdk/ACL/include/ACL\l/Transport/TransportDefines.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ACL/src/Transport/HTTP2Transport.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_8cpp.html"];
+  Node5 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/HTTP2Transport.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_8cpp.html"];
   Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/ACL/src/Transport/Transport\lDefines.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_transport_defines_8cpp.html"];
+  Node6 [label="/workplace/avs-device\l-sdk/ACL/src/Transport\l/TransportDefines.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_transport_defines_8cpp.html"];
 }

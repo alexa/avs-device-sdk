@@ -1,0 +1,16 @@
+digraph "/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_21f9dc4a50fb8157fc2dede908335315 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AudioPlayer" fontname="Helvetica", fontsize="10", URL="dir_21f9dc4a50fb8157fc2dede908335315.html"]
+  subgraph clusterdir_3fddb67373d44b7570953fd85440f300 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_3fddb67373d44b7570953fd85440f300.html"];
+    dir_3fddb67373d44b7570953fd85440f300 [shape=plaintext label="acsdkAudioPlayerInterfaces"];
+    dir_da75a2d73952d6c6519269aed5b47a37 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_da75a2d73952d6c6519269aed5b47a37.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_da75a2d73952d6c6519269aed5b47a37 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000261.html"];
+  dir_da75a2d73952d6c6519269aed5b47a37->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000261_000017.html"];
+}

@@ -1,0 +1,34 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkDefaultDeviceSettingsManager/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_71f5bfcd0a5bab77daf39416ebe479fc {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkDefaultDeviceSettingsManager" fontname="Helvetica", fontsize="10", URL="dir_71f5bfcd0a5bab77daf39416ebe479fc.html"]
+  subgraph clusterdir_489fed465bb186c249027aff5741ee9a {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_489fed465bb186c249027aff5741ee9a.html"];
+    dir_489fed465bb186c249027aff5741ee9a [shape=plaintext label="include"];
+    dir_dc2b1baf1f6270780cc36d35c800fdff [shape=box label="acsdkDeviceSettingsManager" color="black" fillcolor="white" style="filled" URL="dir_dc2b1baf1f6270780cc36d35c800fdff.html"];
+  }
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_8ae0dd75af039a94f4269584fb8eef13 [shape=box label="Settings" fillcolor="white" style="filled" color="red" URL="dir_8ae0dd75af039a94f4269584fb8eef13.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1 [shape=box label="capabilities" fillcolor="white" style="filled" color="red" URL="dir_55f1e16e469d547c636a522dac21b8a1.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000549_000017.html"];
+  dir_dc2b1baf1f6270780cc36d35c800fdff->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000060_000549.html"];
+  dir_dc2b1baf1f6270780cc36d35c800fdff->dir_8ae0dd75af039a94f4269584fb8eef13 [headlabel="12", labeldistance=1.5 headhref="dir_000060_000539.html"];
+  dir_dc2b1baf1f6270780cc36d35c800fdff->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="8", labeldistance=1.5 headhref="dir_000060_000017.html"];
+  dir_dc2b1baf1f6270780cc36d35c800fdff->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="2", labeldistance=1.5 headhref="dir_000060_000524.html"];
+  dir_dc2b1baf1f6270780cc36d35c800fdff->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="2", labeldistance=1.5 headhref="dir_000060_000133.html"];
+  dir_8ae0dd75af039a94f4269584fb8eef13->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="54", labeldistance=1.5 headhref="dir_000539_000017.html"];
+  dir_8ae0dd75af039a94f4269584fb8eef13->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="4", labeldistance=1.5 headhref="dir_000539_000524.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000549.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_8ae0dd75af039a94f4269584fb8eef13 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000539.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="4", labeldistance=1.5 headhref="dir_000017_000133.html"];
+  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000524_000017.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1->dir_9982052f7ce695d12571567315b2fafa [headlabel="47", labeldistance=1.5 headhref="dir_000133_000549.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1->dir_8ae0dd75af039a94f4269584fb8eef13 [headlabel="34", labeldistance=1.5 headhref="dir_000133_000539.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="496", labeldistance=1.5 headhref="dir_000133_000017.html"];
+  dir_55f1e16e469d547c636a522dac21b8a1->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="12", labeldistance=1.5 headhref="dir_000133_000524.html"];
+}

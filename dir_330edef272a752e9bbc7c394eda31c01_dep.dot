@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/acsdkSystemClockMonitorInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_4270bfced15e0e73154b13468c7c9ad9 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="core" fontname="Helvetica", fontsize="10", URL="dir_4270bfced15e0e73154b13468c7c9ad9.html"]
+  subgraph clusterdir_330edef272a752e9bbc7c394eda31c01 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_330edef272a752e9bbc7c394eda31c01.html"];
+    dir_330edef272a752e9bbc7c394eda31c01 [shape=plaintext label="acsdkSystemClockMonitorInterfaces"];
+    dir_864b873b53d44448eb665739f1817102 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_864b873b53d44448eb665739f1817102.html"];
+  }
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_864b873b53d44448eb665739f1817102->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000448_000549.html"];
+}

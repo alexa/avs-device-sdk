@@ -1,10 +1,10 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/DefaultAttachmentReader.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/DefaultAttachmentReader.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node26 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/DefaultAttachmentReader.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node26 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Attachment\l/DefaultAttachmentReader.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node26 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node27 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/AVS/src/Attachment\l/InProcessAttachmentReader.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_in_process_attachment_reader_8cpp.html"];
+  Node27 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/Attachment/InProcessAttachment\lReader.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_in_process_attachment_reader_8cpp.html"];
   Node26 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/CapabilityAgents/AIP\l/src/AudioInputProcessor.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_input_processor_8cpp.html"];
+  Node28 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_input_processor_8cpp.html"];
 }

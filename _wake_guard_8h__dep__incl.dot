@@ -1,0 +1,12 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/WakeGuard.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node9 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Power/WakeGuard.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="/workplace/avs-device\l-sdk/ADSL/src/DirectiveSequencer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_directive_sequencer_8cpp.html"];
+  Node9 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/Power/WakeGuard.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_wake_guard_8cpp.html"];
+  Node9 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Power/WakeGuardTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_wake_guard_test_8cpp.html"];
+}

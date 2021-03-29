@@ -2,7 +2,10 @@ digraph "alexaClientSDK::capabilitiesDelegate::DiscoveryEventSenderInterface"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node4 [label="alexaClientSDK::capabilities\lDelegate::DiscoveryEventSenderInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaEventProcessed\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html"];
+  rankdir="LR";
+  Node5 [label="alexaClientSDK::capabilities\lDelegate::DiscoveryEventSenderInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaEventProcessed\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_event_processed_observer_interface.html"];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html"];
 }

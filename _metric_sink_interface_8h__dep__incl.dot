@@ -1,14 +1,18 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h"
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node31 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/AVSCommon/Utils/include\l/AVSCommon/Utils/Metrics/MetricSink\lInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node31 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Metrics/MetricSinkInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node31 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node32 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/Metrics/MetricRecorder\l/include/Metrics/MetricRecorder.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_metric_recorder_8h.html"];
+  Node32 [label="/workplace/avs-device\l-sdk/Metrics/MetricRecorder\l/include/Metrics/MetricRecorder.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_metric_recorder_8h.html"];
   Node32 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node33 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/Metrics/MetricRecorder\l/src/MetricRecorder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_metric_recorder_8cpp.html"];
+  Node33 [label="/workplace/avs-device\l-sdk/Metrics/MetricRecorder\l/src/MetricRecorder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_metric_recorder_8cpp.html"];
   Node31 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node34 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/Metrics/SampleMetricSink\l/include/Metrics/SampleMetricSink.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_metric_sink_8h.html"];
+  Node34 [label="/workplace/avs-device\l-sdk/Metrics/SampleMetricSink\l/include/Metrics/SampleMetricSink.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_metric_sink_8h.html"];
   Node34 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node35 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/Metrics/SampleMetricSink\l/src/SampleMetricSink.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_metric_sink_8cpp.html"];
+  Node35 [label="/workplace/avs-device\l-sdk/Metrics/SampleMetricSink\l/src/SampleMetricSink.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_metric_sink_8cpp.html"];
+  Node31 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="/workplace/avs-device\l-sdk/Metrics/UplCalculator\l/include/Metrics/UplMetricSink.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_upl_metric_sink_8h.html"];
+  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="/workplace/avs-device\l-sdk/Metrics/UplCalculator\l/src/UplMetricSink.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_upl_metric_sink_8cpp.html"];
 }

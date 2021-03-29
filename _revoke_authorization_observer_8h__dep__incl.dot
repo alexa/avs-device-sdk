@@ -1,8 +1,8 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/SampleApp/include/SampleApp/RevokeAuthorizationObserver.h"
+digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/RevokeAuthorizationObserver.h"
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node65 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/include/SampleApp\l/RevokeAuthorizationObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node65 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node66 [label="/home/ANT.AMAZON.COM\l/womw/workplace/1.19\l_release/doxy/avs-device\l-sdk/SampleApp/src/RevokeAuthorization\lObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8cpp.html"];
+  Node70 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/RevokeAuthorization\lObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node70 -> Node71 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="/workplace/avs-device\l-sdk/SampleApp/src/RevokeAuthorization\lObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_revoke_authorization_observer_8cpp.html"];
 }

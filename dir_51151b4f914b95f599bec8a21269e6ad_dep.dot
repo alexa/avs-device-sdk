@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d6090b0167727de9c3086da5455efe48 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkBluetoothInterfaces" fontname="Helvetica", fontsize="10", URL="dir_d6090b0167727de9c3086da5455efe48.html"]
+  subgraph clusterdir_51151b4f914b95f599bec8a21269e6ad {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_51151b4f914b95f599bec8a21269e6ad.html"];
+    dir_51151b4f914b95f599bec8a21269e6ad [shape=plaintext label="test"];
+    dir_8cd5192a203bbe4875016e93f133f8c7 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_8cd5192a203bbe4875016e93f133f8c7.html"];
+  }
+  }
+  dir_cbaa0c2bd1e08c672f344a40c1ff8458 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_cbaa0c2bd1e08c672f344a40c1ff8458.html"];
+  dir_8cd5192a203bbe4875016e93f133f8c7->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000273_000270.html"];
+}

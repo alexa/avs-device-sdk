@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/src/ID3Tags" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_93a54634d0ab52618b36b15672961616 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="src" fontname="Helvetica", fontsize="10", URL="dir_93a54634d0ab52618b36b15672961616.html"]
+  dir_a7673807e9596160851619ff8f50a3ef [shape=box, label="ID3Tags", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a7673807e9596160851619ff8f50a3ef.html"];
+  }
+  dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
+  dir_a7673807e9596160851619ff8f50a3ef->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="2", labeldistance=1.5 headhref="dir_000211_000176.html"];
+}

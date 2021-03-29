@@ -1,4 +1,4 @@
-digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/CapabilityAgents/ToggleController" {
+digraph "/workplace/avs-device-sdk/CapabilityAgents/ToggleController" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
@@ -13,9 +13,9 @@ digraph "/home/ANT.AMAZON.COM/womw/workplace/1.19_release/doxy/avs-device-sdk/Ca
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_ed45dfca4886cbaffdd948fff29b1af2->dir_56d034411a5083916ae57b5fd40966e2 [headlabel="2", labeldistance=1.5 headhref="dir_000266_000264.html"];
-  dir_ed45dfca4886cbaffdd948fff29b1af2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000266_000017.html"];
-  dir_56d034411a5083916ae57b5fd40966e2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000264_000017.html"];
-  dir_dcfc2ad97d5253e2b9de625f1e43df29->dir_56d034411a5083916ae57b5fd40966e2 [headlabel="2", labeldistance=1.5 headhref="dir_000267_000264.html"];
-  dir_dcfc2ad97d5253e2b9de625f1e43df29->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000267_000017.html"];
+  dir_ed45dfca4886cbaffdd948fff29b1af2->dir_56d034411a5083916ae57b5fd40966e2 [headlabel="2", labeldistance=1.5 headhref="dir_000398_000396.html"];
+  dir_ed45dfca4886cbaffdd948fff29b1af2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000398_000017.html"];
+  dir_56d034411a5083916ae57b5fd40966e2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000396_000017.html"];
+  dir_dcfc2ad97d5253e2b9de625f1e43df29->dir_56d034411a5083916ae57b5fd40966e2 [headlabel="2", labeldistance=1.5 headhref="dir_000399_000396.html"];
+  dir_dcfc2ad97d5253e2b9de625f1e43df29->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000399_000017.html"];
 }
