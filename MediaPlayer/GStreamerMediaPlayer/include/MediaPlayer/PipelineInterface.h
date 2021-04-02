@@ -75,7 +75,7 @@ public:
      * @param callback The callback to queue.
      * @return The ID of the queued callback (for calling @c g_source_remove).
      */
-    virtual guint queueCallback(const std::function<gboolean()>* callback) = 0;
+    virtual guint queueCallback(std::function<gboolean()>&& callback) = 0;
 
     /**
      * Attach the source to the worker thread.

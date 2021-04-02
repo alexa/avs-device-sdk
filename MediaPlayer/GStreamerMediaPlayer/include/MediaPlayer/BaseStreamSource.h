@@ -181,12 +181,6 @@ private:
     /// Number of times reading data has been attempted since data was last successfully read.
     guint m_sourceRetryCount;
 
-    /// Function to invoke on the worker thread thread when more data is needed.
-    const std::function<gboolean()> m_handleNeedDataFunction;
-
-    /// Function to invoke on the worker thread thread when there is enough data.
-    const std::function<gboolean()> m_handleEnoughDataFunction;
-
     /// ID of the handler installed to receive need data signals.
     guint m_needDataHandlerId;
 
