@@ -677,24 +677,32 @@ bool MediaPlayer::setupPipeline() {
         }
     }
 
-    std::string audioSinkElement;
+    std::string audioSinkDescription;
     ConfigurationNode::getRoot()[MEDIAPLAYER_CONFIGURATION_ROOT_KEY].getString(
-        MEDIAPLAYER_AUDIO_SINK_KEY, &audioSinkElement, "autoaudiosink");
-    m_pipeline.audioSink = gst_element_factory_make(audioSinkElement.c_str(), "audio_sink");
-
-    /// If the sink is a fakesink, set sync to true so that it uses system clock for consuming the buffer
-    /// instead of the default behavior, which is to consume the buffer as fast as possible.
-    if (audioSinkElement == "fakesink") {
-        m_isFakeSink = true;
-        g_object_set(m_pipeline.audioSink, "sync", true, NULL);
-    }
+        MEDIAPLAYER_AUDIO_SINK_KEY, &audioSinkDescription, "autoaudiosink");
+    GError* error = NULL;
+    m_pipeline.audioSink = gst_parse_bin_from_description_full(
+        audioSinkDescription.c_str(),
+        TRUE,
+        NULL,
+        static_cast<GstParseFlags>(GST_PARSE_FLAG_FATAL_ERRORS | GST_PARSE_FLAG_NO_SINGLE_ELEMENT_BINS),
+        &error);
 
     if (!m_pipeline.audioSink) {
         ACSDK_ERROR(LX("setupPipelineFailed")
                         .d("name", RequiresShutdown::name())
                         .d("reason", "createAudioSinkElementFailed")
-                        .d("audioSinkElement", audioSinkElement));
+                        .d("errorMessage", error->message)
+                        .d("audioSinkDescription", audioSinkDescription));
+        g_error_free(error);
         return false;
+    }
+
+    /// If the sink is a fakesink, set sync to true so that it uses system clock for consuming the buffer
+    /// instead of the default behavior, which is to consume the buffer as fast as possible.
+    if (audioSinkDescription == "fakesink") {
+        m_isFakeSink = true;
+        g_object_set(m_pipeline.audioSink, "sync", true, NULL);
     }
 
     GstCaps* caps = gst_caps_new_empty_simple("audio/x-raw");
